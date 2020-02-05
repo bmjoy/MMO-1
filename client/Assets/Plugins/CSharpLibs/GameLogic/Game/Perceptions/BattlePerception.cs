@@ -10,8 +10,9 @@ using Layout.AITree;
 using GameLogic.Game.AIBehaviorTree;
 using Proto;
 using Layout.LayoutEffects;
-using UMath;
 using EConfig;
+using UVector3 = UnityEngine.Vector3;
+using UnityEngine;
 
 namespace GameLogic.Game.Perceptions
 {
@@ -51,9 +52,10 @@ namespace GameLogic.Game.Perceptions
 
         public MagicReleaser CreateReleaser(MagicData magic, IReleaserTarget target,ReleaserType ty)
 		{
-			var view = View.CreateReleaserView(target.Releaser.View, 
-                                               target.ReleaserTarget.View, 
-                                               target.TargetPosition);
+			var view = View.CreateReleaserView(target.Releaser.Index, 
+                                               target.ReleaserTarget.Index,
+                                               magic.key,
+                                               target.TargetPosition.ToPV3());
             var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view,ty);
             this.JoinElement(mReleaser);
 			return mReleaser;
@@ -61,12 +63,13 @@ namespace GameLogic.Game.Perceptions
 
 
         public BattleMissile CreateMissile(MissileLayout layout, MagicReleaser releaser)
-		{
-			var view = this.View.CreateMissile(releaser.View, layout);
-			var missile= new BattleMissile(BattleMissileControllor,releaser,view,layout);
+        {
+            var view = this.View.CreateMissile(releaser.Index,
+                layout.resourcesPath, layout.offset.ToV3(), layout.fromBone, layout.toBone, layout.speed);
+            var missile = new BattleMissile(BattleMissileControllor, releaser, view, layout);
             this.JoinElement(missile);
             return missile;
-		}
+        }
 
         #endregion
 
@@ -77,10 +80,13 @@ namespace GameLogic.Game.Perceptions
             List<CharacterMagicData> magics,
             int teamIndex, 
             UVector3 position,
-            UVector3 forward,string accountUuid)
+            UVector3 forward,string accountUuid,string name)
 		{
-			var res = data.ResourcesPath;
-			var view = View.CreateBattleCharacterView(res, position, forward);
+			
+			var view = View.CreateBattleCharacterView(accountUuid,data.ID,
+                teamIndex,position.ToPV3(),forward.ToPV3(),level, name,
+                data.MoveSpeed);
+
             var battleCharacter = new BattleCharacter(data.ID,magics, this.BattleCharacterControllor, view, accountUuid);
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -107,19 +113,21 @@ namespace GameLogic.Game.Perceptions
 
         internal IParticlePlayer CreateParticlePlayer(MagicReleaser relaser, ParticleLayout layout)
         {
-            var p= View.CreateParticlePlayer(relaser.View, layout);
+            var p= View.CreateParticlePlayer(relaser.Index, layout.path,
+                (int)layout.fromTarget,
+                layout.Bind,layout.fromBoneName,layout.toBoneName,(int)layout.destoryType,layout.destoryTime);
             return p;
         }
 
         internal void CharacterMoveTo(BattleCharacter character, UVector3 pos)
         {
             if (character.Lock.IsLock(ActionLockType.NoMove)) return;
-            character.View.MoveTo(pos);
+            character.MoveTo(pos);
         }
 
         internal void CharacterStopMove(BattleCharacter character)
         {
-            character.View.StopMove();
+            character.StopMove();
         }
 
         internal void PlayMotion(BattleCharacter releaser, string motionName)
@@ -130,12 +138,12 @@ namespace GameLogic.Game.Perceptions
 
         internal void LookAtCharacter(BattleCharacter own, BattleCharacter target)
         {
-            own.View.LookAtTarget(target.View);
+            own.View.LookAtTarget(target.Index);
         }
 
-        internal void ProcessDamage(BattleCharacter sources,BattleCharacter effectTarget,DamageResult result)
+        internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {
-            View.ProcessDamage( sources.View,effectTarget.View, result);
+            View.ProcessDamage(sources.View.Index, effectTarget.View.Index, result.Damage, result.IsMissed);
             if (result.IsMissed) return;
             CharacterSubHP(effectTarget, result.Damage);
         }
@@ -254,7 +262,7 @@ namespace GameLogic.Game.Perceptions
                         var orgin = character.View.Transform.position + offset;
                         var forward = character.View.Transform.forward;
 
-                        var q = UQuaternion.Euler(0,angle,0);
+                        var q = Quaternion.Euler(0,angle,0);
                        
                         forward =  q * forward;
 

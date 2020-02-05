@@ -39,9 +39,9 @@ namespace Windows
                 if (magicID != id)
                 {
                     magicID = id;
-                    MagicData = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
+                    MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
 
-                    var per = UApplication.G<BattleSimulater>().PreView as IBattlePerception;
+                    var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
                     var magic = per.GetMagicByKey(MagicData.MagicKey);
 
                     if (magic != null)
@@ -90,7 +90,7 @@ namespace Windows
 
             bt_Exit.onClick.AddListener(() =>
                 {
-                    var gate = UApplication.G<BattleSimulater>();
+                    var gate = UApplication.G<BattleGate>();
                     ExitBattle.CreateQuery()
                     .SendRequest(gate.Client,
                     new C2B_ExitBattle
@@ -99,13 +99,24 @@ namespace Windows
                     }, null);
                     UApplication.S.GoBackToMainGate();
                 });
+
+            var bt = this.Joystick_Left.GetComponent<zFrame.UI.Joystick>();
+            ///float lastTime = -1;
+            bt.OnValueChanged.AddListener((v) =>
+            {
+                var g = UApplication.G<BattleGate>();
+                if (g == null) return;
+                g.MoveDir(v);
+            });
         }
+
+        
 
         private void SetAuto(bool auto)
         {
             var action = new Action_AutoFindTarget { Auto = auto };
             IsAuto = auto;
-            UApplication.G<BattleSimulater>()?.SendAction(action);
+            UApplication.G<BattleGate>().SendAction(action);
             bt_Auto.SetText(IsAuto ? "暂停" : "战斗");
         }
 
@@ -123,7 +134,7 @@ namespace Windows
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            var gate = UApplication.G<BattleSimulater>();
+            var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
             var timeSpan = TimeSpan.FromSeconds(gate.TimeServerNow);
             this.Time.text = string.Format("{0:00}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
@@ -162,7 +173,7 @@ namespace Windows
         private void OnRelease(GridTableModel item)
         {
             var action = new Proto.Action_ClickSkillIndex { MagicKey = item.MagicData.MagicKey };
-            UApplication.G<BattleSimulater>()?.SendAction(action);
+            UApplication.G<BattleGate>()?.SendAction(action);
         }
 
         private UCharacterView view;

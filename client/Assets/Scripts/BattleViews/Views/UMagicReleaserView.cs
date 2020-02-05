@@ -8,15 +8,6 @@ using EngineCore.Simulater;
 public class UMagicReleaserView :UElementView,IMagicReleaser
 {
 
-    public override void OnAttachElement(GObject el)
-    {
-        base.OnAttachElement(el);
-        this.gameObject.name = string.Format ("Releaser_{0}", el.Index);
-        var releaser = el as MagicReleaser;
-        SetCharacter(releaser.ReleaserTarget.Releaser.View,
-            releaser.ReleaserTarget.ReleaserTarget.View);
-    }
-
     public void SetCharacter(IBattleCharacter releaser, IBattleCharacter target)
     {
         CharacterTarget = target;
@@ -26,15 +17,16 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
 	public IBattleCharacter CharacterTarget{private set; get;}
 	public IBattleCharacter CharacterReleaser{private set; get; }
 
+    public string Key { get; internal set; }
+
     public override IMessage ToInitNotify()
     {
-        var mReleaser = this.Element as MagicReleaser;
         var createNotify = new Notify_CreateReleaser
         {
-            Index = mReleaser.Index,
-            ReleaserIndex = mReleaser.ReleaserTarget.Releaser.Index,
-            TargetIndex = mReleaser.ReleaserTarget.ReleaserTarget.Index,
-            MagicKey = mReleaser.Magic.key
+            Index = Index,
+            ReleaserIndex = CharacterTarget.Index,
+            TargetIndex = CharacterReleaser.Index,
+            MagicKey = Key
         };
         return createNotify;
     }

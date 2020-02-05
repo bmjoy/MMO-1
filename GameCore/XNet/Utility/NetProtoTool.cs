@@ -49,7 +49,7 @@ namespace XNet.Libs.Utility
             if (MessageTypeIndexs.TryGetType(msg.Flag, out Type t))
             {
                 var ty = Activator.CreateInstance(t) as IMessage;
-                ty.MergeFrom(msg.Content);
+                if (msg.Content != null) ty.MergeFrom(msg.Content);
                 return ty;
             }
             throw new Exception($"No found type by index  {msg.Flag}");
@@ -61,7 +61,7 @@ namespace XNet.Libs.Utility
             if (MessageTypeIndexs.TryGetType(msg.Flag, out Type t))
             {
                 var ty = Activator.CreateInstance(t) as IMessage;
-                ty.MergeFrom(msg.Content);
+                if (msg.Content != null) ty.MergeFrom(msg.Content);
                 return ty;
             }
             throw new Exception($"No found type by index  {msg.Flag}");
@@ -73,7 +73,7 @@ namespace XNet.Libs.Utility
             if (MessageTypeIndexs.TryGetType(msg.Flag, out Type t))
             {
                 var ty = Activator.CreateInstance(t) as IMessage;
-                ty.MergeFrom(msg.Content);
+                if(msg.Content!=null) ty.MergeFrom(msg.Content);
                 return ty;
             }
             throw new Exception($"No found type by index  {msg.Flag}");

@@ -1,9 +1,6 @@
 {
     "name": "Server",
     "references": [
-        "BebaviorTree",
-        "EngineCore",
-        "Layout",
         "GameLogic",
         "BattleViews"
     ],

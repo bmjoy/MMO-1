@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BehaviorTree;
-using EngineCore;
 using GameLogic.Game.Elements;
 using GameLogic.Game.Perceptions;
 using Layout.AITree;
-using UMath;
+using UnityEngine;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	[TreeNodeParse(typeof(TreeNodeFarFromTarget))]
-	public class ActionFarFromTarget:ActionComposite,ITreeNodeHandle
+    [TreeNodeParse(typeof(TreeNodeFarFromTarget))]
+	public class ActionFarFromTarget:ActionComposite<TreeNodeFarFromTarget>
 	{
-		public ActionFarFromTarget()
+		public ActionFarFromTarget(TreeNodeFarFromTarget node):base(node)
 		{
 		}
 
@@ -27,7 +25,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			UVector3 target;
+			Vector3 target;
 
 			var targetIndex = root[AITreeRoot.TRAGET_INDEX];
 			if (targetIndex == null)
@@ -35,12 +33,11 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield return RunStatus.Failure;
 				yield break;
 			}
-			var targetCharacter = root.Perception.State[(int)targetIndex] as BattleCharacter;
-			if (targetCharacter == null)
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
+            if (!(root.Perception.State[(int)targetIndex] is BattleCharacter targetCharacter))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
 
             var noraml =(root.Character.View.Transform.position - targetCharacter.View.Transform.position).normalized;
 			target = noraml * distance + root.Character.View.Transform.position;
@@ -52,17 +49,10 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield return RunStatus.Running;
 			}
 
-			root.Character.View.StopMove();
+			root.Character.StopMove();
 			yield return RunStatus.Success;
 
 
-		}
-
-		private TreeNodeFarFromTarget Node;
-
-		public void SetTreeNode(TreeNode node)
-		{
-			Node = node as TreeNodeFarFromTarget;
 		}
 
         public override void Stop(ITreeRoot context)

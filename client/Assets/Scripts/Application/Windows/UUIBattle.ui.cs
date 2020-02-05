@@ -31,8 +31,9 @@ namespace Windows
         protected GridLayoutGroup Grid;
         protected Text Time;
         protected Button bt_Auto;
-        protected Text Text;
         protected Button bt_Exit;
+        protected RectTransform Text;
+        protected Image Joystick_Left;
 
 
         protected UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>> GridTableManager = new UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>>();
@@ -44,8 +45,9 @@ namespace Windows
             Grid = FindChild<GridLayoutGroup>("Grid");
             Time = FindChild<Text>("Time");
             bt_Auto = FindChild<Button>("bt_Auto");
-            Text = FindChild<Text>("Text");
             bt_Exit = FindChild<Button>("bt_Exit");
+            Text = FindChild<RectTransform>("Text");
+            Joystick_Left = FindChild<Image>("Joystick_Left");
 
             GridTableManager.InitFromGrid(Grid);
 

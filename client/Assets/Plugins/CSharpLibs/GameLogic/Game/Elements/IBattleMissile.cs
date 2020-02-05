@@ -1,12 +1,10 @@
-﻿using System;
-using EngineCore;
-using UMath;
+﻿using UnityEngine;
 
 namespace GameLogic.Game.Elements
 {
-	public interface IBattleMissile:IBattleElement
+    public interface IBattleMissile:IBattleElement
 	{
-		UTransform Transform { get; }
+		Transform Transform { get; }
 	}
 }
 

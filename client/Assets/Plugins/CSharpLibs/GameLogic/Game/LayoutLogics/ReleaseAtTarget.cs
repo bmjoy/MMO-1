@@ -1,40 +1,25 @@
-﻿using System;
-using GameLogic.Game.Elements;
-using EngineCore;
-using UMath;
+﻿using GameLogic.Game.Elements;
+using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.LayoutLogics
 {
-	public class ReleaseAtTarget:IReleaserTarget
+	public class ReleaseAtTarget : IReleaserTarget
 	{
-		public ReleaseAtTarget (BattleCharacter releaser, BattleCharacter target)
+		public ReleaseAtTarget(BattleCharacter releaser, BattleCharacter target)
 		{
 			Releaser = releaser;
 			ReleaserTarget = target;
 		}
 
-		//public BattleCharacter Releaser;
+		public BattleCharacter Releaser { get; private set; }
 
-		#region IReleaserTarget implementation
+		public BattleCharacter ReleaserTarget { get; private set; }
 
-		public BattleCharacter Releaser {
-			get ;
-			private set;
+		public UVector3 TargetPosition
+		{
+			get { return ReleaserTarget.View.Transform.position; }
 		}
 
-		public BattleCharacter ReleaserTarget {
-			get ;
-			private set;
-		}
-
-		public UVector3 TargetPosition {
-			get {
-
-                return ReleaserTarget.View.Transform.position;
-			}
-		}
-
-		#endregion
 	}
 }
 

@@ -9,19 +9,23 @@ using GameLogic.Game.Perceptions;
 using GameLogic.Game.Elements;
 using Google.Protobuf;
 using EConfig;
+using System.Reflection;
+using GameLogic.Utility;
 
 /// <summary>
 /// 游戏中的通知播放者
 /// </summary>
 public class NotifyPlayer
 {
-    public NotifyPlayer(IBattlePerception view)
+    private struct NotifyMapping
     {
-        PerView = view;
+        public NeedNotifyAttribute Attr { set; get; }
+        public MethodInfo Method { set; get; }
     }
+    private readonly Dictionary<Type, NotifyMapping> PerceptionInvokes = new Dictionary<Type, NotifyMapping>();
+    private readonly Dictionary<Type, NotifyMapping> ElementInvokes = new Dictionary<Type, NotifyMapping>();
 
-
-    private readonly Dictionary<int,IBattleElement> views = new Dictionary<int, IBattleElement>();
+    public IBattlePerception PerView { set; get; }
 
     #region Events
     public Action<IBattleCharacter> OnCreateUser;
@@ -30,7 +34,41 @@ public class NotifyPlayer
     public Action<Notify_Drop> OnDrop;
     #endregion
 
-    public IBattlePerception PerView { set; get; }
+    public NotifyPlayer(UPerceptionView view)
+    {
+        PerView = view;
+        var invokes = typeof(IBattlePerception).GetMethods();
+        foreach (var i in invokes)
+        {
+            var att = i.GetCustomAttribute<NeedNotifyAttribute>();
+            if (att == null) continue;
+            PerceptionInvokes.Add(att.NotifyType, new NotifyMapping { Method = i, Attr = att });
+        }
+
+        AddType<IBattleElement>();
+        AddType<IBattleCharacter>();
+        AddType<IBattleMissile>();
+        AddType<IMagicReleaser>();
+
+    }
+
+    public void AddType<T>()
+    {
+        var invokes = typeof(T).GetMethods();
+        foreach (var i in invokes)
+        {
+            var att = i.GetCustomAttribute<NeedNotifyAttribute>();
+            if (att == null) continue;
+            if (ElementInvokes.ContainsKey(att.NotifyType))
+            {
+                Debug.LogError($"{att.NotifyType} had add");
+                continue;
+            }
+            ElementInvokes.Add(att.NotifyType, new NotifyMapping { Method = i, Attr = att });
+            Debug.Log($"{ typeof(T)} handle notify {att.NotifyType}");
+        }
+    }
+
 
     /// <summary>
     /// 处理网络包的解析
@@ -38,146 +76,57 @@ public class NotifyPlayer
     /// <param name="notify">Notify.</param>
     public void Process(IMessage notify)
     {
-        var per = PerView;
-        if (notify is Notify_CreateBattleCharacter)
+        //优先处理 perception 创建元素
+        if (PerceptionInvokes.TryGetValue(notify.GetType(), out NotifyMapping m))
         {
-            var createcharacter = notify as Notify_CreateBattleCharacter;
-            var resources = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(createcharacter.ConfigID);
-            var view = per.CreateBattleCharacterView(
-                           resources.ResourcesPath,
-                           createcharacter.Position.ToGVer3(), 
-                           createcharacter.Forward.ToGVer3());
-            var character = view as UCharacterView;
-            character.Index = createcharacter.Index;
-            character.AccoundUuid = createcharacter.AccountUuid;
-            view.SetSpeed(createcharacter.Speed*1.1f);
-
-            foreach (var i in createcharacter.Magics)
+            var ps = new List<object>();
+            foreach (var i in m.Attr.FieldNames)
             {
-                view.AttachMaigc(i.MagicID, i.CDTime);
+                ps.Add(notify.GetType().GetProperty(i).GetValue(notify));
             }
-            views.Add(view.Index, view);
-            OnCreateUser?.Invoke(view);
+            var go = m.Method.Invoke(PerView, ps.ToArray());
+            if (go is UElementView el)
+            {
+                el.SetPrecpetion(PerView as UPerceptionView);
+                (el as IBattleElement).JoinState((int)notify.GetType().GetProperty("Index").GetValue(notify));
+            }
+            if (go is UCharacterView c)
+            {
+                OnCreateUser?.Invoke(c);
+            }
+            return;
+        }
 
-        }
-        else if (notify is Notify_CreateReleaser)
+        //查找元素消息
+        //index
+        var property = notify.GetType().GetProperty("Index");
+        if (property != null)
         {
-            var creater = notify as Notify_CreateReleaser;
-            var releaer = views[creater.ReleaserIndex] as UCharacterView;
-            var target = views[creater.TargetIndex] as UCharacterView;
-            var viewer = per.CreateReleaserView(releaer, target, null);
-            var releaser = viewer as UMagicReleaserView;
-            releaser.SetCharacter(releaer, target);
-            releaser.Index = creater.Index;
-            views.Add(viewer.Index, viewer);
-        }
-        else if (notify is Notify_CreateMissile)
-        {
-            var create = notify as Notify_CreateMissile;
-            var releaser = views[create.ReleaserIndex] as UMagicReleaserView;
-            var layout = new Layout.LayoutElements.MissileLayout
+            var index = (int)property.GetValue(notify);
+            var per = PerView as UPerceptionView;
+            var v = per.GetViewByIndex(index);
+            Debug.Log($"{v.GetType()} -> {notify.GetType()}");
+            if (ElementInvokes.TryGetValue(notify.GetType(), out NotifyMapping elI))
             {
-                fromBone = create.FormBone,
-                toBone = create.ToBone,
-                offset = create.Offset.ToLVer3(),
-                resourcesPath = create.ResourcesPath,
-                speed = create.Speed
-            };
-            var view = per.CreateMissile(releaser, layout);
-            var missile = view as UBattleMissileView;
-            missile.Index = create.Index;
-            views.Add(view.Index, view);
-        }
-        else if (notify is Notify_LayoutPlayParticle)
-        {
-            var particle = notify as Notify_LayoutPlayParticle;
-            var layout = new Layout.LayoutElements.ParticleLayout
-            {
-                path = particle.Path,
-                destoryTime = particle.DestoryTime,
-                destoryType = (Layout.LayoutElements.ParticleDestoryType)particle.DestoryType,
-                fromBoneName = particle.FromBoneName,
-                fromTarget = (Layout.TargetType)particle.FromTarget,
-                toBoneName = particle.ToBoneName,
-                toTarget = (Layout.TargetType)particle.ToTarget,
-                Bind = particle.Bind
-            };
-            var releaser = views[particle.ReleaseIndex] as UMagicReleaserView;
-            per.CreateParticlePlayer(releaser, layout);
-        }
-        else if (notify is Notify_LookAtCharacter)
-        {
-            var look = notify as Notify_LookAtCharacter;
-            var owner = views[look.Own] as IBattleCharacter;
-            var target = views[look.Target]as IBattleCharacter;
-            owner.LookAtTarget(target);
-        }
-        else if (notify is Notify_CharacterPosition)
-        {
-            var position = notify as Notify_CharacterPosition;
-            var view = views[position.Index] as IBattleCharacter;
-            view.MoveTo(position.TargetPosition.ToGVer3());
-        }
-        else if (notify is Notify_LayoutPlayMotion)
-        {
-            var motion = notify as Notify_LayoutPlayMotion;
-            var view = views[motion.Index] as IBattleCharacter;
-            view.PlayMotion(motion.Motion);
-        }
-        else if (notify is Notify_HPChange)
-        {
-            var change = notify as Proto.Notify_HPChange;
-            var view = views[change.Index] as IBattleCharacter;
-            view.ShowHPChange(change.HP, change.TargetHP, change.Max);
-            if (change.TargetHP == 0)
-            {
-                OnDeath?.Invoke(view);
-                view.Death();
+                Debug.Log($"invoke {elI.Method.Name}");
+                var ps = new List<object>();
+                foreach (var f in elI.Attr.FieldNames)
+                {
+                    ps.Add(notify.GetType().GetProperty(f).GetValue(notify));
+                }
+                elI.Method.Invoke(v, ps.ToArray());
+                return;
             }
         }
-        else if (notify is Notify_ElementExitState)
-        {
-            var exit = notify as Notify_ElementExitState;
-            var view = views[exit.Index];
-            views.Remove(exit.Index);
 
-            //GameObject.Destroy(view.gameObject);
-        }
-        else if (notify is Notify_ElementJoinState)
+        //处理特别消息
+
+        if (notify is Notify_PlayerJoinState p)
         {
-            var joinState = notify as Proto.Notify_ElementJoinState;
-            var view = views[joinState.Index];
-            //view.Joined();
+            OnJoined?.Invoke(p);
         }
-        else if (notify is Notify_DamageResult)
+        else if (notify is Notify_Drop drop)
         {
-            /*var damage = notify as Proto.Notify_DamageResult;
-            var view = views[damage.Index];
-            var character = view as UCharacterView;
-            character.NotifyDamage(damage);*/
-        }
-        else if (notify is Notify_MPChange)
-        {
-            var mpChanged = notify as Notify_MPChange;
-            var view = views[mpChanged.Index] as IBattleCharacter;
-            view.ShowMPChange(mpChanged.MP, mpChanged.TargetMP, mpChanged.Max);
-        }
-        else if (notify is Notify_PropertyValue)
-        {
-            var pV = notify as Notify_PropertyValue;
-            var view = views[pV.Index] as IBattleCharacter;
-            view.ProtertyChange(pV.Type, pV.FinallyValue);
-        }
-        else if (notify is Notify_PlayerJoinState)
-        {
-            //package
-            var package = notify as Notify_PlayerJoinState;
-            if (this.OnJoined != null)
-                OnJoined(package);
-        }
-        else if (notify is Notify_Drop)
-        {
-            var drop = notify as Notify_Drop;
             OnDrop?.Invoke(drop);
             //var drop = notify as Notify_Drop;
             if (drop.Gold > 0)
@@ -189,18 +138,12 @@ public class NotifyPlayer
             foreach (var i in drop.Items)
             {
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
-                UApplication.S.ShowNotify(string.Format("{0}+{1}",item.Name,i.Num));
+                UApplication.S.ShowNotify(string.Format("{0}+{1}", item.Name, i.Num));
             }
-        }
-        else if (notify is Notify_ReleaseMagic)
-        {
-            var release = notify as Notify_ReleaseMagic;
-            var view = views[release.Index] as IBattleCharacter;
-            view.AttachMaigc(release.MagicID, release.CdCompletedTime);
         }
         else
         {
-            Debug.LogError("NO Handle:" + notify.GetType());
+            Debug.LogError($"NO Handle:{notify.GetType()}->{notify}");
         }
     }
 

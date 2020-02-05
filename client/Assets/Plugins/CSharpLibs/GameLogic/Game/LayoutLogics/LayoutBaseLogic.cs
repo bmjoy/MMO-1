@@ -4,12 +4,10 @@ using GameLogic.Game.Elements;
 using System.Collections.Generic;
 using System.Reflection;
 using GameLogic.Game.Perceptions;
-using EngineCore;
 using ExcelConfig;
 using System.Linq;
-using EngineCore.Simulater;
-using UMath;
 using EConfig;
+using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.LayoutLogics
 {
@@ -22,7 +20,9 @@ namespace GameLogic.Game.LayoutLogics
 		{
 			HandleType = handleType;
 		}
-
+        /// <summary>
+        /// layout type
+        /// </summary>
 		public Type HandleType{set;get;}
 	}
     /// <summary>
@@ -36,25 +36,25 @@ namespace GameLogic.Game.LayoutLogics
 			var type = typeof(LayoutBaseLogic);
 			var methods=type.GetMethods (BindingFlags.Public | BindingFlags.Static);
 			foreach (var i in methods) {
-				
-				var atts = i.GetCustomAttributes(typeof(HandleLayoutAttribute), false) as HandleLayoutAttribute[];
-				if (atts == null || atts.Length ==0)
-					continue;
-				_handler.Add (atts[0].HandleType, i);
+                if (!(i.GetCustomAttributes(typeof(HandleLayoutAttribute), false) is HandleLayoutAttribute[] atts) || atts.Length == 0)
+                    continue;
+                _handler.Add (atts[0].HandleType, i);
 			}
 		}
 
-		private static Dictionary<Type,MethodInfo> _handler = new Dictionary<Type, MethodInfo> ();
+		private static readonly Dictionary<Type,MethodInfo> _handler = new Dictionary<Type, MethodInfo> ();
 
 		public static void EnableLayout(LayoutBase layout, TimeLinePlayer player)
 		{
-			MethodInfo m;
-			if (_handler.TryGetValue (layout.GetType (), out m)) {
-				m.Invoke (null, new object[]{ player, layout });
-			} else {
-				throw new Exception ("No Found handle Type :"+ layout.GetType());
-			}
-		}
+            if (_handler.TryGetValue(layout.GetType(), out MethodInfo m))
+            {
+                m.Invoke(null, new object[] { player, layout });
+            }
+            else
+            {
+                throw new Exception("No Found handle Type :" + layout.GetType());
+            }
+        }
 
         #endregion
 
@@ -63,6 +63,7 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(LookAtTarget))]
 		public static void LookAtTargetActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
+			_ = layoutBase.GUID;
             var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
             per.LookAtCharacter(linePlayer.Releaser.ReleaserTarget.Releaser,
                                 linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
@@ -214,7 +215,7 @@ namespace GameLogic.Game.LayoutLogics
                 charachter.TeamIndex,
                 charachter.View.Transform.position,
                 charachter.View.Transform.forward,
-                string.Empty
+                string.Empty,data.Name
             );
             //无限视野
             unit[Proto.HeroPropertyType.ViewDistance].SetAppendValue(100000);

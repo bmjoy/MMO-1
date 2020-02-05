@@ -9,9 +9,8 @@ using Proto.BattleServerService;
 using XNet.Libs.Utility;
 using ExcelConfig;
 using System.Collections;
-using GameLogic.Game.Perceptions;
 
-public class BattleSimulater : UGate, IServerMessageHandler
+public class BattleGate : UGate, IServerMessageHandler
 {
 
     public void SetServer(GameServerInfo serverInfo, int mapID)
@@ -27,8 +26,7 @@ public class BattleSimulater : UGate, IServerMessageHandler
     {
         get
         {
-            if (startTime < 0)
-                return 0f;
+            if (startTime < 0)  return 0f;
             return Time.time - startTime + ServerStartTime;
         }
     }
@@ -43,7 +41,7 @@ public class BattleSimulater : UGate, IServerMessageHandler
     private int MapID;
     public RequestClient<TaskHandler> Client { set; get; }
 
-    public IBattlePerception PreView { get; internal set; }
+    public UPerceptionView PreView { get; internal set; }
 
     #region implemented abstract members of UGate
 
@@ -102,7 +100,9 @@ public class BattleSimulater : UGate, IServerMessageHandler
             var character = view as UCharacterView;
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
-                FindObjectOfType<ThridPersionCameraContollor>()?.SetLookAt(character.GetBoneByName("Bottom"));
+                Owner = character;
+                FindObjectOfType<ThridPersionCameraContollor>()
+                .SetLookAt(character.GetBoneByName("Bottom"));
                 UUIManager.Singleton.ShowMask(false);
                 var ui = UUIManager.Singleton.GetUIWindow<Windows.UUIBattle>();
                 ui.InitCharacter(character);
@@ -113,8 +113,7 @@ public class BattleSimulater : UGate, IServerMessageHandler
             var character = view as UCharacterView;
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
-                //Go to Main
-                //dead
+                UApplication.S.GoBackToMainGate();
             }
         };
         player.OnJoined = (initPack) =>
@@ -130,6 +129,18 @@ public class BattleSimulater : UGate, IServerMessageHandler
 
         };
     }
+
+    private UCharacterView Owner;
+
+    internal void MoveDir(Vector2 v)
+    {
+        if (!Owner) return;
+        SendAction(new Action_MoveDir
+        {
+            Fast = true,
+            Forward = new Proto.Vector3 { X = v.x, Z = v.y }
+        });
+     }
 
     protected override void ExitGate()
     {

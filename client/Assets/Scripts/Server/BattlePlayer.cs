@@ -4,6 +4,8 @@ using System.Linq;
 using EConfig;
 using ExcelConfig;
 using Proto;
+using XNet.Libs.Net;
+
 public class BattlePlayer
 {
 
@@ -21,17 +23,20 @@ public class BattlePlayer
     #endregion
 
 
+    public Client Client{set;get;}
+
     public DHero GetHero() { return Hero; }
 
-    public string AccountId { set; get; }
+    public string AccountId {  private set; get; }
 
    
-    public BattlePlayer(string account, PlayerPackage package, DHero hero)
+    public BattlePlayer(string account, PlayerPackage package, DHero hero, Client client)
     {
         Package = package;
         CurrentSize = package.Items.Count;
         Hero = hero;
         this.AccountId = account;
+        this.Client = client;
     }
 
 

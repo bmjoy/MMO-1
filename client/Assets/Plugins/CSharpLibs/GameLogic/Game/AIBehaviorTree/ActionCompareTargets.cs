@@ -8,9 +8,9 @@ using Proto;
 namespace GameLogic.Game.AIBehaviorTree
 {
 	[TreeNodeParse(typeof(TreeNodeCompareTargets))]
-	public class ActionCompareTargets:ActionComposite,ITreeNodeHandle
+	public class ActionCompareTargets:ActionComposite<TreeNodeCompareTargets>
 	{
-		public ActionCompareTargets()
+		public ActionCompareTargets(TreeNodeCompareTargets node):base(node)
 		{
 		}
 
@@ -60,11 +60,6 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
 			yield break;
 
-		}
-		private TreeNodeCompareTargets Node;
-		public void SetTreeNode(TreeNode node)
-		{
-			Node = node as TreeNodeCompareTargets;
 		}
 	}
 }

@@ -5,12 +5,6 @@ using Layout.AITree;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-
-	public interface ITreeNodeHandle
-	{
-		void SetTreeNode(TreeNode node);
-	}
-
 	public class TreeNodeParseAttribute : Attribute
 	{
 		public TreeNodeParseAttribute(Type paserType)
@@ -23,7 +17,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 	public class AITreeParse
 	{
-		private static Dictionary<Type, Type> _handler = new Dictionary<Type, Type>();
+		private static readonly Dictionary<Type, Type> _handler = new Dictionary<Type, Type>();
 		static AITreeParse()
 		{
 			_handler.Clear();
@@ -108,18 +102,14 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		private static Composite Parse(TreeNode node)
 		{
-			Type handle;
-			if (_handler.TryGetValue(node.GetType(), out handle))
-			{
-				var comp = Activator.CreateInstance(handle) as ITreeNodeHandle;
-				comp.SetTreeNode(node);
-
-				var t = comp as Composite;
-				t.Guid = node.guid;
-				return t;
-			}
-
-			throw new Exception("Not parsed TreeNode:" + node.GetType());
+            if (_handler.TryGetValue(node.GetType(), out Type handle))
+            {
+                var comp = Activator.CreateInstance(handle, node);
+                var t = comp as Composite;
+                t.Guid = node.guid;
+                return t;
+            }
+            throw new Exception("Not parsed TreeNode:" + node.GetType());
 			//return null;
 		}
 

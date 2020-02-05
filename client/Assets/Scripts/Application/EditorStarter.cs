@@ -37,8 +37,8 @@ public class EditorStarter : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (!isStarted)
-			return;
+		if (!isStarted) return;
+
 		tcamera.forward.y = -1.08f + slider;
 		tcamera.Distance = 22 - distance;
 		tcamera.rotationY = ry;
@@ -50,8 +50,8 @@ public class EditorStarter : MonoBehaviour {
 			var position = midd.position;
 			var left = position + (Vector3.left * distanceCharacter / 2);
 			var right = position + (Vector3.right * distanceCharacter / 2);
-			gate.releaser.View.SetPosition(left.ToGVer3());
-			gate.target.View.SetPosition(right.ToGVer3());
+			gate.releaser.View.SetPosition(left.ToPVer3());
+			gate.target.View.SetPosition(right.ToPVer3());
 			isChanged = false;
 		}
 	}
@@ -62,31 +62,33 @@ public class EditorStarter : MonoBehaviour {
 	{
 		var data = ExcelToJSONConfigManager
 			.Current.GetConfigByID<CharacterData>(int.Parse(index));
-		if (data == null)
-			return;
-        UApplication.G<EditorGate>()?.ReplaceRelease(data, stay, aiEnable);
-
+		if (data == null) return;
+		var g = UApplication.G<EditorGate>();
+		if (g == null) return;
+        g.ReplaceRelease(data, stay, aiEnable);
 	}
 
 	private void ReplaceTarget(bool stay)
 	{
-		var data=	ExcelConfig.ExcelToJSONConfigManager
-			.Current.GetConfigByID<CharacterData>(int.Parse(index));
+		var data= ExcelToJSONConfigManager
+            .Current.GetConfigByID<CharacterData>(int.Parse(index));
 		if (data == null)
 			return;
-		UApplication.G<EditorGate>()?.ReplaceTarget (data,stay,aiEnable);
+		var g = UApplication.G<EditorGate>();
+		if (g == null) return;
+		g.ReplaceTarget (data,stay,aiEnable);
 	}
 
 
 	private void ReleaseSkill(string key)
 	{
 		var action = new Proto.Action_ClickSkillIndex { MagicKey = key };
-		UApplication.G<EditorGate>()?.DoAction(action);
+		var g = UApplication.G<EditorGate>();
+		if (g == null) return;
+		g.DoAction(action);
 	}
 
-
-	private string[] names ;
-	private string index ="1";
+    private string index ="1";
 
 	private float slider = 1f;
 	private float distance = -5f;

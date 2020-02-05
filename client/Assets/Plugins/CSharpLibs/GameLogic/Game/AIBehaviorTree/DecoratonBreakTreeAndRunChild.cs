@@ -4,10 +4,11 @@ using BehaviorTree;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	public class DecoratonBreakTreeAndRunChild:BehaviorTree.Decorator
-	{
+	public class DecoratonBreakTreeAndRunChild: Decorator
+    {
 		public DecoratonBreakTreeAndRunChild(Composite comp):base(comp)
 		{
+
 		}
 
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)

@@ -9,23 +9,17 @@ using EngineCore.Simulater;
 using Layout.AITree;
 using Quaternion = UnityEngine.Quaternion;
 using Layout;
-using UMath;
 using GameLogic;
+using UVector3 = UnityEngine.Vector3;
+using Google.Protobuf;
+using Proto;
+using System;
+using ExcelConfig;
+using EConfig;
 
 public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater, IViewBase
 {
     public UGameScene UScene;
-
-    public virtual void DeAttachView(UElementView el)
-    {
-        
-    }
-
-    public virtual void AttachView(UElementView el)
-    {
-      
-    }
-
     public bool UseCache = true;
 
 	void Awake()
@@ -50,6 +44,12 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
 	}
 
+    public UElementView GetViewByIndex(int releaseIndex)
+    {
+        if (AttachElements.TryGetValue(releaseIndex, out UElementView vi)) return vi;
+        return null;
+    }
+
     void Update()
     {
         now = new GTime(Time.time, Time.deltaTime);
@@ -61,6 +61,54 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
     private Dictionary<string,TimeLine> _timeLines;
     private Dictionary<string ,MagicData> _magicData;
 
+    private readonly Queue<IMessage> _notify = new Queue<IMessage>();
+
+    private readonly Dictionary<int, UElementView> AttachElements = new Dictionary<int, UElementView>();
+
+    public void DeAttachView(UElementView battleElement)
+    {
+        AddNotify(new Notify_ElementExitState { Index = battleElement.Index });
+        AttachElements.Remove(battleElement.Index);
+    }
+
+    public void AttachView(UElementView battleElement)
+    {
+        AttachElements.Add(battleElement.Index, battleElement);
+        AddNotify(battleElement.ToInitNotify());
+    }
+
+    public IMessage[] GetAndClearNotify()
+    {
+        if (_notify.Count > 0)
+        {
+            var list = _notify.ToArray();
+            _notify.Clear();
+            return list;
+        }
+        else
+            return new IMessage[0];
+    }
+
+    public IMessage[] GetInitNotify()
+    {
+        var list = new List<IMessage>();
+        foreach (var i in AttachElements)
+        {
+            if (i.Value is ISerializerableElement sElement)
+            {
+                list.Add(sElement.ToInitNotify());
+            }
+        }
+        return list.ToArray();
+    }
+
+    public void AddNotify(IMessage notify)
+    {
+#if UNITY_SERVER
+        _notify.Enqueue(notify);
+#endif
+    }
+
     private GTime now;
 
     public GTime GetTime() { return now; }
@@ -70,7 +118,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         var go = new GameObject("PreView");
         return go.AddComponent<UPerceptionView>();
     }
-
 
     GTime ITimeSimulater.Now => GetTime();
 
@@ -87,12 +134,19 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         } 
         return line;
     }
-        
-	#region IBattlePerception implementation
-           
-    void IBattlePerception.ProcessDamage(IBattleCharacter view1, IBattleCharacter view2, GameLogic.Game.DamageResult result)
+
+    #region IBattlePerception implementation
+
+    bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed)
     {
-       
+        AddNotify(new Notify_DamageResult
+        {
+            Index = owner,
+            TargetIndex = target,
+            Damage = damage,
+            IsMissed = isMissed
+        });
+        return true;
     }
         
     TimeLine IBattlePerception.GetTimeLineByPath (string path)
@@ -110,12 +164,11 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         
     MagicData IBattlePerception.GetMagicByKey (string key)
 	{
-		Layout.MagicData magic;
-		if(_magicData.TryGetValue(key,out magic))
-		{
-			return magic;	
-		}
-		Debug.LogError ("No found magic by key:"+key);
+        if (_magicData.TryGetValue(key, out MagicData magic))
+        {
+            return magic;
+        }
+        Debug.LogError ("No found magic by key:"+key);
 		return null;
 	}
 
@@ -124,15 +177,16 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 		return _magicData.ContainsKey (key);
 	}
 
-    IBattleCharacter IBattlePerception.CreateBattleCharacterView (string resources, UVector3 pos,UVector3 forward)
+    IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
+        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed)
 	{
-		var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (resources);
-		var tPos = new Vector3(pos.x,pos.y,pos.z);
-		var qu = Quaternion.Euler (forward.x, forward.y, forward.z);
-		var ins = GameObject.Instantiate (character) as GameObject;
-		var root = new GameObject (resources);
+        var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
+		var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (data.ResourcesPath);
+		var qu = Quaternion.Euler (forward.X, forward.Y, forward.Z);
+		var ins = Instantiate(character) as GameObject;
+        var root = new GameObject(data.ResourcesPath);
         root.transform.SetParent(this.transform, false);
-		root.transform.position = tPos;
+		root.transform.position = pos.ToUV3();
 		root.transform.rotation = Quaternion.identity;
 		ins.transform.parent = root.transform;
 		ins.transform.localPosition = Vector3.zero;
@@ -142,25 +196,35 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         view.SetPrecpetion(this);
 		view.targetLookQuaternion = qu;
 		view.SetCharacter(ins);
+        view.TeamId = teamId;
+        view.Level = level;
+        view.Speed = speed;
+        view.ConfigID = config;
+        view.AccoundUuid = account_id;
+        view.Name = name;
 		return view;
 	}
 
-    IMagicReleaser IBattlePerception.CreateReleaserView(IBattleCharacter releaser, IBattleCharacter targt, UVector3? targetPos)
-	{
-        var obj = new GameObject ("MagicReleaser");
+    IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos)
+    {
+        var obj = new GameObject("MagicReleaser");
         obj.transform.SetParent(this.transform, false);
-		var view = obj.AddComponent<UMagicReleaserView> ();
+        var view = obj.AddComponent<UMagicReleaserView>();
+        if (AttachElements.TryGetValue(releaser, out UElementView r))
+        {
+            if (AttachElements.TryGetValue(target, out UElementView t))
+            {
+                view.SetCharacter(r as IBattleCharacter, t as IBattleCharacter);
+            }
+        }
+        view.Key = magicKey;
         view.SetPrecpetion(this);
         return view;
     }
         
-    IBattleMissile IBattlePerception.CreateMissile (IMagicReleaser releaser, MissileLayout layout)
+    IBattleMissile IBattlePerception.CreateMissile (int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
-		var viewRelease = releaser as UMagicReleaserView;
-		var viewTarget = viewRelease.CharacterTarget as UCharacterView;
-		var characterView = viewRelease.CharacterReleaser as UCharacterView;
-		var res = layout.resourcesPath;
-		var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (res);
+        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (res);
         GameObject ins;
         if (obj == null)
         {
@@ -171,54 +235,56 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
             ins = Instantiate(obj);
         }
         ins.transform.SetParent(this.transform, false);
-        var trans = characterView.transform ;
-        var offset =  trans.rotation* new Vector3(layout.offset.x,layout.offset.y,layout.offset.z);
-		ins.transform.position = characterView.GetBoneByName (layout.fromBone).position+offset;
-		ins.transform.rotation = Quaternion.identity;
-
 		var missile = ins.AddComponent<UBattleMissileView> (); //NO
+        missile.fromBone = fromBone;
+        missile.toBone = toBone;
+        missile.speed = speed;
+        missile.offset = offset.ToUV3();
+        missile.releaserIndex = releaseIndex;
+        missile.res = res;
         missile.SetPrecpetion(this);
-        var path = ins.GetComponent<MissileFollowPath> ();
-		if(path) path.SetTarget(viewTarget.GetBoneByName(layout.toBone),layout.speed);
 		return missile;
 	}
 
-    IParticlePlayer IBattlePerception.CreateParticlePlayer(IMagicReleaser releaser, ParticleLayout layout)
+    IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
+        string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime)
     {
-        var res = layout.path;
-        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (res);
+        //var res = layout.path;
+        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (path);
         GameObject ins;
-        if (obj == null) {
+        if (obj == null)
+        {
             return null;
         } else {
-            ins = GameObject.Instantiate (obj);
+            ins =Instantiate (obj);
         }
-        var viewRelease = releaser as UMagicReleaserView;
+
+        var viewRelease = GetViewByIndex(releaser) as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
        // var trans = (GTransform)characterView.Transform ;
-        var form = layout.fromTarget == Layout.TargetType.Releaser ? characterView : viewTarget;
-        if (layout.Bind)
+        var form = (TargetType)fromTarget == Layout.TargetType.Releaser ? characterView : viewTarget;
+        if (bind)
         {
-            ins.transform.SetParent(form.GetBoneByName(layout.fromBoneName),false);
+            ins.transform.SetParent(form.GetBoneByName(fromBone),false);
         }
         else
         {
             ins.transform.SetParent(this.transform, false);
-            ins.transform.position = form.GetBoneByName(layout.fromBoneName).position;
+            ins.transform.position = form.GetBoneByName(toBone).position;
             ins.transform.rotation = Quaternion.identity;
         }
 
-        switch (layout.destoryType)
+        switch ((ParticleDestoryType)destoryType)
         {
             case  ParticleDestoryType.Time:
-                GameObject.Destroy(ins, layout.destoryTime);
+                Destroy(ins, destoryTime);
                 break;
             case ParticleDestoryType.Normal:
-                GameObject.Destroy(ins, 3);
+                Destroy(ins, 3);
                 break;
             case ParticleDestoryType.LayoutTimeOut:
-                GameObject.Destroy(ins, 1);
+                Destroy(ins, 1);
                 break;
         }
 
@@ -244,6 +310,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         return this;
     }
 
-    #endregion
+#endregion
 
 }

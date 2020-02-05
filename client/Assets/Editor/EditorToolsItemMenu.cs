@@ -1,9 +1,5 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine.SceneManagement;
 
 public sealed class EditorToolsItemMenu
@@ -13,13 +9,12 @@ public sealed class EditorToolsItemMenu
     {
         for (int i = 0; i < EditorSceneManager.loadedSceneCount; i++)
         {
-            var s = EditorSceneManager.GetSceneAt(i);
+            var s = SceneManager.GetSceneAt(i);
             if (s.isDirty)
             {
-                return EditorUtility.DisplayDialog("提示", "放弃保存？", "确定", "取消");
+                return EditorUtility.DisplayDialog("Notify", "Drop modify？", "Yes", "Cancel");
             }
         }
-
         return true;
     }
     [MenuItem("GAME/UI/INIT_LANGUAGE_FILE")]
@@ -47,7 +42,7 @@ public sealed class EditorToolsItemMenu
             return;
         }
 
-        var editor ="Assets/EditorReleaseMagic.unity";
+        var editor ="Assets/Scenes/EditorReleaseMagic.unity";
         EditorSceneManager.OpenScene(editor);
         EditorApplication.isPlaying = true;
     }
@@ -56,14 +51,13 @@ public sealed class EditorToolsItemMenu
     public static void GoToStarScene()
     {
 
-        if (!ShowSave())
-            return;
+        if (!ShowSave())  return;
         if (EditorApplication.isPlaying)
         {
             EditorApplication.Beep();
             return;
         }
-        var editor ="Assets/Welcome.unity";
+        var editor = "Assets/ScenesWelcome.unity";
         EditorSceneManager.OpenScene(editor);
         EditorApplication.isPlaying = true;
 

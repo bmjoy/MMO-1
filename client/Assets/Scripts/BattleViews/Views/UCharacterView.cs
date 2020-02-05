@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GameLogic.Game.Elements;
 using System.Collections.Generic;
 using GameLogic;
-using EngineCore;
 using Quaternion = UnityEngine.Quaternion;
 using Proto;
 using Vector3 = UnityEngine.Vector3;
-using UMath;
+using UVector3 = UnityEngine.Vector3;
 using UGameTools;
 using EngineCore.Simulater;
 using Google.Protobuf;
@@ -23,7 +21,7 @@ using System;
 public class UCharacterView : UElementView,IBattleCharacter
 {
 
-    public class HpChangeTip
+    private class HpChangeTip
     {
         public int id = -1;
         public float hideTime;
@@ -31,16 +29,16 @@ public class UCharacterView : UElementView,IBattleCharacter
         public Vector3 pos;
     }
 
-    private List<HpChangeTip> _tips = new List<HpChangeTip>();
+    private readonly List<HpChangeTip> _tips = new List<HpChangeTip>();
 
     public string AccoundUuid = string.Empty;
 
     //public Dictionary<Proto.HeroPropertyType,int> Properties = new Dictionary<HeroPropertyType, int>();
 
-	private string SpeedStr ="Speed";
+	private  const string SpeedStr ="Speed";
 	private Animator CharacterAnimator;
 	private bool IsStop = true;
-    private string TopBone ="Top";
+    private const string TopBone ="Top";
 
     public int hpBar = -1;
     private float showHpBarTime =0;
@@ -73,37 +71,43 @@ public class UCharacterView : UElementView,IBattleCharacter
 
         lookQuaternion = Quaternion.Lerp(lookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
         Character.transform.localRotation = lookQuaternion;
-        if (CharacterAnimator != null)
-            CharacterAnimator.SetFloat(SpeedStr, Agent.velocity.magnitude);
+        if (CharacterAnimator != null) CharacterAnimator.SetFloat(SpeedStr, Agent.velocity.magnitude);
 
-        if (bcharacter != null)
-            hp = bcharacter.HP;
-        if (!Agent)
-            return;
-
-        if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
+        if (!Agent) return;
         {
-            targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
+            if (MoveForward.HasValue)
+            {
+                Agent.Move(MoveForward.Value * Agent.speed * Time.deltaTime);
+                lookQuaternion = Quaternion.LookRotation(MoveForward.Value);
+            }
+
+            if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
+            {
+                targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
+            }
         }
     }
-
-	void Awake()
-	{
-		Agent=this.gameObject.AddComponent<UnityEngine.AI.NavMeshAgent> ();
-        trans = new UTransform();
-		Agent.updateRotation = false;
-		Agent.updatePosition = true;
+    void Awake()
+    {
+        Agent = this.gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>();
+        Agent.updateRotation = false;
+        Agent.updatePosition = true;
         Agent.acceleration = 20;
         Agent.radius = 0.1f;
         Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+        Agent.speed = Speed;
+    }
 
-	}
+    public int ConfigID { internal set; get; }
+    public int TeamId { get; internal set; }
+    public int Level { get; internal set; }
+    public float Speed { get; internal set; }
+    public string Name { get; internal set; }
 
-	private UnityEngine.AI.NavMeshAgent Agent;
-    private UTransform trans;
+    private UnityEngine.AI.NavMeshAgent Agent;
     public string lastMotion =string.Empty;
     private float last = 0;
-	private Dictionary<string ,Transform > bones = new Dictionary<string, Transform>();
+	private readonly Dictionary<string ,Transform > bones = new Dictionary<string, Transform>();
     private Vector3? targetPos;
 
     public int hp;
@@ -117,8 +121,8 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public Transform GetBoneByName(string name)
     {
-        Transform bone;
-        if (bones.TryGetValue (name, out bone)) {
+        if (bones.TryGetValue(name, out Transform bone))
+        {
             return bone;
         }
         return transform;
@@ -150,55 +154,24 @@ public class UCharacterView : UElementView,IBattleCharacter
         Agent.radius = collider.radius;
     }
 
-
-    private List<string> GetBoneInfo(string name,bool haveTemp)
-    {
-        var att = typeof(UCharacterView).GetCustomAttributes(typeof(BoneNameAttribute),false) as BoneNameAttribute[];
-        List<string> tnames = new List<string> ();
-        List<string> tbones = new List<string> ();
-        foreach (var i in att) 
-        {
-            if (!haveTemp && i.Temp) {
-                continue;
-            }
-            tnames.Add (i.Name);
-            tbones.Add (i.BoneName);
-        }
-        return tbones;
-    }
-
-    private BattleCharacter bcharacter;
-
-    /// <summary>
-    /// Not All have
-    /// </summary>
-    /// <returns>The battle character.</returns>
-    public BattleCharacter GetBattleCharacter(){
-        return bcharacter;
-    }
-
-
     private float lockRotationTime = -1f;
-    void LookAt(UTransform target)
+    void LookAt(Transform target)
     {
-        if (target == null)
-            return;
-        var v = target.position.ToUVer3();
-        var look = v - this.transform.position;
-        if (look.magnitude <= 0.01f)
-            return;
+        if (target == null) return;
+        var look = target.position - this.transform.position;
+        if (look.magnitude <= 0.01f) return;
         look.y = 0;
         lockRotationTime = Time.time + 0.3f;
-        var qu = Quaternion.LookRotation (look, Vector3.up);
+        var qu = Quaternion.LookRotation(look, Vector3.up);
         lookQuaternion = targetLookQuaternion = qu;
-
+        
     }
 
     private void StopMove()
     {
+        MoveForward = null;
         IsStop = true;
-        if (!Agent ||!Agent.enabled)
-            return;
+        if (!Agent ||!Agent.enabled) return;
         Agent.velocity = Vector3.zero;
         Agent.ResetPath();
         Agent.isStopped = true;// ();
@@ -216,45 +189,55 @@ public class UCharacterView : UElementView,IBattleCharacter
         return 0;
     }
 
-    public override void OnAttachElement(GObject el)
-    {
-        base.OnAttachElement(el);
-        bcharacter = el as BattleCharacter;
-    }
-
     #region impl
-    void IBattleCharacter.SetForward (UVector3 forward)
-	{
-        this.transform.forward = forward.ToUVer3();
-	}
 
-    UTransform IBattleCharacter.Transform {
-		get 
-		{
-            trans.localPosition = transform.localPosition.ToGVer3();
-            trans.localRotation = transform.localRotation.ToGQu();
-            trans.localScale = transform.localScale.ToGVer3();
-            return trans;
-		}
-	}
-
-    void IBattleCharacter.SetPosition (UVector3 pos)
+    void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
-        this.transform.localPosition = pos.ToUVer3();
+        var f = forward.ToUV3();
+        this.lookQuaternion = Quaternion.LookRotation(f);
     }
 
-    void IBattleCharacter.LookAtTarget(IBattleCharacter target)
+    Transform IBattleCharacter.Transform
     {
-        this.LookAt(target.Transform);
+        get
+        {
+            return transform;
+        }
     }
 
-    void IBattleCharacter.ProtertyChange(Proto.HeroPropertyType type, int finalValue)
+
+    private Vector3 TryToSetPosition(Vector3 pos)
+    {
+        if (Vector3.Distance(pos, transform.localPosition) > 0.1f)
+        {
+            this.Agent.Warp(pos);
+        }
+        return this.transform.localPosition;
+    }
+
+    void IBattleCharacter.SetPosition(Proto.Vector3 pos)
+    {
+        TryToSetPosition(pos.ToUV3());
+    }
+
+
+
+    void IBattleCharacter.LookAtTarget(int target)
+    {
+        var v = PerView.GetViewByIndex(target);
+        if (v == null) return;
+        this.LookAt(v.transform);
+    }
+
+
+    void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
 
     }
 
     void IBattleCharacter.SetAlpha(float alpha)
     {
+        
        //do nothing
     }
 
@@ -280,16 +263,18 @@ public class UCharacterView : UElementView,IBattleCharacter
 		an.SetTrigger (motion);
 
 	}
-		
 
-    void IBattleCharacter.MoveTo (UVector3 position)
+
+    void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target)
     {
         if (!Agent || !Agent.enabled)
             return;
         IsStop = false;
-        this.Agent.isStopped = false;// ();
-        var pos = position.ToUVer3();
-        if (UnityEngine.AI.NavMesh.SamplePosition(pos, out UnityEngine.AI.NavMeshHit hit, 10000, this.Agent.areaMask))
+
+        TryToSetPosition(position.ToUV3());
+        this.Agent.isStopped = false;
+        if (UnityEngine.AI.NavMesh.SamplePosition(target.ToUV3(),
+            out UnityEngine.AI.NavMeshHit hit, 10000, this.Agent.areaMask))
         {
             targetPos = hit.position;
         }
@@ -297,6 +282,9 @@ public class UCharacterView : UElementView,IBattleCharacter
         {
             return;
         }
+
+
+
 
         if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f)
         {
@@ -313,9 +301,14 @@ public class UCharacterView : UElementView,IBattleCharacter
             return targetPos.HasValue && Vector3.Distance(targetPos.Value, this.transform.position) > 0.2f;
         }
     }
-        
-    void IBattleCharacter.StopMove()
+
+
+    void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
+        if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.1f)
+        {
+            transform.localPosition = pos.ToUV3();
+        }
         StopMove();
 	}
 
@@ -323,7 +316,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 	{
         var view = this as IBattleCharacter;
 		view.PlayMotion ("Die");
-		view.StopMove ();
+        StopMove();
         showHpBarTime = -1;
 		if(Agent)
 		 Agent.enabled = false;
@@ -370,7 +363,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         //throw new System.NotImplementedException();
     }
 
-    void IBattleCharacter.AttachMaigc(int magicID, float cdCompletedTime)
+    void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
     {
         if (MagicCds.ContainsKey(magicID))
         {
@@ -385,39 +378,29 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public override IMessage ToInitNotify()
     {
-        var battleCharacter = this.Element as BattleCharacter;
-
+        
         var createNotity = new Notify_CreateBattleCharacter
         {
-            Index = battleCharacter.Index,
-            AccountUuid = battleCharacter.AcccountUuid,
-            ConfigID = battleCharacter.ConfigID,
-            Position = battleCharacter.View.Transform.position.ToV3(),
-            Forward = battleCharacter.View.Transform.forward.ToV3(),
-            HP = battleCharacter.HP,
-            Level = battleCharacter.Level,
-            TDamage = battleCharacter.TDamage,
-            TDefance = battleCharacter.TDefance,
-            Name = battleCharacter.Name,
-            Category = battleCharacter.Category,
-            TeamIndex = battleCharacter.TeamIndex,
-            Speed = battleCharacter.Speed
+            Index =Index,
+            AccountUuid = this.AccoundUuid,
+            ConfigID = ConfigID,
+            Position = transform.position.ToPVer3(),
+            Forward = transform.forward.ToPVer3(),
+            Level = Level,
+            Name = Name,
+            TeamIndex = TeamId,
+            Speed = Speed
         };
-
-
-        foreach (var i in Enum.GetValues(typeof(HeroPropertyType)))
-        {
-            var p = (HeroPropertyType)i;
-            createNotity.Properties.Add(new HeroProperty { Property = p, Value = battleCharacter[p].FinalValue });
-        }
-
-        foreach (var i in battleCharacter.Magics)
-        {
-            var time = battleCharacter.GetCoolDwon(i.ID);
-            createNotity.Magics.Add(new HeroMagicData { CDTime = time, MagicID = i.ID });
-        }
 
         return createNotity;
     }
 
+    private Vector3? MoveForward;
+
+    void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
+    {
+        TryToSetPosition(pos.ToUV3());
+
+        MoveForward = forward.ToUV3().normalized;
+    }
 }

@@ -44,7 +44,7 @@ public class UICreater : EditorWindow
             windowsRoot = EditorGUILayout.TextField("Code Path:", windowsRoot);
             if(GUILayout.Button("Select",GUILayout.Width(100)))
             {
-                windowsRoot = EditorUtility.SaveFolderPanel("Selet Code Path",Path.Combine(Application.dataPath,"CSharpScripts/UUI/Windows"),"");
+                windowsRoot = EditorUtility.SaveFolderPanel("Selet Code Path",Path.Combine(Application.dataPath, "Scripts/Application/Windows"),"");
             }
             GUILayout.EndHorizontal();
             EditorGUILayout.TextField("ClassName:", className);

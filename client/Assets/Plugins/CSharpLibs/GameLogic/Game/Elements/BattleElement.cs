@@ -20,18 +20,18 @@ namespace GameLogic.Game.Elements
 			base.OnJoinState();
             View.AttachElement(this);
             View.JoinState (this.Index);
-            if (OnJoinedState != null) OnJoinedState(this);
+            OnJoinedState?.Invoke(this);
 
 
-		}
+        }
 
 		protected override void OnExitState ()
 		{
 			base.OnExitState ();
             View.ExitState (this.Index);
-            if (OnExitedState != null) OnExitedState(this);
-           
-		}
+            OnExitedState?.Invoke(this);
+
+        }
 
 		public HanlderEvent OnJoinedState;
 		public HanlderEvent OnExitedState;

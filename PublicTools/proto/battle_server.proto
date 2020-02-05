@@ -64,12 +64,6 @@ message Action_MoveDir
 }
 //notify action
 
-//元素进入场景
-message Notify_ElementJoinState
-{
-	 int32 Index=1;
-}
-
 //元素退出场景
 message Notify_ElementExitState
 {
@@ -83,7 +77,7 @@ message Notify_CreateReleaser
 	 int32 ReleaserIndex=2;
 	 int32 TargetIndex=3;
 	 string MagicKey=4;
-	
+	 Vector3 Position = 5;
 }
 
 //战斗中的角色
@@ -96,15 +90,8 @@ message Notify_CreateBattleCharacter
 	 Vector3 Position=5;//位置
 	 Vector3 Forward=6;//朝向
 	 int32 Level=7; //等级
-	 int32 HP=8;
-	 int32 MP=9;
-	 repeated HeroProperty Properties=10;
-	 DamageType TDamage=11; //伤害类型
-	 DefanceType TDefance=12; //防御类型
-	 HeroCategory Category=13;//英雄类型
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
-	 repeated HeroMagicData Magics=16;
 }
 
 //创建一个飞行物
@@ -114,10 +101,9 @@ message Notify_CreateMissile
 	 int32 ReleaserIndex=2;
 	 string ResourcesPath=3;
 	 float Speed=4;//速度
-	 Vector3 Position=5;
-	 string formBone=6;
-	 string toBone=7;
-	 Vector3 offset=8;
+	 string FromBone=6;
+	 string ToBone=7;
+	 Vector3 Offset=8;
 }
 
 enum MoveType
@@ -127,14 +113,29 @@ enum MoveType
 	Jump =2;//跳跃
 }
 
-message Notify_CharacterPosition
+message Notify_CharacterSetPosition
 {
-     int32 Index=1;
-	 Vector3 LastPosition=2;
-	 Vector3 TargetPosition=3;
-     MoveType Type=4;//移动类型
+	 int32 Index=1;
+	 Vector3 Position = 2;//
 }
 
+message Notify_CharacterAlpha
+{
+	 int32 Index=1; //角色
+	 float Alpha=2; //最终的Alpha
+}
+
+message Notify_CharacterSetForword
+{
+	int32 Index =1;
+	Vector3  Forward =2;
+}
+
+message Notify_CharacterSpeed
+{
+	int32 Index =1 ;
+	float Speed = 2;
+}
 message Notify_LayoutPlayMotion
 {
 	 int32 Index=1;
@@ -143,8 +144,51 @@ message Notify_LayoutPlayMotion
 
 message Notify_LookAtCharacter
 {
-	 int32 Own=1;//源
+	 int32 Index=1;//源
 	 int32 Target=2;//目标
+}
+
+message Notify_CharacterMoveTo
+{
+	int32 Index = 1;
+	Vector3 Position=2;
+	Vector3 Target = 3;
+}
+
+message Notify_CharacterStopMove
+{
+	int32 Index = 1;
+	Vector3 Position=2;
+}
+
+message Notify_CharacterDeath
+{
+	int32 Index =1;
+}
+
+message Notify_CharacterPriorityMove
+{
+	int32 Index =1;
+	float PriorityMove =2;
+}
+
+message Notify_CharacterSetScale
+{
+	int32 Index =1;
+    float Scale =2;
+}
+
+message Notify_CharacterAttachMagic
+{
+	int32 Index  =1;
+	int32 MagicId =2;
+	int32 CompletedTime = 3;
+}
+message Notify_CharacterMoveForward
+{
+	int32 Index =1;
+	Vector3 Position = 2;
+	Vector3 Forward = 3;
 }
 
 message Notify_LayoutPlayParticle
@@ -172,8 +216,8 @@ message Notify_PropertyValue
 message Notify_HPChange
 {
 	 int32 Index=1; 
-	 int32 TargetHP=2; //最终HP 
-	 int32 HP=3;//HP变化值
+	 int32 Hp=2; //最终HP 
+	 int32 Cur=3;//HP变化值
 	 int32 Max=4;
 }
 
@@ -181,8 +225,8 @@ message Notify_HPChange
 message Notify_MPChange
 {
 	 int32 Index=1; 
-	 int32 TargetMP=2; //最终MP 
-	 int32 MP=3;//MP变化值
+	 int32 Mp=2; //最终MP 
+	 int32 Cur=3;//MP变化值
 	 int32 Max=4;
 }
 
@@ -210,31 +254,16 @@ message Notify_PlayerJoinState
 	 PlayerPackage Package=4;//道具列表
 }
 
-message Notify_ReleaseMagic
-{
-	 int32 Index=1;
-	 float CdCompletedTime=2;
-	 int32 MagicID=3;
-}
-
-message Notify_CharacterAlpha
-{
-	 int32 Index=1; //角色
-	 float Alpha=2; //最终的Alpha
-}
-
-
 service NotifyService
 {
 	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
-	rpc CharacterPosition(Void) returns (Notify_CharacterPosition){};//2
+	rpc CharacterPosition(Void) returns (Notify_CharacterSetPosition){};//2
 	rpc CreateBattleCharacter(Void) returns (Notify_CreateBattleCharacter){};//3
 	rpc CreateMissile(Void) returns (Notify_CreateMissile){};//4
 	rpc CreateReleaser(Void) returns (Notify_CreateReleaser){};//5
 	rpc DamageResult(Void) returns ( Notify_DamageResult);//6
 	rpc Drop(Void) returns (Notify_Drop){};//7
 	rpc ElementExitState(Void) returns (Notify_ElementExitState){};//8
-	rpc ElementJoinState(Void) returns (Notify_ElementJoinState);//9
 	rpc HPChange(Void) returns (Notify_HPChange); //11
 	rpc LayoutPlayMotion(Void) returns (Notify_LayoutPlayMotion);//12
 	rpc LayoutPlayParticle(Void) returns (Notify_LayoutPlayParticle);//13
@@ -242,15 +271,21 @@ service NotifyService
 	rpc MPChange(Void) returns (Notify_MPChange);//15
 	rpc PlayerJoinState(Void) returns (Notify_PlayerJoinState);//16
 	rpc PropertyValue(Void) returns (Notify_PropertyValue){ };//17
-	rpc ReleaseMagic(Void) returns (Notify_ReleaseMagic){};//18
+	rpc CharacterSetForword(Void) returns (Notify_CharacterSetForword){};//19
+	rpc CharacterMoveTo(Void) returns (Notify_CharacterMoveTo){};//20
+	rpc CharacterStopMove(Void) returns (Notify_CharacterStopMove);//21
+	rpc CharacterDeath(Void) returns (Notify_CharacterDeath);//22
+	rpc CharacterPriorityMove(Void) returns (Notify_CharacterPriorityMove);//23
+	rpc CharacterSetScale(Void) returns (Notify_CharacterSetScale){};//24
+	rpc CharacterAttachMagic(Void) returns (Notify_CharacterAttachMagic);//25
+	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
 }
 
 service ActionService
 {
-	rpc ClickMapGround(Action_ClickMapGround)returns(Void){};//1
-	rpc ClickSkillIndex(Action_ClickSkillIndex)returns(Void){};//2
-	rpc AutoFindTarget(Action_AutoFindTarget)returns(Void){};//3
-	rpc MoveDir(Action_MoveDir)returns(Void){};//4
+	rpc ClickSkillIndex(Action_ClickSkillIndex)returns(Void){};//1
+	rpc AutoFindTarget(Action_AutoFindTarget)returns(Void){};//2
+	rpc MoveDir(Action_MoveDir)returns(Void){};//3
 }
 
 service BattleServerService

@@ -1,11 +1,9 @@
 ﻿using System;
-using EngineCore.Simulater;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Proto;
 using ExcelConfig;
 using System.Collections.Generic;
-using UMath;
 using GameLogic.Game.Perceptions;
 using UGameTools;
 using System.Linq;
@@ -15,6 +13,8 @@ using System.Threading.Tasks;
 using Windows;
 using System.Collections;
 using XNet.Libs.Net;
+using UVector3 = UnityEngine.Vector3;
+using Vector3 = UnityEngine.Vector3;
 
 public class GMainGate:UGate
 {
@@ -72,14 +72,12 @@ public class GMainGate:UGate
 
         var character = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(this.hero.HeroID);
         var perView = view as IBattlePerception;
-        characterView = perView.CreateBattleCharacterView(
-            character.ResourcesPath,Data.pos[3].position.ToGVer3(),
-            new UVector3(0, 0, 0)) as UCharacterView;
-        var thridCamear = GameObject.FindObjectOfType<ThridPersionCameraContollor>();
-        thridCamear.lookAt = characterView.GetBoneByName("Bottom");
-         
-        //thridCamear.forwardTrans = hero.GetBoneByName("Top");
-        //GameObject.Instantiate(res, data.pos[0].position, Quaternion.identity);
+        characterView = perView.CreateBattleCharacterView(string.Empty,
+            character.ID,0,
+            Data.pos[3].position.ToPVer3(),Vector3.zero.ToPVer3(),
+            hero.Level,hero.Name, character.MoveSpeed ) as UCharacterView;
+        var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
+        thridCamear.SetLookAt(characterView.GetBoneByName("Bottom"));
     }
 
     #region implemented abstract members of UGate
@@ -99,7 +97,7 @@ public class GMainGate:UGate
 
         yield return SceneManager.LoadSceneAsync("Main");
 
-        Data = GameObject.FindObjectOfType<MainData>();
+        Data = FindObjectOfType<MainData>();
         view = UPerceptionView.Create();
         Client = new RequestClient<GateServerTaskHandler>(ServerInfo.Host, ServerInfo.Port, false)
         {

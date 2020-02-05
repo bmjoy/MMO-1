@@ -1,30 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using GameLogic.Game.Elements;
 
 [CustomEditor(typeof(UCharacterView))]
 public class UCharacterViewEditor : Editor
 {
-	public override void OnInspectorGUI ()
+	public override void OnInspectorGUI()
 	{
-		EditorGUILayout.BeginVertical ();
-		if (GUILayout.Button ("同步到当前行为树编辑器")) {
+		EditorGUILayout.BeginVertical();
+		if (GUILayout.Button("Open AI Tree"))
+		{
 			var target = this.target as UCharacterView;
-			var window = EditorWindow.GetWindow<AITreeEditor> ();
-			if (window == null)
-				return;
-            var character = target.GetBattleCharacter();
-            if (character == null)
-                return;
-            var root = character.AIRoot;
-			if (root == null) {
-				EditorUtility.DisplayDialog ("操作失败", "当前角色没有使用AI", "确定");
-			} else {
-				
-				window.AttachRoot (root);
+			var window = EditorWindow.GetWindow<AITreeEditor>();
+			if (window == null) return;
+			if (!(target.GElement is BattleCharacter character)) return;
+			var root = character.AIRoot;
+			if (root == null)
+			{
+				EditorUtility.DisplayDialog("Failuer", "Current character no ai tree", "OK");
+			}
+			else
+			{
+
+				window.AttachRoot(root);
 			}
 		}
-		EditorGUILayout.EndVertical ();
-		base.OnInspectorGUI ();
+		EditorGUILayout.EndVertical();
+		base.OnInspectorGUI();
 	}
 }

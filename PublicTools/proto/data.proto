@@ -43,6 +43,7 @@ message DHero
 	int32 Exprices=3;//当前经验
 	repeated WearEquip Equips=4;//当前穿戴装备
 	repeated HeroMagic Magics=5;//英雄当前激活魔法
+	string Name = 6;
 }
 
 //装备属性

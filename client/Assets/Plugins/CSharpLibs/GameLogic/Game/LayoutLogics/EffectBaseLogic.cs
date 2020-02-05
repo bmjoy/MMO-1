@@ -43,12 +43,12 @@ namespace GameLogic.Game.LayoutLogics
         /// <param name="releaser">魔法释放者</param>
         public static void EffectActive(BattleCharacter effectTarget, EffectBase effect, MagicReleaser releaser)
         {
-            MethodInfo handle;
-            if (_handlers.TryGetValue(effect.GetType(), out handle))
+            if (_handlers.TryGetValue(effect.GetType(), out MethodInfo handle))
             {
                 handle.Invoke(null, new object[] { effectTarget, effect, releaser });
             }
-            else {
+            else
+            {
                 throw new Exception(string.Format("Effect [{0}] no handler!!!", effect.GetType()));
             }
         }

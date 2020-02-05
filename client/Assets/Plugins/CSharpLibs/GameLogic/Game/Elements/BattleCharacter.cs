@@ -36,8 +36,9 @@ namespace GameLogic.Game.Elements
                 switch (e.Type)
                 {
                     case ActionLockType.NoMove:
-                        if (e.IsLocked) {
-                            this.View.StopMove();
+                        if (e.IsLocked)
+                        {
+                            StopMove();
                         }
                         break;
                     case ActionLockType.Inhiden:
@@ -48,7 +49,29 @@ namespace GameLogic.Game.Elements
             };
 		}
 
+        internal void MoveTo(UnityEngine.Vector3 target)
+        {
+            View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3());
+        }
+
+        internal void MoveForward(UnityEngine.Vector3 forward)
+        {
+            if (forward.magnitude > 0.1f)
+            {
+                View.SetMoveDir(View.Transform.position.ToPV3(), forward.ToPV3());
+            }
+            else {
+                StopMove();
+            }
+        }
+
         public List<CharacterMagicData> Magics { private set; get; }
+
+        internal void StopMove()
+        {
+            View.StopMove(View.Transform.position.ToPV3());
+        }
+
         public string AcccountUuid { private set; get; }
         public HanlderEvent OnDead;
 		public int ConfigID { private set; get; }
@@ -212,7 +235,7 @@ namespace GameLogic.Game.Elements
 
             }
             history.LastTime = now;
-            View.AttachMaigc(data.ID, history.LastTime + history.CdTime);
+            View.AttachMagic(data.ID, history.LastTime + history.CdTime);
         }
 
         public bool HasMagicKey(string key)
@@ -235,9 +258,8 @@ namespace GameLogic.Game.Elements
 
 		public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
 		{
-			ReleaseHistory h;
-			bool isOK = true;
-			if (_history.TryGetValue(magicID, out h))
+            bool isOK = true;
+            if (_history.TryGetValue(magicID, out ReleaseHistory h))
 			{ 
 				isOK = h.IsCoolDown(now); 
 			}
@@ -250,8 +272,7 @@ namespace GameLogic.Game.Elements
 
         public float GetCoolDwon(int magicID)
         {
-            ReleaseHistory h;
-            if (_history.TryGetValue(magicID, out h))
+            if (_history.TryGetValue(magicID, out ReleaseHistory h))
             {
                 return h.CdTime;
             }
@@ -279,8 +300,7 @@ namespace GameLogic.Game.Elements
                     }
                     break;
             }
-
-            View.ProtertyChange(property, value.FinalValue);
+            View.PropertyChange(property, value.FinalValue);
         }
 
         public void Reset()

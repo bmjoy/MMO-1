@@ -143,8 +143,7 @@ public class UUIManager:XSingleton<UUIManager>
 
     public bool TryToGetTip<T>(int id,out T tip)  where T:UUITip
     {
-        UUITip t;
-        if (_tips.TryGetValue(id, out t))
+        if (_tips.TryGetValue(id, out UUITip t))
         {
             tip = t as T;
             return true;
@@ -155,29 +154,23 @@ public class UUIManager:XSingleton<UUIManager>
 
 	public void ShowMask(bool show)
     {
-        var image= BackImage.GetComponent<ImageColor>();
+        //var image= BackImage.GetComponent<ImageColor>();
         if (show)
         {
-            image.Show();
-            BackImage.transform.FindChild<AutoValueScrollbar>("Scrollbar").Reset(1);
+            BackImage.ActiveSelfObject(true);
+            BackImage.transform.FindChild<AutoValueScrollbar>("Scrollbar").ResetValue(1);
         }
         else
         {
-            image.Hide();
+            BackImage.ActiveSelfObject(false);
         }
     }
 
-	public void ShowLoading(float p)
+	public void ShowLoading(float p,string text = "Loading")
 	{
-		BackImage.transform.FindChild<Scrollbar> ("Scrollbar").size =  p;
-        BackImage.transform.FindChild<Text>("Text").text = string.Empty;
-	}
-
-    public void ShowLoading(float start,float durtion,string text)
-    {
-        BackImage.transform.FindChild<Scrollbar> ("Scrollbar").size =  start;
+		BackImage.transform.FindChild<Scrollbar> ("Scrollbar").value =  p;
         BackImage.transform.FindChild<Text>("Text").text = text;
-    }
+	}
 
     private float? duration;
 

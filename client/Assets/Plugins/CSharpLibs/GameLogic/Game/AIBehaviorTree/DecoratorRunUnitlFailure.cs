@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class DecoratorRunUnitlFailure : BehaviorTree.Decorator
+    public class DecoratorRunUnitlFailure : Decorator
     {
         public DecoratorRunUnitlFailure(Composite child) : base(child) { }
 

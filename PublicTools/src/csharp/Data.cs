@@ -32,20 +32,21 @@ namespace Proto {
             "Y2VzX2hvc3QYByABKAkSFQoNc2VydmljZXNfcG9ydBgIIAEoBSJNCglXZWFy",
             "RXF1aXASDgoGSXRlbUlEGAEgASgFEgwKBEdVSUQYAiABKAkSIgoEUGFydBgD",
             "IAEoDjIULlByb3RvLkVxdWlwbWVudFR5cGUiLAoJSGVyb01hZ2ljEhAKCE1h",
-            "Z2ljS2V5GAEgASgFEg0KBUxldmVsGAIgASgFInwKBURIZXJvEg4KBkhlcm9J",
-            "RBgBIAEoBRINCgVMZXZlbBgCIAEoBRIQCghFeHByaWNlcxgDIAEoBRIgCgZF",
-            "cXVpcHMYBCADKAsyEC5Qcm90by5XZWFyRXF1aXASIAoGTWFnaWNzGAUgAygL",
-            "MhAuUHJvdG8uSGVyb01hZ2ljIkkKDUVxdWlwUHJvcGVydHkSKQoIUHJvcGVy",
-            "dHkYASABKA4yFy5Qcm90by5IZXJvUHJvcGVydHlUeXBlEg0KBVZhbHVlGAIg",
-            "ASgFIlYKClBsYXllckl0ZW0SDgoGSXRlbUlEGAEgASgFEgsKA051bRgCIAEo",
-            "BRIMCgRHVUlEGAMgASgJEg4KBkxvY2tlZBgEIAEoCBINCgVMZXZlbBgFIAEo",
-            "BSJCCg1QbGF5ZXJQYWNrYWdlEiAKBUl0ZW1zGAEgAygLMhEuUHJvdG8uUGxh",
-            "eWVySXRlbRIPCgdNYXhTaXplGAIgASgFImMKEFBsYXllclNlcnZlckluZm8S",
-            "EwoLQWNjb3VudFV1aWQYASABKAkSEAoIU2VydmVySUQYAiABKAUSEwoLU2Vy",
-            "dmljZVBvcnQYAyABKAUSEwoLU2VydmljZUhvc3QYBCABKAkiSAoMSGVyb1By",
-            "b3BlcnR5EikKCFByb3BlcnR5GAEgASgOMhcuUHJvdG8uSGVyb1Byb3BlcnR5",
-            "VHlwZRINCgVWYWx1ZRgCIAEoBSIwCg1IZXJvTWFnaWNEYXRhEg4KBkNEVGlt",
-            "ZRgBIAEoAhIPCgdNYWdpY0lEGAIgASgFYgZwcm90bzM="));
+            "Z2ljS2V5GAEgASgFEg0KBUxldmVsGAIgASgFIooBCgVESGVybxIOCgZIZXJv",
+            "SUQYASABKAUSDQoFTGV2ZWwYAiABKAUSEAoIRXhwcmljZXMYAyABKAUSIAoG",
+            "RXF1aXBzGAQgAygLMhAuUHJvdG8uV2VhckVxdWlwEiAKBk1hZ2ljcxgFIAMo",
+            "CzIQLlByb3RvLkhlcm9NYWdpYxIMCgROYW1lGAYgASgJIkkKDUVxdWlwUHJv",
+            "cGVydHkSKQoIUHJvcGVydHkYASABKA4yFy5Qcm90by5IZXJvUHJvcGVydHlU",
+            "eXBlEg0KBVZhbHVlGAIgASgFIlYKClBsYXllckl0ZW0SDgoGSXRlbUlEGAEg",
+            "ASgFEgsKA051bRgCIAEoBRIMCgRHVUlEGAMgASgJEg4KBkxvY2tlZBgEIAEo",
+            "CBINCgVMZXZlbBgFIAEoBSJCCg1QbGF5ZXJQYWNrYWdlEiAKBUl0ZW1zGAEg",
+            "AygLMhEuUHJvdG8uUGxheWVySXRlbRIPCgdNYXhTaXplGAIgASgFImMKEFBs",
+            "YXllclNlcnZlckluZm8SEwoLQWNjb3VudFV1aWQYASABKAkSEAoIU2VydmVy",
+            "SUQYAiABKAUSEwoLU2VydmljZVBvcnQYAyABKAUSEwoLU2VydmljZUhvc3QY",
+            "BCABKAkiSAoMSGVyb1Byb3BlcnR5EikKCFByb3BlcnR5GAEgASgOMhcuUHJv",
+            "dG8uSGVyb1Byb3BlcnR5VHlwZRINCgVWYWx1ZRgCIAEoBSIwCg1IZXJvTWFn",
+            "aWNEYXRhEg4KBkNEVGltZRgBIAEoAhIPCgdNYWdpY0lEGAIgASgFYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -53,7 +54,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameServerInfo), global::Proto.GameServerInfo.Parser, new[]{ "Host", "Port", "ServerId", "MaxPlayerCount", "CurrentPlayerCount", "ServicesHost", "ServicesPort" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.WearEquip), global::Proto.WearEquip.Parser, new[]{ "ItemID", "GUID", "Part" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagic), global::Proto.HeroMagic.Parser, new[]{ "MagicKey", "Level" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.DHero), global::Proto.DHero.Parser, new[]{ "HeroID", "Level", "Exprices", "Equips", "Magics" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.DHero), global::Proto.DHero.Parser, new[]{ "HeroID", "Level", "Exprices", "Equips", "Magics", "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.EquipProperty), global::Proto.EquipProperty.Parser, new[]{ "Property", "Value" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerItem), global::Proto.PlayerItem.Parser, new[]{ "ItemID", "Num", "GUID", "Locked", "Level" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerPackage), global::Proto.PlayerPackage.Parser, new[]{ "Items", "MaxSize" }, null, null, null),
@@ -950,6 +951,7 @@ namespace Proto {
       exprices_ = other.exprices_;
       equips_ = other.equips_.Clone();
       magics_ = other.magics_.Clone();
+      name_ = other.name_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1026,6 +1028,17 @@ namespace Proto {
       get { return magics_; }
     }
 
+    /// <summary>Field number for the "Name" field.</summary>
+    public const int NameFieldNumber = 6;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as DHero);
@@ -1044,6 +1057,7 @@ namespace Proto {
       if (Exprices != other.Exprices) return false;
       if(!equips_.Equals(other.equips_)) return false;
       if(!magics_.Equals(other.magics_)) return false;
+      if (Name != other.Name) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1055,6 +1069,7 @@ namespace Proto {
       if (Exprices != 0) hash ^= Exprices.GetHashCode();
       hash ^= equips_.GetHashCode();
       hash ^= magics_.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1082,6 +1097,10 @@ namespace Proto {
       }
       equips_.WriteTo(output, _repeated_equips_codec);
       magics_.WriteTo(output, _repeated_magics_codec);
+      if (Name.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(Name);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1101,6 +1120,9 @@ namespace Proto {
       }
       size += equips_.CalculateSize(_repeated_equips_codec);
       size += magics_.CalculateSize(_repeated_magics_codec);
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1123,6 +1145,9 @@ namespace Proto {
       }
       equips_.Add(other.equips_);
       magics_.Add(other.magics_);
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1152,6 +1177,10 @@ namespace Proto {
           }
           case 42: {
             magics_.AddEntriesFrom(input, _repeated_magics_codec);
+            break;
+          }
+          case 50: {
+            Name = input.ReadString();
             break;
           }
         }

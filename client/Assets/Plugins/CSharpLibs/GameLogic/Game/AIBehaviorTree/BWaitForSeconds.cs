@@ -9,8 +9,11 @@ namespace GameLogic.Game.AIBehaviorTree
 {
 	//TreeNodeWaitForSeconds
 	[TreeNodeParse(typeof(TreeNodeWaitForSeconds))]
-	public class BWaitForSeconds : BehaviorTree.Composite,ITreeNodeHandle
+	public class BWaitForSeconds : ActionComposite<TreeNodeWaitForSeconds>
     {
+
+		public BWaitForSeconds(TreeNodeWaitForSeconds n) : base(n) { }
+
         public override IEnumerable<BehaviorTree.RunStatus> Execute(ITreeRoot context)
         {
 			float Seconds = Node.seconds;
@@ -36,13 +39,6 @@ namespace GameLogic.Game.AIBehaviorTree
 			return null;
 		}
 
-		private TreeNodeWaitForSeconds Node;
-
-		public void SetTreeNode(TreeNode node)
-		{
-			Node= node as TreeNodeWaitForSeconds;
-			//Seconds = n.seconds;
-		}
 
     }
 }

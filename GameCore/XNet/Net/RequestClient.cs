@@ -114,7 +114,7 @@ namespace XNet.Libs.Net
                     Start = DateTime.Now
                 }))
                 {
-                    Debuger.DebugLog($"[{requestIndex}] Send {api.QueryRequest.GetType()}-->{api.QueryRequest}");
+                    Debuger.DebugLog($"[{requestIndex}]Send{api.QueryRequest.GetType()}-->{api.QueryRequest}");
 
                     var result = new Message(MessageClass.Request,
                         api.API,

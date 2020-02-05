@@ -1,23 +1,40 @@
 ﻿using System;
+using Google.Protobuf;
+
 namespace GameLogic.Utility
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple =  false) ]
     public class NeedNotifyAttribute : Attribute
     {
-        public string IndexFieldName { private set; get; }
         public Type NotifyType{ private set; get; }
         public string[] FieldNames { private set; get; }
 
-        public NeedNotifyAttribute(Type notifyType, string indexFieldName, params string[] pars)
+        public NeedNotifyAttribute(Type notifyType, params string[] pars)
         {
             NotifyType = notifyType;
-            IndexFieldName = indexFieldName;
             FieldNames = pars;
+
+            Check();
+           
         }
 
-        public NeedNotifyAttribute(Type notifyType, params string[] pars):this(notifyType,"Index", pars)
+        private void Check()
         {
-            
+            foreach (var i in FieldNames)
+            {
+                if (NotifyType.GetProperty(i) == null)
+                {
+                    throw new Exception($"{i} nofound in type{NotifyType}");
+                }
+            }
         }
+
+    }
+
+    
+
+    public class NB<T> where T : IMessage, new()
+    {
+        public static T F = new T();
     }
 }

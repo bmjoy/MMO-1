@@ -6,11 +6,11 @@ using System.Text;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class DecoratorNegation : BehaviorTree.Decorator
+    public class DecoratorNegation : Decorator
     {
-        public DecoratorNegation(BehaviorTree.Composite child) : base(child) { }
+        public DecoratorNegation(Composite child) : base(child) { }
 
-        public override IEnumerable<BehaviorTree.RunStatus> Execute(ITreeRoot context)
+        public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             if (DecoratedChild == null)
             {

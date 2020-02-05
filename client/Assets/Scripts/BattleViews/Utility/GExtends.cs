@@ -1,13 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using EngineCore;
-using UMath;
 using System.Collections.Generic;
 
 namespace UGameTools
 {
-	public static class GExtends
+    public static class GExtends
 	{
 		public static T FindChild<T> (this Transform trans, string name) where T :Component
 		{
@@ -18,20 +15,18 @@ namespace UGameTools
 				return t.GetComponent<T> ();
 		}
 
-		private static Transform FindInAllChild (Transform trans, string name)
-		{
-			if (trans.name == name) {
-				return trans;
-			}
+        private static Transform FindInAllChild(Transform trans, string name)
+        {
+            if (trans.name == name) { return trans; }
 
-			for (var i = 0; i < trans.childCount; i++) {
-				var t = FindInAllChild (trans.GetChild (i), name);
-				if (t != null)
-					return t;
-			}
+            for (var i = 0; i < trans.childCount; i++)
+            {
+                var t = FindInAllChild(trans.GetChild(i), name);
+                if (t != null) return t;
+            }
+            return null;
+        }
 
-			return null;
-		}
 
 		public static void ActiveSelfObject (this Component com, bool active)
 		{
@@ -45,25 +40,9 @@ namespace UGameTools
             t.text = text;
         }
             
-        public static UVector3 ToGVer3(this Proto.Vector3 v3)
+        public static Vector3 ToGVer3(this Proto.Vector3 v3)
         {
-            return new UVector3(v3.X, v3.Y, v3.Z);
-        }
-
-
-        public static UVector3 ToGVer3(this Vector3 v3)
-        {
-            return new UVector3(v3.x, v3.y, v3.z);
-        }
-
-        public static UQuaternion ToGQu(this Quaternion q)
-        {
-            return new UQuaternion(q.x, q.y, q.z, q.w);
-        }
-
-        public static UnityEngine.Vector3 ToUVer3(this UVector3 v3)
-        {
-            return new Vector3(v3.x, v3.y, v3.z);
+            return new Vector3(v3.X, v3.Y, v3.Z);
         }
 
         public static Layout.Vector3 ToLVer3(this Proto.Vector3 v3)

@@ -39,13 +39,13 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
 
     public float PingDelay = 0f;
     public static bool IsEditorMode = false;
-    
+
     #region Gate
 
     public void GetServer()
     {
 #if !UNITY_EDITOR
-        index =0;
+        index = 0;
 #endif
         SetServer(index);
     }
@@ -97,7 +97,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
 
     public void GotoBattleGate(GameServerInfo serverInfo, int mapID)
     {
-        ChangeGate<BattleSimulater>().SetServer(serverInfo, mapID);
+        ChangeGate<BattleGate>().SetServer(serverInfo, mapID);
     }
 
     public T ChangeGate<T>() where T : UGate
@@ -118,7 +118,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
         DontDestroyOnLoad(this.gameObject);
         _ = new ExcelToJSONConfigManager(this);
         GetServer();
-        
+
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartCoroutine(RunReader());
     }
@@ -129,7 +129,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
         {
             bool auto = false;
 #if !UNITY_EDITOR
-            auto = true; 
+            auto = true;
 #endif
             if (auto && PlayerPrefs.HasKey("_PlayerSession"))
             {

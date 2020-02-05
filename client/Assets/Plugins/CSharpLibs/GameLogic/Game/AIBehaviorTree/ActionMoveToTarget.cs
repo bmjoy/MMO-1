@@ -5,13 +5,16 @@ using EngineCore;
 using GameLogic.Game.Elements;
 using GameLogic.Game.Perceptions;
 using Layout.AITree;
-using UMath;
+using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
 	[TreeNodeParse(typeof(TreeNodeMoveToTarget))]
-	public class ActionMoveToTarget:ActionComposite,ITreeNodeHandle
+	public class ActionMoveToTarget:ActionComposite<TreeNodeMoveToTarget>
 	{
+
+		public ActionMoveToTarget(TreeNodeMoveToTarget n) : base(n) { }
+
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
@@ -22,18 +25,16 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			var target = root.Perception.State[(int)index] as BattleCharacter;
-			if (target == null)
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
-			float stopDistance;
-			if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out stopDistance))
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
+            if (!(root.Perception.State[(int)index] is BattleCharacter target))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
+            if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float stopDistance))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
             var per = root.Perception as BattlePerception;
             //var offset = new GVector3(r);
 			//float lastTime = root.Time-2;
@@ -69,17 +70,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		}
 
-		private TreeNodeMoveToTarget Node;
-
-		public void SetTreeNode(TreeNode node)
-		{
-			var n = node as TreeNodeMoveToTarget;
-			Node = n;
-		}
-
 		private IBattleCharacter view;
-
-		//private float stopDistance = 0f;
 
 		public override void Stop(ITreeRoot context)
 		{

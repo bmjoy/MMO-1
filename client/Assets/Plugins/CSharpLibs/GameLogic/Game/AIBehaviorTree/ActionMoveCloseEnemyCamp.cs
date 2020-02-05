@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BehaviorTree;
-using EngineCore;
 using GameLogic.Game.Perceptions;
 using Layout.AITree;
-using UMath;
+using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	[TreeNodeParse(typeof(TreeNodeMoveCloseEnemyCamp))]
-	public class ActionMoveCloseEnemyCamp:ActionComposite,ITreeNodeHandle
+    [TreeNodeParse(typeof(TreeNodeMoveCloseEnemyCamp))]
+	public class ActionMoveCloseEnemyCamp:ActionComposite<TreeNodeMoveCloseEnemyCamp>
 	{
-		public ActionMoveCloseEnemyCamp()
+		public ActionMoveCloseEnemyCamp(TreeNodeMoveCloseEnemyCamp n):base(n)
 		{
 		}
 
@@ -33,9 +31,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             var pos = target.View.Transform.position;
             per.CharacterMoveTo(root.Character, pos);
-            var view = root.Character.View;
             var last = root.Time;
-
             while (root.Perception.Distance(target, root.Character) > 0f)
             {
                 
@@ -61,13 +57,6 @@ namespace GameLogic.Game.AIBehaviorTree
             per.CharacterStopMove(root.Character);
 			yield return RunStatus.Success;
 		}
-
-		public void SetTreeNode(TreeNode node)
-		{
-			Node = node as TreeNodeMoveCloseEnemyCamp;
-		}
-
-		public TreeNodeMoveCloseEnemyCamp Node;
 
 		public override void Stop(ITreeRoot context)
 		{

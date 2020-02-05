@@ -18,19 +18,19 @@ using System.Linq;
 using GameLogic.Game;
 using ExcelConfig;
 using EConfig;
-using UMath;
 using UGameTools;
 using UnityEngine.SceneManagement;
 using org.vxwo.csharp.json;
+using Vector3 = UnityEngine.Vector3;
 
 public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfigLoader
 {
-    
+
     List<T> IConfigLoader.Deserialize<T>()
     {
         var name = ExcelToJSONConfigManager.GetFileName<T>();
         var json = ResourcesManager.S.LoadText("Json/" + name);
-        if (json == null)  return null;
+        if (json == null) return null;
         return JsonTool.Deserialize<List<T>>(json);
     }
 
@@ -49,17 +49,19 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     private int CountKillCount = 0;
     private SocketServer Server;
 
-    [Space][Header("Service Info")]
+    [Space]
+    [Header("Service Info")]
     public int ListenPort = 2100;
     public string ListenHost = "127.0.0.1";
     public int MaxPlayer = 1000;
-    [Space][Header("Center Server")]
+    [Space]
+    [Header("Center Server")]
     public string LoginHost = "127.0.0.1";
     public int Port = 1800;//center server port
     public int ServerID = -1;
     [Space]
     [Header("Handle Level")]
-    private int LevelID =1;
+    private int LevelID = 1;
 
     public ConnectionManager Manager { get { return Server.CurrentConnectionManager; } }
     public RequestClient<LoginServerTaskServiceHandler> CenterServerClient { private set; get; }
@@ -68,13 +70,12 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     public BattleLevelData LevelData { get; private set; }
     public MapData MapConfig { get; private set; }
     public BattleState State { private set; get; }
+
     private readonly ConcurrentQueue<BindPlayer> _addTemp = new ConcurrentQueue<BindPlayer>();
     private readonly ConcurrentQueue<string> _kickUsers = new ConcurrentQueue<string>();
-    private readonly ConcurrentDictionary<string, BattlePlayer> BattlePlayers = new ConcurrentDictionary<string, BattlePlayer>();
-    private readonly ConcurrentDictionary<string, Client> Clients = new ConcurrentDictionary<string, Client>();
-    private readonly Dictionary<string, BattleCharacter> UserCharacters = new Dictionary<string, BattleCharacter>();
-
-
+    private readonly Dictionary<string, BattlePlayer> BattlePlayers = new Dictionary<string, BattlePlayer>();
+    [System.Obsolete("需要考虑下")]
+    private readonly Dictionary<string, BattleCharacter> Characters = new Dictionary<string, BattleCharacter>();
     private void Start()
     {
         StartCoroutine(Begin());
@@ -99,8 +100,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         {
             HandlerManager = handler
         };
-        
+
         Server.Start();
+
         yield return new WaitForEndOfFrame();
 
         CenterServerClient = new RequestClient<LoginServerTaskServiceHandler>(LoginHost, Port);
@@ -114,24 +116,31 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
 
         yield return new WaitUntil(() => !connecting);
 
+        if (!CenterServerClient.IsConnect)
+        {
+            ExitApp();
+            yield break;
+        }
+
         var req = RegBattleServer.CreateQuery();
 
         yield return req.Send(CenterServerClient,
             new B2L_RegBattleServer
-        {
-            Maxplayer = MaxPlayer,
-            Host = ListenHost,
-            Port = ListenPort,
-            LevelId = LevelID,
-            Version = 1
-        });
+            {
+                Maxplayer = MaxPlayer,
+                Host = ListenHost,
+                Port = ListenPort,
+                LevelId = LevelID,
+                Version = 1
+            });
 
         if (req.QueryRespons.Code.IsOk())
         {
             ServerID = req.QueryRespons.ServiceServerID;
             Debug.Log($"Reg success get id of {ServerID}");
         }
-        else {
+        else
+        {
             Debug.LogError("Connect server failure!");
             Server.Stop();
         }
@@ -144,11 +153,20 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         State.Start(this.GetTime());
     }
 
+    private void ExitApp()
+    {
+
+#if UNITY_EDITOR
+         UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+    }
 
     internal bool BindUser(string accountUuid, Client c, PlayerPackage package, DHero hero)
     {
-        var player = new BattlePlayer(accountUuid, package, hero);
-        _addTemp.Enqueue(new BindPlayer { Client = c, Player = player, Account = accountUuid , });
+        var player = new BattlePlayer(accountUuid, package, hero,c) ;
+        _addTemp.Enqueue(new BindPlayer { Client = c, Player = player, Account = accountUuid, });
         return true;
     }
 
@@ -178,6 +196,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     private void OnDestroy()
     {
         Debug.Log("Exit");
+        Server?.Stop();
         CenterServerClient?.Disconnect();
         State?.Stop(GetTime());
     }
@@ -191,23 +210,27 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         {
             if (_addTemp.TryDequeue(out BindPlayer client))
             {
-                if (BattlePlayers.TryAdd(client.Account, client.Player))
+                if (BattlePlayers.TryGetValue(client.Account, out BattlePlayer p))
                 {
-                    if (CreateUser(client.Player))
-                    {
-                        Clients.TryAdd(client.Account, client.Client);
-                        //package
-                        var package = client.Player.GetNotifyPackage();
-                        package.TimeNow = (GetTime().Time);
-                        client.Client.SendMessage(package.ToNotityMessage());
+                    Server.DisConnectClient(p.Client);
+                    BattlePlayers.Remove(client.Account);
+                }
 
-                        var createNotify = view.GetInitNotify();
-                        //Notify package
-                        foreach (var i in createNotify)
-                        {
-                            client.Client.SendMessage(i.ToNotityMessage());
-                        }
+                var createNotify = view.GetInitNotify();
+
+                if (CreateUser(client.Player))
+                {
+                    BattlePlayers.Add(client.Account, client.Player);
+                    //package
+                    var package = client.Player.GetNotifyPackage();
+                    package.TimeNow = (GetTime().Time);
+                    var buffer = new MessageBufferPackage();
+                    buffer.AddMessage(package.ToNotityMessage());
+                    foreach (var i in createNotify)
+                    {
+                        buffer.AddMessage(i.ToNotityMessage());
                     }
+                    client.Client.SendMessage(buffer.ToPackage());
                 }
             }
         }
@@ -215,16 +238,17 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         {
             if (_kickUsers.TryDequeue(out string u))
             {
-                BattlePlayers.TryRemove(u,out _);
-                Clients.TryRemove(u,out _);
-                per.State.Each<BattleCharacter>((el) =>
+                if (BattlePlayers.TryGetValue(u, out BattlePlayer p))
                 {
-                    if (el.AcccountUuid == u)
+                    Server.DisConnectClient(p.Client);
+                    BattlePlayers.Remove(u);
+                    if (Characters.TryGetValue(u, out BattleCharacter c))
                     {
-                        GObject.Destory(el);
+                        Characters.Remove(u);
+                        GObject.Destory(c);
                     }
-                    return false;
-                });
+                }
+                 
             }
         }
     }
@@ -239,47 +263,44 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
                 buffer.AddMessage(i.ToNotityMessage());
             }
             var pack = buffer.ToPackage();
-            foreach (var i in Clients)
+            foreach (var i in BattlePlayers)
             {
-                if (!i.Value.Enable) continue;
-                i.Value.SendMessage(pack);
+                if (!i.Value.Client.Enable) {
+                    KickUser(i.Key);    
+                    continue;
+                }
+                i.Value.Client.SendMessage(pack);
             }
         }
     }
 
-    private void ExitUser(string account_uuid)
-    {
-        BattlePlayers.TryRemove(account_uuid, out _);
-    }
-
     private void ProcessAction()
     {
-        foreach (var i in Clients)
+        foreach (var i in BattlePlayers)
         {
-            if (!i.Value.Enable)
+            if (!i.Value.Client?.Enable!=true)
             {
-                Clients.TryRemove(i.Key,out _);
-                ExitUser(i.Key);//send msg
+                KickUser(i.Key);
                 continue;
             }
 
-            IMessage action;
-            if (i.Value.TryGetActionMessage(out Message msg))
+            if (i.Value.Client.TryGetActionMessage(out Message msg))
             {
-                action = msg.AsAction();
+                IMessage action = msg.AsAction();
                 Debug.Log($"client {i.Key} {action}");
-                if (UserCharacters.TryGetValue(i.Key, out BattleCharacter userCharacter))
+                if (Characters.TryGetValue(i.Key, out BattleCharacter userCharacter))
                 {
                     if (action is Action_AutoFindTarget)
                     {
                         var auto = action as Action_AutoFindTarget;
-                        userCharacter
-                            .ModifyValue(HeroPropertyType.ViewDistance, AddType.Append, !auto.Auto ? 0 : 1000 * 100); //修改玩家AI视野
+                        userCharacter.ModifyValue(HeroPropertyType.ViewDistance,
+                            AddType.Append, !auto.Auto ? 0 : 1000 * 100); //修改玩家AI视野
                         userCharacter.AIRoot.BreakTree();
                     }
                     else if (userCharacter.AIRoot != null)
                     {
                         //保存到AI
+                        Debug.Log($"[{userCharacter.Index}]{userCharacter.Name} {action}");
                         userCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
                         userCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
@@ -305,17 +326,18 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     {
         //to do
     }
-
     //处理掉落
     private void DoDrop()
     {
         if (drop == null) return;
         var items = drop.DropItem.SplitToInt();
         var pors = drop.Pro.SplitToInt();
-        foreach (var i in this.BattlePlayers)
+        foreach (var i in BattlePlayers)
         {
-            var notify = new Notify_Drop();
-            notify.AccountUuid = i.Value.AccountId;
+            var notify = new Notify_Drop
+            {
+                AccountUuid = i.Value.AccountId
+            };
             var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
             notify.Gold = gold;
             i.Value.AddGold(gold);
@@ -330,14 +352,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
                     }
                 }
             }
-            if (Clients.TryGetValue(i.Value.AccountId, out Client client))
-            {
-                var message = notify.ToNotityMessage();
-                client.SendMessage(message);
-            }
+            var message = notify.ToNotityMessage();
+            i.Value.Client.SendMessage(message);
         }
     }
-
     //处理怪物生成
     private void CreateMonster()
     {
@@ -374,13 +392,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
             var magic = ExcelToJSONConfigManager.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
             var Monster = per.CreateCharacter(monsterData.Level,
-                                              data,
-                                              magic.ToList(),
-                                              2,
-                                              pos.ToGVer3()
-                                              + new UVector3(GRandomer.RandomMinAndMax(-1, 1), 0,
-                                              GRandomer.RandomMinAndMax(-1, 1)) * i,
-                                           new UVector3(0, 0, 0), string.Empty);
+                data,  magic.ToList(),  2,
+                pos + new Vector3(GRandomer.RandomMinAndMax(-1, 1), 0, GRandomer.RandomMinAndMax(-1, 1)) * i,
+                new Vector3(0, 0, 0), string.Empty,
+                $"{monsterData.NamePrefix}.{ data.Name}");
             //data
             Monster[HeroPropertyType.DamageMax]
                 .SetBaseValue(Monster[HeroPropertyType.DamageMax].BaseValue + monsterData.DamageMax);
@@ -412,24 +427,21 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
 
     private bool CreateUser(BattlePlayer user)
     {
-        if(UserCharacters.TryGetValue(user.AccountId,out BattleCharacter battleCharacte))
+        if (Characters.TryGetValue(user.AccountId, out BattleCharacter battleCharacte))
         {
-            UserCharacters.Remove(user.AccountId);
-            GObject.ExitState(battleCharacte);
+            Debug.Log($"hero is exists!{user.AccountId}"); ;
+            return true;
         }
 
         var per = State.Perception as BattlePerception;
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
         var magic = ExcelToJSONConfigManager.Current
-            .GetConfigs<CharacterMagicData>(t =>{return t.CharacterID == data.ID;});
-
+            .GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
         var pos = GRandomer.RandomArray(playerBornPositions).transform.position;
         //处理装备加成
-         battleCharacte = per.CreateCharacter(
-            user.GetHero().Level, data, magic.ToList(), 1,
-            pos.ToGVer3(),
-            new UVector3(0, 0, 0), user.AccountId);
-
+        battleCharacte = per.CreateCharacter(user.GetHero().Level,
+            data, magic.ToList(), 1, pos, new Vector3(0, 0, 0), user.AccountId,
+            user.GetHero().Name);
         foreach (var i in user.GetHero().Equips)
         {
             var itemsConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
@@ -459,7 +471,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             }
         }
         battleCharacte.ModifyValue(HeroPropertyType.ViewDistance, AddType.Append, 1000 * 100); //修改玩家AI视野
-        UserCharacters.Add(user.AccountId, battleCharacte);
+        Characters.Add(user.AccountId, battleCharacte);
         per.ChangeCharacterAI(data.AIResourcePath, battleCharacte);
         return true;
     }

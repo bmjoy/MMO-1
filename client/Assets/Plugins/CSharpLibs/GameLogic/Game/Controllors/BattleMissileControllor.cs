@@ -1,13 +1,9 @@
-﻿using System;
-using EngineCore;
-using EngineCore.Simulater;
+﻿using EngineCore.Simulater;
 using GameLogic.Game.Elements;
-using GameLogic.Game.Perceptions;
-using UMath;
-
+using UVector3 = UnityEngine.Vector3;
 namespace GameLogic.Game.Controllors
 {
-	public class BattleMissileControllor:GControllor
+    public class BattleMissileControllor:GControllor
 	{
 		public BattleMissileControllor (GPerception per):base(per)
 		{

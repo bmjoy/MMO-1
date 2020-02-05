@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BehaviorTree;
 using EConfig;
-using EngineCore;
 using ExcelConfig;
 using GameLogic.Game.Elements;
 using GameLogic.Game.Perceptions;
 using Layout.AITree;
 using Layout.EditorAttributes;
 using Proto;
-using UMath;
+using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	[TreeNodeParse(typeof(TreeNodeFindTarget))]
-	public class ActionFindTarget:ActionComposite, ITreeNodeHandle
+    [TreeNodeParse(typeof(TreeNodeFindTarget))]
+	public class ActionFindTarget:ActionComposite<TreeNodeFindTarget>
     {
+		public ActionFindTarget(TreeNodeFindTarget n) : base(n) { }
 
-        [Label("当前查找距离")]
+		[Label("当前查找距离")]
         public float getDistanceValue;
         [Label("获得目标数")]
         public int getTargets;
@@ -31,8 +30,8 @@ namespace GameLogic.Game.AIBehaviorTree
 			var per = character.Controllor.Perception as BattlePerception;
 			var root = context as AITreeRoot;
 			var list = new List<BattleCharacter>();
-			var distance = node.Distance;
-			if (!root.GetDistanceByValueType(node.valueOf, distance, out distance))
+			var distance = Node.Distance;
+			if (!root.GetDistanceByValueType(Node.valueOf, distance, out distance))
 			{
                 getDistanceValue = -1;
 				yield return RunStatus.Failure;
@@ -41,7 +40,7 @@ namespace GameLogic.Game.AIBehaviorTree
             getDistanceValue = distance;
 
             //是否保留之前目标
-            if (!node.findNew)
+            if (!Node.findNew)
             {
                 var older = root[AITreeRoot.TRAGET_INDEX];
                 if (older != null)
@@ -58,9 +57,9 @@ namespace GameLogic.Game.AIBehaviorTree
             }
             //清除
             root[AITreeRoot.TRAGET_INDEX] = -1L;
-            var type = node.teamType;
+            var type = Node.teamType;
             //处理使用魔法目标
-            if (node.useMagicConfig)
+            if (Node.useMagicConfig)
             {
                 var magicID = root[AITreeRoot.SELECT_MAGIC_ID];
                 if (magicID == null)
@@ -114,7 +113,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 
 				if (per.Distance(t, root.Character) > distance) return false;
-				switch (node.filter)
+				switch (Node.filter)
 				{
 					case TargetFilterType.Hurt:
                         if (t.HP == t.MaxHP) return false;
@@ -134,7 +133,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 			BattleCharacter target =null;
 
-			switch (node.selectType)
+			switch (Node.selectType)
 			{
 				case TargetSelectType.Nearest:
 					{
@@ -223,12 +222,6 @@ namespace GameLogic.Game.AIBehaviorTree
 			yield return RunStatus.Success;
 		}
 
-		public void SetTreeNode(TreeNode node)
-		{
-			this.node  = node as TreeNodeFindTarget;
-		}
-
-		private TreeNodeFindTarget node;
 
 	}
 }

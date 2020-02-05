@@ -7,15 +7,14 @@ using Layout.AITree;
 namespace GameLogic.Game.AIBehaviorTree
 {
 	[TreeNodeParse(typeof(TreeNodeDistancTarget))]
-	public class ActionDistancTarget : ActionComposite,ITreeNodeHandle
+	public class ActionDistancTarget : ActionComposite<TreeNodeDistancTarget>
 	{
-		public ActionDistancTarget()
+		public ActionDistancTarget(TreeNodeDistancTarget node):base(node)
 		{
 		}
 
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
-
 			var root = context as AITreeRoot;
 			var index = root["TargetIndex"];
 			if (index == null)
@@ -24,20 +23,18 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			var target = root.Perception.State[(int)index] as BattleCharacter;
-			if (target == null)
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
+            if (!(root.Perception.State[(int)index] is BattleCharacter target))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
 
-			float distance;
-			if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out distance))
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
-			switch (Node.compareType)
+            if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float distance))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
+            switch (Node.compareType)
 			{
 				case CompareType.Less:
 					if (root.Perception.Distance(target, root.Character) > distance)
@@ -55,13 +52,6 @@ namespace GameLogic.Game.AIBehaviorTree
 
 
 		}
-
-		private TreeNodeDistancTarget Node;
-
-        public void SetTreeNode(TreeNode node)
-        {
-            Node = node as TreeNodeDistancTarget;
-        }
 
 		//private float distance;
 	}

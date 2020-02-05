@@ -1,10 +1,7 @@
 {
     "name": "UnitTest",
     "references": [
-        "BebaviorTree",
-        "EngineCore",
         "GameLogic",
-        "Layout",
         "BattleViews",
         "Server",
         "Application"

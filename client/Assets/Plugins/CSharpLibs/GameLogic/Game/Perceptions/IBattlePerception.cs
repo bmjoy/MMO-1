@@ -6,7 +6,9 @@ using Layout;
 using GameLogic.Game.LayoutLogics;
 using EngineCore.Simulater;
 using Layout.AITree;
-using UMath;
+using UVector3 = UnityEngine.Vector3;
+using GameLogic.Utility;
+using Proto;
 
 namespace GameLogic.Game.Perceptions
 {
@@ -36,23 +38,17 @@ namespace GameLogic.Game.Perceptions
         /// <param name="key">Key.</param>
         bool ExistMagicKey(string key);
 
-        /// <summary>
-        /// Creates the battle character view.
-        /// </summary>
-        /// <returns>The battle character view.</returns>
-        /// <param name="res">Res.</param>
-        /// <param name="pos">Position.</param>
-        /// <param name="forword">Forword.</param>
-        IBattleCharacter CreateBattleCharacterView(string res, UVector3 pos, UVector3 forword);
+ 
+        [NeedNotify(typeof(Notify_CreateBattleCharacter),
+            "AccountUuid", "ConfigID", "TeamIndex",
+            "Position", "Forward", "Level", "Name", "Speed")]
+        IBattleCharacter CreateBattleCharacterView
+            (string account_id,int config, int teamId,
+            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed);
 
-        /// <summary>
-        /// Creates the releaser view.
-        /// </summary>
-        /// <returns>The releaser view.</returns>
-        /// <param name="releaser">Releaser.</param>
-        /// <param name="targt">Targt.</param>
-        /// <param name="targetPos">Target position.</param>
-        IMagicReleaser CreateReleaserView(IBattleCharacter releaser, IBattleCharacter targt, UVector3? targetPos);
+       
+        [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position")]
+        IMagicReleaser CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos);
 
         /// <summary>
         /// Creates the particle player.
@@ -60,21 +56,34 @@ namespace GameLogic.Game.Perceptions
         /// <returns>The particle player.</returns>
         /// <param name="releaser">Releaser.</param>
         /// <param name="layout">Layout.</param>
-        IParticlePlayer CreateParticlePlayer(IMagicReleaser releaser, ParticleLayout layout);
+        [NeedNotify(typeof(Notify_LayoutPlayParticle),
+            "ReleaseIndex", 
+            "Path", "FromTarget", "Bind", "FromBoneName", "ToBoneName", "DestoryType", "DestoryTime")
+        ]
+        IParticlePlayer CreateParticlePlayer(int releaser,
+        string path, int fromTarget, bool bind, string fromBone, string toBone, int destoryType, float destoryTime);
 
         /// <summary>
         /// Creates the missile.
         /// </summary>
-        /// <returns>The missile.</returns>
-        /// <param name="releaser">Releaser.</param>
-        /// <param name="layout">Layout.</param>
-        IBattleMissile CreateMissile(IMagicReleaser releaser, MissileLayout layout);
+        /// <param name="releaseIndex"></param>
+        /// <param name="res"></param>
+        /// <param name="offset"></param>
+        /// <param name="fromBone"></param>
+        /// <param name="toBone"></param>
+        /// <param name="speed"></param>
+        /// <returns></returns>
+        [NeedNotify(typeof(Notify_CreateMissile), "ReleaserIndex",
+            "ResourcesPath","Offset", "FromBone", "ToBone", "Speed")]
+        IBattleMissile CreateMissile(int releaseIndex,
+            string res,  Proto.Vector3 offset, string fromBone, string toBone, float speed);
 
         /// <summary>
         /// 当前的时间仿真
         /// </summary>
         /// <returns>The time simulater.</returns>
         ITimeSimulater GetTimeSimulater();
+
         /// <summary>
         /// Gets the AIT ree.
         /// </summary>
@@ -85,10 +94,11 @@ namespace GameLogic.Game.Perceptions
         /// <summary>
         /// Processes the damage.
         /// </summary>
-        /// <param name="view1">View1.</param>
-        /// <param name="view2">View2.</param>
-        /// <param name="result">Result.</param>
-        void ProcessDamage(IBattleCharacter view1, IBattleCharacter view2, DamageResult result);
+        /// <param name="owner"></param>
+        /// <param name="target"></param>
+        /// <param name="result"></param>
+        [NeedNotify(typeof(Notify_DamageResult), "Index", "TargetIndex", "Damage", "IsMissed")]
+        bool ProcessDamage(int owner, int target, int damage, bool isMissed);
     }
 }
 

@@ -8,8 +8,16 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
 {
 
     public int Index { set; get; }
+    public UPerceptionView PerView { private set; get; }
 
-	#region IBattleElement implementation
+    public GObject GElement { private set; get; }
+
+    public void SetPrecpetion(UPerceptionView view)
+    {
+        PerView = view;
+    }
+
+    #region IBattleElement implementation
 
     void IBattleElement.JoinState(int index)
     {
@@ -26,31 +34,20 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
 
     void IBattleElement.AttachElement(GObject el)
     {
-        OnAttachElement(el);
+        GElement = el;
     }
 
 	#endregion
 
-    public GObject Element { private set; get; }
-
-    public virtual void OnAttachElement(GObject el)
-    {
-        Element = el;
-    }
 
     public void DestorySelf()
     {
-        GameObject.Destroy (this.gameObject);   
+        Destroy(this.gameObject,0.3f);   
     }
 
     public virtual void OnJoined() { }
 
     public abstract IMessage ToInitNotify();
 
-    public UPerceptionView PerView { private set; get; }
-
-    public void SetPrecpetion(UPerceptionView view)
-    {
-        PerView = view;
-    }
+    
 }

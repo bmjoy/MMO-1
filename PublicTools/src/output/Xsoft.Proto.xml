@@ -4,24 +4,19 @@
         <name>Xsoft.Proto</name>
     </assembly>
     <members>
-        <member name="T:Proto.ActionService.ClickMapGround">
-             <summary>
-             10018
-             </summary>    
-            </member>
         <member name="T:Proto.ActionService.ClickSkillIndex">
              <summary>
-             10019
+             10024
              </summary>    
             </member>
         <member name="T:Proto.ActionService.AutoFindTarget">
              <summary>
-             10020
+             10025
              </summary>    
             </member>
         <member name="T:Proto.ActionService.MoveDir">
              <summary>
-             10021
+             10026
              </summary>    
             </member>
         <member name="T:Proto.BattleServerReflection">
@@ -117,14 +112,6 @@
         <member name="F:Proto.Action_MoveDir.FastFieldNumber">
              <summary>Field number for the "Fast" field.</summary>
             </member>
-        <member name="T:Proto.Notify_ElementJoinState">
-             <summary>
-            元素进入场景
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_ElementJoinState.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
         <member name="T:Proto.Notify_ElementExitState">
              <summary>
             元素退出场景
@@ -149,6 +136,9 @@
             </member>
         <member name="F:Proto.Notify_CreateReleaser.MagicKeyFieldNumber">
              <summary>Field number for the "MagicKey" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CreateReleaser.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
             </member>
         <member name="T:Proto.Notify_CreateBattleCharacter">
              <summary>
@@ -206,39 +196,6 @@
             等级
              </summary>
             </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.HPFieldNumber">
-             <summary>Field number for the "HP" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.MPFieldNumber">
-             <summary>Field number for the "MP" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.PropertiesFieldNumber">
-             <summary>Field number for the "Properties" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.TDamageFieldNumber">
-             <summary>Field number for the "TDamage" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CreateBattleCharacter.TDamage">
-             <summary>
-            伤害类型
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.TDefanceFieldNumber">
-             <summary>Field number for the "TDefance" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CreateBattleCharacter.TDefance">
-             <summary>
-            防御类型
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.CategoryFieldNumber">
-             <summary>Field number for the "Category" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CreateBattleCharacter.Category">
-             <summary>
-            英雄类型
-             </summary>
-            </member>
         <member name="F:Proto.Notify_CreateBattleCharacter.NameFieldNumber">
              <summary>Field number for the "Name" field.</summary>
             </member>
@@ -254,9 +211,6 @@
              <summary>
             移动速度
              </summary>
-            </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.MagicsFieldNumber">
-             <summary>Field number for the "Magics" field.</summary>
             </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>
@@ -280,34 +234,52 @@
             速度
              </summary>
             </member>
-        <member name="F:Proto.Notify_CreateMissile.PositionFieldNumber">
-             <summary>Field number for the "Position" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CreateMissile.FormBoneFieldNumber">
-             <summary>Field number for the "formBone" field.</summary>
+        <member name="F:Proto.Notify_CreateMissile.FromBoneFieldNumber">
+             <summary>Field number for the "FromBone" field.</summary>
             </member>
         <member name="F:Proto.Notify_CreateMissile.ToBoneFieldNumber">
-             <summary>Field number for the "toBone" field.</summary>
+             <summary>Field number for the "ToBone" field.</summary>
             </member>
         <member name="F:Proto.Notify_CreateMissile.OffsetFieldNumber">
-             <summary>Field number for the "offset" field.</summary>
+             <summary>Field number for the "Offset" field.</summary>
             </member>
-        <member name="F:Proto.Notify_CharacterPosition.IndexFieldNumber">
+        <member name="F:Proto.Notify_CharacterSetPosition.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
-        <member name="F:Proto.Notify_CharacterPosition.LastPositionFieldNumber">
-             <summary>Field number for the "LastPosition" field.</summary>
+        <member name="F:Proto.Notify_CharacterSetPosition.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
             </member>
-        <member name="F:Proto.Notify_CharacterPosition.TargetPositionFieldNumber">
-             <summary>Field number for the "TargetPosition" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterPosition.TypeFieldNumber">
-             <summary>Field number for the "Type" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CharacterPosition.Type">
+        <member name="P:Proto.Notify_CharacterSetPosition.Position">
              <summary>
-            移动类型
              </summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAlpha.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="P:Proto.Notify_CharacterAlpha.Index">
+             <summary>
+            角色
+             </summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAlpha.AlphaFieldNumber">
+             <summary>Field number for the "Alpha" field.</summary>
+            </member>
+        <member name="P:Proto.Notify_CharacterAlpha.Alpha">
+             <summary>
+            最终的Alpha
+             </summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSetForword.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSetForword.ForwardFieldNumber">
+             <summary>Field number for the "Forward" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSpeed.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSpeed.SpeedFieldNumber">
+             <summary>Field number for the "Speed" field.</summary>
             </member>
         <member name="F:Proto.Notify_LayoutPlayMotion.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
@@ -315,10 +287,10 @@
         <member name="F:Proto.Notify_LayoutPlayMotion.MotionFieldNumber">
              <summary>Field number for the "Motion" field.</summary>
             </member>
-        <member name="F:Proto.Notify_LookAtCharacter.OwnFieldNumber">
-             <summary>Field number for the "Own" field.</summary>
+        <member name="F:Proto.Notify_LookAtCharacter.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
             </member>
-        <member name="P:Proto.Notify_LookAtCharacter.Own">
+        <member name="P:Proto.Notify_LookAtCharacter.Index">
              <summary>
             源
              </summary>
@@ -330,6 +302,54 @@
              <summary>
             目标
              </summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveTo.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveTo.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveTo.TargetFieldNumber">
+             <summary>Field number for the "Target" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterStopMove.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterStopMove.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterDeath.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterPriorityMove.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterPriorityMove.PriorityMoveFieldNumber">
+             <summary>Field number for the "PriorityMove" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSetScale.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterSetScale.ScaleFieldNumber">
+             <summary>Field number for the "Scale" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAttachMagic.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAttachMagic.MagicIdFieldNumber">
+             <summary>Field number for the "MagicId" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAttachMagic.CompletedTimeFieldNumber">
+             <summary>Field number for the "CompletedTime" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveForward.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveForward.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterMoveForward.ForwardFieldNumber">
+             <summary>Field number for the "Forward" field.</summary>
             </member>
         <member name="F:Proto.Notify_LayoutPlayParticle.ReleaseIndexFieldNumber">
              <summary>Field number for the "ReleaseIndex" field.</summary>
@@ -380,18 +400,18 @@
         <member name="F:Proto.Notify_HPChange.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
-        <member name="F:Proto.Notify_HPChange.TargetHPFieldNumber">
-             <summary>Field number for the "TargetHP" field.</summary>
+        <member name="F:Proto.Notify_HPChange.HpFieldNumber">
+             <summary>Field number for the "Hp" field.</summary>
             </member>
-        <member name="P:Proto.Notify_HPChange.TargetHP">
+        <member name="P:Proto.Notify_HPChange.Hp">
              <summary>
             最终HP 
              </summary>
             </member>
-        <member name="F:Proto.Notify_HPChange.HPFieldNumber">
-             <summary>Field number for the "HP" field.</summary>
+        <member name="F:Proto.Notify_HPChange.CurFieldNumber">
+             <summary>Field number for the "Cur" field.</summary>
             </member>
-        <member name="P:Proto.Notify_HPChange.HP">
+        <member name="P:Proto.Notify_HPChange.Cur">
              <summary>
             HP变化值
              </summary>
@@ -402,18 +422,18 @@
         <member name="F:Proto.Notify_MPChange.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
-        <member name="F:Proto.Notify_MPChange.TargetMPFieldNumber">
-             <summary>Field number for the "TargetMP" field.</summary>
+        <member name="F:Proto.Notify_MPChange.MpFieldNumber">
+             <summary>Field number for the "Mp" field.</summary>
             </member>
-        <member name="P:Proto.Notify_MPChange.TargetMP">
+        <member name="P:Proto.Notify_MPChange.Mp">
              <summary>
             最终MP 
              </summary>
             </member>
-        <member name="F:Proto.Notify_MPChange.MPFieldNumber">
-             <summary>Field number for the "MP" field.</summary>
+        <member name="F:Proto.Notify_MPChange.CurFieldNumber">
+             <summary>Field number for the "Cur" field.</summary>
             </member>
-        <member name="P:Proto.Notify_MPChange.MP">
+        <member name="P:Proto.Notify_MPChange.Cur">
              <summary>
             MP变化值
              </summary>
@@ -459,44 +479,19 @@
             道具列表
              </summary>
             </member>
-        <member name="F:Proto.Notify_ReleaseMagic.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_ReleaseMagic.CdCompletedTimeFieldNumber">
-             <summary>Field number for the "CdCompletedTime" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_ReleaseMagic.MagicIDFieldNumber">
-             <summary>Field number for the "MagicID" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterAlpha.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CharacterAlpha.Index">
-             <summary>
-            角色
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterAlpha.AlphaFieldNumber">
-             <summary>Field number for the "Alpha" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CharacterAlpha.Alpha">
-             <summary>
-            最终的Alpha
-             </summary>
-            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
-             10022
+             10027
              </summary>    
             </member>
         <member name="T:Proto.BattleServerService.ExitGame">
              <summary>
-             10023
+             10028
              </summary>    
             </member>
         <member name="T:Proto.BattleServerService.JoinBattle">
              <summary>
-             10024
+             10029
              </summary>    
             </member>
         <member name="T:Proto.ConstReflection">
@@ -745,6 +740,9 @@
              <summary>
             英雄当前激活魔法
              </summary>
+            </member>
+        <member name="F:Proto.DHero.NameFieldNumber">
+             <summary>Field number for the "Name" field.</summary>
             </member>
         <member name="T:Proto.EquipProperty">
              <summary>
@@ -1770,12 +1768,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10046
+             10051
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10047
+             10052
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -2136,92 +2134,92 @@
             </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
-             10035
+             10040
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.CreateHero">
              <summary>
-             10036
+             10041
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BeginGame">
              <summary>
-             10037
+             10042
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
              <summary>
-             10038
+             10043
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
              <summary>
-             10039
+             10044
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.SaleItem">
              <summary>
-             10040
+             10045
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
              <summary>
-             10041
+             10046
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GMTool">
              <summary>
-             10042
+             10047
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
-             10043
+             10048
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
-             10044
+             10049
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
              <summary>
-             10045
+             10050
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
              <summary>
-             10027
+             10032
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.EndBattle">
              <summary>
-             10028
+             10033
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.CheckSession">
              <summary>
-             10029
+             10034
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegGateServer">
              <summary>
-             10030
+             10035
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GateServerSession">
              <summary>
-             10031
+             10036
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.BeginBattle">
              <summary>
-             10032
+             10037
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GetLastBattle">
              <summary>
-             10033
+             10038
              </summary>    
             </member>
         <member name="T:Proto.LoginServerReflection">
@@ -2581,17 +2579,17 @@
             </member>
         <member name="T:Proto.LoginServerService.Login">
              <summary>
-             10025
+             10030
              </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Reg">
              <summary>
-             10026
+             10031
              </summary>    
             </member>
         <member name="T:Proto.LoginServerTaskServices.ExitUser">
              <summary>
-             10034
+             10039
              </summary>    
             </member>
         <member name="M:Proto.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
@@ -2922,49 +2920,79 @@
              10008
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.ElementJoinState">
+        <member name="T:Proto.NotifyService.HPChange">
              <summary>
              10009
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.HPChange">
+        <member name="T:Proto.NotifyService.LayoutPlayMotion">
              <summary>
              10010
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.LayoutPlayMotion">
+        <member name="T:Proto.NotifyService.LayoutPlayParticle">
              <summary>
              10011
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.LayoutPlayParticle">
+        <member name="T:Proto.NotifyService.LookAtCharacter">
              <summary>
              10012
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.LookAtCharacter">
+        <member name="T:Proto.NotifyService.MPChange">
              <summary>
              10013
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.MPChange">
+        <member name="T:Proto.NotifyService.PlayerJoinState">
              <summary>
              10014
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.PlayerJoinState">
+        <member name="T:Proto.NotifyService.PropertyValue">
              <summary>
              10015
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.PropertyValue">
+        <member name="T:Proto.NotifyService.CharacterSetForword">
              <summary>
              10016
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.ReleaseMagic">
+        <member name="T:Proto.NotifyService.CharacterMoveTo">
              <summary>
              10017
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterStopMove">
+             <summary>
+             10018
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterDeath">
+             <summary>
+             10019
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterPriorityMove">
+             <summary>
+             10020
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterSetScale">
+             <summary>
+             10021
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterAttachMagic">
+             <summary>
+             10022
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterMoveForward">
+             <summary>
+             10023
              </summary>    
             </member>
     </members>

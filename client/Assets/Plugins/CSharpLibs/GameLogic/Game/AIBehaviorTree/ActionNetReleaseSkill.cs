@@ -5,10 +5,10 @@ using Layout.AITree;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    [TreeNodeParse(typeof(Layout.AITree.TreeNodeNetActionSkill))]
-    public class ActionNetReleaseSkill:ActionComposite,ITreeNodeHandle
+    [TreeNodeParse(typeof(TreeNodeNetActionSkill))]
+    public class ActionNetReleaseSkill:ActionComposite<TreeNodeNetActionSkill>
     {
-        public ActionNetReleaseSkill()
+        public ActionNetReleaseSkill(TreeNodeNetActionSkill n):base(n)
         {
         }
 

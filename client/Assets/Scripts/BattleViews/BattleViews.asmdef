@@ -1,10 +1,7 @@
 {
     "name": "BattleViews",
     "references": [
-        "BebaviorTree",
-        "EngineCore",
-        "GameLogic",
-        "Layout"
+        "GameLogic"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

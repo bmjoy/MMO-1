@@ -9,9 +9,11 @@ using Layout.EditorAttributes;
 namespace GameLogic.Game.AIBehaviorTree
 {
 	[TreeNodeParse(typeof(TreeNodeSelectCanReleaseMagic))]
-	public class ActionSelectCanReleaseMagic:ActionComposite,ITreeNodeHandle
+	public class ActionSelectCanReleaseMagic:ActionComposite<TreeNodeSelectCanReleaseMagic>
 	{
-		private HashSet<int> releaseHistorys = new HashSet<int>();
+        public ActionSelectCanReleaseMagic(TreeNodeSelectCanReleaseMagic node) : base(node) { }
+
+		private readonly HashSet<int> releaseHistorys = new HashSet<int>();
 
         [Label("当前魔法")]
         public string key;
@@ -82,12 +84,6 @@ namespace GameLogic.Game.AIBehaviorTree
         }
 
 
-		private TreeNodeSelectCanReleaseMagic Node;
-
-		public void SetTreeNode(TreeNode node)
-		{
-			Node = node as TreeNodeSelectCanReleaseMagic;
-		}
 	}
 }
 

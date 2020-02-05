@@ -8,20 +8,9 @@ namespace Proto.ActionService
 {
 
     /// <summary>
-    /// 10018
+    /// 10024
     /// </summary>    
-    [API(10018)]
-    public class ClickMapGround:APIBase<Action_ClickMapGround, Void> 
-    {
-        private ClickMapGround() : base() { }
-        public  static ClickMapGround CreateQuery(){ return new ClickMapGround();}
-    }
-    
-
-    /// <summary>
-    /// 10019
-    /// </summary>    
-    [API(10019)]
+    [API(10024)]
     public class ClickSkillIndex:APIBase<Action_ClickSkillIndex, Void> 
     {
         private ClickSkillIndex() : base() { }
@@ -30,9 +19,9 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 10020
+    /// 10025
     /// </summary>    
-    [API(10020)]
+    [API(10025)]
     public class AutoFindTarget:APIBase<Action_AutoFindTarget, Void> 
     {
         private AutoFindTarget() : base() { }
@@ -41,9 +30,9 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 10021
+    /// 10026
     /// </summary>    
-    [API(10021)]
+    [API(10026)]
     public class MoveDir:APIBase<Action_MoveDir, Void> 
     {
         private MoveDir() : base() { }
@@ -53,20 +42,18 @@ namespace Proto.ActionService
 
     public interface IActionService
     {
-        [API(10021)]Void MoveDir(Action_MoveDir req);
-        [API(10020)]Void AutoFindTarget(Action_AutoFindTarget req);
-        [API(10019)]Void ClickSkillIndex(Action_ClickSkillIndex req);
-        [API(10018)]Void ClickMapGround(Action_ClickMapGround req);
+        [API(10026)]Void MoveDir(Action_MoveDir req);
+        [API(10025)]Void AutoFindTarget(Action_AutoFindTarget req);
+        [API(10024)]Void ClickSkillIndex(Action_ClickSkillIndex req);
 
     }
    
 
     public abstract class ActionService
     {
-        [API(10021)]public abstract Task<Void> MoveDir(Action_MoveDir request);
-        [API(10020)]public abstract Task<Void> AutoFindTarget(Action_AutoFindTarget request);
-        [API(10019)]public abstract Task<Void> ClickSkillIndex(Action_ClickSkillIndex request);
-        [API(10018)]public abstract Task<Void> ClickMapGround(Action_ClickMapGround request);
+        [API(10026)]public abstract Task<Void> MoveDir(Action_MoveDir request);
+        [API(10025)]public abstract Task<Void> AutoFindTarget(Action_AutoFindTarget request);
+        [API(10024)]public abstract Task<Void> ClickSkillIndex(Action_ClickSkillIndex request);
 
     }
 

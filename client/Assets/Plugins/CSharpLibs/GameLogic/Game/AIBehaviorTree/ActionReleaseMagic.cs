@@ -9,8 +9,11 @@ using Layout.AITree;
 namespace GameLogic.Game.AIBehaviorTree
 {
     [TreeNodeParse(typeof(TreeNodeReleaseMagic))]
-	public class ActionReleaseMagic : ActionComposite, ITreeNodeHandle
+	public class ActionReleaseMagic : ActionComposite<TreeNodeReleaseMagic>
 	{
+
+        public ActionReleaseMagic(TreeNodeReleaseMagic node) : base(node) { }
+
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             var root = context as AITreeRoot;
@@ -74,15 +77,7 @@ namespace GameLogic.Game.AIBehaviorTree
 		    yield return RunStatus.Success;
         }
 
-		private TreeNodeReleaseMagic Node;
-
         private MagicReleaser releaser;
-
-		public void SetTreeNode(TreeNode node)
-		{
-			Node = node as TreeNodeReleaseMagic;
-		}
-
         public override void Stop(ITreeRoot context)
         {
 
