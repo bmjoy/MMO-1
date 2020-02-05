@@ -8,9 +8,9 @@ namespace Proto.GateServerTask
 {
 
     /// <summary>
-    /// 10048
+    /// 10047
     /// </summary>    
-    [API(10048)]
+    [API(10047)]
     public class SyncPackage:APIBase<Task_G2C_SyncPackage, Task_G2C_SyncPackage> 
     {
         private SyncPackage() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.GateServerTask
     
 
     /// <summary>
-    /// 10049
+    /// 10048
     /// </summary>    
-    [API(10049)]
+    [API(10048)]
     public class SyncHero:APIBase<Task_G2C_SyncHero, Task_G2C_SyncHero> 
     {
         private SyncHero() : base() { }
@@ -30,9 +30,9 @@ namespace Proto.GateServerTask
     
 
     /// <summary>
-    /// 10050
+    /// 10049
     /// </summary>    
-    [API(10050)]
+    [API(10049)]
     public class JoinBattle:APIBase<Task_G2C_JoinBattle, Task_G2C_JoinBattle> 
     {
         private JoinBattle() : base() { }
@@ -42,18 +42,18 @@ namespace Proto.GateServerTask
 
     public interface IGateServerTask
     {
-        [API(10050)]Task_G2C_JoinBattle JoinBattle(Task_G2C_JoinBattle req);
-        [API(10049)]Task_G2C_SyncHero SyncHero(Task_G2C_SyncHero req);
-        [API(10048)]Task_G2C_SyncPackage SyncPackage(Task_G2C_SyncPackage req);
+        [API(10049)]Task_G2C_JoinBattle JoinBattle(Task_G2C_JoinBattle req);
+        [API(10048)]Task_G2C_SyncHero SyncHero(Task_G2C_SyncHero req);
+        [API(10047)]Task_G2C_SyncPackage SyncPackage(Task_G2C_SyncPackage req);
 
     }
    
 
     public abstract class GateServerTask
     {
-        [API(10050)]public abstract Task<Task_G2C_JoinBattle> JoinBattle(Task_G2C_JoinBattle request);
-        [API(10049)]public abstract Task<Task_G2C_SyncHero> SyncHero(Task_G2C_SyncHero request);
-        [API(10048)]public abstract Task<Task_G2C_SyncPackage> SyncPackage(Task_G2C_SyncPackage request);
+        [API(10049)]public abstract Task<Task_G2C_JoinBattle> JoinBattle(Task_G2C_JoinBattle request);
+        [API(10048)]public abstract Task<Task_G2C_SyncHero> SyncHero(Task_G2C_SyncHero request);
+        [API(10047)]public abstract Task<Task_G2C_SyncPackage> SyncPackage(Task_G2C_SyncPackage request);
 
     }
 

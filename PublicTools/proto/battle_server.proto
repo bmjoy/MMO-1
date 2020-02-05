@@ -5,18 +5,6 @@ import "const.proto";
 import "excelconst.proto";
 package Proto;
 
-//退出
-message C2B_ExitGame
-{
-	 int64 UserID =1;
-}
-
-message B2C_ExitGame
-{
-	 ErrorCode Code =1;
-}
-
-
 
 message C2B_JoinBattle
 {
@@ -97,7 +85,6 @@ message Notify_CreateBattleCharacter
 //创建一个飞行物
 message Notify_CreateMissile
 {
-	 int32 Index=1;
 	 int32 ReleaserIndex=2;
 	 string ResourcesPath=3;
 	 float Speed=4;//速度
@@ -182,7 +169,7 @@ message Notify_CharacterAttachMagic
 {
 	int32 Index  =1;
 	int32 MagicId =2;
-	int32 CompletedTime = 3;
+	float CompletedTime = 3;
 }
 message Notify_CharacterMoveForward
 {
@@ -291,6 +278,5 @@ service ActionService
 service BattleServerService
 {
 	rpc ExitBattle(C2B_ExitBattle)returns(B2C_ExitBattle){};//1
-	rpc ExitGame (C2B_ExitGame) returns (B2C_ExitGame){};//2
 	rpc JoinBattle(C2B_JoinBattle) returns (B2C_JoinBattle){};//3
 }

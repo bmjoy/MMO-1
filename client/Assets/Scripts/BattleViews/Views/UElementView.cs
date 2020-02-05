@@ -3,6 +3,7 @@ using System.Collections;
 using GameLogic.Game.Elements;
 using EngineCore.Simulater;
 using Google.Protobuf;
+using Proto;
 
 public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializerableElement
 {
@@ -29,6 +30,7 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     void IBattleElement.ExitState(int index)
     {
         PerView.DeAttachView(this);
+        CreateNotify(new Notify_ElementExitState { Index = Index });
         DestorySelf();  
     }
 
@@ -49,5 +51,8 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
 
     public abstract IMessage ToInitNotify();
 
-    
+    protected void CreateNotify(IMessage notify)
+    {
+        PerView.AddNotify(notify);//  AddNotify();
+    }
 }

@@ -67,7 +67,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
     public void DeAttachView(UElementView battleElement)
     {
-        AddNotify(new Notify_ElementExitState { Index = battleElement.Index });
         AttachElements.Remove(battleElement.Index);
     }
 
@@ -104,7 +103,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
     public void AddNotify(IMessage notify)
     {
-#if UNITY_SERVER
+#if UNITY_SERVER//UNITY_SERVER
         _notify.Enqueue(notify);
 #endif
     }
@@ -249,6 +248,11 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
     IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
         string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime)
     {
+        AddNotify(new Notify_LayoutPlayParticle {
+             Bind =bind, DestoryTime = destoryTime,DestoryType = destoryType,
+            FromBoneName = fromBone, FromTarget = fromTarget, Path = path, ReleaseIndex = releaser,
+            ToBoneName =toBone
+        });
         //var res = layout.path;
         var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (path);
         GameObject ins;
@@ -289,7 +293,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         }
 
         var view = ins.AddComponent<UParticlePlayer>();
-        //view.SetPrecpetion(this);
+       // view.SetPrecpetion(this);
         return view;
     }
         

@@ -265,7 +265,8 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             var pack = buffer.ToPackage();
             foreach (var i in BattlePlayers)
             {
-                if (!i.Value.Client.Enable) {
+                if (!i.Value.Client.Enable)
+                {
                     KickUser(i.Key);    
                     continue;
                 }
@@ -278,7 +279,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     {
         foreach (var i in BattlePlayers)
         {
-            if (!i.Value.Client?.Enable!=true)
+            if (i.Value.Client?.Enable!=true)
             {
                 KickUser(i.Key);
                 continue;

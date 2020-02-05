@@ -12,7 +12,6 @@ using XNet.Libs.Utility;
 public class BattleServerService : Responser, IBattleServerService
 {
     public BattleServerService(Client c) : base(c) { }
-  
 
     public B2C_ExitBattle ExitBattle(C2B_ExitBattle req)
     {
@@ -21,17 +20,10 @@ public class BattleServerService : Responser, IBattleServerService
         return new B2C_ExitBattle { Code = ErrorCode.Ok };
     }
 
-    public B2C_ExitGame ExitGame(C2B_ExitGame req)
-    {
-
-        return new B2C_ExitGame { Code = ErrorCode.Error };
-    }
-
     [IgnoreAdmission]
     public B2C_JoinBattle JoinBattle(C2B_JoinBattle request)
     {
         var gate = BattleSimulater.S;
-        var result = ErrorCode.Error;
         var re = new B2L_CheckSession
         {
             UserID = request.AccountUuid,
@@ -40,7 +32,7 @@ public class BattleServerService : Responser, IBattleServerService
         };
 
         var seResult = CheckSession.CreateQuery().GetResult(gate.CenterServerClient, re);
-        result = seResult.Code;
+        ErrorCode result = seResult.Code;
         if (seResult.Code == ErrorCode.Ok)
         {
             Client.UserState = request.AccountUuid;

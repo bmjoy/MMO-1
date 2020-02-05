@@ -21,6 +21,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield return RunStatus.Failure;
                 yield break;
             }
+
             root[AITreeRoot.ACTION_MESSAGE] = null;
             var target = message.Forward.ToUV3();
             root.Character.MoveForward(target);

@@ -124,8 +124,7 @@ public class BattlePlayer
 
     public bool ConsumeItem(int item, int num)
     {
-        int consumeNum = 0;
-        consumeItems.TryGetValue(item, out consumeNum);
+        consumeItems.TryGetValue(item, out int consumeNum);
         //是否足够
         {
             bool enough = false;

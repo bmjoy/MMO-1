@@ -15,8 +15,7 @@ namespace GameLogic.Game.AIBehaviorTree
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             var root = context as AITreeRoot;
-            var message = root[AITreeRoot.ACTION_MESSAGE] as Proto.Action_ClickSkillIndex;
-            if (message == null)
+            if (!(root[AITreeRoot.ACTION_MESSAGE] is Proto.Action_ClickSkillIndex message))
             {
                 yield return RunStatus.Failure;
                 yield break;

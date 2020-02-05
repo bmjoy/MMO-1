@@ -101,9 +101,15 @@ namespace Windows
                 });
 
             var bt = this.Joystick_Left.GetComponent<zFrame.UI.Joystick>();
-            ///float lastTime = -1;
+            float lastTime = -1;
+            Vector2 last = Vector2.zero;
             bt.OnValueChanged.AddListener((v) =>
             {
+                if (lastTime > UnityEngine.Time.time) return;
+                lastTime = UnityEngine.Time.time + .3f;
+                if ((v - last).magnitude <= 0.03f) return;
+                last = v;
+                Debug.Log(v);
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
                 g.MoveDir(v);

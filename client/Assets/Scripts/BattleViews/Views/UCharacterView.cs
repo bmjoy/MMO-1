@@ -195,6 +195,11 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         var f = forward.ToUV3();
         this.lookQuaternion = Quaternion.LookRotation(f);
+        CreateNotify(new Notify_CharacterSetForword
+        {
+            Forward = forward,
+            Index = Index
+        });
     }
 
     Transform IBattleCharacter.Transform
@@ -218,12 +223,14 @@ public class UCharacterView : UElementView,IBattleCharacter
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
     {
         TryToSetPosition(pos.ToUV3());
+        CreateNotify(new Notify_CharacterSetPosition { Index = Index, Position = pos });
     }
 
 
 
     void IBattleCharacter.LookAtTarget(int target)
     {
+        CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
         var v = PerView.GetViewByIndex(target);
         if (v == null) return;
         this.LookAt(v.transform);
@@ -232,21 +239,20 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
-
+        CreateNotify(new Notify_PropertyValue { Index = Index, Type = type, FinallyValue = finalValue });
     }
 
     void IBattleCharacter.SetAlpha(float alpha)
     {
-        
+        CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
        //do nothing
     }
 
     void IBattleCharacter.PlayMotion (string motion)
 	{
-		
+        CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
 		var an = CharacterAnimator;
-		if (an == null)
-			return;
+		if (an == null) return;
         
 		if (motion == "Hit") {
 			if (last + 0.3f > Time.time)
@@ -267,6 +273,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target)
     {
+        CreateNotify(new Notify_CharacterMoveTo { Index = Index, Position = position, Target = target });
         if (!Agent || !Agent.enabled)
             return;
         IsStop = false;
@@ -282,8 +289,6 @@ public class UCharacterView : UElementView,IBattleCharacter
         {
             return;
         }
-
-
 
 
         if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f)
@@ -310,6 +315,7 @@ public class UCharacterView : UElementView,IBattleCharacter
             transform.localPosition = pos.ToUV3();
         }
         StopMove();
+        CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
 	}
 
     void IBattleCharacter.Death ()
@@ -322,30 +328,33 @@ public class UCharacterView : UElementView,IBattleCharacter
 		 Agent.enabled = false;
 		IsDead = true;
 		MoveDown.BeginMove (this.Character, 1, 1, 5);
+        CreateNotify(new Notify_CharacterDeath { Index = Index });
 	}
 
 
     void IBattleCharacter.SetSpeed(float speed)
     {
         this.Agent.speed = speed;
+        CreateNotify(new Notify_CharacterSpeed { Index = Index, Speed = speed });
     }
 
     void IBattleCharacter.SetPriorityMove (float priorityMove)
     {
         Agent.avoidancePriority = (int)priorityMove;
+        CreateNotify(new Notify_CharacterPriorityMove { Index = Index, PriorityMove = priorityMove });
     }
 
     void IBattleCharacter.SetScale(float scale)
     {
         this.gameObject.transform.localScale = Vector3.one * scale;
+        CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
     }
 
 
     void IBattleCharacter.ShowHPChange(int hp,int cur,int max)
     {
-        if (IsDead)
-            return;
-
+        CreateNotify(new Notify_HPChange { Index = Index, Cur = cur, Hp = hp, Max = max });
+        if (IsDead)  return;
         this.cur = cur;
         this.max = max;
         if (hp < 0)
@@ -356,15 +365,19 @@ public class UCharacterView : UElementView,IBattleCharacter
                 });
         }
         showHpBarTime = Time.time + 3;
+       
     }
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
+        CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
         //throw new System.NotImplementedException();
     }
 
     void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
     {
+        CreateNotify(new Notify_CharacterAttachMagic { Index = Index,
+            MagicId = magicID, CompletedTime = cdCompletedTime });
         if (MagicCds.ContainsKey(magicID))
         {
             MagicCds[magicID].CDTime = cdCompletedTime;

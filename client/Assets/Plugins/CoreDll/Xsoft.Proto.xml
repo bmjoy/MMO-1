@@ -40,17 +40,6 @@
             跳跃
              </summary>
             </member>
-        <member name="T:Proto.C2B_ExitGame">
-             <summary>
-            退出
-             </summary>
-            </member>
-        <member name="F:Proto.C2B_ExitGame.UserIDFieldNumber">
-             <summary>Field number for the "UserID" field.</summary>
-            </member>
-        <member name="F:Proto.B2C_ExitGame.CodeFieldNumber">
-             <summary>Field number for the "Code" field.</summary>
-            </member>
         <member name="F:Proto.C2B_JoinBattle.MapIDFieldNumber">
              <summary>Field number for the "MapID" field.</summary>
             </member>
@@ -484,14 +473,9 @@
              10027
              </summary>    
             </member>
-        <member name="T:Proto.BattleServerService.ExitGame">
-             <summary>
-             10028
-             </summary>    
-            </member>
         <member name="T:Proto.BattleServerService.JoinBattle">
              <summary>
-             10029
+             10028
              </summary>    
             </member>
         <member name="T:Proto.ConstReflection">
@@ -1768,12 +1752,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10051
+             10050
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10052
+             10051
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -2134,92 +2118,92 @@
             </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
-             10040
+             10039
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.CreateHero">
              <summary>
-             10041
+             10040
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BeginGame">
              <summary>
-             10042
+             10041
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
              <summary>
-             10043
+             10042
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
              <summary>
-             10044
+             10043
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.SaleItem">
              <summary>
-             10045
+             10044
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
              <summary>
-             10046
+             10045
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GMTool">
              <summary>
-             10047
+             10046
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
-             10048
+             10047
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
-             10049
+             10048
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
              <summary>
-             10050
+             10049
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
              <summary>
-             10032
+             10031
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.EndBattle">
              <summary>
-             10033
+             10032
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.CheckSession">
              <summary>
-             10034
+             10033
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegGateServer">
              <summary>
-             10035
+             10034
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GateServerSession">
              <summary>
-             10036
+             10035
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.BeginBattle">
              <summary>
-             10037
+             10036
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GetLastBattle">
              <summary>
-             10038
+             10037
              </summary>    
             </member>
         <member name="T:Proto.LoginServerReflection">
@@ -2579,17 +2563,17 @@
             </member>
         <member name="T:Proto.LoginServerService.Login">
              <summary>
-             10030
+             10029
              </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Reg">
              <summary>
-             10031
+             10030
              </summary>    
             </member>
         <member name="T:Proto.LoginServerTaskServices.ExitUser">
              <summary>
-             10039
+             10038
              </summary>    
             </member>
         <member name="M:Proto.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
