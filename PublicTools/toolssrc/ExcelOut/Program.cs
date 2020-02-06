@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Excel;
+using ExcelDataReader;
 using System.Text.RegularExpressions;
 using org.vxwo.csharp.json;
 
@@ -17,23 +17,9 @@ namespace ExcelOut
     {
         static void Main(string[] args)
         {
-            //var table = new ExcelTable();
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix21", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix22", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix23", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix24", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix25", Type = "Int" });
+            
 
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix2_1", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix2_2", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix2_3", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix2_4", Type = "Int" });
-            //table.Cols.Add(new ExcelTableCol { Name = "Fix2_5", Type = "Int" });
-            //table.ProcessColsArray();
-            //return;
-            //args
-
-            //args =@"dir:../ExcelConfig namespace:ExcelConfig exportJson:../ exportCs:../src/NetSources/Config.cs ex:*.xlsx exportType:server".Split(' ');
+            //args =@"dir:../econfigs namespace:ExcelConfig exportJson:../ exportCs:../src/NetSources/Config.cs ex:*.xlsx exportType:server".Split(' ');
 
             // dir: namespace: class: exportJson: exportCs: ex:.xls
             string dir = string.Empty;
@@ -41,9 +27,9 @@ namespace ExcelOut
             string exportJson = string.Empty;
             string exportCs = string.Empty;
             string ex = "*.xlsx";
-            string mode = "java";
+            string mode = "csharp";
             int exportType = 0;
-            bool isDebug = false;
+            bool isDebug = true;
 
             #region parmas
             foreach (var i in args)
@@ -195,7 +181,7 @@ namespace ExcelOut
             Console.WriteLine("导出成功！！");
         }
 
-        private static Regex RegexName = new System.Text.RegularExpressions.Regex("([^\\(]*)\\(([^\\)]*)\\)");
+        private static Regex RegexName = new Regex("([^\\(]*)\\(([^\\)]*)\\)");
 
         
         private static void ReadTables(List<ExcelTable> outTables,
@@ -216,144 +202,153 @@ namespace ExcelOut
                 //IExcelDataReader excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
                 //...
                 //2. Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                //...
-                //3. DataSet - The result of each spreadsheet will be created in the result.Tables
-                //DataSet result = excelReader.AsDataSet();
-                //...
-                //4. DataSet - Create column names from first row
-                excelReader.IsFirstRowAsColumnNames = false;
-                DataSet result = excelReader.AsDataSet();
-                var _base = result.Tables["__Base"];
-                var exTables = new List<ExcelTable>();
-
-                #region Table
-
-                if (_base!=null && _base.Rows != null)
+                //using IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream);
+                using( IExcelDataReader excelReader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    for (var i = 0; i < _base.Rows.Count; i++)
+                    //...
+                    //3. DataSet - The result of each spreadsheet will be created in the result.Tables
+                    //DataSet result = excelReader.AsDataSet();
+                    //...
+                    //4. DataSet - Create column names from first row
+                    //excelReader.IsFirstRowAsColumnNames = false;
+                    DataSet result = excelReader.AsDataSet(new ExcelDataSetConfiguration()
                     {
-                        var table = new Libs.EX.ExcelTable();
-
-                        var row = _base.Rows[i];
-                        table.TableName = row[1].ToString();
-                        if (debug)
-                            Console.WriteLine("Export Table:" + table.TableName);
-                        if (string.IsNullOrEmpty(table.TableName)) break;
-                        if (!ExcelTool.IsCshapName(table.TableName))
+                        UseColumnDataType = false,
+                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
                         {
-                            throw new Exception("Not A Name Of csharp!!! [" + table.TableName+"]");
+                            UseHeaderRow = false
                         }
-                        table.ExportType = (TypeOfTable)int.Parse(row[0].ToString());
-                        table.ClassName = row[2].ToString();
-                        table.FileName = row[3].ToString();
-                        table.Description = row[4].ToString();
-                        if (table.ExportType != TypeOfTable.ALL && table.ExportType != (TypeOfTable)type) continue;
-                        exTables.Add(table);
+                    }); ;
+                    var _base = result.Tables["__Base"];
+                    var exTables = new List<ExcelTable>();
 
-                    }
-                }
-                #endregion
+                    #region Table
 
-                var reg = new System.Text.RegularExpressions.Regex("[\\d]+");
-
-                foreach (var table in exTables)
-                {
-                    #region Read col
-                    if (debug)
-                        Console.WriteLine("Read Table:" + table.TableName);
-                    var data = result.Tables[table.TableName];
-                    var dataTable = new DataTable();
-                    for (var col = 1; col < data.Columns.Count; col++)
+                    if (_base != null && _base.Rows != null)
                     {
-
-                        var colnum = new ExcelTableCol();
-                        colnum.ColIndex = col - 1;
-                        colnum.Comment = data.Rows[2][col].ToString();
-                        colnum.Name = data.Rows[0][col].ToString();
-                        colnum.Type = data.Rows[1][col].ToString();
-
-                        var m = RegexName.Match(colnum.Name);
-                        if (m.Success)
+                        for (var i = 0; i < _base.Rows.Count; i++)
                         {
-                            colnum.Name = m.Groups[1].Value;
+                            var table = new ExcelTable();
 
-                            var r = m.Groups[2].Value;
-                            Regex arrReg = ExcelTable.RegOfArray;
-                            var cN = colnum.Name;
-                            var am = arrReg.Match(cN);
-                            if (am.Success)
-                            {
-                                cN = am.Groups[1].Value;
-                            }
-
-                            var re = new ForeignRelation
-                            {
-                                TableName = table.TableName,
-                                Key = cN,
-                                ForeignTableName = r.Split('.')[0],
-                                ForeignKey = r.Split('.')[1],
-                            };
+                            var row = _base.Rows[i];
+                            table.TableName = row[1].ToString();
                             if (debug)
+                                Console.WriteLine("Export Table:" + table.TableName);
+                            if (string.IsNullOrEmpty(table.TableName)) break;
+                            if (!ExcelTool.IsCshapName(table.TableName))
                             {
-                                Console.WriteLine("Foreign:" + re.ToString());
+                                throw new Exception("Not A Name Of csharp!!! [" + table.TableName + "]");
+                            }
+                            table.ExportType = TypeOfTable.ALL;// (TypeOfTable)int.Parse(row[0].ToString());
+                            table.ClassName = row[1].ToString();
+                            table.FileName = row[2].ToString();
+                            table.Description = row[3].ToString();
+                            if (table.ExportType != TypeOfTable.ALL && table.ExportType != (TypeOfTable)type) continue;
+                            exTables.Add(table);
+
+                        }
+                    }
+                    #endregion
+
+                    var reg = new Regex("[\\d]+");
+
+                    foreach (var table in exTables)
+                    {
+                        #region Read col
+                        if (debug)
+                            Console.WriteLine("Read Table:" + table.TableName);
+                        var data = result.Tables[table.TableName];
+                        var dataTable = new DataTable();
+                        for (var col = 1; col < data.Columns.Count; col++)
+                        {
+
+                            var colnum = new ExcelTableCol
+                            {
+                                ColIndex = col - 1,
+                                Comment = data.Rows[2][col].ToString(),
+                                Name = data.Rows[0][col].ToString(),
+                                Type = data.Rows[1][col].ToString()
+                            };
+
+                            var m = RegexName.Match(colnum.Name);
+                            if (m.Success)
+                            {
+                                colnum.Name = m.Groups[1].Value;
+
+                                var r = m.Groups[2].Value;
+                                Regex arrReg = ExcelTable.RegOfArray;
+                                var cN = colnum.Name;
+                                var am = arrReg.Match(cN);
+                                if (am.Success)
+                                {
+                                    cN = am.Groups[1].Value;
+                                }
+
+                                var re = new ForeignRelation
+                                {
+                                    TableName = table.TableName,
+                                    Key = cN,
+                                    ForeignTableName = r.Split('.')[0],
+                                    ForeignKey = r.Split('.')[1],
+                                };
+                                if (debug)
+                                {
+                                    Console.WriteLine("Foreign:" + re.ToString());
+                                }
+
+                                var tK = string.Format("{0}.{1}", re.TableName, re.Key);
+                                if (!rlist.ContainsKey(tK))
+                                    rlist.Add(tK, re);
                             }
 
-                            var tK = string.Format("{0}.{1}", re.TableName, re.Key);
-                            if (!rlist.ContainsKey(tK))
-                                rlist.Add(tK, re);
+
+                            if (string.IsNullOrEmpty(colnum.Name)
+                                || colnum.Name == "0" || colnum.Name == "-1")
+                                break;
+
+                            if (!ExcelTool.IsCshapName(colnum.Name))
+                            {
+                                throw new Exception(string.Format("[{0}] Not a csharp name!", colnum.Name));
+                            }
+                            table.Cols.Add(colnum);
+                            var coln = data.Columns[col];
+                            dataTable.Columns.Add(new DataColumn
+                            {
+                                AllowDBNull = true,
+                                ColumnName = coln.ColumnName
+                            });
+                            if (debug)
+                                Console.WriteLine(string.Format("{1}-{0} {2}", colnum.Name, colnum.ColIndex, colnum.Type));
+
                         }
-                        
-
-                        if (string.IsNullOrEmpty(colnum.Name)
-                            || colnum.Name == "0" || colnum.Name == "-1")
-                            break;
-
-                        if (!ExcelTool.IsCshapName(colnum.Name))
+                        #endregion
+                        table.ProcessColsArray();
+                        #region Read row
+                        for (var i = 3; i < data.Rows.Count; i++)
                         {
-                            throw new Exception(string.Format("[{0}] Not a csharp name!", colnum.Name));
+                            if (data.Rows[i][1] == null)
+                                continue;
+                            var row = dataTable.NewRow();
+                            for (var col = 1; col < data.Columns.Count && col < dataTable.Columns.Count + 1; col++)
+                            {
+                                row[col - 1] = data.Rows[i][col];
+                            }
+
+                            dataTable.Rows.Add(row);
                         }
-                        table.Cols.Add(colnum);
-                        var coln = data.Columns[col];
-                        dataTable.Columns.Add(new DataColumn
-                        {
-                            AllowDBNull = true,
-                            ColumnName = coln.ColumnName
-                        });
-                        if (debug)
-                            Console.WriteLine(string.Format("{1}-{0} {2}", colnum.Name, colnum.ColIndex, colnum.Type));
 
+                        #endregion
+
+                        #region Save Json File
+                        var json = ExcelTool.GetExcelData(table, dataTable, debug, out JsonValue values);
+                        if (debug) Console.WriteLine(string.Format("Write json data of {0} path:[{1}]", table.TableName, table.FileName));
+                        File.WriteAllText(Path.Combine(jsonDir, table.FileName), json);
+                        #endregion
+                        outList.Add(table.ClassName, table);
+                        tableData.Add(table.TableName, values);
                     }
-                    #endregion
-                    table.ProcessColsArray();
-                    #region Read row
-                    for (var i = 3; i < data.Rows.Count; i++)
-                    {
-                        if (data.Rows[i][1] == null)
-                            continue;
-                        var row = dataTable.NewRow();
-                        for (var col = 1; col < data.Columns.Count && col < dataTable.Columns.Count + 1; col++)
-                        {
-                            row[col - 1] = data.Rows[i][col];
-                        }
-
-                        dataTable.Rows.Add(row);
-                    }
-                    #endregion
-                    #region Save Json File
-                    JsonValue values;
-                    var json = ExcelTool.GetExcelData(table, dataTable,debug, out  values);
-                    if (debug)
-                        Console.WriteLine( string.Format("Write json data of {0} path:[{1}]", table.TableName,table.FileName));
-                    File.WriteAllText(Path.Combine(jsonDir, table.FileName), json);
-                    #endregion
-                    outList.Add( table.ClassName, table);
-                    tableData.Add(table.TableName, values);
+              
                 }
-                //myConn.Close();
-
-
-                excelReader.Close();
             }
             #endregion
 

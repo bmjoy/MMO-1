@@ -72,15 +72,18 @@ public class LayoutEditorWindow:EditorWindow
 				line =this.line
 			}
 		);
-        UApplication.G<EditorGate>()?.ReleaseMagic (testMaigc);
+
+        EditorStarter.G()?.ReleaseMagic (testMaigc);
 		lastStep = 0;
 		//time = 0;
 	}
+
+
     private void GetPlayingInfo()
     {
         if (!EditorApplication.isPlaying)
             return;
-        currentRunTime = UApplication.G<EditorGate>()
+        currentRunTime = EditorStarter.G()
             ?.currentReleaser?.GetLayoutTimeByPath(this.shortPath);
 
     }

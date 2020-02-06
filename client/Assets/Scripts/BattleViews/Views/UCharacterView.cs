@@ -73,17 +73,23 @@ public class UCharacterView : UElementView,IBattleCharacter
             Agent.isStopped = true;
             Agent.Move(MoveForward.Value * Agent.speed * Time.deltaTime);
             targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
-            CharacterAnimator.SetFloat(SpeedStr, Agent.speed);
+            PlaySpeed( Agent.speed);
         }
         else
         {
-            CharacterAnimator.SetFloat(SpeedStr, Agent.velocity.magnitude);
+            PlaySpeed(Agent.velocity.magnitude);
         }
 
         if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
         {
             targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
         }
+    }
+
+    private void PlaySpeed(float speed)
+    {
+        if (CharacterAnimator == null) return;
+        CharacterAnimator.SetFloat(SpeedStr, speed);
     }
 
 

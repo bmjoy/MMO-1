@@ -6,37 +6,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using XNet.Libs.Utility;
 
+
 public class StartType : MonoBehaviour
 {
-    private class UnityLoger : Loger
-    {
-        #region implemented abstract members of Loger
-        public override void WriteLog(DebugerLog log)
-        {
-            switch (log.Type)
-            {
-                case LogerType.Error:
-                    Debug.LogError(log);
-                    break;
-                case LogerType.Log:
-                    Debug.Log(log);
-                    break;
-                case LogerType.Waring:
-                case LogerType.Debug:
-                    Debug.LogWarning(log);
-                    break;
-            }
-
-        }
-        #endregion   
-    }
-
+    
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
         Debuger.Loger = new UnityLoger();
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
+
+        yield return SceneManager.LoadSceneAsync("Welcome", LoadSceneMode.Additive);
 
         yield return new WaitForEndOfFrame();
   

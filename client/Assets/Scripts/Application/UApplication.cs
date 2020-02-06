@@ -9,17 +9,8 @@ using System.Collections;
 /// <summary>
 /// 处理 App
 /// </summary>
-public class UApplication : XSingleton<UApplication>, IConfigLoader
+public class UApplication : XSingleton<UApplication>
 {
-
-    List<T> IConfigLoader.Deserialize<T>()
-    {
-        var name = ExcelToJSONConfigManager.GetFileName<T>();
-        var json = ResourcesManager.S.LoadText("Json/" + name);
-        if (json == null) return null;
-        return JsonTool.Deserialize<List<T>>(json);
-    }
-
 
     public int ReceiveTotal;
     public int SendTotal;
@@ -37,7 +28,6 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
     public string SesssionKey;
 
     public float PingDelay = 0f;
-    public static bool IsEditorMode = false;
 
     #region Gate
 
@@ -104,7 +94,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
     public void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        _ = new ExcelToJSONConfigManager(this);
+        _ = new ExcelToJSONConfigManager(ResourcesManager.S);
         GetServer();
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;

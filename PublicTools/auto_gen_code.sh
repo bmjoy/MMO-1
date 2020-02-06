@@ -16,7 +16,7 @@ if [ "$?" -ne "0" ]; then
   exit 1
 fi
 
-mono ./ExcelOut.exe dir:../econfigs namespace:EConfig exportJson:../src/json/ exportCs:$CSHARP_OUT_PATH/ExcelConfig.cs ex:*.xlsx
+mono ./ExcelOut.exe dir:../econfigs namespace:EConfig exportJson:../src/json/ exportCs:$CSHARP_OUT_PATH/ExcelConfig.cs ex:*.xlsx debug:true
 if [ "$?" -ne "0" ]; then
   echo "Sorry, check excel files "
   exit 1

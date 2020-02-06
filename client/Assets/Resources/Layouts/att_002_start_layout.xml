@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TimeLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Time>1</Time>
   <Points>
     <TimePoint>
@@ -45,10 +45,10 @@
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>2149d010-aada-4980-b5b1-e139816ad5f5</GUID>
-      <target>Target</target>
-      <damageType>Single</damageType>
+      <target>Releaser</target>
+      <damageType>Rangle</damageType>
       <fiterType>OwnerTeam</fiterType>
-      <radius>1</radius>
+      <radius>3</radius>
       <angle>360</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>

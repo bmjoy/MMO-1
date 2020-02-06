@@ -19,6 +19,7 @@ namespace EConfig
     /// 装备数据表
     /// </summary>
     [ConfigFile("EquipmentData.json","EquipmentData")]
+    [global::System.Serializable]
     public class EquipmentData:JSONConfigBase    {
         
         /// <summary>
@@ -54,9 +55,10 @@ namespace EConfig
     }
 
     /// <summary>
-    /// 英雄数据表
+    /// 等级表
     /// </summary>
     [ConfigFile("MapData.json","MapData")]
+    [global::System.Serializable]
     public class MapData:JSONConfigBase    {
         
         /// <summary>
@@ -89,6 +91,7 @@ namespace EConfig
     /// 装备升级表
     /// </summary>
     [ConfigFile("EquipmentLevelUpData.json","EquipmentLevelUpData")]
+    [global::System.Serializable]
     public class EquipmentLevelUpData:JSONConfigBase    {
         
         /// <summary>
@@ -133,6 +136,7 @@ namespace EConfig
     /// 战斗关卡地图表
     /// </summary>
     [ConfigFile("BattleLevelData.json","BattleLevelData")]
+    [global::System.Serializable]
     public class BattleLevelData:JSONConfigBase    {
         
         /// <summary>
@@ -148,40 +152,34 @@ namespace EConfig
         public int MapID { set; get; }
         
         /// <summary>
-        /// 最大玩家数
+        /// 最大进入等级
         /// </summary>
         [ExcelConfigColIndex(3)]
-        public int MaxPlayer { set; get; }
-        
-        /// <summary>
-        /// 解锁条件
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int UnlockType { set; get; }
-        
-        /// <summary>
-        /// 解锁参数
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public String UnlockParams { set; get; }
+        public int LimitLevel { set; get; }
         
         /// <summary>
         /// 怪物刷新组
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(4)]
         public String MonsterGroupID { set; get; }
         
         /// <summary>
         /// Boss刷新组
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(5)]
         public String BossGroupID { set; get; }
         
         /// <summary>
         /// boss出现需求杀怪数
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(6)]
         public int BossNeedKilledNumber { set; get; }
+        
+        /// <summary>
+        /// 描述
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public String Description { set; get; }
 
     }
 
@@ -189,19 +187,20 @@ namespace EConfig
     /// 怪物刷新组
     /// </summary>
     [ConfigFile("MonsterGroupData.json","MonsterGroupData")]
+    [global::System.Serializable]
     public class MonsterGroupData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
         
         /// <summary>
         /// 掉落ID
         /// </summary>
-        [ExcelConfigColIndex(2)]
+        [ExcelConfigColIndex(1)]
         public int DropID { set; get; }
+        
+        /// <summary>
+        /// 掉落概率
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Pro { set; get; }
         
         /// <summary>
         /// 怪物ID
@@ -210,21 +209,15 @@ namespace EConfig
         public String MonsterID { set; get; }
         
         /// <summary>
-        /// 出现概率
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public String Pro { set; get; }
-        
-        /// <summary>
         /// 最少刷怪数
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(4)]
         public int MonsterNumberMin { set; get; }
         
         /// <summary>
         /// 最大刷怪数
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(5)]
         public int MonsterNumberMax { set; get; }
 
     }
@@ -233,6 +226,7 @@ namespace EConfig
     /// 掉落组
     /// </summary>
     [ConfigFile("DropGroupData.json","DropGroupData")]
+    [global::System.Serializable]
     public class DropGroupData:JSONConfigBase    {
         
         /// <summary>
@@ -277,6 +271,7 @@ namespace EConfig
     /// 怪物表
     /// </summary>
     [ConfigFile("MonsterData.json","MonsterData")]
+    [global::System.Serializable]
     public class MonsterData:JSONConfigBase    {
         
         /// <summary>
@@ -345,6 +340,7 @@ namespace EConfig
     /// buff数据表
     /// </summary>
     [ConfigFile("BuffData.json","BuffData")]
+    [global::System.Serializable]
     public class BuffData:JSONConfigBase    {
         
         /// <summary>
@@ -371,6 +367,7 @@ namespace EConfig
     /// 装备洗练属性表
     /// </summary>
     [ConfigFile("EquipmentRefreshData.json","EquipmentRefreshData")]
+    [global::System.Serializable]
     public class EquipmentRefreshData:JSONConfigBase    {
         
         /// <summary>
@@ -415,6 +412,7 @@ namespace EConfig
     /// 英雄升级经验表
     /// </summary>
     [ConfigFile("CharacterLevelUpData.json","CharacterLevelUpData")]
+    [global::System.Serializable]
     public class CharacterLevelUpData:JSONConfigBase    {
         
         /// <summary>
@@ -441,6 +439,7 @@ namespace EConfig
     /// 角色数据表
     /// </summary>
     [ConfigFile("CharacterData.json","CharacterData")]
+    [global::System.Serializable]
     public class CharacterData:JSONConfigBase    {
         
         /// <summary>
@@ -462,111 +461,123 @@ namespace EConfig
         public String AIResourcePath { set; get; }
         
         /// <summary>
-        /// 视野
+        /// 普通攻击技能ID
         /// </summary>
         [ExcelConfigColIndex(4)]
+        public int AttackSkillID { set; get; }
+        
+        /// <summary>
+        /// 连击技能
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int AttackAppend { set; get; }
+        
+        /// <summary>
+        /// 视野(m)
+        /// </summary>
+        [ExcelConfigColIndex(6)]
         public float ViewDistance { set; get; }
         
         /// <summary>
         /// 攻击速度(间隔秒)
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(7)]
         public float AttackSpeed { set; get; }
         
         /// <summary>
         /// 移动速度（m/s）
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(8)]
         public float MoveSpeed { set; get; }
         
         /// <summary>
         /// 避让优先级
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(9)]
         public float PriorityMove { set; get; }
         
         /// <summary>
         /// 魔法
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(10)]
         public int MPMax { set; get; }
         
         /// <summary>
         /// 血量
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(11)]
         public int HPMax { set; get; }
         
         /// <summary>
         /// 伤害小
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(12)]
         public int DamageMin { set; get; }
         
         /// <summary>
         /// 伤害大
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(13)]
         public int DamageMax { set; get; }
         
         /// <summary>
         /// 防御力
         /// </summary>
-        [ExcelConfigColIndex(12)]
+        [ExcelConfigColIndex(14)]
         public int Defance { set; get; }
         
         /// <summary>
         /// 力量
         /// </summary>
-        [ExcelConfigColIndex(13)]
+        [ExcelConfigColIndex(15)]
         public int Force { set; get; }
         
         /// <summary>
         /// 智力
         /// </summary>
-        [ExcelConfigColIndex(14)]
+        [ExcelConfigColIndex(16)]
         public int Knowledge { set; get; }
         
         /// <summary>
         /// 敏捷
         /// </summary>
-        [ExcelConfigColIndex(15)]
+        [ExcelConfigColIndex(17)]
         public int Agility { set; get; }
         
         /// <summary>
         /// 力量成长
         /// </summary>
-        [ExcelConfigColIndex(16)]
+        [ExcelConfigColIndex(18)]
         public float ForceGrowth { set; get; }
         
         /// <summary>
         /// 智力成长
         /// </summary>
-        [ExcelConfigColIndex(17)]
+        [ExcelConfigColIndex(19)]
         public float KnowledgeGrowth { set; get; }
         
         /// <summary>
         /// 敏捷成长
         /// </summary>
-        [ExcelConfigColIndex(18)]
+        [ExcelConfigColIndex(20)]
         public float AgilityGrowth { set; get; }
         
         /// <summary>
         /// 种类
         /// </summary>
-        [ExcelConfigColIndex(19)]
+        [ExcelConfigColIndex(21)]
         public int Category { set; get; }
         
         /// <summary>
         /// 防御类型
         /// </summary>
-        [ExcelConfigColIndex(20)]
+        [ExcelConfigColIndex(22)]
         public int DefanceType { set; get; }
         
         /// <summary>
         /// 攻击类型
         /// </summary>
-        [ExcelConfigColIndex(21)]
+        [ExcelConfigColIndex(23)]
         public int DamageType { set; get; }
 
     }
@@ -575,61 +586,74 @@ namespace EConfig
     /// 角色技能
     /// </summary>
     [ConfigFile("CharacterMagicData.json","CharacterMagicData")]
+    [global::System.Serializable]
     public class CharacterMagicData:JSONConfigBase    {
         
         /// <summary>
         /// 名称
         /// </summary>
         [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 所属角色
+        /// </summary>
+        [ExcelConfigColIndex(2)]
         public int CharacterID { set; get; }
         
         /// <summary>
         /// 魔法图标
         /// </summary>
-        [ExcelConfigColIndex(2)]
+        [ExcelConfigColIndex(3)]
         public String IconKey { set; get; }
         
         /// <summary>
         /// 魔法Key
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(4)]
         public String MagicKey { set; get; }
         
         /// <summary>
         /// 需求MP
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public int MPCost { set; get; }
         
         /// <summary>
         /// 释放最小距离
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public float ReleaseRangeMin { set; get; }
         
         /// <summary>
-        /// 释放距离（释放最大距离）
+        /// 释放最大距离
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public float ReleaseRangeMax { set; get; }
         
         /// <summary>
         /// 释放类型
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public int ReleaseType { set; get; }
         
         /// <summary>
         /// 释放参数
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public int ReleaseAITargetType { set; get; }
         
         /// <summary>
-        /// CoolDown时间秒
+        /// CoolDown(s)
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public float TickTime { set; get; }
+        
+        /// <summary>
+        /// 描述
+        /// </summary>
+        [ExcelConfigColIndex(11)]
+        public String Description { set; get; }
 
     }
 
@@ -637,6 +661,7 @@ namespace EConfig
     /// 英雄数据表
     /// </summary>
     [ConfigFile("MagicLevelUpData.json","MagicLevelUpData")]
+    [global::System.Serializable]
     public class MagicLevelUpData:JSONConfigBase    {
         
         /// <summary>
@@ -654,32 +679,8 @@ namespace EConfig
         /// <summary>
         /// 参数1
         /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String Param1 { set; get; }
-        
-        /// <summary>
-        /// 参数2
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public String Param2 { set; get; }
-        
-        /// <summary>
-        /// 参数3
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public String Param3 { set; get; }
-        
-        /// <summary>
-        /// 参数4
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public String Param4 { set; get; }
-        
-        /// <summary>
-        /// 参数5
-        /// </summary>
-        [ExcelConfigColIndex(7)]
-        public String Param5 { set; get; }
+        [ExcelConfigColIndex(0)]
+        public List<String> Param { set; get; }
 
     }
 
@@ -687,6 +688,7 @@ namespace EConfig
     /// 道具表
     /// </summary>
     [ConfigFile("ItemData.json","ItemData")]
+    [global::System.Serializable]
     public class ItemData:JSONConfigBase    {
         
         /// <summary>
@@ -726,18 +728,6 @@ namespace EConfig
         public String Icon { set; get; }
         
         /// <summary>
-        /// 参数1
-        /// </summary>
-        [ExcelConfigColIndex(7)]
-        public String Params1 { set; get; }
-        
-        /// <summary>
-        /// 参数2
-        /// </summary>
-        [ExcelConfigColIndex(8)]
-        public String Params2 { set; get; }
-        
-        /// <summary>
         /// 是否可堆叠
         /// </summary>
         [ExcelConfigColIndex(9)]
@@ -748,6 +738,12 @@ namespace EConfig
         /// </summary>
         [ExcelConfigColIndex(10)]
         public int MaxStackNum { set; get; }
+        
+        /// <summary>
+        /// 参数1
+        /// </summary>
+        [ExcelConfigColIndex(0)]
+        public List<String> Params { set; get; }
 
     }
 

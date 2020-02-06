@@ -1,2 +1,3 @@
 [
-{"ID":1,"Name":"\u8BAD\u7EC3\u57FA\u5730","MapID":1,"MaxPlayer":4,"UnlockType":-1,"UnlockParams":"","MonsterGroupID":"1|2","BossGroupID":"3","BossNeedKilledNumber":50}]
+	{"ID":1,"Name":"\u7981\u5FCC\u4E4B\u5730","MapID":1,"LimitLevel":20,"MonsterGroupID":"10001","BossGroupID":"10002","BossNeedKilledNumber":1000,"Description":"\u4F5C\u4E3A\u7B2C\u4E00\u4E2A\u5173\u5361\u60F3\u4E0D\u5230\u597D\u540D\u5B57"}
+]

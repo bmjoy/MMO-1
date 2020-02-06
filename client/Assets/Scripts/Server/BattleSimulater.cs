@@ -25,16 +25,9 @@ using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
 
-public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfigLoader
+public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader
 {
 
-    List<T> IConfigLoader.Deserialize<T>()
-    {
-        var name = ExcelToJSONConfigManager.GetFileName<T>();
-        var json = ResourcesManager.S.LoadText("Json/" + name);
-        if (json == null) return null;
-        return JsonTool.Deserialize<List<T>>(json);
-    }
 
     private class BindPlayer
     {
@@ -76,7 +69,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     {
         var config = ResourcesManager.S.ReadStreamingFile("server.json");
         var battleServer = BattleServerConfig.Parser.ParseJson(config);;
-        new CM(this);
+        new CM(ResourcesManager.S);
 
         LevelData = CM.Current.GetConfigByID<BattleLevelData>(battleServer.Level);
         MapConfig = CM.Current.GetConfigByID<MapData>(LevelData.MapID);
@@ -433,7 +426,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         foreach (var i in user.GetHero().Equips)
         {
             var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
-            var equipId = int.Parse(itemsConfig.Params1);
+            var equipId = int.Parse(itemsConfig.Params[0]);
             var equipconfig = CM.Current.GetConfigByID<EquipmentData>(equipId);
             if (equipconfig == null) continue;
             var equip = user.GetEquipByGuid(i.GUID);

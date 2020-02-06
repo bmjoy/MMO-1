@@ -53,18 +53,15 @@ public class MagicEditorWindow : EditorWindow
 		if (!EditorApplication.isPlaying)
 			return;
 		if (data == null) return;
-		var gate = UApplication.G< EditorGate>();
-		if (gate == null) return;
 
 		foreach (var i in data.Containers) i.line = null;
-		gate.ReleaseMagic(data);
+		AIRunner.Current?.ReleaseMagic(data);
 	}
 
 	private bool IsRuning(Layout.EventType type)
 	{
 		if (!EditorApplication.isPlaying) return false;
-		return UApplication.G<EditorGate>()?
-			.currentReleaser?.IsRuning(type) ?? false;
+		return AIRunner.Current?.IsRuning(type)??false;
 	}
 
 	private void OnGUI()

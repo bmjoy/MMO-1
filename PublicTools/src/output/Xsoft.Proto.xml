@@ -928,7 +928,7 @@
             </member>
         <member name="T:EConfig.MapData">
              <summary>
-             英雄数据表
+             等级表
              </summary>
             </member>
         <member name="P:EConfig.MapData.Name">
@@ -1001,19 +1001,9 @@
              地图ID
              </summary>
             </member>
-        <member name="P:EConfig.BattleLevelData.MaxPlayer">
+        <member name="P:EConfig.BattleLevelData.LimitLevel">
              <summary>
-             最大玩家数
-             </summary>
-            </member>
-        <member name="P:EConfig.BattleLevelData.UnlockType">
-             <summary>
-             解锁条件
-             </summary>
-            </member>
-        <member name="P:EConfig.BattleLevelData.UnlockParams">
-             <summary>
-             解锁参数
+             最大进入等级
              </summary>
             </member>
         <member name="P:EConfig.BattleLevelData.MonsterGroupID">
@@ -1031,14 +1021,14 @@
              boss出现需求杀怪数
              </summary>
             </member>
+        <member name="P:EConfig.BattleLevelData.Description">
+             <summary>
+             描述
+             </summary>
+            </member>
         <member name="T:EConfig.MonsterGroupData">
              <summary>
              怪物刷新组
-             </summary>
-            </member>
-        <member name="P:EConfig.MonsterGroupData.Name">
-             <summary>
-             名称
              </summary>
             </member>
         <member name="P:EConfig.MonsterGroupData.DropID">
@@ -1046,14 +1036,14 @@
              掉落ID
              </summary>
             </member>
+        <member name="P:EConfig.MonsterGroupData.Pro">
+             <summary>
+             掉落概率
+             </summary>
+            </member>
         <member name="P:EConfig.MonsterGroupData.MonsterID">
              <summary>
              怪物ID
-             </summary>
-            </member>
-        <member name="P:EConfig.MonsterGroupData.Pro">
-             <summary>
-             出现概率
              </summary>
             </member>
         <member name="P:EConfig.MonsterGroupData.MonsterNumberMin">
@@ -1251,9 +1241,19 @@
              AI路径
              </summary>
             </member>
+        <member name="P:EConfig.CharacterData.AttackSkillID">
+             <summary>
+             普通攻击技能ID
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterData.AttackAppend">
+             <summary>
+             连击技能
+             </summary>
+            </member>
         <member name="P:EConfig.CharacterData.ViewDistance">
              <summary>
-             视野
+             视野(m)
              </summary>
             </member>
         <member name="P:EConfig.CharacterData.AttackSpeed">
@@ -1346,9 +1346,14 @@
              角色技能
              </summary>
             </member>
-        <member name="P:EConfig.CharacterMagicData.CharacterID">
+        <member name="P:EConfig.CharacterMagicData.Name">
              <summary>
              名称
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterMagicData.CharacterID">
+             <summary>
+             所属角色
              </summary>
             </member>
         <member name="P:EConfig.CharacterMagicData.IconKey">
@@ -1373,7 +1378,7 @@
             </member>
         <member name="P:EConfig.CharacterMagicData.ReleaseRangeMax">
              <summary>
-             释放距离（释放最大距离）
+             释放最大距离
              </summary>
             </member>
         <member name="P:EConfig.CharacterMagicData.ReleaseType">
@@ -1388,7 +1393,12 @@
             </member>
         <member name="P:EConfig.CharacterMagicData.TickTime">
              <summary>
-             CoolDown时间秒
+             CoolDown(s)
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterMagicData.Description">
+             <summary>
+             描述
              </summary>
             </member>
         <member name="T:EConfig.MagicLevelUpData">
@@ -1406,29 +1416,9 @@
              等级
              </summary>
             </member>
-        <member name="P:EConfig.MagicLevelUpData.Param1">
+        <member name="P:EConfig.MagicLevelUpData.Param">
              <summary>
              参数1
-             </summary>
-            </member>
-        <member name="P:EConfig.MagicLevelUpData.Param2">
-             <summary>
-             参数2
-             </summary>
-            </member>
-        <member name="P:EConfig.MagicLevelUpData.Param3">
-             <summary>
-             参数3
-             </summary>
-            </member>
-        <member name="P:EConfig.MagicLevelUpData.Param4">
-             <summary>
-             参数4
-             </summary>
-            </member>
-        <member name="P:EConfig.MagicLevelUpData.Param5">
-             <summary>
-             参数5
              </summary>
             </member>
         <member name="T:EConfig.ItemData">
@@ -1466,16 +1456,6 @@
              图标
              </summary>
             </member>
-        <member name="P:EConfig.ItemData.Params1">
-             <summary>
-             参数1
-             </summary>
-            </member>
-        <member name="P:EConfig.ItemData.Params2">
-             <summary>
-             参数2
-             </summary>
-            </member>
         <member name="P:EConfig.ItemData.Unique">
              <summary>
              是否可堆叠
@@ -1484,6 +1464,11 @@
         <member name="P:EConfig.ItemData.MaxStackNum">
              <summary>
              最大堆叠数
+             </summary>
+            </member>
+        <member name="P:EConfig.ItemData.Params">
+             <summary>
+             参数1
              </summary>
             </member>
         <member name="T:Proto.ExcelconstReflection">

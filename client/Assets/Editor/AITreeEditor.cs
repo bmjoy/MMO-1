@@ -536,13 +536,9 @@ public class AITreeEditor:EditorWindow
     {
         if (root == null)
             return;
-        if (!EditorApplication.isPlaying)
-            return;
-        var gate = UApplication.G<EditorGate>();
-        if (gate == null) return;
+        if (!EditorApplication.isPlaying) return;
+        _runRoot = AIRunner.Current?.RunAI(root);
 
-        var per = gate.releaser.Controllor.Perception as BattlePerception;
-        _runRoot = per.ChangeCharacterAI(root, gate.releaser);
     }
 
 	private AITreeRoot _runRoot;

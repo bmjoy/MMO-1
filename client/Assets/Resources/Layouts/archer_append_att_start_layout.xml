@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>1.2</Time>
+  <Points>
+    <TimePoint>
+      <GUID>ecac0d2f-6de3-4614-acc1-7be19e9aeb58</GUID>
+      <Time>0.53031677</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>cbf5d334-8769-4f2a-81e6-b035bb75a116</GUID>
+      <Time>0</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>ce83d1d5-6482-4ec3-8f43-9e16223bcd2c</GUID>
+      <Time>0.09351433</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="MissileLayout">
+      <GUID>ecac0d2f-6de3-4614-acc1-7be19e9aeb58</GUID>
+      <resourcesPath>Missiles/Arrow-human-light.prefab</resourcesPath>
+      <movementType>Line</movementType>
+      <maxLifeTime>-1</maxLifeTime>
+      <maxDistance>-1</maxDistance>
+      <speed>25</speed>
+      <fromBone>Body</fromBone>
+      <toBone>Body</toBone>
+      <offset>
+        <x>1</x>
+        <y>0</y>
+        <z>1</z>
+      </offset>
+    </LayoutBase>
+    <LayoutBase xsi:type="MotionLayout">
+      <GUID>a644f2e2-f212-42cb-82a8-48d975f139c9</GUID>
+      <motionName>Attack</motionName>
+      <targetType>Releaser</targetType>
+    </LayoutBase>
+    <LayoutBase xsi:type="LookAtTarget">
+      <GUID>cbf5d334-8769-4f2a-81e6-b035bb75a116</GUID>
+    </LayoutBase>
+    <LayoutBase xsi:type="MotionLayout">
+      <GUID>ce83d1d5-6482-4ec3-8f43-9e16223bcd2c</GUID>
+      <motionName>Jump</motionName>
+      <targetType>Releaser</targetType>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>

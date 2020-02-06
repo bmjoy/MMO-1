@@ -2,8 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ExcelConfig;
+using org.vxwo.csharp.json;
 
-public class ResourcesManager : XSingleton<ResourcesManager> {
+public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
+{
+
+	List<T> IConfigLoader.Deserialize<T>()
+	{
+		var name = ExcelToJSONConfigManager.GetFileName<T>();
+		var json =LoadText("Json/" + name);
+		if (json == null) return null;
+		return JsonTool.Deserialize<List<T>>(json);
+	}
 
 	public class LoadProcesser
 	{

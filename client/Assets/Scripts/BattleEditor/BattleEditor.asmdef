@@ -1,0 +1,17 @@
+{
+    "name": "BattleEditor",
+    "references": [
+        "BattleViews",
+        "Application",
+        "GameLogic",
+        "Joystick"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
