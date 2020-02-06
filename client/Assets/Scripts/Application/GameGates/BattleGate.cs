@@ -158,6 +158,7 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         if (Client != null)
         {
+            PreView.GetAndClearNotify();
             Client.Update();
             UApplication.Singleton.ReceiveTotal = Client.ReceiveSize;
             UApplication.Singleton.SendTotal = Client.SendSize;

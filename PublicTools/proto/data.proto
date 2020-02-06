@@ -92,3 +92,18 @@ message HeroMagicData
 }
 
 
+message ClientConfig
+{
+	string LoginServerHost=1;
+	int32 LoginServerPort=2;
+}
+
+message BattleServerConfig
+{
+	int32 Level=1;
+    int32 MaxPlayer =2;
+	int32 ListenPort=3;
+	string ListenHost=4;
+	int32 LoginServerPort=5;
+	string LoginServiceHost =6;
+}

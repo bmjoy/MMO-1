@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EConfig;
 using ExcelConfig;
+using GameLogic.Game.Elements;
 using Proto;
 using XNet.Libs.Net;
 
@@ -16,6 +17,8 @@ public class BattlePlayer
     private readonly Dictionary<int, int> dropItems = new Dictionary<int, int>();
     private readonly Dictionary<int, int> consumeItems = new Dictionary<int, int>();
 
+    public BattleCharacter HeroCharacter { set; get; }
+
     public int Gold { get; private set; }
 
     private int DifGold = 0;
@@ -28,7 +31,6 @@ public class BattlePlayer
     public DHero GetHero() { return Hero; }
 
     public string AccountId {  private set; get; }
-
    
     public BattlePlayer(string account, PlayerPackage package, DHero hero, Client client)
     {
@@ -38,8 +40,6 @@ public class BattlePlayer
         this.AccountId = account;
         this.Client = client;
     }
-
-
 
     public bool SubGold(int gold)
     {
@@ -55,7 +55,6 @@ public class BattlePlayer
         return true;
     }
 
-    //not completed
     public Notify_PlayerJoinState GetNotifyPackage()
     {
         var notify = new Notify_PlayerJoinState()

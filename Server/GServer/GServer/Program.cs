@@ -24,14 +24,17 @@ namespace GServer
             }
             else
             {
+
+                var testHost = "192.168.1.104";
+
                 json = "{" +
                     "\"ListenPort\":1700," +
-                    "\"Host\":\"127.0.0.1\"," +
+                    $"\"Host\":\"{testHost}\"," +
                     "\"ServicePort\":2000," +
-                    "\"ServiceHost\":\"127.0.0.1\"" +
-                    "\"LoginServerHost\":\"127.0.0.1\"," +
+                    $"\"ServiceHost\":\"{testHost}\"" +
+                    $"\"LoginServerHost\":\"{testHost}\"," +
                     "\"LoginServerPort\":\"1800\"," +
-                    "\"DBHost\":\"mongodb://127.0.0.1:27017/\"," +
+                    $"\"DBHost\":\"mongodb://127.0.0.1:27017/\"," +
                     "\"DBName\":\"gate01\"," +
                     "\"ServerID\":\"1\"," +
                     "\"ConfigPath\":\"/Users/xiexiongping/Documents/github/version/Server/\"" +

@@ -12,7 +12,78 @@ namespace GameLogic.Game.Elements
 
     public class BattleCharacter:BattleElement<IBattleCharacter>
 	{
-		public BattleCharacter (
+
+
+        
+        private readonly Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
+        private readonly Dictionary<HeroPropertyType, ComplexValue> Properties = new Dictionary<HeroPropertyType, ComplexValue>();
+        private float _speed;
+
+        public List<CharacterMagicData> Magics { private set; get; }
+        public string AcccountUuid { private set; get; }
+        public HeroCategory Category { set; get; }
+        public DefanceType TDefance { set; get; }
+        public DamageType TDamage { set; get; }
+        public int MaxHP
+        {
+            get
+            {
+                return this[HeroPropertyType.MaxHp].FinalValue + (int)(this[HeroPropertyType.Force].FinalValue * BattleAlgorithm.FORCE_HP);
+            }
+        }
+        public int MaxMP
+        {
+            get
+            {
+                var maxMP = this[HeroPropertyType.MaxMp].FinalValue + (int)(this[HeroPropertyType.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP);
+                return maxMP;
+            }
+        }
+        public float AttackSpeed
+        {
+            get
+            {
+                //500  - 20 *100
+                var time = this[HeroPropertyType.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[HeroPropertyType.Agility].FinalValue;
+                return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
+            }
+        }
+        public string Name { set; get; }
+        public int TeamIndex { set; get; }
+        public int Level { set; get; }
+        public HanlderEvent OnDead;
+        public int ConfigID { private set; get; }
+        public ActionLock Lock { private set; get; }
+        public float Speed
+        {
+            set
+            {
+                _speed = value;
+                View.SetSpeed(Speed);
+            }
+            get
+            {
+                var speed = this[HeroPropertyType.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
+                return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
+            }
+        }
+        public int HP { private set; get; }
+        public int MP { private set; get; }
+        public bool IsDeath
+        {
+            get
+            {
+                return HP == 0;
+            }
+        }
+        public AITreeRoot AIRoot { private set; get; }
+
+        public ComplexValue this[HeroPropertyType type]
+        {
+            get { return Properties[type]; }
+        }
+
+        public BattleCharacter (
             int configID,
             List<CharacterMagicData> magics,
             GControllor controllor, 
@@ -31,7 +102,6 @@ namespace GameLogic.Game.Elements
                 Properties.Add(pr,value );
             }
             Lock = new ActionLock();
-
             Lock.OnStateOnchanged += (s, e) => {
                 switch (e.Type)
                 {
@@ -49,12 +119,11 @@ namespace GameLogic.Game.Elements
             };
 		}
 
-        internal void MoveTo(UnityEngine.Vector3 target)
+        public void MoveTo(UnityEngine.Vector3 target)
         {
             View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3());
         }
-
-        internal void MoveForward(UnityEngine.Vector3 forward)
+        public void MoveForward(UnityEngine.Vector3 forward)
         {
             if (forward.magnitude > 0.1f)
             {
@@ -64,116 +133,30 @@ namespace GameLogic.Game.Elements
                 StopMove();
             }
         }
-
-        public List<CharacterMagicData> Magics { private set; get; }
-
-        internal void StopMove()
+        public void StopMove()
         {
             View.StopMove(View.Transform.position.ToPV3());
         }
-
-        public string AcccountUuid { private set; get; }
-        public HanlderEvent OnDead;
-		public int ConfigID { private set; get; }
-		private Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
-        private Dictionary<HeroPropertyType, ComplexValue> Properties = new Dictionary<HeroPropertyType, ComplexValue>();
-        public HeroCategory Category { set; get; }
-		public DefanceType TDefance{ set; get;}
-		public DamageType TDamage{ set; get;}
-
-        public int MaxHP
-        {
-            get
-            {
-                var hpMax = this[HeroPropertyType.MaxHp].FinalValue;
-                return hpMax + (int)(this[HeroPropertyType.Force].FinalValue * BattleAlgorithm.FORCE_HP);
-            }
-        }
-        public int MaxMP {
-            get 
-            {
-                var maxMP = this[HeroPropertyType.MaxMp].FinalValue 
-                + (int)(this[HeroPropertyType.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP);
-                return maxMP;
-            }
-        }
-
-        public float AttackSpeed
-        {
-            get
-            {
-                //500  - 20 *100
-                var time = this[HeroPropertyType.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[HeroPropertyType.Agility].FinalValue;
-                return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
-            }
-        }
-        public string Name { set; get; }
-		public int TeamIndex{ set; get;}
-		public int Level{ set; get;}
-
-        public ComplexValue this[HeroPropertyType type]
-        {
-            get { return Properties[type]; }
-        }
-
-        public ActionLock Lock { private set; get; }
-
-		private float _speed;
-
-		public float Speed
-        {
-            set
-            {
-                _speed = value;
-                View.SetSpeed(Speed);
-            }
-
-            get
-            {
-                var speed = (float)this[HeroPropertyType.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
-                return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
-            }
-        }
-
-		public int HP{ private set; get;} 
-        public int MP { private set; get; }
-
-		public bool IsDeath{
-			get
-			{ 
-				return HP == 0;
-			}
-		}
-
 		public bool SubHP(int hp)
 		{
-			if (hp <= 0)
-				return false;
-			if (HP == 0)
-				return true;
+			if (hp <= 0)  return false;
+			if (HP == 0) return true;
 			HP -= hp;
-			if (HP <= 0)
-				HP = 0;
+			if (HP <= 0) HP = 0;
 			var dead = HP == 0;//is dead
-			if (dead) OnDeath();
-            View.ShowHPChange(-hp,HP,this.MaxHP);
+            View.ShowHPChange(-hp, HP, this.MaxHP);
+            if (dead) OnDeath();
 			return dead;
 		}
-
-		public void AddHP(int hp)
-		{
+        public void AddHP(int hp)
+        {
             var maxHP = MaxHP;
-			if (hp <= 0)
-				return;
-            if (HP >= maxHP)
-				return;
-			HP += hp;
-			if (HP >=maxHP)
-				HP = maxHP;
-            View.ShowHPChange(hp,HP, maxHP);
-		}
-
-
+            if (hp <= 0) return;
+            if (HP >= maxHP) return;
+            HP += hp;
+            if (HP >= maxHP) HP = maxHP;
+            View.ShowHPChange(hp, HP, maxHP);
+        }
         public bool SubMP(int mp)
         {
             if (mp <= 0)
@@ -183,7 +166,6 @@ namespace GameLogic.Game.Elements
             View.ShowMPChange(-mp, MP, this.MaxMP);
             return true;
         }
-
         public bool AddMP(int mp)
         {
             if (mp <= 0) return false;
@@ -193,15 +175,12 @@ namespace GameLogic.Game.Elements
             View.ShowMPChange(mp, MP, MaxMP);
             return true;
         }
-
-        public AITreeRoot AIRoot { private set; get; }
-
         public void SetAITree(AITreeRoot root)
         {
             AIRoot = root;
         }
 
-		internal void Init()
+		public void Init()
 		{
             HP = MaxHP;
             MP = MaxMP;
@@ -211,13 +190,11 @@ namespace GameLogic.Game.Elements
 		protected void OnDeath()
 		{
 			View.Death();
-            if (OnDead != null)
-                OnDead(this);
+            OnDead?.Invoke(this);
             var per = this.Controllor.Perception as BattlePerception;
             per.StopAllReleaserByCharacter(this);
 			Destory(this, 5.5f);
 		}
-
 
         public void AttachMagicHistory(int magicID, float now)
         {

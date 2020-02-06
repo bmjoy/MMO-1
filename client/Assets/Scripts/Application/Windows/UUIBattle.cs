@@ -57,7 +57,7 @@ namespace Windows
 
             public void Update(UCharacterView view, float now)
             {
-                if (view.MagicCds.TryGetValue(magicID, out HeroMagicData data))
+                if (view.TryGetMagicData(magicID, out HeroMagicData data))
                 {
                     var time = Mathf.Max(0, data.CDTime - now);
                     this.Template.Cost.text = time > 0 ? string.Format("{0:0.0}", time) : string.Empty;
@@ -164,12 +164,12 @@ namespace Windows
 
         public void InitCharacter(UCharacterView view)
         {
-            var magic = view.MagicCds.Where(t => IsMaigic(t.Key)).ToList();
+            var magic = view.Magics.Where(t => IsMaigic(t.MagicID)).ToList();
             this.GridTableManager.Count = magic.Count;
             int index = 0;
             foreach (var i in GridTableManager)
             {
-                i.Model.SetMagic(magic[index].Key, magic[index].Value.CDTime);
+                i.Model.SetMagic(magic[index].MagicID, magic[index].CDTime);
                 i.Model.OnClick = OnRelease;
                 index++;
             }
@@ -178,8 +178,8 @@ namespace Windows
 
         private void OnRelease(GridTableModel item)
         {
-            var action = new Proto.Action_ClickSkillIndex { MagicKey = item.MagicData.MagicKey };
-            UApplication.G<BattleGate>()?.SendAction(action);
+            var action = new Action_ClickSkillIndex { MagicKey = item.MagicData.MagicKey };
+            UApplication.G<BattleGate>().SendAction(action);
         }
 
         private UCharacterView view;

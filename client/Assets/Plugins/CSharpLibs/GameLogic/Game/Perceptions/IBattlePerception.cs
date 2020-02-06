@@ -9,6 +9,7 @@ using Layout.AITree;
 using UVector3 = UnityEngine.Vector3;
 using GameLogic.Utility;
 using Proto;
+using System.Collections.Generic;
 
 namespace GameLogic.Game.Perceptions
 {
@@ -41,10 +42,10 @@ namespace GameLogic.Game.Perceptions
  
         [NeedNotify(typeof(Notify_CreateBattleCharacter),
             "AccountUuid", "ConfigID", "TeamIndex",
-            "Position", "Forward", "Level", "Name", "Speed")]
+            "Position", "Forward", "Level", "Name", "Speed", "MagicId")]
         IBattleCharacter CreateBattleCharacterView
             (string account_id,int config, int teamId,
-            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed);
+            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed, IList<int> magicId);
 
        
         [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position")]

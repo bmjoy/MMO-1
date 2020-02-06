@@ -80,17 +80,19 @@ message Notify_CreateBattleCharacter
 	 int32 Level=7; //等级
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
+	 repeated int32 MagicId = 16;//魔法
 }
 
 //创建一个飞行物
 message Notify_CreateMissile
 {
-	 int32 ReleaserIndex=2;
-	 string ResourcesPath=3;
-	 float Speed=4;//速度
-	 string FromBone=6;
-	 string ToBone=7;
-	 Vector3 Offset=8;
+	int32 Index =1;
+	int32 ReleaserIndex=2;
+	string ResourcesPath=3;
+	float Speed=4;//速度
+	string FromBone=6;
+	string ToBone=7;
+	Vector3 Offset=8;
 }
 
 enum MoveType
@@ -266,6 +268,7 @@ service NotifyService
 	rpc CharacterSetScale(Void) returns (Notify_CharacterSetScale){};//24
 	rpc CharacterAttachMagic(Void) returns (Notify_CharacterAttachMagic);//25
 	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
+	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
 }
 
 service ActionService

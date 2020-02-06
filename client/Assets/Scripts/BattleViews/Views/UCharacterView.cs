@@ -10,6 +10,7 @@ using UGameTools;
 using EngineCore.Simulater;
 using Google.Protobuf;
 using System;
+using System.Linq;
 
 [
 	BoneName("Top","__Top"),
@@ -32,18 +33,17 @@ public class UCharacterView : UElementView,IBattleCharacter
     private readonly List<HpChangeTip> _tips = new List<HpChangeTip>();
 
     public string AccoundUuid = string.Empty;
-
-    //public Dictionary<Proto.HeroPropertyType,int> Properties = new Dictionary<HeroPropertyType, int>();
-
 	private  const string SpeedStr ="Speed";
-	private Animator CharacterAnimator;
+    private const string TopBone = "Top";
+    private const string Die_Motion = "Die";
+    private Animator CharacterAnimator;
 	private bool IsStop = true;
-    private const string TopBone ="Top";
-
     public int hpBar = -1;
     private float showHpBarTime =0;
     private int max;
     private int cur;
+
+    private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
 
     // Update is called once per frame
     void Update()
@@ -58,35 +58,35 @@ public class UCharacterView : UElementView,IBattleCharacter
                     UUIManager.Singleton.OffsetInUI(i.pos));
             }
         }
-
         if (showHpBarTime > Time.time)
         {
-
             hpBar = UUITipDrawer.Singleton.DrawUUITipHpBar(hpBar,
                     cur, max,
                     UUIManager.Singleton.OffsetInUI(GetBoneByName(TopBone).position)
                 );
-
         }
-
         lookQuaternion = Quaternion.Lerp(lookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
         Character.transform.localRotation = lookQuaternion;
-        if (CharacterAnimator != null) CharacterAnimator.SetFloat(SpeedStr, Agent.velocity.magnitude);
-
         if (!Agent) return;
+        if (MoveForward.HasValue)
         {
-            if (MoveForward.HasValue)
-            {
-                Agent.Move(MoveForward.Value * Agent.speed * Time.deltaTime);
-                lookQuaternion = Quaternion.LookRotation(MoveForward.Value);
-            }
+            Agent.isStopped = true;
+            Agent.Move(MoveForward.Value * Agent.speed * Time.deltaTime);
+            targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
+            CharacterAnimator.SetFloat(SpeedStr, Agent.speed);
+        }
+        else
+        {
+            CharacterAnimator.SetFloat(SpeedStr, Agent.velocity.magnitude);
+        }
 
-            if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
-            {
-                targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
-            }
+        if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
+        {
+            targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
         }
     }
+
+
     void Awake()
     {
         Agent = this.gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>();
@@ -101,23 +101,18 @@ public class UCharacterView : UElementView,IBattleCharacter
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
-    public float Speed { get; internal set; }
+    public float Speed { get { return Agent.speed; } set { Agent.speed = value; } }
     public string Name { get; internal set; }
-
     private UnityEngine.AI.NavMeshAgent Agent;
     public string lastMotion =string.Empty;
     private float last = 0;
 	private readonly Dictionary<string ,Transform > bones = new Dictionary<string, Transform>();
     private Vector3? targetPos;
-
-    public int hp;
     private bool IsDead = false;
-
     public float damping  = 5;
-
     public Quaternion targetLookQuaternion;
-
     public Quaternion lookQuaternion = Quaternion.identity;
+    public int hp = -1;
 
     public Transform GetBoneByName(string name)
     {
@@ -180,14 +175,19 @@ public class UCharacterView : UElementView,IBattleCharacter
 
 
 
-    public Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
-
     public float GetCdTime(int magicKey)
     {
-        if (MagicCds.TryGetValue(magicKey, out HeroMagicData cd))
-            return cd.CDTime;
+        if (TryGetMagicData(magicKey, out HeroMagicData cd)) return cd.CDTime;
         return 0;
     }
+
+    public bool TryGetMagicData(int magicID, out HeroMagicData data)
+    {
+        if (MagicCds.TryGetValue(magicID, out data)) return true;
+        return false;
+    }
+
+    public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
     #region impl
 
@@ -213,11 +213,11 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     private Vector3 TryToSetPosition(Vector3 pos)
     {
-        if (Vector3.Distance(pos, transform.localPosition) > 0.1f)
+        if (Vector3.Distance(pos, transform.position) > 3f)
         {
             this.Agent.Warp(pos);
         }
-        return this.transform.localPosition;
+        return this.transform.position;
     }
 
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
@@ -248,27 +248,23 @@ public class UCharacterView : UElementView,IBattleCharacter
        //do nothing
     }
 
-    void IBattleCharacter.PlayMotion (string motion)
-	{
+    void IBattleCharacter.PlayMotion(string motion)
+    {
         CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
-		var an = CharacterAnimator;
-		if (an == null) return;
-        
-		if (motion == "Hit") {
-			if (last + 0.3f > Time.time)
-				return;
-		}
-		if (IsDead)
-			return;
-        
-        if (!string.IsNullOrEmpty(lastMotion)&& lastMotion != motion) {
-			an.ResetTrigger (lastMotion);
-		}
-		lastMotion = motion;
-		last = Time.time;
-		an.SetTrigger (motion);
+        var an = CharacterAnimator;
+        if (an == null) return;
 
-	}
+        if (motion == "Hit") { if (last + 0.3f > Time.time) return; }
+        if (IsDead) return;
+
+        if (!string.IsNullOrEmpty(lastMotion) && lastMotion != motion)
+        {
+            an.ResetTrigger(lastMotion);
+        }
+        lastMotion = motion;
+        last = Time.time;
+        an.SetTrigger(motion);
+    }
 
 
     void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target)
@@ -307,12 +303,11 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
     }
 
-
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.1f)
         {
-            transform.localPosition = pos.ToUV3();
+            transform.position = pos.ToUV3();
         }
         StopMove();
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
@@ -321,11 +316,10 @@ public class UCharacterView : UElementView,IBattleCharacter
     void IBattleCharacter.Death ()
 	{
         var view = this as IBattleCharacter;
-		view.PlayMotion ("Die");
+		view.PlayMotion (Die_Motion);
         StopMove();
         showHpBarTime = -1;
-		if(Agent)
-		 Agent.enabled = false;
+		if(Agent)  Agent.enabled = false;
 		IsDead = true;
 		MoveDown.BeginMove (this.Character, 1, 1, 5);
         CreateNotify(new Notify_CharacterDeath { Index = Index });
@@ -334,7 +328,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetSpeed(float speed)
     {
-        this.Agent.speed = speed;
+        this.Speed = speed;
         CreateNotify(new Notify_CharacterSpeed { Index = Index, Speed = speed });
     }
 
@@ -378,15 +372,21 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         CreateNotify(new Notify_CharacterAttachMagic { Index = Index,
             MagicId = magicID, CompletedTime = cdCompletedTime });
-        if (MagicCds.ContainsKey(magicID))
+        AddMagicCd(magicID, cdCompletedTime);
+    }
+
+    public void AddMagicCd(int id, float cdTime)
+    {
+        if (MagicCds.ContainsKey(id))
         {
-            MagicCds[magicID].CDTime = cdCompletedTime;
+            MagicCds[id].CDTime = cdTime;
         }
         else
         {
-            MagicCds.Add(magicID, new HeroMagicData{ MagicID = magicID, CDTime = cdCompletedTime});
+            MagicCds.Add(id, new HeroMagicData { MagicID = id, CDTime = cdTime });
         }
     }
+
     #endregion
 
     public override IMessage ToInitNotify()
@@ -405,6 +405,9 @@ public class UCharacterView : UElementView,IBattleCharacter
             Speed = Speed
         };
 
+        foreach (var i in MagicCds)
+            createNotity.MagicId.Add(i.Key);
+
         return createNotity;
     }
 
@@ -413,7 +416,7 @@ public class UCharacterView : UElementView,IBattleCharacter
     void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
     {
         TryToSetPosition(pos.ToUV3());
-
         MoveForward = forward.ToUV3().normalized;
+        CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
     }
 }

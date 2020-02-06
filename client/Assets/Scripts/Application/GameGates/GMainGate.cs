@@ -75,7 +75,7 @@ public class GMainGate:UGate
         characterView = perView.CreateBattleCharacterView(string.Empty,
             character.ID,0,
             Data.pos[3].position.ToPVer3(),Vector3.zero.ToPVer3(),
-            hero.Level,hero.Name, character.MoveSpeed ) as UCharacterView;
+            hero.Level,hero.Name, character.MoveSpeed,null) as UCharacterView;
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName("Bottom"));
     }

@@ -103,7 +103,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
     public void AddNotify(IMessage notify)
     {
-#if UNITY_SERVER//UNITY_SERVER
+#if UNITY_SERVER || UNITY_EDITOR
         _notify.Enqueue(notify);
 #endif
     }
@@ -177,32 +177,37 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
-        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed)
-	{
+        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed, IList<int> magics)
+    {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
-		var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (data.ResourcesPath);
-		var qu = Quaternion.Euler (forward.X, forward.Y, forward.Z);
-		var ins = Instantiate(character) as GameObject;
+        var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
+        var qu = Quaternion.Euler(forward.X, forward.Y, forward.Z);
+        var ins = Instantiate(character) as GameObject;
         var root = new GameObject(data.ResourcesPath);
         root.transform.SetParent(this.transform, false);
-		root.transform.position = pos.ToUV3();
-		root.transform.rotation = Quaternion.identity;
-		ins.transform.parent = root.transform;
-		ins.transform.localPosition = Vector3.zero;
-		ins.transform.localRotation =  Quaternion.identity;
-		ins.name = "Character";
-		var view= root.AddComponent<UCharacterView> ();
+        root.transform.position = pos.ToUV3();
+        root.transform.rotation = Quaternion.identity;
+        ins.transform.parent = root.transform;
+        ins.transform.localPosition = Vector3.zero;
+        ins.transform.localRotation = Quaternion.identity;
+        ins.name = "Character";
+        var view = root.AddComponent<UCharacterView>();
+
         view.SetPrecpetion(this);
-		view.targetLookQuaternion = qu;
-		view.SetCharacter(ins);
+        view.targetLookQuaternion = qu;
+        view.SetCharacter(ins);
         view.TeamId = teamId;
         view.Level = level;
         view.Speed = speed;
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
-		return view;
-	}
+        if (magics != null)
+        {
+            foreach (var i in magics) view.AddMagicCd(i, GetTime().Time);
+        }
+        return view;
+    }
 
     IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos)
     {

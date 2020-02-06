@@ -23,10 +23,11 @@ namespace LoginServer
             }
             else
             {
+                var testHost = "192.168.1.104";
                 json = "{" +
                     "\"ListenPort\":1900," +
                     "\"ServicePort\":1800," +
-                    @"""DBHost"":""mongodb://127.0.0.1:27017/""," +
+                    $"\"DBHost\":\"mongodb://127.0.0.1:27017/\"," +
                     "\"DBName\":\"CenterAccount\"," +
                     "\"Log\":true" +
                     "}";

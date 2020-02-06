@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class ResourcesManager : XSingleton<ResourcesManager> {
 
@@ -79,4 +80,11 @@ public class ResourcesManager : XSingleton<ResourcesManager> {
 		var processer = new LoadProcesser{ CallBack = callBack, Request = request };
 		loaders.Add (processer);
 	}
+
+	public string ReadStreamingFile(string namae)
+	{
+		var path = Path.Combine(Application.streamingAssetsPath, namae);
+		Debug.Log(path);
+		return File.ReadAllText(path);
+    }
 }

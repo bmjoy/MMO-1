@@ -36,7 +36,7 @@ public class StartType : MonoBehaviour
     IEnumerator Start()
     {
         Debuger.Loger = new UnityLoger();
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
 
         yield return new WaitForEndOfFrame();
   

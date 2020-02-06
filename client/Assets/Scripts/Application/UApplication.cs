@@ -16,8 +16,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
     {
         var name = ExcelToJSONConfigManager.GetFileName<T>();
         var json = ResourcesManager.S.LoadText("Json/" + name);
-        if (json == null)
-            return null;
+        if (json == null) return null;
         return JsonTool.Deserialize<List<T>>(json);
     }
 
@@ -44,24 +43,13 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
 
     public void GetServer()
     {
-#if !UNITY_EDITOR
-        index = 0;
-#endif
-        SetServer(index);
-    }
+        var config = ResourcesManager.S.ReadStreamingFile("client.json");
+        var clientConfig = ClientConfig.Parser.ParseJson(config);
 
-    public void SetServer(int index)
-    {
-        var serverInfo = ResourcesManager.Singleton.LoadText("ServerInfo.json");
-        var data = JsonReader.Read(serverInfo);
-        Debug.Log(serverInfo);
-
-        var server = data["Servers"].GetAt(index);
-        ServerHost = server["Host"].AsString();
-        ServerPort = server["Port"].AsInt();
-        ServerName = server["Name"].AsString();
+        ServerHost = clientConfig.LoginServerHost;
+        ServerPort = clientConfig.LoginServerPort;
+        ServerName = clientConfig.LoginServerHost;
         Debug.Log(string.Format("{2} {0}:{1}", ServerHost, ServerPort, ServerName));
-
     }
 
     public void GoBackToMainGate()
@@ -125,30 +113,7 @@ public class UApplication : XSingleton<UApplication>, IConfigLoader
 
     void Start()
     {
-        if (!IsEditorMode)
-        {
-            bool auto = false;
-#if !UNITY_EDITOR
-            auto = true;
-#endif
-            if (auto && PlayerPrefs.HasKey("_PlayerSession"))
-            {
-                var session = PlayerPrefs.GetString("_PlayerSession");
-                var userID = PlayerPrefs.GetString("_UserID");
-                int port = PlayerPrefs.GetInt("_GateServerPort");
-                var host = PlayerPrefs.GetString("_GateServerHost");
-                var serverID = PlayerPrefs.GetInt("_GateServerID");
-                SesssionKey = session;
-                AccountUuid = userID;
-                GameServer = new GameServerInfo { ServerId = serverID, Host = host, Port = port };
-                GoToMainGate(GameServer);
-            }
-            else
-            {
-                GotoLoginGate();
-            }
-
-        }
+        GotoLoginGate();
     }
 
     public void OnApplicationQuit()

@@ -6,17 +6,17 @@
     <members>
         <member name="T:Proto.ActionService.ClickSkillIndex">
              <summary>
-             10024
+             10025
              </summary>    
             </member>
         <member name="T:Proto.ActionService.AutoFindTarget">
              <summary>
-             10025
+             10026
              </summary>    
             </member>
         <member name="T:Proto.ActionService.MoveDir">
              <summary>
-             10026
+             10027
              </summary>    
             </member>
         <member name="T:Proto.BattleServerReflection">
@@ -199,6 +199,14 @@
         <member name="P:Proto.Notify_CreateBattleCharacter.Speed">
              <summary>
             移动速度
+             </summary>
+            </member>
+        <member name="F:Proto.Notify_CreateBattleCharacter.MagicIdFieldNumber">
+             <summary>Field number for the "MagicId" field.</summary>
+            </member>
+        <member name="P:Proto.Notify_CreateBattleCharacter.MagicId">
+             <summary>
+            魔法
              </summary>
             </member>
         <member name="T:Proto.Notify_CreateMissile">
@@ -470,12 +478,12 @@
             </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
-             10027
+             10028
              </summary>    
             </member>
         <member name="T:Proto.BattleServerService.JoinBattle">
              <summary>
-             10028
+             10029
              </summary>    
             </member>
         <member name="T:Proto.ConstReflection">
@@ -863,6 +871,30 @@
             </member>
         <member name="F:Proto.HeroMagicData.MagicIDFieldNumber">
              <summary>Field number for the "MagicID" field.</summary>
+            </member>
+        <member name="F:Proto.ClientConfig.LoginServerHostFieldNumber">
+             <summary>Field number for the "LoginServerHost" field.</summary>
+            </member>
+        <member name="F:Proto.ClientConfig.LoginServerPortFieldNumber">
+             <summary>Field number for the "LoginServerPort" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.MaxPlayerFieldNumber">
+             <summary>Field number for the "MaxPlayer" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.ListenPortFieldNumber">
+             <summary>Field number for the "ListenPort" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.ListenHostFieldNumber">
+             <summary>Field number for the "ListenHost" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.LoginServerPortFieldNumber">
+             <summary>Field number for the "LoginServerPort" field.</summary>
+            </member>
+        <member name="F:Proto.BattleServerConfig.LoginServiceHostFieldNumber">
+             <summary>Field number for the "LoginServiceHost" field.</summary>
             </member>
         <member name="T:EConfig.EquipmentData">
              <summary>
@@ -1752,12 +1784,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10050
+             10051
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10051
+             10052
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -2118,92 +2150,92 @@
             </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
-             10039
+             10040
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.CreateHero">
              <summary>
-             10040
+             10041
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BeginGame">
              <summary>
-             10041
+             10042
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
              <summary>
-             10042
+             10043
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
              <summary>
-             10043
+             10044
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.SaleItem">
              <summary>
-             10044
+             10045
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
              <summary>
-             10045
+             10046
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GMTool">
              <summary>
-             10046
+             10047
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
-             10047
+             10048
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
-             10048
+             10049
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
              <summary>
-             10049
+             10050
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
              <summary>
-             10031
+             10032
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.EndBattle">
              <summary>
-             10032
+             10033
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.CheckSession">
              <summary>
-             10033
+             10034
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegGateServer">
              <summary>
-             10034
+             10035
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GateServerSession">
              <summary>
-             10035
+             10036
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.BeginBattle">
              <summary>
-             10036
+             10037
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GetLastBattle">
              <summary>
-             10037
+             10038
              </summary>    
             </member>
         <member name="T:Proto.LoginServerReflection">
@@ -2563,17 +2595,17 @@
             </member>
         <member name="T:Proto.LoginServerService.Login">
              <summary>
-             10029
+             10030
              </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Reg">
              <summary>
-             10030
+             10031
              </summary>    
             </member>
         <member name="T:Proto.LoginServerTaskServices.ExitUser">
              <summary>
-             10038
+             10039
              </summary>    
             </member>
         <member name="M:Proto.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
@@ -2977,6 +3009,11 @@
         <member name="T:Proto.NotifyService.CharacterMoveForward">
              <summary>
              10023
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterSpeed">
+             <summary>
+             10024
              </summary>    
             </member>
     </members>

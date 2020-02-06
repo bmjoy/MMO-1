@@ -39,8 +39,8 @@ public class GameGMTools : MonoBehaviour
 
 	private string level = "level 1";
     public bool ShowGM = false;
-    GUIStyle red = new GUIStyle();
-    GUIStyle green = new GUIStyle();
+    readonly GUIStyle red = new GUIStyle();
+    readonly GUIStyle green = new GUIStyle();
 
 	public void OnGUI ()
 	{
@@ -53,23 +53,12 @@ public class GameGMTools : MonoBehaviour
                 (UApplication.Singleton.ReceiveTotal/1024.0f)/Mathf.Max(1,Time.time - UApplication.Singleton.ConnectTime)),
             1/Time.deltaTime>28?green:red);
 
-        if (!ShowGM)
-            return;
+        if (!ShowGM)  return;
 		GUI.BeginGroup (new Rect (Screen.width - 185, 55, 180, 25));
 		GUILayout.BeginHorizontal ();
-        int[] indexs = new int[]{ 0, 1, 2 };
-        foreach (var i in indexs)
-        {
-            if(GUILayout.Button(string.Format("{0}",i)))
-            {
-                UApplication.S.SetServer(i);
-                UApplication.S.GotoLoginGate();
-            }
-        }
         level = GUILayout.TextField (level,GUILayout.Width(100));
         if (GUILayout.Button("GM", GUILayout.Width(60)))
         {
-            //StartGM (level);
             var gata = UApplication.G<GMainGate>();
             if (gata == null) return;
             GMTool.CreateQuery()
@@ -87,36 +76,5 @@ public class GameGMTools : MonoBehaviour
 		GUILayout.EndHorizontal ();
 		GUI.EndGroup ();
 	}
-
-	private void StartGM(string gm)
-	{
-
-		var args = gm.Split (' ');
-		if (args.Length >= 2) {
-			switch (args [0].ToLower()) 
-            {
-                case "replay":
-                    {
-                       // var data = File.ReadAllBytes(Path.Combine(Application.dataPath, "replay.data"));
-                       // var gate = new UReplayGate(data, 1);
-                       // UApplication.ChangeGate(gate);
-                    }
-                    break;
-                case "server":
-                    {
-                        var index =  int.Parse (args[1]);
-                        UApplication.Singleton.index = index;
-                        UApplication.Singleton.GetServer();
-                        UApplication.Singleton.GotoLoginGate();
-                    }
-                    break;
-			default:
-				return;
-				//break;
-            }
-		}
-
-		PlayerPrefs.SetString ("GM", gm);
-	}
-        
+     
 }

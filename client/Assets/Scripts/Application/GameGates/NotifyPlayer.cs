@@ -105,10 +105,10 @@ public class NotifyPlayer
             var index = (int)property.GetValue(notify);
             var per = PerView as UPerceptionView;
             var v = per.GetViewByIndex(index);
-            Debug.Log($"{v.GetType()} -> {notify.GetType()}");
+            //Debug.Log($"{v.GetType()} -> {notify.GetType()}");
             if (ElementInvokes.TryGetValue(notify.GetType(), out NotifyMapping elI))
             {
-                Debug.Log($"invoke {elI.Method.Name}");
+                //Debug.Log($"invoke {elI.Method.Name}");
                 var ps = new List<object>();
                 foreach (var f in elI.Attr.FieldNames)
                 {

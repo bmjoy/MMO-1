@@ -1,26 +1,15 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateBattleServerService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Program.cs">
     <Files>
-      <File FileName="GServer/RPCResponser/GateBattleServerService.cs" Line="1" Column="1" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" />
-      <File FileName="../../GameCore/XNet/Net/MessageHandler.cs" />
-      <File FileName="../../GameCore/XNet/Net/RequestHandle.cs" />
-      <File FileName="../../GameCore/XNet/Net/BufferPackage.cs" />
-      <File FileName="../../GameCore/XNet/Net/RequestClient.cs" />
+      <File FileName="GServer/Program.cs" Line="37" Column="54" />
+      <File FileName="LoginServer/Program.cs" Line="30" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="GServer" expanded="True">
-            <Node name="Libiray" expanded="True" />
-            <Node name="GateServer" expanded="True">
-              <Node name="RPCResponser" expanded="True">
-                <Node name="GateBattleServerService.cs" selected="True" />
-              </Node>
-            </Node>
-            <Node name="LoginServer" expanded="True">
-              <Node name="RPCResponsers" expanded="True" />
-            </Node>
+          <Node name="GServer" expanded="True" selected="True">
+            <Node name="GateServer" expanded="True" />
+            <Node name="LoginServer" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -28,16 +17,9 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.LoginServer PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <DisabledProjects>
-    <String>../../PublicTools/toolssrc/JSON/Json/Json.csproj</String>
-    <String>MapServer/MapServer.csproj</String>
-    <String>../../GameCore/BehaviorTree/BehaviorTree.csproj</String>
-  </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/xiexiongping/Documents/github/version/GameCore/XNet/Net/Message.cs" line="8" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
 </Properties>

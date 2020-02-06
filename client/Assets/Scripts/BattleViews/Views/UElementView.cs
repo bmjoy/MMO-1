@@ -24,6 +24,7 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     {
         OnJoined();
         this.Index = index;
+        CreateNotify(this.ToInitNotify());
         PerView.AttachView(this);
     }
 
@@ -39,12 +40,13 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
         GElement = el;
     }
 
-	#endregion
+    #endregion
 
 
     public void DestorySelf()
     {
-        Destroy(this.gameObject,0.3f);   
+        if (!this) return;
+        Destroy(this.gameObject, 0.3f);
     }
 
     public virtual void OnJoined() { }

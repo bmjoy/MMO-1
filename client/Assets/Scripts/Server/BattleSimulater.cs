@@ -22,6 +22,8 @@ using UGameTools;
 using UnityEngine.SceneManagement;
 using org.vxwo.csharp.json;
 using Vector3 = UnityEngine.Vector3;
+using P = Proto.HeroPropertyType;
+using CM = ExcelConfig.ExcelToJSONConfigManager;
 
 public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfigLoader
 {
@@ -49,24 +51,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     private int CountKillCount = 0;
     private SocketServer Server;
 
-    [Space]
-    [Header("Service Info")]
-    public int ListenPort = 2100;
-    public string ListenHost = "127.0.0.1";
-    public int MaxPlayer = 1000;
-    [Space]
-    [Header("Center Server")]
-    public string LoginHost = "127.0.0.1";
-    public int Port = 1800;//center server port
-    public int ServerID = -1;
-    [Space]
-    [Header("Handle Level")]
-    private int LevelID = 1;
+    [Header("Server ID")]
+    public int ServerID;
+
 
     public ConnectionManager Manager { get { return Server.CurrentConnectionManager; } }
     public RequestClient<LoginServerTaskServiceHandler> CenterServerClient { private set; get; }
     private GTime GetTime() { return (PerView as ITimeSimulater).Now; }
-    public ServerPerceptionView PerView;
+    public UPerceptionView PerView;
     public BattleLevelData LevelData { get; private set; }
     public MapData MapConfig { get; private set; }
     public BattleState State { private set; get; }
@@ -74,8 +66,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     private readonly ConcurrentQueue<BindPlayer> _addTemp = new ConcurrentQueue<BindPlayer>();
     private readonly ConcurrentQueue<string> _kickUsers = new ConcurrentQueue<string>();
     private readonly Dictionary<string, BattlePlayer> BattlePlayers = new Dictionary<string, BattlePlayer>();
-    [System.Obsolete("需要考虑下")]
-    private readonly Dictionary<string, BattleCharacter> Characters = new Dictionary<string, BattleCharacter>();
+   
     private void Start()
     {
         StartCoroutine(Begin());
@@ -83,20 +74,22 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
 
     private IEnumerator Begin()
     {
-        //Debuger.Loger = new UnityLoger();
-        new ExcelToJSONConfigManager(this);
+        var config = ResourcesManager.S.ReadStreamingFile("server.json");
+        var battleServer = BattleServerConfig.Parser.ParseJson(config);;
+        new CM(this);
 
-        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(1);
+        LevelData = CM.Current.GetConfigByID<BattleLevelData>(battleServer.Level);
+        MapConfig = CM.Current.GetConfigByID<MapData>(LevelData.MapID);
         yield return SceneManager.LoadSceneAsync(MapConfig.LevelName, LoadSceneMode.Single);
 
         yield return new WaitForEndOfFrame();
-        PerView = gameObject.AddComponent<ServerPerceptionView>();
+        PerView = UPerceptionView.Create();
 
         monsterGroup = FindObjectsOfType<MonsterGroupPosition>();
         playerBornPositions = FindObjectsOfType<PlayerBornPosition>();
 
         var handler = new RequestHandle<BattleServerService>();
-        Server = new SocketServer(new ConnectionManager(), ListenPort)
+        Server = new SocketServer(new ConnectionManager(), battleServer.ListenPort)
         {
             HandlerManager = handler
         };
@@ -105,7 +98,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
 
         yield return new WaitForEndOfFrame();
 
-        CenterServerClient = new RequestClient<LoginServerTaskServiceHandler>(LoginHost, Port);
+        CenterServerClient = new RequestClient<LoginServerTaskServiceHandler>(battleServer.LoginServiceHost, battleServer.LoginServerPort);
         bool connecting = true;
         CenterServerClient.OnConnectCompleted = (e) =>
         {
@@ -127,10 +120,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         yield return req.Send(CenterServerClient,
             new B2L_RegBattleServer
             {
-                Maxplayer = MaxPlayer,
-                Host = ListenHost,
-                Port = ListenPort,
-                LevelId = LevelID,
+                Maxplayer = battleServer.MaxPlayer,
+                Host = battleServer.ListenHost,
+                Port = battleServer.ListenPort,
+                LevelId = battleServer.Level,
                 Version = 1
             });
 
@@ -144,10 +137,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             Debug.LogError("Connect server failure!");
             Server.Stop();
         }
-
-
-        LevelData = ExcelToJSONConfigManager.Current.GetConfigByID<BattleLevelData>(LevelID);
-        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(LevelData.MapID);
 
         State = new BattleState(PerView, this, PerView);
         State.Start(this.GetTime());
@@ -187,9 +176,27 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             }
 
             GState.Tick(State, GetTime());
+            CureHPAndMp();
             ProcessJoinClient();
             ProcessAction();
             SendNotify(PerView.GetAndClearNotify());
+        }
+    }
+
+    private void CureHPAndMp()
+    {
+        //处理生命,魔法恢复
+        if (lastHpCure + 3 < GetTime().Time)
+        {
+            lastHpCure = GetTime().Time;
+            State.Each<BattleCharacter>((el) =>
+            {
+                var hp = (int)(el[P.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP * 3);
+                if (hp > 0) el.AddHP(hp);
+                var mp = (int)(el[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP * 3);
+                if (mp > 0) el.AddMP(mp);
+                return false;
+            });
         }
     }
 
@@ -204,7 +211,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
     private void ProcessJoinClient()
     {
         var per = State.Perception as BattlePerception;
-        var view = per.View as ServerPerceptionView;
+        var view = per.View as UPerceptionView;
         //send Init message.
         while (_addTemp.Count > 0)
         {
@@ -217,13 +224,13 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
                 }
 
                 var createNotify = view.GetInitNotify();
-
-                if (CreateUser(client.Player))
+                var c = CreateUser(client.Player);
+                if (c != null)
                 {
+                    client.Player.HeroCharacter = c;
                     BattlePlayers.Add(client.Account, client.Player);
-                    //package
                     var package = client.Player.GetNotifyPackage();
-                    package.TimeNow = (GetTime().Time);
+                    package.TimeNow = GetTime().Time;
                     var buffer = new MessageBufferPackage();
                     buffer.AddMessage(package.ToNotityMessage());
                     foreach (var i in createNotify)
@@ -240,17 +247,16 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             {
                 if (BattlePlayers.TryGetValue(u, out BattlePlayer p))
                 {
-                    Server.DisConnectClient(p.Client);
-                    BattlePlayers.Remove(u);
-                    if (Characters.TryGetValue(u, out BattleCharacter c))
-                    {
-                        Characters.Remove(u);
-                        GObject.Destory(c);
-                    }
+                    ExitPlayer(p);
                 }
-                 
             }
         }
+    }
+
+    private void ExitPlayer(BattlePlayer p)
+    {
+        Server.DisConnectClient(p.Client);
+        BattlePlayers.Remove(p.AccountId);
     }
 
     private void SendNotify(IMessage[] notify)
@@ -289,38 +295,26 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             {
                 IMessage action = msg.AsAction();
                 Debug.Log($"client {i.Key} {action}");
-                if (Characters.TryGetValue(i.Key, out BattleCharacter userCharacter))
+
+                if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))
                 {
                     if (action is Action_AutoFindTarget)
                     {
                         var auto = action as Action_AutoFindTarget;
-                        userCharacter.ModifyValue(HeroPropertyType.ViewDistance,
+                        p.HeroCharacter?.ModifyValue(P.ViewDistance,
                             AddType.Append, !auto.Auto ? 0 : 1000 * 100); //修改玩家AI视野
-                        userCharacter.AIRoot.BreakTree();
+                        p.HeroCharacter?.AIRoot.BreakTree();
                     }
-                    else if (userCharacter.AIRoot != null)
+                    else if (p.HeroCharacter?.AIRoot != null)
                     {
                         //保存到AI
-                        Debug.Log($"[{userCharacter.Index}]{userCharacter.Name} {action}");
-                        userCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        userCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
+                        Debug.Log($"[{p.HeroCharacter.Index}]{p.HeroCharacter.Name} {action}");
+                        p.HeroCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
+                        p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }
             }
-        }
-        //处理生命,魔法恢复
-        if (lastHpCure + 1 < GetTime().Time)
-        {
-            lastHpCure = GetTime().Time;
-            State.Each<BattleCharacter>((el) =>
-            {
-                var hp = (int)(el[HeroPropertyType.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP);
-                if (hp > 0) el.AddHP(hp);
-                var mp = (int)(el[HeroPropertyType.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP);
-                if (mp > 0) el.AddMP(mp);
-                return false;
-            });
-        }
+        }    
     }
 
     public void Load(GState state)
@@ -374,14 +368,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
 
         var groups = LevelData.MonsterGroupID.SplitToInt();
 
-        var monsterGroups = ExcelToJSONConfigManager.Current.GetConfigs<MonsterGroupData>(t =>
+        var monsterGroups = CM.Current.GetConfigs<MonsterGroupData>(t =>
         {
             return groups.Contains(t.ID);
         });
 
 
         var monsterGroup = GRandomer.RandomArray(monsterGroups);
-        drop = ExcelToJSONConfigManager.Current.GetConfigByID<DropGroupData>(monsterGroup.DropID);
+        drop = CM.Current.GetConfigByID<DropGroupData>(monsterGroup.DropID);
 
         int maxCount = GRandomer.RandomMinAndMax(monsterGroup.MonsterNumberMin, monsterGroup.MonsterNumberMax);
         for (var i = 0; i < maxCount; i++)
@@ -389,34 +383,22 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             var m = monsterGroup.MonsterID.SplitToInt();
             var p = monsterGroup.Pro.SplitToInt().ToArray();
             var monsterID = m[GRandomer.RandPro(p)];
-            var monsterData = ExcelToJSONConfigManager.Current.GetConfigByID<MonsterData>(monsterID);
-            var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
-            var magic = ExcelToJSONConfigManager.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
-            var Monster = per.CreateCharacter(monsterData.Level,
-                data,  magic.ToList(),  2,
+            var monsterData = CM.Current.GetConfigByID<MonsterData>(monsterID);
+            var data = CM.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
+            var magic = CM.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
+            var Monster = per.CreateCharacter(monsterData.Level,data, magic.ToList(), 2,
                 pos + new Vector3(GRandomer.RandomMinAndMax(-1, 1), 0, GRandomer.RandomMinAndMax(-1, 1)) * i,
                 new Vector3(0, 0, 0), string.Empty,
                 $"{monsterData.NamePrefix}.{ data.Name}");
-            //data
-            Monster[HeroPropertyType.DamageMax]
-                .SetBaseValue(Monster[HeroPropertyType.DamageMax].BaseValue + monsterData.DamageMax);
-            Monster[HeroPropertyType.DamageMin]
-                .SetBaseValue(Monster[HeroPropertyType.DamageMin].BaseValue + monsterData.DamageMax);
-            Monster[HeroPropertyType.Force]
-                .SetBaseValue(Monster[HeroPropertyType.Force].BaseValue + monsterData.Force);
-            Monster[HeroPropertyType.Agility]
-                .SetBaseValue(Monster[HeroPropertyType.Agility].BaseValue + monsterData.Agility);
-            Monster[HeroPropertyType.Knowledge]
-                .SetBaseValue(Monster[HeroPropertyType.Knowledge].BaseValue + monsterData.Knowledeg);
-            Monster[HeroPropertyType.MaxHp]
-                .SetBaseValue(Monster[HeroPropertyType.MaxHp].BaseValue + monsterData.HPMax);
-            Monster[HeroPropertyType.MaxMp]
-                .SetBaseValue(Monster[HeroPropertyType.MaxMp].BaseValue);
-            Monster.Name = string.Format("{0}.{1}", monsterData.NamePrefix, data.Name);
-
+            Monster[P.DamageMax].SetBaseValue(Monster[P.DamageMax].BaseValue + monsterData.DamageMax);
+            Monster[P.DamageMin].SetBaseValue(Monster[P.DamageMin].BaseValue + monsterData.DamageMin);
+            Monster[P.Force].SetBaseValue(Monster[P.Force].BaseValue + monsterData.Force);
+            Monster[P.Agility].SetBaseValue(Monster[P.Agility].BaseValue + monsterData.Agility);
+            Monster[P.Knowledge].SetBaseValue(Monster[P.Knowledge].BaseValue + monsterData.Knowledeg);
+            Monster[P.MaxHp].SetBaseValue(Monster[P.MaxHp].BaseValue + monsterData.HPMax);
+            //Monster[P.MaxMp].SetBaseValue(Monster[P.MaxMp].BaseValue+monsterData);
             Monster.Reset();
             per.ChangeCharacterAI(data.AIResourcePath, Monster);
-
             AliveCount++;
             Monster.OnDead = (el) =>
             {
@@ -426,39 +408,44 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
         }
     }
 
-    private bool CreateUser(BattlePlayer user)
+    private BattleCharacter CreateUser(BattlePlayer user)
     {
-        if (Characters.TryGetValue(user.AccountId, out BattleCharacter battleCharacte))
-        {
-            Debug.Log($"hero is exists!{user.AccountId}"); ;
-            return true;
-        }
+        BattleCharacter character =null ;
+        State.Each<BattleCharacter>(t => {
+            if (t.Enable) return false;
+            if (t.AcccountUuid == user.AccountId)
+            {
+                character = t;
+                return true;
+            }
+            return false;
+        });
+
+        if (character != null) return character;
 
         var per = State.Perception as BattlePerception;
-        var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
-        var magic = ExcelToJSONConfigManager.Current
-            .GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
+        var data = CM.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
+        var magic = CM.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
         var pos = GRandomer.RandomArray(playerBornPositions).transform.position;
         //处理装备加成
-        battleCharacte = per.CreateCharacter(user.GetHero().Level,
-            data, magic.ToList(), 1, pos, new Vector3(0, 0, 0), user.AccountId,
-            user.GetHero().Name);
+        character = per.CreateCharacter(user.GetHero().Level,
+            data, magic.ToList(), 1, pos, new Vector3(0, 0, 0), user.AccountId, user.GetHero().Name);
         foreach (var i in user.GetHero().Equips)
         {
-            var itemsConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
+            var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
             var equipId = int.Parse(itemsConfig.Params1);
-            var equipconfig = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(equipId);
+            var equipconfig = CM.Current.GetConfigByID<EquipmentData>(equipId);
             if (equipconfig == null) continue;
             var equip = user.GetEquipByGuid(i.GUID);
             float addRate = 0f;
             if (equip != null)
             {
-                var equipLevelUp = ExcelToJSONConfigManager
+                var equipLevelUp = CM
                     .Current
                     .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quility == equipconfig.Quility);
                 if (equipLevelUp != null)
                 {
-                    addRate = (float)equipLevelUp.AppendRate / 10000f;
+                    addRate = equipLevelUp.AppendRate / 10000f;
                 }
             }
             //基础加成
@@ -466,14 +453,13 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IConfi
             var values = equipconfig.PropertyValues.SplitToInt();
             for (var index = 0; index < properties.Count; index++)
             {
-                var p = (HeroPropertyType)properties[index];
-                var v = battleCharacte[p].BaseValue + (float)values[index] * (1 + addRate);
-                battleCharacte[p].SetBaseValue((int)v);
+                var p = (P)properties[index];
+                var v = character[p].BaseValue + values[index] * (1 + addRate);
+                character[p].SetBaseValue((int)v);
             }
         }
-        battleCharacte.ModifyValue(HeroPropertyType.ViewDistance, AddType.Append, 1000 * 100); //修改玩家AI视野
-        Characters.Add(user.AccountId, battleCharacte);
-        per.ChangeCharacterAI(data.AIResourcePath, battleCharacte);
-        return true;
+        character.ModifyValue(P.ViewDistance, AddType.Append, 1000 * 100); 
+        per.ChangeCharacterAI(data.AIResourcePath, character);
+        return character;
     }
 }

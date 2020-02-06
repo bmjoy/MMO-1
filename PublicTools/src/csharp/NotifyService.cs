@@ -260,8 +260,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 10024
+    /// </summary>    
+    [API(10024)]
+    public class CharacterSpeed:APIBase<Void, Notify_CharacterSpeed> 
+    {
+        private CharacterSpeed() : base() { }
+        public  static CharacterSpeed CreateQuery(){ return new CharacterSpeed();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(10024)]Notify_CharacterSpeed CharacterSpeed(Void req);
         [API(10023)]Notify_CharacterMoveForward CharacterMoveForward(Void req);
         [API(10022)]Notify_CharacterAttachMagic CharacterAttachMagic(Void req);
         [API(10021)]Notify_CharacterSetScale CharacterSetScale(Void req);
@@ -291,6 +303,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(10024)]public abstract Task<Notify_CharacterSpeed> CharacterSpeed(Void request);
         [API(10023)]public abstract Task<Notify_CharacterMoveForward> CharacterMoveForward(Void request);
         [API(10022)]public abstract Task<Notify_CharacterAttachMagic> CharacterAttachMagic(Void request);
         [API(10021)]public abstract Task<Notify_CharacterSetScale> CharacterSetScale(Void request);

@@ -45,8 +45,12 @@ namespace Proto {
             "SUQYAiABKAUSEwoLU2VydmljZVBvcnQYAyABKAUSEwoLU2VydmljZUhvc3QY",
             "BCABKAkiSAoMSGVyb1Byb3BlcnR5EikKCFByb3BlcnR5GAEgASgOMhcuUHJv",
             "dG8uSGVyb1Byb3BlcnR5VHlwZRINCgVWYWx1ZRgCIAEoBSIwCg1IZXJvTWFn",
-            "aWNEYXRhEg4KBkNEVGltZRgBIAEoAhIPCgdNYWdpY0lEGAIgASgFYgZwcm90",
-            "bzM="));
+            "aWNEYXRhEg4KBkNEVGltZRgBIAEoAhIPCgdNYWdpY0lEGAIgASgFIkAKDENs",
+            "aWVudENvbmZpZxIXCg9Mb2dpblNlcnZlckhvc3QYASABKAkSFwoPTG9naW5T",
+            "ZXJ2ZXJQb3J0GAIgASgFIpEBChJCYXR0bGVTZXJ2ZXJDb25maWcSDQoFTGV2",
+            "ZWwYASABKAUSEQoJTWF4UGxheWVyGAIgASgFEhIKCkxpc3RlblBvcnQYAyAB",
+            "KAUSEgoKTGlzdGVuSG9zdBgEIAEoCRIXCg9Mb2dpblNlcnZlclBvcnQYBSAB",
+            "KAUSGAoQTG9naW5TZXJ2aWNlSG9zdBgGIAEoCWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -60,7 +64,9 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerPackage), global::Proto.PlayerPackage.Parser, new[]{ "Items", "MaxSize" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerServerInfo), global::Proto.PlayerServerInfo.Parser, new[]{ "AccountUuid", "ServerID", "ServicePort", "ServiceHost" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroProperty), global::Proto.HeroProperty.Parser, new[]{ "Property", "Value" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagicData), global::Proto.HeroMagicData.Parser, new[]{ "CDTime", "MagicID" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagicData), global::Proto.HeroMagicData.Parser, new[]{ "CDTime", "MagicID" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.ClientConfig), global::Proto.ClientConfig.Parser, new[]{ "LoginServerHost", "LoginServerPort" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.BattleServerConfig), global::Proto.BattleServerConfig.Parser, new[]{ "Level", "MaxPlayer", "ListenPort", "ListenHost", "LoginServerPort", "LoginServiceHost" }, null, null, null)
           }));
     }
     #endregion
@@ -2306,6 +2312,432 @@ namespace Proto {
           }
           case 16: {
             MagicID = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ClientConfig : pb::IMessage<ClientConfig> {
+    private static readonly pb::MessageParser<ClientConfig> _parser = new pb::MessageParser<ClientConfig>(() => new ClientConfig());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ClientConfig> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.DataReflection.Descriptor.MessageTypes[11]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfig() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfig(ClientConfig other) : this() {
+      loginServerHost_ = other.loginServerHost_;
+      loginServerPort_ = other.loginServerPort_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ClientConfig Clone() {
+      return new ClientConfig(this);
+    }
+
+    /// <summary>Field number for the "LoginServerHost" field.</summary>
+    public const int LoginServerHostFieldNumber = 1;
+    private string loginServerHost_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string LoginServerHost {
+      get { return loginServerHost_; }
+      set {
+        loginServerHost_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "LoginServerPort" field.</summary>
+    public const int LoginServerPortFieldNumber = 2;
+    private int loginServerPort_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int LoginServerPort {
+      get { return loginServerPort_; }
+      set {
+        loginServerPort_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ClientConfig);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ClientConfig other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (LoginServerHost != other.LoginServerHost) return false;
+      if (LoginServerPort != other.LoginServerPort) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (LoginServerHost.Length != 0) hash ^= LoginServerHost.GetHashCode();
+      if (LoginServerPort != 0) hash ^= LoginServerPort.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (LoginServerHost.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(LoginServerHost);
+      }
+      if (LoginServerPort != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(LoginServerPort);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (LoginServerHost.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(LoginServerHost);
+      }
+      if (LoginServerPort != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoginServerPort);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ClientConfig other) {
+      if (other == null) {
+        return;
+      }
+      if (other.LoginServerHost.Length != 0) {
+        LoginServerHost = other.LoginServerHost;
+      }
+      if (other.LoginServerPort != 0) {
+        LoginServerPort = other.LoginServerPort;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            LoginServerHost = input.ReadString();
+            break;
+          }
+          case 16: {
+            LoginServerPort = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class BattleServerConfig : pb::IMessage<BattleServerConfig> {
+    private static readonly pb::MessageParser<BattleServerConfig> _parser = new pb::MessageParser<BattleServerConfig>(() => new BattleServerConfig());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<BattleServerConfig> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.DataReflection.Descriptor.MessageTypes[12]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BattleServerConfig() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BattleServerConfig(BattleServerConfig other) : this() {
+      level_ = other.level_;
+      maxPlayer_ = other.maxPlayer_;
+      listenPort_ = other.listenPort_;
+      listenHost_ = other.listenHost_;
+      loginServerPort_ = other.loginServerPort_;
+      loginServiceHost_ = other.loginServiceHost_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BattleServerConfig Clone() {
+      return new BattleServerConfig(this);
+    }
+
+    /// <summary>Field number for the "Level" field.</summary>
+    public const int LevelFieldNumber = 1;
+    private int level_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Level {
+      get { return level_; }
+      set {
+        level_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "MaxPlayer" field.</summary>
+    public const int MaxPlayerFieldNumber = 2;
+    private int maxPlayer_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int MaxPlayer {
+      get { return maxPlayer_; }
+      set {
+        maxPlayer_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ListenPort" field.</summary>
+    public const int ListenPortFieldNumber = 3;
+    private int listenPort_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int ListenPort {
+      get { return listenPort_; }
+      set {
+        listenPort_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ListenHost" field.</summary>
+    public const int ListenHostFieldNumber = 4;
+    private string listenHost_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ListenHost {
+      get { return listenHost_; }
+      set {
+        listenHost_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "LoginServerPort" field.</summary>
+    public const int LoginServerPortFieldNumber = 5;
+    private int loginServerPort_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int LoginServerPort {
+      get { return loginServerPort_; }
+      set {
+        loginServerPort_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "LoginServiceHost" field.</summary>
+    public const int LoginServiceHostFieldNumber = 6;
+    private string loginServiceHost_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string LoginServiceHost {
+      get { return loginServiceHost_; }
+      set {
+        loginServiceHost_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as BattleServerConfig);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(BattleServerConfig other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Level != other.Level) return false;
+      if (MaxPlayer != other.MaxPlayer) return false;
+      if (ListenPort != other.ListenPort) return false;
+      if (ListenHost != other.ListenHost) return false;
+      if (LoginServerPort != other.LoginServerPort) return false;
+      if (LoginServiceHost != other.LoginServiceHost) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Level != 0) hash ^= Level.GetHashCode();
+      if (MaxPlayer != 0) hash ^= MaxPlayer.GetHashCode();
+      if (ListenPort != 0) hash ^= ListenPort.GetHashCode();
+      if (ListenHost.Length != 0) hash ^= ListenHost.GetHashCode();
+      if (LoginServerPort != 0) hash ^= LoginServerPort.GetHashCode();
+      if (LoginServiceHost.Length != 0) hash ^= LoginServiceHost.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Level != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Level);
+      }
+      if (MaxPlayer != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(MaxPlayer);
+      }
+      if (ListenPort != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ListenPort);
+      }
+      if (ListenHost.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(ListenHost);
+      }
+      if (LoginServerPort != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(LoginServerPort);
+      }
+      if (LoginServiceHost.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(LoginServiceHost);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Level != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Level);
+      }
+      if (MaxPlayer != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxPlayer);
+      }
+      if (ListenPort != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ListenPort);
+      }
+      if (ListenHost.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ListenHost);
+      }
+      if (LoginServerPort != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoginServerPort);
+      }
+      if (LoginServiceHost.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(LoginServiceHost);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(BattleServerConfig other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Level != 0) {
+        Level = other.Level;
+      }
+      if (other.MaxPlayer != 0) {
+        MaxPlayer = other.MaxPlayer;
+      }
+      if (other.ListenPort != 0) {
+        ListenPort = other.ListenPort;
+      }
+      if (other.ListenHost.Length != 0) {
+        ListenHost = other.ListenHost;
+      }
+      if (other.LoginServerPort != 0) {
+        LoginServerPort = other.LoginServerPort;
+      }
+      if (other.LoginServiceHost.Length != 0) {
+        LoginServiceHost = other.LoginServiceHost;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Level = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            MaxPlayer = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            ListenPort = input.ReadInt32();
+            break;
+          }
+          case 34: {
+            ListenHost = input.ReadString();
+            break;
+          }
+          case 40: {
+            LoginServerPort = input.ReadInt32();
+            break;
+          }
+          case 50: {
+            LoginServiceHost = input.ReadString();
             break;
           }
         }
