@@ -1,5 +1,16 @@
-挂机游戏。
-1，支持多人同时在一个房间挂机。采用unity3d，网络协议自动生成，支持中心服务器，网管服务器，战斗地图服务器的分布模式。技能编辑可视化，ai编辑和调试可视化
 
+ # 多人在线的动作游戏 
+ ## 技术特点:
+  * 1.使用unity为服务器。<br/>
+  * 2.协议使用protobuf自动生产<br/>
+  * 3.UI系统使用自动生产代码<br/>
+  * 4.使用mongodb作为数据储存<br/>
+  * 5.使用AI行为树的AI逻辑处理<br/>
+  * 6.技能编辑可视化<br/>
+  * 7.基于帧同步的技术<br/>
 
-https://www.youtube.com/watch?v=xxkcTMaQHDs&t=190s
+## 编辑效果查看：<br/>
+https://www.youtube.com/watch?v=xxkcTMaQHDs&t=190s<br/>
+
+  [项目相关文档](https://drive.google.com/drive/folders/1yl8qRea4k8GfgQMEJbQq0JGRSVvwrRnv?usp=sharing)
+  
