@@ -13,12 +13,10 @@ namespace EngineCore.Simulater
             return lastIndex;
         }
 
-        private Dictionary<int, GObject> _elements = new Dictionary<int, GObject>();
-        private LinkedList<GObject> _elementList = new LinkedList<GObject>();
+        private readonly Dictionary<int, GObject> _elements = new Dictionary<int, GObject>();
+        private readonly LinkedList<GObject> _elementList = new LinkedList<GObject>();
 
         public GPerception Perception { protected set; get; }
-
-        private bool Enable = false;
 
         public void Init()
         {
@@ -32,7 +30,7 @@ namespace EngineCore.Simulater
 
         public void Pause(bool isPause)
         {
-            Enable = !isPause;
+            IsEnable = !isPause;
         }
 
         public GObject this[int index]
@@ -50,7 +48,7 @@ namespace EngineCore.Simulater
 
         public void Start(GTime time)
         {
-            Enable = true;
+            IsEnable = true;
             this.Tick(time);
         }
 
@@ -61,12 +59,12 @@ namespace EngineCore.Simulater
                 GObject.Destory(i.Value);
             }
             this.Tick(time);
-            Enable = false;
+            IsEnable = false;
         }
 
-        private void Tick(GTime time)
+        protected virtual void Tick(GTime time)
         {
-            if (!Enable) return;
+            if (!IsEnable) return;
             var current = _elementList.First;
            
             while (current != null)
@@ -87,9 +85,11 @@ namespace EngineCore.Simulater
             }
         }
 
+       
+
         public static void Tick(GState state, GTime now)
         {
-            if (state.Enable)
+            if (state.IsEnable)
             {
                 state.Tick(now);
             }
@@ -126,7 +126,7 @@ namespace EngineCore.Simulater
             }
         }
 
-        public bool IsEnable { get { return Enable; } }
+        public bool IsEnable { get; private set; } = false;
 
     }
 }

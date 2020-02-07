@@ -10,7 +10,7 @@ using UVector3 = UnityEngine.Vector3;
 namespace GameLogic.Game.AIBehaviorTree
 {
 	[TreeNodeParse(typeof(TreeNodeMoveToTarget))]
-	public class ActionMoveToTarget:ActionComposite<TreeNodeMoveToTarget>
+	public class ActionMoveToTarget : ActionComposite<TreeNodeMoveToTarget>
 	{
 
 		public ActionMoveToTarget(TreeNodeMoveToTarget n) : base(n) { }
@@ -18,68 +18,56 @@ namespace GameLogic.Game.AIBehaviorTree
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
-			var index = root[AITreeRoot.TRAGET_INDEX];
-			if (index == null)
+			if (!root.TryGetTarget(out BattleCharacter target))
 			{
+				if (context.IsDebug) Attach("failure", $"nofound target by target");
 				yield return RunStatus.Failure;
 				yield break;
 			}
 
-            if (!(root.Perception.State[(int)index] is BattleCharacter target))
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
-            if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float stopDistance))
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
-            var per = root.Perception as BattlePerception;
-            //var offset = new GVector3(r);
-			//float lastTime = root.Time-2;
-			var pos = target.View.Transform.position;
-            per.CharacterMoveTo(root.Character, pos);
-			view = root.Character.View;
-
-			while (root.Perception.Distance(target, root.Character) > stopDistance)
+			if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float stopDistance))
 			{
-                if (UVector3.Distance(pos, target.View.Transform.position) > stopDistance)
-                {
-                    per.CharacterMoveTo(root.Character, target.View.Transform.position);
-                    pos = target.View.Transform.position;
-                }
+				if (context.IsDebug)
+					Attach("failure", $"nofound stop distance");
+				yield return RunStatus.Failure;
+				yield break;
+			}
 
-				if(!target.Enable)
+			root.Character.MoveTo(target.Position);
+			float last = root.Time-.3f;
+
+			while (BattlePerception.Distance(target, root.Character) > stopDistance)
+			{
+				if (!target)
 				{
-                    per.CharacterStopMove(root.Character);
+					root.Character.StopMove();
 					yield return RunStatus.Failure;
 					yield break;
 				}
+
+
+				if (last + .2f > root.Time)
+				{
+					yield return RunStatus.Running;
+					continue;
+				}
+
+				root.Character.MoveTo(target.Position);
 				yield return RunStatus.Running;
 			}
 
-            var time = root.Time;
-            if (time + 0.2f < root.Time)
-            {
-                yield return RunStatus.Running;
-            }
-			per.CharacterStopMove(root.Character);
+			root.Character.StopMove();
 
 			yield return RunStatus.Success;
 
 		}
 
-		private IBattleCharacter view;
-
 		public override void Stop(ITreeRoot context)
 		{
-            var root = context as AITreeRoot;
-            var per = root.Perception as BattlePerception;
-            if (LastStatus.HasValue && LastStatus.Value == RunStatus.Running && view != null)
-            {
-                per.CharacterStopMove(root.Character);
-            }
+			var root = context as AITreeRoot;
+
+			if (LastStatus == RunStatus.Running) if (root.Character) root.Character?.StopMove();
+
 			base.Stop(context);
 		}
 	}

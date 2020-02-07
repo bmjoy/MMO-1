@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
-<MagicData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <key>att_003</key>
-  <name>人组战士普通攻击</name>
+<MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <name>混乱之雨</name>
   <Containers>
     <EventContainer>
       <type>EVENT_START</type>

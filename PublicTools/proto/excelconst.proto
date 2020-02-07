@@ -76,16 +76,19 @@ enum ItemType
 
 enum MagicReleaseType
 {
-	MRT_NormalAttack =0;//普通攻击
-	MRT_Magic = 1;//魔法
+	MRT_NONE = 0;
+	MRT_NormalAttack =1;//普通攻击
 	MRT_BornMagic =2;//出生技能
+	MRT_Magic = 3;//魔法
 }
 
 enum MagicReleaseAITarget
 {
-	EnemyTarget = 0;//敌方目标
-	TeamTarget =1; //己方目标
-	Owner =2 ;//自己
+	MAT_ALL=0 ;//所有
+	MAT_Enemy =1;//敌人
+	MAT_OwnTeam =2;//自己队友
+	MAT_OwnTeamWithOutSelf =3;//不包含自己
+	MAT_Own =4;//只有自己
 }
 
 enum EquipmentType

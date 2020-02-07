@@ -39,16 +39,18 @@ namespace Proto {
             "QUxUX05vbmUQABIMCghOT19TS0lMTBABEgsKB05PX01PVkUQAhINCglOT19B",
             "VFRBQ0sQBBILCgdJTkhJREVOEAgqRgoISXRlbVR5cGUSCwoHSVRfTm9uZRAA",
             "Eg8KC0lUX1VzZU1hZ2ljEAESDgoKSVRfQ29uc3VtZRACEgwKCElUX0VxdWlw",
-            "EAMqSgoQTWFnaWNSZWxlYXNlVHlwZRIUChBNUlRfTm9ybWFsQXR0YWNrEAAS",
-            "DQoJTVJUX01hZ2ljEAESEQoNTVJUX0Jvcm5NYWdpYxACKkIKFE1hZ2ljUmVs",
-            "ZWFzZUFJVGFyZ2V0Eg8KC0VuZW15VGFyZ2V0EAASDgoKVGVhbVRhcmdldBAB",
-            "EgkKBU93bmVyEAIqNgoNRXF1aXBtZW50VHlwZRIICgRIZWFkEAASBwoDQXJt",
-            "EAESCAoEQm9keRACEggKBEZvb3QQAyqPAQoMR2V0VmFsdWVGcm9tEhEKDUN1",
-            "cnJlbnRDb25maWcQABIUChBNYWdpY0xldmVsUGFyYW0xEAESFAoQTWFnaWNM",
-            "ZXZlbFBhcmFtMhACEhQKEE1hZ2ljTGV2ZWxQYXJhbTMQAxIUChBNYWdpY0xl",
-            "dmVsUGFyYW00EAQSFAoQTWFnaWNMZXZlbFBhcmFtNRAFKlIKDlRhcmdldFRl",
-            "YW1UeXBlEgcKA0FMTBAAEgkKBUVuZW15EAESCwoHT3duVGVhbRACEhYKEk93",
-            "blRlYW1XaXRoT3V0U2VsZhADEgcKA093bhAEYgZwcm90bzM="));
+            "EAMqWAoQTWFnaWNSZWxlYXNlVHlwZRIMCghNUlRfTk9ORRAAEhQKEE1SVF9O",
+            "b3JtYWxBdHRhY2sQARIRCg1NUlRfQm9ybk1hZ2ljEAISDQoJTVJUX01hZ2lj",
+            "EAMqbAoUTWFnaWNSZWxlYXNlQUlUYXJnZXQSCwoHTUFUX0FMTBAAEg0KCU1B",
+            "VF9FbmVteRABEg8KC01BVF9Pd25UZWFtEAISGgoWTUFUX093blRlYW1XaXRo",
+            "T3V0U2VsZhADEgsKB01BVF9Pd24QBCo2Cg1FcXVpcG1lbnRUeXBlEggKBEhl",
+            "YWQQABIHCgNBcm0QARIICgRCb2R5EAISCAoERm9vdBADKo8BCgxHZXRWYWx1",
+            "ZUZyb20SEQoNQ3VycmVudENvbmZpZxAAEhQKEE1hZ2ljTGV2ZWxQYXJhbTEQ",
+            "ARIUChBNYWdpY0xldmVsUGFyYW0yEAISFAoQTWFnaWNMZXZlbFBhcmFtMxAD",
+            "EhQKEE1hZ2ljTGV2ZWxQYXJhbTQQBBIUChBNYWdpY0xldmVsUGFyYW01EAUq",
+            "UgoOVGFyZ2V0VGVhbVR5cGUSBwoDQUxMEAASCQoFRW5lbXkQARILCgdPd25U",
+            "ZWFtEAISFgoST3duVGVhbVdpdGhPdXRTZWxmEAMSBwoDT3duEARiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), }, null));
@@ -240,33 +242,42 @@ namespace Proto {
   }
 
   public enum MagicReleaseType {
+    [pbr::OriginalName("MRT_NONE")] MrtNone = 0,
     /// <summary>
     ///普通攻击
     /// </summary>
-    [pbr::OriginalName("MRT_NormalAttack")] MrtNormalAttack = 0,
-    /// <summary>
-    ///魔法
-    /// </summary>
-    [pbr::OriginalName("MRT_Magic")] MrtMagic = 1,
+    [pbr::OriginalName("MRT_NormalAttack")] MrtNormalAttack = 1,
     /// <summary>
     ///出生技能
     /// </summary>
     [pbr::OriginalName("MRT_BornMagic")] MrtBornMagic = 2,
+    /// <summary>
+    ///魔法
+    /// </summary>
+    [pbr::OriginalName("MRT_Magic")] MrtMagic = 3,
   }
 
   public enum MagicReleaseAITarget {
     /// <summary>
-    ///敌方目标
+    ///所有
     /// </summary>
-    [pbr::OriginalName("EnemyTarget")] EnemyTarget = 0,
+    [pbr::OriginalName("MAT_ALL")] MatAll = 0,
     /// <summary>
-    ///己方目标
+    ///敌人
     /// </summary>
-    [pbr::OriginalName("TeamTarget")] TeamTarget = 1,
+    [pbr::OriginalName("MAT_Enemy")] MatEnemy = 1,
     /// <summary>
-    ///自己
+    ///自己队友
     /// </summary>
-    [pbr::OriginalName("Owner")] Owner = 2,
+    [pbr::OriginalName("MAT_OwnTeam")] MatOwnTeam = 2,
+    /// <summary>
+    ///不包含自己
+    /// </summary>
+    [pbr::OriginalName("MAT_OwnTeamWithOutSelf")] MatOwnTeamWithOutSelf = 3,
+    /// <summary>
+    ///只有自己
+    /// </summary>
+    [pbr::OriginalName("MAT_Own")] MatOwn = 4,
   }
 
   public enum EquipmentType {

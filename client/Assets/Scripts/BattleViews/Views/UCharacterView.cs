@@ -66,7 +66,7 @@ public class UCharacterView : UElementView,IBattleCharacter
                 );
         }
         lookQuaternion = Quaternion.Lerp(lookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
-        Character.transform.localRotation = lookQuaternion;
+        ViewRoot.transform.localRotation = lookQuaternion;
         if (!Agent) return;
         if (MoveForward.HasValue)
         {
@@ -129,30 +129,43 @@ public class UCharacterView : UElementView,IBattleCharacter
         return transform;
     }
 
-    public GameObject Character{ private set; get; }
+    //public GameObject Character{ private set; get; }
 
-    public void SetCharacter(GameObject character)
+    private GameObject ViewRoot;
+
+    public void SetCharacter(GameObject root, GameObject character)
     {
-        this.Character = character;
+        ViewRoot = root;
+        //this.Character = character;
 
-        var collider = this.Character.GetComponent<CapsuleCollider> ();
-        var gameTop = new GameObject ("__Top");
+        var collider = character.GetComponent<CapsuleCollider>();
+
+        var gameTop = new GameObject("__Top");
         gameTop.transform.SetParent(this.transform);
-        gameTop.transform.localPosition =  new Vector3(0,collider.height,0);
-        bones.Add ("Top", gameTop.transform);
+        gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
+        bones.Add("Top", gameTop.transform);
 
-        var bottom = new GameObject ("__Bottom");
-        bottom.transform.SetParent( this.transform,false);
-        bottom.transform.localPosition =  new Vector3(0,0,0);
-        bones.Add ("Bottom", bottom.transform);
+        var bottom = new GameObject("__Bottom");
+        bottom.transform.SetParent(this.transform, false);
+        bottom.transform.localPosition = new Vector3(0, 0, 0);
+        bones.Add("Bottom", bottom.transform);
 
-        var body = new GameObject ("__Body");
-        body.transform.SetParent( this.transform,false);
-        body.transform.localPosition =  new Vector3(0,collider.height/2,0);
-        bones.Add ("Body", body.transform);
+        var body = new GameObject("__Body");
+        body.transform.SetParent(this.transform, false);
+        body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
+        bones.Add("Body", body.transform);
 
-        CharacterAnimator= Character. GetComponent<Animator> ();
+        
         Agent.radius = collider.radius;
+        Agent.height = collider.height;
+
+
+#if UNITY_SERVER
+        Destroy(character);
+#else
+        CharacterAnimator = character.GetComponent<Animator>();
+#endif
+
     }
 
     private float lockRotationTime = -1f;
@@ -195,7 +208,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
-    #region impl
+#region impl
 
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
@@ -327,7 +340,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         showHpBarTime = -1;
 		if(Agent)  Agent.enabled = false;
 		IsDead = true;
-		MoveDown.BeginMove (this.Character, 1, 1, 5);
+		MoveDown.BeginMove (ViewRoot, 1, 1, 5);
         CreateNotify(new Notify_CharacterDeath { Index = Index });
 	}
 
@@ -393,7 +406,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
     }
 
-    #endregion
+#endregion
 
     public override IMessage ToInitNotify()
     {

@@ -22,14 +22,23 @@ namespace Windows
 
             bt_package.onClick.AddListener(() =>
                 {
-                    var ui = UUIManager.Singleton.CreateWindow<Windows.UUIPackage>();
-                    ui.ShowWindow();
+                    UUIManager.S.CreateWindow<UUIPackage>().ShowWindow();
                 });
+
+            bt_close.onClick.AddListener(() => {
+                UApplication.S.GotoLoginGate();
+            });
+
+            bt_equip.onClick.AddListener(() => {
+                UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
+            });
+
             //Write Code here
         }
         protected override void OnShow()
         {
             base.OnShow();
+            this.HeroName.text = string.Empty;
             OnUpdateUIData();
         }
         protected override void OnHide()
@@ -44,6 +53,8 @@ namespace Windows
 
             lb_coin.text = gate.Coin.ToString("N0");
             lb_gold.text = gate.Gold.ToString("N0");
+            if (gate.hero == null) return;
+            this.HeroName.text = $"{gate.hero.Name} 等级{gate.hero.Level}";
         }
     }
 }

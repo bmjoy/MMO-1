@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TimeLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Time>1</Time>
   <Points>
     <TimePoint>
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <Time>0.576507</Time>
+      <Time>0.4456328</Time>
     </TimePoint>
     <TimePoint>
       <GUID>78164013-d316-4f24-90c1-e2218581082a</GUID>
@@ -15,8 +15,12 @@
       <Time>0</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>0a5eb684-79cb-4508-a3d1-95b4f4ae97bd</GUID>
-      <Time>0.480680048</Time>
+      <GUID>a4fa31fe-f794-464c-8cae-847da9238d6a</GUID>
+      <Time>0.320855618</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
+      <Time>0.837789655</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -41,19 +45,19 @@
     </LayoutBase>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>0f640c11-a3c8-4eb8-86d3-13f07c768d53</GUID>
-      <motionName>Cast Spell 03</motionName>
+      <motionName>Cast Spell 02</motionName>
       <targetType>Releaser</targetType>
     </LayoutBase>
     <LayoutBase xsi:type="ParticleLayout">
-      <GUID>0a5eb684-79cb-4508-a3d1-95b4f4ae97bd</GUID>
+      <GUID>a4fa31fe-f794-464c-8cae-847da9238d6a</GUID>
       <path>Effects/Range.prefab</path>
       <fromTarget>Target</fromTarget>
-      <toTarget>Target</toTarget>
-      <fromBoneName>Bottom</fromBoneName>
-      <toBoneName>Bottom</toBoneName>
+      <toTarget>Releaser</toTarget>
+      <fromBoneName>Top</fromBoneName>
+      <toBoneName>Top</toBoneName>
       <Bind>false</Bind>
-      <destoryType>Time</destoryType>
-      <destoryTime>2</destoryTime>
+      <destoryType>Normal</destoryType>
+      <destoryTime>1</destoryTime>
     </LayoutBase>
   </Layouts>
 </TimeLine>

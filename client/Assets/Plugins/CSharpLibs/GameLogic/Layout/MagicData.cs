@@ -13,9 +13,6 @@ namespace Layout
 			triggerTicksTime = -1;
 		}
 
-		[Label("查询Key")]
-		public string key;
-
 		[Label("名称")]
 		public string name;
 

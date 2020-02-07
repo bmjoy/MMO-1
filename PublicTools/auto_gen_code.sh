@@ -1,5 +1,7 @@
 cd ./ToolBin
 
+cp -af /Users/xiexiongping/Google\ 云端硬盘/MultplayerGame/Excel/ /Users/xiexiongping/Documents/github/version/PublicTools/econfigs
+
 IMPORT_PATH=../proto/
 CSHARP_PATH=../src/csharp
 CSHARP_OUT_PATH=$CSHARP_PATH

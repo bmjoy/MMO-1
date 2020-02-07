@@ -29,15 +29,11 @@ message B2C_ExitBattle
 	 ErrorCode Code=1;
 }
 
-//点击移动
-message Action_ClickMapGround
-{
-	 Vector3 TargetPosition =1; //点击的位置
-}
 //点击释放技能
 message Action_ClickSkillIndex
 {
-	 string MagicKey=1;//技能Key
+	 int32 MagicId = 1;//技能id
+	 int32 Target =  2;//技能目标
 }
 //自动寻敌
 message Action_AutoFindTarget

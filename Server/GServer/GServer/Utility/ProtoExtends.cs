@@ -14,8 +14,10 @@ namespace GateServer
             {
                 Exprices = entity.Exp,
                 HeroID = entity.HeroId,
-                Level = entity.Level
+                Level = entity.Level,
+                Name = entity.HeroName
             };
+
 
             foreach (var i in entity.Magics)
             {

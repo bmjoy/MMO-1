@@ -19,32 +19,26 @@ namespace GameLogic.Game.AIBehaviorTree
 			var root = context as AITreeRoot;
 			var per = root.Perception as BattlePerception;
 			var distance = Node.distance;
+
+
 			if (!root.GetDistanceByValueType(Node.valueOf, distance, out distance))
 			{
 				yield return RunStatus.Failure;
 				yield break;
 			}
 
-			Vector3 target;
-
-			var targetIndex = root[AITreeRoot.TRAGET_INDEX];
-			if (targetIndex == null)
+			if (root.TryGetTarget(out BattleCharacter targetCharacter))
 			{
 				yield return RunStatus.Failure;
 				yield break;
 			}
-            if (!(root.Perception.State[(int)targetIndex] is BattleCharacter targetCharacter))
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
 
-            var noraml =(root.Character.View.Transform.position - targetCharacter.View.Transform.position).normalized;
-			target = noraml * distance + root.Character.View.Transform.position;
+			var noraml = (root.Character.Position - targetCharacter.Position).normalized;
+			var target = noraml * distance + root.Character.Position;
 
-            per.CharacterMoveTo(root.Character, target);
+			root.Character.MoveTo(target);
 
-            while ((root.Character.View.Transform.position-target).magnitude > 0.2f)
+			while ((root.Character.Position - target).magnitude > 0.2f)
 			{
 				yield return RunStatus.Running;
 			}
@@ -61,8 +55,8 @@ namespace GameLogic.Game.AIBehaviorTree
             if (LastStatus == RunStatus.Running)
             {
                 var root = context as AITreeRoot;
-                var per = root.Perception as BattlePerception;
-                per.CharacterStopMove(root.Character);}
+                root.Character.StopMove();
+            }
         }
 	}
 }

@@ -61,30 +61,25 @@
         <member name="F:Proto.B2C_ExitBattle.CodeFieldNumber">
              <summary>Field number for the "Code" field.</summary>
             </member>
-        <member name="T:Proto.Action_ClickMapGround">
-             <summary>
-            点击移动
-             </summary>
-            </member>
-        <member name="F:Proto.Action_ClickMapGround.TargetPositionFieldNumber">
-             <summary>Field number for the "TargetPosition" field.</summary>
-            </member>
-        <member name="P:Proto.Action_ClickMapGround.TargetPosition">
-             <summary>
-            点击的位置
-             </summary>
-            </member>
         <member name="T:Proto.Action_ClickSkillIndex">
              <summary>
             点击释放技能
              </summary>
             </member>
-        <member name="F:Proto.Action_ClickSkillIndex.MagicKeyFieldNumber">
-             <summary>Field number for the "MagicKey" field.</summary>
+        <member name="F:Proto.Action_ClickSkillIndex.MagicIdFieldNumber">
+             <summary>Field number for the "MagicId" field.</summary>
             </member>
-        <member name="P:Proto.Action_ClickSkillIndex.MagicKey">
+        <member name="P:Proto.Action_ClickSkillIndex.MagicId">
              <summary>
-            技能Key
+            技能id
+             </summary>
+            </member>
+        <member name="F:Proto.Action_ClickSkillIndex.TargetFieldNumber">
+             <summary>Field number for the "Target" field.</summary>
+            </member>
+        <member name="P:Proto.Action_ClickSkillIndex.Target">
+             <summary>
+            技能目标
              </summary>
             </member>
         <member name="T:Proto.Action_AutoFindTarget">
@@ -1241,16 +1236,6 @@
              AI路径
              </summary>
             </member>
-        <member name="P:EConfig.CharacterData.AttackSkillID">
-             <summary>
-             普通攻击技能ID
-             </summary>
-            </member>
-        <member name="P:EConfig.CharacterData.AttackAppend">
-             <summary>
-             连击技能
-             </summary>
-            </member>
         <member name="P:EConfig.CharacterData.ViewDistance">
              <summary>
              视野(m)
@@ -1371,12 +1356,12 @@
              需求MP
              </summary>
             </member>
-        <member name="P:EConfig.CharacterMagicData.ReleaseRangeMin">
+        <member name="P:EConfig.CharacterMagicData.RangeMin">
              <summary>
              释放最小距离
              </summary>
             </member>
-        <member name="P:EConfig.CharacterMagicData.ReleaseRangeMax">
+        <member name="P:EConfig.CharacterMagicData.RangeMax">
              <summary>
              释放最大距离
              </summary>
@@ -1386,7 +1371,7 @@
              释放类型
              </summary>
             </member>
-        <member name="P:EConfig.CharacterMagicData.ReleaseAITargetType">
+        <member name="P:EConfig.CharacterMagicData.AITargetType">
              <summary>
              释放参数
              </summary>
@@ -1399,6 +1384,36 @@
         <member name="P:EConfig.CharacterMagicData.Description">
              <summary>
              描述
+             </summary>
+            </member>
+        <member name="T:EConfig.CharacterPlayerData">
+             <summary>
+             玩家角色表
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterPlayerData.CharacterID">
+             <summary>
+             名称
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterPlayerData.NormalAttack">
+             <summary>
+             普通攻击技能
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterPlayerData.NormalAttackAppend">
+             <summary>
+             连击技能
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterPlayerData.Motion">
+             <summary>
+             创建角色动作
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterPlayerData.Description">
+             <summary>
+             角色说明
              </summary>
             </member>
         <member name="T:EConfig.MagicLevelUpData">
@@ -1687,29 +1702,39 @@
             普通攻击
              </summary>
             </member>
-        <member name="F:Proto.MagicReleaseType.MrtMagic">
-             <summary>
-            魔法
-             </summary>
-            </member>
         <member name="F:Proto.MagicReleaseType.MrtBornMagic">
              <summary>
             出生技能
              </summary>
             </member>
-        <member name="F:Proto.MagicReleaseAITarget.EnemyTarget">
+        <member name="F:Proto.MagicReleaseType.MrtMagic">
              <summary>
-            敌方目标
+            魔法
              </summary>
             </member>
-        <member name="F:Proto.MagicReleaseAITarget.TeamTarget">
+        <member name="F:Proto.MagicReleaseAITarget.MatAll">
              <summary>
-            己方目标
+            所有
              </summary>
             </member>
-        <member name="F:Proto.MagicReleaseAITarget.Owner">
+        <member name="F:Proto.MagicReleaseAITarget.MatEnemy">
              <summary>
-            自己
+            敌人
+             </summary>
+            </member>
+        <member name="F:Proto.MagicReleaseAITarget.MatOwnTeam">
+             <summary>
+            自己队友
+             </summary>
+            </member>
+        <member name="F:Proto.MagicReleaseAITarget.MatOwnTeamWithOutSelf">
+             <summary>
+            不包含自己
+             </summary>
+            </member>
+        <member name="F:Proto.MagicReleaseAITarget.MatOwn">
+             <summary>
+            只有自己
              </summary>
             </member>
         <member name="F:Proto.EquipmentType.Head">

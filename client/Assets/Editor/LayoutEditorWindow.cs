@@ -33,7 +33,10 @@ public class LayoutEditorWindow:EditorWindow
 		//window.Show ();
 	}
 
-	public static void OpenLayout(string layout)
+    private const string SAVE_PATH = "/Resources/Layouts/";
+
+
+    public static void OpenLayout(string layout)
 	{
 		Init ();
 
@@ -51,32 +54,33 @@ public class LayoutEditorWindow:EditorWindow
 	private TimeLine line;
 	private string shortPath;
 
-	private static Dictionary<Type,string> _layouts = new Dictionary<Type, string> ();
-	private void PlayLayout()
-	{
-		if (line == null)
-			return;
-		if (!EditorApplication.isPlaying)
-			return;
+	private static readonly Dictionary<Type,string> _layouts = new Dictionary<Type, string> ();
+    private void PlayLayout()
+    {
+        if (line == null)
+            return;
+        if (!EditorApplication.isPlaying)
+            return;
 
-		var testMaigc = new Layout.MagicData
-		{
-			key = shortPath
-		};
+        var testMaigc = new Layout.MagicData
+        {
 
-		testMaigc.Containers.Add (
-			new Layout.EventContainer
-			{
-				type = Layout.EventType.EVENT_START,
-				layoutPath = shortPath,
-				line =this.line
-			}
-		);
+        };
 
-        EditorStarter.G()?.ReleaseMagic (testMaigc);
-		lastStep = 0;
-		//time = 0;
-	}
+        testMaigc.Containers.Add(
+            new Layout.EventContainer
+            {
+                type = Layout.EventType.EVENT_START,
+                layoutPath = shortPath,
+                line = this.line
+            }
+        );
+        var g = EditorStarter.G();
+        if (g == null) return;
+        g.ReleaseMagic(testMaigc);
+        lastStep = 0;
+        //time = 0;
+    }
 
 
     private void GetPlayingInfo()
@@ -380,7 +384,7 @@ public class LayoutEditorWindow:EditorWindow
 
 
 
-	private float pre100FixeTick = 10;
+	private readonly float pre100FixeTick = 10;
 	private Vector2 _scroll = Vector2.zero;
 
 	//private LayoutBase current;
@@ -389,7 +393,7 @@ public class LayoutEditorWindow:EditorWindow
 	{
 		if (line == null)
 			return;
-		path = EditorUtility.SaveFilePanel ("保存", Application.dataPath + "/Resources", "layout", "xml");
+		path = EditorUtility.SaveFilePanel ("保存", Application.dataPath + SAVE_PATH ,"layout", "xml");
 		if (!string.IsNullOrEmpty (path)) {
 			shortPath = path.Replace (Application.dataPath + "/Resources/", "");
 			var xml = XmlParser.Serialize (line);
@@ -424,7 +428,7 @@ public class LayoutEditorWindow:EditorWindow
         }
 
         path = EditorUtility.OpenFilePanel("Open Layout",
-            Application.dataPath + "/Resources", "xml");
+            Application.dataPath +  SAVE_PATH, "xml");
         
         Open(path);
     }

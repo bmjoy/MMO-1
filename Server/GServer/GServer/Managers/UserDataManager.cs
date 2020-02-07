@@ -111,7 +111,13 @@ namespace GServer.Managers
 
         public async Task<bool> TryToCreateUser(string userID, int heroID, string heroName)
         {
-           
+
+            if (heroName.Length > 12) return false;
+
+            var character = ExcelToJSONConfigManager
+                .Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == heroID);
+            if (character == null) return false;
+
             var fiter = Builders<GamePlayerEntity>.Filter.Eq(t => t.AccountUuid, userID);
             var fiterHero = Builders<GameHeroEntity>.Filter.Eq(t => t.HeroName, heroName);
             //var heros = db.GetCollection<GameHeroEntity>(Hero);
@@ -159,7 +165,6 @@ namespace GServer.Managers
 
         }
 
-
         public async Task<G2C_EquipmentLevelUp> EquipLevel(string player_uuid,string item_uuid,int level)
         {
            
@@ -176,7 +181,8 @@ namespace GServer.Managers
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.Error };
 
             //装备获取失败
-            var equipconfig = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(itemconfig.Params1));
+            var equipconfig = ExcelToJSONConfigManager.
+                Current.GetConfigByID<EquipmentData>(int.Parse(itemconfig.Params[0]));
             if (equipconfig == null)
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.Error };
 
@@ -298,7 +304,7 @@ namespace GServer.Managers
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
             if (config == null) return false;
 
-            var equipConfig = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse( config.Params1));
+            var equipConfig = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse( config.Params[0]));
             if (equipConfig == null) return false;
             if (equipConfig.PartType != (int)part) return false;
 
@@ -315,7 +321,7 @@ namespace GServer.Managers
         }
 
         [Obsolete("todo")]
-        internal async Task<bool> ProcessItem(string player_uuid, int gold, Dictionary<int, PlayerItem> diff)
+        internal async Task<bool> ProcessItem(string player_uuid, int gold, int coin, Dictionary<int, PlayerItem> diff)
         {
             
             var pa_filter = Builders<ItemPackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);

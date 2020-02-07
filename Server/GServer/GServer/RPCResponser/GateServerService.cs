@@ -3,9 +3,11 @@
 using System;
 using GServer;
 using GServer.Managers;
+using MongoDB.Driver;
 using Proto;
 using Proto.GateServerService;
 using Proto.LoginBattleGameServerService;
+using Proto.MongoDB;
 using ServerUtility;
 using XNet.Libs.Net;
 
@@ -46,10 +48,11 @@ namespace GateServer
 
         public G2C_EquipmentLevelUp EquipmentLevelUp(C2G_EquipmentLevelUp request)
         {
-            return MonitorPool.G<UserDataManager>()
-                .EquipLevel(AccountUuid, request.Guid, request.Level)
-                .GetAwaiter()
-                .GetResult();
+            var task = MonitorPool.G<UserDataManager>()
+                .EquipLevel(AccountUuid, request.Guid, request.Level);
+
+            task.Wait();
+            return task.Result;
         }
 
         public G2C_GetLastBattle GetLastBattle(C2G_GetLastBattle request)
@@ -72,6 +75,10 @@ namespace GateServer
         {
 #if USEGM
             if (!Appliaction.Current.EnableGM) return new G2C_GMTool() { Code = ErrorCode.Error };
+            var task = MonitorPool.G<UserDataManager>()
+                                .FindPlayerByAccountId(this.AccountUuid);
+            task.Wait();
+            var player = task.Result;
 
             var args = request.GMCommand.Split(' ');
             if (args.Length == 0) return new G2C_GMTool { Code = ErrorCode.Error };
@@ -82,7 +89,9 @@ namespace GateServer
                     {
                         if (int.TryParse(args[1], out int level))
                         {
-                           // userData.HeroLevelTo(level);
+                            var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.PlayerUuid,player.Uuid);
+                            var update = Builders<GameHeroEntity>.Update.Set(t => t.Level, level);
+                            DataBase.S.Heros.UpdateOne(filter, update);   
                         }
                     }
                     break;
@@ -91,6 +100,9 @@ namespace GateServer
                         int id = int.Parse(args[1]);
                         var num = 1;
                         if (args.Length > 2) num = int.Parse(args[2]);
+                        var dic = new System.Collections.Generic.Dictionary<int, PlayerItem>();
+                        dic.Add(id, new PlayerItem { ItemID = id, Num = num });
+                        MonitorPool.G<UserDataManager>().ProcessItem(player.Uuid, 0, 0, dic).Wait();
                     }
                     break;
                 case "addgold":
@@ -111,12 +123,8 @@ namespace GateServer
                     break;
             }
 
-            //sync
-            //var syncHero = new Task_G2C_SyncHero { Hero = userData.GetHero() };
-            //var syncPackage = new Task_G2C_SyncPackage { };
-            //NetProtoTool.SendTask(client, syncHero);
-            //NetProtoTool.SendTask(client, syncPackage);
-
+            MonitorPool.G<UserDataManager>().SyncToClient(Client, player.Uuid)
+                                .Wait();
             return new G2C_GMTool
             {
                 Code = ErrorCode.Ok

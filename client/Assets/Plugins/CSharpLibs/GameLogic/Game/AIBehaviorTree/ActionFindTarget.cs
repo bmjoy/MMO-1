@@ -16,21 +16,14 @@ namespace GameLogic.Game.AIBehaviorTree
     {
 		public ActionFindTarget(TreeNodeFindTarget n) : base(n) { }
 
-		[Label("当前查找距离")]
-        public float getDistanceValue;
-        [Label("获得目标数")]
-        public int getTargets;
-        [Label("目标Index")]
-        public long index;
-
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
-            //state =LastStatus.HasValue? LastStatus.Value:RunStatus.Failure;
 			var character = context.UserState as BattleCharacter;
 			var per = character.Controllor.Perception as BattlePerception;
 			var root = context as AITreeRoot;
 			var list = new List<BattleCharacter>();
 			var distance = Node.Distance;
+			float getDistanceValue = 0f;
 			if (!root.GetDistanceByValueType(Node.valueOf, distance, out distance))
 			{
                 getDistanceValue = -1;
@@ -47,7 +40,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     if (per.State[(int)older] is BattleCharacter targetCharacter)
                     {
-                        if (per.Distance(targetCharacter, root.Character) <= distance)
+                        if (BattlePerception.Distance(targetCharacter, root.Character) <= distance)
                         {
                             yield return RunStatus.Success;
                             yield break;
@@ -73,15 +66,13 @@ namespace GameLogic.Game.AIBehaviorTree
                     yield return RunStatus.Failure;
                     yield break;
                 }
-                type = (TargetTeamType)data.ReleaseAITargetType;
+                type = (TargetTeamType)data.AITargetType;
             }
 
 			per.State.Each<BattleCharacter>(t => 
             {
                 //隐身的不进入目标查找
-                if (t.Lock.IsLock(ActionLockType.Inhiden))
-                    return false;
-
+                if (t.Lock.IsLock(ActionLockType.Inhiden))   return false;
                 switch (type)
 				{
                     case TargetTeamType.Enemy:
@@ -112,7 +103,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				}
 
 
-				if (per.Distance(t, root.Character) > distance) return false;
+				if (BattlePerception.Distance(t, root.Character) > distance) return false;
 				switch (Node.filter)
 				{
 					case TargetFilterType.Hurt:
@@ -126,6 +117,7 @@ namespace GameLogic.Game.AIBehaviorTree
             //getTargets = list.Count;
 			if (list.Count == 0)
 			{
+				if (context.IsDebug) Attach("failure", $"{list.Count} nofound targets");
 				yield return RunStatus.Failure;
 				yield break;
 			}
@@ -138,10 +130,10 @@ namespace GameLogic.Game.AIBehaviorTree
 				case TargetSelectType.Nearest:
 					{
 						target = list[0];
-						var d = UVector3.Distance (target.View.Transform.position, character.View.Transform.position);
+						var d = BattlePerception.Distance(target, character);
 						foreach (var i in list)
 						{
-							var temp =UVector3.Distance(i.View.Transform.position, character.View.Transform.position);
+							var temp = BattlePerception.Distance(i, character);
 							if (temp < d)
 							{
 								d = temp;
@@ -186,10 +178,10 @@ namespace GameLogic.Game.AIBehaviorTree
 				case TargetSelectType.HPRateMax:
 					{
 						target = list[0];
-                        var d = (float)target.HP/(float)target.MaxHP;
+                        var d = (float)target.HP/ target.MaxHP;
 						foreach (var i in list)
 						{
-                            var temp = (float)i.HP / (float)i.MaxHP; ;
+                            var temp = (float)i.HP / i.MaxHP; ;
 							if (temp > d)
 							{
 								d = temp;
@@ -201,10 +193,10 @@ namespace GameLogic.Game.AIBehaviorTree
 				case TargetSelectType.HPRateMin:
 					{
 						target = list[0];
-                        var d = (float)target.HP / (float)target.MaxHP;
+                        var d = (float)target.HP / target.MaxHP;
 						foreach (var i in list)
 						{
-                            var temp = (float)i.HP / (float)i.MaxHP; 
+                            var temp = (float)i.HP / i.MaxHP; 
 							if (temp < d)
 							{
 								d = temp;
@@ -215,13 +207,10 @@ namespace GameLogic.Game.AIBehaviorTree
 					break;
 			}
 
-            index = target.Index;
+			if (context.IsDebug) Attach("Tagert", target);
 			root[AITreeRoot.TRAGET_INDEX] = target.Index;
-
-
 			yield return RunStatus.Success;
 		}
-
 
 	}
 }

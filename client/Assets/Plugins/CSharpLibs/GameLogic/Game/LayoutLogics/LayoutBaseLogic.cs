@@ -65,8 +65,7 @@ namespace GameLogic.Game.LayoutLogics
 		{
 			_ = layoutBase.GUID;
             var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
-            per.LookAtCharacter(linePlayer.Releaser.ReleaserTarget.Releaser,
-                                linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
+			linePlayer.Releaser.ReleaserTarget?.Releaser?.LookAt(linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
 		}
         #endregion
 
@@ -79,23 +78,21 @@ namespace GameLogic.Game.LayoutLogics
 			var missile = per.CreateMissile (layout, linePlayer.Releaser);
 			linePlayer.Releaser.AttachElement(missile);
 		}
-        #endregion
+		#endregion
 
-        #region MotionLayout
+		#region MotionLayout
 		[HandleLayout(typeof(MotionLayout))]
 		public static void MotionActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
 			var layout = layoutBase as MotionLayout;
 			var releaser = linePlayer.Releaser;
-            var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
-			if (layout.targetType == Layout.TargetType.Releaser) 
-            {
-                per.PlayMotion (releaser.ReleaserTarget.Releaser, layout.motionName);
-			} else if (layout.targetType == Layout.TargetType.Target) 
-            {
-				if (releaser.ReleaserTarget.ReleaserTarget == null)
-					return;
-                per.PlayMotion(releaser.ReleaserTarget.ReleaserTarget, layout.motionName);
+			if (layout.targetType == Layout.TargetType.Releaser)
+			{
+				releaser.ReleaserTarget?.Releaser?.PlayMotion(layout.motionName);
+			}
+			else if (layout.targetType == Layout.TargetType.Target)
+			{
+				releaser.ReleaserTarget?.ReleaserTarget?.PlayMotion(layout.motionName);
 			}
 		}
         #endregion
@@ -213,8 +210,8 @@ namespace GameLogic.Game.LayoutLogics
                 data,
                 magics.ToList(),
                 charachter.TeamIndex,
-                charachter.View.Transform.position,
-                charachter.View.Transform.forward,
+                charachter.Position,
+                charachter.Forward,
                 string.Empty,data.Name
             );
             //无限视野

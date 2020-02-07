@@ -17,12 +17,17 @@ namespace GameLogic.Game.AIBehaviorTree
         public const string TRAGET_INDEX = "TargetIndex";
         public const string ACTION_MESSAGE = "Action_Message";
 
+        public bool IsDebug { set; get; }
+        public object UserState { get { return Character; } }
+        private Composite Current;
+
+        private readonly Dictionary<string, object> _blackbroad = new Dictionary<string, object>();
 
         public AITreeRoot(ITimeSimulater timeSimulater, BattleCharacter userstate, Composite root,
                           TreeNode nodeRoot)
         {
             TimeSimulater = timeSimulater;
-            UserState = userstate;
+            Character = userstate;
             Character = userstate;
             Root = root;
             NodeRoot = nodeRoot;
@@ -47,7 +52,7 @@ namespace GameLogic.Game.AIBehaviorTree
                         {
                             return false;
                         }
-                        outValue = magic.ReleaseRangeMax;
+                        outValue = magic.RangeMax;
                     }
                     break;
                 case DistanceValueOf.BlackboardMaigicRangeMin:
@@ -62,11 +67,11 @@ namespace GameLogic.Game.AIBehaviorTree
                         {
                             return false;
                         }
-                        outValue = magic.ReleaseRangeMin;
+                        outValue = magic.RangeMin;
                     }
                     break;
                 case DistanceValueOf.ViewDistance:
-                    outValue = (float)this.Character[Proto.HeroPropertyType.ViewDistance].FinalValue / 100f;
+                    outValue = Character[Proto.HeroPropertyType.ViewDistance].FinalValue / 100f;
                     break;
                 case DistanceValueOf.Value:
                     break;
@@ -78,16 +83,9 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public ITimeSimulater TimeSimulater { private set; get; }
 
-
         public BattlePerception Perception { get { return Character.Controllor.Perception as BattlePerception; } }
 
-        public object UserState
-        {
-            get;
-            private set;
-        }
-
-        public BattleCharacter Character { get; }
+        public BattleCharacter Character { get; private set; }
 
         public Composite Root { private set; get; }
 
@@ -156,7 +154,6 @@ namespace GameLogic.Game.AIBehaviorTree
             return (int)v;
         }
 
-
         public float Time
         {
             get
@@ -164,12 +161,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 return TimeSimulater.Now.Time;
             }
         }
-
-        public bool IsDebug { set; get; }
-
-        private Composite Current;
-
-		private readonly Dictionary<string, object> _blackbroad = new Dictionary<string, object>();
 
 		public object this[string key] 
         { 
@@ -189,6 +180,34 @@ namespace GameLogic.Game.AIBehaviorTree
 				return null;
 			}
 		}
+
+
+        public bool TryGet<T>(string key, out T v)
+        {
+            var t = this[key];
+            v = default;
+            if (t == null)
+                return false;
+            v = (T)t;
+            if (v == null) return false;
+            return true;
+        }
+
+
+        public bool TryGetTarget(out BattleCharacter target)
+        {
+            target = null;
+            if (!TryGet(TRAGET_INDEX, out int index)) return false;
+            target = Perception.FindTarget(index);
+            return target;
+        }
+
+        public bool TryGetAction<T>(out T action)
+        {
+            if (!TryGet(ACTION_MESSAGE, out action)) return false;
+            this[ACTION_MESSAGE] = null;
+            return true;
+        }
 
 	}
 }

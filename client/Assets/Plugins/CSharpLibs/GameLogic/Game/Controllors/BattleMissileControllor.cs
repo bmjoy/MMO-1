@@ -19,8 +19,8 @@ namespace GameLogic.Game.Controllors
 				case MissileState.NoStart:
 					{
 						var distance =UVector3.Distance (
-                            missile.Releaser.ReleaserTarget.Releaser.View.Transform.position,
-                            missile.Releaser.ReleaserTarget.ReleaserTarget.View.Transform.position);
+                            missile.Releaser.ReleaserTarget.Releaser.Position,
+                            missile.Releaser.ReleaserTarget.ReleaserTarget.Position);
 						missile.TotalTime = distance / missile.Layout.speed;
 						missile.TimeStart = time.Time;
 						missile.State = MissileState.Moving;

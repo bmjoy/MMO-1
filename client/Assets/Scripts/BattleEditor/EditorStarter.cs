@@ -125,7 +125,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 			return;
         }
 		var per = curState.Perception as BattlePerception;
-		this.currentReleaser =per.CreateReleaser(magic,
+		this.currentReleaser =per.CreateReleaser(string.Empty,magic,
             new GameLogic.Game.LayoutLogics.ReleaseAtTarget(this.releaser, this.target),
 			ReleaserType.Magic);
 
@@ -186,8 +186,8 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 			var position = midd.position;
 			var left = position + (UVector3.left * distanceCharacter / 2);
 			var right = position + (UVector3.right * distanceCharacter / 2);
-			releaser.View.SetPosition(left.ToPVer3());
-			target.View.SetPosition(right.ToPVer3());
+			releaser.Position = left;
+			target.Position = right;
 			isChanged = false;
 		}
 	}
@@ -216,8 +216,8 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 
 	private void ReleaseSkill(string key)
 	{
-		var action = new Proto.Action_ClickSkillIndex { MagicKey = key };
-		DoAction(action);
+		//var action = new Proto.Action_ClickSkillIndex { MagicKey = key };
+		//DoAction(action);
 	}
 
     private string index ="1";

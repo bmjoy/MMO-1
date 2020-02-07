@@ -24,7 +24,9 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            if (!(root.Perception.State[(int)index] is BattleCharacter target))
+            var target = root.Perception.FindTarget((int)index);
+
+            if (!target)
             {
                 yield return RunStatus.Failure;
                 yield break;
@@ -41,10 +43,9 @@ namespace GameLogic.Game.AIBehaviorTree
                             yield return RunStatus.Failure;
                             yield break;
                         }
-                        var magicData = ExcelToJSONConfigManager.Current
-                                                                .GetConfigByID<CharacterMagicData>((int)id);
+                        var magicData = ExcelToJSONConfigManager
+                            .Current.GetConfigByID<CharacterMagicData>((int)id);
                         key = magicData.MagicKey;
-                        //var attackSpeed = root.Character.AttackSpeed;
                         root.Character.AttachMagicHistory(magicData.ID,root.Time);
                     }
                     break;
@@ -57,41 +58,37 @@ namespace GameLogic.Game.AIBehaviorTree
 
 			if (!root.Perception.View.ExistMagicKey(key))
 			{
+                if (context.IsDebug)
+                {
+                    Attach("failure", $"nofound key {key}");
+                }
 				yield return RunStatus.Failure;
 				yield break;
 			}
 
-            releaser = root.Perception.CreateReleaser(
-                 key,
-                 new ReleaseAtTarget(root.Character, target),
-                 ReleaserType.Magic
-            );
+            releaser = root.Perception
+                .CreateReleaser(key, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic );
 
-
-            var time = root.Time;
-            while (time + root.Character.AttackSpeed > root.Time)
+            while (releaser.IsLayoutStartFinish)
             {
                 yield return RunStatus.Running;
             }
 
-		    yield return RunStatus.Success;
+            yield return RunStatus.Success;
+            yield break;
+           
         }
 
         private MagicReleaser releaser;
+
         public override void Stop(ITreeRoot context)
         {
-
-            if (LastStatus.HasValue && LastStatus.Value == RunStatus.Running)
+            if (LastStatus == RunStatus.Running)
             {
-                if (!releaser.IsLayoutStartFinish)
-                {
-                    releaser.StopAllPlayer();
-                }
-                releaser.SetState(ReleaserStates.ToComplete);
+                releaser?.Cancel();
             }
             base.Stop(context);
         }
-
 	}
 }
 

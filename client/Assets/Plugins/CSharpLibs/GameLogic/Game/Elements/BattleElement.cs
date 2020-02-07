@@ -6,32 +6,32 @@ namespace GameLogic.Game.Elements
 {
     public delegate void HanlderEvent(GObject el);
 
-	public class BattleElement<T>: GObject  where T:IBattleElement
+	public class BattleElement<T> : GObject where T : IBattleElement
 	{
-		public BattleElement (GControllor controllor,T view):base(controllor)
+		public BattleElement(GControllor controllor, T view) : base(controllor)
 		{
 			View = view;
 		}
 
-		public T View{ private set; get; }
-			
-		protected override void OnJoinState ()
+		protected T View { private set; get; }
+
+		protected override void OnJoinState()
 		{
 			base.OnJoinState();
-            View.AttachElement(this);
-            View.JoinState (this.Index);
-            OnJoinedState?.Invoke(this);
+			View?.AttachElement(this);
+			View?.JoinState(this.Index);
+			OnJoinedState?.Invoke(this);
 
 
-        }
+		}
 
-		protected override void OnExitState ()
+		protected override void OnExitState()
 		{
-			base.OnExitState ();
-            View.ExitState (this.Index);
-            OnExitedState?.Invoke(this);
+			base.OnExitState();
+			View?.ExitState(this.Index);
+			OnExitedState?.Invoke(this);
 
-        }
+		}
 
 		public HanlderEvent OnJoinedState;
 		public HanlderEvent OnExitedState;

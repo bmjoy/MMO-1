@@ -15,8 +15,9 @@ public class GateServerTaskHandler : TaskHandler, IGateServerTask
     {
         var gata = UApplication.G<GMainGate>();
         gata.hero = req.Hero;
+        
+        gata.ReCreateHero(req.Hero.HeroID, req.Hero.Name);
         UUIManager.S.UpdateUIData();
-        gata.ReCreateHero();
         return req;
     }
 

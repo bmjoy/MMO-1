@@ -98,6 +98,11 @@ namespace RPCResponsers
         {
             if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
                 return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
+            if (request.UserName.Length > 100 || request.UserName.Length < 5)
+                return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
+            if (request.Password.Length > 100 || request.Password.Length < 5)
+                return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
+
             var users = DataBase.S.Account;
             var filter = Builders<PlayInfoEntity>.Filter.Eq(t=>t.Username, request.UserName);
             var query = users.Find(filter);

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>1</Time>
+  <Points>
+    <TimePoint>
+      <GUID>78164013-d316-4f24-90c1-e2218581082a</GUID>
+      <Time>0</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>0f640c11-a3c8-4eb8-86d3-13f07c768d53</GUID>
+      <Time>0</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>c7a49ee0-9512-497f-a144-e9e78c9dda23</GUID>
+      <Time>0.28877005</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="LookAtTarget">
+      <GUID>78164013-d316-4f24-90c1-e2218581082a</GUID>
+    </LayoutBase>
+    <LayoutBase xsi:type="MotionLayout">
+      <GUID>0f640c11-a3c8-4eb8-86d3-13f07c768d53</GUID>
+      <motionName>Cast Spell 03</motionName>
+      <targetType>Releaser</targetType>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>c7a49ee0-9512-497f-a144-e9e78c9dda23</GUID>
+      <path>Effects/Range.prefab</path>
+      <fromTarget>Releaser</fromTarget>
+      <toTarget>Releaser</toTarget>
+      <Bind>false</Bind>
+      <destoryType>Normal</destoryType>
+      <destoryTime>0</destoryTime>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>

@@ -17,7 +17,7 @@ namespace GameLogic.Game.LayoutLogics
 
 		public UVector3 TargetPosition
 		{
-			get { return ReleaserTarget.View.Transform.position; }
+			get { return ReleaserTarget.Position; }
 		}
 
 	}

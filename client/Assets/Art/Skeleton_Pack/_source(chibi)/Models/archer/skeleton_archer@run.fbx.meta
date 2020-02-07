@@ -110,8 +110,7 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: "Copied Avatar Rig Configuration mis-match. Transform hierarchy
-      does not match:\n\tTransform 'eyes 1' for human bone 'RightEye' not found\n"
+    rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -119,7 +118,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -190,274 +189,10 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
-    human:
-    - boneName: Character1_Hips
-      humanName: Hips
-      limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
-        value: {x: 0.11341974, y: 0, z: 0.05670987}
-        length: 0.14177471
-        modified: 1
-    - boneName: Character1_LeftUpLeg
-      humanName: LeftUpperLeg
-      limit:
-        min: {x: -60.000004, y: -60.000004, z: -90}
-        max: {x: 60.000004, y: 60.000004, z: 50}
-        value: {x: 0.16373394, y: 0, z: 0.08186697}
-        length: 0.2046675
-        modified: 1
-    - boneName: Character1_RightUpLeg
-      humanName: RightUpperLeg
-      limit:
-        min: {x: -60.000004, y: -60.000004, z: -90}
-        max: {x: 60.000004, y: 60.000004, z: 50}
-        value: {x: 0.16373387, y: 0, z: 0.081866935}
-        length: 0.2046674
-        modified: 1
-    - boneName: Character1_LeftLeg
-      humanName: LeftLowerLeg
-      limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
-        value: {x: 0.15207095, y: 0, z: 0.07603548}
-        length: 0.19008876
-        modified: 1
-    - boneName: Character1_RightLeg
-      humanName: RightLowerLeg
-      limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
-        value: {x: 0.15207097, y: 0, z: 0.076035485}
-        length: 0.19008878
-        modified: 1
-    - boneName: Character1_LeftFoot
-      humanName: LeftFoot
-      limit:
-        min: {x: 0, y: -30.000002, z: -50}
-        max: {x: 0, y: 30.000002, z: 50}
-        value: {x: 0.051443826, y: 0, z: 0.025721913}
-        length: 0.0643048
-        modified: 1
-    - boneName: Character1_RightFoot
-      humanName: RightFoot
-      limit:
-        min: {x: 0, y: -30.000002, z: -50}
-        max: {x: 0, y: 30.000002, z: 50}
-        value: {x: 0.051443767, y: 0, z: 0.025721883}
-        length: 0.064304724
-        modified: 1
-    - boneName: Character1_Spine
-      humanName: Spine
-      limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
-        value: {x: 0.13977775, y: 0, z: 0.069888875}
-        length: 0.17472225
-        modified: 1
-    - boneName: Character1_Spine1
-      humanName: Chest
-      limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
-        value: {x: 0.1409772, y: 0, z: 0.0704886}
-        length: 0.17622158
-        modified: 1
-    - boneName: Character1_Neck
-      humanName: Neck
-      limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
-        value: {x: 0.14920256, y: 0, z: 0.07460128}
-        length: 0.18650326
-        modified: 1
-    - boneName: Character1_Head
-      humanName: Head
-      limit:
-        min: {x: -40, y: -40, z: -40}
-        max: {x: 40, y: 40, z: 40}
-        value: {x: 0.14920256, y: 0, z: 0.07460128}
-        length: 0.18650326
-        modified: 1
-    - boneName: Character1_LeftArm
-      humanName: LeftUpperArm
-      limit:
-        min: {x: -90, y: -100, z: -60.000004}
-        max: {x: 90, y: 100, z: 100}
-        value: {x: 0.177938, y: 0, z: 0.088969}
-        length: 0.22242257
-        modified: 1
-    - boneName: Character1_RightArm
-      humanName: RightUpperArm
-      limit:
-        min: {x: -90, y: -100, z: -60.000004}
-        max: {x: 90, y: 100, z: 100}
-        value: {x: 0.17793654, y: 0, z: 0.08896827}
-        length: 0.22242074
-        modified: 1
-    - boneName: Character1_LeftForeArm
-      humanName: LeftLowerArm
-      limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
-        value: {x: 0.12023674, y: 0, z: 0.06011837}
-        length: 0.15029596
-        modified: 1
-    - boneName: Character1_RightForeArm
-      humanName: RightLowerArm
-      limit:
-        min: {x: -90, y: 0, z: -80}
-        max: {x: 90, y: 0, z: 80}
-        value: {x: 0.12023755, y: 0, z: 0.060118776}
-        length: 0.15029697
-        modified: 1
-    - boneName: Character1_LeftHand
-      humanName: LeftHand
-      limit:
-        min: {x: 0, y: -40, z: -80}
-        max: {x: 0, y: 40, z: 80}
-        value: {x: 0.06011837, y: 0, z: 0.030059185}
-        length: 0.07514798
-        modified: 1
-    - boneName: Character1_RightHand
-      humanName: RightHand
-      limit:
-        min: {x: 0, y: -40, z: -80}
-        max: {x: 0, y: 40, z: 80}
-        value: {x: 0.060118776, y: 0, z: 0.030059388}
-        length: 0.075148486
-        modified: 1
-    - boneName: Character1_LeftToeBase
-      humanName: LeftToes
-      limit:
-        min: {x: 0, y: 0, z: -50}
-        max: {x: 0, y: 0, z: 50}
-        value: {x: 0.0347086, y: 0, z: 0.0173543}
-        length: 0.043385766
-        modified: 1
-    - boneName: Character1_RightToeBase
-      humanName: RightToes
-      limit:
-        min: {x: 0, y: 0, z: -50}
-        max: {x: 0, y: 0, z: 50}
-        value: {x: 0.03470857, y: 0, z: 0.017354285}
-        length: 0.043385733
-        modified: 1
-    - boneName: eyes 1
-      humanName: RightEye
-      limit:
-        min: {x: 0, y: -20, z: -10}
-        max: {x: 0, y: 20, z: 15.000001}
-        value: {x: 0.079999976, y: 0, z: 0.039999988}
-        length: 0.1
-        modified: 1
-    - boneName: jaw
-      humanName: Jaw
-      limit:
-        min: {x: 0, y: -10, z: -10}
-        max: {x: 0, y: 10, z: 10}
-        value: {x: 0.079999976, y: 0, z: 0.039999988}
-        length: 0.1
-        modified: 1
-    - boneName: Character1_LeftHandThumb1
-      humanName: Left Thumb Proximal
-      limit:
-        min: {x: 0, y: -25, z: -20}
-        max: {x: 0, y: 25, z: 20}
-        value: {x: 0.040597286, y: 0, z: 0.020298643}
-        length: 0.050746627
-        modified: 1
-    - boneName: Character1_LeftHandThumb2
-      humanName: Left Thumb Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -40}
-        max: {x: 0, y: 0, z: 35}
-        value: {x: 0.030447971, y: 0, z: 0.015223986}
-        length: 0.038059972
-        modified: 1
-    - boneName: Character1_LeftHandIndex1
-      humanName: Left Index Proximal
-      limit:
-        min: {x: 0, y: -20, z: -50}
-        max: {x: 0, y: 20, z: 50}
-        value: {x: 0.053355914, y: 0, z: 0.026677957}
-        length: 0.06669491
-        modified: 1
-    - boneName: Character1_LeftHandIndex2
-      humanName: Left Index Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -45}
-        max: {x: 0, y: 0, z: 45}
-        value: {x: 0.04001693, y: 0, z: 0.020008465}
-        length: 0.05002118
-        modified: 1
-    - boneName: Character1_LeftHandRing1
-      humanName: Left Ring Proximal
-      limit:
-        min: {x: 0, y: -7.5000005, z: -50}
-        max: {x: 0, y: 7.5000005, z: 50}
-        value: {x: 0.045668963, y: 0, z: 0.022834482}
-        length: 0.057086222
-        modified: 1
-    - boneName: Character1_LeftHandRing2
-      humanName: Left Ring Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -45}
-        max: {x: 0, y: 0, z: 45}
-        value: {x: 0.034251716, y: 0, z: 0.017125858}
-        length: 0.042814665
-        modified: 1
-    - boneName: Character1_RightHandThumb1
-      humanName: Right Thumb Proximal
-      limit:
-        min: {x: 0, y: -25, z: -20}
-        max: {x: 0, y: 25, z: 20}
-        value: {x: 0.040595654, y: 0, z: 0.020297827}
-        length: 0.050744586
-        modified: 1
-    - boneName: Character1_RightHandThumb2
-      humanName: Right Thumb Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -40}
-        max: {x: 0, y: 0, z: 35}
-        value: {x: 0.030446744, y: 0, z: 0.015223372}
-        length: 0.038058437
-        modified: 1
-    - boneName: Character1_RightHandIndex1
-      humanName: Right Index Proximal
-      limit:
-        min: {x: 0, y: -20, z: -50}
-        max: {x: 0, y: 20, z: 50}
-        value: {x: 0.053357553, y: 0, z: 0.026678776}
-        length: 0.06669696
-        modified: 1
-    - boneName: Character1_RightHandIndex2
-      humanName: Right Index Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -45}
-        max: {x: 0, y: 0, z: 45}
-        value: {x: 0.04001816, y: 0, z: 0.02000908}
-        length: 0.050022718
-        modified: 1
-    - boneName: Character1_RightHandRing1
-      humanName: Right Ring Proximal
-      limit:
-        min: {x: 0, y: -7.5000005, z: -50}
-        max: {x: 0, y: 7.5000005, z: 50}
-        value: {x: 0.045670744, y: 0, z: 0.022835372}
-        length: 0.05708845
-        modified: 1
-    - boneName: Character1_RightHandRing2
-      humanName: Right Ring Intermediate
-      limit:
-        min: {x: 0, y: 0, z: -45}
-        max: {x: 0, y: 0, z: 45}
-        value: {x: 0.034253057, y: 0, z: 0.017126529}
-        length: 0.042816337
-        modified: 1
+    human: []
     skeleton:
     - name: skeleton_archer
       parentName: 
@@ -705,8 +440,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 0
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: d8f5ac196a5b8854f899f1810c77bdfd,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
   humanoidOversampling: 1
   additionalBone: 1

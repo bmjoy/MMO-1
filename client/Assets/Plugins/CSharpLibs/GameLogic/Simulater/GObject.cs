@@ -4,49 +4,49 @@ namespace EngineCore.Simulater
 {
 	public class GObject
 	{
-	
-		public int Index{ private set; get; }
 
-        private GObject(int index)
-        {
-            this.Index = index;
-        }
+		public int Index { private set; get; }
 
-        public GObject (GControllor controllor) :this(controllor.Perception.State.NextElementID())
+		private GObject(int index)
 		{
-			Controllor = controllor;	
+			this.Index = index;
 		}
 
-		public GControllor Controllor {private set; get; }
+		public GObject(GControllor controllor) : this(controllor.Perception.State.NextElementID())
+		{
+			Controllor = controllor;
+		}
+
+		public GControllor Controllor { private set; get; }
 
 		public void SetControllor(GControllor controllor)
 		{
-			OnChangedControllor (this.Controllor, controllor);
+			OnChangedControllor(this.Controllor, controllor);
 			this.Controllor = controllor;
 		}
 
 		private bool HadBeenDestory = false;
 
-		public bool Enable{private set; get; }
+		public bool Enable { private set; get; }
 
 
-        public bool IsAliveAble { get { return !HadBeenDestory;}}
+		public bool IsAliveAble { get { return !HadBeenDestory; } }
 
 		#region Events
 
 		protected virtual void OnJoinState()
 		{
-			
+
 		}
 
 		protected virtual void OnExitState()
 		{
-			
+
 		}
 
 		protected virtual void OnChangedControllor(GControllor old, GControllor current)
 		{
-			
+
 		}
 
 		#endregion
@@ -54,18 +54,18 @@ namespace EngineCore.Simulater
 		private DateTime? destoryTime;
 
 		public bool CanDestory
-        {
-            get
-            {
-                if (this.Enable) return false;
-                if (destoryTime.HasValue)
-                {
-                    return destoryTime.Value < DateTime.Now;
+		{
+			get
+			{
+				if (this.Enable) return false;
+				if (destoryTime.HasValue)
+				{
+					return destoryTime.Value < DateTime.Now;
 				}
 
 				return true;
-            } 
-        }
+			}
+		}
 
 		internal static void JoinState(GObject el)
 		{
@@ -76,13 +76,13 @@ namespace EngineCore.Simulater
 
 		internal static void ExitState(GObject el)
 		{
-			el.OnExitState ();
+			el.OnExitState();
 		}
 
 		public static void Destory(GObject el)
 		{
 			el.HadBeenDestory = true;
-			if (el.Enable) 
+			if (el.Enable)
 			{
 				el.Enable = false;
 			}
@@ -92,12 +92,17 @@ namespace EngineCore.Simulater
 
 		public static void Destory(GObject el, float time)
 		{
-			if(time>0)
-			el.destoryTime = DateTime.Now.AddSeconds(time);
+			if (time > 0)
+				el.destoryTime = DateTime.Now.AddSeconds(time);
 			Destory(el);
 		}
 
-	
+		public static implicit operator bool(GObject el)
+		{
+			if (el == null) return false;
+			if (!el.Enable) return false;
+			return true;
+		}
 	}
 }
 

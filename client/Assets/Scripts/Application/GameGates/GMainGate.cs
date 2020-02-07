@@ -62,22 +62,25 @@ public class GMainGate:UGate
         UUIManager.S.UpdateUIData();
     }
 
-    public void ReCreateHero()
+    public UCharacterView ReCreateHero(int heroID,string heroname)
     {
 
         if (characterView)
         {
-            characterView.DestorySelf();
+            characterView.DestorySelf(0);
         }
 
-        var character = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(this.hero.HeroID);
+        var character = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(heroID);
         var perView = view as IBattlePerception;
         characterView = perView.CreateBattleCharacterView(string.Empty,
             character.ID,0,
-            Data.pos[3].position.ToPVer3(),Vector3.zero.ToPVer3(),
-            hero.Level,hero.Name, character.MoveSpeed,null) as UCharacterView;
+            Data.pos[3].position.ToPVer3(),
+            Vector3.zero.ToPVer3(),1,heroname,
+            character.MoveSpeed,null) as UCharacterView;
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName("Bottom"));
+
+        return characterView;
     }
 
     #region implemented abstract members of UGate
@@ -140,20 +143,6 @@ public class GMainGate:UGate
         }
     }
 
-    private async Task ShowCreateHero(int heroId, string heroName )
-    {
-        var r = await CreateHero.CreateQuery()
-            .SendAsync(Client, new C2G_CreateHero { HeroID = heroId, HeroName = heroName });
-        if (r.Code == ErrorCode.Ok)
-        {
-            await RequestPlayer();
-        }
-        else
-        {
-            UUITipDrawer.Singleton.ShowNotify("CreatHero Response:" + r.Code);
-        }
-    }
-
     private void ShowPlayer(G2C_Login result)
     {
         //Result = result;
@@ -171,7 +160,7 @@ public class GMainGate:UGate
         {
             //todo
             //create  hero
-            _ = ShowCreateHero(4, "Max");
+            UUIManager.S.CreateWindow<UUIHeroCreate>().ShowWindow();
         }
     }
 

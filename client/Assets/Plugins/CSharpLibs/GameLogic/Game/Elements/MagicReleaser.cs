@@ -123,6 +123,12 @@ namespace GameLogic.Game.Elements
                       });
         }
 
+        internal void Cancel()
+        {
+            if (!IsLayoutStartFinish) StopAllPlayer();
+            SetState(ReleaserStates.ToComplete);
+        }
+
         private readonly LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
         private readonly Queue<long> _removeTemp = new Queue<long>();
 

@@ -178,8 +178,8 @@ namespace Windows
 
         private void OnRelease(GridTableModel item)
         {
-            var action = new Action_ClickSkillIndex { MagicKey = item.MagicData.MagicKey };
-            UApplication.G<BattleGate>().SendAction(action);
+            
+            UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);
         }
 
         private UCharacterView view;

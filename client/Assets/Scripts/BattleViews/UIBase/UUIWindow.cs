@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 
@@ -23,10 +24,18 @@ public enum WindowState
 
 public abstract class UUIWindow:UUIElement
 {
+	private MonoBehaviour runner;
+
 	protected UUIWindow ()
 	{
         CanDestoryWhenHidden = true;
 	}
+
+	public void StartCoroutine(IEnumerator el)
+	{
+		runner.StartCoroutine(el);
+    }
+
 
 	protected  override void OnDestory()
 	{
@@ -126,6 +135,7 @@ public abstract class UUIWindow:UUIElement
 			window.uiRoot = root;
 			window.Rect.SetParent(uiRoot, false);
 			window.uiRoot.name = string.Format ("UI_{0}", typeof(T).Name);
+			window.runner = root.AddComponent<UIWindowRunner>();
 			window.OnCreate ();
 		} else {
 			throw new Exception ("No found UIResourcesAttribute!");

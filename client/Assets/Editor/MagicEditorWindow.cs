@@ -71,7 +71,7 @@ public class MagicEditorWindow : EditorWindow
 		Color color = Color.black;
 		float lS = 230;
         DrawOp();
-		
+		GUI.Label(new Rect(0, 0, this.position.width, 30), currentPath);
 
 		if (data == null)
 			return;
@@ -261,14 +261,15 @@ public class MagicEditorWindow : EditorWindow
 
 	private void New()
 	{
-		if (data != null) {
-			if (!EditorUtility.DisplayDialog ("Cancel", "The operator will lost current edit,Do you want to over it!", "Yes", "Cancel"))
+		if (data != null)
+		{
+			if (!EditorUtility.DisplayDialog("Cancel", "The operator will lost current edit,Do you want to over it!", "Yes", "Cancel"))
 				return;
 		}
 
 		currentPath = null;
-		data = new MagicData (){key="new_magic",name="New Magic"};
-		data.Containers.Add (new EventContainer (){ type = Layout.EventType.EVENT_START});
+		data = new MagicData() { name = "New Magic" };
+		data.Containers.Add(new EventContainer() { type = Layout.EventType.EVENT_START });
 	}
         
 	private void Open()
@@ -277,7 +278,7 @@ public class MagicEditorWindow : EditorWindow
 			if (!EditorUtility.DisplayDialog ("Cancel", "Open file will lost current edit，Do you want to over it", "Yes", "Cancel"))
 				return;
 		}
-		var path = EditorUtility.OpenFilePanel ("Open", Application.dataPath+ "/Resources", "xml");
+		var path = EditorUtility.OpenFilePanel ("Open", Application.dataPath+ SAVE_PATH, "xml");
 		if (string.IsNullOrEmpty (path))
 			return;
 		var xml = File.ReadAllText (path,XmlParser.UTF8);
@@ -287,10 +288,9 @@ public class MagicEditorWindow : EditorWindow
 
 	private void Save(object userstate)
 	{
-		var data = userstate as MagicData;
-		if (data == null)
-			return;
-		var xml = XmlParser.Serialize (data);
+        if (!(userstate is MagicData data))
+            return;
+        var xml = XmlParser.Serialize (data);
 		if (!string.IsNullOrEmpty (currentPath)) {
 			File.WriteAllText (currentPath, xml, XmlParser.UTF8);
 			ShowNotification( new GUIContent( "Save To:" + currentPath));
@@ -298,19 +298,21 @@ public class MagicEditorWindow : EditorWindow
 		} else {
 			SaveAs (data);
 		}
-		
+
+
+
 	}
 
+	public const string SAVE_PATH = "/Resources/Magics/";
+
+	[System.NonSerialized]
 	private string currentPath;
 
 	private void SaveAs(object userstate)
 	{
-		var data = userstate as MagicData;
-		if (data == null)
-			return;
-		var xml = XmlParser.Serialize (data);
-
-		var path =EditorUtility.SaveFilePanel ("Open", Application.dataPath+ "/Resources",data.key, "xml");
+        if (!(userstate is MagicData data)) return;
+        var xml = XmlParser.Serialize (data);
+		var path =EditorUtility.SaveFilePanel ("Open", Application.dataPath+ SAVE_PATH, "magic", "xml");
 		if (string.IsNullOrEmpty (path))
 			return;
 		File.WriteAllText (path, xml, XmlParser.UTF8);
@@ -321,10 +323,8 @@ public class MagicEditorWindow : EditorWindow
 	
     private void AddEvent(object userstate)
 	{
-		var data = userstate as MagicData;
-		if (data == null)
-			return;
-		data.Containers.Add (new EventContainer (){ type = Layout.EventType.EVENT_TRIGGER });
+        if (!(userstate is MagicData data)) return;
+        data.Containers.Add (new EventContainer (){ type = Layout.EventType.EVENT_TRIGGER });
 	}
 
 	private void OpenLayout(object userstate)
@@ -342,26 +342,23 @@ public class MagicEditorWindow : EditorWindow
 
 	private void DeleteEffectGroupDe(object userstate)
 	{
-		var del = userstate as DeleteEffectGroup;
-		if (del == null)
-			return;
-		del.Container.effectGroup.Remove (del.egroup);
+        if (!(userstate is DeleteEffectGroup del))
+            return;
+        del.Container.effectGroup.Remove (del.egroup);
 	}
 
 	private void AddEffectGroup(object userstate)
 	{
-		var e = userstate as EventContainer;
-		if (e == null)
-			return;
-		e.effectGroup.Add (new EffectGroup (){ key= "Action_new"  });
+        if (!(userstate is EventContainer e))
+            return;
+        e.effectGroup.Add (new EffectGroup (){ key= "Action_new"  });
 	}
 
 	private void DeleteEvent(object userstate)
 	{
-		var e = userstate as EventContainer;
-		if (e == null)
-			return;
-		if (EditorUtility.DisplayDialog ("Delete?", "Delete event container?", "Yes", "Cancel")) {
+        if (!(userstate is EventContainer e))
+            return;
+        if (EditorUtility.DisplayDialog ("Delete?", "Delete event container?", "Yes", "Cancel")) {
 			data.Containers.Remove (e);
 			currentObj = null;
 		}
@@ -401,8 +398,6 @@ public class MagicEditorWindow : EditorWindow
 	private void MagicWindow(int id)
 	{
 		GUILayout.BeginVertical ();
-		//GUILayout.FlexibleSpace();
-		GUILayout.Label (string.Format("Key:{0}", data.key));
 		//GUILayout.FlexibleSpace();
 		GUILayout.Label(string.Format("Tick:{0}s",data.triggerTicksTime));
 		//GUILayout.FlexibleSpace();

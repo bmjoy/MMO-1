@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Proto;
 using GameLogic.Game.Perceptions;
 using EConfig;
+using UVector3 = UnityEngine.Vector3;
+using P = Proto.HeroPropertyType;
 
 namespace GameLogic.Game.Elements
 {
@@ -13,12 +15,8 @@ namespace GameLogic.Game.Elements
     public class BattleCharacter:BattleElement<IBattleCharacter>
 	{
 
-
-        
         private readonly Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
-        private readonly Dictionary<HeroPropertyType, ComplexValue> Properties = new Dictionary<HeroPropertyType, ComplexValue>();
-        private float _speed;
-
+        private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         public List<CharacterMagicData> Magics { private set; get; }
         public string AcccountUuid { private set; get; }
         public HeroCategory Category { set; get; }
@@ -28,14 +26,14 @@ namespace GameLogic.Game.Elements
         {
             get
             {
-                return this[HeroPropertyType.MaxHp].FinalValue + (int)(this[HeroPropertyType.Force].FinalValue * BattleAlgorithm.FORCE_HP);
+                return this[P.MaxHp].FinalValue + (int)(this[P.Force].FinalValue * BattleAlgorithm.FORCE_HP);
             }
         }
         public int MaxMP
         {
             get
             {
-                var maxMP = this[HeroPropertyType.MaxMp].FinalValue + (int)(this[HeroPropertyType.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP);
+                var maxMP = this[P.MaxMp].FinalValue + (int)(this[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP);
                 return maxMP;
             }
         }
@@ -44,7 +42,9 @@ namespace GameLogic.Game.Elements
             get
             {
                 //500  - 20 *100
-                var time = this[HeroPropertyType.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[HeroPropertyType.Agility].FinalValue;
+                var time = this[P.MagicWaitTime].FinalValue
+                    - BattleAlgorithm.AGILITY_SUBWAITTIME
+                    * this[P.Agility].FinalValue;
                 return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
@@ -54,6 +54,7 @@ namespace GameLogic.Game.Elements
         public HanlderEvent OnDead;
         public int ConfigID { private set; get; }
         public ActionLock Lock { private set; get; }
+        private float _speed;
         public float Speed
         {
             set
@@ -63,7 +64,7 @@ namespace GameLogic.Game.Elements
             }
             get
             {
-                var speed = this[HeroPropertyType.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
+                var speed = this[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
                 return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
             }
         }
@@ -77,8 +78,32 @@ namespace GameLogic.Game.Elements
             }
         }
         public AITreeRoot AIRoot { private set; get; }
-
-        public ComplexValue this[HeroPropertyType type]
+        //position
+        public UVector3 Position
+        {
+            get
+            {
+                var t = View?.Transform;
+                if (!t) return UVector3.zero;
+                return t.position;
+            }
+            set
+            {
+                if (!View?.Transform) return;
+                View.SetPosition(value.ToPV3());
+            }
+        }
+        //forward
+        public UVector3 Forward {
+            get
+            {
+                var t = View?.Transform;
+                if (!t) return UVector3.zero;
+                return t.forward;
+            }
+        }
+        //property
+        public ComplexValue this[P type]
         {
             get { return Properties[type]; }
         }
@@ -94,10 +119,10 @@ namespace GameLogic.Game.Elements
 			HP = 0;
 			ConfigID = configID;
             Magics = magics;
-            var enums = Enum.GetValues(typeof(HeroPropertyType));
+            var enums = Enum.GetValues(typeof(P));
             foreach (var i in enums)
             {
-                var pr = (HeroPropertyType)i;
+                var pr = (P)i;
                 var value = new ComplexValue();
                 Properties.Add(pr,value );
             }
@@ -119,10 +144,16 @@ namespace GameLogic.Game.Elements
             };
 		}
 
+        internal void PlayMotion(string motionName)
+        {
+            View.PlayMotion(motionName);
+        }
+
         public void MoveTo(UnityEngine.Vector3 target)
         {
             View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3());
         }
+
         public void MoveForward(UnityEngine.Vector3 forward)
         {
             if (forward.magnitude > 0.1f)
@@ -135,8 +166,11 @@ namespace GameLogic.Game.Elements
         }
         public void StopMove()
         {
-            View.StopMove(View.Transform.position.ToPV3());
+            View.StopMove(Position.ToPV3());
         }
+
+       
+
 		public bool SubHP(int hp)
 		{
 			if (hp <= 0)  return false;
@@ -180,7 +214,11 @@ namespace GameLogic.Game.Elements
             AIRoot = root;
         }
 
-		public void Init()
+        internal void LookAt(BattleCharacter releaserTarget)
+        {
+            View.LookAtTarget(releaserTarget.Index);
+        }
+        public void Init()
 		{
             HP = MaxHP;
             MP = MaxMP;
@@ -215,20 +253,12 @@ namespace GameLogic.Game.Elements
             View.AttachMagic(data.ID, history.LastTime + history.CdTime);
         }
 
-        public bool HasMagicKey(string key)
-        {
-            foreach (var i in Magics)
-            {
-                if (i.MagicKey == key) return true;
-            }
-            return false;
-        }
 
-        public CharacterMagicData GetMagicByKey(string key)
+        public CharacterMagicData GetMagicById(int id)
         {
             foreach (var i in Magics)
             {
-                if (i.MagicKey == key) return i;
+                if (i.ID == id) return i;
             }
             return null;
         }

@@ -27,10 +27,12 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeCompareTargets)),
 		XmlInclude(typeof(TreeNodeFarFromTarget)),
 		XmlInclude(typeof(TreeNodeSelectCanReleaseMagic)),
-		XmlInclude(typeof(TreeNodeMoveCloseEnemyCamp)),
+
+		//XmlInclude(typeof(TreeNodeMoveCloseEnemyCamp)),
 
         XmlInclude(typeof(TreeNodeNetActionSkill)),
-        XmlInclude(typeof(TreeNodeNetActionMove))
+        XmlInclude(typeof(TreeNodeNetActionMove)),
+        XmlInclude(typeof(TreedNodeNetNomarlAttack))
 
 	]
 	public class TreeNode

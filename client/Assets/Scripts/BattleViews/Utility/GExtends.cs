@@ -6,7 +6,16 @@ namespace UGameTools
 {
     public static class GExtends
 	{
-		public static T FindChild<T> (this Transform trans, string name) where T :Component
+
+        public static void RestRTS(this Transform trans)
+        {
+            trans.localPosition = Vector3.zero;
+            trans.localScale = Vector3.one;
+            trans.localRotation = Quaternion.identity;
+        }
+
+
+        public static T FindChild<T> (this Transform trans, string name) where T :Component
 		{
 			var t = FindInAllChild (trans, name);
 			if (t == null)

@@ -173,7 +173,8 @@ namespace Layout.AITree
 		public TargetTeamType teamType;
 	}
 
-	[EditorAITreeNode("靠近敌方阵营", "Act", "战斗节点", AllowChildType.None)]
+    //[EditorAITreeNode("靠近敌方阵营", "Act", "战斗节点", AllowChildType.None)]
+    [Obsolete]
 	public class TreeNodeMoveCloseEnemyCamp : TreeNode 
 	{
 	
@@ -186,5 +187,11 @@ namespace Layout.AITree
     }
     [EditorAITreeNode("处理释放技能输入", "Act", "网络输入", AllowChildType.None)]
     public class TreeNodeNetActionSkill : TreeNode { }
+
+	[EditorAITreeNode("处理普通攻击", "Act", "网络输入", AllowChildType.None)]
+	public class TreedNodeNetNomarlAttack : TreeNode
+    {
+
+    }
 }
 

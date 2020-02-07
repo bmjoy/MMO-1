@@ -22,6 +22,17 @@ namespace GameLogic.Game.Perceptions
     /// </summary>
 	public class BattlePerception : GPerception
     {
+
+        /// <summary>
+        /// Distance the specified c1 and c2.
+        /// </summary>
+        /// <param name="c1">C1.</param>
+        /// <param name="c2">C2.</param>
+        public static float Distance(BattleCharacter c1, BattleCharacter c2)
+        {
+            return Math.Max(0, (c1.Position - c2.Position).magnitude - 1);
+        }
+
         public BattlePerception(GState state, IBattlePerception view) : base(state)
         {
             View = view;
@@ -38,6 +49,8 @@ namespace GameLogic.Game.Perceptions
         //初始化游戏中的控制器 保证唯一性
         public BattleCharacterControllor BattleCharacterControllor { private set; get; }
         public BattleMissileControllor BattleMissileControllor { private set; get; }
+
+
         public MagicReleaserControllor ReleaserControllor { private set; get; }
         public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
         #endregion
@@ -52,15 +65,15 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(magic, target, ty);
+            var releaser = CreateReleaser(key, magic, target, ty);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(MagicData magic, IReleaserTarget target, ReleaserType ty)
+        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty)
         {
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
-                                               magic.key,
+                                               key,
                                                target.TargetPosition.ToPV3());
             var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty);
             this.JoinElement(mReleaser);
@@ -125,30 +138,10 @@ namespace GameLogic.Game.Perceptions
             return p;
         }
 
-        internal void CharacterMoveTo(BattleCharacter character, UVector3 pos)
-        {
-            if (character.Lock.IsLock(ActionLockType.NoMove)) return;
-            character.MoveTo(pos);
-        }
-
-        internal void CharacterStopMove(BattleCharacter character)
-        {
-            character.StopMove();
-        }
-
-        internal void PlayMotion(BattleCharacter releaser, string motionName)
-        {
-            releaser.View.PlayMotion(motionName);
-        }
-
-        internal void LookAtCharacter(BattleCharacter own, BattleCharacter target)
-        {
-            own.View.LookAtTarget(target.Index);
-        }
 
         internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {
-            View.ProcessDamage(sources.View.Index, effectTarget.View.Index, result.Damage, result.IsMissed);
+            View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed);
             if (result.IsMissed) return;
             CharacterSubHP(effectTarget, result.Damage);
         }
@@ -180,15 +173,7 @@ namespace GameLogic.Game.Perceptions
             return root;
         }
 
-        /// <summary>
-        /// Distance the specified c1 and c2.
-        /// </summary>
-        /// <param name="c1">C1.</param>
-        /// <param name="c2">C2.</param>
-        public float Distance(BattleCharacter c1, BattleCharacter c2)
-        {
-            return Math.Max(0, (c1.View.Transform.position - c2.View.Transform.position).magnitude - 1);
-        }
+      
 
         #endregion
 
@@ -208,6 +193,16 @@ namespace GameLogic.Game.Perceptions
             });
 
             return target;
+        }
+
+        /// <summary>
+        /// 获取目标
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public BattleCharacter FindTarget(int target)
+        {
+            return this.State[target] as BattleCharacter;
         }
 
         /// <summary>
@@ -236,8 +231,8 @@ namespace GameLogic.Game.Perceptions
                     return new List<BattleCharacter> { character };
                 case Layout.LayoutElements.DamageType.Rangle:
                     {
-                        var orgin = character.View.Transform.position + offset;
-                        var forward = character.View.Transform.forward;
+                        var orgin = character.Position + offset;
+                        var forward = character.Forward;
 
                         var q = Quaternion.Euler(0, angle, 0);
 
@@ -260,10 +255,10 @@ namespace GameLogic.Game.Perceptions
 
                             }
                             //不在目标区域内
-                            if ((orgin - t.View.Transform.position).sqrMagnitude > sqrRadius) return false;
+                            if ((orgin - t.Position).sqrMagnitude > sqrRadius) return false;
                             if (angle < 360)
                             {
-                                if (UVector3.Angle(forward, t.View.Transform.forward) > (angle / 2)) return false;
+                                if (UVector3.Angle(forward, t.Forward) > (angle / 2)) return false;
                             }
                             list.Add(t);
                             return false;

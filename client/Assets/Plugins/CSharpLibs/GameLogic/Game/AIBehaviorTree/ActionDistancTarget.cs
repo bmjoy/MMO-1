@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BehaviorTree;
 using GameLogic.Game.Elements;
+using GameLogic.Game.Perceptions;
 using Layout.AITree;
 
 namespace GameLogic.Game.AIBehaviorTree
@@ -16,41 +17,33 @@ namespace GameLogic.Game.AIBehaviorTree
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
-			var index = root["TargetIndex"];
-			if (index == null)
+
+			if (root.TryGetTarget( out BattleCharacter target))
 			{
 				yield return RunStatus.Failure;
 				yield break;
 			}
-
-            if (!(root.Perception.State[(int)index] is BattleCharacter target))
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
 
             if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float distance))
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
-            switch (Node.compareType)
+			switch (Node.compareType)
 			{
 				case CompareType.Less:
-					if (root.Perception.Distance(target, root.Character) > distance)
+					if (BattlePerception.Distance(target, root.Character) > distance)
 						yield return RunStatus.Failure;
 					else
 						yield return RunStatus.Success;
 					break;
 				case CompareType.Greater:
-					if (root.Perception.Distance(target, root.Character) > distance)
+					if (BattlePerception.Distance(target, root.Character) > distance)
 						yield return RunStatus.Success;
 					else
 						yield return RunStatus.Failure;
 					break;
 			}
-
-
 		}
 
 		//private float distance;

@@ -43,10 +43,13 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     #endregion
 
 
-    public void DestorySelf()
+    public void DestorySelf(float time = 0.3f)
     {
         if (!this) return;
-        Destroy(this.gameObject, 0.3f);
+        if (time > 0)
+            Destroy(this.gameObject, time);
+        else
+            Destroy(this.gameObject);
     }
 
     public virtual void OnJoined() { }

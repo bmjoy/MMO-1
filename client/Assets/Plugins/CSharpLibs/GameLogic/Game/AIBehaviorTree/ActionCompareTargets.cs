@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BehaviorTree;
 using GameLogic.Game.Elements;
+using GameLogic.Game.Perceptions;
 using Layout.AITree;
 using Proto;
 
@@ -37,7 +38,7 @@ namespace GameLogic.Game.AIBehaviorTree
 						if (t.TeamIndex != root.Character.TeamIndex) return false;
 						break;
 				}
-				if (per.Distance(t, root.Character) <= distance)
+				if (BattlePerception.Distance(t, root.Character) <= distance)
 					targets.Add(t);
 				return false;
 			});

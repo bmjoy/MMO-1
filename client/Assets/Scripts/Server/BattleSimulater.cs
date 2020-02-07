@@ -15,12 +15,9 @@ using Google.Protobuf;
 using GameLogic.Game.AIBehaviorTree;
 using Layout.LayoutEffects;
 using System.Linq;
-using GameLogic.Game;
-using ExcelConfig;
 using EConfig;
 using UGameTools;
 using UnityEngine.SceneManagement;
-using org.vxwo.csharp.json;
 using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
@@ -77,7 +74,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
         public string Account;
     }
 
-    private float lastHpCure = 0;
     private MonsterGroupPosition[] monsterGroup;
     private PlayerBornPosition[] playerBornPositions;
     private DropGroupData drop;
@@ -210,29 +206,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
             }
 
             GState.Tick(State, GetTime());
-            CureHPAndMp();
+            //CureHPAndMp();
             ProcessJoinClient();
             ProcessAction();
             SendNotify(PerView.GetAndClearNotify());
         }
     }
 
-    private void CureHPAndMp()
-    {
-        //处理生命,魔法恢复
-        if (lastHpCure + 3 < GetTime().Time)
-        {
-            lastHpCure = GetTime().Time;
-            State.Each<BattleCharacter>((el) =>
-            {
-                var hp = (int)(el[P.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP * 3);
-                if (hp > 0) el.AddHP(hp);
-                var mp = (int)(el[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP * 3);
-                if (mp > 0) el.AddMP(mp);
-                return false;
-            });
-        }
-    }
+   
 
     private void OnDestroy()
     {
@@ -344,7 +325,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
                         //保存到AI
                         Debug.Log($"[{p.HeroCharacter.Index}]{p.HeroCharacter.Name} {action}");
                         p.HeroCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
+                        //p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }
             }

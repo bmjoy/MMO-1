@@ -9,6 +9,7 @@ using Proto.BattleServerService;
 using XNet.Libs.Utility;
 using ExcelConfig;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -176,6 +177,43 @@ public class BattleGate : UGate, IServerMessageHandler
         var notify = message.AsNotify();
         Debug.Log($"{notify.GetType()}->{notify}");
         player.Process(notify);
+    }
+
+    internal void ReleaseSkill(CharacterMagicData magicData)
+    {
+        int target = -1;
+        float dis = float.MaxValue;
+        IList<UCharacterView> views = new List<UCharacterView>(); ;
+        switch ((MagicReleaseAITarget)magicData.AITargetType)
+        {
+            case MagicReleaseAITarget.MatAll:
+            case MagicReleaseAITarget.MatOwn:
+            case MagicReleaseAITarget.MatOwnTeam:
+                target = Owner.Index;
+                break;
+            case MagicReleaseAITarget.MatEnemy:
+                PreView.Each<UCharacterView>(t =>
+                {
+                    if (t.TeamId == Owner.TeamId) return false;
+                    var td = UnityEngine.Vector3.Distance(t.transform.position, Owner.transform.position);
+                    if (td < dis) { dis = td; target = t.Index; }
+                    return false;
+                });
+                break;
+            case MagicReleaseAITarget.MatOwnTeamWithOutSelf:
+                PreView.Each<UCharacterView>(t =>
+                {
+                    if (t.TeamId != Owner.TeamId) return false;
+                    if (t.Index == Owner.Index) return false;
+                    var td = UnityEngine.Vector3.Distance(t.transform.position, Owner.transform.position);
+                    if (td < dis) { dis = td; target = t.Index; }
+                    return false;
+                });
+                break;
+        }
+
+        SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID, Target = target });
+
     }
     #endregion
 }
