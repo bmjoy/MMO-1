@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-16"?>
 <MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <key>att_007</key>
-  <name>隐身</name>
+  <key>knight_normal_att</key>
+  <name>knight normal attack</name>
   <Containers>
     <EventContainer>
       <type>EVENT_START</type>
-      <layoutPath>Layouts/att_007_start_layout.xml</layoutPath>
+      <layoutPath>Layouts/knight_append_att_start_layout.xml</layoutPath>
       <effectGroup>
         <EffectGroup>
           <effects>
-            <EffectBase xsi:type="AddBufEffect">
-              <buffMagicKey>hiden_buff</buffMagicKey>
-              <timeVauleOf>MagicConfig</timeVauleOf>
-              <durationTime>0</durationTime>
+            <EffectBase xsi:type="NormalDamageEffect">
+              <valueOf>NormalAttack</valueOf>
+              <DamageValue>0</DamageValue>
             </EffectBase>
           </effects>
-          <Des>添加buff</Des>
-          <key>action1</key>
+          <key>001</key>
         </EffectGroup>
       </effectGroup>
     </EventContainer>

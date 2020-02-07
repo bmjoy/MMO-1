@@ -19,9 +19,8 @@ namespace GameLogic.Game.LayoutLogics
 
 		private float lastTime = -1;
 		private float startTime = 0;
-		private float totalTime = 0f;
 
-		public TimeLine Line{ private set; get; }
+        public TimeLine Line{ private set; get; }
 
 		public MagicReleaser Releaser{ private set; get; }
 
@@ -49,19 +48,14 @@ namespace GameLogic.Game.LayoutLogics
 
 			lastTime = time.Time;
 			var result=  now > Line.Time ;
-			isfinshed = result;
-			totalTime = now;
+			IsFinshed = result;
+			PlayTime = now;
 			return result;
 		}
 
-		private bool isfinshed = false;
+        public bool IsFinshed { get; private set; } = false;
 
-		public bool IsFinshed
-		{
-			get{ return isfinshed; }
-		}
-
-		private List<IParticlePlayer> players;
+        private readonly List<IParticlePlayer> players;
 
 		public void AttachParticle(IParticlePlayer particle)
 		{
@@ -78,7 +72,7 @@ namespace GameLogic.Game.LayoutLogics
 			}
 		}
 
-		public float PlayTime { get { return totalTime; }}
-	}
+        public float PlayTime { get; private set; } = 0f;
+    }
 }
 

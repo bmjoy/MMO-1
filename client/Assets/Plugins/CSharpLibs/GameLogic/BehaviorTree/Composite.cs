@@ -7,29 +7,24 @@ namespace BehaviorTree
 {
     public abstract class Composite
     {
-        public Composite()
-		{
-            
-        }
-
 		public string Guid { set; get; }
 
-        private IEnumerator<RunStatus> _current { set; get; }
+        private IEnumerator<RunStatus> Current { set; get; }
            
         public virtual void Start(ITreeRoot context)
         {
             _attachVariables.Clear();
             LastStatus = null;
-            _current = Execute(context).GetEnumerator();
+            Current = Execute(context).GetEnumerator();
 
         }
 
         public virtual void Stop(ITreeRoot context)
         {
-            if (_current != null)
+            if (Current != null)
             {
-                _current.Dispose();
-                _current = null;
+                Current.Dispose();
+                Current = null;
             }
 
             if (LastStatus.HasValue && LastStatus.Value == RunStatus.Running)
@@ -45,13 +40,13 @@ namespace BehaviorTree
             {
                 return LastStatus.Value;
             }
-            if (_current == null)
+            if (Current == null)
             {
                 throw new Exception("You Must start it!");
             }
-            if (_current.MoveNext())
+            if (Current.MoveNext())
             {
-                LastStatus = _current.Current;
+                LastStatus = Current.Current;
             }
             else
             {
@@ -69,7 +64,7 @@ namespace BehaviorTree
 
         public RunStatus? LastStatus { private set; get; }
 
-        private Dictionary<string, object> _attachVariables = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _attachVariables = new Dictionary<string, object>();
 
         public string Name { set; get; }
 

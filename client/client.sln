@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleEditor", "BattleEditor.csproj", "{1F15A57B-6FAC-6493-A90D-85D89E7E08F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{2FC59FCE-BCB1-13D3-FB79-5DD1AF79A2AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor.csproj", "{87C74275-8197-FBF3-3A77-DDEDB454289B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,10 @@ Global
 		{1F15A57B-6FAC-6493-A90D-85D89E7E08F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F15A57B-6FAC-6493-A90D-85D89E7E08F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F15A57B-6FAC-6493-A90D-85D89E7E08F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FC59FCE-BCB1-13D3-FB79-5DD1AF79A2AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FC59FCE-BCB1-13D3-FB79-5DD1AF79A2AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FC59FCE-BCB1-13D3-FB79-5DD1AF79A2AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FC59FCE-BCB1-13D3-FB79-5DD1AF79A2AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C74275-8197-FBF3-3A77-DDEDB454289B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C74275-8197-FBF3-3A77-DDEDB454289B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C74275-8197-FBF3-3A77-DDEDB454289B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C74275-8197-FBF3-3A77-DDEDB454289B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,10 +24,51 @@ using org.vxwo.csharp.json;
 using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
+using Layout.AITree;
+using Layout;
 
-public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader
+public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunner
 {
 
+    #region AI RUN
+    private BattleCharacter aiAttach;
+
+    AITreeRoot IAIRunner.RunAI(TreeNode ai)
+    {
+        if (aiAttach == null)
+        {
+            Debug.LogError($"Need attach a battlecharacter");
+            return null;
+        }
+
+        if (this.State.Perception is BattlePerception p)
+        {
+            var root= p.ChangeCharacterAI(ai, this.aiAttach);
+            root.IsDebug = true;
+            return root;
+        }
+
+        return null;
+    }
+
+    bool IAIRunner.IsRuning(Layout.EventType eventType)
+    {
+        return false;
+    }
+
+    bool IAIRunner.ReleaseMagic(MagicData data)
+    {
+        return false;
+    }
+
+    void IAIRunner.Attach(BattleCharacter character)
+    {
+        aiAttach = character;
+        if (character.AIRoot != null)
+            character.AIRoot.IsDebug = true;
+        //throw new System.NotImplementedException();
+    }
+    #endregion
 
     private class BindPlayer
     {
@@ -455,4 +496,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader
         per.ChangeCharacterAI(data.AIResourcePath, character);
         return character;
     }
+
+ 
 }

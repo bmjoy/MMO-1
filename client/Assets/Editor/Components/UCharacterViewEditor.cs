@@ -22,8 +22,8 @@ public class UCharacterViewEditor : Editor
 			}
 			else
 			{
-
 				window.AttachRoot(root);
+				AIRunner.Current?.Attach(character);
 			}
 		}
 		EditorGUILayout.EndVertical();

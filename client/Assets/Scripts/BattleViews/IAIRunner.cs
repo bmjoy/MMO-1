@@ -9,6 +9,7 @@ public interface IAIRunner
     AITreeRoot RunAI(TreeNode ai);
     bool IsRuning(Layout.EventType eventType);
     bool ReleaseMagic(MagicData data);
+    void Attach(BattleCharacter character);
 }
 
 public abstract class AIRunner

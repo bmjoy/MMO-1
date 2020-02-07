@@ -81,7 +81,8 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
-                    var timeLine = i.line == null ? per.View.GetTimeLineByPath(i.layoutPath) : i.line;
+                    var timeLine = i.line ?? per.View.GetTimeLineByPath(i.layoutPath);
+                    if (timeLine == null) continue;
                     var player = new TimeLinePlayer(timeLine, this, i);
                     _players.AddLast(player);
                     if (i.type == EventType.EVENT_START)
@@ -105,7 +106,7 @@ namespace GameLogic.Game.Elements
             public bool HaveLeftTime;
         }
 
-        private Dictionary<int, AttachedElement> _objs = new Dictionary<int, AttachedElement>();
+        private readonly Dictionary<int, AttachedElement> _objs = new Dictionary<int, AttachedElement>();
 
         public void AttachElement(GObject el, float time = -1f)
         {
@@ -122,8 +123,8 @@ namespace GameLogic.Game.Elements
                       });
         }
 
-        private LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
-        private Queue<long> _removeTemp = new Queue<long>();
+        private readonly LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
+        private readonly Queue<long> _removeTemp = new Queue<long>();
 
         public void TickTimeLines(GTime time)
         {
@@ -144,8 +145,7 @@ namespace GameLogic.Game.Elements
                     if (i.Value.HaveLeftTime)
                     {
                         i.Value.time -= time.DeltaTime;
-                        var character = i.Value.Element as BattleCharacter;
-                        if (character != null)
+                        if (i.Value.Element is BattleCharacter character)
                         {
                             if (i.Value.time <= 0)
                             {
@@ -282,7 +282,7 @@ namespace GameLogic.Game.Elements
             public float addValue;
         }
 
-        private List<RevertData> reverts = new List<RevertData>();
+        private readonly List<RevertData> reverts = new List<RevertData>();
         internal void RevertProperty(BattleCharacter effectTarget, HeroPropertyType property, AddType addType, float addValue)
         {
             reverts.Add(new RevertData { addtype = addType, addValue = addValue, property = property, target = effectTarget });
@@ -295,7 +295,7 @@ namespace GameLogic.Game.Elements
             public ActionLockType type;
         }
 
-        private List<RevertActionLock> actionReverts = new List<RevertActionLock>();
+        private readonly List<RevertActionLock> actionReverts = new List<RevertActionLock>();
         internal void RevertLock(BattleCharacter effectTarget, ActionLockType lockType)
         {
             actionReverts.Add(new RevertActionLock { target = effectTarget, type = lockType });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 using BehaviorTree;
 using Layout.AITree;
 
@@ -18,8 +19,6 @@ namespace GameLogic.Game.AIBehaviorTree
 			if (this.Guid == id) return this;
 			return null;
 		}
-
-
 	}
 }
 

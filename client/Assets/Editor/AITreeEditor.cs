@@ -12,44 +12,44 @@ using BehaviorTree;
 /// <summary>
 /// AI tree editor.
 /// </summary>
-public class AITreeEditor:EditorWindow 
+public class AITreeEditor : EditorWindow
 {
     #region Inner types
 
-	public class LineData
-	{
-		public Vector2 point;
-		public bool IsRunning;
+    public class LineData
+    {
+        public Vector2 point;
+        public bool IsRunning;
 
-	}
+    }
 
-	public class StateOfEditor
-	{
-		public bool Expanded;
-		public bool OnEdited;
-		public Vector2 scroll;
-		//public static StateOfEditor Empty = new StateOfEditor ();
-	}
+    public class StateOfEditor
+    {
+        public bool Expanded;
+        public bool OnEdited;
+        public Vector2 scroll;
+        //public static StateOfEditor Empty = new StateOfEditor ();
+    }
 
-	public class MenuState
-	{
-		public Type type;
-		public TreeNode node;
-	}
+    public class MenuState
+    {
+        public Type type;
+        public TreeNode node;
+    }
 
-	public enum HoverType
-	{
-		Top,
-		Middle,
-		Bottom
-	}
+    public enum HoverType
+    {
+        Top,
+        Middle,
+        Bottom
+    }
 
     public class ShortNameColors
     {
         public int order;
         public Color color;
 
-        public ShortNameColors(int order,Color c)
+        public ShortNameColors(int order, Color c)
         {
             this.color = c;
             this.order = order;
@@ -60,87 +60,92 @@ public class AITreeEditor:EditorWindow
 
     #region static 
     [MenuItem("GAME/Editor/AITreeEditor &3")]
-	public static void Init()
-	{
-		var window = (AITreeEditor)GetWindow(typeof(AITreeEditor), false, "AI辑器");
-		window.minSize = new Vector2 (200, 100);
-	}
-        
-	static AITreeEditor()
-	{
-		_nodeTypes.Clear ();
-		var types = typeof(TreeNode).Assembly.GetTypes ();
-		foreach (var i in types) {
-			if (i.IsSubclassOf (typeof(TreeNode))) {
-				var attrs = i.GetCustomAttributes (typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
-				if (attrs.Length > 0) {
-					_nodeTypes.Add (i, attrs [0]);
-				}
-			}
-		}
+    public static void Init()
+    {
+        var window = (AITreeEditor)GetWindow(typeof(AITreeEditor), false, "AI辑器");
+        window.minSize = new Vector2(200, 100);
+    }
 
-		_colors.Clear ();
-        _colors.Add ("Seq", new ShortNameColors(1,new Color32(0xCA,0xE1,0xFF,0xFF)));
-        _colors.Add ("PSeq",new ShortNameColors(1,new Color32(0xCA,0xE1,0xFF,0xFF)));
-        _colors.Add ("Sel",new ShortNameColors(1, new Color32 (0xEE,0xD8,0xAE,0xFF)));
-        _colors.Add ("PSel", new ShortNameColors(1,new Color32 (0xEE,0xD8,0xAE,0xFF)));
-        _colors.Add ("Dec",new ShortNameColors(2, new Color32(0xFF,0xF6,0x8F,0xFF)));
-        _colors.Add ("PRSel", new ShortNameColors(1,new Color32(0xDD,0xA0,0xDD,0xff)));
-        _colors.Add ("PRNode", new ShortNameColors(1,new Color32(0xDD,0xA0,0xDD,0xff)));
-        _colors.Add ("Act", new ShortNameColors(5,new Color32(0xFF,0xff,0xff,0xff)));
-        _colors.Add ("Event", new ShortNameColors(3,Color.blue));
-        _colors.Add ("Cond", new ShortNameColors(4,Color.yellow));
+    static AITreeEditor()
+    {
+        _nodeTypes.Clear();
+        var types = typeof(TreeNode).Assembly.GetTypes();
+        foreach (var i in types)
+        {
+            if (i.IsSubclassOf(typeof(TreeNode)))
+            {
+                var attrs = i.GetCustomAttributes(typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
+                if (attrs.Length > 0)
+                {
+                    _nodeTypes.Add(i, attrs[0]);
+                }
+            }
+        }
 
-	}
+        _colors.Clear();
+        _colors.Add("Seq", new ShortNameColors(1, new Color32(0xCA, 0xE1, 0xFF, 0xFF)));
+        _colors.Add("PSeq", new ShortNameColors(1, new Color32(0xCA, 0xE1, 0xFF, 0xFF)));
+        _colors.Add("Sel", new ShortNameColors(1, new Color32(0xEE, 0xD8, 0xAE, 0xFF)));
+        _colors.Add("PSel", new ShortNameColors(1, new Color32(0xEE, 0xD8, 0xAE, 0xFF)));
+        _colors.Add("Dec", new ShortNameColors(2, new Color32(0xFF, 0xF6, 0x8F, 0xFF)));
+        _colors.Add("PRSel", new ShortNameColors(1, new Color32(0xDD, 0xA0, 0xDD, 0xff)));
+        _colors.Add("PRNode", new ShortNameColors(1, new Color32(0xDD, 0xA0, 0xDD, 0xff)));
+        _colors.Add("Act", new ShortNameColors(5, new Color32(0xFF, 0xff, 0xff, 0xff)));
+        _colors.Add("Event", new ShortNameColors(3, Color.blue));
+        _colors.Add("Cond", new ShortNameColors(4, Color.yellow));
+
+    }
     #endregion
 
     #region fields
-    private static Dictionary<string,ShortNameColors> _colors = new Dictionary<string, ShortNameColors>();
-	private static Dictionary<Type,EditorAITreeNodeAttribute> _nodeTypes = new Dictionary<Type, EditorAITreeNodeAttribute> ();
+    private static readonly Dictionary<string, ShortNameColors> _colors = new Dictionary<string, ShortNameColors>();
+    private static readonly  Dictionary<Type, EditorAITreeNodeAttribute> _nodeTypes = new Dictionary<Type, EditorAITreeNodeAttribute>();
 
-	private Color GetColorByShortName(string name)
-	{ 
-        ShortNameColors c;
-		if (_colors.TryGetValue (name, out c))
+    private Color GetColorByShortName(string name)
+    {
+        if (_colors.TryGetValue(name, out ShortNameColors c))
             return c.color;
-		return Color.white;
-	}
+        return Color.white;
+    }
 
-	private Dictionary<string, StateOfEditor> _expand = new Dictionary<string, StateOfEditor>();
+    private readonly Dictionary<string, StateOfEditor> _expand = new Dictionary<string, StateOfEditor>();
 
-	private StateOfEditor this[string key]
-	{
-		get{
-			StateOfEditor e;
-			if (_expand.TryGetValue (key, out e))
-				return e;
-			else {
-				e = new StateOfEditor ();
-				_expand.Add (key, e);
-			}
-			return e;
-		}
+    private StateOfEditor this[string key]
+    {
+        get
+        {
+            if (_expand.TryGetValue(key, out StateOfEditor e))
+                return e;
+            else
+            {
+                e = new StateOfEditor();
+                _expand.Add(key, e);
+            }
+            return e;
+        }
 
-		set{ 
-			if (_expand.ContainsKey (key))
-				_expand [key] = value;
-			else
-			_expand.Add (key, value);
-		}
-	}
+        set
+        {
+            if (_expand.ContainsKey(key))
+                _expand[key] = value;
+            else
+                _expand.Add(key, value);
+        }
+    }
 
-    private const string AI_ROOT="/Resources/AI";
-	private const int height = 40;
-	private const int width =200;
-	private const int editHeight = 200;
-	private const int offsetx = 40;
-	private const int offsety = 20;
+    private const string AI_ROOT = "/Resources/AI";
+    private const int height = 40;
+    private const int width = 200;
+    private const int editHeight = 200;
+    private const int offsetx = 40;
+    private const int offsety = 20;
 
-	private TreeNode root;
+    [NonSerialized]
+    private TreeNode root;
 
-	//private Vector2 scroll = Vector2.zero;
-	//private Vector2 lastoffset = Vector2.zero;
-    private float scale =1;
+    //private Vector2 scroll = Vector2.zero;
+    //private Vector2 lastoffset = Vector2.zero;
+    private float scale = 1;
     private Vector2 offsetPos = Vector2.zero;
     #endregion
 
@@ -151,14 +156,14 @@ public class AITreeEditor:EditorWindow
         var guiSty = new GUIStyle();
         guiSty.normal.textColor = Color.yellow;
         guiSty.alignment = TextAnchor.MiddleRight;
-        GUI.Label(new Rect(this.position.width -200, 0, 150, 20),
+        GUI.Label(new Rect(this.position.width - 200, 0, 150, 20),
             string.Format("s:{0:0.0} p:x={1:0.0} y={2:0.0}",
-                scale,offsetPos.x,offsetPos.y),guiSty
+                scale, offsetPos.x, offsetPos.y), guiSty
         );
 
         if (GUI.Button(new Rect(this.position.width - 50, 0, 45, 20), "Reset"))
         {
-            scale = 1; 
+            scale = 1;
             //offsetPos = Vector2.zero;
         }
 
@@ -168,12 +173,12 @@ public class AITreeEditor:EditorWindow
         }
         GUI.EndGroup();
 
-        GUI.BeginGroup(new Rect(0,20,100000,100000));
+        GUI.BeginGroup(new Rect(0, 20, 100000, 100000));
         var m = GUI.matrix;
-        var sm = m * 
+        var sm = m *
             Matrix4x4.TRS(
-                new Vector3(offsetPos.x,offsetPos.y,0),
-                Quaternion.identity,Vector3.one*scale);
+                new Vector3(offsetPos.x, offsetPos.y, 0),
+                Quaternion.identity, Vector3.one * scale);
         GUI.matrix = sm;
         OnDrawGUI();
         GUI.matrix = m;
@@ -181,13 +186,13 @@ public class AITreeEditor:EditorWindow
         if (Event.current.type == EventType.ScrollWheel)
         {
             float y = Event.current.delta.y;
-            var s =  (1 + (-y) / 100);
-            scale *=s;
-            scale = Mathf.Clamp(scale,0.1f,1.5f) ;
+            var s = (1 + (-y) / 100);
+            scale *= s;
+            scale = Mathf.Clamp(scale, 0.1f, 1.5f);
             Event.current.Use();
         }
 
-        if (currentDrag == null 
+        if (currentDrag == null
             && Event.current.type == EventType.MouseDrag)
         {
             offsetPos += Event.current.delta;
@@ -218,12 +223,11 @@ public class AITreeEditor:EditorWindow
             //runNodeName = string.Empty;
             //var rect = new Rect(0, 0, position.width, position.height); 
             //scroll = GUI.BeginScrollView(rect, scroll, new Rect(0, 0, lastoffset.x, lastoffset.y));
-            Vector2 mine;
-            RunStatus? runState;
-            var runing = CheckRunning(root.guid, out runState);
+           // RunStatus? runState;
+            var runing = CheckRunning(root.guid, out RunStatus? runState);
             //GUI.BeginClip (rect);
             //lastoffset =
-            DrawRoot(root, new Vector2(offsetx, offsety), runing, runState, out mine);
+            DrawRoot(root, new Vector2(offsetx, offsety), runing, runState, out Vector2 mine);
             //GUI.EndClip ();
             //lastoffset.x;
 
@@ -311,7 +315,7 @@ public class AITreeEditor:EditorWindow
         #endregion
         if (runstate != null)
         {
-            
+
             /*// disable show state
             var group = new Rect(position.width - 300, position.height - 100, 295, 90);
             GUI.BeginGroup(group);
@@ -324,7 +328,7 @@ public class AITreeEditor:EditorWindow
             GUI.EndGroup();
             */
         }
-        
+
     }
     #endregion
 
@@ -339,50 +343,54 @@ public class AITreeEditor:EditorWindow
             if (pasteNode != null)
             {
                 m.AddItem(new GUIContent("Paste"), false, PasteNode, new MenuState()
-                    {
-                        type = null,
-                        node = node
-                    });
+                {
+                    type = null,
+                    node = node
+                });
             }
             if (pasteNode != node)
             {
                 m.AddItem(new GUIContent("Copy"), false, CopyNode, new MenuState()
-                    {
-                        type = null,
-                        node = node
-                    });
+                {
+                    type = null,
+                    node = node
+                });
             }
             m.AddSeparator("");
 
             m.AddItem(new GUIContent("Export"), false, ExportNode, new MenuState()
-                {
-                    type = null,
-                    node = node
-                });
+            {
+                type = null,
+                node = node
+            });
             m.AddItem(new GUIContent("Import"), false, ImportNode, new MenuState()
-                {
-                    type = null,
-                    node = node
-                });
+            {
+                type = null,
+                node = node
+            });
             m.AddSeparator("");
         }
 
-        foreach (var i in _nodeTypes) 
+        foreach (var i in _nodeTypes)
         {
-            if (node == null) {
-                if (!CanAppend (i.Key))
+            if (node == null)
+            {
+                if (!CanAppend(i.Key))
                     continue;
-            } else {
-                if (!CanAppend (node, i.Key))
+            }
+            else
+            {
+                if (!CanAppend(node, i.Key))
                     continue;
             }
 
 
-            m.AddItem (new GUIContent (i.Value.Flag + "/" + i.Value.Name),false,CreateNode
-                ,new MenuState(){
-                type = i.Key,
-                node = node
-            });
+            m.AddItem(new GUIContent(i.Value.Flag + "/" + i.Value.Name), false, CreateNode
+                , new MenuState()
+                {
+                    type = i.Key,
+                    node = node
+                });
         }
     }
 
@@ -406,7 +414,7 @@ public class AITreeEditor:EditorWindow
     {
         var m = userState as MenuState;
         pasteNode = m.node;
-        ShowNotification(new GUIContent(string.Format("Copy:{0}",m.node.name)));
+        ShowNotification(new GUIContent(string.Format("Copy:{0}", m.node.name)));
     }
 
     private void ImportNode(object userState)
@@ -415,7 +423,7 @@ public class AITreeEditor:EditorWindow
         string path = EditorUtility.OpenFilePanel(
             "Import Ai Tree",
             Application.dataPath + AI_ROOT, "xml");
-        if(!string.IsNullOrEmpty(path))
+        if (!string.IsNullOrEmpty(path))
         {
             var node = XmlParser.DeSerialize<TreeNode>(File.ReadAllText(path));
             if (CanAppend(m.node, node))
@@ -433,28 +441,31 @@ public class AITreeEditor:EditorWindow
     private void ExportNode(object userState)
     {
         var m = userState as MenuState;
-        var path = EditorUtility.SaveFilePanel("Export Ai Tree", 
-            Application.dataPath + AI_ROOT,"AITree", "xml");
-        if (string.IsNullOrEmpty (path))
+        var path = EditorUtility.SaveFilePanel("Export Ai Tree",
+            Application.dataPath + AI_ROOT, "AITree", "xml");
+        if (string.IsNullOrEmpty(path))
             return;
-        
-        var xml = XmlParser.Serialize (m.node);
+
+        var xml = XmlParser.Serialize(m.node);
         var exportNode = XmlParser.DeSerialize<TreeNode>(xml);
         exportNode.NewGuid();
         xml = XmlParser.Serialize(exportNode);
-        File.WriteAllText (path, xml);
-        ShowNotification ( new GUIContent("Export To:" + path));
-        AssetDatabase.Refresh ();
+        File.WriteAllText(path, xml);
+        ShowNotification(new GUIContent("Export To:" + path));
+        AssetDatabase.Refresh();
     }
 
     private void CreateNode(object userState)
     {
         var m = userState as MenuState;
-        var n = TreeNode.CreateInstance (m.type);
-        if (root != null) {
-            m.node.childs.Add (n);
-            this [m.node.guid].Expanded = true;
-        } else {
+        var n = TreeNode.CreateInstance(m.type);
+        if (root != null)
+        {
+            m.node.childs.Add(n);
+            this[m.node.guid].Expanded = true;
+        }
+        else
+        {
             root = n;
             currenPath = string.Empty;
         }
@@ -463,10 +474,13 @@ public class AITreeEditor:EditorWindow
     private void DeleteNode(object userState)
     {
         var n = userState as TreeNode;
-        var r = TreeNode.FindNodeByGuid (root,n.guid);
-        if (r.HasValue && r.Value.Parant != null) {
-            r.Value.Parant.childs.Remove (n);
-        }  else if(r.HasValue) {
+        var r = TreeNode.FindNodeByGuid(root, n.guid);
+        if (r.HasValue && r.Value.Parant != null)
+        {
+            r.Value.Parant.childs.Remove(n);
+        }
+        else if (r.HasValue)
+        {
             root = null;
             currenPath = string.Empty;
         }
@@ -478,12 +492,12 @@ public class AITreeEditor:EditorWindow
 
     private string currenPath;
 
-	private void OpenTree()
-	{
-		var path = EditorUtility.OpenFilePanel("Open AI Tree",
-            Application.dataPath+ AI_ROOT,"xml");	
+    private void OpenTree()
+    {
+        var path = EditorUtility.OpenFilePanel("Open AI Tree",
+            Application.dataPath + AI_ROOT, "xml");
         OpenTree(path);
-	}
+    }
 
     private void OpenTree(string path)
     {
@@ -499,35 +513,38 @@ public class AITreeEditor:EditorWindow
         }
     }
 
-	private void Save()
-	{
-		if (!string.IsNullOrEmpty (currenPath)) {
-			var xml = XmlParser.Serialize (root);
-			File.WriteAllText (currenPath, xml);
-			ShowNotification (new GUIContent( "Save To:" + currenPath));
-			AssetDatabase.Refresh ();
-		} else {
-			SaveAs ();
-		}
-	}
+    private void Save()
+    {
+        if (!string.IsNullOrEmpty(currenPath))
+        {
+            var xml = XmlParser.Serialize(root);
+            File.WriteAllText(currenPath, xml);
+            ShowNotification(new GUIContent("Save To:" + currenPath));
+            AssetDatabase.Refresh();
+        }
+        else
+        {
+            SaveAs();
+        }
+    }
 
-	private void SaveAs()
-	{
+    private void SaveAs()
+    {
         currenPath = EditorUtility.SaveFilePanel("Save Tree", Application.dataPath +
-            AI_ROOT,"AITree_"+root.guid, "xml");
-		if (string.IsNullOrEmpty (currenPath))
-			return;
+            AI_ROOT, "AITree_" + root.guid, "xml");
+        if (string.IsNullOrEmpty(currenPath))
+            return;
 
-		var xml = XmlParser.Serialize (root);
-		File.WriteAllText (currenPath, xml);
+        var xml = XmlParser.Serialize(root);
+        File.WriteAllText(currenPath, xml);
 
-		ShowNotification ( new GUIContent("Save To:" + currenPath));
-		AssetDatabase.Refresh ();
-	}
-   
+        ShowNotification(new GUIContent("Save To:" + currenPath));
+        AssetDatabase.Refresh();
+    }
+
     private bool ShowSaveNotify()
     {
-        return EditorUtility.DisplayDialog ("Cancel", "Do you want over current edit？", "Yes", "Cancel");
+        return EditorUtility.DisplayDialog("Cancel", "Do you want over current edit？", "Yes", "Cancel");
     }
 
     #endregion
@@ -541,21 +558,21 @@ public class AITreeEditor:EditorWindow
 
     }
 
-	private AITreeRoot _runRoot;
+    private AITreeRoot _runRoot;
 
-	public void AttachRoot(AITreeRoot root)
-	{
-		if (root != null) 
-		{
-			if (!ShowSaveNotify())
-				return;
-		}
-		_runRoot = root;
-		this.root = _runRoot.NodeRoot;
-	}
+    public void AttachRoot(AITreeRoot root)
+    {
+        if (root != null)
+        {
+            if (!ShowSaveNotify())
+                return;
+        }
+        _runRoot = root;
+        this.root = _runRoot.NodeRoot;
+    }
 
     #endregion
- 
+
     #region draw
 
     private void SetLastClick(TreeNode node)
@@ -567,27 +584,27 @@ public class AITreeEditor:EditorWindow
 
     private EditorAITreeNodeAttribute GetNodeAtt(Type type)
     {
-        var attrs = type.GetCustomAttributes (typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
+        var attrs = type.GetCustomAttributes(typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
         if (attrs.Length > 0)
-            return attrs [0];
+            return attrs[0];
         return null;
     }
-	private bool CheckRunning(string guid,out RunStatus? state)
-	{
-		state = null;
-		if (!EditorApplication.isPlaying)
-			return false;
-		if (_runRoot == null)
-			return false;
-		var comp =_runRoot.Root.FindGuid (guid);
-		if (comp == null)
-			return false;
-		if (comp.LastStatus == null)
-			return false;
-		state = comp.LastStatus;
-		return comp.LastStatus.Value == BehaviorTree.RunStatus.Running;
-		//return false;
-	}
+    private bool CheckRunning(string guid, out RunStatus? state)
+    {
+        state = null;
+        if (!EditorApplication.isPlaying)
+            return false;
+        if (_runRoot == null)
+            return false;
+        var comp = _runRoot.Root.FindGuid(guid);
+        if (comp == null)
+            return false;
+        if (comp.LastStatus == null)
+            return false;
+        state = comp.LastStatus;
+        return comp.LastStatus.Value == BehaviorTree.RunStatus.Running;
+        //return false;
+    }
 
     private Composite GetComposite(string guid)
     {
@@ -595,215 +612,243 @@ public class AITreeEditor:EditorWindow
             return null;
         if (_runRoot == null)
             return null;
-        var comp =_runRoot.Root.FindGuid (guid);
+        var comp = _runRoot.Root.FindGuid(guid);
         if (comp == null)
             return null;
         return comp;
     }
 
-	private Vector2 DrawRoot(TreeNode node, Vector2 offset, bool isRuning,RunStatus? state, out  Vector2  current)
-	{
-		var tempOffset = new Vector2 (offset.x+offsetx + width, offset.y);
-		float offex = tempOffset.x;
-		var expand = this [node.guid];
-		List<LineData> points = new List<LineData> ();
-		if (expand.Expanded) {
-			for (var i = 0; i < node.childs.Count; i++) {
-				if (node.childs [i] == currentDrag)
-					continue;
-				RunStatus? cRunstate;
-				var runing = CheckRunning(node.childs [i].guid,out cRunstate);
-				var mine = tempOffset;
-				var or = DrawRoot (node.childs [i], tempOffset, runing,cRunstate, out mine);
-				var h = Mathf.Max (height + offsety, or.y);
-				offex = Mathf.Max (offex, or.x);
-
-				points.Add ( new LineData{ point = new Vector2(mine.x,mine.y+5), IsRunning = runing});
-				tempOffset.y += h;
-			}
-		}
-		var t = Mathf.Max (0, (tempOffset.y - offset.y-height));
-		int currentHeight = height;
-		if (this [node.guid].OnEdited) 
+    private Vector2 DrawRoot(TreeNode node, Vector2 offset, bool isRuning, RunStatus? state, out Vector2 current)
+    {
+        var tempOffset = new Vector2(offset.x + offsetx + width, offset.y);
+        float offex = tempOffset.x;
+        var expand = this[node.guid];
+        List<LineData> points = new List<LineData>();
+        if (expand.Expanded)
         {
-			currentHeight = editHeight;
+            for (var i = 0; i < node.childs.Count; i++)
+            {
+                if (node.childs[i] == currentDrag)
+                    continue;
+                var runing = CheckRunning(node.childs[i].guid, out RunStatus? cRunstate);
+                var mine = tempOffset;
+                var or = DrawRoot(node.childs[i], tempOffset, runing, cRunstate, out mine);
+                var h = Mathf.Max(height + offsety, or.y);
+                offex = Mathf.Max(offex, or.x);
+
+                points.Add(new LineData { point = new Vector2(mine.x, mine.y + 5), IsRunning = runing });
+                tempOffset.y += h;
+            }
+        }
+        var t = Mathf.Max(0, (tempOffset.y - offset.y - height));
+        int currentHeight = height;
+        if (this[node.guid].OnEdited)
+        {
+            currentHeight = editHeight;
             runstate = GetComposite(node.guid);
             //runNodeName = node.ToString();
-		}
-		var rect = new Rect (offset.x, offset.y + (t/2), width, currentHeight);
-		this[node.guid] = DrawNode (rect, node, expand, node.childs.Count>0,isRuning,state);
+        }
+        var rect = new Rect(offset.x, offset.y + (t / 2), width, currentHeight);
+        this[node.guid] = DrawNode(rect, node, expand, node.childs.Count > 0, isRuning, state);
 
-		foreach (var p in points) 
-		{
-			GLDraw.DrawConnectingCurve(new Vector2(rect.xMax+10,rect.center.y),p.point,
-				p.IsRunning? Color.yellow: Color.black, p.IsRunning?2:1);
-		}
+        foreach (var p in points)
+        {
+            GLDraw.DrawConnectingCurve(new Vector2(rect.xMax + 10, rect.center.y), p.point,
+                p.IsRunning ? Color.yellow : Color.black, p.IsRunning ? 2 : 1);
+        }
 
-		current = rect.position;
+        current = rect.position;
 
-		return new Vector2(offex, Mathf.Max(height + offsety, t+offsety+currentHeight));
-	}
+        return new Vector2(offex, Mathf.Max(height + offsety, t + offsety + currentHeight));
+    }
 
     private object runstate;
- 
-	private StateOfEditor DrawNode(Rect rect, TreeNode node, StateOfEditor expanded, bool haveChild, bool isRuning,RunStatus? state)
-	{
-		Color color = isRuning ? Color.yellow : Color.black;
+
+    private StateOfEditor DrawNode(Rect rect, TreeNode node, StateOfEditor expanded, bool haveChild, bool isRuning, RunStatus? state)
+    {
+        Color color = isRuning ? Color.yellow : Color.black;
 
 
-		Color bg = Color.white;
-		var att = GetNodeAtt (node.GetType ());
+        Color bg = Color.white;
+        var att = GetNodeAtt(node.GetType());
 
-		if (lastClick == node) {
-			color = Color.green;
-		}
-		var name = node.GetType().Name;
-		if (att != null) 
+        if (lastClick == node)
         {
-			name = att.ShorName+":"+node.name + (state==null?"":state.Value.ToString());
-			bg = GetColorByShortName (att.ShorName);
-		}
-
-		if (haveChild) {
-			expanded.Expanded =	EditorGLTools.DrawExpandBox (rect, name,
-				expanded.OnEdited?string.Empty:node.ToString (), 
-				expanded.Expanded, color, bg, isRuning ? 2 : 1);
-		} else {
-			EditorGLTools.DrawTitleRect (rect, name,
-				expanded.OnEdited?string.Empty:node.ToString (),
-				color, bg, isRuning ? 2 : 1); 
-		} 
-
-		if (lastClick == node) {
-			if (GUI.Button (new Rect (rect.xMax - 50, rect.y, 50, 20), expanded.OnEdited?"Close":"Edit")) {
-				expanded.OnEdited = !expanded.OnEdited;
-			}
-		} else {
-			expanded.OnEdited = false;
-		}
-
-		if (expanded.OnEdited) {
-		
-            GUILayout.BeginArea (new Rect (rect.x, rect.y + 25, rect.width-2, rect.height - 25));
-			expanded.scroll = GUILayout.BeginScrollView (expanded.scroll);
-			GUILayout.BeginVertical(GUILayout.Width(rect.width-25));
-			PropertyDrawer.DrawObject (node,"AINODE");
-			GUILayout.EndVertical ();
-			GUILayout.EndScrollView ();
-            GUILayout.EndArea ();
-		}
-
-
-		if (currentDrag == node)
-			return new StateOfEditor();
-		
-		if (Event.current.type == EventType.ContextClick) 
+            color = Color.green;
+        }
+        var name = node.GetType().Name;
+        if (att != null)
         {
-			if (rect.Contains (Event.current.mousePosition))
+            name = att.ShorName + ":" + node.name + (state == null ? "" : state.Value.ToString());
+            bg = GetColorByShortName(att.ShorName);
+        }
+
+        if (haveChild)
+        {
+            expanded.Expanded = EditorGLTools.DrawExpandBox(rect, name,
+                expanded.OnEdited ? string.Empty : node.ToString(),
+                expanded.Expanded, color, bg, isRuning ? 2 : 1);
+        }
+        else
+        {
+            EditorGLTools.DrawTitleRect(rect, name,
+                expanded.OnEdited ? string.Empty : node.ToString(),
+                color, bg, isRuning ? 2 : 1);
+        }
+
+        if (lastClick == node)
+        {
+            if (GUI.Button(new Rect(rect.xMax - 50, rect.y, 50, 20), expanded.OnEdited ? "Close" : "Edit"))
             {
-				GenericMenu m = new GenericMenu ();
-				m.AddItem (new GUIContent ("Delete"), false, DeleteNode, node);
-				//m.AddSeparator ("");
-				ProcessMenu (m, node);
-				m.ShowAsContext ();
-				Event.current.Use ();
-			}
-		}
-            
-		if (lastClick != node) {
-			if (Event.current.type == EventType.MouseDown) {
-				if (rect.Contains (Event.current.mousePosition)) {
-					SetLastClick (node);
-					Event.current.Use ();
-				}
-			}
-		} 
+                expanded.OnEdited = !expanded.OnEdited;
+            }
+        }
+        else
+        {
+            expanded.OnEdited = false;
+        }
 
-		if (Event.current.type == EventType.MouseDrag) {
-			if (rect.Contains (Event.current.mousePosition)) {
-				if (currentDrag != null) {
-					if (currentDrag != node) {
-						
-						HoverType t = HoverType.Middle;
-						if (node != root)
-							t = GetHoverType (rect, Event.current.mousePosition.y);
-						DragHover (rect, t); 
-						Event.current.Use ();
+        if (expanded.OnEdited)
+        {
 
-					} else {
-						currentShowDrag = null;
-						Event.current.Use ();
-					}
-				} else {
-				
-					BeginDrag (node);
-					Event.current.Use ();
-				}
-			}
-		}
+            GUILayout.BeginArea(new Rect(rect.x, rect.y + 25, rect.width - 2, rect.height - 25));
+            expanded.scroll = GUILayout.BeginScrollView(expanded.scroll);
+            GUILayout.BeginVertical(GUILayout.Width(rect.width - 25));
+            PropertyDrawer.DrawObject(node, "AINODE");
+            GUILayout.EndVertical();
+            GUILayout.EndScrollView();
+            GUILayout.EndArea();
+        }
 
-		if (Event.current.type == EventType.MouseUp) {
-			if (currentDrag != null && currentDrag != node) {
-				if (rect.Contains (Event.current.mousePosition)) {
-					var t = GetHoverType (rect, Event.current.mousePosition.y);
-					EndDrag (node, t);
-					Event.current.Use ();
-				}
-			}
-		}
 
-		return expanded;
-	}
-       
-	private HoverType GetHoverType(Rect rect, float y)
-	{
-		HoverType hy = HoverType.Middle;
-		float p =	rect.height / 3;
+        if (currentDrag == node)
+            return new StateOfEditor();
 
-		if (y < p + rect.y) {
-			hy = HoverType.Top;
-		} else if (y > 2 * p + rect.y) {
-			hy = HoverType.Bottom;
-		}
-		return hy;
-	}
+        if (Event.current.type == EventType.ContextClick)
+        {
+            if (rect.Contains(Event.current.mousePosition))
+            {
+                GenericMenu m = new GenericMenu();
+                m.AddItem(new GUIContent("Delete"), false, DeleteNode, node);
+                //m.AddSeparator ("");
+                ProcessMenu(m, node);
+                m.ShowAsContext();
+                Event.current.Use();
+            }
+        }
+
+        if (lastClick != node)
+        {
+            if (Event.current.type == EventType.MouseDown)
+            {
+                if (rect.Contains(Event.current.mousePosition))
+                {
+                    SetLastClick(node);
+                    Event.current.Use();
+                }
+            }
+        }
+
+        if (Event.current.type == EventType.MouseDrag)
+        {
+            if (rect.Contains(Event.current.mousePosition))
+            {
+                if (currentDrag != null)
+                {
+                    if (currentDrag != node)
+                    {
+
+                        HoverType t = HoverType.Middle;
+                        if (node != root)
+                            t = GetHoverType(rect, Event.current.mousePosition.y);
+                        DragHover(rect, t);
+                        Event.current.Use();
+
+                    }
+                    else
+                    {
+                        currentShowDrag = null;
+                        Event.current.Use();
+                    }
+                }
+                else
+                {
+
+                    BeginDrag(node);
+                    Event.current.Use();
+                }
+            }
+        }
+
+        if (Event.current.type == EventType.MouseUp)
+        {
+            if (currentDrag != null && currentDrag != node)
+            {
+                if (rect.Contains(Event.current.mousePosition))
+                {
+                    var t = GetHoverType(rect, Event.current.mousePosition.y);
+                    EndDrag(node, t);
+                    Event.current.Use();
+                }
+            }
+        }
+
+        return expanded;
+    }
+
+    private HoverType GetHoverType(Rect rect, float y)
+    {
+        HoverType hy = HoverType.Middle;
+        float p = rect.height / 3;
+
+        if (y < p + rect.y)
+        {
+            hy = HoverType.Top;
+        }
+        else if (y > 2 * p + rect.y)
+        {
+            hy = HoverType.Bottom;
+        }
+        return hy;
+    }
     #endregion
 
     #region Drag
-	private Rect? currentShowDrag;
+    private Rect? currentShowDrag;
     private TreeNode currentDrag;
-    private void DragHover(Rect rect,HoverType type)
+    private void DragHover(Rect rect, HoverType type)
     {
-        switch (type) {
+        switch (type)
+        {
             case HoverType.Bottom:
-                currentShowDrag = new Rect (rect.x, rect.yMax, rect.width, offsety);
+                currentShowDrag = new Rect(rect.x, rect.yMax, rect.width, offsety);
                 break;
             case HoverType.Middle:
-                currentShowDrag = new Rect (rect.xMax, rect.center.y- offsety/2, rect.width, offsety);
+                currentShowDrag = new Rect(rect.xMax, rect.center.y - offsety / 2, rect.width, offsety);
                 break;
             case HoverType.Top:
-                currentShowDrag = new Rect (rect.x, rect.y-offsety, rect.width, offsety);
+                currentShowDrag = new Rect(rect.x, rect.y - offsety, rect.width, offsety);
                 break;
         }
     }
 
-	private void BeginDrag(TreeNode node)
-	{
-		if(root == node) 
-			return;
-		currentDrag = node;
-	}
+    private void BeginDrag(TreeNode node)
+    {
+        if (root == node)   return;
+        currentDrag = node;
+    }
 
-	private void EndDrag(TreeNode hoverNode,HoverType type)
-	{
-		var reDrag = TreeNode.FindNodeByGuid (root,currentDrag.guid);
-		var hove = TreeNode.FindNodeByGuid (root,hoverNode.guid);
-		if (reDrag != null && hove != null) {
-			
-			switch(type)
-			{
-			case HoverType.Bottom:
-				{
+    private void EndDrag(TreeNode hoverNode, HoverType type)
+    {
+        var reDrag = TreeNode.FindNodeByGuid(root, currentDrag.guid);
+        var hove = TreeNode.FindNodeByGuid(root, hoverNode.guid);
+        if (reDrag != null && hove != null)
+        {
+
+            switch (type)
+            {
+                case HoverType.Bottom:
+                    {
                         if (CanAppend(hove.Value.Parant, currentDrag))
                         {
                             int index = hove.Value.Parant.childs.IndexOf(hoverNode) + 1;
@@ -829,8 +874,8 @@ public class AITreeEditor:EditorWindow
                         {
                             EditorApplication.Beep();
                         }
-				}
-				break;
+                    }
+                    break;
                 case HoverType.Middle:
                     {
                         if (CanAppend(hoverNode, currentDrag))
@@ -843,7 +888,7 @@ public class AITreeEditor:EditorWindow
                             EditorApplication.Beep();
                         }
                     }
-				break;
+                    break;
                 case HoverType.Top:
                     {
                         if (CanAppend(hove.Value.Parant, currentDrag))
@@ -860,60 +905,62 @@ public class AITreeEditor:EditorWindow
                             EditorApplication.Beep();
                         }
                     }
-				break;
-			}
-		}
-		 
-		currentDrag = null;
-		currentShowDrag = null;
-	}
+                    break;
+            }
+        }
+
+        currentDrag = null;
+        currentShowDrag = null;
+    }
     #endregion
 
     #region append 
-	private bool CanAppend(Type t )
-	{
-		if (t == typeof(TreeNodeProbabilityNode))
-			return false;
-		var att = GetNodeAtt (t);
-		if (att == null)
-			return false;
-		switch (att.CanAppendChild) {
-		case AllowChildType.Manay:
-		case AllowChildType.One:
-		case AllowChildType.Probability:
-			return true;
-		default:
-			return false;
-		}
-	}
+    private bool CanAppend(Type t)
+    {
+        if (t == typeof(TreeNodeProbabilityNode))
+            return false;
+        var att = GetNodeAtt(t);
+        if (att == null)
+            return false;
+        switch (att.CanAppendChild)
+        {
+            case AllowChildType.Manay:
+            case AllowChildType.One:
+            case AllowChildType.Probability:
+                return true;
+            default:
+                return false;
+        }
+    }
 
-	private bool CanAppend(TreeNode node, TreeNode child)
-	{
-		return CanAppend (node, child.GetType ());
-	}
+    private bool CanAppend(TreeNode node, TreeNode child)
+    {
+        return CanAppend(node, child.GetType());
+    }
 
-	private bool CanAppend(TreeNode node, Type t)
-	{
-		if (node == null)
-			return false;
-		
-		var att = GetNodeAtt (node.GetType ());
-		switch (att.CanAppendChild) {
-		case  AllowChildType.Manay:
-			return true;
-		case AllowChildType.One:
-			{
-				return node.childs.Count == 0;
-			}
-		case  AllowChildType.None:
-			return false;
-		case AllowChildType.Probability:
-			{
-				return t == typeof(TreeNodeProbabilityNode);
-			}
-		}
-		return false;
-	}
+    private bool CanAppend(TreeNode node, Type t)
+    {
+        if (node == null)
+            return false;
+
+        var att = GetNodeAtt(node.GetType());
+        switch (att.CanAppendChild)
+        {
+            case AllowChildType.Manay:
+                return true;
+            case AllowChildType.One:
+                {
+                    return node.childs.Count == 0;
+                }
+            case AllowChildType.None:
+                return false;
+            case AllowChildType.Probability:
+                {
+                    return t == typeof(TreeNodeProbabilityNode);
+                }
+        }
+        return false;
+    }
     #endregion
 
 }

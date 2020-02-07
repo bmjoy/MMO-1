@@ -47,6 +47,11 @@ namespace GameLogic.Game.Perceptions
         public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty)
         {
             var magic = View.GetMagicByKey(key);
+            if (magic == null)
+            {
+                Debug.LogError($"{key} no found!");
+                return null;
+            }
             var releaser = CreateReleaser(magic, target, ty);
             return releaser;
         }

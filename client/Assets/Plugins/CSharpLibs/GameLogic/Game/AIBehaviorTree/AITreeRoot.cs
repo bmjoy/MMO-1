@@ -10,7 +10,7 @@ using Layout.AITree;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class AITreeRoot : ITreeRoot
+    public class AITreeRoot :  ITreeRoot
     {
 
         public const string SELECT_MAGIC_ID = "MagicID";
@@ -23,7 +23,7 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             TimeSimulater = timeSimulater;
             UserState = userstate;
-            _char = userstate;
+            Character = userstate;
             Root = root;
             NodeRoot = nodeRoot;
         }
@@ -79,7 +79,7 @@ namespace GameLogic.Game.AIBehaviorTree
         public ITimeSimulater TimeSimulater { private set; get; }
 
 
-        public BattlePerception Perception { get { return _char.Controllor.Perception as BattlePerception; } }
+        public BattlePerception Perception { get { return Character.Controllor.Perception as BattlePerception; } }
 
         public object UserState
         {
@@ -87,13 +87,9 @@ namespace GameLogic.Game.AIBehaviorTree
             private set;
         }
 
-        private BattleCharacter _char;
-
-        public BattleCharacter Character { get { return _char; } }
+        public BattleCharacter Character { get; }
 
         public Composite Root { private set; get; }
-
-
 
         private bool NeedBreak = false;
 
@@ -160,6 +156,7 @@ namespace GameLogic.Game.AIBehaviorTree
             return (int)v;
         }
 
+
         public float Time
         {
             get
@@ -168,9 +165,11 @@ namespace GameLogic.Game.AIBehaviorTree
             }
         }
 
+        public bool IsDebug { set; get; }
+
         private Composite Current;
 
-		private Dictionary<string, object> _blackbroad = new Dictionary<string, object>();
+		private readonly Dictionary<string, object> _blackbroad = new Dictionary<string, object>();
 
 		public object this[string key] 
         { 

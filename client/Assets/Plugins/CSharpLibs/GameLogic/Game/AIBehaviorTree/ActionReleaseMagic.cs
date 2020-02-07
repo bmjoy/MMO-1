@@ -44,7 +44,7 @@ namespace GameLogic.Game.AIBehaviorTree
                         var magicData = ExcelToJSONConfigManager.Current
                                                                 .GetConfigByID<CharacterMagicData>((int)id);
                         key = magicData.MagicKey;
-                        var attackSpeed = root.Character.AttackSpeed;
+                        //var attackSpeed = root.Character.AttackSpeed;
                         root.Character.AttachMagicHistory(magicData.ID,root.Time);
                     }
                     break;

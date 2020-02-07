@@ -44,6 +44,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             if (list.Count == 0)
             {
+                if (context.IsDebug) Attach("normalAttack", list.Count);
                 yield return RunStatus.Failure;
                 yield break;
             }
@@ -64,23 +65,26 @@ namespace GameLogic.Game.AIBehaviorTree
                         result = i.ID;
                     }
                     if (result == -1)
-					{
-						releaseHistorys.Clear();
-						result = list[0].ID;
-					}
-					releaseHistorys.Add(result);
-					break;
-			}
-			if (result == -1)
-			{
-				yield return RunStatus.Failure;
-				yield break;
-			}
-			root[AITreeRoot.SELECT_MAGIC_ID] = result;
+                    {
+                        releaseHistorys.Clear();
+                        result = list[0].ID;
+                    }
+                    releaseHistorys.Add(result);
+                    break;
+            }
+            if (result == -1)
+            {
+
+                yield return RunStatus.Failure;
+                yield break;
+            }
+
+            root[AITreeRoot.SELECT_MAGIC_ID] = result;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(result);
-            if (config != null)
-                key = config.MagicKey;
-			yield return RunStatus.Success;
+            if (config != null) key = config.MagicKey;
+            if (context.IsDebug) Attach("select result", key);
+
+            yield return RunStatus.Success;
         }
 
 

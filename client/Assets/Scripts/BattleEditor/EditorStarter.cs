@@ -284,7 +284,9 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 	{
 		if (curState.Perception is BattlePerception p)
 		{
-			return p.ChangeCharacterAI(ai, releaser);
+			var root = p.ChangeCharacterAI(ai, releaser);
+			root.IsDebug = true;
+			return root;
 		}
 		return null;
 	}
@@ -299,5 +301,11 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		ReleaseMagic(data);
 		return true;
 	}
+
+    void IAIRunner.Attach(BattleCharacter character)
+    {
+		releaser = character;
+		if (character.AIRoot != null) character.AIRoot.IsDebug = true;
+    }
 }
 #endif
