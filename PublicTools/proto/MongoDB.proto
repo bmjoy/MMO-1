@@ -1,20 +1,11 @@
 syntax = "proto3";
 
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 package Proto.MongoDB;
 
-//account 
-message PlayInfoEntity
-{
-    string uuid = 1; //id  key of the entity
-    string username = 2;
-    string password = 3;
-    int64 create_date_time = 4;
-    int32 login_count = 5;
-    int64 last_login_date_time =7;
-    int32 server_id = 8;
-}
+
 
 message ItemNum 
 {
@@ -35,33 +26,12 @@ message GamePlayerEntity
     string last_ip = 5;
 }
 
-//game
-message ItemPackageEntity
-{
-    map<string, ItemNum> items = 1;
-    string uuid = 2; 
-    string player_uuid = 3;
-    int32 package_size = 4;
-}
 
 //hero
 message HeroMagic
 {
     int32 level = 1;
     int32 exp = 2;
-}
-
-//hero
-message GameHeroEntity
-{
-   string uuid = 1;//hero uuid
-   string player_uuid = 2;//
-   int32 exp = 3;
-   int32 level = 4;//level
-   map<int32,HeroMagic> magics = 5;
-   map<int32,string> equips = 6;
-   string hero_name = 7;
-   int32 hero_id = 8;
 }
 
 //游戏服务器信息
@@ -93,7 +63,7 @@ message PlayerBattleServerEntity
 {
     string uuid = 1;
     int32 server_id =2;
-    int64 join_time = 3;
+    google.protobuf.Timestamp join_time = 3;
     int32 level_id =4; //level id for selected level data
     int32 client_id =5;
     string host = 6;

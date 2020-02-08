@@ -31,7 +31,7 @@ namespace Windows
             public void SetLevel(BattleLevelData level)
             {
                 Data = level;
-                this.Template.Button.SetText(level.Name);
+                this.Template.Button.SetText($"{level.Name} Lv:{level.LimitLevel}");
             }
         }
 

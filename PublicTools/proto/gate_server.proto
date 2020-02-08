@@ -60,6 +60,19 @@ message G2C_GetLastBattle
 	 int32 MapID=3;//地图
 }
 
+message C2G_BuyPackageSize
+{
+    int32 SizeCurrent =1;
+}
+
+message G2C_BuyPackageSize
+{
+	ErrorCode Code =1;
+	int32 PackageCount = 2;
+	int32 OldCount =3;
+}
+
+
 //同步包裹
 message Task_G2C_SyncPackage
 {
@@ -77,7 +90,6 @@ message Task_G2C_SyncHero
 //处理装备穿戴
 message C2G_OperatorEquip
 {
-	 int64 HeroID=1;//英雄ID
 	 string Guid=2;//装备guid
 	 EquipmentType Part=3; //部位
 	 bool IsWear=4;//是否是穿戴
@@ -181,6 +193,7 @@ service GateServerService
 	rpc SaleItem(C2G_SaleItem)returns(G2C_SaleItem){};//6
 	rpc EquipmentLevelUp(C2G_EquipmentLevelUp)returns(G2C_EquipmentLevelUp){};//7
 	rpc GMTool(C2G_GMTool)returns(G2C_GMTool){};//8
+	rpc BuyPackageSize (C2G_BuyPackageSize) returns (G2C_BuyPackageSize){};//9
 }
 
 service GateServerTask

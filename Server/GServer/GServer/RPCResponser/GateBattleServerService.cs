@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GServer;
 using GServer.Managers;
 using Proto;
@@ -18,16 +19,14 @@ namespace GateServer
         public G2B_BattleReward BattleReward(B2G_BattleReward request)
         {
 
-            var manager = MonitorPool.G<UserDataManager>();
-            var task = manager.FindPlayerByAccountId(request.AccountUuid);
+            //var manager = MonitorPool.G<UserDataManager>();
+            var task = UserDataManager.S.FindPlayerByAccountId(request.AccountUuid);
             task.Wait();
             var player = task.Result;
             if (player == null)
             {
                 return new G2B_BattleReward { Code = ErrorCode.NoGamePlayerData };
             }
-
-
 
             var diff = new Dictionary<int, PlayerItem>();
             foreach (var i in request.DropItems)
@@ -41,7 +40,6 @@ namespace GateServer
                     diff.Add(i.ItemID, i);
                 }
             }
-
             foreach (var i in request.ConsumeItems)
             {
                 if (diff.ContainsKey(i.ItemID))
@@ -53,18 +51,17 @@ namespace GateServer
                     diff.Add(i.ItemID, i);
                 }
             }
-
             ErrorCode code = ErrorCode.Ok;
 
-            var r = manager.ProcessItem(player.Uuid, request.Gold, diff)
-                .GetAwaiter().GetResult();
-
+            var t = UserDataManager.S.ProcessItem(player.Uuid, diff.Values.ToList());
+            t.Wait();
+            var r = t.Result;
             if (r)
             {
-                var userClient = Appliaction.Current.GetClientByUserID(player.Uuid);
+                var userClient = Application.Current.GetClientByUserID(player.Uuid);
                 if (userClient != null)
                 {
-                    manager.SyncToClient(userClient,player.Uuid).Wait();
+                    UserDataManager.S.SyncToClient(userClient, player.Uuid).Wait();
                 }
             }
 
@@ -75,8 +72,8 @@ namespace GateServer
         public G2B_GetPlayerInfo GetPlayerInfo(B2G_GetPlayerInfo request)
         {
 
-            var manager = MonitorPool.G<UserDataManager>();
-            var player =  manager.FindPlayerByAccountId(request.AccountUuid).GetAwaiter().GetResult();
+            // var manager = MonitorPool.G<UserDataManager>();
+            var player = UserDataManager.S.FindPlayerByAccountId(request.AccountUuid).GetAwaiter().GetResult();
 
             if (player == null)
             {
@@ -86,9 +83,9 @@ namespace GateServer
                 };
             }
 
-            var package = manager.FindPackageByPlayerID(player.Uuid).GetAwaiter().GetResult();
+            var package = UserDataManager.S.FindPackageByPlayerID(player.Uuid).GetAwaiter().GetResult();
 
-            var hero = manager.FindHeroByPlayerId(player.Uuid).GetAwaiter().GetResult();
+            var hero = UserDataManager.S.FindHeroByPlayerId(player.Uuid).GetAwaiter().GetResult();
 
             return new G2B_GetPlayerInfo
             {

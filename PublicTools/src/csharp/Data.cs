@@ -39,18 +39,20 @@ namespace Proto {
             "cGVydHkSKQoIUHJvcGVydHkYASABKA4yFy5Qcm90by5IZXJvUHJvcGVydHlU",
             "eXBlEg0KBVZhbHVlGAIgASgFIlYKClBsYXllckl0ZW0SDgoGSXRlbUlEGAEg",
             "ASgFEgsKA051bRgCIAEoBRIMCgRHVUlEGAMgASgJEg4KBkxvY2tlZBgEIAEo",
-            "CBINCgVMZXZlbBgFIAEoBSJCCg1QbGF5ZXJQYWNrYWdlEiAKBUl0ZW1zGAEg",
-            "AygLMhEuUHJvdG8uUGxheWVySXRlbRIPCgdNYXhTaXplGAIgASgFImMKEFBs",
-            "YXllclNlcnZlckluZm8SEwoLQWNjb3VudFV1aWQYASABKAkSEAoIU2VydmVy",
-            "SUQYAiABKAUSEwoLU2VydmljZVBvcnQYAyABKAUSEwoLU2VydmljZUhvc3QY",
-            "BCABKAkiSAoMSGVyb1Byb3BlcnR5EikKCFByb3BlcnR5GAEgASgOMhcuUHJv",
-            "dG8uSGVyb1Byb3BlcnR5VHlwZRINCgVWYWx1ZRgCIAEoBSIwCg1IZXJvTWFn",
-            "aWNEYXRhEg4KBkNEVGltZRgBIAEoAhIPCgdNYWdpY0lEGAIgASgFIkAKDENs",
-            "aWVudENvbmZpZxIXCg9Mb2dpblNlcnZlckhvc3QYASABKAkSFwoPTG9naW5T",
-            "ZXJ2ZXJQb3J0GAIgASgFIpEBChJCYXR0bGVTZXJ2ZXJDb25maWcSDQoFTGV2",
-            "ZWwYASABKAUSEQoJTWF4UGxheWVyGAIgASgFEhIKCkxpc3RlblBvcnQYAyAB",
-            "KAUSEgoKTGlzdGVuSG9zdBgEIAEoCRIXCg9Mb2dpblNlcnZlclBvcnQYBSAB",
-            "KAUSGAoQTG9naW5TZXJ2aWNlSG9zdBgGIAEoCWIGcHJvdG8z"));
+            "CBINCgVMZXZlbBgFIAEoBSKRAQoNUGxheWVyUGFja2FnZRIuCgVJdGVtcxgB",
+            "IAMoCzIfLlByb3RvLlBsYXllclBhY2thZ2UuSXRlbXNFbnRyeRIPCgdNYXhT",
+            "aXplGAIgASgFGj8KCkl0ZW1zRW50cnkSCwoDa2V5GAEgASgJEiAKBXZhbHVl",
+            "GAIgASgLMhEuUHJvdG8uUGxheWVySXRlbToCOAEiYwoQUGxheWVyU2VydmVy",
+            "SW5mbxITCgtBY2NvdW50VXVpZBgBIAEoCRIQCghTZXJ2ZXJJRBgCIAEoBRIT",
+            "CgtTZXJ2aWNlUG9ydBgDIAEoBRITCgtTZXJ2aWNlSG9zdBgEIAEoCSJICgxI",
+            "ZXJvUHJvcGVydHkSKQoIUHJvcGVydHkYASABKA4yFy5Qcm90by5IZXJvUHJv",
+            "cGVydHlUeXBlEg0KBVZhbHVlGAIgASgFIjAKDUhlcm9NYWdpY0RhdGESDgoG",
+            "Q0RUaW1lGAEgASgCEg8KB01hZ2ljSUQYAiABKAUiQAoMQ2xpZW50Q29uZmln",
+            "EhcKD0xvZ2luU2VydmVySG9zdBgBIAEoCRIXCg9Mb2dpblNlcnZlclBvcnQY",
+            "AiABKAUikQEKEkJhdHRsZVNlcnZlckNvbmZpZxINCgVMZXZlbBgBIAEoBRIR",
+            "CglNYXhQbGF5ZXIYAiABKAUSEgoKTGlzdGVuUG9ydBgDIAEoBRISCgpMaXN0",
+            "ZW5Ib3N0GAQgASgJEhcKD0xvZ2luU2VydmVyUG9ydBgFIAEoBRIYChBMb2dp",
+            "blNlcnZpY2VIb3N0GAYgASgJYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -61,7 +63,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.DHero), global::Proto.DHero.Parser, new[]{ "HeroID", "Level", "Exprices", "Equips", "Magics", "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.EquipProperty), global::Proto.EquipProperty.Parser, new[]{ "Property", "Value" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerItem), global::Proto.PlayerItem.Parser, new[]{ "ItemID", "Num", "GUID", "Locked", "Level" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerPackage), global::Proto.PlayerPackage.Parser, new[]{ "Items", "MaxSize" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerPackage), global::Proto.PlayerPackage.Parser, new[]{ "Items", "MaxSize" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerServerInfo), global::Proto.PlayerServerInfo.Parser, new[]{ "AccountUuid", "ServerID", "ServicePort", "ServiceHost" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroProperty), global::Proto.HeroProperty.Parser, new[]{ "Property", "Value" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagicData), global::Proto.HeroMagicData.Parser, new[]{ "CDTime", "MagicID" }, null, null, null),
@@ -1660,14 +1662,14 @@ namespace Proto {
 
     /// <summary>Field number for the "Items" field.</summary>
     public const int ItemsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_items_codec
-        = pb::FieldCodec.ForMessage(10, global::Proto.PlayerItem.Parser);
-    private readonly pbc::RepeatedField<global::Proto.PlayerItem> items_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
+    private static readonly pbc::MapField<string, global::Proto.PlayerItem>.Codec _map_items_codec
+        = new pbc::MapField<string, global::Proto.PlayerItem>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Proto.PlayerItem.Parser), 10);
+    private readonly pbc::MapField<string, global::Proto.PlayerItem> items_ = new pbc::MapField<string, global::Proto.PlayerItem>();
     /// <summary>
     ///道具列表
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto.PlayerItem> Items {
+    public pbc::MapField<string, global::Proto.PlayerItem> Items {
       get { return items_; }
     }
 
@@ -1698,7 +1700,7 @@ namespace Proto {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!items_.Equals(other.items_)) return false;
+      if (!Items.Equals(other.Items)) return false;
       if (MaxSize != other.MaxSize) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1706,7 +1708,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= items_.GetHashCode();
+      hash ^= Items.GetHashCode();
       if (MaxSize != 0) hash ^= MaxSize.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1721,7 +1723,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      items_.WriteTo(output, _repeated_items_codec);
+      items_.WriteTo(output, _map_items_codec);
       if (MaxSize != 0) {
         output.WriteRawTag(16);
         output.WriteInt32(MaxSize);
@@ -1734,7 +1736,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += items_.CalculateSize(_repeated_items_codec);
+      size += items_.CalculateSize(_map_items_codec);
       if (MaxSize != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxSize);
       }
@@ -1765,7 +1767,7 @@ namespace Proto {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            items_.AddEntriesFrom(input, _repeated_items_codec);
+            items_.AddEntriesFrom(input, _map_items_codec);
             break;
           }
           case 16: {

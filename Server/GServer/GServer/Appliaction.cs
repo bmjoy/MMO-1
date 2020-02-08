@@ -5,12 +5,17 @@ using ServerUtility;
 using org.vxwo.csharp.json;
 using GateServer;
 using Proto.LoginBattleGameServerService;
+using ExcelConfig;
+using EConfig;
 
 namespace GServer
 {
-    public class Appliaction
+    public class Application
     {
-        public Appliaction(JsonValue config)
+
+        public static ConstantValue Constant { private set; get; }
+
+        public Application(JsonValue config)
         {
 
             this.configRoot = config["ConfigPath"].AsString();
@@ -42,7 +47,7 @@ namespace GServer
         public bool EnableGM { get; set; }
         public int ServerID { set; get; }
 
-        public static Appliaction Current { private set; get; }
+        public static Application Current { private set; get; }
 
         //玩家访问端口
         public SocketServer ListenServer { private set; get; }
@@ -91,6 +96,7 @@ namespace GServer
             DataBase.S.Init(this.ConnectionString, this.DbName);
             MonitorPool.Singleton.Start();
             ResourcesLoader.Singleton.LoadAllConfig(this.configRoot);
+            Constant= ExcelToJSONConfigManager.Current.GetConfigByID<ConstantValue>(1);
             IsRunning = true;
             //同时对外对内服务器不能使用全部注册
             var listenHandler = new RequestHandle<GateServerService>();

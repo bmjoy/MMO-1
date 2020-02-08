@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using ExcelConfig;
 using org.vxwo.csharp.json;
+using EConfig;
 
 public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 {
@@ -98,4 +99,10 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		Debug.Log(path);
 		return File.ReadAllText(path);
     }
+
+	public Texture2D LoadIcon(ItemData item)
+	{
+		return LoadResources<Texture2D>("Icon/" + item.Icon);
+
+	}
 }

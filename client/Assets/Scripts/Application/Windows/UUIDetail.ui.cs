@@ -20,6 +20,7 @@ namespace Windows
         protected Text t_prices;
         protected Button bt_cancel;
         protected Button bt_sale;
+        protected Button bt_equip;
 
 
 
@@ -34,6 +35,7 @@ namespace Windows
             t_prices = FindChild<Text>("t_prices");
             bt_cancel = FindChild<Button>("bt_cancel");
             bt_sale = FindChild<Button>("bt_sale");
+            bt_equip = FindChild<Button>("bt_equip");
 
 
         }

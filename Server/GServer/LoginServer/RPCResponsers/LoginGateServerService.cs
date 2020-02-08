@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Protobuf.WellKnownTypes;
 using LoginServer;
 using MongoDB.Driver;
 using MongoTool;
@@ -163,7 +164,7 @@ namespace RPCResponsers
                 ServerId = id,
                 MaxPlayerCount = req.Maxplayer,
                 ClientId = Client.ID,
-                JoinTime = DateTime.UtcNow.Ticks,
+                JoinTime = Timestamp.FromDateTime( DateTime.UtcNow),//.Ticks,
                 LevelId = req.LevelId,
             };
 

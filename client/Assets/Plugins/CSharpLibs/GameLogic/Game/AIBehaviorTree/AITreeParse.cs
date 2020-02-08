@@ -35,6 +35,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		public static Composite CreateFrom(TreeNode node)
 		{
+			
 		    if (node is TreeNodeProbabilitySelector)
 			{
 				var sels = new List<ProbabilitySelection>();

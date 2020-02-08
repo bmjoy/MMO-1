@@ -95,8 +95,20 @@ namespace Proto.GateServerService
     }
     
 
+    /// <summary>
+    /// 10048
+    /// </summary>    
+    [API(10048)]
+    public class BuyPackageSize:APIBase<C2G_BuyPackageSize, G2C_BuyPackageSize> 
+    {
+        private BuyPackageSize() : base() { }
+        public  static BuyPackageSize CreateQuery(){ return new BuyPackageSize();}
+    }
+    
+
     public interface IGateServerService
     {
+        [API(10048)]G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req);
         [API(10047)]G2C_GMTool GMTool(C2G_GMTool req);
         [API(10046)]G2C_EquipmentLevelUp EquipmentLevelUp(C2G_EquipmentLevelUp req);
         [API(10045)]G2C_SaleItem SaleItem(C2G_SaleItem req);
@@ -111,6 +123,7 @@ namespace Proto.GateServerService
 
     public abstract class GateServerService
     {
+        [API(10048)]public abstract Task<G2C_BuyPackageSize> BuyPackageSize(C2G_BuyPackageSize request);
         [API(10047)]public abstract Task<G2C_GMTool> GMTool(C2G_GMTool request);
         [API(10046)]public abstract Task<G2C_EquipmentLevelUp> EquipmentLevelUp(C2G_EquipmentLevelUp request);
         [API(10045)]public abstract Task<G2C_SaleItem> SaleItem(C2G_SaleItem request);

@@ -25,6 +25,7 @@ enum ErrorCode
     IsWearOnHero =15;//穿戴中
     NoEnoughtGold =16;//金币不足
     NoFreeGateServer =17;//没有空闲网关服务器
+    NameOrPwdLeghtIncorrect = 18;//账号或者密码长度不好
 }
 
 //empty text

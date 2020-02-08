@@ -85,13 +85,15 @@ namespace Proto
     [Index(10065,typeof(G2C_EquipmentLevelUp))]
     [Index(10066,typeof(C2G_GMTool))]
     [Index(10067,typeof(G2C_GMTool))]
-    [Index(10068,typeof(Task_G2C_SyncPackage))]
-    [Index(10069,typeof(Task_G2C_SyncHero))]
-    [Index(10070,typeof(Task_G2C_JoinBattle))]
-    [Index(10071,typeof(B2G_GetPlayerInfo))]
-    [Index(10072,typeof(G2B_GetPlayerInfo))]
-    [Index(10073,typeof(B2G_BattleReward))]
-    [Index(10074,typeof(G2B_BattleReward))]
+    [Index(10068,typeof(C2G_BuyPackageSize))]
+    [Index(10069,typeof(G2C_BuyPackageSize))]
+    [Index(10070,typeof(Task_G2C_SyncPackage))]
+    [Index(10071,typeof(Task_G2C_SyncHero))]
+    [Index(10072,typeof(Task_G2C_JoinBattle))]
+    [Index(10073,typeof(B2G_GetPlayerInfo))]
+    [Index(10074,typeof(G2B_GetPlayerInfo))]
+    [Index(10075,typeof(B2G_BattleReward))]
+    [Index(10076,typeof(G2B_BattleReward))]
 
     public static class MessageTypeIndexs
     {

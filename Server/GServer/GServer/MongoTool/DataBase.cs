@@ -1,6 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Google.Protobuf.Collections;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson.Serialization.Options;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Proto.MongoDB;
 using ServerUtility;
@@ -9,7 +14,49 @@ namespace GateServer
 {
     public class DataBase:XSingleton<DataBase>
     {
-        public DataBase()
+
+        public class GamePackageEntity 
+        {
+            [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+            [BsonElement("id")]
+            public string Uuid { set; get; }
+            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
+            [BsonElement("item")]
+            public Dictionary<string, ItemNum> Items { set; get; }
+            [BsonElement("size")]
+            public int PackageSize { set; get; }
+            [BsonElement("puuid")]
+            public string PlayerUuid { set; get; }
+
+            public GamePackageEntity()
+            {
+                Items = new Dictionary<string, ItemNum>();
+            }
+
+        }
+
+        public class GameHeroEntity
+        {
+            [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+            [BsonElement("_id")]
+            public string Uuid { set; get; }
+            public string PlayerUuid { set; get; }
+            public int Exp { set; get; }
+            public int Level { set; get; }
+            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
+            public Dictionary<int, HeroMagic> Magics { set; get; }
+            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
+            public Dictionary<int, string> Equips { set; get; }
+            public string HeroName { set; get; }
+            public int HeroId { set; get; }
+            public GameHeroEntity()
+            {
+                Magics = new Dictionary<int, HeroMagic>();
+                Equips = new Dictionary<int, string>();
+            }
+        }
+
+    public DataBase()
         {
             BsonClassMap.RegisterClassMap<GamePlayerEntity>(
             (cm) =>
@@ -18,12 +65,8 @@ namespace GateServer
                 cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
             });
 
-            BsonClassMap.RegisterClassMap<ItemPackageEntity>(
-            (cm) =>
-            {
-                cm.AutoMap();
-                cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
-            });
+            var map = new DictionaryInterfaceImplementerSerializer<MapField<string, ItemNum>>(DictionaryRepresentation.Document);
+        
 
             BsonClassMap.RegisterClassMap<GameHeroEntity>(
             (cm) =>
@@ -39,7 +82,7 @@ namespace GateServer
 
         public IMongoCollection<GamePlayerEntity> Playes { get; private set; }
         public IMongoCollection<GameHeroEntity> Heros { get; private set; }
-        public IMongoCollection<ItemPackageEntity> Packages { get; private set; }
+        public IMongoCollection<GamePackageEntity> Packages { get; private set; }
 
         public void Init(string connectString, string dbName)
         {
@@ -48,7 +91,7 @@ namespace GateServer
 
             Playes = db.GetCollection<GamePlayerEntity>(PLAYER);
             Heros = db.GetCollection<GameHeroEntity>(HERO);
-            Packages = db.GetCollection<ItemPackageEntity>(PACKAGE);
+            Packages = db.GetCollection<GamePackageEntity>(PACKAGE);
 
         }
     }

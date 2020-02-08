@@ -48,7 +48,7 @@ namespace GServer
 
             var MEvent = new ManualResetEvent(false);
             var config = JsonReader.Read(json);
-            var app = new Appliaction(config);
+            var app = new Application(config);
 
             MEvent.Reset();
             var u = new UnixExitSignal();

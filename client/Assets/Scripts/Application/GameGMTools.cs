@@ -54,7 +54,7 @@ public class GameGMTools : MonoBehaviour
             1/Time.deltaTime>28?green:red);
 
         if (!ShowGM)  return;
-		GUI.BeginGroup (new Rect (Screen.width - 185, 55, 180, 25));
+		GUI.BeginGroup (new Rect (Screen.width - 185, 105, 180, 25));
 		GUILayout.BeginHorizontal ();
         level = GUILayout.TextField (level,GUILayout.Width(100));
         if (GUILayout.Button("GM", GUILayout.Width(60)))

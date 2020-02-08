@@ -36,7 +36,7 @@ namespace Windows
                 Config = itemconfig;
                 pItem = item;
                 Template.Text.text = item.Num>1? item.Num.ToString():string.Empty;
-                Template.RawImage.texture =ResourcesManager.S.LoadResources<Texture2D>("Icon/" + itemconfig.Icon);
+                Template.RawImage.texture = ResourcesManager.S.LoadIcon(itemconfig);
             }
         }
 
@@ -64,16 +64,20 @@ namespace Windows
         {
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
+
             ContentTableManager.Count = gate.package.Items.Count;
             int index = 0;
-            foreach (var i in ContentTableManager)
+            foreach (var item in gate.package.Items)
             {
-                i.Model.SetItem(gate.package.Items[index]);
+                var i = ContentTableManager[index];
+                i.Model.SetItem(item.Value);
                 i.Model.OnClickItem = ClickItem;
                 index++;
             }
             t_size.text = string.Format("{0}/{1}", gate.package.Items.Count, gate.package.MaxSize);
         }
+
+     
 
         private void ClickItem(ContentTableModel item)
         {

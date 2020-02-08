@@ -7,6 +7,7 @@ using LoginServer;
 using MongoDB.Driver;
 using MongoTool;
 using XNet.Libs.Utility;
+using Google.Protobuf.WellKnownTypes;
 
 namespace RPCResponsers
 {
@@ -26,9 +27,9 @@ namespace RPCResponsers
             var users = DataBase.S.Account;
 
             var pwd = Md5Tool.GetMd5Hash(request.Password);
-            var pwdfilter = Builders<PlayInfoEntity>.Filter.Eq(t => t.Password, pwd);
-            var namefilter = Builders<PlayInfoEntity>.Filter.Eq(t=>t.Username, request.UserName);
-            var filter = Builders<PlayInfoEntity>.Filter.And(namefilter, pwdfilter);
+            var pwdfilter = Builders<AccountEntity>.Filter.Eq(t => t.Password, pwd);
+            var namefilter = Builders<AccountEntity>.Filter.Eq(t=>t.UserName, request.UserName);
+            var filter = Builders<AccountEntity>.Filter.And(namefilter, pwdfilter);
             var query = users.Find(filter);
 
             if (!query.Any()) return new L2C_Login { Code = ErrorCode.LoginFailure };
@@ -56,18 +57,18 @@ namespace RPCResponsers
                 }
             }
 
-           
-            user.LastLoginDateTime = DateTime.UtcNow.Ticks;
             user.LoginCount += 1;
-            var update = Builders<PlayInfoEntity>
-            .Update.Set(u => u.LastLoginDateTime, DateTime.UtcNow.Ticks);
-            var upfilter = Builders<PlayInfoEntity>.Filter.Eq(t => t.Uuid, user.Uuid);
+            var update = Builders<AccountEntity>.Update
+                .Set(u => u.LastLoginTime,  DateTime.Now)
+                .Set(t=>t.LoginCount, user.LoginCount);
+
+            var upfilter = Builders<AccountEntity>.Filter.Eq(t => t.Uuid, user.Uuid);
             users.UpdateOne(upfilter, update);
 
-            var g_filter = Builders<GateServerInfoEntity>.Filter.Eq(t => t.ServerId, user.ServerId);
+            var g_filter = Builders<GateServerInfoEntity>.Filter.Eq(t => t.ServerId, user.ServerID);
             var gate = DataBase.S.GateServer.Find(g_filter).SingleOrDefault();
             if (gate == null)  return new L2C_Login { Code = ErrorCode.NofoundServerId };
-            var session = SaveSession(user.Uuid, user.ServerId);
+            var session = SaveSession(user.Uuid, user.ServerID);
             return new L2C_Login
             {
                 Code = ErrorCode.Ok,
@@ -98,13 +99,13 @@ namespace RPCResponsers
         {
             if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
                 return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
-            if (request.UserName.Length > 100 || request.UserName.Length < 5)
-                return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
-            if (request.Password.Length > 100 || request.Password.Length < 5)
-                return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
+            if (request.UserName.Length > 100 || request.UserName.Length < 2)
+                return new L2C_Reg { Code = ErrorCode.NameOrPwdLeghtIncorrect };
+            if (request.Password.Length > 100 || request.Password.Length < 2)
+                return new L2C_Reg { Code = ErrorCode.NameOrPwdLeghtIncorrect };
 
             var users = DataBase.S.Account;
-            var filter = Builders<PlayInfoEntity>.Filter.Eq(t=>t.Username, request.UserName);
+            var filter = Builders<AccountEntity>.Filter.Eq(t=>t.UserName, request.UserName);
             var query = users.Find(filter);
 
             if (query.Any())return new L2C_Reg{Code = ErrorCode.RegExistUserName };
@@ -114,19 +115,19 @@ namespace RPCResponsers
     
             var serverID = data.ServerId;
             var pwd = Md5Tool.GetMd5Hash(request.Password);
-            var acc = new PlayInfoEntity
+            var acc = new AccountEntity
             {
-                Username = request.UserName,
+                UserName = request.UserName,
                 Password = pwd,
-                CreateDateTime = DateTime.UtcNow.Ticks,
+                CreateTime = DateTime.Now,
                 LoginCount = 0,
-                LastLoginDateTime = DateTime.UtcNow.Ticks,
-                ServerId = serverID
+                LastLoginTime =DateTime.Now,
+                ServerID = serverID
             };
 
             users.InsertOne(acc);
 
-            var session = SaveSession(acc.Uuid, acc.ServerId);
+            var session = SaveSession(acc.Uuid, acc.ServerID);
             return new L2C_Reg
             {
                 Code = ErrorCode.Ok,

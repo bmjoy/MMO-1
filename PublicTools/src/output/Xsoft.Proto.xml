@@ -582,6 +582,11 @@
             没有空闲网关服务器
              </summary>
             </member>
+        <member name="F:Proto.ErrorCode.NameOrPwdLeghtIncorrect">
+             <summary>
+            账号或者密码长度不好
+             </summary>
+            </member>
         <member name="T:Proto.Void">
              <summary>
             empty text
@@ -1196,6 +1201,41 @@
              增加值
              </summary>
             </member>
+        <member name="T:EConfig.ConstantValue">
+             <summary>
+             游戏常量表
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PLAYER_COIN">
+             <summary>
+             用户初始化钻石
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PLAYER_GOLD">
+             <summary>
+             初始化金币
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PACKAGE_SIZE">
+             <summary>
+             初始化数据 
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PACKAGE_BUY_COST">
+             <summary>
+             购买消耗
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PACKAGE_BUY_SIZE">
+             <summary>
+             购买消耗增容量
+             </summary>
+            </member>
+        <member name="P:EConfig.ConstantValue.PACKAGE_SIZE_LIMIT">
+             <summary>
+             购买消耗增容量
+             </summary>
+            </member>
         <member name="T:EConfig.CharacterLevelUpData">
              <summary>
              英雄升级经验表
@@ -1794,12 +1834,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10051
+             10052
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10052
+             10053
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -1905,6 +1945,18 @@
             地图
              </summary>
             </member>
+        <member name="F:Proto.C2G_BuyPackageSize.SizeCurrentFieldNumber">
+             <summary>Field number for the "SizeCurrent" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyPackageSize.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyPackageSize.PackageCountFieldNumber">
+             <summary>Field number for the "PackageCount" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyPackageSize.OldCountFieldNumber">
+             <summary>Field number for the "OldCount" field.</summary>
+            </member>
         <member name="T:Proto.Task_G2C_SyncPackage">
              <summary>
             同步包裹
@@ -1930,14 +1982,6 @@
         <member name="T:Proto.C2G_OperatorEquip">
              <summary>
             处理装备穿戴
-             </summary>
-            </member>
-        <member name="F:Proto.C2G_OperatorEquip.HeroIDFieldNumber">
-             <summary>Field number for the "HeroID" field.</summary>
-            </member>
-        <member name="P:Proto.C2G_OperatorEquip.HeroID">
-             <summary>
-            英雄ID
              </summary>
             </member>
         <member name="F:Proto.C2G_OperatorEquip.GuidFieldNumber">
@@ -2198,19 +2242,24 @@
              10047
              </summary>    
             </member>
-        <member name="T:Proto.GateServerTask.SyncPackage">
+        <member name="T:Proto.GateServerService.BuyPackageSize">
              <summary>
              10048
              </summary>    
             </member>
-        <member name="T:Proto.GateServerTask.SyncHero">
+        <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
              10049
              </summary>    
             </member>
-        <member name="T:Proto.GateServerTask.JoinBattle">
+        <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
              10050
+             </summary>    
+            </member>
+        <member name="T:Proto.GateServerTask.JoinBattle">
+             <summary>
+             10051
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
@@ -2640,37 +2689,6 @@
         <member name="P:Proto.MongoDB.MongoDBReflection.Descriptor">
              <summary>File descriptor for MongoDB.proto</summary>
             </member>
-        <member name="T:Proto.MongoDB.PlayInfoEntity">
-             <summary>
-            account 
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.UuidFieldNumber">
-             <summary>Field number for the "uuid" field.</summary>
-            </member>
-        <member name="P:Proto.MongoDB.PlayInfoEntity.Uuid">
-             <summary>
-            id  key of the entity
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.UsernameFieldNumber">
-             <summary>Field number for the "username" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.PasswordFieldNumber">
-             <summary>Field number for the "password" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.CreateDateTimeFieldNumber">
-             <summary>Field number for the "create_date_time" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.LoginCountFieldNumber">
-             <summary>Field number for the "login_count" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.LastLoginDateTimeFieldNumber">
-             <summary>Field number for the "last_login_date_time" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.PlayInfoEntity.ServerIdFieldNumber">
-             <summary>Field number for the "server_id" field.</summary>
-            </member>
         <member name="F:Proto.MongoDB.ItemNum.IdFieldNumber">
              <summary>Field number for the "id" field.</summary>
             </member>
@@ -2706,23 +2724,6 @@
         <member name="F:Proto.MongoDB.GamePlayerEntity.LastIpFieldNumber">
              <summary>Field number for the "last_ip" field.</summary>
             </member>
-        <member name="T:Proto.MongoDB.ItemPackageEntity">
-             <summary>
-            game
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.ItemPackageEntity.ItemsFieldNumber">
-             <summary>Field number for the "items" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.ItemPackageEntity.UuidFieldNumber">
-             <summary>Field number for the "uuid" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.ItemPackageEntity.PlayerUuidFieldNumber">
-             <summary>Field number for the "player_uuid" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.ItemPackageEntity.PackageSizeFieldNumber">
-             <summary>Field number for the "package_size" field.</summary>
-            </member>
         <member name="T:Proto.MongoDB.HeroMagic">
              <summary>
             hero
@@ -2733,49 +2734,6 @@
             </member>
         <member name="F:Proto.MongoDB.HeroMagic.ExpFieldNumber">
              <summary>Field number for the "exp" field.</summary>
-            </member>
-        <member name="T:Proto.MongoDB.GameHeroEntity">
-             <summary>
-            hero
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.UuidFieldNumber">
-             <summary>Field number for the "uuid" field.</summary>
-            </member>
-        <member name="P:Proto.MongoDB.GameHeroEntity.Uuid">
-             <summary>
-            hero uuid
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.PlayerUuidFieldNumber">
-             <summary>Field number for the "player_uuid" field.</summary>
-            </member>
-        <member name="P:Proto.MongoDB.GameHeroEntity.PlayerUuid">
-             <summary>
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.ExpFieldNumber">
-             <summary>Field number for the "exp" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.LevelFieldNumber">
-             <summary>Field number for the "level" field.</summary>
-            </member>
-        <member name="P:Proto.MongoDB.GameHeroEntity.Level">
-             <summary>
-            level
-             </summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.MagicsFieldNumber">
-             <summary>Field number for the "magics" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.EquipsFieldNumber">
-             <summary>Field number for the "equips" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.HeroNameFieldNumber">
-             <summary>Field number for the "hero_name" field.</summary>
-            </member>
-        <member name="F:Proto.MongoDB.GameHeroEntity.HeroIdFieldNumber">
-             <summary>Field number for the "hero_id" field.</summary>
             </member>
         <member name="T:Proto.MongoDB.GateServerInfoEntity">
              <summary>

@@ -73,7 +73,7 @@ public class BattlePlayer
 
         foreach (var i in Package.Items)
         {
-            result.Items.Add(i);
+            result.Items.Add(i.Key ,i.Value);
             result.MaxSize = Package.MaxSize;
         }
 
@@ -104,7 +104,7 @@ public class BattlePlayer
                 bool have = false;
                 foreach (var i in Package.Items)
                 {
-                    if (i.ItemID == item)
+                    if (i.Value.ItemID == item)
                     {
                         have = true;
                     }
@@ -129,9 +129,9 @@ public class BattlePlayer
             bool enough = false;
             foreach (var i in this.Package.Items)
             {
-                if (i.ItemID == item)
+                if (i.Value.ItemID == item)
                 {
-                    if (i.Num < consumeNum + num) return false;
+                    if (i.Value.Num < consumeNum + num) return false;
                     else
                     {
                         enough = true;
@@ -172,11 +172,8 @@ public class BattlePlayer
 
     internal PlayerItem GetEquipByGuid(string gUID)
     {
-
-        foreach (var i in Package.Items)
-        {
-            if (i.GUID == gUID) return i;
-        }
+        if (Package.Items.TryGetValue(gUID, out PlayerItem item)) return item;
+              
         return null;
     }
 }

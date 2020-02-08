@@ -25,49 +25,31 @@ namespace Proto.MongoDB {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg1Nb25nb0RCLnByb3RvEg1Qcm90by5Nb25nb0RCGhxnb29nbGUvcHJvdG9i",
-            "dWYvc3RydWN0LnByb3RvIqIBCg5QbGF5SW5mb0VudGl0eRIMCgR1dWlkGAEg",
-            "ASgJEhAKCHVzZXJuYW1lGAIgASgJEhAKCHBhc3N3b3JkGAMgASgJEhgKEGNy",
-            "ZWF0ZV9kYXRlX3RpbWUYBCABKAMSEwoLbG9naW5fY291bnQYBSABKAUSHAoU",
-            "bGFzdF9sb2dpbl9kYXRlX3RpbWUYByABKAMSEQoJc2VydmVyX2lkGAggASgF",
-            "IlAKB0l0ZW1OdW0SCgoCaWQYASABKAUSCwoDbnVtGAIgASgFEgwKBHV1aWQY",
-            "AyABKAkSDQoFbGV2ZWwYBCABKAUSDwoHaXNfbG9jaxgFIAEoCCJjChBHYW1l",
-            "UGxheWVyRW50aXR5EgwKBHV1aWQYASABKAkSFAoMYWNjb3VudF91dWlkGAIg",
-            "ASgJEgwKBGNvaW4YAyABKAUSDAoEZ29sZBgEIAEoBRIPCgdsYXN0X2lwGAUg",
-            "ASgJIs4BChFJdGVtUGFja2FnZUVudGl0eRI6CgVpdGVtcxgBIAMoCzIrLlBy",
-            "b3RvLk1vbmdvREIuSXRlbVBhY2thZ2VFbnRpdHkuSXRlbXNFbnRyeRIMCgR1",
-            "dWlkGAIgASgJEhMKC3BsYXllcl91dWlkGAMgASgJEhQKDHBhY2thZ2Vfc2l6",
-            "ZRgEIAEoBRpECgpJdGVtc0VudHJ5EgsKA2tleRgBIAEoCRIlCgV2YWx1ZRgC",
-            "IAEoCzIWLlByb3RvLk1vbmdvREIuSXRlbU51bToCOAEiJwoJSGVyb01hZ2lj",
-            "Eg0KBWxldmVsGAEgASgFEgsKA2V4cBgCIAEoBSLhAgoOR2FtZUhlcm9FbnRp",
-            "dHkSDAoEdXVpZBgBIAEoCRITCgtwbGF5ZXJfdXVpZBgCIAEoCRILCgNleHAY",
-            "AyABKAUSDQoFbGV2ZWwYBCABKAUSOQoGbWFnaWNzGAUgAygLMikuUHJvdG8u",
-            "TW9uZ29EQi5HYW1lSGVyb0VudGl0eS5NYWdpY3NFbnRyeRI5CgZlcXVpcHMY",
-            "BiADKAsyKS5Qcm90by5Nb25nb0RCLkdhbWVIZXJvRW50aXR5LkVxdWlwc0Vu",
-            "dHJ5EhEKCWhlcm9fbmFtZRgHIAEoCRIPCgdoZXJvX2lkGAggASgFGkcKC01h",
-            "Z2ljc0VudHJ5EgsKA2tleRgBIAEoBRInCgV2YWx1ZRgCIAEoCzIYLlByb3Rv",
-            "Lk1vbmdvREIuSGVyb01hZ2ljOgI4ARotCgtFcXVpcHNFbnRyeRILCgNrZXkY",
-            "ASABKAUSDQoFdmFsdWUYAiABKAk6AjgBIsoBChRHYXRlU2VydmVySW5mb0Vu",
-            "dGl0eRIMCgR1dWlkGAEgASgJEgwKBGhvc3QYAiABKAkSDAoEcG9ydBgDIAEo",
-            "BRIRCglzZXJ2ZXJfaWQYBCABKAUSGAoQbWF4X3BsYXllcl9Db3VudBgFIAEo",
-            "BRIcChRjdXJyZW50X3BsYXllcl9jb3VudBgGIAEoBRIRCgljbGllbnRfaWQY",
-            "ByABKAUSFAoMc2VydmljZV9ob3N0GAkgASgJEhQKDHNlcnZpY2VfcG9ydBgK",
-            "IAEoBSKOAQoVVXNlclNlc3Npb25JbmZvRW50aXR5EgwKBHV1aWQYASABKAkS",
-            "FAoMYWNjb3VudF91dWlkGAIgASgJEhYKDmdhdGVfc2VydmVyX2lkGAMgASgF",
-            "EhgKEGJhdHRsZV9zZXJ2ZXJfaWQYBCABKAUSDQoFdG9rZW4YBSABKAkSEAoI",
-            "bGV2ZWxfaWQYBiABKAUiqQEKGFBsYXllckJhdHRsZVNlcnZlckVudGl0eRIM",
-            "CgR1dWlkGAEgASgJEhEKCXNlcnZlcl9pZBgCIAEoBRIRCglqb2luX3RpbWUY",
-            "AyABKAMSEAoIbGV2ZWxfaWQYBCABKAUSEQoJY2xpZW50X2lkGAUgASgFEgwK",
-            "BGhvc3QYBiABKAkSDAoEcG9ydBgHIAEoBRIYChBtYXhfcGxheWVyX2NvdW50",
-            "GAggASgFYgZwcm90bzM="));
+            "dWYvc3RydWN0LnByb3RvGh9nb29nbGUvcHJvdG9idWYvdGltZXN0YW1wLnBy",
+            "b3RvIlAKB0l0ZW1OdW0SCgoCaWQYASABKAUSCwoDbnVtGAIgASgFEgwKBHV1",
+            "aWQYAyABKAkSDQoFbGV2ZWwYBCABKAUSDwoHaXNfbG9jaxgFIAEoCCJjChBH",
+            "YW1lUGxheWVyRW50aXR5EgwKBHV1aWQYASABKAkSFAoMYWNjb3VudF91dWlk",
+            "GAIgASgJEgwKBGNvaW4YAyABKAUSDAoEZ29sZBgEIAEoBRIPCgdsYXN0X2lw",
+            "GAUgASgJIicKCUhlcm9NYWdpYxINCgVsZXZlbBgBIAEoBRILCgNleHAYAiAB",
+            "KAUiygEKFEdhdGVTZXJ2ZXJJbmZvRW50aXR5EgwKBHV1aWQYASABKAkSDAoE",
+            "aG9zdBgCIAEoCRIMCgRwb3J0GAMgASgFEhEKCXNlcnZlcl9pZBgEIAEoBRIY",
+            "ChBtYXhfcGxheWVyX0NvdW50GAUgASgFEhwKFGN1cnJlbnRfcGxheWVyX2Nv",
+            "dW50GAYgASgFEhEKCWNsaWVudF9pZBgHIAEoBRIUCgxzZXJ2aWNlX2hvc3QY",
+            "CSABKAkSFAoMc2VydmljZV9wb3J0GAogASgFIo4BChVVc2VyU2Vzc2lvbklu",
+            "Zm9FbnRpdHkSDAoEdXVpZBgBIAEoCRIUCgxhY2NvdW50X3V1aWQYAiABKAkS",
+            "FgoOZ2F0ZV9zZXJ2ZXJfaWQYAyABKAUSGAoQYmF0dGxlX3NlcnZlcl9pZBgE",
+            "IAEoBRINCgV0b2tlbhgFIAEoCRIQCghsZXZlbF9pZBgGIAEoBSLFAQoYUGxh",
+            "eWVyQmF0dGxlU2VydmVyRW50aXR5EgwKBHV1aWQYASABKAkSEQoJc2VydmVy",
+            "X2lkGAIgASgFEi0KCWpvaW5fdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1",
+            "Zi5UaW1lc3RhbXASEAoIbGV2ZWxfaWQYBCABKAUSEQoJY2xpZW50X2lkGAUg",
+            "ASgFEgwKBGhvc3QYBiABKAkSDAoEcG9ydBgHIAEoBRIYChBtYXhfcGxheWVy",
+            "X2NvdW50GAggASgFYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.PlayInfoEntity), global::Proto.MongoDB.PlayInfoEntity.Parser, new[]{ "Uuid", "Username", "Password", "CreateDateTime", "LoginCount", "LastLoginDateTime", "ServerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.ItemNum), global::Proto.MongoDB.ItemNum.Parser, new[]{ "Id", "Num", "Uuid", "Level", "IsLock" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.GamePlayerEntity), global::Proto.MongoDB.GamePlayerEntity.Parser, new[]{ "Uuid", "AccountUuid", "Coin", "Gold", "LastIp" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.ItemPackageEntity), global::Proto.MongoDB.ItemPackageEntity.Parser, new[]{ "Items", "Uuid", "PlayerUuid", "PackageSize" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.HeroMagic), global::Proto.MongoDB.HeroMagic.Parser, new[]{ "Level", "Exp" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.GameHeroEntity), global::Proto.MongoDB.GameHeroEntity.Parser, new[]{ "Uuid", "PlayerUuid", "Exp", "Level", "Magics", "Equips", "HeroName", "HeroId" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.GateServerInfoEntity), global::Proto.MongoDB.GateServerInfoEntity.Parser, new[]{ "Uuid", "Host", "Port", "ServerId", "MaxPlayerCount", "CurrentPlayerCount", "ClientId", "ServiceHost", "ServicePort" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.UserSessionInfoEntity), global::Proto.MongoDB.UserSessionInfoEntity.Parser, new[]{ "Uuid", "AccountUuid", "GateServerId", "BattleServerId", "Token", "LevelId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.MongoDB.PlayerBattleServerEntity), global::Proto.MongoDB.PlayerBattleServerEntity.Parser, new[]{ "Uuid", "ServerId", "JoinTime", "LevelId", "ClientId", "Host", "Port", "MaxPlayerCount" }, null, null, null)
@@ -77,309 +59,6 @@ namespace Proto.MongoDB {
 
   }
   #region Messages
-  /// <summary>
-  ///account 
-  /// </summary>
-  public sealed partial class PlayInfoEntity : pb::IMessage<PlayInfoEntity> {
-    private static readonly pb::MessageParser<PlayInfoEntity> _parser = new pb::MessageParser<PlayInfoEntity>(() => new PlayInfoEntity());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<PlayInfoEntity> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[0]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayInfoEntity() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayInfoEntity(PlayInfoEntity other) : this() {
-      uuid_ = other.uuid_;
-      username_ = other.username_;
-      password_ = other.password_;
-      createDateTime_ = other.createDateTime_;
-      loginCount_ = other.loginCount_;
-      lastLoginDateTime_ = other.lastLoginDateTime_;
-      serverId_ = other.serverId_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayInfoEntity Clone() {
-      return new PlayInfoEntity(this);
-    }
-
-    /// <summary>Field number for the "uuid" field.</summary>
-    public const int UuidFieldNumber = 1;
-    private string uuid_ = "";
-    /// <summary>
-    ///id  key of the entity
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Uuid {
-      get { return uuid_; }
-      set {
-        uuid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "username" field.</summary>
-    public const int UsernameFieldNumber = 2;
-    private string username_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Username {
-      get { return username_; }
-      set {
-        username_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "password" field.</summary>
-    public const int PasswordFieldNumber = 3;
-    private string password_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Password {
-      get { return password_; }
-      set {
-        password_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "create_date_time" field.</summary>
-    public const int CreateDateTimeFieldNumber = 4;
-    private long createDateTime_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long CreateDateTime {
-      get { return createDateTime_; }
-      set {
-        createDateTime_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "login_count" field.</summary>
-    public const int LoginCountFieldNumber = 5;
-    private int loginCount_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int LoginCount {
-      get { return loginCount_; }
-      set {
-        loginCount_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "last_login_date_time" field.</summary>
-    public const int LastLoginDateTimeFieldNumber = 7;
-    private long lastLoginDateTime_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long LastLoginDateTime {
-      get { return lastLoginDateTime_; }
-      set {
-        lastLoginDateTime_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "server_id" field.</summary>
-    public const int ServerIdFieldNumber = 8;
-    private int serverId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ServerId {
-      get { return serverId_; }
-      set {
-        serverId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as PlayInfoEntity);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(PlayInfoEntity other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Uuid != other.Uuid) return false;
-      if (Username != other.Username) return false;
-      if (Password != other.Password) return false;
-      if (CreateDateTime != other.CreateDateTime) return false;
-      if (LoginCount != other.LoginCount) return false;
-      if (LastLoginDateTime != other.LastLoginDateTime) return false;
-      if (ServerId != other.ServerId) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Uuid.Length != 0) hash ^= Uuid.GetHashCode();
-      if (Username.Length != 0) hash ^= Username.GetHashCode();
-      if (Password.Length != 0) hash ^= Password.GetHashCode();
-      if (CreateDateTime != 0L) hash ^= CreateDateTime.GetHashCode();
-      if (LoginCount != 0) hash ^= LoginCount.GetHashCode();
-      if (LastLoginDateTime != 0L) hash ^= LastLoginDateTime.GetHashCode();
-      if (ServerId != 0) hash ^= ServerId.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Uuid.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Uuid);
-      }
-      if (Username.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Username);
-      }
-      if (Password.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Password);
-      }
-      if (CreateDateTime != 0L) {
-        output.WriteRawTag(32);
-        output.WriteInt64(CreateDateTime);
-      }
-      if (LoginCount != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(LoginCount);
-      }
-      if (LastLoginDateTime != 0L) {
-        output.WriteRawTag(56);
-        output.WriteInt64(LastLoginDateTime);
-      }
-      if (ServerId != 0) {
-        output.WriteRawTag(64);
-        output.WriteInt32(ServerId);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Uuid.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uuid);
-      }
-      if (Username.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
-      }
-      if (Password.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Password);
-      }
-      if (CreateDateTime != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(CreateDateTime);
-      }
-      if (LoginCount != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoginCount);
-      }
-      if (LastLoginDateTime != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(LastLoginDateTime);
-      }
-      if (ServerId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ServerId);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(PlayInfoEntity other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Uuid.Length != 0) {
-        Uuid = other.Uuid;
-      }
-      if (other.Username.Length != 0) {
-        Username = other.Username;
-      }
-      if (other.Password.Length != 0) {
-        Password = other.Password;
-      }
-      if (other.CreateDateTime != 0L) {
-        CreateDateTime = other.CreateDateTime;
-      }
-      if (other.LoginCount != 0) {
-        LoginCount = other.LoginCount;
-      }
-      if (other.LastLoginDateTime != 0L) {
-        LastLoginDateTime = other.LastLoginDateTime;
-      }
-      if (other.ServerId != 0) {
-        ServerId = other.ServerId;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            Uuid = input.ReadString();
-            break;
-          }
-          case 18: {
-            Username = input.ReadString();
-            break;
-          }
-          case 26: {
-            Password = input.ReadString();
-            break;
-          }
-          case 32: {
-            CreateDateTime = input.ReadInt64();
-            break;
-          }
-          case 40: {
-            LoginCount = input.ReadInt32();
-            break;
-          }
-          case 56: {
-            LastLoginDateTime = input.ReadInt64();
-            break;
-          }
-          case 64: {
-            ServerId = input.ReadInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class ItemNum : pb::IMessage<ItemNum> {
     private static readonly pb::MessageParser<ItemNum> _parser = new pb::MessageParser<ItemNum>(() => new ItemNum());
     private pb::UnknownFieldSet _unknownFields;
@@ -388,7 +67,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -632,7 +311,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -866,214 +545,6 @@ namespace Proto.MongoDB {
   }
 
   /// <summary>
-  ///game
-  /// </summary>
-  public sealed partial class ItemPackageEntity : pb::IMessage<ItemPackageEntity> {
-    private static readonly pb::MessageParser<ItemPackageEntity> _parser = new pb::MessageParser<ItemPackageEntity>(() => new ItemPackageEntity());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ItemPackageEntity> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[3]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ItemPackageEntity() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ItemPackageEntity(ItemPackageEntity other) : this() {
-      items_ = other.items_.Clone();
-      uuid_ = other.uuid_;
-      playerUuid_ = other.playerUuid_;
-      packageSize_ = other.packageSize_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ItemPackageEntity Clone() {
-      return new ItemPackageEntity(this);
-    }
-
-    /// <summary>Field number for the "items" field.</summary>
-    public const int ItemsFieldNumber = 1;
-    private static readonly pbc::MapField<string, global::Proto.MongoDB.ItemNum>.Codec _map_items_codec
-        = new pbc::MapField<string, global::Proto.MongoDB.ItemNum>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Proto.MongoDB.ItemNum.Parser), 10);
-    private readonly pbc::MapField<string, global::Proto.MongoDB.ItemNum> items_ = new pbc::MapField<string, global::Proto.MongoDB.ItemNum>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<string, global::Proto.MongoDB.ItemNum> Items {
-      get { return items_; }
-    }
-
-    /// <summary>Field number for the "uuid" field.</summary>
-    public const int UuidFieldNumber = 2;
-    private string uuid_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Uuid {
-      get { return uuid_; }
-      set {
-        uuid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "player_uuid" field.</summary>
-    public const int PlayerUuidFieldNumber = 3;
-    private string playerUuid_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string PlayerUuid {
-      get { return playerUuid_; }
-      set {
-        playerUuid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "package_size" field.</summary>
-    public const int PackageSizeFieldNumber = 4;
-    private int packageSize_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PackageSize {
-      get { return packageSize_; }
-      set {
-        packageSize_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ItemPackageEntity);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ItemPackageEntity other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (!Items.Equals(other.Items)) return false;
-      if (Uuid != other.Uuid) return false;
-      if (PlayerUuid != other.PlayerUuid) return false;
-      if (PackageSize != other.PackageSize) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= Items.GetHashCode();
-      if (Uuid.Length != 0) hash ^= Uuid.GetHashCode();
-      if (PlayerUuid.Length != 0) hash ^= PlayerUuid.GetHashCode();
-      if (PackageSize != 0) hash ^= PackageSize.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      items_.WriteTo(output, _map_items_codec);
-      if (Uuid.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Uuid);
-      }
-      if (PlayerUuid.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(PlayerUuid);
-      }
-      if (PackageSize != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(PackageSize);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += items_.CalculateSize(_map_items_codec);
-      if (Uuid.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uuid);
-      }
-      if (PlayerUuid.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerUuid);
-      }
-      if (PackageSize != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PackageSize);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ItemPackageEntity other) {
-      if (other == null) {
-        return;
-      }
-      items_.Add(other.items_);
-      if (other.Uuid.Length != 0) {
-        Uuid = other.Uuid;
-      }
-      if (other.PlayerUuid.Length != 0) {
-        PlayerUuid = other.PlayerUuid;
-      }
-      if (other.PackageSize != 0) {
-        PackageSize = other.PackageSize;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            items_.AddEntriesFrom(input, _map_items_codec);
-            break;
-          }
-          case 18: {
-            Uuid = input.ReadString();
-            break;
-          }
-          case 26: {
-            PlayerUuid = input.ReadString();
-            break;
-          }
-          case 32: {
-            PackageSize = input.ReadInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
   ///hero
   /// </summary>
   public sealed partial class HeroMagic : pb::IMessage<HeroMagic> {
@@ -1084,7 +555,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1234,326 +705,6 @@ namespace Proto.MongoDB {
   }
 
   /// <summary>
-  ///hero
-  /// </summary>
-  public sealed partial class GameHeroEntity : pb::IMessage<GameHeroEntity> {
-    private static readonly pb::MessageParser<GameHeroEntity> _parser = new pb::MessageParser<GameHeroEntity>(() => new GameHeroEntity());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameHeroEntity> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[5]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameHeroEntity() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameHeroEntity(GameHeroEntity other) : this() {
-      uuid_ = other.uuid_;
-      playerUuid_ = other.playerUuid_;
-      exp_ = other.exp_;
-      level_ = other.level_;
-      magics_ = other.magics_.Clone();
-      equips_ = other.equips_.Clone();
-      heroName_ = other.heroName_;
-      heroId_ = other.heroId_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameHeroEntity Clone() {
-      return new GameHeroEntity(this);
-    }
-
-    /// <summary>Field number for the "uuid" field.</summary>
-    public const int UuidFieldNumber = 1;
-    private string uuid_ = "";
-    /// <summary>
-    ///hero uuid
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Uuid {
-      get { return uuid_; }
-      set {
-        uuid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "player_uuid" field.</summary>
-    public const int PlayerUuidFieldNumber = 2;
-    private string playerUuid_ = "";
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string PlayerUuid {
-      get { return playerUuid_; }
-      set {
-        playerUuid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "exp" field.</summary>
-    public const int ExpFieldNumber = 3;
-    private int exp_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Exp {
-      get { return exp_; }
-      set {
-        exp_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "level" field.</summary>
-    public const int LevelFieldNumber = 4;
-    private int level_;
-    /// <summary>
-    ///level
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Level {
-      get { return level_; }
-      set {
-        level_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "magics" field.</summary>
-    public const int MagicsFieldNumber = 5;
-    private static readonly pbc::MapField<int, global::Proto.MongoDB.HeroMagic>.Codec _map_magics_codec
-        = new pbc::MapField<int, global::Proto.MongoDB.HeroMagic>.Codec(pb::FieldCodec.ForInt32(8), pb::FieldCodec.ForMessage(18, global::Proto.MongoDB.HeroMagic.Parser), 42);
-    private readonly pbc::MapField<int, global::Proto.MongoDB.HeroMagic> magics_ = new pbc::MapField<int, global::Proto.MongoDB.HeroMagic>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::Proto.MongoDB.HeroMagic> Magics {
-      get { return magics_; }
-    }
-
-    /// <summary>Field number for the "equips" field.</summary>
-    public const int EquipsFieldNumber = 6;
-    private static readonly pbc::MapField<int, string>.Codec _map_equips_codec
-        = new pbc::MapField<int, string>.Codec(pb::FieldCodec.ForInt32(8), pb::FieldCodec.ForString(18), 50);
-    private readonly pbc::MapField<int, string> equips_ = new pbc::MapField<int, string>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, string> Equips {
-      get { return equips_; }
-    }
-
-    /// <summary>Field number for the "hero_name" field.</summary>
-    public const int HeroNameFieldNumber = 7;
-    private string heroName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string HeroName {
-      get { return heroName_; }
-      set {
-        heroName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "hero_id" field.</summary>
-    public const int HeroIdFieldNumber = 8;
-    private int heroId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int HeroId {
-      get { return heroId_; }
-      set {
-        heroId_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as GameHeroEntity);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameHeroEntity other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Uuid != other.Uuid) return false;
-      if (PlayerUuid != other.PlayerUuid) return false;
-      if (Exp != other.Exp) return false;
-      if (Level != other.Level) return false;
-      if (!Magics.Equals(other.Magics)) return false;
-      if (!Equips.Equals(other.Equips)) return false;
-      if (HeroName != other.HeroName) return false;
-      if (HeroId != other.HeroId) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Uuid.Length != 0) hash ^= Uuid.GetHashCode();
-      if (PlayerUuid.Length != 0) hash ^= PlayerUuid.GetHashCode();
-      if (Exp != 0) hash ^= Exp.GetHashCode();
-      if (Level != 0) hash ^= Level.GetHashCode();
-      hash ^= Magics.GetHashCode();
-      hash ^= Equips.GetHashCode();
-      if (HeroName.Length != 0) hash ^= HeroName.GetHashCode();
-      if (HeroId != 0) hash ^= HeroId.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Uuid.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Uuid);
-      }
-      if (PlayerUuid.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(PlayerUuid);
-      }
-      if (Exp != 0) {
-        output.WriteRawTag(24);
-        output.WriteInt32(Exp);
-      }
-      if (Level != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(Level);
-      }
-      magics_.WriteTo(output, _map_magics_codec);
-      equips_.WriteTo(output, _map_equips_codec);
-      if (HeroName.Length != 0) {
-        output.WriteRawTag(58);
-        output.WriteString(HeroName);
-      }
-      if (HeroId != 0) {
-        output.WriteRawTag(64);
-        output.WriteInt32(HeroId);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Uuid.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uuid);
-      }
-      if (PlayerUuid.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerUuid);
-      }
-      if (Exp != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Exp);
-      }
-      if (Level != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Level);
-      }
-      size += magics_.CalculateSize(_map_magics_codec);
-      size += equips_.CalculateSize(_map_equips_codec);
-      if (HeroName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(HeroName);
-      }
-      if (HeroId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(HeroId);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameHeroEntity other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Uuid.Length != 0) {
-        Uuid = other.Uuid;
-      }
-      if (other.PlayerUuid.Length != 0) {
-        PlayerUuid = other.PlayerUuid;
-      }
-      if (other.Exp != 0) {
-        Exp = other.Exp;
-      }
-      if (other.Level != 0) {
-        Level = other.Level;
-      }
-      magics_.Add(other.magics_);
-      equips_.Add(other.equips_);
-      if (other.HeroName.Length != 0) {
-        HeroName = other.HeroName;
-      }
-      if (other.HeroId != 0) {
-        HeroId = other.HeroId;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            Uuid = input.ReadString();
-            break;
-          }
-          case 18: {
-            PlayerUuid = input.ReadString();
-            break;
-          }
-          case 24: {
-            Exp = input.ReadInt32();
-            break;
-          }
-          case 32: {
-            Level = input.ReadInt32();
-            break;
-          }
-          case 42: {
-            magics_.AddEntriesFrom(input, _map_magics_codec);
-            break;
-          }
-          case 50: {
-            equips_.AddEntriesFrom(input, _map_equips_codec);
-            break;
-          }
-          case 58: {
-            HeroName = input.ReadString();
-            break;
-          }
-          case 64: {
-            HeroId = input.ReadInt32();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  /// <summary>
   ///游戏服务器信息
   /// </summary>
   public sealed partial class GateServerInfoEntity : pb::IMessage<GateServerInfoEntity> {
@@ -1564,7 +715,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1941,7 +1092,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2216,7 +1367,7 @@ namespace Proto.MongoDB {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Proto.MongoDB.MongoDBReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2235,7 +1386,7 @@ namespace Proto.MongoDB {
     public PlayerBattleServerEntity(PlayerBattleServerEntity other) : this() {
       uuid_ = other.uuid_;
       serverId_ = other.serverId_;
-      joinTime_ = other.joinTime_;
+      joinTime_ = other.joinTime_ != null ? other.joinTime_.Clone() : null;
       levelId_ = other.levelId_;
       clientId_ = other.clientId_;
       host_ = other.host_;
@@ -2273,9 +1424,9 @@ namespace Proto.MongoDB {
 
     /// <summary>Field number for the "join_time" field.</summary>
     public const int JoinTimeFieldNumber = 3;
-    private long joinTime_;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp joinTime_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long JoinTime {
+    public global::Google.Protobuf.WellKnownTypes.Timestamp JoinTime {
       get { return joinTime_; }
       set {
         joinTime_ = value;
@@ -2355,7 +1506,7 @@ namespace Proto.MongoDB {
       }
       if (Uuid != other.Uuid) return false;
       if (ServerId != other.ServerId) return false;
-      if (JoinTime != other.JoinTime) return false;
+      if (!object.Equals(JoinTime, other.JoinTime)) return false;
       if (LevelId != other.LevelId) return false;
       if (ClientId != other.ClientId) return false;
       if (Host != other.Host) return false;
@@ -2369,7 +1520,7 @@ namespace Proto.MongoDB {
       int hash = 1;
       if (Uuid.Length != 0) hash ^= Uuid.GetHashCode();
       if (ServerId != 0) hash ^= ServerId.GetHashCode();
-      if (JoinTime != 0L) hash ^= JoinTime.GetHashCode();
+      if (joinTime_ != null) hash ^= JoinTime.GetHashCode();
       if (LevelId != 0) hash ^= LevelId.GetHashCode();
       if (ClientId != 0) hash ^= ClientId.GetHashCode();
       if (Host.Length != 0) hash ^= Host.GetHashCode();
@@ -2396,9 +1547,9 @@ namespace Proto.MongoDB {
         output.WriteRawTag(16);
         output.WriteInt32(ServerId);
       }
-      if (JoinTime != 0L) {
-        output.WriteRawTag(24);
-        output.WriteInt64(JoinTime);
+      if (joinTime_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(JoinTime);
       }
       if (LevelId != 0) {
         output.WriteRawTag(32);
@@ -2434,8 +1585,8 @@ namespace Proto.MongoDB {
       if (ServerId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ServerId);
       }
-      if (JoinTime != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(JoinTime);
+      if (joinTime_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JoinTime);
       }
       if (LevelId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LevelId);
@@ -2469,8 +1620,11 @@ namespace Proto.MongoDB {
       if (other.ServerId != 0) {
         ServerId = other.ServerId;
       }
-      if (other.JoinTime != 0L) {
-        JoinTime = other.JoinTime;
+      if (other.joinTime_ != null) {
+        if (joinTime_ == null) {
+          JoinTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        JoinTime.MergeFrom(other.JoinTime);
       }
       if (other.LevelId != 0) {
         LevelId = other.LevelId;
@@ -2506,8 +1660,11 @@ namespace Proto.MongoDB {
             ServerId = input.ReadInt32();
             break;
           }
-          case 24: {
-            JoinTime = input.ReadInt64();
+          case 26: {
+            if (joinTime_ == null) {
+              JoinTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(JoinTime);
             break;
           }
           case 32: {

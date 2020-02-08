@@ -28,15 +28,45 @@ namespace GameLogic.Game
             //HeroPropertyType.Agility
 		}
 
+        /// <summary>
+        /// 力量增加血量
+        /// </summary>
         public static float FORCE_HP = 10;
+        /// <summary>
+        /// 智力增加Mp
+        /// </summary>
         public static float KNOWLEGDE_MP = 10;
+        /// <summary>
+        /// 敏捷增加防御
+        /// </summary>
         public static float AGILITY_DEFANCE = 1;
+        /// <summary>
+        /// 敏捷减少普攻间隔时间 ms
+        /// </summary>
         public static float AGILITY_SUBWAITTIME = 2;//每点敏捷降低攻击间隔时间毫秒
+        /// <summary>
+        /// 敏捷增加移动速度
+        /// </summary>
         public static float AGILITY_ADDSPEED = 0.02f;//0.02米
+        /// <summary>
+        /// 攻击最小间隔
+        /// </summary>
         public static float ATTACK_MIN_WAIT = 100;//攻击最低间隔200毫秒
+        /// <summary>
+        /// 力量增加回血速度
+        /// </summary>
         public static float FORCE_CURE_HP =0.1f; //每点力量没秒增加血量
+        /// <summary>
+        /// 智力增加恢复MP
+        /// </summary>
         public static float KNOWLEDGE_CURE_MP = 0.1f;//每点智力增加魔法
+        /// <summary>
+        /// 最快的移动速度
+        /// </summary>
         public static float MAX_SPEED = 5.4f;//最大速度
+        /// <summary>
+        /// 伤害减免参数
+        /// </summary>
         public static float DEFANCE_RATE = 0.006f;//伤害减免参数
 		/// <summary>
 		/// 取中间数

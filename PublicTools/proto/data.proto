@@ -66,7 +66,7 @@ message PlayerItem
 //玩家背包
 message PlayerPackage
 {
-	repeated PlayerItem Items=1;//道具列表
+	map<string, PlayerItem> Items=1;//道具列表
 	int32 MaxSize=2;//背包上限
 }
 

@@ -165,12 +165,19 @@ namespace GameLogic.Game.Perceptions
 
         public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character)
         {
-            var comp = AITreeParse.CreateFrom(ai);
-            //var state = State as BattleState;
-            var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
-            character.SetAITree(root);
-            character.SetControllor(AIControllor);
-            return root;
+            try
+            {
+                var comp = AITreeParse.CreateFrom(ai);
+                //var state = State as BattleState;
+                var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
+                character.SetAITree(root);
+                character.SetControllor(AIControllor);
+                return root;
+            }
+            catch(Exception ex) {
+                Debug.LogException(ex);
+                return null;
+            }
         }
 
       

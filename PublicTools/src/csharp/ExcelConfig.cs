@@ -409,6 +409,51 @@ namespace EConfig
     }
 
     /// <summary>
+    /// 游戏常量表
+    /// </summary>
+    [ConfigFile("ConstantValue.json","ConstantValue")]
+    [global::System.Serializable]
+    public class ConstantValue:JSONConfigBase    {
+        
+        /// <summary>
+        /// 用户初始化钻石
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int PLAYER_COIN { set; get; }
+        
+        /// <summary>
+        /// 初始化金币
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int PLAYER_GOLD { set; get; }
+        
+        /// <summary>
+        /// 初始化数据 
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int PACKAGE_SIZE { set; get; }
+        
+        /// <summary>
+        /// 购买消耗
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int PACKAGE_BUY_COST { set; get; }
+        
+        /// <summary>
+        /// 购买消耗增容量
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int PACKAGE_BUY_SIZE { set; get; }
+        
+        /// <summary>
+        /// 购买消耗增容量
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int PACKAGE_SIZE_LIMIT { set; get; }
+
+    }
+
+    /// <summary>
     /// 英雄升级经验表
     /// </summary>
     [ConfigFile("CharacterLevelUpData.json","CharacterLevelUpData")]

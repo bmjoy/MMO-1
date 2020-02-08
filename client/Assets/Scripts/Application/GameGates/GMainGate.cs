@@ -35,30 +35,18 @@ public class GMainGate:UGate
 
     public void UpdateItem(IList<PlayerItem> diff)
     {
-
-        var list = new List<string>();
         foreach (var i in diff)
         {
-            foreach (var p in package.Items)
+            if (package.Items.TryGetValue(i.GUID, out PlayerItem p))
             {
-                if (p.GUID == i.GUID)
+                p.Num += i.Num;
+                if (p.Num <= 0)
                 {
-                    p.Num += i.Num;
-                    if (p.Num <= 0)
-                    {
-                        list.Add(p.GUID);
-                    }
+                    package.Items.Remove(i.GUID);
                 }
+
             }
         }
-
-        foreach (var i in list)
-        {
-            var item = package.Items.FirstOrDefault(t => t.GUID == i);
-            if (item == null) continue;
-            package.Items.Remove(item);
-        }
-       
         UUIManager.S.UpdateUIData();
     }
 
@@ -67,6 +55,7 @@ public class GMainGate:UGate
 
         if (characterView)
         {
+            if (characterView.ConfigID == heroID) return characterView;
             characterView.DestorySelf(0);
         }
 
@@ -145,11 +134,7 @@ public class GMainGate:UGate
 
     private void ShowPlayer(G2C_Login result)
     {
-        //Result = result;
-        Coin = result.Coin;
-        Gold = result.Gold;
-        hero = result.Hero;
-        // package = result.Package;
+
         UUIManager.Singleton.ShowMask(false);
 
         if (result.HavePlayer)
@@ -166,9 +151,7 @@ public class GMainGate:UGate
 
     public void ShowMain()
     {
-        var ui = UUIManager.Singleton.CreateWindow<UUIMain>();
-        ui.ShowWindow();
-        //ReCreateHero();
+        UUIManager.Singleton.CreateWindow<UUIMain>().ShowWindow() ;
     }
 
     protected override void ExitGate()

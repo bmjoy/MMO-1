@@ -21,14 +21,14 @@ namespace MongoTool
 
         public IMongoDatabase Data { set; get; }
 
-        public IMongoCollection<PlayInfoEntity> Account { private set; get; }
+        public IMongoCollection<AccountEntity> Account { private set; get; }
         public IMongoCollection<GateServerInfoEntity> GateServer { private set; get; }
         public IMongoCollection<PlayerBattleServerEntity> BattleServer { private set; get; }
         public IMongoCollection<UserSessionInfoEntity> Session { private set; get; }
 
         static DataBase()
         {
-            BsonClassMap.RegisterClassMap<PlayInfoEntity>(
+            BsonClassMap.RegisterClassMap<AccountEntity>(
             (cm) =>
             {
                 cm.AutoMap();
@@ -59,7 +59,7 @@ namespace MongoTool
         {
             Client = new MongoClient(connectString);
             Data = Client.GetDatabase(db);
-            Account = Data.GetCollection<PlayInfoEntity>(ACCOUNT);
+            Account = Data.GetCollection<AccountEntity>(ACCOUNT);
             GateServer = Data.GetCollection<GateServerInfoEntity>(GATE_SERVER);
             Session = Data.GetCollection<UserSessionInfoEntity>(SESSION);
             BattleServer = Data.GetCollection<PlayerBattleServerEntity>(BATTLE_SERVER);

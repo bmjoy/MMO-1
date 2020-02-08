@@ -3,12 +3,13 @@ using EConfig;
 using ExcelConfig;
 using Proto;
 using Proto.MongoDB;
+using static GateServer.DataBase;
 
 namespace GateServer
 {
     public static class ProtoExtends
     {
-        public static DHero ToDhero(this GameHeroEntity entity, ItemPackageEntity package)
+        public static DHero ToDhero(this GameHeroEntity entity, GamePackageEntity package)
         {
             var h = new DHero
             {
@@ -42,19 +43,22 @@ namespace GateServer
             return h;
         }
 
-        public static PlayerPackage ToPackage(this ItemPackageEntity entity)
+        public static PlayerPackage ToPackage(this GamePackageEntity entity)
         {
             var p = new PlayerPackage { MaxSize = entity.PackageSize };
-            foreach (var i in entity.Items)
+            if (entity.Items != null)
             {
-                p.Items.Add(new PlayerItem
+                foreach (var i in entity.Items)
                 {
-                    GUID = i.Key,
-                    ItemID = i.Value.Id,
-                    Locked = i.Value.IsLock,
-                    Num = i.Value.Num,
-                    Level = i.Value.Level
-                });
+                    p.Items.Add(i.Key,new PlayerItem
+                    {
+                        GUID = i.Key,
+                        ItemID = i.Value.Id,
+                        Locked = i.Value.IsLock,
+                        Num = i.Value.Num,
+                        Level = i.Value.Level
+                    });
+                }
             }
 
             return p;
