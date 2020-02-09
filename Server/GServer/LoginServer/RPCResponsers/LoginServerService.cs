@@ -68,6 +68,12 @@ namespace RPCResponsers
             var g_filter = Builders<GateServerInfoEntity>.Filter.Eq(t => t.ServerId, user.ServerID);
             var gate = DataBase.S.GateServer.Find(g_filter).SingleOrDefault();
             if (gate == null)  return new L2C_Login { Code = ErrorCode.NofoundServerId };
+
+            var gateServer = Appliaction.Current.GetServerConnectByClientID(gate.ServerId);
+            gateServer
+                .CreateTask(new Task_L2G_ExitUser { AccountId = user.Uuid })
+                .Send();
+
             var session = SaveSession(user.Uuid, user.ServerID);
             return new L2C_Login
             {

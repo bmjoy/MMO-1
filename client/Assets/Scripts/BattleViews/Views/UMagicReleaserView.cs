@@ -24,8 +24,8 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
         var createNotify = new Notify_CreateReleaser
         {
             Index = Index,
-            ReleaserIndex = CharacterTarget.Index,
-            TargetIndex = CharacterReleaser.Index,
+            ReleaserIndex = CharacterReleaser.Index,
+            TargetIndex = CharacterTarget.Index,
             MagicKey = Key
         };
         return createNotify;

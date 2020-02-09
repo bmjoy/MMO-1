@@ -107,7 +107,18 @@ public class UCharacterView : UElementView,IBattleCharacter
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
-    public float Speed { get { return Agent.speed; } set { Agent.speed = value; } }
+    public float Speed
+    {
+        get
+        {
+            if (!Agent) return 0;
+            return Agent.speed;
+        }
+        set
+        {
+            if (!Agent) return; Agent.speed = value;
+        }
+    }
     public string Name { get; internal set; }
     private UnityEngine.AI.NavMeshAgent Agent;
     public string lastMotion =string.Empty;
@@ -122,6 +133,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public Transform GetBoneByName(string name)
     {
+        if (!transform) return null;
         if (bones.TryGetValue(name, out Transform bone))
         {
             return bone;
@@ -241,7 +253,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
     {
-        TryToSetPosition(pos.ToUV3());
+        this.Agent.Warp(pos.ToUV3());
         CreateNotify(new Notify_CharacterSetPosition { Index = Index, Position = pos });
     }
 
@@ -286,9 +298,16 @@ public class UCharacterView : UElementView,IBattleCharacter
     }
 
 
-    void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target)
+    void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
-        CreateNotify(new Notify_CharacterMoveTo { Index = Index, Position = position, Target = target });
+        CreateNotify(new Notify_CharacterMoveTo
+        {
+            Index = Index,
+            Position = position,
+            Target = target,
+            StopDis = stopDis
+        });
+
         if (!Agent || !Agent.enabled)
             return;
         IsStop = false;
@@ -305,12 +324,12 @@ public class UCharacterView : UElementView,IBattleCharacter
             return;
         }
 
-
-        if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f)
+        if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f+stopDis)
         {
             StopMove();
             return;
         }
+        this.Agent.stoppingDistance = stopDis;
         this.Agent.SetDestination(targetPos.Value);
     }
 
@@ -318,12 +337,15 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         get
         {
+            if (MoveForward.HasValue) return true;
+            if (!this.transform) return false;
             return targetPos.HasValue && Vector3.Distance(targetPos.Value, this.transform.position) > 0.2f;
         }
     }
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
+        if (!transform) return;
         if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.1f)
         {
             transform.position = pos.ToUV3();
@@ -353,6 +375,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetPriorityMove (float priorityMove)
     {
+        if (!Agent) return;
         Agent.avoidancePriority = (int)priorityMove;
         CreateNotify(new Notify_CharacterPriorityMove { Index = Index, PriorityMove = priorityMove });
     }

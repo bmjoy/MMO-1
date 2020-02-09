@@ -17,11 +17,15 @@ namespace GameLogic.Game.Elements
 
         private readonly Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
-        public List<CharacterMagicData> Magics { private set; get; }
+        public Dictionary<int,CharacterMagicData> Magics { private set; get; }
         public string AcccountUuid { private set; get; }
+
+        public int AttackCount { private set; get; }
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
+        public UVector3 BronPosition { private set; get; }
+
         public int MaxHP
         {
             get
@@ -89,7 +93,8 @@ namespace GameLogic.Game.Elements
             }
             set
             {
-                if (!View?.Transform) return;
+                var tart = View?.Transform;
+                if (!tart) return;
                 View.SetPosition(value.ToPV3());
             }
         }
@@ -102,6 +107,9 @@ namespace GameLogic.Game.Elements
                 return t.forward;
             }
         }
+
+        public bool IsMoving { get { return View.IsMoving; } }
+
         //property
         public ComplexValue this[P type]
         {
@@ -118,7 +126,12 @@ namespace GameLogic.Game.Elements
             AcccountUuid = account_uuid;
 			HP = 0;
 			ConfigID = configID;
-            Magics = magics;
+            Magics = new Dictionary<int, CharacterMagicData>();
+            foreach (var i in magics)
+            {
+                if (Magics.ContainsKey(i.ID)) continue;
+                Magics.Add(i.ID, i);
+            }
             var enums = Enum.GetValues(typeof(P));
             foreach (var i in enums)
             {
@@ -142,19 +155,32 @@ namespace GameLogic.Game.Elements
                      
                 }
             };
+            BronPosition = Position;
 		}
+
+        public bool AddMagic(CharacterMagicData data)
+        {
+            if (Magics.ContainsKey(data.ID)) return false;
+            Magics.Add(data.ID, data);
+            return true;
+        }
+
+        public bool RemoveMaic(int id)
+        {
+           return  Magics.Remove(id);
+        }
 
         internal void PlayMotion(string motionName)
         {
             View.PlayMotion(motionName);
         }
 
-        public void MoveTo(UnityEngine.Vector3 target)
+        public void MoveTo(UVector3 target,float stopDis =0f)
         {
-            View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3());
+            View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
         }
 
-        public void MoveForward(UnityEngine.Vector3 forward)
+        public void MoveForward(UVector3 forward)
         {
             if (forward.magnitude > 0.1f)
             {
@@ -164,12 +190,11 @@ namespace GameLogic.Game.Elements
                 StopMove();
             }
         }
+
         public void StopMove()
         {
             View.StopMove(Position.ToPV3());
         }
-
-       
 
 		public bool SubHP(int hp)
 		{
@@ -256,11 +281,10 @@ namespace GameLogic.Game.Elements
 
         public CharacterMagicData GetMagicById(int id)
         {
-            foreach (var i in Magics)
-            {
-                if (i.ID == id) return i;
-            }
-            return null;
+
+            Magics.TryGetValue(id, out CharacterMagicData datat);
+
+            return datat;
         }
 
 		public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
@@ -313,6 +337,16 @@ namespace GameLogic.Game.Elements
         public void Reset()
         {
             Init();
+        }
+
+        public void IncreaseAttackCount()
+        {
+            AttackCount++;
+        }
+
+        public void ResetAttackCount()
+        {
+            AttackCount = 0;
         }
     }
 }

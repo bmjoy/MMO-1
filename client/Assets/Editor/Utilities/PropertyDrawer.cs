@@ -4,14 +4,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
 using Layout.EditorAttributes;
-using EngineCore;
 using Object = UnityEngine.Object;
-using EventType = UnityEngine.EventType;
 using Layout.LayoutElements;
 using System.IO;
 using Layout;
 using Layout.LayoutEffects;
-using System.Linq;
 
 public class DrawerHandlerAttribute:Attribute
 {
@@ -67,12 +64,12 @@ public class PropertyDrawer
 
         if(!string.IsNullOrEmpty(key))
         {
-            object last;
-            if(_dic.TryGetValue(key,out last))
+            if (_dic.TryGetValue(key, out object last))
             {
                 _dic[key] = obj;
             }
-            else {
+            else
+            {
                 _dic.Add(key, obj);
             }
 
@@ -144,7 +141,36 @@ public class PropertyDrawer
 			var v = (Layout.Vector3)field.GetValue (obj);
 			var value = EditorGUILayout.Vector3Field(name,new UnityEngine.Vector3 (v.x, v.y, v.z));
 			field.SetValue (obj, new Layout.Vector3 { x= value.x, y=value.y, z=value.z});
-		} else if (field.FieldType.IsEnum) {
+		}
+		else if (field.FieldType == typeof(FieldValue))
+		{
+			GUILayout.Label(name);
+            if (!(field.GetValue(obj) is FieldValue value))
+            {
+                value = 1000;
+            }
+
+            GUILayout.BeginHorizontal();
+			value.type = (FieldValue.ValueType)EditorGUILayout.EnumPopup(value.type);
+			switch (value.type)
+			{
+				case FieldValue.ValueType.Range:
+					{
+						value.min = EditorGUILayout.IntField(value.min);
+						value.max = EditorGUILayout.IntField(value.max);
+					}
+					break;
+				default:
+					{
+						value.min = EditorGUILayout.IntField(value.min);
+					}
+					break;
+			}
+			GUILayout.EndHorizontal();
+
+			field.SetValue(obj, value);
+		}
+		else if (field.FieldType.IsEnum) {
 			GUILayout.Label (name);
             var value = EditorGUILayout.EnumPopup ((Enum)field.GetValue (obj));
             field.SetValue (obj, value);
@@ -154,7 +180,8 @@ public class PropertyDrawer
 		//GUILayout.EndVertical ();
 	}
 
-	[DrawerHandlerAttribute(typeof(EditorResourcePathAttribute))]
+
+	[DrawerHandler(typeof(EditorResourcePathAttribute))]
 	public static void ResourcesSelect(object obj,FieldInfo field, string label, object attr)
 	{
 		//var eAtt = attr as EditorResourcePathAttribute;
@@ -169,7 +196,7 @@ public class PropertyDrawer
 		field.SetValue (obj, path);
 
 	}
-	[DrawerHandlerAttribute(typeof(LayoutPathAttribute))]
+	[DrawerHandler(typeof(LayoutPathAttribute))]
 	public static void LayoutPathSelect(object obj, FieldInfo field,string label, object attr)
 	{
 		var resources = "Assets/Resources/";
@@ -207,7 +234,7 @@ public class PropertyDrawer
 		//GUILayout.EndVertical ();
 	}
 
-	[DrawerHandlerAttribute(typeof(EditorEffectsAttribute))]
+	[DrawerHandler(typeof(EditorEffectsAttribute))]
 	public static void EffectGroupSelect(object obj, FieldInfo field,string label, object attr)
 	{
 		//GUILayout.BeginVertical ();
@@ -220,7 +247,7 @@ public class PropertyDrawer
 
 	private static int indexOfBone=-1;
 	//EditorBoneAttribute
-	[DrawerHandlerAttribute(typeof(EditorBoneAttribute))]
+	[DrawerHandler(typeof(EditorBoneAttribute))]
 	public static void BoneSelected(object obj, FieldInfo field,string label, object attr)
 	{
 		var boneName = (string)field.GetValue (obj);

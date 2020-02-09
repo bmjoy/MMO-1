@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>1.2</Time>
+  <Time>0.5</Time>
   <Points>
     <TimePoint>
       <GUID>ecac0d2f-6de3-4614-acc1-7be19e9aeb58</GUID>
-      <Time>0.53031677</Time>
+      <Time>0.408284038</Time>
     </TimePoint>
     <TimePoint>
       <GUID>cbf5d334-8769-4f2a-81e6-b035bb75a116</GUID>

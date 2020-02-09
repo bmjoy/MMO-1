@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Collections.Concurrent;
+using XNet.Libs.Utility;
 
 namespace XNet.Libs.Net
 {
@@ -19,6 +21,8 @@ namespace XNet.Libs.Net
 
         private volatile bool IsClose;
 		private Message _actionMessage;
+        //readonly ConcurrentQueue<Message> sendQueue = new ConcurrentQueue<Message>();
+
 
 		/// <summary>
 		/// 连接ID
@@ -100,15 +104,48 @@ namespace XNet.Libs.Net
 		/// <param name="message"></param>
 		public void SendMessage(Message message)
 		{
-			if (IsClose) return;
-			Server.SendMessage(this, message);
+			BeginSendMessage(message.ToBytes());
 		}
 
-        /// <summary>
-        /// get last action message 
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
+
+        private void OnEndSentData(IAsyncResult ar)
+		{
+			try
+			{
+				Socket.EndSend(ar);
+			}
+			catch (Exception ex)
+			{
+				HandleException(ex);
+			}
+		}
+
+
+		private bool BeginSendMessage(byte[] msg)
+		{
+			try
+			{
+				Socket.BeginSend(msg, 0, msg.Length, SocketFlags.None,
+					new AsyncCallback(OnEndSentData), this);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				HandleException(ex);
+				return false;
+			}
+		}
+
+		private void HandleException( Exception ex)
+		{
+			Server.RemoveClient(this);
+			Debuger.DebugLog(ex.ToString());
+		}
+		/// <summary>
+		/// get last action message 
+		/// </summary>
+		/// <param name="message"></param>
+		/// <returns></returns>
 		public bool TryGetActionMessage(out Message message)
 		{
 			message = _actionMessage;

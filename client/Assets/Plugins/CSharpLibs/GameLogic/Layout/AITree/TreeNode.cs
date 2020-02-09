@@ -12,25 +12,30 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeParallelSequence)),
 		XmlInclude(typeof(TreeNodeProbabilitySelector)),
 		XmlInclude(typeof(TreeNodeProbabilityNode)),
+        XmlInclude(typeof(TreeNodeLinkNode)),
+
+       
 		/*基础结束*/
 		XmlInclude(typeof(TreeNodeNegation)),
 		XmlInclude(typeof(TreeNodeRunUnitlFailure)),
 		XmlInclude(typeof(TreeNodeRunUnitlSuccess)),
 		XmlInclude(typeof(TreeNodeTick)),
 		XmlInclude(typeof(TreeNodeTickUntilSuccess)),
+        XmlInclude(typeof(TreeNodeReturnSuccss)),
 		/*装饰节点结束*/
 		XmlInclude(typeof(TreeNodeFindTarget)),
 		XmlInclude(typeof(TreeNodeWaitForSeconds)),
 		XmlInclude(typeof(TreeNodeReleaseMagic)),
 		XmlInclude(typeof(TreeNodeDistancTarget)),
-		XmlInclude(typeof(TreeNodeMoveToTarget)),
+		XmlInclude(typeof(TreeNodeMoveCloseTarget)),
 		XmlInclude(typeof(TreeNodeCompareTargets)),
 		XmlInclude(typeof(TreeNodeFarFromTarget)),
 		XmlInclude(typeof(TreeNodeSelectCanReleaseMagic)),
 
-		//XmlInclude(typeof(TreeNodeMoveCloseEnemyCamp)),
+		XmlInclude(typeof(TreeNodeMoveRandom)),
+		XmlInclude(typeof(TreeNodeMoveToBronPosition)),
 
-        XmlInclude(typeof(TreeNodeNetActionSkill)),
+		XmlInclude(typeof(TreeNodeNetActionSkill)),
         XmlInclude(typeof(TreeNodeNetActionMove)),
         XmlInclude(typeof(TreedNodeNetNomarlAttack))
 
@@ -77,17 +82,18 @@ namespace Layout.AITree
 
 		public override bool Equals(object obj)
 		{
-			var node = obj as TreeNode;
-			if (node == null) return false;
-			if (guid == node.guid) return true;
+            if (!(obj is TreeNode node)) return false;
+            if (guid == node.guid) return true;
 			return false;
 		}
 
 		public static T CreateInstance<T>() where T : TreeNode, new()
 		{
-			var node = new T();
-			node.guid = Guid.NewGuid().ToString();
-			var attrs = typeof(T).GetCustomAttributes(typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
+            var node = new T
+            {
+                guid = Guid.NewGuid().ToString()
+            };
+            var attrs = typeof(T).GetCustomAttributes(typeof(EditorAITreeNodeAttribute), false) as EditorAITreeNodeAttribute[];
 			if (attrs.Length > 0)
 			{
 				node.name = attrs[0].Name;

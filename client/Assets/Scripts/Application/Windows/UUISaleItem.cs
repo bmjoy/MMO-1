@@ -34,16 +34,14 @@ namespace Windows
                     .SendRequest(gate.Client, re,
                     r =>
                     {
-                        UApplication.S.ShowError(r.Code);
+                        //UApplication.S.ShowError(r.Code);
                         if (r.Code.IsOk())
                         {
                             HideWindow();
-                            gate.Coin = r.Coin;
-                            gate.Gold = r.Gold;
-                            gate.UpdateItem(r.Diff);
-                            //update
-
+                            UApplication.S.ShowNotify("出售成功");
                         }
+                        else
+                            UApplication.S.ShowError(r.Code);
                     });
                 });
             //Write Code here

@@ -33,6 +33,7 @@ namespace GameLogic.Game.AIBehaviorTree
             NodeRoot = nodeRoot;
         }
 
+       
         public bool GetDistanceByValueType(DistanceValueOf type, float value, out float outValue)
         {
             outValue = value;
@@ -175,9 +176,8 @@ namespace GameLogic.Game.AIBehaviorTree
 					_blackbroad.Add(key, value);
 			}
 			get {
-				object v;
-				if (_blackbroad.TryGetValue(key, out v)) return v;
-				return null;
+                if (_blackbroad.TryGetValue(key, out object v)) return v;
+                return null;
 			}
 		}
 
@@ -209,6 +209,20 @@ namespace GameLogic.Game.AIBehaviorTree
             return true;
         }
 
-	}
+        internal bool TryGetMagic(out CharacterMagicData magicData)
+        {
+            magicData = null;
+            if (!TryGet(SELECT_MAGIC_ID, out int id))
+            {
+                return false;
+            }
+
+            magicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
+            return magicData != null;
+
+        }
+
+
+    }
 }
 

@@ -20,7 +20,6 @@ namespace Windows
             public GridTableModel() { }
             public override void InitModel()
             {
-                //todo
                 this.Template.Button.onClick.AddListener(
                     () =>
                     {
@@ -113,6 +112,12 @@ namespace Windows
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
                 g.MoveDir(v);
+            });
+
+            var swipeEv = swipe.GetComponent<UIEventSwipe>();
+            swipeEv.OnSwiping.AddListener((v) => {
+                ThridPersionCameraContollor.Current.RotationX(v.y);
+                ThridPersionCameraContollor.Current.RotationY(v.x);
             });
         }
 

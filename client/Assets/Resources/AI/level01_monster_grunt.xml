@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
+  <childs>
+    <TreeNode xsi:type="TreeNodeSequence">
+      <childs>
+        <TreeNode xsi:type="TreeNodeFindTarget">
+          <childs />
+          <name>查找目标</name>
+          <guid>357f722b-cb6d-492e-a0ba-c9b6d329ceed</guid>
+          <valueOf>ViewDistance</valueOf>
+          <Distance>
+            <min>1000</min>
+            <max>1000</max>
+            <type>Fixed</type>
+          </Distance>
+          <View>
+            <min>180</min>
+            <max>360</max>
+            <type>Fixed</type>
+          </View>
+          <selectType>Nearest</selectType>
+          <filter>None</filter>
+          <useMagicConfig>false</useMagicConfig>
+          <teamType>Enemy</teamType>
+          <findNew>false</findNew>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeMoveCloseTarget">
+          <childs />
+          <name>靠近目标</name>
+          <guid>88b19bb8-c362-4c55-a1fc-27448b191b7a</guid>
+          <valueOf>Value</valueOf>
+          <distance>
+            <min>150</min>
+            <max>100</max>
+            <type>Fixed</type>
+          </distance>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeReleaseMagic">
+          <childs />
+          <name>释放技能</name>
+          <guid>29a7ca12-db9b-48d8-a71d-95773fd9d68f</guid>
+          <magicKey>level01_grunt_att</magicKey>
+          <valueOf>MagicKey</valueOf>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeWaitForSeconds">
+          <childs />
+          <name>等待时间</name>
+          <guid>ac8fc6e0-a7bd-4fa6-86f7-de814f7c0e50</guid>
+          <seconds>
+            <min>2000</min>
+            <max>3000</max>
+            <type>Range</type>
+          </seconds>
+        </TreeNode>
+      </childs>
+      <name>顺序节点</name>
+      <guid>75f51b2e-c139-4928-a2fd-1ee1caaf6cff</guid>
+    </TreeNode>
+  </childs>
+  <name>选择节点</name>
+  <guid>5d2e146e-c348-4255-a02e-a09617d77242</guid>
+</TreeNode>

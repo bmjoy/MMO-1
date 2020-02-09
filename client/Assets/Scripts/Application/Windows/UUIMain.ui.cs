@@ -21,6 +21,7 @@ namespace Windows
         protected Button bt_magic;
         protected Button bt_close;
         protected Text HeroName;
+        protected Image swipe;
 
 
 
@@ -36,6 +37,7 @@ namespace Windows
             bt_magic = FindChild<Button>("bt_magic");
             bt_close = FindChild<Button>("bt_close");
             HeroName = FindChild<Text>("HeroName");
+            swipe = FindChild<Image>("swipe");
 
 
         }

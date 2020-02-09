@@ -25,17 +25,17 @@ namespace XNet.Libs.Net
 
         private byte ReadByte()
         {
-            if (this._position >= this._length)
+            if (_position >= _length)
             {
                 return 0;
             }
-            return this._buffer[this._position++];
+            return _buffer[_position++];
         }
 
         private int ReadInt()
         {
-            int num = this._position += 4;
-            if (num > this._length)
+            int num = _position += 4;
+            if (num > _length)
             {
                 this._position = this._length;
                 return -1;
@@ -88,7 +88,7 @@ namespace XNet.Libs.Net
                 message.Flag = ReadInt();
                 message.ExtendFlag = ReadInt();
                 message.Size = ReadInt();
-                if (message.Size >= 0 || message.Size <= _length - _position)
+                if (message.Size >= 0 && message.Size <= _length - _position)
                 {
                     if(message.Size>0) message.Content = ReadBytes(message.Size);
                     Remove(message.Size + HeadLength);

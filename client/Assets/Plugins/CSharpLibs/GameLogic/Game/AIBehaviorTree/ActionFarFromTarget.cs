@@ -17,8 +17,8 @@ namespace GameLogic.Game.AIBehaviorTree
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
-			var per = root.Perception as BattlePerception;
-			var distance = Node.distance;
+			
+			var distance = Node.distance.Value/100f;
 
 
 			if (!root.GetDistanceByValueType(Node.valueOf, distance, out distance))

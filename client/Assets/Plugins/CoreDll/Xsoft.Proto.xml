@@ -304,6 +304,9 @@
         <member name="F:Proto.Notify_CharacterMoveTo.TargetFieldNumber">
              <summary>Field number for the "Target" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CharacterMoveTo.StopDisFieldNumber">
+             <summary>Field number for the "StopDis" field.</summary>
+            </member>
         <member name="F:Proto.Notify_CharacterStopMove.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
@@ -1834,12 +1837,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10052
+             10053
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10053
+             10054
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -2204,62 +2207,62 @@
             </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
-             10040
+             10041
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.CreateHero">
              <summary>
-             10041
+             10042
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BeginGame">
              <summary>
-             10042
+             10043
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
              <summary>
-             10043
+             10044
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
              <summary>
-             10044
+             10045
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.SaleItem">
              <summary>
-             10045
+             10046
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
              <summary>
-             10046
+             10047
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GMTool">
              <summary>
-             10047
+             10048
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BuyPackageSize">
              <summary>
-             10048
+             10049
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
-             10049
+             10050
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
-             10050
+             10051
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
              <summary>
-             10051
+             10052
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
@@ -2387,6 +2390,9 @@
             </member>
         <member name="F:Proto.Task_L2B_ExitUser.UserIDFieldNumber">
              <summary>Field number for the "UserID" field.</summary>
+            </member>
+        <member name="F:Proto.Task_L2G_ExitUser.AccountIdFieldNumber">
+             <summary>Field number for the "AccountId" field.</summary>
             </member>
         <member name="T:Proto.G2L_GateServerReg">
              <summary>
@@ -2651,6 +2657,11 @@
             </member>
         <member name="F:Proto.L2B_CheckSession.GateServerFieldNumber">
              <summary>Field number for the "GateServer" field.</summary>
+            </member>
+        <member name="T:Proto.LoginServerGateServerTaskServices.ExitUser">
+             <summary>
+             10040
+             </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Login">
              <summary>

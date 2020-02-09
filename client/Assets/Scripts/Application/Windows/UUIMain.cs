@@ -33,6 +33,12 @@ namespace Windows
                 UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
             });
 
+            var swipeEv = swipe.GetComponent<UIEventSwipe>();
+            swipeEv.OnSwiping.AddListener((v) => {
+                ThridPersionCameraContollor.Current.RotationX(v.y);
+                ThridPersionCameraContollor.Current.RotationY(v.x);
+            });
+
             //Write Code here
         }
         protected override void OnShow()

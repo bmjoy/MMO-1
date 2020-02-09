@@ -34,6 +34,7 @@ namespace Windows
         protected Button bt_Exit;
         protected RectTransform Text;
         protected Image Joystick_Left;
+        protected Image swipe;
 
 
         protected UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>> GridTableManager = new UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>>();
@@ -48,6 +49,7 @@ namespace Windows
             bt_Exit = FindChild<Button>("bt_Exit");
             Text = FindChild<RectTransform>("Text");
             Joystick_Left = FindChild<Image>("Joystick_Left");
+            swipe = FindChild<Image>("swipe");
 
             GridTableManager.InitFromGrid(Grid);
 

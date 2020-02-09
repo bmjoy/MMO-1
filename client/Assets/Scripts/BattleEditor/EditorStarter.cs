@@ -16,7 +16,7 @@ using Layout;
 using GameLogic.Game.States;
 using XNet.Libs.Utility;
 using Layout.AITree;
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
 
 public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 {
@@ -89,6 +89,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		curState.Init();
 		curState.Start(Now);
 		PerView.UseCache = false;
+		UUIManager.S.CreateWindow<Windows.UUIBattleEditor>().ShowWindow();
 	}
 
 	private GState curState;
@@ -164,7 +165,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		if (this.releaser == null) return;
 		if (this.releaser.AIRoot == null) return;
 		this.releaser.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
-		this.releaser.AIRoot.BreakTree();
+		//this.releaser.AIRoot.BreakTree();
 	}
 
     private bool isStarted = false;
@@ -176,9 +177,9 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 	{
 		if (!isStarted) return;
 		Tick();
-		tcamera.forward.y = -1.08f + slider;
-		tcamera.Distance = 22 - distance;
-		tcamera.rotationY = ry;
+		//tcamera.forward.y = -1.08f + slider_y;
+		//tcamera.Distance = 22 - distance;
+		//tcamera.rotationY = ry;
 
 		var midd = tcamera.lookAt;
 		if (isChanged)
@@ -192,93 +193,13 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		}
 	}
 
-	private bool isChanged = false;
+	public bool isChanged = false;
 
-	private void ReleaceReleaser(bool stay)
-	{
-		var data = ExcelToJSONConfigManager
-			.Current.GetConfigByID<CharacterData>(int.Parse(index));
-		if (data == null) return;
+	public float slider_y = 1f;
+	public float distance = -5f;
+	public float ry =0;
+	public float distanceCharacter = 8;
 
-		ReplaceRelease(data, stay, aiEnable);
-	}
-
-	private void ReplaceTarget(bool stay)
-	{
-		var data= ExcelToJSONConfigManager
-            .Current.GetConfigByID<CharacterData>(int.Parse(index));
-		if (data == null)
-			return;
-		
-		ReplaceTarget (data,stay,aiEnable);
-	}
-
-
-	private void ReleaseSkill(string key)
-	{
-		//var action = new Proto.Action_ClickSkillIndex { MagicKey = key };
-		//DoAction(action);
-	}
-
-    private string index ="1";
-
-	private float slider = 1f;
-	private float distance = -5f;
-	private float ry =0;
-	private float distanceCharacter = 10;
-
-	//public  GameObject target;
-	public bool stay = false;
-	public bool aiEnable = false;
-
-	void OnGUI()
-	{
-		slider = GUI.VerticalSlider (new Rect (10, 10, 30, 200), slider, 0, 1);
-		distance = GUI.HorizontalSlider (new Rect (50, 10, 200, 30), distance, -10, 20 );
-		ry = GUI.HorizontalSlider (new Rect (50, 35, 200, 30), ry, 0, 180 );
-		float last = distanceCharacter;
-		distanceCharacter= GUI.HorizontalSlider (new Rect (50, 70, 200, 30), distanceCharacter, -10, 20 );
-		if (last != distanceCharacter)
-			isChanged = true;
-
-        Time.timeScale = GUI.HorizontalSlider (new Rect (50, 110, 200, 30), Time.timeScale, 0.1f, 1 );
-		
-		int h = 30;
-		int w = 430;
-		var rect =new Rect(5,Screen.height-h-20,w+10,h+20);
-		GUI.Box(rect,"编辑");
-		GUI.BeginGroup(new Rect(10,Screen.height-h,w,h));
-		GUILayout.BeginVertical(GUILayout.Width(w));
-
-		GUILayout.BeginHorizontal();
-
-		index =GUILayout.TextField(index,GUILayout.Width(30));
-
-		if(GUILayout.Button("释放者"))
-		{
-			ReleaceReleaser(stay);
-		}
-		if(GUILayout.Button("目标"))
-		{
-			ReplaceTarget(stay);
-		}
-
-
-        if(GUILayout.Button("魔法"))
-        {
-            ReleaseSkill(index);
-        }
-		stay= GUILayout.Toggle(stay,"保留");
-		aiEnable = GUILayout.Toggle(aiEnable,"AI");
-
-		GUILayout.EndHorizontal();
-		GUILayout.EndVertical();
-
-
-
-		GUI.EndGroup();
-
-	}
 
 	AITreeRoot IAIRunner.RunAI(TreeNode ai)
 	{
@@ -308,4 +229,4 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		if (character.AIRoot != null) character.AIRoot.IsDebug = true;
     }
 }
-#endif
+//#endif

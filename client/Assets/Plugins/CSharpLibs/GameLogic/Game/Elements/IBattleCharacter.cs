@@ -16,8 +16,8 @@ namespace GameLogic.Game.Elements
         void LookAtTarget(int target); //target for look
         [NeedNotify(typeof(Notify_LayoutPlayMotion), "Motion")]
         void PlayMotion(string motion);//play motion
-        [NeedNotify(typeof(Notify_CharacterMoveTo), "Position", "Target")]
-        void MoveTo(Vector3 position, Vector3 target);//move to target
+        [NeedNotify(typeof(Notify_CharacterMoveTo), "Position", "Target","StopDis")]
+        void MoveTo(Vector3 position, Vector3 target,float stopDis);//move to target
         [NeedNotify(typeof(Notify_CharacterStopMove), "Position")]
         void StopMove(Proto.Vector3 pos);//stop move
         [NeedNotify(typeof(Notify_CharacterDeath))]

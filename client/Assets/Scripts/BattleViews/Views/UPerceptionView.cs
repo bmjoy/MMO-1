@@ -17,6 +17,7 @@ using System;
 using ExcelConfig;
 using EConfig;
 using UGameTools;
+using GameLogic.Game.AIBehaviorTree;
 
 public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater, IViewBase
 {
@@ -296,15 +297,18 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
       
         var form = (TargetType)fromTarget == TargetType.Releaser ? characterView : viewTarget;
+        var bone = form.GetBoneByName(fromBone);
         if (bind)
         {
-            viewRoot.transform.SetParent(form.GetBoneByName(fromBone),false);
+            if (bone) viewRoot.transform.SetParent(bone, false);
+            viewRoot.transform.RestRTS();
         }
         else
         {
-            viewRoot.transform.SetParent(this.transform, false);
-            viewRoot.transform.position = form.GetBoneByName(toBone).position;
-            viewRoot.transform.rotation = Quaternion.identity;
+            viewRoot.transform.SetParent(transform, false);
+            viewRoot.transform.RestRTS();
+            if (bone) viewRoot.transform.position = bone.position;
+
         }
 
         switch ((ParticleDestoryType)destoryType)
@@ -330,16 +334,25 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
     TreeNode IBattlePerception.GetAITree (string pathTree)
 	{
-		var xml = ResourcesManager.Singleton.LoadText (pathTree);
-		var root = XmlParser.DeSerialize<TreeNode> (xml);
-		return root;
-	}
+        return LoadTreeXml(pathTree);
+    }
 
     IBattlePerception IViewBase.Create(ITimeSimulater simulater)
     {
         return this;
     }
 
-#endregion
+    TreeNode ITreeLoader.Load(string path)
+    {
+        return LoadTreeXml(path);
+    }
+
+    private TreeNode LoadTreeXml(string pathTree)
+    {
+        var xml = ResourcesManager.Singleton.LoadText(pathTree);
+        var root = XmlParser.DeSerialize<TreeNode>(xml);
+        return root;
+    }
+    #endregion
 
 }

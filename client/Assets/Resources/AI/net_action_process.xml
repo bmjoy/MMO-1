@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
+  <childs>
+    <TreeNode xsi:type="TreeNodeNetActionMove">
+      <childs />
+      <name>处理移动输入</name>
+      <guid>185346fc-6236-437a-a5b5-c01def28711f</guid>
+    </TreeNode>
+    <TreeNode xsi:type="TreeNodeNetActionSkill">
+      <childs />
+      <name>处理释放技能输入</name>
+      <guid>f1f7c163-4a7b-4b6c-8033-b4dde3a52da9</guid>
+    </TreeNode>
+    <TreeNode xsi:type="TreedNodeNetNomarlAttack">
+      <childs />
+      <name>处理普通攻击</name>
+      <guid>2b8fa12f-9cb0-4880-8db3-376ef48be70d</guid>
+    </TreeNode>
+  </childs>
+  <name>选择节点</name>
+  <guid>5e2c7cd4-8957-4b67-a1a7-a188d8e6e3af</guid>
+</TreeNode>

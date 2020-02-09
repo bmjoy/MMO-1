@@ -144,6 +144,8 @@ public class UApplication : XSingleton<UApplication>
 
 
     public static T G<T>() where T : UGate { return S.gate as T; }
+
+   
 }
 
 

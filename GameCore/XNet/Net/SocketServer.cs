@@ -179,7 +179,7 @@ namespace XNet.Libs.Net
             RemoveClient(client);
         }
 
-        private void RemoveClient(Client client)
+        public void RemoveClient(Client client)
         {
             client.Close();
             CurrentConnectionManager.RemoveClient(client);

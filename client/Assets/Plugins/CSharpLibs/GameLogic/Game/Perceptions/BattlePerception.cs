@@ -33,6 +33,15 @@ namespace GameLogic.Game.Perceptions
             return Math.Max(0, (c1.Position - c2.Position).magnitude - 1);
         }
 
+        public static bool InviewSide(BattleCharacter ower , BattleCharacter target, float viewDistance, float angle)
+        {
+            if (Distance(ower, target) > viewDistance) return false;
+
+            var forward = target.Position - ower.Position;
+            if (angle / 2 < UVector3.Angle(forward, ower.Forward)) return false;
+            return true;
+        }
+
         public BattlePerception(GState state, IBattlePerception view) : base(state)
         {
             View = view;
@@ -163,21 +172,14 @@ namespace GameLogic.Game.Perceptions
             return ChangeCharacterAI(ai, character);
         }
 
+
         public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character)
         {
-            try
-            {
-                var comp = AITreeParse.CreateFrom(ai);
-                //var state = State as BattleState;
-                var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
-                character.SetAITree(root);
-                character.SetControllor(AIControllor);
-                return root;
-            }
-            catch(Exception ex) {
-                Debug.LogException(ex);
-                return null;
-            }
+            var comp = AITreeParse.CreateFrom(ai,View);
+            var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
+            character.SetAITree(root);
+            character.SetControllor(AIControllor);
+            return root;
         }
 
       

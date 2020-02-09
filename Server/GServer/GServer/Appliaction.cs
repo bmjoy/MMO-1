@@ -55,7 +55,7 @@ namespace GServer
         //游戏战斗服务器访问端口
         public SocketServer ServiceServer { private set; get; }
 
-        public RequestClient<TaskHandler> Client { private set; get; }
+        public RequestClient<LoginServerGateServerTaskServices> Client { private set; get; }
 
         public volatile bool IsRunning;
         #endregion
@@ -114,7 +114,7 @@ namespace GServer
                 HandlerManager = serviceHandler
             };
             ServiceServer.Start();
-            Client = new RequestClient<TaskHandler>(LoginHost, LoginPort);
+            Client = new RequestClient<LoginServerGateServerTaskServices>(LoginHost, LoginPort);
 
             Client.OnConnectCompleted = (success) =>
             {

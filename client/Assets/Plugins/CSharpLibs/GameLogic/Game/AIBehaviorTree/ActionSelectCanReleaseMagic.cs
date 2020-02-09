@@ -33,11 +33,11 @@ namespace GameLogic.Game.AIBehaviorTree
             var list = new List<CharacterMagicData>();
             foreach (var i in magics)
             {
-                if (i.ReleaseType == (int)Proto.MagicReleaseType.MrtNormalAttack)
+                if (i.Value.ReleaseType == (int)Proto.MagicReleaseType.MrtNormalAttack)
                 {
-                    if (root.Character.IsCoolDown(i.ID, root.Time, false))
+                    if (root.Character.IsCoolDown(i.Key, root.Time, false))
                     {
-                        list.Add(i);
+                        list.Add(i.Value);
                     }
                 }
             }

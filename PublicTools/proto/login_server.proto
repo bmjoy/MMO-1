@@ -46,6 +46,11 @@ message Task_L2B_ExitUser
 	string UserID=1;
 }
 
+message Task_L2G_ExitUser
+{
+	string AccountId = 1;
+}
+
 //游戏服务器注册
 message G2L_GateServerReg
 {
@@ -167,5 +172,10 @@ service LoginBattleGameServerService
 
 service LoginServerTaskServices
 {
-    rpc ExitUser(Task_L2B_ExitUser) returns(Task_L2B_ExitUser){};//2
+	rpc ExitUser(Task_L2B_ExitUser) returns(Task_L2B_ExitUser){};//2
+}
+
+service LoginServerGateServerTaskServices
+{
+	rpc  ExitUser (Task_L2G_ExitUser) returns (Task_L2G_ExitUser);//1
 }

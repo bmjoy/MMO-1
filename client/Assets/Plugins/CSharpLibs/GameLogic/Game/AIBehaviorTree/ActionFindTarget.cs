@@ -18,12 +18,13 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
-			var character = context.UserState as BattleCharacter;
-			var per = character.Controllor.Perception as BattlePerception;
 			var root = context as AITreeRoot;
+			var character =  root.Character;
+			var per = root.Perception;
 			var list = new List<BattleCharacter>();
-			var distance = Node.Distance;
+			var distance = Node.Distance/100f;
 			float getDistanceValue = 0f;
+			int view = Node.View;
 			if (!root.GetDistanceByValueType(Node.valueOf, distance, out distance))
 			{
                 getDistanceValue = -1;
@@ -32,37 +33,27 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
             getDistanceValue = distance;
 
-            //是否保留之前目标
-            if (!Node.findNew)
-            {
-                var older = root[AITreeRoot.TRAGET_INDEX];
-                if (older != null)
-                {
-                    if (per.State[(int)older] is BattleCharacter targetCharacter)
-                    {
-                        if (BattlePerception.Distance(targetCharacter, root.Character) <= distance)
-                        {
-                            yield return RunStatus.Success;
-                            yield break;
-                        }
-                    }
-                }
-            }
+			//是否保留之前目标
+			if (!Node.findNew)
+			{
+				root.TryGetTarget(out BattleCharacter targetCharacter);
+				if (targetCharacter)
+				{
+					if (BattlePerception.InviewSide(targetCharacter, root.Character, distance,view))
+					{
+						yield return RunStatus.Success;
+						yield break;
+					}
+				}
+			}
             //清除
-            root[AITreeRoot.TRAGET_INDEX] = -1L;
+            root[AITreeRoot.TRAGET_INDEX] = null;
             var type = Node.teamType;
             //处理使用魔法目标
             if (Node.useMagicConfig)
             {
-                var magicID = root[AITreeRoot.SELECT_MAGIC_ID];
-                if (magicID == null)
-                {
-                    yield return RunStatus.Failure;
-                    yield break;
-                }
-                var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>((int)magicID);
-                if (data == null)
-                {
+				if (!root.TryGetMagic(out CharacterMagicData data))
+				{ 
                     yield return RunStatus.Failure;
                     yield break;
                 }
@@ -94,16 +85,12 @@ namespace GameLogic.Game.AIBehaviorTree
                         }
                         break;
                     case TargetTeamType.All: 
-                        {
-                            //all
-                        }
                         break;
                     default:
                         return false;
 				}
 
-
-				if (BattlePerception.Distance(t, root.Character) > distance) return false;
+				if (!BattlePerception.InviewSide(t, root.Character, distance,view) )return false;
 				switch (Node.filter)
 				{
 					case TargetFilterType.Hurt:

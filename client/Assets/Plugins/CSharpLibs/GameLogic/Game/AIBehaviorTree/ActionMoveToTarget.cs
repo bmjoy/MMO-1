@@ -9,11 +9,11 @@ using UVector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	[TreeNodeParse(typeof(TreeNodeMoveToTarget))]
-	public class ActionMoveToTarget : ActionComposite<TreeNodeMoveToTarget>
+	[TreeNodeParse(typeof(TreeNodeMoveCloseTarget))]
+	public class ActionMoveToTarget : ActionComposite<TreeNodeMoveCloseTarget>
 	{
 
-		public ActionMoveToTarget(TreeNodeMoveToTarget n) : base(n) { }
+		public ActionMoveToTarget(TreeNodeMoveCloseTarget n) : base(n) { }
 
 		public override IEnumerable<RunStatus> Execute(ITreeRoot context)
 		{
@@ -25,7 +25,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float stopDistance))
+			if (!root.GetDistanceByValueType(Node.valueOf, Node.distance/100f, out float stopDistance))
 			{
 				if (context.IsDebug)
 					Attach("failure", $"nofound stop distance");

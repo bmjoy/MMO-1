@@ -1,25 +1,25 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs">
     <Files>
-      <File FileName="GServer/RPCResponser/GateBattleServerService.cs" Line="61" Column="45" />
-      <File FileName="LoginServer/RPCResponsers/LoginServerService.cs" Line="101" Column="74" />
-      <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" />
-      <File FileName="ServerUnitTest/MongTest.cs" />
-      <File FileName="../../PublicTools/toolssrc/JSON/JsonTool.cs" />
-      <File FileName="../../PublicTools/toolssrc/JSON/JsonParser.cs" />
-      <File FileName="GServer/Utility/ProtoExtends.cs" Line="12" Column="47" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="74" Column="13" />
-      <File FileName="GServer/MongoTool/DataBase.cs" Line="48" Column="79" />
-      <File FileName="GServer/Managers/UserDataManager.cs" Line="233" Column="35" />
+      <File FileName="../../GameCore/XNet/Net/SocketClient.cs" Line="1" Column="1" />
+      <File FileName="../../GameCore/XNet/Net/Client.cs" Line="137" Column="4" />
+      <File FileName="../../GameCore/XNet/Net/NetStream.cs" Line="91" Column="41" />
+      <File FileName="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs" Line="19" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="GServer" expanded="True" selected="True">
+          <Node name="GServer" expanded="True">
+            <Node name="Libiray" expanded="True">
+              <Node name="XNet.Libs" expanded="True">
+                <Node name="Utility" expanded="True" />
+              </Node>
+            </Node>
             <Node name="GateServer" expanded="True">
-              <Node name="Managers" expanded="True" />
-              <Node name="MongoTool" expanded="True" />
               <Node name="RPCResponser" expanded="True" />
+              <Node name="RPCTaskHandlers" expanded="True">
+                <Node name="LoginServerGateServerTaskServices.cs" selected="True" />
+              </Node>
               <Node name="Utility" expanded="True" />
             </Node>
             <Node name="LoginServer" expanded="True">

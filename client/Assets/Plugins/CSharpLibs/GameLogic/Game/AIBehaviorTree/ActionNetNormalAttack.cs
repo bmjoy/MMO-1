@@ -15,7 +15,8 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
-            throw new NotImplementedException();
+            yield return RunStatus.Failure;
+            yield break;
         }
     }
 }

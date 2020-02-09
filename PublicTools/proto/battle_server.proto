@@ -138,6 +138,7 @@ message Notify_CharacterMoveTo
 	int32 Index = 1;
 	Vector3 Position=2;
 	Vector3 Target = 3;
+	float StopDis = 4;
 }
 
 message Notify_CharacterStopMove

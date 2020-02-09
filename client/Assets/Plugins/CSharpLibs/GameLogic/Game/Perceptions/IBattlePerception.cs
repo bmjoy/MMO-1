@@ -10,13 +10,14 @@ using UVector3 = UnityEngine.Vector3;
 using GameLogic.Utility;
 using Proto;
 using System.Collections.Generic;
+using GameLogic.Game.AIBehaviorTree;
 
 namespace GameLogic.Game.Perceptions
 {
     /// <summary>
     /// I battle perception.
     /// </summary>
-    public interface IBattlePerception
+    public interface IBattlePerception:ITreeLoader
     {
         /// <summary>
         /// 获取当前的layout

@@ -17,16 +17,8 @@ namespace GameLogic.Game.AIBehaviorTree
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             var root = context as AITreeRoot;
-            var index = root[AITreeRoot.TRAGET_INDEX];
-            if (index == null)
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
 
-            var target = root.Perception.FindTarget((int)index);
-
-            if (!target)
+            if (!root.TryGetTarget(out BattleCharacter target))
             {
                 yield return RunStatus.Failure;
                 yield break;
@@ -37,16 +29,15 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 case MagicValueOf.BlackBoard:
                     {
-                        var id = root[AITreeRoot.SELECT_MAGIC_ID];
-                        if (id == null)
+
+                        if (!root.TryGetMagic(out CharacterMagicData magicData))
+
                         {
                             yield return RunStatus.Failure;
                             yield break;
                         }
-                        var magicData = ExcelToJSONConfigManager
-                            .Current.GetConfigByID<CharacterMagicData>((int)id);
                         key = magicData.MagicKey;
-                        root.Character.AttachMagicHistory(magicData.ID,root.Time);
+                        root.Character.AttachMagicHistory(magicData.ID, root.Time);
                     }
                     break;
                 case MagicValueOf.MagicKey:
@@ -66,10 +57,12 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
+
+            root.Character.StopMove();
             releaser = root.Perception
                 .CreateReleaser(key, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic );
 
-            while (releaser.IsLayoutStartFinish)
+            while (!releaser.IsLayoutStartFinish)
             {
                 yield return RunStatus.Running;
             }

@@ -23,14 +23,13 @@ namespace XNet.Libs.Utility
 
             private T Task { set; get; }
 
-            private int API { set; get; }
-
             private Client Client { set; get; }
             public bool Send()
             {
                 if (Client?.Enable != true) return false;
-
-                Client?.SendMessage(Task.ToTask());
+                var msg = Task.ToTask();
+                Debuger.DebugLog($"{Task.GetType()} ->{Task}");
+                Client?.SendMessage(msg);
                 return true;
             }
         }
@@ -60,6 +59,7 @@ namespace XNet.Libs.Utility
             if (msg.Class != MessageClass.Task) throw new Exception("only can paser notify");
             if (MessageTypeIndexs.TryGetType(msg.Flag, out Type t))
             {
+                //Debuger.DebugLog($"[{Md5Tool.GetMd5Hash(msg.Content)}]{t}");
                 var ty = Activator.CreateInstance(t) as IMessage;
                 if (msg.Content != null) ty.MergeFrom(msg.Content);
                 return ty;

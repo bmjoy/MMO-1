@@ -15,6 +15,12 @@ namespace GameLogic.Game.AIBehaviorTree
 		public Type ParserType { set; get; }
 	}
 
+	public interface ITreeLoader
+	{
+		TreeNode Load(string path);
+    }
+
+
 	public class AITreeParse
 	{
 		private static readonly Dictionary<Type, Type> _handler = new Dictionary<Type, Type>();
@@ -33,7 +39,7 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
 		}
 
-		public static Composite CreateFrom(TreeNode node)
+		public static Composite CreateFrom(TreeNode node, ITreeLoader loader)
 		{
 			
 		    if (node is TreeNodeProbabilitySelector)
@@ -42,7 +48,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				foreach (var i in node.childs)
 				{
 					var n = i as TreeNodeProbabilityNode;
-					var comp = CreateFrom(i.childs[0]);
+					var comp = CreateFrom(i.childs[0],loader);
 					var ps = new ProbabilitySelection(comp, n.probability);
 					sels.Add(ps);
 				}
@@ -52,7 +58,7 @@ namespace GameLogic.Game.AIBehaviorTree
 			var list = new List<Composite>();
 			foreach (var i in node.childs)
 			{
-				list.Add(CreateFrom(i));
+				list.Add(CreateFrom(i,loader));
 			}
 
 			if (node is TreeNodeSequence)
@@ -80,6 +86,10 @@ namespace GameLogic.Game.AIBehaviorTree
 			{
 				return new DecoratorNegation(list[0]) { Guid = node.guid };
 			}
+			else if (node is TreeNodeReturnSuccss)
+			{
+				return new DecoratorSuccess(list[0]) { Guid = node.guid };
+			}
 			else if (node is TreeNodeRunUnitlSuccess)
 			{
 				return new DecoratorRunUntilSuccess(list[0]) { Guid = node.guid };
@@ -96,7 +106,15 @@ namespace GameLogic.Game.AIBehaviorTree
 			{
 				return new DecoratonBreakTreeAndRunChild(list[0]) { Guid = node.guid };
 			}
-			else {
+			else if (node is TreeNodeLinkNode linkNode)
+			{
+				var childNode = loader.Load(linkNode.Path);
+				var child = CreateFrom(childNode, loader);
+				linkNode.childs.Add(childNode);
+				return new DecoratorLinkChild(child);
+			}
+			else
+			{
 				return Parse(node);
 			}
 		}
