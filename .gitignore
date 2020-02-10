@@ -19,7 +19,6 @@ local.properties
 .settings/
 .loadpath
 *.suo
-*/.vs/*
 # External tool builders
 .externalToolBuilders/
 
@@ -234,3 +233,7 @@ client/Assembly-CSharp-Editor.csproj
 client/Assembly-CSharp-firstpass.csproj
 
 client/Assembly-CSharp.csproj
+Icon\r
+
+/Server/GServer/.vs
+.vs/
