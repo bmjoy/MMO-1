@@ -24,7 +24,7 @@ using CM = ExcelConfig.ExcelToJSONConfigManager;
 using Layout.AITree;
 using Layout;
 
-public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunner
+public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRunner
 {
 
     #region AI RUN
@@ -40,7 +40,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
         if (this.State.Perception is BattlePerception p)
         {
-            var root= p.ChangeCharacterAI(ai, this.aiAttach);
+            var root = p.ChangeCharacterAI(ai, this.aiAttach);
             root.IsDebug = true;
             return root;
         }
@@ -96,7 +96,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
     private readonly ConcurrentQueue<BindPlayer> _addTemp = new ConcurrentQueue<BindPlayer>();
     private readonly ConcurrentQueue<string> _kickUsers = new ConcurrentQueue<string>();
     private readonly Dictionary<string, BattlePlayer> BattlePlayers = new Dictionary<string, BattlePlayer>();
-   
+
     private void Start()
     {
         StartCoroutine(Begin());
@@ -105,7 +105,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
     private IEnumerator Begin()
     {
         var config = ResourcesManager.S.ReadStreamingFile("server.json");
-        var battleServer = BattleServerConfig.Parser.ParseJson(config);;
+        var battleServer = BattleServerConfig.Parser.ParseJson(config); ;
         new CM(ResourcesManager.S);
 
         LevelData = CM.Current.GetConfigByID<BattleLevelData>(battleServer.Level);
@@ -176,7 +176,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
     {
 
 #if UNITY_EDITOR
-         UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
          Application.Quit();
 #endif
@@ -184,7 +184,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
     internal bool BindUser(string accountUuid, Client c, PlayerPackage package, DHero hero)
     {
-        var player = new BattlePlayer(accountUuid, package, hero,c) ;
+        var player = new BattlePlayer(accountUuid, package, hero, c);
         _addTemp.Enqueue(new BindPlayer { Client = c, Player = player, Account = accountUuid, });
         return true;
     }
@@ -213,7 +213,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
         }
     }
 
-   
+
 
     private void OnDestroy()
     {
@@ -232,13 +232,16 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
         {
             if (_addTemp.TryDequeue(out BindPlayer client))
             {
+                Debug.Log($"Add Client:{client.Account}");
                 if (BattlePlayers.TryGetValue(client.Account, out BattlePlayer p))
                 {
+
                     Server.DisConnectClient(p.Client);
                     BattlePlayers.Remove(client.Account);
                 }
 
                 var createNotify = view.GetInitNotify();
+
                 var c = CreateUser(client.Player);
                 if (c != null)
                 {
@@ -250,6 +253,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
                     buffer.AddMessage(package.ToNotityMessage());
                     foreach (var i in createNotify)
                     {
+                        Debug.Log($"{i.GetType()}->{i}");
                         buffer.AddMessage(i.ToNotityMessage());
                     }
                     client.Client.SendMessage(buffer.ToPackage());
@@ -281,6 +285,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
             var buffer = new MessageBufferPackage();
             foreach (var i in notify)
             {
+                Debug.Log($"{i.GetType()}->{i}");
                 buffer.AddMessage(i.ToNotityMessage());
             }
             var pack = buffer.ToPackage();
@@ -288,7 +293,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
             {
                 if (!i.Value.Client.Enable)
                 {
-                    KickUser(i.Key);    
+                    KickUser(i.Key);
                     continue;
                 }
                 i.Value.Client.SendMessage(pack);
@@ -300,7 +305,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
     {
         foreach (var i in BattlePlayers)
         {
-            if (i.Value.Client?.Enable!=true)
+            if (i.Value.Client?.Enable != true)
             {
                 KickUser(i.Key);
                 continue;
@@ -313,23 +318,16 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
                 if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))
                 {
-                    if (action is Action_AutoFindTarget)
-                    {
-                        var auto = action as Action_AutoFindTarget;
-                        p.HeroCharacter?.ModifyValue(P.ViewDistance,
-                            AddType.Append, !auto.Auto ? 0 : 1000 * 100); //修改玩家AI视野
-                        p.HeroCharacter?.AIRoot.BreakTree();
-                    }
-                    else if (p.HeroCharacter?.AIRoot != null)
+                    if (p.HeroCharacter?.AIRoot != null)
                     {
                         //保存到AI
                         Debug.Log($"[{p.HeroCharacter.Index}]{p.HeroCharacter.Name} {action}");
                         p.HeroCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        //p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
+                        p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }
             }
-        }    
+        }
     }
 
     public void Load(GState state)
@@ -381,18 +379,60 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
         var pos = GRandomer.RandomArray(groupPos);
 
-        var groups = LevelData.MonsterGroupID.SplitToInt();
+        IList<int> groups = null;
+
+        if (CountKillCount < LevelData.BossNeedKilledNumber)
+        {
+
+            groups = LevelData.MonsterGroupID.SplitToInt();
+
+        }
+        else
+        {
+            groups = LevelData.BossGroupID.SplitToInt();
+        }
 
         var monsterGroups = CM.Current.GetConfigs<MonsterGroupData>(t =>
         {
             return groups.Contains(t.ID);
         });
 
-
         var monsterGroup = GRandomer.RandomArray(monsterGroups);
         drop = CM.Current.GetConfigByID<DropGroupData>(monsterGroup.DropID);
-
         int maxCount = GRandomer.RandomMinAndMax(monsterGroup.MonsterNumberMin, monsterGroup.MonsterNumberMax);
+        var standPos  = new List<BattleStandData>();
+        switch ((StandType)monsterGroup.StandType)
+        {
+            case StandType.StAround:
+                {
+                    var r = monsterGroup.StandParams[0];
+                    var ang = 360 / maxCount;
+                    for (var i = 0; i < maxCount; i++)
+                    {
+                        var offset = Quaternion.Euler(0, ang * i, 0) * Vector3.forward * r;
+                        var forword = Quaternion.LookRotation(Quaternion.Euler(0, ang * i, 0) * Vector3.forward);
+                        standPos.Add(new BattleStandData { Pos = pos + offset, Forward = new Vector3(0, forword.eulerAngles.y, 0) });
+                    }
+                }
+                break;
+            case StandType.StRandom:
+            default:
+                {
+                    var r = (int)monsterGroup.StandParams[0];
+                    for (var i = 0; i < maxCount; i++)
+                    {
+                        var offset = new Vector3(GRandomer.RandomMinAndMax(-r, r), 0, GRandomer.RandomMinAndMax(-r, r));
+                        standPos.Add(new BattleStandData
+                        {
+                            Pos = pos + offset,
+                            Forward = new Vector3(0, GRandomer.RandomMinAndMax(0, 360), 0)
+                        }); ;
+                    }
+                }
+
+                break;
+        }
+
         for (var i = 0; i < maxCount; i++)
         {
             var m = monsterGroup.MonsterID.SplitToInt();
@@ -401,9 +441,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
             var monsterData = CM.Current.GetConfigByID<MonsterData>(monsterID);
             var data = CM.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
             var magic = CM.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
-            var Monster = per.CreateCharacter(monsterData.Level,data, magic.ToList(), 2,
-                pos + new Vector3(GRandomer.RandomMinAndMax(-1, 1), 0, GRandomer.RandomMinAndMax(-1, 1)) * i,
-                new Vector3(0, 0, 0), string.Empty,
+            var Monster = per.CreateCharacter(monsterData.Level, data, magic.ToList(), 2, standPos[i].Pos,standPos[i].Forward, string.Empty,
                 $"{monsterData.NamePrefix}.{ data.Name}");
             Monster[P.DamageMax].SetBaseValue(Monster[P.DamageMax].BaseValue + monsterData.DamageMax);
             Monster[P.DamageMin].SetBaseValue(Monster[P.DamageMin].BaseValue + monsterData.DamageMin);
@@ -425,9 +463,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
     private BattleCharacter CreateUser(BattlePlayer user)
     {
-        BattleCharacter character =null ;
-        State.Each<BattleCharacter>(t => {
-            if (t.Enable) return false;
+        BattleCharacter character = null;
+        State.Each<BattleCharacter>(t =>
+        {
+            if (!t.Enable) return false;
             if (t.AcccountUuid == user.AccountId)
             {
                 character = t;
@@ -440,11 +479,19 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
 
         var per = State.Perception as BattlePerception;
         var data = CM.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
-        var magic = CM.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
+        var cData = CM.Current.FirstConfig<CharacterPlayerData>(t=>t.CharacterID == data.ID);
+        var magic = CM.Current.GetConfigs<CharacterMagicData>(t =>
+        {
+            return t.CharacterID == data.ID && (MagicReleaseType)t.ReleaseType == MagicReleaseType.MrtMagic;
+        });
+
         var pos = GRandomer.RandomArray(playerBornPositions).transform.position;
         //处理装备加成
         character = per.CreateCharacter(user.GetHero().Level,
             data, magic.ToList(), 1, pos, new Vector3(0, 0, 0), user.AccountId, user.GetHero().Name);
+        if (cData != null)
+            character.AddNormalAttack(cData.NormalAttack, cData.NormalAttackAppend);
+
         foreach (var i in user.GetHero().Equips)
         {
             var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
@@ -473,10 +520,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader,IAIRunn
                 character[p].SetBaseValue((int)v);
             }
         }
-        character.ModifyValue(P.ViewDistance, AddType.Append, 1000 * 100); 
+        character.ModifyValue(P.ViewDistance, AddType.Append, 1000 * 100);
         per.ChangeCharacterAI(data.AIResourcePath, character);
+        character.Reset();
         return character;
     }
 
- 
 }

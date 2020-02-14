@@ -19,7 +19,7 @@ namespace Layout.AITree
 		[Label("概率")]
 		public int probability = 1;
 	}
-	[EditorAITreeNode("链接子树", "Act", "基础节点", AllowChildType.None)]
+	[EditorAITreeNode("链接子树", "Dec", "基础节点", AllowChildType.None)]
 	public class TreeNodeLinkNode : TreeNode
 	{
 		[Label("子树")]

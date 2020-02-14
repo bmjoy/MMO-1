@@ -49,11 +49,12 @@ namespace Proto {
             "ARIUChBNYWdpY0xldmVsUGFyYW0yEAISFAoQTWFnaWNMZXZlbFBhcmFtMxAD",
             "EhQKEE1hZ2ljTGV2ZWxQYXJhbTQQBBIUChBNYWdpY0xldmVsUGFyYW01EAUq",
             "UgoOVGFyZ2V0VGVhbVR5cGUSBwoDQUxMEAASCQoFRW5lbXkQARILCgdPd25U",
-            "ZWFtEAISFgoST3duVGVhbVdpdGhPdXRTZWxmEAMSBwoDT3duEARiBnByb3Rv",
-            "Mw=="));
+            "ZWFtEAISFgoST3duVGVhbVdpdGhPdXRTZWxmEAMSBwoDT3duEAQqNgoJU3Rh",
+            "bmRUeXBlEgsKB1NUX05PTkUQABINCglTVF9SYW5kb20QARINCglTVF9Bcm91",
+            "bmQQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), }, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), typeof(global::Proto.StandType), }, null));
     }
     #endregion
 
@@ -335,6 +336,12 @@ namespace Proto {
     ///只有自己
     /// </summary>
     [pbr::OriginalName("Own")] Own = 4,
+  }
+
+  public enum StandType {
+    [pbr::OriginalName("ST_NONE")] StNone = 0,
+    [pbr::OriginalName("ST_Random")] StRandom = 1,
+    [pbr::OriginalName("ST_Around")] StAround = 2,
   }
 
   #endregion

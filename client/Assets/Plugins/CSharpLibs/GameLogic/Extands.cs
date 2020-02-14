@@ -20,6 +20,10 @@ namespace GameLogic
             return new Vector3 { X = v3.x, Y = v3.y, Z = v3.z };
         }
 
+        public static UVector3 ToUV3(this Layout.Vector3 v3)
+        {
+            return new UVector3(v3.x,  v3.y, v3.z);
+        }
         public static Proto.Vector3 ToPV3(this UVector3 v3)
         {
             return new Vector3 { X = v3.x, Y = v3.y, Z = v3.z };

@@ -164,7 +164,7 @@ namespace RPCResponsers
                 ServerId = id,
                 MaxPlayerCount = req.Maxplayer,
                 ClientId = Client.ID,
-                JoinTime = Timestamp.FromDateTime( DateTime.UtcNow),//.Ticks,
+                JoinTime = DateTime.Now.Ticks,//.Ticks,
                 LevelId = req.LevelId,
             };
 

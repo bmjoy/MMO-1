@@ -46,7 +46,7 @@ namespace Layout
 
         public static implicit operator float(FieldValue value)
         {
-            return (float)value.Value;
+            return value.Value;
         }
 
     }

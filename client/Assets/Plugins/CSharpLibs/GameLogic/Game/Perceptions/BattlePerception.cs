@@ -151,8 +151,10 @@ namespace GameLogic.Game.Perceptions
         internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {
             View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed);
+            NotifyHurt(effectTarget);
             if (result.IsMissed) return;
             CharacterSubHP(effectTarget, result.Damage);
+           
         }
 
         public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)
@@ -204,30 +206,152 @@ namespace GameLogic.Game.Perceptions
             return target;
         }
 
-        /// <summary>
-        /// 获取目标
-        /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
+      
         public BattleCharacter FindTarget(int target)
         {
             return this.State[target] as BattleCharacter;
         }
 
-        /// <summary>
-        /// Finds the target.
-        /// </summary>
-        /// <returns>The target.</returns>
-        /// <param name="character">Character.</param>
-        /// <param name="fitler">Fitler.</param>
-        /// <param name="damageType">Damage type.</param>
-        /// <param name="radius">Radius.</param>
-        /// <param name="angle">Angle.</param>
-        /// <param name="offsetAngle">Offset angle.</param>
-        /// <param name="offset">Offset.</param>
-        /// <param name="teamIndex">team</param>
+        public BattleCharacter FindTarget(BattleCharacter character, TargetTeamType type, float distance,float view,
+            TargetSelectType sType = TargetSelectType.Nearest,
+            TargetFilterType filterType = TargetFilterType.None)
+        {
+
+            var list = new List<BattleCharacter>();
+            State.Each<BattleCharacter>(t =>
+            {
+                //隐身的不进入目标查找
+                if (t.IsLock(ActionLockType.Inhiden)) return false;
+                switch (type)
+                {
+                    case TargetTeamType.Enemy:
+                        if (character.TeamIndex == t.TeamIndex)
+                            return false;
+                        break;
+                    case TargetTeamType.OwnTeam:
+                        if (character.TeamIndex != t.TeamIndex)
+                            return false;
+                        break;
+                    case TargetTeamType.OwnTeamWithOutSelf:
+                        if (character.Index == t.Index) return false;
+                        if (character.TeamIndex != t.TeamIndex)
+                            return false;
+                        break;
+                    case TargetTeamType.Own:
+                        {
+                            if (character.Index != t.Index) return false;
+                        }
+                        break;
+                    case TargetTeamType.All:
+                        break;
+                    default:
+                        return false;
+                }
+
+                if (!InviewSide(character, t, distance, view)) return false;
+                switch (filterType)
+                {
+                    case TargetFilterType.Hurt:
+                        if (t.HP == t.MaxHP) return false;
+                        break;
+                }
+                list.Add(t);
+                return false;
+            });
+
+            BattleCharacter target = null;
+
+            if (list.Count > 0)
+            {
+                switch (sType)
+                {
+                    case TargetSelectType.Nearest:
+                        {
+                            target = list[0];
+                            var d = Distance(target, character);
+                            foreach (var i in list)
+                            {
+                                var temp = Distance(i, character);
+                                if (temp < d)
+                                {
+                                    d = temp;
+                                    target = i;
+                                }
+                            }
+                        }
+                        break;
+                    case TargetSelectType.Random:
+                        target = GRandomer.RandomList(list);
+                        break;
+                    case TargetSelectType.HPMax:
+                        {
+                            target = list[0];
+                            var d = target.HP;
+                            foreach (var i in list)
+                            {
+                                var temp = i.HP;
+                                if (temp > d)
+                                {
+                                    d = temp;
+                                    target = i;
+                                }
+                            }
+                        }
+                        break;
+                    case TargetSelectType.HPMin:
+                        {
+                            target = list[0];
+                            var d = target.HP;
+                            foreach (var i in list)
+                            {
+                                var temp = i.HP;
+                                if (temp < d)
+                                {
+                                    d = temp;
+                                    target = i;
+                                }
+                            }
+                        }
+                        break;
+                    case TargetSelectType.HPRateMax:
+                        {
+                            target = list[0];
+                            var d = (float)target.HP / target.MaxHP;
+                            foreach (var i in list)
+                            {
+                                var temp = (float)i.HP / i.MaxHP; ;
+                                if (temp > d)
+                                {
+                                    d = temp;
+                                    target = i;
+                                }
+                            }
+                        }
+                        break;
+                    case TargetSelectType.HPRateMin:
+                        {
+                            target = list[0];
+                            var d = (float)target.HP / target.MaxHP;
+                            foreach (var i in list)
+                            {
+                                var temp = (float)i.HP / i.MaxHP;
+                                if (temp < d)
+                                {
+                                    d = temp;
+                                    target = i;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return target;
+
+        }
+
         public List<BattleCharacter> FindTarget(
-            BattleCharacter character,
+            BattleCharacter target,
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,
             float radius, float angle, float offsetAngle,
@@ -237,15 +361,14 @@ namespace GameLogic.Game.Perceptions
             switch (damageType)
             {
                 case Layout.LayoutElements.DamageType.Single://单体直接对目标
-                    return new List<BattleCharacter> { character };
+                    return new List<BattleCharacter> { target };
                 case Layout.LayoutElements.DamageType.Rangle:
                     {
-                        var orgin = character.Position + offset;
-                        var forward = character.Forward;
-
-                        var q = Quaternion.Euler(0, angle, 0);
-
-                        forward = q * forward;
+                        
+                        var orgin = target.Position + target.Rototion * offset;
+                       
+                        var q = Quaternion.Euler(0, offsetAngle, 0);
+                        var forward = q * target.Rototion * UVector3.forward;
 
                         var list = new List<BattleCharacter>();
                         State.Each<BattleCharacter>((t) =>
@@ -263,11 +386,15 @@ namespace GameLogic.Game.Perceptions
                                     break;
 
                             }
+
+                            var len =  t.Position- orgin;
                             //不在目标区域内
-                            if ((orgin - t.Position).sqrMagnitude > sqrRadius) return false;
+                            if (len.sqrMagnitude > sqrRadius) return false;
+
                             if (angle < 360)
                             {
-                                if (UVector3.Angle(forward, t.Forward) > (angle / 2)) return false;
+                                var an = UVector3.Angle(len, forward);
+                                if (an> angle / 2) return false;
                             }
                             list.Add(t);
                             return false;
@@ -333,6 +460,21 @@ namespace GameLogic.Game.Perceptions
             });
         }
 
+
+        public void NotifyHurt(BattleCharacter sources)
+        {
+            State.Each<BattleCharacter>((c) => {
+
+                if (c.TeamIndex == sources.TeamIndex)
+                {
+                    if (Distance(c, sources) < BattleAlgorithm.HURT_NOTIYY_R)
+                    {
+                        c.FireEvent(BattleEventType.TeamBeAttack, sources);
+                    }
+                }
+                return false;
+            });
+        }
     }
 }
 

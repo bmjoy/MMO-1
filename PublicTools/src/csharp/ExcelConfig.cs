@@ -219,6 +219,18 @@ namespace EConfig
         /// </summary>
         [ExcelConfigColIndex(5)]
         public int MonsterNumberMax { set; get; }
+        
+        /// <summary>
+        /// 站位
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int StandType { set; get; }
+        
+        /// <summary>
+        /// 参数
+        /// </summary>
+        [ExcelConfigColIndex(0)]
+        public List<float> StandParams { set; get; }
 
     }
 
@@ -446,7 +458,7 @@ namespace EConfig
         public int PACKAGE_BUY_SIZE { set; get; }
         
         /// <summary>
-        /// 购买消耗增容量
+        /// 购买消耗增容量上限
         /// </summary>
         [ExcelConfigColIndex(6)]
         public int PACKAGE_SIZE_LIMIT { set; get; }
@@ -653,13 +665,13 @@ namespace EConfig
         public int MPCost { set; get; }
         
         /// <summary>
-        /// 释放最小距离
+        /// 释放最小距离(m)
         /// </summary>
         [ExcelConfigColIndex(6)]
         public float RangeMin { set; get; }
         
         /// <summary>
-        /// 释放最大距离
+        /// 释放最大距离(m)
         /// </summary>
         [ExcelConfigColIndex(7)]
         public float RangeMax { set; get; }

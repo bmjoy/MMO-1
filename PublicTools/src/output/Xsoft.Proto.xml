@@ -6,17 +6,22 @@
     <members>
         <member name="T:Proto.ActionService.ClickSkillIndex">
              <summary>
-             10025
+             10026
              </summary>    
             </member>
         <member name="T:Proto.ActionService.AutoFindTarget">
              <summary>
-             10026
+             10027
              </summary>    
             </member>
         <member name="T:Proto.ActionService.MoveDir">
              <summary>
-             10027
+             10028
+             </summary>    
+            </member>
+        <member name="T:Proto.ActionService.NormalAttack">
+             <summary>
+             10029
              </summary>    
             </member>
         <member name="T:Proto.BattleServerReflection">
@@ -95,6 +100,9 @@
             </member>
         <member name="F:Proto.Action_MoveDir.FastFieldNumber">
              <summary>Field number for the "Fast" field.</summary>
+            </member>
+        <member name="F:Proto.Action_MoveDir.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
             </member>
         <member name="T:Proto.Notify_ElementExitState">
              <summary>
@@ -474,14 +482,20 @@
             道具列表
              </summary>
             </member>
+        <member name="F:Proto.Notify_CharacterLock.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterLock.LockFieldNumber">
+             <summary>Field number for the "Lock" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
-             10028
+             10030
              </summary>    
             </member>
         <member name="T:Proto.BattleServerService.JoinBattle">
              <summary>
-             10029
+             10031
              </summary>    
             </member>
         <member name="T:Proto.ConstReflection">
@@ -1059,6 +1073,16 @@
              最大刷怪数
              </summary>
             </member>
+        <member name="P:EConfig.MonsterGroupData.StandType">
+             <summary>
+             站位
+             </summary>
+            </member>
+        <member name="P:EConfig.MonsterGroupData.StandParams">
+             <summary>
+             参数
+             </summary>
+            </member>
         <member name="T:EConfig.DropGroupData">
              <summary>
              掉落组
@@ -1236,7 +1260,7 @@
             </member>
         <member name="P:EConfig.ConstantValue.PACKAGE_SIZE_LIMIT">
              <summary>
-             购买消耗增容量
+             购买消耗增容量上限
              </summary>
             </member>
         <member name="T:EConfig.CharacterLevelUpData">
@@ -1401,12 +1425,12 @@
             </member>
         <member name="P:EConfig.CharacterMagicData.RangeMin">
              <summary>
-             释放最小距离
+             释放最小距离(m)
              </summary>
             </member>
         <member name="P:EConfig.CharacterMagicData.RangeMax">
              <summary>
-             释放最大距离
+             释放最大距离(m)
              </summary>
             </member>
         <member name="P:EConfig.CharacterMagicData.ReleaseType">
@@ -1837,12 +1861,12 @@
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
-             10053
+             10055
              </summary>    
             </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
              <summary>
-             10054
+             10056
              </summary>    
             </member>
         <member name="T:Proto.GateServerReflection">
@@ -2207,97 +2231,97 @@
             </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
-             10041
+             10043
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.CreateHero">
              <summary>
-             10042
+             10044
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BeginGame">
              <summary>
-             10043
+             10045
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
              <summary>
-             10044
+             10046
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
              <summary>
-             10045
+             10047
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.SaleItem">
              <summary>
-             10046
+             10048
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
              <summary>
-             10047
+             10049
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.GMTool">
              <summary>
-             10048
+             10050
              </summary>    
             </member>
         <member name="T:Proto.GateServerService.BuyPackageSize">
              <summary>
-             10049
+             10051
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
              <summary>
-             10050
+             10052
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncHero">
              <summary>
-             10051
+             10053
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
              <summary>
-             10052
+             10054
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
              <summary>
-             10032
+             10034
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.EndBattle">
              <summary>
-             10033
+             10035
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.CheckSession">
              <summary>
-             10034
+             10036
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.RegGateServer">
              <summary>
-             10035
+             10037
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GateServerSession">
              <summary>
-             10036
+             10038
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.BeginBattle">
              <summary>
-             10037
+             10039
              </summary>    
             </member>
         <member name="T:Proto.LoginBattleGameServerService.GetLastBattle">
              <summary>
-             10038
+             10040
              </summary>    
             </member>
         <member name="T:Proto.LoginServerReflection">
@@ -2660,22 +2684,22 @@
             </member>
         <member name="T:Proto.LoginServerGateServerTaskServices.ExitUser">
              <summary>
-             10040
+             10042
              </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Login">
              <summary>
-             10030
+             10032
              </summary>    
             </member>
         <member name="T:Proto.LoginServerService.Reg">
              <summary>
-             10031
+             10033
              </summary>    
             </member>
         <member name="T:Proto.LoginServerTaskServices.ExitUser">
              <summary>
-             10039
+             10041
              </summary>    
             </member>
         <member name="M:Proto.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
@@ -2993,6 +3017,11 @@
         <member name="T:Proto.NotifyService.CharacterSpeed">
              <summary>
              10024
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterLock">
+             <summary>
+             10025
              </summary>    
             </member>
     </members>

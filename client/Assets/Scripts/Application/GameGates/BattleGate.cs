@@ -10,6 +10,10 @@ using XNet.Libs.Utility;
 using ExcelConfig;
 using System.Collections;
 using System.Collections.Generic;
+using UVector3 = UnityEngine.Vector3;
+using GameLogic;
+using GameLogic.Game.Elements;
+using Vector3 = UnityEngine.Vector3;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -133,15 +137,35 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private UCharacterView Owner;
 
-    internal void MoveDir(Vector2 v)
+    internal void MoveDir(Vector3 dir)
     {
         if (!Owner) return;
-        SendAction(new Action_MoveDir
+
+        if (Owner.IsLock(ActionLockType.NoMove)) return;
+
+        var fast = dir.magnitude > 0.8f;
+        var pos = Owner.transform.position;
+        var dn = dir.normalized;
+
+        var ch = Owner as IBattleCharacter;
+        var move = new Action_MoveDir
         {
-            Fast = true,
-            Forward = new Proto.Vector3 { X = v.x, Z = v.y }
-        });
-     }
+            Fast = fast,
+            Position = pos.ToPV3(),
+            Forward = new Proto.Vector3 { X = dn.x, Z = dn.z }
+        };
+
+        SendAction(move);
+        if (dir.magnitude < 0.001f)
+        {
+            ch.StopMove(pos.ToPV3());
+        }
+        else
+        {
+            var f = dn * (fast ? 1f : 0.5f);
+            ch.SetMoveDir(pos.ToPV3(),new Proto.Vector3 {  X = f.x, Z = f.z});
+        }
+    }
 
     protected override void ExitGate()
     {
@@ -215,5 +239,6 @@ public class BattleGate : UGate, IServerMessageHandler
         SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID, Target = target });
 
     }
+
     #endregion
 }

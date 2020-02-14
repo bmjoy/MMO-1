@@ -147,7 +147,7 @@ namespace GameLogic.Game.LayoutLogics
         public static void ModifyLockEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var effect = e as ModifyLockEffect;
-            effectTarget.Lock.Lock(effect.lockType);
+            effectTarget.LockAction(effect.lockType);
             if (effect.revertType == RevertType.ReleaserDeath)
             {
                 releaser.RevertLock(effectTarget, effect.lockType);

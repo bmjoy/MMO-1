@@ -20,7 +20,11 @@ namespace GameLogic.Game.AIBehaviorTree
 			var root = context as AITreeRoot;
 
 			var stop = Node.distance / 100f;
-			root.Character.MoveTo(root.Character.BronPosition, stop);
+			if (!root.Character.MoveTo(root.Character.BronPosition, stop))
+			{
+				yield return RunStatus.Failure;
+				yield break;
+            }
 			while (root.Character.IsMoving)
 				yield return RunStatus.Running;
 

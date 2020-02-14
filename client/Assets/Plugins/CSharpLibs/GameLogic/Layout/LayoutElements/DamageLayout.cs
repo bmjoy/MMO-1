@@ -48,7 +48,7 @@ namespace Layout.LayoutElements
 		public FilterType fiterType;
 		[Label("半径")]
 		public float radius;
-		[Label("方向")]
+		[Label("范围角度方向")]
 		public float angle;
 		[Label("方向偏移角")]
 		public float offsetAngle;

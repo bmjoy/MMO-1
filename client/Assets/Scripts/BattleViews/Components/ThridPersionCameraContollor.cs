@@ -5,35 +5,67 @@ using System;
 [RequireComponent(typeof(Camera))]
 public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
 {
-	
-    private Vector3 current;
-    private Vector3 targetForward;
-
-	void Update ()
+    public static ThridPersionCameraContollor Current { private set; get; }
+    private Camera CurrenCamera;
+    private void Awake()
     {
-        if (lookAt != null)
-        {
-            targetForward = lookAt.forward;
-            targetForward.y = forward.y;
-            current = Vector3.Lerp(current, lookAt.position, Time.deltaTime * 10);
-            targetPos = current - (Quaternion.Euler(0, rotationY, 0) * forward.normalized) * Distance;
-            this.transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 5);
-            this.transform.LookAt(current);
-        }
+        Current = this;
+        CurrenCamera = GetComponent<Camera>();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
+        rx = Mathf.Lerp(rx, rotationX, Time.deltaTime * 5);
+        ry = Mathf.Lerp(ry, rotationY, Time.deltaTime * 5);
+
+       // var targetPos = Vector3.zero;
+        if (lookTarget)
+            targetPos = lookTarget.position;
+        this.transform.position = targetPos - (Quaternion.Euler(rx, ry, 0) * Vector3.forward) * distance;
+        this.transform.LookAt(targetPos);
     }
 
+    public float distance = 10;
+    private float rx = 0;
+    private float ry = 0;
     private Vector3 targetPos;
 
-	public Transform lookAt;
+    public float rotationX = 45;
+    public float rotationY = 0;
 
-	public float Distance = 10f;
-
-	public Vector3 forward = new Vector3(0,-0.2f,0.5f);
-
-	public float rotationY = 0;
+    public Transform lookTarget;
 
     public void SetLookAt(Transform tr)
     {
-        lookAt = tr;
+        lookTarget = tr;
+    }
+    public void SetLookAt(Vector3 tr)
+    {
+        targetPos = tr;
+    }
+
+    public ThridPersionCameraContollor RotationX(float x)
+    {
+        rotationX += x;
+        rotationX = Mathf.Clamp(rotationX ,5, 85);
+        return this;
+    }
+
+    public ThridPersionCameraContollor RotationY(float y)
+    {
+        rotationY -= y;
+        rotationY %= 360;
+        return this;
+    }
+
+    public Vector3 LookPos { get { return targetPos; } }
+
+    public Quaternion LookRotaion { get { return Quaternion.Euler(0, ry, 0); } }
+
+    internal bool InView(Vector3 position)
+    {
+        var vp = CurrenCamera.WorldToViewportPoint(position);
+        return vp.z > 0;
     }
 }

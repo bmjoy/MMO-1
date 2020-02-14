@@ -3,14 +3,12 @@ using GameLogic.Game.Perceptions;
 using Layout.LayoutElements;
 using GameLogic.Game.Elements;
 using GameLogic.Game.LayoutLogics;
-using Vector3 = UnityEngine.Vector3;
 using System.Collections.Generic;
 using EngineCore.Simulater;
 using Layout.AITree;
 using Quaternion = UnityEngine.Quaternion;
 using Layout;
 using GameLogic;
-using UVector3 = UnityEngine.Vector3;
 using Google.Protobuf;
 using Proto;
 using System;
@@ -75,7 +73,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
     public void AttachView(UElementView battleElement)
     {
         AttachElements.Add(battleElement.Index, battleElement);
-        AddNotify(battleElement.ToInitNotify());
+        //AddNotify(battleElement.ToInitNotify());
     }
 
     public IMessage[] GetAndClearNotify()
@@ -140,6 +138,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
     bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed)
     {
+#if UNITY_SERVER|| UNITY_EDITOR
         AddNotify(new Notify_DamageResult
         {
             Index = owner,
@@ -147,6 +146,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
             Damage = damage,
             IsMissed = isMissed
         });
+#endif
         return true;
     }
         
@@ -199,7 +199,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 
         var view = root.AddComponent<UCharacterView>();
         view.SetPrecpetion(this);
-        view.targetLookQuaternion = qu;
+        view.LookQuaternion = view.targetLookQuaternion = qu;
         view.SetCharacter(body, ins);
         view.TeamId = teamId;
         view.Level = level;
@@ -209,7 +209,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         view.Name = name;
         if (magics != null)
         {
-            foreach (var i in magics) view.AddMagicCd(i, GetTime().Time);
+            foreach (var i in magics)
+                view.AddMagicCd(i, GetTime().Time);
         }
         return view;
     }
@@ -268,17 +269,24 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
     IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
         string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime)
     {
-        AddNotify(new Notify_LayoutPlayParticle {
-             Bind =bind, DestoryTime = destoryTime,DestoryType = destoryType,
-            FromBoneName = fromBone, FromTarget = fromTarget, Path = path, ReleaseIndex = releaser,
-            ToBoneName =toBone
+#if UNITY_SERVER||UNITY_EDITOR
+        AddNotify(new Notify_LayoutPlayParticle
+        {
+            Bind = bind,
+            DestoryTime = destoryTime,
+            DestoryType = destoryType,
+            FromBoneName = fromBone ?? string.Empty,
+            FromTarget = fromTarget,
+            Path = path,
+            ReleaseIndex = releaser,
+            ToBoneName = toBone??string.Empty
         });
+#endif
 
         var viewRoot = new GameObject(path);
         var view = viewRoot.AddComponent<UParticlePlayer>();
 
 #if !UNITY_SERVER
-        //var res = layout.path;
         var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (path);
         GameObject ins;
         if (obj == null)
@@ -290,8 +298,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
             ins.transform.SetParent(viewRoot.transform);
             ins.transform.RestRTS();
         }
-
-
         var viewRelease = GetViewByIndex(releaser) as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;

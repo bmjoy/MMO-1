@@ -45,6 +45,12 @@ message Action_MoveDir
 {
 	Vector3 Forward = 1;
 	bool Fast =2;
+	Vector3 Position =3;
+}
+
+message Action_NormalAttack
+{
+
 }
 //notify action
 
@@ -240,6 +246,12 @@ message Notify_PlayerJoinState
 	 PlayerPackage Package=4;//道具列表
 }
 
+message Notify_CharacterLock
+{
+	int32 Index =1;
+	int32 Lock = 2;
+}
+
 service NotifyService
 {
 	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
@@ -266,6 +278,7 @@ service NotifyService
 	rpc CharacterAttachMagic(Void) returns (Notify_CharacterAttachMagic);//25
 	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
 	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
+	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
 }
 
 service ActionService
@@ -273,6 +286,7 @@ service ActionService
 	rpc ClickSkillIndex(Action_ClickSkillIndex)returns(Void){};//1
 	rpc AutoFindTarget(Action_AutoFindTarget)returns(Void){};//2
 	rpc MoveDir(Action_MoveDir)returns(Void){};//3
+	rpc NormalAttack (Action_NormalAttack) returns (Action_NormalAttack){};//4
 }
 
 service BattleServerService

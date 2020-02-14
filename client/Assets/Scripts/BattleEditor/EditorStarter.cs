@@ -3,7 +3,6 @@ using System.Collections;
 using System.Linq;
 using ExcelConfig;
 using UnityEngine.SceneManagement;
-using UGameTools;
 using EConfig;
 using GameLogic;
 using EngineCore.Simulater;
@@ -18,44 +17,9 @@ using XNet.Libs.Utility;
 using Layout.AITree;
 //#if UNITY_EDITOR
 
-public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
+public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 {
-	private class StateLoader : IStateLoader
-	{
-
-		public StateLoader(EditorStarter gate)
-		{
-			Gate = gate;
-		}
-
-		private EditorStarter Gate { set; get; }
-
-		#region IStateLoader implementation
-		public void Load(GState state)
-		{
-			var configs = ExcelToJSONConfigManager.Current.GetConfigs<CharacterData>();
-			var releaserData = configs[0];
-			var targetData = configs[1];
-
-			var releaserMagics = ExcelToJSONConfigManager
-				.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == releaserData.ID).ToList();
-
-			var targetMagics = ExcelToJSONConfigManager
-				.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == targetData.ID).ToList();
-			//throw new NotImplementedException ();
-			var per = state.Perception as BattlePerception;
-			var scene = (per.View as UPerceptionView).UScene;
-			var releaser = per.CreateCharacter(1, releaserData, releaserMagics, 1,
-				scene.startPoint.position,
-				new UVector3(0, 90, 0), string.Empty, "releaser");
-			var target = per.CreateCharacter(1, targetData, targetMagics, 2, scene.enemyStartPoint.position,
-				new UVector3(0, -90, 0), string.Empty, "target");
-			Gate.releaser = releaser;
-			Gate.target = target;
-		}
-		#endregion
-
-	}
+	
 
 	public const string EDITOR_LEVEL_NAME = "EditorReleaseMagic";
 
@@ -85,11 +49,12 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 		tcamera = FindObjectOfType<ThridPersionCameraContollor>();
 		isStarted = true;
 		PerView = UPerceptionView.Create();
-		curState = new BattleState(PerView, new StateLoader(this), PerView);
+		curState = new BattleState(PerView, this, PerView);
 		curState.Init();
 		curState.Start(Now);
 		PerView.UseCache = false;
 		UUIManager.S.CreateWindow<Windows.UUIBattleEditor>().ShowWindow();
+		
 	}
 
 	private GState curState;
@@ -132,33 +97,46 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 
 	}
 
-	public void ReplaceRelease(CharacterData data, bool stay, bool ai)
+	public void ReplaceRelease(int level,CharacterData data, bool stay, bool ai)
 	{
 		var magics = ExcelToJSONConfigManager
 			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID).ToList();
 
-		if (!stay) this.releaser.SubHP(this.releaser.HP);
+		if (!stay && this.releaser)
+            this.releaser.SubHP(this.releaser.HP);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
-		var releaser = per.CreateCharacter(1, data, magics, 1,
-			scene.startPoint.position, new UVector3(0, 90, 0), string.Empty, "Releaser");
-		if (ai)
-			per.ChangeCharacterAI(data.AIResourcePath, releaser);
+		var releaser = per.CreateCharacter(level, data, magics, 1,
+			scene.startPoint.position + (UVector3.right * distanceCharacter / 2)
+            , new UVector3(0, 90, 0), string.Empty, data.Name);
+		if (ai) per.ChangeCharacterAI(data.AIResourcePath, releaser);
 		this.releaser = releaser;
+
+		var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
+		if (cData != null)
+		{
+			releaser.AddNormalAttack(cData.NormalAttack, cData.NormalAttackAppend);
+        }
+
+		tcamera.SetLookAt(releaser.Transform);
 	}
 
-	public void ReplaceTarget(CharacterData data, bool stay, bool ai)
+	public void ReplaceTarget(int level,CharacterData data, bool stay, bool ai)
 	{
 		var magics = ExcelToJSONConfigManager
 			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID).ToList();
-		if (!stay) this.target.SubHP(this.target.HP);
+		if (!stay&&this.target)
+            this.target.SubHP(this.target.HP);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
-		var target = per.CreateCharacter(1, data, magics, 2, scene.enemyStartPoint.position,
-			new UVector3(0, -90, 0), string.Empty, "target"); ;
+		var target = per.CreateCharacter(level, data, magics, 2, scene.enemyStartPoint.position + (UVector3.left * distanceCharacter / 2),
+			new UVector3(0, -90, 0), string.Empty, data.Name); ;
 		if (ai) per.ChangeCharacterAI(data.AIResourcePath, target);
 		this.target = target;
 	}
+
+    
+
 
 	public void DoAction(IMessage action)
 	{
@@ -177,14 +155,12 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 	{
 		if (!isStarted) return;
 		Tick();
-		//tcamera.forward.y = -1.08f + slider_y;
-		//tcamera.Distance = 22 - distance;
-		//tcamera.rotationY = ry;
-
-		var midd = tcamera.lookAt;
+		tcamera.rotationX =  slider_y;
+		tcamera.distance = distance;
+		tcamera.rotationY = ry;
 		if (isChanged)
 		{
-			var position = midd.position;
+			var position = PerView.UScene.startPoint.position;
 			var left = position + (UVector3.left * distanceCharacter / 2);
 			var right = position + (UVector3.right * distanceCharacter / 2);
 			releaser.Position = left;
@@ -196,7 +172,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
 	public bool isChanged = false;
 
 	public float slider_y = 1f;
-	public float distance = -5f;
+	public float distance = 5;
 	public float ry =0;
 	public float distanceCharacter = 8;
 
@@ -227,6 +203,17 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner
     {
 		releaser = character;
 		if (character.AIRoot != null) character.AIRoot.IsDebug = true;
+    }
+
+    public void Load(GState state)
+    {
+		var configs = ExcelToJSONConfigManager.Current.GetConfigs<CharacterData>();
+		var releaserData = configs[0];
+		var targetData = configs[1];
+		curState = state;
+
+		ReplaceRelease(1, releaserData, false, true);
+		ReplaceTarget(1, targetData, false, true);
     }
 }
 //#endif

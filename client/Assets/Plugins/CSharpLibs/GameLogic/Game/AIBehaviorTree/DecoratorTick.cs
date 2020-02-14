@@ -1,4 +1,5 @@
 ﻿using BehaviorTree;
+using Layout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,11 @@ using System.Text;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class DecoratorTick : BehaviorTree.Decorator
+    public class DecoratorTick : Decorator
     {
-        public DecoratorTick(BehaviorTree.Composite child) : base(child) { }
+        public DecoratorTick(Composite child) : base(child) { }
 
-        public override IEnumerable<BehaviorTree.RunStatus> Execute(ITreeRoot context)
+        public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
 			float lastTime = context.Time;
 
@@ -26,11 +27,11 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                     DecoratedChild.Stop(context);
                 }
-                yield return BehaviorTree.RunStatus.Running;
+                yield return RunStatus.Running;
             }
         }
 
-        public float TickTime { set; get; }
+        public FieldValue TickTime { set; get; }
 
 		public override void Stop(ITreeRoot context)
 		{

@@ -25,8 +25,8 @@ public class UBattleMissileView : UElementView ,IBattleMissile
         var viewRelease = releaser as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
-        var trans = characterView.transform;
-        transform.position = characterView.GetBoneByName(fromBone).position + trans.rotation * offset;
+        var rotation = (characterView as IBattleCharacter).Rotation;
+        transform.position = characterView.GetBoneByName(fromBone).position +  rotation* offset;
         transform.rotation = Quaternion.identity;
         var path = GetComponent<MissileFollowPath>();
         if (path) path.SetTarget(viewTarget.GetBoneByName(toBone), speed);

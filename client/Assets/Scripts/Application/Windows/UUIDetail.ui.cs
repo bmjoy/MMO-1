@@ -13,6 +13,7 @@ namespace Windows
     {
 
 
+        protected Image root;
         protected RawImage Icon;
         protected Text t_name;
         protected Text t_num;
@@ -28,6 +29,7 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
+            root = FindChild<Image>("root");
             Icon = FindChild<RawImage>("Icon");
             t_name = FindChild<Text>("t_name");
             t_num = FindChild<Text>("t_num");

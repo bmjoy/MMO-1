@@ -41,24 +41,24 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		public static Composite CreateFrom(TreeNode node, ITreeLoader loader)
 		{
-			
-		    if (node is TreeNodeProbabilitySelector)
+
+			if (node is TreeNodeProbabilitySelector)
 			{
 				var sels = new List<ProbabilitySelection>();
 				foreach (var i in node.childs)
 				{
 					var n = i as TreeNodeProbabilityNode;
-					var comp = CreateFrom(i.childs[0],loader);
+					var comp = CreateFrom(i.childs[0], loader);
 					var ps = new ProbabilitySelection(comp, n.probability);
 					sels.Add(ps);
 				}
-				return new ProbabilitySelector(sels.ToArray()) {Guid = node.guid };
+				return new ProbabilitySelector(sels.ToArray()) { Guid = node.guid };
 			}
 
 			var list = new List<Composite>();
 			foreach (var i in node.childs)
 			{
-				list.Add(CreateFrom(i,loader));
+				list.Add(CreateFrom(i, loader));
 			}
 
 			if (node is TreeNodeSequence)
@@ -77,10 +77,14 @@ namespace GameLogic.Game.AIBehaviorTree
 			{
 				return new ParallelSequence(list.ToArray()) { Guid = node.guid };
 			}
-			else if (node is TreeNodeTick)
+			else if (node is TreeNodeTick n)
 			{
-				var n = node as TreeNodeTick;
-				return new DecoratorTick(list[0]) { TickTime = n.tickTime, Guid = node.guid };
+				//var n = node as TreeNodeTick;
+				return new DecoratorTick(list[0])
+				{
+					TickTime = n.tickTime,
+					Guid = node.guid
+				};
 			}
 			else if (node is TreeNodeNegation)
 			{
@@ -96,11 +100,18 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
 			else if (node is TreeNodeRunUnitlFailure)
 			{
-				return new DecoratorRunUnitlFailure(list[0]) { Guid = node.guid };
+				return new DecoratorRunUnitlFailure(list[0])
+				{
+					Guid = node.guid
+				};
 			}
-			else if (node is TreeNodeTickUntilSuccess)
+			else if (node is TreeNodeTickUntilSuccess ns)
 			{
-				return new DecoratorTickUntilSuccess(list[0]) { Guid = node.guid };
+				return new DecoratorTickUntilSuccess(list[0])
+				{
+					Guid = node.guid,
+					TickTime = ns.tickTime
+				};
 			}
 			else if (node is TreeNodeBreakTreeAndRunChild)
 			{
@@ -113,6 +124,12 @@ namespace GameLogic.Game.AIBehaviorTree
 				linkNode.childs.Add(childNode);
 				return new DecoratorLinkChild(child);
 			}
+
+			else if (node is TreeNodeBattleEvent ev)
+			{
+				var t= CreateFrom(node.childs[0],loader);
+				return new EventBattle(t) { eventType = ev.eventType };
+            }
 			else
 			{
 				return Parse(node);

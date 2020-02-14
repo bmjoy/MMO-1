@@ -18,7 +18,7 @@ namespace GameLogic.Game.AIBehaviorTree
 		{
 			var root = context as AITreeRoot;
 
-			if (root.TryGetTarget( out BattleCharacter target))
+			if (!root.TryGetTarget( out BattleCharacter target))
 			{
 				yield return RunStatus.Failure;
 				yield break;

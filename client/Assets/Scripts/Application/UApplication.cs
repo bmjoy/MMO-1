@@ -122,7 +122,7 @@ public class UApplication : XSingleton<UApplication>
             yield return null;
             if (NotifyMessages.Count > 0)
             {
-                UUITipDrawer.Singleton.ShowNotify(NotifyMessages.Dequeue());
+                UUITipDrawer.Singleton.ShowNotify(NotifyMessages.Dequeue(), NotifyMessages.Count >3?1:3.2f);
                 yield return new WaitForSeconds(.8f);
             }
         }

@@ -1,31 +1,16 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="LoginServer/RPCResponsers/LoginGateServerService.cs">
     <Files>
       <File FileName="../../GameCore/XNet/Net/SocketClient.cs" Line="1" Column="1" />
-      <File FileName="../../GameCore/XNet/Net/Client.cs" Line="137" Column="4" />
-      <File FileName="../../GameCore/XNet/Net/NetStream.cs" Line="91" Column="41" />
-      <File FileName="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs" Line="19" Column="34" />
+      <File FileName="../../GameCore/XNet/Net/Client.cs" />
+      <File FileName="../../GameCore/XNet/Net/NetStream.cs" />
+      <File FileName="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs" />
+      <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="171" Column="55" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="GServer" expanded="True">
-            <Node name="Libiray" expanded="True">
-              <Node name="XNet.Libs" expanded="True">
-                <Node name="Utility" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="GateServer" expanded="True">
-              <Node name="RPCResponser" expanded="True" />
-              <Node name="RPCTaskHandlers" expanded="True">
-                <Node name="LoginServerGateServerTaskServices.cs" selected="True" />
-              </Node>
-              <Node name="Utility" expanded="True" />
-            </Node>
-            <Node name="LoginServer" expanded="True">
-              <Node name="MongoTool" expanded="True" />
-              <Node name="RPCResponsers" expanded="True" />
-            </Node>
+          <Node name="GServer" expanded="True" selected="True">
             <Node name="ServerUnitTest" expanded="True" />
           </Node>
         </State>

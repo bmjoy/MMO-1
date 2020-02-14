@@ -70,7 +70,14 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     yield break;
                 }
-                root.Character.MoveTo(target.Position);
+                if (!root.Character.MoveTo(target.Position))
+                {
+                    if (context.IsDebug)
+                        Attach("failure", $"can move");
+                    yield return RunStatus.Failure;
+                    yield break;
+                }
+                //root.Character.MoveTo(target.Position);
                 while (lastTime + .5 > root.Time)
                 {
                     yield return RunStatus.Running;

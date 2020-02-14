@@ -118,3 +118,9 @@ enum TargetTeamType
 	Own =4;//只有自己
 }
 
+enum StandType
+{
+	ST_NONE =0;
+	ST_Random = 1;
+	ST_Around = 2;
+}

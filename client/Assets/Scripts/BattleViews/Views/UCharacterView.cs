@@ -11,6 +11,8 @@ using EngineCore.Simulater;
 using Google.Protobuf;
 using System;
 using System.Linq;
+using UnityEngine.AI;
+using GameLogic.Game;
 
 [
 	BoneName("Top","__Top"),
@@ -35,45 +37,68 @@ public class UCharacterView : UElementView,IBattleCharacter
     public string AccoundUuid = string.Empty;
 	private  const string SpeedStr ="Speed";
     private const string TopBone = "Top";
+    private const string BodyBone = "Body";
+    private const string BottomBone = "Bottom";
     private const string Die_Motion = "Die";
     private Animator CharacterAnimator;
 	private bool IsStop = true;
-    public int hpBar = -1;
+    private int hpBar = -1;
+    private int nameBar=-1;
     private float showHpBarTime =0;
     private int max;
     private int cur;
-
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
 
-    // Update is called once per frame
     void Update()
     {
-        if (_tips.Count > 0)
+
+        if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
-            _tips.RemoveAll(t => t.hideTime < Time.time);
-            foreach (var i in _tips)
+            if (_tips.Count > 0)
             {
-                i.id = UUITipDrawer.Singleton.DrawHPNumber(i.id,
-                    i.hp,
-                    UUIManager.Singleton.OffsetInUI(i.pos));
+                _tips.RemoveAll(t => t.hideTime < Time.time);
+                foreach (var i in _tips)
+                {
+                    i.id = UUITipDrawer.Singleton.DrawHPNumber(i.id,
+                        i.hp,
+                        UUIManager.Singleton.OffsetInUI(i.pos));
+                }
+            }
+
+            if (showHpBarTime > Time.time)
+            {
+                hpBar = UUITipDrawer.S.DrawUUITipHpBar(hpBar,
+                        cur, max,
+                        UUIManager.S.OffsetInUI(GetBoneByName(TopBone).position)
+                    );
+            }
+
+
+            if (ShowName && !IsDead && ThridPersionCameraContollor.Current)
+            {
+
+                if (ThridPersionCameraContollor.Current.InView(this.transform.position))
+                {
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar,
+                                this.Name,
+                                UUIManager.S.OffsetInUI(GetBoneByName(BottomBone).position)
+                            );
+                }
+
             }
         }
-        if (showHpBarTime > Time.time)
-        {
-            hpBar = UUITipDrawer.Singleton.DrawUUITipHpBar(hpBar,
-                    cur, max,
-                    UUIManager.Singleton.OffsetInUI(GetBoneByName(TopBone).position)
-                );
-        }
-        lookQuaternion = Quaternion.Lerp(lookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
-        ViewRoot.transform.localRotation = lookQuaternion;
+
+
+        LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
+        
         if (!Agent) return;
         if (MoveForward.HasValue)
         {
             Agent.isStopped = true;
-            Agent.Move(MoveForward.Value * Agent.speed * Time.deltaTime);
+            var v = MoveForward.Value * Agent.speed;
+            Agent.Move(v * Time.deltaTime);
             targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
-            PlaySpeed( Agent.speed);
+            PlaySpeed(v.magnitude);
         }
         else
         {
@@ -85,25 +110,22 @@ public class UCharacterView : UElementView,IBattleCharacter
             targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
         }
     }
-
     private void PlaySpeed(float speed)
     {
         if (CharacterAnimator == null) return;
         CharacterAnimator.SetFloat(SpeedStr, speed);
     }
-
-
     void Awake()
     {
-        Agent = this.gameObject.AddComponent<UnityEngine.AI.NavMeshAgent>();
+        Agent = this.gameObject.AddComponent<NavMeshAgent>();
         Agent.updateRotation = false;
         Agent.updatePosition = true;
         Agent.acceleration = 20;
         Agent.radius = 0.1f;
-        Agent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+        Agent.baseOffset = 0;//-0.15f;
+        Agent.obstacleAvoidanceType =ObstacleAvoidanceType.MedQualityObstacleAvoidance;
         Agent.speed = Speed;
     }
-
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
@@ -128,7 +150,19 @@ public class UCharacterView : UElementView,IBattleCharacter
     private bool IsDead = false;
     public float damping  = 5;
     public Quaternion targetLookQuaternion;
-    public Quaternion lookQuaternion = Quaternion.identity;
+    public Quaternion LookQuaternion
+    {
+        set
+        {
+            //Debug.Log($"look:{value} euler:{value.eulerAngles}");
+            if (ViewRoot) ViewRoot.transform.rotation = value;
+        }
+        get
+        {
+            if (ViewRoot) return ViewRoot.transform.rotation;
+            return Quaternion.identity;
+        }
+    }
     public int hp = -1;
 
     public Transform GetBoneByName(string name)
@@ -155,22 +189,19 @@ public class UCharacterView : UElementView,IBattleCharacter
         var gameTop = new GameObject("__Top");
         gameTop.transform.SetParent(this.transform);
         gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
-        bones.Add("Top", gameTop.transform);
+        bones.Add(TopBone, gameTop.transform);
 
         var bottom = new GameObject("__Bottom");
         bottom.transform.SetParent(this.transform, false);
         bottom.transform.localPosition = new Vector3(0, 0, 0);
-        bones.Add("Bottom", bottom.transform);
+        bones.Add(BottomBone, bottom.transform);
 
         var body = new GameObject("__Body");
         body.transform.SetParent(this.transform, false);
         body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
-        bones.Add("Body", body.transform);
-
-        
+        bones.Add(BodyBone, body.transform);    
         Agent.radius = collider.radius;
         Agent.height = collider.height;
-
 
 #if UNITY_SERVER
         Destroy(character);
@@ -181,7 +212,8 @@ public class UCharacterView : UElementView,IBattleCharacter
     }
 
     private float lockRotationTime = -1f;
-    void LookAt(Transform target)
+
+    private void LookAt(Transform target)
     {
         if (target == null) return;
         var look = target.position - this.transform.position;
@@ -189,8 +221,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         look.y = 0;
         lockRotationTime = Time.time + 0.3f;
         var qu = Quaternion.LookRotation(look, Vector3.up);
-        lookQuaternion = targetLookQuaternion = qu;
-        
+        LookQuaternion = targetLookQuaternion = qu;
     }
 
     private void StopMove()
@@ -204,7 +235,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         targetPos = null;
     }
 
-
+    public bool ShowName { set; get; } = true;
 
     public float GetCdTime(int magicKey)
     {
@@ -225,22 +256,33 @@ public class UCharacterView : UElementView,IBattleCharacter
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
         var f = forward.ToUV3();
-        this.lookQuaternion = Quaternion.LookRotation(f);
+        this.LookQuaternion = Quaternion.LookRotation(f);
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetForword
         {
             Forward = forward,
             Index = Index
         });
+#endif
     }
 
     Transform IBattleCharacter.Transform
     {
         get
         {
-            return transform;
+            if (ViewRoot)
+                return ViewRoot.transform;
+            return null;
         }
     }
 
+    Transform IBattleCharacter.RootTransform
+    {
+        get {
+            if (this) return transform;
+            return null;
+        }
+    }
 
     private Vector3 TryToSetPosition(Vector3 pos)
     {
@@ -254,34 +296,41 @@ public class UCharacterView : UElementView,IBattleCharacter
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
     {
         this.Agent.Warp(pos.ToUV3());
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetPosition { Index = Index, Position = pos });
+#endif
     }
-
-
 
     void IBattleCharacter.LookAtTarget(int target)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
+#endif
         var v = PerView.GetViewByIndex(target);
         if (v == null) return;
         this.LookAt(v.transform);
     }
 
-
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_PropertyValue { Index = Index, Type = type, FinallyValue = finalValue });
+#endif
     }
 
     void IBattleCharacter.SetAlpha(float alpha)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
+#endif
        //do nothing
     }
 
     void IBattleCharacter.PlayMotion(string motion)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
+#endif
         var an = CharacterAnimator;
         if (an == null) return;
 
@@ -297,9 +346,10 @@ public class UCharacterView : UElementView,IBattleCharacter
         an.SetTrigger(motion);
     }
 
-
-    void IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
+    bool IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
+
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveTo
         {
             Index = Index,
@@ -307,30 +357,26 @@ public class UCharacterView : UElementView,IBattleCharacter
             Target = target,
             StopDis = stopDis
         });
+#endif
 
         if (!Agent || !Agent.enabled)
-            return;
+            return false;
         IsStop = false;
 
         TryToSetPosition(position.ToUV3());
         this.Agent.isStopped = false;
-        if (UnityEngine.AI.NavMesh.SamplePosition(target.ToUV3(),
-            out UnityEngine.AI.NavMeshHit hit, 10000, this.Agent.areaMask))
-        {
-            targetPos = hit.position;
-        }
-        else
-        {
-            return;
-        }
+        if (!NavMesh.SamplePosition(target.ToUV3(), out NavMeshHit hit, 10000, this.Agent.areaMask)) return false;
 
-        if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f+stopDis)
+        targetPos = hit.position;
+
+        if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f + stopDis)
         {
             StopMove();
-            return;
+            return false;
         }
         this.Agent.stoppingDistance = stopDis;
         this.Agent.SetDestination(targetPos.Value);
+        return true;
     }
 
     bool IBattleCharacter.IsMoving
@@ -343,15 +389,26 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
     }
 
+    Quaternion IBattleCharacter.Rotation {
+        get
+        {
+            if (ViewRoot)
+                return ViewRoot.transform.rotation;
+            return Quaternion.identity;
+        }
+    }
+
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (!transform) return;
-        if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.1f)
+        if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.5f)
         {
             transform.position = pos.ToUV3();
         }
         StopMove();
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
+#endif
 	}
 
     void IBattleCharacter.Death ()
@@ -363,42 +420,56 @@ public class UCharacterView : UElementView,IBattleCharacter
 		if(Agent)  Agent.enabled = false;
 		IsDead = true;
 		MoveDown.BeginMove (ViewRoot, 1, 1, 5);
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterDeath { Index = Index });
+#endif
 	}
-
 
     void IBattleCharacter.SetSpeed(float speed)
     {
         this.Speed = speed;
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSpeed { Index = Index, Speed = speed });
+#endif
     }
 
     void IBattleCharacter.SetPriorityMove (float priorityMove)
     {
         if (!Agent) return;
         Agent.avoidancePriority = (int)priorityMove;
+#if UNITY_SERVER|| UNITY_EDITOR
         CreateNotify(new Notify_CharacterPriorityMove { Index = Index, PriorityMove = priorityMove });
+#endif
     }
 
     void IBattleCharacter.SetScale(float scale)
     {
         this.gameObject.transform.localScale = Vector3.one * scale;
+#if UNITY_SERVER|| UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
+#endif
     }
-
 
     void IBattleCharacter.ShowHPChange(int hp,int cur,int max)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_HPChange { Index = Index, Cur = cur, Hp = hp, Max = max });
+#endif
         if (IsDead)  return;
         this.cur = cur;
         this.max = max;
         if (hp < 0)
         {
-            _tips.Add(new HpChangeTip
-                { 
-                    id = -1, hp = hp, hideTime = Time.time + 3, pos = GetBoneByName(TopBone).position
+            if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
+            {
+                _tips.Add(new HpChangeTip
+                {
+                    id = -1,
+                    hp = hp,
+                    hideTime = Time.time + 3,
+                    pos = GetBoneByName(TopBone).position
                 });
+            }
         }
         showHpBarTime = Time.time + 3;
        
@@ -406,14 +477,18 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
+#endif
         //throw new System.NotImplementedException();
     }
 
     void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
     {
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterAttachMagic { Index = Index,
             MagicId = magicID, CompletedTime = cdCompletedTime });
+#endif
         AddMagicCd(magicID, cdCompletedTime);
     }
 
@@ -429,6 +504,15 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
     }
 
+    void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
+    {
+        TryToSetPosition(pos.ToUV3());
+        MoveForward = forward.ToUV3();
+#if UNITY_SERVER|| UNITY_EDITOR
+        CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
+#endif
+    }
+
 #endregion
 
     public override IMessage ToInitNotify()
@@ -440,25 +524,32 @@ public class UCharacterView : UElementView,IBattleCharacter
             AccountUuid = this.AccoundUuid,
             ConfigID = ConfigID,
             Position = transform.position.ToPVer3(),
-            Forward = transform.forward.ToPVer3(),
+            Forward =  LookQuaternion.eulerAngles.ToPVer3(),
             Level = Level,
             Name = Name,
             TeamIndex = TeamId,
             Speed = Speed
         };
 
-        foreach (var i in MagicCds)
-            createNotity.MagicId.Add(i.Key);
+        foreach (var i in MagicCds) createNotity.MagicId.Add(i.Key);
 
         return createNotity;
     }
 
+    private int LockValue = 0;
+
+    void IBattleCharacter.SetLock(int lockValue)
+    {
+        LockValue = lockValue;
+#if UNITY_SERVER|| UNITY_EDITOR
+        CreateNotify(new Notify_CharacterLock { Index = Index, Lock = lockValue });
+#endif
+    }
+
     private Vector3? MoveForward;
 
-    void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
+    public bool IsLock(ActionLockType type)
     {
-        TryToSetPosition(pos.ToUV3());
-        MoveForward = forward.ToUV3().normalized;
-        CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
+        return (LockValue &(1 << (int)type )) > 0;
     }
 }

@@ -13,14 +13,14 @@ namespace Layout.AITree
 	public class TreeNodeRunUnitlSuccess : TreeNode { }
 	[EditorAITreeNode("间隔时间执行", "Dec", "修饰节点", AllowChildType.One)]
 	public class TreeNodeTick : TreeNode {
-		[Label("间隔时间(秒)")]
-		public float tickTime;
+		[Label("间隔时间(ms)")]
+		public FieldValue tickTime=1000;
 	}
 	[EditorAITreeNode("间隔时间执行直到返回Success", "Dec", "修饰节点", AllowChildType.One)]
 	public class TreeNodeTickUntilSuccess : TreeNode 
 	{
-		[Label("间隔时间(秒)")]
-		public float tickTime;
+		[Label("间隔时间(ms)")]
+		public FieldValue tickTime =1000;
 	}
 
 	[EditorAITreeNode("终止树并启动子树", "Dec", "修饰节点", AllowChildType.One)]

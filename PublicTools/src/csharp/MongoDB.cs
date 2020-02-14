@@ -38,12 +38,11 @@ namespace Proto.MongoDB {
             "CSABKAkSFAoMc2VydmljZV9wb3J0GAogASgFIo4BChVVc2VyU2Vzc2lvbklu",
             "Zm9FbnRpdHkSDAoEdXVpZBgBIAEoCRIUCgxhY2NvdW50X3V1aWQYAiABKAkS",
             "FgoOZ2F0ZV9zZXJ2ZXJfaWQYAyABKAUSGAoQYmF0dGxlX3NlcnZlcl9pZBgE",
-            "IAEoBRINCgV0b2tlbhgFIAEoCRIQCghsZXZlbF9pZBgGIAEoBSLFAQoYUGxh",
+            "IAEoBRINCgV0b2tlbhgFIAEoCRIQCghsZXZlbF9pZBgGIAEoBSKpAQoYUGxh",
             "eWVyQmF0dGxlU2VydmVyRW50aXR5EgwKBHV1aWQYASABKAkSEQoJc2VydmVy",
-            "X2lkGAIgASgFEi0KCWpvaW5fdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1",
-            "Zi5UaW1lc3RhbXASEAoIbGV2ZWxfaWQYBCABKAUSEQoJY2xpZW50X2lkGAUg",
-            "ASgFEgwKBGhvc3QYBiABKAkSDAoEcG9ydBgHIAEoBRIYChBtYXhfcGxheWVy",
-            "X2NvdW50GAggASgFYgZwcm90bzM="));
+            "X2lkGAIgASgFEhEKCWpvaW5fdGltZRgDIAEoAxIQCghsZXZlbF9pZBgEIAEo",
+            "BRIRCgljbGllbnRfaWQYBSABKAUSDAoEaG9zdBgGIAEoCRIMCgRwb3J0GAcg",
+            "ASgFEhgKEG1heF9wbGF5ZXJfY291bnQYCCABKAViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -1386,7 +1385,7 @@ namespace Proto.MongoDB {
     public PlayerBattleServerEntity(PlayerBattleServerEntity other) : this() {
       uuid_ = other.uuid_;
       serverId_ = other.serverId_;
-      joinTime_ = other.joinTime_ != null ? other.joinTime_.Clone() : null;
+      joinTime_ = other.joinTime_;
       levelId_ = other.levelId_;
       clientId_ = other.clientId_;
       host_ = other.host_;
@@ -1424,9 +1423,9 @@ namespace Proto.MongoDB {
 
     /// <summary>Field number for the "join_time" field.</summary>
     public const int JoinTimeFieldNumber = 3;
-    private global::Google.Protobuf.WellKnownTypes.Timestamp joinTime_;
+    private long joinTime_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Google.Protobuf.WellKnownTypes.Timestamp JoinTime {
+    public long JoinTime {
       get { return joinTime_; }
       set {
         joinTime_ = value;
@@ -1506,7 +1505,7 @@ namespace Proto.MongoDB {
       }
       if (Uuid != other.Uuid) return false;
       if (ServerId != other.ServerId) return false;
-      if (!object.Equals(JoinTime, other.JoinTime)) return false;
+      if (JoinTime != other.JoinTime) return false;
       if (LevelId != other.LevelId) return false;
       if (ClientId != other.ClientId) return false;
       if (Host != other.Host) return false;
@@ -1520,7 +1519,7 @@ namespace Proto.MongoDB {
       int hash = 1;
       if (Uuid.Length != 0) hash ^= Uuid.GetHashCode();
       if (ServerId != 0) hash ^= ServerId.GetHashCode();
-      if (joinTime_ != null) hash ^= JoinTime.GetHashCode();
+      if (JoinTime != 0L) hash ^= JoinTime.GetHashCode();
       if (LevelId != 0) hash ^= LevelId.GetHashCode();
       if (ClientId != 0) hash ^= ClientId.GetHashCode();
       if (Host.Length != 0) hash ^= Host.GetHashCode();
@@ -1547,9 +1546,9 @@ namespace Proto.MongoDB {
         output.WriteRawTag(16);
         output.WriteInt32(ServerId);
       }
-      if (joinTime_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(JoinTime);
+      if (JoinTime != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(JoinTime);
       }
       if (LevelId != 0) {
         output.WriteRawTag(32);
@@ -1585,8 +1584,8 @@ namespace Proto.MongoDB {
       if (ServerId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ServerId);
       }
-      if (joinTime_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JoinTime);
+      if (JoinTime != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(JoinTime);
       }
       if (LevelId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LevelId);
@@ -1620,11 +1619,8 @@ namespace Proto.MongoDB {
       if (other.ServerId != 0) {
         ServerId = other.ServerId;
       }
-      if (other.joinTime_ != null) {
-        if (joinTime_ == null) {
-          JoinTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
-        }
-        JoinTime.MergeFrom(other.JoinTime);
+      if (other.JoinTime != 0L) {
+        JoinTime = other.JoinTime;
       }
       if (other.LevelId != 0) {
         LevelId = other.LevelId;
@@ -1660,11 +1656,8 @@ namespace Proto.MongoDB {
             ServerId = input.ReadInt32();
             break;
           }
-          case 26: {
-            if (joinTime_ == null) {
-              JoinTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
-            }
-            input.ReadMessage(JoinTime);
+          case 24: {
+            JoinTime = input.ReadInt64();
             break;
           }
           case 32: {

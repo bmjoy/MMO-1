@@ -1,11 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 namespace UGameTools
 {
     public static class GExtends
 	{
+        public static UIMouseClick OnMouseClick(this Component mo,Action<object> callBack, object state = null)
+        {
+            var click = mo.gameObject.TryAdd<UIMouseClick>();
+            click.userState = state;
+            click.OnClick = callBack;
+            return click;
+        }
+
+        public static T TryAdd<T>(this GameObject obj) where T:Component
+        {
+            var c =obj.GetComponent<T>();
+            if (c != null) return c;
+            return obj.AddComponent<T>();
+        }
 
         public static void RestRTS(this Transform trans)
         {

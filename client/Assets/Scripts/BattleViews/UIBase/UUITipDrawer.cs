@@ -27,8 +27,7 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
     public  int DrawUUITipHpBar(int instanceId, int hp, int hpMax, Vector2 offset)
     {
-        UUITipHpBar tip;
-        if (!UUIManager.Singleton.TryToGetTip<UUITipHpBar>(instanceId,out tip))
+        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUITipHpBar tip))
         {
             tip = UUIManager.Singleton.CreateTip<UUITipHpBar>();
         }
@@ -37,11 +36,22 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         return tip.InstanceID;
     }
 
+    public int DrawUUITipNameBar(int instanceId, string name, Vector2 offset)
+    {
+        // UUITipHpBar tip;
+        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUITipNameBar tip))
+        {
+            tip = UUIManager.S.CreateTip<UUITipNameBar>();
+        }
+        tip.SetName(name);
+        UUITip.Update(tip, offset);
+        return tip.InstanceID;
+    }
+
     #region Notify
     private  int DrawUUINotify(int instanceId, string notify)
     {
-        UUINotify tip;
-        if (!UUIManager.Singleton.TryToGetTip<UUINotify>(instanceId,out tip))
+        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip))
         {
             tip = UUIManager.Singleton.CreateTip<UUINotify>();
             tip.SetNotify(notify);
@@ -50,12 +60,12 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         return tip.InstanceID;
     }
         
-    private  List<NotifyMessage> notifys= new List<NotifyMessage>();
-    private Queue<NotifyMessage> _dels = new Queue<NotifyMessage>();
+    private readonly List<NotifyMessage> notifys= new List<NotifyMessage>();
+    private readonly Queue<NotifyMessage> _dels = new Queue<NotifyMessage>();
 
-    public void ShowNotify(string notify)
+    public void ShowNotify(string notify, float dur = 4.5f)
     {
-        notifys.Add(new NotifyMessage{ message = notify, time = Time.time +4.5f });
+        notifys.Add(new NotifyMessage{ message = notify, time = Time.time +dur });
         Debug.Log(notify);
     }
     #endregion

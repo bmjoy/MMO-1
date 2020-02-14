@@ -6,14 +6,12 @@ using ExcelConfig;
 using System.Collections.Generic;
 using GameLogic.Game.Perceptions;
 using UGameTools;
-using System.Linq;
 using EConfig;
 using Proto.GateServerService;
 using System.Threading.Tasks;
 using Windows;
 using System.Collections;
 using XNet.Libs.Net;
-using UVector3 = UnityEngine.Vector3;
 using Vector3 = UnityEngine.Vector3;
 
 public class GMainGate:UGate
@@ -68,7 +66,7 @@ public class GMainGate:UGate
             character.MoveSpeed,null) as UCharacterView;
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName("Bottom"));
-
+        characterView.ShowName = false;
         return characterView;
     }
 

@@ -52,7 +52,7 @@ public class NotifyPlayer
 
     }
 
-    public void AddType<T>()
+    private void AddType<T>()
     {
         var invokes = typeof(T).GetMethods();
         foreach (var i in invokes)
@@ -68,7 +68,6 @@ public class NotifyPlayer
             Debug.Log($"{ typeof(T)} handle notify {att.NotifyType}");
         }
     }
-
 
     /// <summary>
     /// 处理网络包的解析

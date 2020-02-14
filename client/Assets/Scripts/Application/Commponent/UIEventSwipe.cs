@@ -8,13 +8,15 @@ public class UIEventSwipe : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
 {
     [System.Serializable] public class SwipeEvent : UnityEvent<Vector2> { }
     private Vector2? start;
+    private Vector2? last;
 
     public SwipeEvent OnSwiping { private set; get; } = new SwipeEvent();
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        if (start == null) return;
-        var diff = start.Value - eventData.position;
+        if (last == null) return;
+        var diff = last.Value - eventData.position;
+        last = eventData.position;
 
         OnSwiping?.Invoke(diff);
         // Debug.Log(diff);
@@ -23,11 +25,11 @@ public class UIEventSwipe : MonoBehaviour, IPointerDownHandler, IDragHandler, IP
 
     void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        start = eventData.position;
+        last= start = eventData.position;
     }
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        start = null;
+        last= start = null;
     }
 }

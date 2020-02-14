@@ -53,6 +53,10 @@ namespace Windows
                     }
                 });
             });
+
+            this.uiRoot.transform.OnMouseClick((obj) => {
+                HideWindow();
+            });
             //Write Code here
         }
 

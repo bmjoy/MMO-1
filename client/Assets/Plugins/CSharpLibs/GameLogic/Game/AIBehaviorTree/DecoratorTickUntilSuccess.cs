@@ -1,4 +1,5 @@
 ﻿using BehaviorTree;
+using Layout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             while (true)
             {
-				if (lastTime + (TickTime) >= context.Time)
+				if (lastTime + (TickTime/1000f) >= context.Time)
                 {
                     yield return BehaviorTree.RunStatus.Running;
                 }
@@ -34,7 +35,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     if (DecoratedChild.LastStatus.Value == RunStatus.Success)
                     {
-                        yield return BehaviorTree.RunStatus.Success;
+                        yield return RunStatus.Success;
                         yield break;
                     }
                 }
@@ -42,7 +43,7 @@ namespace GameLogic.Game.AIBehaviorTree
             }
         }
 
-        public float TickTime { set; get; }
+        public FieldValue TickTime { set; get; }
 
         public override void Stop(ITreeRoot context)
         {

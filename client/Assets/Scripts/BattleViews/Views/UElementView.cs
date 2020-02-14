@@ -24,14 +24,18 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     {
         OnJoined();
         this.Index = index;
-        CreateNotify(this.ToInitNotify());
+#if UNITY_SERVER
+        CreateNotify(ToInitNotify());
+#endif
         PerView.AttachView(this);
     }
 
     void IBattleElement.ExitState(int index)
     {
         PerView.DeAttachView(this);
+#if UNITY_SERVER
         CreateNotify(new Notify_ElementExitState { Index = Index });
+#endif
         DestorySelf();  
     }
 
@@ -46,10 +50,7 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     public void DestorySelf(float time = 0.3f)
     {
         if (!this) return;
-        if (time > 0)
-            Destroy(this.gameObject, time);
-        else
-            Destroy(this.gameObject);
+        Destroy(this.gameObject, time);
     }
 
     public virtual void OnJoined() { }

@@ -16,11 +16,24 @@ namespace GameLogic.Game
 
     public class ActionLock
     {
-        private int value = 0xFFFFFFF;
+        //private int value = 0xFFFFFFF;
 
         public int Value
         {
-            get { return value; }
+            get
+            {
+                var v = 0;
+
+                foreach (var i in Locks)
+                {
+                    if (i.Value > 0)
+                    {
+                        v += 1 << (int)i.Key;
+                    }
+                }
+
+                return v;
+            }
         }
 
         private Dictionary<ActionLockType, int> Locks { set; get; }
@@ -44,12 +57,9 @@ namespace GameLogic.Game
         {
             bool isLocked = IsLock(type);
             Locks[type]++;
-            if (isLocked != IsLock(type)){
-                if (OnStateOnchanged != null)
-                {
-                    var args = new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) };
-                    OnStateOnchanged(this, args);
-                }
+            if (isLocked != IsLock(type))
+            {
+                OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) });
             }
         }
 
@@ -59,11 +69,7 @@ namespace GameLogic.Game
             Locks[type]--;
             if (isLocked != IsLock(type))
             {
-                if (OnStateOnchanged != null)
-                {
-                    var args = new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) };
-                    OnStateOnchanged(this, args);
-                }
+                OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) });
             }
         }
 

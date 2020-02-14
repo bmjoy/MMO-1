@@ -63,7 +63,7 @@ message PlayerBattleServerEntity
 {
     string uuid = 1;
     int32 server_id =2;
-    google.protobuf.Timestamp join_time = 3;
+    int64 join_time = 3;
     int32 level_id =4; //level id for selected level data
     int32 client_id =5;
     string host = 6;

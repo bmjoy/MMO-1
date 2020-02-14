@@ -37,6 +37,8 @@ namespace Windows
                 pItem = item;
                 Template.Text.text = item.Num>1? item.Num.ToString():string.Empty;
                 Template.RawImage.texture = ResourcesManager.S.LoadIcon(itemconfig);
+                Template.level.text = item.Level > 0 ? $"+{item.Level}" : string.Empty;
+                Template.i_lock.ActiveSelfObject(item.Locked);
             }
         }
 

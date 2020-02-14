@@ -63,9 +63,7 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(LookAtTarget))]
 		public static void LookAtTargetActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
-			_ = layoutBase.GUID;
-            var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
-			linePlayer.Releaser.ReleaserTarget?.Releaser?.LookAt(linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
+            linePlayer.Releaser.ReleaserTarget?.Releaser?.LookAt(linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
 		}
         #endregion
 
@@ -126,7 +124,9 @@ namespace GameLogic.Game.LayoutLogics
 				layout.angle, 
 				layout.offsetAngle,
                 offsetPos,releaser.ReleaserTarget.Releaser.TeamIndex);
-			
+
+			releaser.ShowDamageRange(layout);
+
 			if (string.IsNullOrEmpty (layout.effectKey))
 			{
 				return;

@@ -68,6 +68,11 @@ namespace GameLogic.Game
         /// 伤害减免参数
         /// </summary>
         public static float DEFANCE_RATE = 0.006f;//伤害减免参数
+
+        /// <summary>
+        /// hurt r
+        /// </summary>
+        public static float HURT_NOTIYY_R = 10f;
 		/// <summary>
 		/// 取中间数
 		/// </summary>

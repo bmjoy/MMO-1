@@ -10,6 +10,7 @@ using ExcelConfig;
 using GameLogic.Game.Perceptions;
 using EConfig;
 using Proto.BattleServerService;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Windows
 {
@@ -81,11 +82,7 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            bt_Auto.onClick.AddListener(() =>
-                {
-                    //IsAuto = !IsAuto;
-                    SetAuto(!IsAuto);
-                });
+            
 
             bt_Exit.onClick.AddListener(() =>
                 {
@@ -109,36 +106,32 @@ namespace Windows
                 if ((v - last).magnitude <= 0.03f) return;
                 last = v;
                 Debug.Log(v);
+                var dir = ThridPersionCameraContollor.Current.LookRotaion * new Vector3(v.x, 0, v.y);
+
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                g.MoveDir(v);
+                g.MoveDir(dir);
             });
 
             var swipeEv = swipe.GetComponent<UIEventSwipe>();
-            swipeEv.OnSwiping.AddListener((v) => {
-                //ThridPersionCameraContollor.Current.RotationX(v.y);
-                //ThridPersionCameraContollor.Current.RotationY(v.x);
+            swipeEv.OnSwiping.AddListener((v) =>
+            {
+                ThridPersionCameraContollor.Current.RotationX(v.y).RotationY(v.x);
+            });
+
+            bt_normal_att.onClick.AddListener(() => {
+                var g = UApplication.G<BattleGate>();
+                if (g == null) return;
+                g.SendAction(new Action_NormalAttack ());
             });
         }
-
-        
-
-        private void SetAuto(bool auto)
-        {
-            var action = new Action_AutoFindTarget { Auto = auto };
-            IsAuto = auto;
-            UApplication.G<BattleGate>().SendAction(action);
-            bt_Auto.SetText(IsAuto ? "暂停" : "战斗");
-        }
-
-        private bool IsAuto = true;
 
         protected override void OnShow()
         {
             base.OnShow();
 
             this.GridTableManager.Count = 0;
-            bt_Auto.SetText(IsAuto ? "暂停" : "战斗");
+           // bt_Auto.SetText(IsAuto ? "暂停" : "战斗");
             //SetAuto(true);
         }
 
@@ -155,13 +148,6 @@ namespace Windows
             }
         }
 
-        //private float targetPoint;
-
-        private void OnClick(CharacterData data)
-        {
-            //ExcelConfig.CharacterData data =null;
-
-        }
         protected override void OnHide()
         {
             base.OnHide();
@@ -194,10 +180,8 @@ namespace Windows
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
             if (data == null)
                 return false;
-            return data.ReleaseType == (int)Proto.MagicReleaseType.MrtMagic;
+            return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
-
-
 
     }
 }

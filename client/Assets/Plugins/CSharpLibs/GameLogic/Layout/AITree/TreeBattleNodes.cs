@@ -27,13 +27,25 @@ namespace Layout.AITree
         NoBuilding
     }
 
+	public enum BattleEventType
+	{
+        TeamBeAttack
+    }
+
+	[EditorAITreeNode("战斗事件", "Event", "战斗节点", AllowChildType.One)]
+	public class TreeNodeBattleEvent: TreeNode
+	{
+        [Label("事件")]
+		public BattleEventType eventType;
+	}
+
     [EditorAITreeNode("查找目标", "Act", "战斗节点/目标",AllowChildType.None)]
 	public class TreeNodeFindTarget:TreeNode
 	{
 		[Label("取值来源")]
 		public DistanceValueOf valueOf;
 		[Label("距离")]
-		public FieldValue Distance;
+		public FieldValue Distance = 0;
 
 		[Label("视野(0-360)")]
 		public FieldValue View = 360;
@@ -92,7 +104,7 @@ namespace Layout.AITree
 	    Less,
 		Greater
 	}
-	[EditorAITreeNode("判断目标距离", "Act", "战斗节点/目标", AllowChildType.None)]
+	[EditorAITreeNode("判断目标距离", "Cond", "战斗节点/目标", AllowChildType.None)]
 	public class TreeNodeDistancTarget : TreeNode
 	{
 		[Label("取值来源")]
@@ -128,7 +140,7 @@ namespace Layout.AITree
 		public FieldValue distance = 100;
 	}
 
-	[EditorAITreeNode("比较目标数", "Act", "战斗节点/目标", AllowChildType.None)]
+	[EditorAITreeNode("比较目标数", "Cond", "战斗节点/目标", AllowChildType.None)]
 	public class TreeNodeCompareTargets : TreeNode
 	{ 
 		[Label("距离取值来源")]
@@ -138,7 +150,7 @@ namespace Layout.AITree
 		public FieldValue Distance =100;
 
 		[Label("比较值(cm)")]
-		public FieldValue compareValue;
+		public FieldValue compareValue=0;
 
 		[Label("比较类型")]
 		public CompareType compareType;

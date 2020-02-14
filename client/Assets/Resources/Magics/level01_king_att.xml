@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
 <MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <key>att_004</key>
   <name>新建魔法</name>
   <Containers>
     <EventContainer>
@@ -12,6 +11,11 @@
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
               <DamageValue>0</DamageValue>
+            </EffectBase>
+            <EffectBase xsi:type="AddBufEffect">
+              <buffMagicKey>show_hit_buff</buffMagicKey>
+              <timeVauleOf>DurationTime</timeVauleOf>
+              <durationTime>1</durationTime>
             </EffectBase>
           </effects>
           <key>001</key>

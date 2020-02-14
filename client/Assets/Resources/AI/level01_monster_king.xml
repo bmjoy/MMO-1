@@ -1,33 +1,18 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
+<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSequence">
   <childs>
+    <TreeNode xsi:type="TreeNodeLinkNode">
+      <childs />
+      <name>链接子树</name>
+      <guid>ec082a15-79f7-40a6-bf16-b2e27f1642ed</guid>
+      <Path>AI/monster_idle.xml</Path>
+    </TreeNode>
     <TreeNode xsi:type="TreeNodeSequence">
       <childs>
-        <TreeNode xsi:type="TreeNodeFindTarget">
-          <childs />
-          <name>查找目标</name>
-          <guid>357f722b-cb6d-492e-a0ba-c9b6d329ceed</guid>
-          <valueOf>ViewDistance</valueOf>
-          <Distance>
-            <min>1000</min>
-            <max>1000</max>
-            <type>Fixed</type>
-          </Distance>
-          <View>
-            <min>180</min>
-            <max>360</max>
-            <type>Fixed</type>
-          </View>
-          <selectType>Nearest</selectType>
-          <filter>None</filter>
-          <useMagicConfig>false</useMagicConfig>
-          <teamType>Enemy</teamType>
-          <findNew>false</findNew>
-        </TreeNode>
         <TreeNode xsi:type="TreeNodeMoveCloseTarget">
           <childs />
           <name>靠近目标</name>
-          <guid>c0c0f683-b4f4-4ac1-a9db-0238fd49117d</guid>
+          <guid>89b0cfdc-2006-4d2f-8aa0-07bd623cc865</guid>
           <valueOf>Value</valueOf>
           <distance>
             <min>100</min>
@@ -38,14 +23,14 @@
         <TreeNode xsi:type="TreeNodeReleaseMagic">
           <childs />
           <name>释放技能</name>
-          <guid>29a7ca12-db9b-48d8-a71d-95773fd9d68f</guid>
+          <guid>f5c8bdc2-2066-4a64-abcd-4ca8048cd5ec</guid>
           <magicKey>level01_king_att</magicKey>
           <valueOf>MagicKey</valueOf>
         </TreeNode>
         <TreeNode xsi:type="TreeNodeWaitForSeconds">
           <childs />
           <name>等待时间</name>
-          <guid>ac8fc6e0-a7bd-4fa6-86f7-de814f7c0e50</guid>
+          <guid>e51445c1-90c8-47c1-bbb9-d0f91184b425</guid>
           <seconds>
             <min>1000</min>
             <max>1000</max>
@@ -54,9 +39,9 @@
         </TreeNode>
       </childs>
       <name>顺序节点</name>
-      <guid>75f51b2e-c139-4928-a2fd-1ee1caaf6cff</guid>
+      <guid>245f203e-92b4-4fca-b143-5c4672102cb9</guid>
     </TreeNode>
   </childs>
-  <name>选择节点</name>
-  <guid>5d2e146e-c348-4255-a02e-a09617d77242</guid>
+  <name>顺序节点</name>
+  <guid>95378cd5-4de1-410f-9bd2-17b575808431</guid>
 </TreeNode>

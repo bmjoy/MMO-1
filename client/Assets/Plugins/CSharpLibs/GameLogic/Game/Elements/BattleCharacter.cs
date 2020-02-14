@@ -8,6 +8,8 @@ using GameLogic.Game.Perceptions;
 using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
+using ExcelConfig;
+using Layout.AITree;
 
 namespace GameLogic.Game.Elements
 {
@@ -18,6 +20,11 @@ namespace GameLogic.Game.Elements
         private readonly Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         public Dictionary<int,CharacterMagicData> Magics { private set; get; }
+        public CharacterMagicData NormalAttack { private set; get; }
+        public CharacterMagicData NormalAppend { private set; get; }
+        public event Action<BattleEventType,object> OnBattleEvent;
+        private float LastNormalAttackTime = 0;
+
         public string AcccountUuid { private set; get; }
 
         public int AttackCount { private set; get; }
@@ -57,7 +64,7 @@ namespace GameLogic.Game.Elements
         public int Level { set; get; }
         public HanlderEvent OnDead;
         public int ConfigID { private set; get; }
-        public ActionLock Lock { private set; get; }
+        private ActionLock Lock {  set; get; }
         private float _speed;
         public float Speed
         {
@@ -110,6 +117,15 @@ namespace GameLogic.Game.Elements
 
         public bool IsMoving { get { return View.IsMoving; } }
 
+        public UnityEngine.Quaternion Rototion
+        {
+            get
+            {
+                return View.Rotation;
+            }
+        }
+
+        public UnityEngine.Transform Transform { get { return this.View.RootTransform; } }
         //property
         public ComplexValue this[P type]
         {
@@ -140,7 +156,8 @@ namespace GameLogic.Game.Elements
                 Properties.Add(pr,value );
             }
             Lock = new ActionLock();
-            Lock.OnStateOnchanged += (s, e) => {
+            Lock.OnStateOnchanged += (s, e) =>
+            {
                 switch (e.Type)
                 {
                     case ActionLockType.NoMove:
@@ -152,7 +169,6 @@ namespace GameLogic.Game.Elements
                     case ActionLockType.Inhiden:
                         view.SetAlpha(e.IsLocked ? 0.5f: 1);
                         break;
-                     
                 }
             };
             BronPosition = Position;
@@ -175,20 +191,23 @@ namespace GameLogic.Game.Elements
             View.PlayMotion(motionName);
         }
 
-        public void MoveTo(UVector3 target,float stopDis =0f)
+        public bool MoveTo(UVector3 target,float stopDis =0f)
         {
-            View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
+            if (IsLock(ActionLockType.NoMove)) return false;
+            return View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
         }
 
-        public void MoveForward(UVector3 forward)
+        public bool MoveForward(UVector3 forward, UVector3 posNext)
         {
-            if (forward.magnitude > 0.1f)
+            if (IsLock(ActionLockType.NoMove)) return false;
+            if (forward.magnitude > 0.001f)
             {
-                View.SetMoveDir(View.Transform.position.ToPV3(), forward.ToPV3());
+                View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
             }
             else {
                 StopMove();
             }
+            return true;
         }
 
         public void StopMove()
@@ -243,6 +262,7 @@ namespace GameLogic.Game.Elements
         {
             View.LookAtTarget(releaserTarget.Index);
         }
+
         public void Init()
 		{
             HP = MaxHP;
@@ -261,14 +281,14 @@ namespace GameLogic.Game.Elements
 
         public void AttachMagicHistory(int magicID, float now)
         {
-            var data = ExcelConfig.ExcelToJSONConfigManager
+            var data = ExcelToJSONConfigManager
                                       .Current.GetConfigByID<CharacterMagicData>(magicID);
             if (!_history.TryGetValue(magicID, out ReleaseHistory history))
             {
                 history = new ReleaseHistory
                 {
                     MagicDataID = magicID,
-                    CdTime = Math.Max(AttackSpeed, data.TickTime),
+                    CdTime = data.TickTime,
                     LastTime = now
                 };
                 _history.Add(magicID, history);
@@ -278,6 +298,10 @@ namespace GameLogic.Game.Elements
             View.AttachMagic(data.ID, history.LastTime + history.CdTime);
         }
 
+        internal bool IsLock(ActionLockType type)
+        {
+            return Lock.IsLock(type);
+        }
 
         public CharacterMagicData GetMagicById(int id)
         {
@@ -285,6 +309,13 @@ namespace GameLogic.Game.Elements
             Magics.TryGetValue(id, out CharacterMagicData datat);
 
             return datat;
+        }
+
+
+        public void AddNormalAttack(int att, int append)
+        {
+            NormalAttack = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
+            NormalAppend = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
         }
 
 		public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
@@ -310,7 +341,7 @@ namespace GameLogic.Game.Elements
             return 0;
         }
 
-        public void ModifyValue(HeroPropertyType property, AddType addType, float resultValue)
+        public void ModifyValue(P property, AddType addType, float resultValue)
         {
             var value = this[property];
             switch (addType)
@@ -339,14 +370,53 @@ namespace GameLogic.Game.Elements
             Init();
         }
 
-        public void IncreaseAttackCount()
+        public void IncreaseNormalAttack(float time)
         {
+            LastNormalAttackTime = time;
             AttackCount++;
         }
 
-        public void ResetAttackCount()
+        public void ResetNormalAttack(float time)
         {
+            LastNormalAttackTime = time;
             AttackCount = 0;
+        }
+
+        public bool TryGetNormalAtt(float now, out CharacterMagicData att, out bool isAppend)
+        {
+            att = null;
+            isAppend = false;
+            if (LastNormalAttackTime + this.AttackSpeed > now) return false;
+
+            if (AttackCount > 3 && NormalAppend != null)
+            {
+                isAppend = true;
+                att = NormalAppend;
+            }
+            else
+            {
+                att = NormalAttack;
+            }
+
+
+            return att != null;
+        }
+
+        public void LockAction(ActionLockType type)
+        {
+            Lock.Lock(type);
+            View.SetLock(Lock.Value);
+        }
+
+        public void UnLockAction(ActionLockType type)
+        {
+            Lock.Unlock(type);
+            View.SetLock(Lock.Value);
+        }
+
+        public void FireEvent(BattleEventType ev, object args)
+        {
+            OnBattleEvent?.Invoke(ev, args);
         }
     }
 }

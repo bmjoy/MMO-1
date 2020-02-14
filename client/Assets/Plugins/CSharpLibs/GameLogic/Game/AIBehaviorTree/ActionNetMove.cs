@@ -16,22 +16,33 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             var root = context as AITreeRoot;
 
-            if (!root.TryGetAction( out Action_MoveDir message))
+            if (!root.TryGetAction(out Action_MoveDir message))
             {
                 if (context.IsDebug)
-                    Attach("failure",$"{root[AITreeRoot.ACTION_MESSAGE]} is not move action");
+                    Attach("failure", $"{root[AITreeRoot.ACTION_MESSAGE]} is not move action");
                 yield return RunStatus.Failure;
                 yield break;
             }
 
             var target = message.Forward.ToUV3();
-            root.Character.MoveForward(target);
+            if (target.magnitude > 0.001f)
+                target = target.normalized * (message.Fast ? 1 : 0.5f);
+            if (!root.Character.MoveForward(target, message.Position.ToUV3()))
+            {
+                if (root.IsDebug)
+                {
+                    Attach("failure", "nomove");
+                }
+                yield return RunStatus.Failure;
+                yield break;
+            }
             if (context.IsDebug)
             {
                 Attach("move_dir", target);
             }
             yield return RunStatus.Success;
         }
+
         public override void Stop(ITreeRoot context)
         {
             base.Stop(context);

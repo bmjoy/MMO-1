@@ -186,9 +186,8 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             var t = this[key];
             v = default;
-            if (t == null)
-                return false;
-            v = (T)t;
+            if (!(t is T val)) return false;
+            v = val;
             if (v == null) return false;
             return true;
         }

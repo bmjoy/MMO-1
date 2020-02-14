@@ -21,7 +21,7 @@ namespace GameLogic.Game.Controllors
 				case ReleaserStates.NOStart:
 					{
 						releaser.OnEvent(Layout.EventType.EVENT_START);
-						releaser.SetState(ReleaserStates.Releasing);
+						releaser.SetState(ReleaserStates.Starting);
                         //tick
                         if (releaser.Magic.triggerDurationTime > 0)
                         {
@@ -30,6 +30,12 @@ namespace GameLogic.Game.Controllors
                             releaser.OnEvent(Layout.EventType.EVENT_TRIGGER);
                         }
 					}
+					break;
+				case ReleaserStates.Starting:
+					if (releaser.IsLayoutStartFinish)
+					{
+						releaser.SetState(ReleaserStates.Releasing);
+                    }
 					break;
 				case ReleaserStates.Releasing:
 					{

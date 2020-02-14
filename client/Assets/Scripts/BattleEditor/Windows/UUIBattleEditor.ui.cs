@@ -40,9 +40,11 @@ namespace Windows
         protected Button bt_targe;
         protected Toggle to_enable_ai;
         protected Toggle to_do_remove;
+        protected InputField input_Level;
         protected InputField input_skill;
         protected Button bt_add;
         protected Button bt_remove;
+        protected Button bt_normal_att;
 
 
         protected UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>> GridTableManager = new UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>>();
@@ -63,9 +65,11 @@ namespace Windows
             bt_targe = FindChild<Button>("bt_targe");
             to_enable_ai = FindChild<Toggle>("to_enable_ai");
             to_do_remove = FindChild<Toggle>("to_do_remove");
+            input_Level = FindChild<InputField>("input_Level");
             input_skill = FindChild<InputField>("input_skill");
             bt_add = FindChild<Button>("bt_add");
             bt_remove = FindChild<Button>("bt_remove");
+            bt_normal_att = FindChild<Button>("bt_normal_att");
 
             GridTableManager.InitFromGrid(Grid);
 

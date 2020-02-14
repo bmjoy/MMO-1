@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using GameLogic.Game.Perceptions;
 using Layout.LayoutEffects;
 using Proto;
+using Layout.LayoutElements;
 
 namespace GameLogic.Game.Elements
 {
     public enum ReleaserStates
     {
         NOStart,
+        Starting,
         Releasing,
         ToComplete,
         Completing,
@@ -24,8 +26,27 @@ namespace GameLogic.Game.Elements
         Buff
     }
 
+    public class RevertActionLock
+    {
+        public BattleCharacter target;
+        public ActionLockType type;
+    }
+
+    public class RevertData
+    {
+        public BattleCharacter target;
+        public HeroPropertyType property;
+        public AddType addtype;
+        public float addValue;
+    }
+
     public class MagicReleaser : BattleElement<IMagicReleaser>
     {
+        public float LastTickTime = -1;
+        public float tickStartTime = -1;
+        private readonly List<RevertActionLock> actionReverts = new List<RevertActionLock>();
+        private readonly List<RevertData> reverts = new List<RevertData>();
+
         public MagicReleaser(
             MagicData magic,
             IReleaserTarget target,
@@ -48,8 +69,9 @@ namespace GameLogic.Game.Elements
         private string[] Params;
 
         public string this[int paramIndex]
-        { 
-            get {
+        {
+            get
+            {
                 if (Params == null) return string.Empty;
                 if (paramIndex < 0 || paramIndex >= Params.Length) return string.Empty;
                 return Params[paramIndex];
@@ -64,18 +86,23 @@ namespace GameLogic.Game.Elements
 
         public ReleaserStates State { private set; get; }
 
-        public int UnitCount { get { return this._objs.Count; }}
+        public int UnitCount { get { return this._objs.Count; } }
 
         public void SetState(ReleaserStates state)
         {
             State = state;
+            if (state == ReleaserStates.Releasing)
+            {
+                CancelLock(startLock);
+                startLock = null;
+            }
         }
 
         public void OnEvent(EventType eventType)
         {
             var per = this.Controllor.Perception as BattlePerception;
-
             LastEvent = eventType;
+
             for (var index = 0; index < Magic.Containers.Count; index++)
             {
                 var i = Magic.Containers[index];
@@ -89,13 +116,20 @@ namespace GameLogic.Game.Elements
                     {
                         if (startLayout != null)
                         {
-                            throw new Exception("Start layout must have one!");
+                            throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
+                        this.ReleaserTarget.Releaser.LockAction(ActionLockType.NoMove);
+                        startLock = RevertLock(this.ReleaserTarget.Releaser, ActionLockType.NoMove);
                     }
                 }
             }
+
+           
         }
+
+
+        private RevertActionLock startLock;
 
         private TimeLinePlayer startLayout;
 
@@ -170,6 +204,11 @@ namespace GameLogic.Game.Elements
 
         }
 
+        internal void ShowDamageRange(DamageLayout layout)
+        {
+            this.View.ShowDamageRanger(layout);
+        }
+
         public bool IsCompleted
         {
             get
@@ -214,7 +253,7 @@ namespace GameLogic.Game.Elements
             get
             {
                 if (State == ReleaserStates.NOStart) return false;
-                if (State == ReleaserStates.Releasing && startLayout != null)
+                if (State == ReleaserStates.Starting && startLayout != null)
                     return startLayout.IsFinshed;
                 return true;
             }
@@ -222,7 +261,7 @@ namespace GameLogic.Game.Elements
 
         public void StopAllPlayer()
         {
-            foreach (var i in _players) 
+            foreach (var i in _players)
             {
                 i.Destory();
             }
@@ -244,7 +283,7 @@ namespace GameLogic.Game.Elements
             {
                 if (i.target.Enable)
                 {
-                    i.target.Lock.Unlock(i.type);
+                    i.target.UnLockAction(i.type);
                 }
             }
 
@@ -277,34 +316,29 @@ namespace GameLogic.Game.Elements
             return false;
         }
 
-        public float LastTickTime = -1;
-        public float tickStartTime = -1;
-
-        private class RevertData
+        internal RevertData RevertProperty(BattleCharacter effectTarget, HeroPropertyType property, AddType addType, float addValue)
         {
-            public BattleCharacter target;
-            public HeroPropertyType property;
-            public AddType addtype;
-            public float addValue;
-        }
-
-        private readonly List<RevertData> reverts = new List<RevertData>();
-        internal void RevertProperty(BattleCharacter effectTarget, HeroPropertyType property, AddType addType, float addValue)
-        {
-            reverts.Add(new RevertData { addtype = addType, addValue = addValue, property = property, target = effectTarget });
+            var rP = new RevertData { addtype = addType, addValue = addValue, property = property, target = effectTarget };
+            reverts.Add(rP);
+            return rP;
 
         }
 
-        private class RevertActionLock
+        public RevertActionLock RevertLock(BattleCharacter effectTarget, ActionLockType lockType)
         {
-            public BattleCharacter target;
-            public ActionLockType type;
+            var rLock = new RevertActionLock { target = effectTarget, type = lockType };
+            actionReverts.Add(rLock);
+           
+            return rLock;
         }
 
-        private readonly List<RevertActionLock> actionReverts = new List<RevertActionLock>();
-        internal void RevertLock(BattleCharacter effectTarget, ActionLockType lockType)
+        private void CancelLock(RevertActionLock rLock)
         {
-            actionReverts.Add(new RevertActionLock { target = effectTarget, type = lockType });
+            if (actionReverts.Contains(rLock))
+            {
+                actionReverts.Remove(rLock);
+                rLock.target.UnLockAction(rLock.type);
+            }
         }
     }
 }

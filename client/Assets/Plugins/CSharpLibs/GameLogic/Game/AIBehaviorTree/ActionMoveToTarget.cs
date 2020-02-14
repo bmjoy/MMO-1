@@ -33,7 +33,13 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			root.Character.MoveTo(target.Position);
+			if (!root.Character.MoveTo(target.Position))
+			{
+				if (context.IsDebug)
+					Attach("failure", $"can move");
+				yield return RunStatus.Failure;
+				yield break;
+            }
 			float last = root.Time-.3f;
 
 			while (BattlePerception.Distance(target, root.Character) > stopDistance)
@@ -52,7 +58,13 @@ namespace GameLogic.Game.AIBehaviorTree
 					continue;
 				}
 
-				root.Character.MoveTo(target.Position);
+				if (!root.Character.MoveTo(target.Position))
+				{
+					if (context.IsDebug)
+						Attach("failure", $"can move");
+					yield return RunStatus.Failure;
+					yield break;
+				}
 				yield return RunStatus.Running;
 			}
 
