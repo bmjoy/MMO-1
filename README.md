@@ -9,8 +9,8 @@
   * 6.技能编辑可视化<br/>
   * 7.基于状态同步的技术<br/>
 
-## 编辑效果查看：<br/>
-https://www.youtube.com/watch?v=xxkcTMaQHDs&t=190s<br/>
+## [编辑效果查看]
+   Youtube(https://youtu.be/jZGbP2sA7vY）
 
   
   ## 项目运行需求
