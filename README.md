@@ -10,7 +10,7 @@
   * 7.基于状态同步的技术<br/>
 
 ## [编辑效果查看]
-   Youtube(https://youtu.be/jZGbP2sA7vY）
+   [Youtube](https://youtu.be/jZGbP2sA7vY）
 
   
   ## 项目运行需求
