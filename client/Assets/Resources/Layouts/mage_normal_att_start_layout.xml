@@ -11,8 +11,8 @@
       <Time>0</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>c7a49ee0-9512-497f-a144-e9e78c9dda23</GUID>
-      <Time>0.28877005</Time>
+      <GUID>4f10c964-1e3f-42ff-a497-e405446bb6b5</GUID>
+      <Time>0.30252102</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -21,17 +21,23 @@
     </LayoutBase>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>0f640c11-a3c8-4eb8-86d3-13f07c768d53</GUID>
-      <motionName>Cast Spell 03</motionName>
+      <motionName>Melee Attack</motionName>
       <targetType>Releaser</targetType>
     </LayoutBase>
-    <LayoutBase xsi:type="ParticleLayout">
-      <GUID>c7a49ee0-9512-497f-a144-e9e78c9dda23</GUID>
-      <path>Effects/Range.prefab</path>
-      <fromTarget>Releaser</fromTarget>
-      <toTarget>Releaser</toTarget>
-      <Bind>false</Bind>
-      <destoryType>Normal</destoryType>
-      <destoryTime>0</destoryTime>
+    <LayoutBase xsi:type="MissileLayout">
+      <GUID>4f10c964-1e3f-42ff-a497-e405446bb6b5</GUID>
+      <resourcesPath>Missiles/SmokeMissle.prefab</resourcesPath>
+      <movementType>Line</movementType>
+      <maxLifeTime>-1</maxLifeTime>
+      <maxDistance>-1</maxDistance>
+      <speed>5</speed>
+      <fromBone>Body</fromBone>
+      <toBone>Body</toBone>
+      <offset>
+        <x>0</x>
+        <y>0</y>
+        <z>2</z>
+      </offset>
     </LayoutBase>
   </Layouts>
 </TimeLine>

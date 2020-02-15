@@ -57,13 +57,8 @@ public class MissileFollowPath : MonoBehaviour
 				}
 				break;
 			case MissileMoveState.Death:
-				if (Moveing)
-				{
-					Moveing.gameObject.SetActive(false);
-				}
 				if (Death)
 				{
-
 					Death.gameObject.SetActive(true);
 					Death.localPosition = Moveing.localPosition;
 				}

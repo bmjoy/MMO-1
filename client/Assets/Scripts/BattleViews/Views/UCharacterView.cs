@@ -49,6 +49,8 @@ public class UCharacterView : UElementView,IBattleCharacter
     private int cur;
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
 
+    private string NameInfo;
+
     void Update()
     {
 
@@ -80,7 +82,7 @@ public class UCharacterView : UElementView,IBattleCharacter
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
                     nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar,
-                                this.Name,
+                                NameInfo,
                                 UUIManager.S.OffsetInUI(GetBoneByName(BottomBone).position)
                             );
                 }
@@ -110,6 +112,7 @@ public class UCharacterView : UElementView,IBattleCharacter
             targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
         }
     }
+
     private void PlaySpeed(float speed)
     {
         if (CharacterAnimator == null) return;
@@ -142,7 +145,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
     }
     public string Name { get; internal set; }
-    private UnityEngine.AI.NavMeshAgent Agent;
+    private NavMeshAgent Agent;
     public string lastMotion =string.Empty;
     private float last = 0;
 	private readonly Dictionary<string ,Transform > bones = new Dictionary<string, Transform>();
@@ -175,8 +178,6 @@ public class UCharacterView : UElementView,IBattleCharacter
         return transform;
     }
 
-    //public GameObject Character{ private set; get; }
-
     private GameObject ViewRoot;
 
     public void SetCharacter(GameObject root, GameObject character)
@@ -208,6 +209,10 @@ public class UCharacterView : UElementView,IBattleCharacter
 #else
         CharacterAnimator = character.GetComponent<Animator>();
 #endif
+
+        string color = TeamId ==1?"{0}" :"<color=red>{0}</color>";
+
+        NameInfo = string.Format(color, $"{Name} Lv:{Level}");
 
     }
 
@@ -250,8 +255,6 @@ public class UCharacterView : UElementView,IBattleCharacter
     }
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
-
-#region impl
 
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
@@ -472,7 +475,6 @@ public class UCharacterView : UElementView,IBattleCharacter
             }
         }
         showHpBarTime = Time.time + 3;
-       
     }
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
@@ -513,7 +515,6 @@ public class UCharacterView : UElementView,IBattleCharacter
 #endif
     }
 
-#endregion
 
     public override IMessage ToInitNotify()
     {

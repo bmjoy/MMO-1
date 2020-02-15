@@ -4,7 +4,13 @@ using Proto;
 
 namespace GameLogic.Game
 {
-    
+
+    public enum TeamTypeIndex
+    {
+        Player = 1, //玩家
+        Monster =2
+    }
+
     public struct DamageResult
     {
         public DamageResult(DamageType t, bool isMissed, int da)

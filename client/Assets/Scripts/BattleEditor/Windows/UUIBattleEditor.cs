@@ -75,7 +75,7 @@ namespace Windows
             {
                 //Debug.Log(v);
                 var dir = ThridPersionCameraContollor.Current.LookRotaion* new Vector3(v.x, 0, v.y);
-                Debug.Log($"{v}->{dir}");
+                //Debug.Log($"{v}->{dir}");
                 EditorStarter.S.DoAction(new Proto.Action_MoveDir
                 {
                     Fast = true,

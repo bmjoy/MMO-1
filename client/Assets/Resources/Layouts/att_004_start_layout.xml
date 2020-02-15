@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TimeLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Time>0.3</Time>
   <Points>
     <TimePoint>
@@ -9,10 +9,6 @@
     <TimePoint>
       <GUID>23ed93cf-319a-4e63-b41e-4ef55b872b35</GUID>
       <Time>0.238372087</Time>
-    </TimePoint>
-    <TimePoint>
-      <GUID>e93e9b44-a177-4c69-b302-035a1cde0a84</GUID>
-      <Time>0.234496117</Time>
     </TimePoint>
     <TimePoint>
       <GUID>8cbb36f3-dce8-4cb4-aeeb-4ab0f300b94c</GUID>
@@ -43,11 +39,6 @@
       </offsetPosition>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
-    </LayoutBase>
-    <LayoutBase xsi:type="MotionLayout">
-      <GUID>e93e9b44-a177-4c69-b302-035a1cde0a84</GUID>
-      <motionName>Hit</motionName>
-      <targetType>Target</targetType>
     </LayoutBase>
   </Layouts>
 </TimeLine>

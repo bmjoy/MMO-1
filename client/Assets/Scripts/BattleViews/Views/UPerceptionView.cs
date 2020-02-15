@@ -200,7 +200,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         var view = root.AddComponent<UCharacterView>();
         view.SetPrecpetion(this);
         view.LookQuaternion = view.targetLookQuaternion = qu;
-        view.SetCharacter(body, ins);
         view.TeamId = teamId;
         view.Level = level;
         view.Speed = speed;
@@ -212,6 +211,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
             foreach (var i in magics)
                 view.AddMagicCd(i, GetTime().Time);
         }
+        view.SetCharacter(body, ins);
         return view;
     }
 

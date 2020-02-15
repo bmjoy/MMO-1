@@ -105,9 +105,7 @@ namespace Windows
                 lastTime = UnityEngine.Time.time + .3f;
                 if ((v - last).magnitude <= 0.03f) return;
                 last = v;
-                Debug.Log(v);
                 var dir = ThridPersionCameraContollor.Current.LookRotaion * new Vector3(v.x, 0, v.y);
-
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
                 g.MoveDir(dir);
