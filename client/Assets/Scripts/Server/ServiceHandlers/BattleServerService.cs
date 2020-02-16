@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Proto;
+﻿using Proto;
 using Proto.BattleServerService;
 using Proto.GateBattleServerService;
 using Proto.LoginBattleGameServerService;
 using UnityEngine;
 using XNet.Libs.Net;
-using XNet.Libs.Utility;
 
 [Handle(typeof(IBattleServerService))]
 public class BattleServerService : Responser, IBattleServerService
@@ -28,7 +25,7 @@ public class BattleServerService : Responser, IBattleServerService
         {
             UserID = request.AccountUuid,
             SessionKey = request.Session,
-            
+
         };
 
         var seResult = CheckSession.CreateQuery().GetResult(gate.CenterServerClient, re);
@@ -52,8 +49,8 @@ public class BattleServerService : Responser, IBattleServerService
             Debug.Log($"{pack}");
 
             gateClient.Disconnect();
-            
-            if (!gate.BindUser(request.AccountUuid, Client, pack.Package,pack.Hero))
+
+            if (!gate.BindUser(request.AccountUuid, Client, pack.Package, pack.Hero, seResult.GateServer))
             {
                 result = ErrorCode.NofoundUserOnBattleServer;
             }
@@ -61,3 +58,4 @@ public class BattleServerService : Responser, IBattleServerService
         return new B2C_JoinBattle { Code = result };
     }
 }
+

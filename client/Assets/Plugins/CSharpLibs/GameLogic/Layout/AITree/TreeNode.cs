@@ -39,8 +39,9 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeNetActionSkill)),
         XmlInclude(typeof(TreeNodeNetActionMove)),
         XmlInclude(typeof(TreedNodeNetNomarlAttack)),
-        XmlInclude(typeof(TreeNodeBreakTreeAndRunChild))
-
+        XmlInclude(typeof(TreeNodeBreakTreeAndRunChild)),
+	
+	   XmlInclude(typeof(TreedNodeDistanceBornPos)),
 	]
 	public class TreeNode
 	{

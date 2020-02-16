@@ -120,17 +120,14 @@ namespace Windows
             bt_normal_att.onClick.AddListener(() => {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                g.SendAction(new Action_NormalAttack ());
+                g.DoNormalAttack();
             });
         }
 
         protected override void OnShow()
         {
             base.OnShow();
-
             this.GridTableManager.Count = 0;
-           // bt_Auto.SetText(IsAuto ? "暂停" : "战斗");
-            //SetAuto(true);
         }
 
         protected override void OnUpdate()

@@ -19,6 +19,4 @@ namespace MongoTool
         public DateTime LastLoginTime { set; get; }
         public int ServerID { set; get; }
     }
-
-  
 }

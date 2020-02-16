@@ -326,7 +326,7 @@ namespace Windows
                     break;
             }
             var str = "主属性";
-            var list = new Dictionary<string,string>
+            var list = new Dictionary<string, string>
             {
                 { "伤害", $"{properties[P.DamageMin].FinalValue+damage}-{properties[P.DamageMax].FinalValue+damage}" },
                 { "力量", $"{properties[P.Force].FinalValue}"+ (category== HeroCategory.HcForce?str:"")},
@@ -336,8 +336,8 @@ namespace Windows
                 { "魔法", $"{properties[P.MaxMp].FinalValue}"},
                 { "防御", $"{properties[P.Defance].FinalValue}"},
                 { "吸血比例", $"{(properties[P.SuckingRate].FinalValue/100)}%"},
-                { "攻击间隔", $"{data.AttackSpeed - attackSpeed/1000f}秒"},
-                { "移动速度", $"{Math.Min( data.MoveSpeed +speedAdd,BattleAlgorithm.MAX_SPEED)}米/秒"},
+                { "攻击间隔", $"{Math.Max(BattleAlgorithm.ATTACK_MIN_WAIT, data.AttackSpeed - attackSpeed/1000f)}秒"},
+                { "移动速度", $"{Math.Min(data.MoveSpeed +speedAdd,BattleAlgorithm.MAX_SPEED)}米/秒"},
                 { "暴击", $"{properties[P.Crt].FinalValue/100}%"},
                 { "经验", $"{dHero.Exprices}/{nextLevel?.NeedExprices??'-'}"}
             };

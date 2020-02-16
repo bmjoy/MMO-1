@@ -31,20 +31,25 @@ public class BattlePlayer
     public DHero GetHero() { return Hero; }
 
     public string AccountId {  private set; get; }
+
+    public GameServerInfo GateServer { set; get; }
    
-    public BattlePlayer(string account, PlayerPackage package, DHero hero, Client client)
+    public BattlePlayer(string account, PlayerPackage package, DHero hero, Client client, GameServerInfo info)
     {
         Package = package;
         CurrentSize = package.Items.Count;
         Hero = hero;
         this.AccountId = account;
         this.Client = client;
+        GateServer = info;
+
     }
 
     public bool SubGold(int gold)
     {
         if (Gold - (DifGold + gold) < 0) return false;
         DifGold += gold;
+        Dirty = true;
         return true;
     }
 
@@ -52,6 +57,7 @@ public class BattlePlayer
     {
         if (gold <= 0) return false;
         DifGold -= gold;
+        Dirty = true;
         return true;
     }
 
@@ -117,7 +123,7 @@ public class BattlePlayer
             }
             dropItems.Add(item, num);
         }
-
+        Dirty = true;
         return true;
     }
 
@@ -149,6 +155,7 @@ public class BattlePlayer
         {
             consumeItems.Add(item, num);
         }
+        Dirty = true;
 
         return true;
     }
@@ -169,6 +176,8 @@ public class BattlePlayer
 
         }
     }
+
+    public bool Dirty { get; private set; } = false;
 
     internal PlayerItem GetEquipByGuid(string gUID)
     {

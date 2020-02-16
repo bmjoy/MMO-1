@@ -1033,6 +1033,16 @@
              Boss刷新组
              </summary>
             </member>
+        <member name="P:EConfig.BattleLevelData.MaxRefrshTime">
+             <summary>
+             最大刷怪间隔时间(秒)
+             </summary>
+            </member>
+        <member name="P:EConfig.BattleLevelData.MaxMonster">
+             <summary>
+             怪物最大数量
+             </summary>
+            </member>
         <member name="P:EConfig.BattleLevelData.BossNeedKilledNumber">
              <summary>
              boss出现需求杀怪数
@@ -1490,7 +1500,17 @@
             </member>
         <member name="P:EConfig.MagicLevelUpData.MagicID">
              <summary>
-             名称
+             ID
+             </summary>
+            </member>
+        <member name="P:EConfig.MagicLevelUpData.NeedLevel">
+             <summary>
+             需要等级
+             </summary>
+            </member>
+        <member name="P:EConfig.MagicLevelUpData.NeedGold">
+             <summary>
+             需求金币
              </summary>
             </member>
         <member name="P:EConfig.MagicLevelUpData.Level">

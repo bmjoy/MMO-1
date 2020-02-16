@@ -1,7 +1,4 @@
-﻿using System;
-using EConfig;
-using ExcelConfig;
-using Proto;
+﻿using Proto;
 using Proto.MongoDB;
 using static GateServer.DataBase;
 
@@ -22,10 +19,8 @@ namespace GateServer
 
             foreach (var i in entity.Magics)
             {
-                h.Magics.Add(new Proto.HeroMagic { MagicKey = i.Key });
+                h.Magics.Add(new Proto.HeroMagic { MagicKey = i.Key, Level = i.Value.Level });
             }
-
-
 
             foreach (var i in entity.Equips)
             {

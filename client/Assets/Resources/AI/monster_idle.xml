@@ -17,36 +17,70 @@
       <childs>
         <TreeNode xsi:type="TreeNodeTick">
           <childs>
-            <TreeNode xsi:type="TreeNodeSequence">
+            <TreeNode xsi:type="TreeNodeSelector">
               <childs>
-                <TreeNode xsi:type="TreeNodeMoveRandom">
-                  <childs />
-                  <name>随机移动</name>
-                  <guid>85d95aa0-bdce-4a7e-8f8a-bcfd872f969a</guid>
-                  <Forward>
-                    <min>0</min>
-                    <max>360</max>
-                    <type>Range</type>
-                  </Forward>
-                  <distance>
-                    <min>300</min>
-                    <max>500</max>
-                    <type>Range</type>
-                  </distance>
+                <TreeNode xsi:type="TreeNodeSequence">
+                  <childs>
+                    <TreeNode xsi:type="TreedNodeDistanceBornPos">
+                      <childs />
+                      <name>判断距离出生点</name>
+                      <guid>df7c186a-2916-4618-80a5-246608e1b6b9</guid>
+                      <valueOf>Value</valueOf>
+                      <compareType>Greater</compareType>
+                      <distance>
+                        <min>1500</min>
+                        <max>100</max>
+                        <type>Fixed</type>
+                      </distance>
+                    </TreeNode>
+                    <TreeNode xsi:type="TreeNodeMoveToBronPosition">
+                      <childs />
+                      <name>靠近出生点</name>
+                      <guid>bc859c42-aadc-4ac6-a257-c5d93c12927f</guid>
+                      <distance>
+                        <min>100</min>
+                        <max>300</max>
+                        <type>Range</type>
+                      </distance>
+                    </TreeNode>
+                  </childs>
+                  <name>顺序节点</name>
+                  <guid>5366aa27-e449-42b6-973c-0fcd617c81ea</guid>
                 </TreeNode>
-                <TreeNode xsi:type="TreeNodeWaitForSeconds">
-                  <childs />
-                  <name>等待时间</name>
-                  <guid>57607b88-b707-4a88-adb8-b11630f830a8</guid>
-                  <seconds>
-                    <min>4000</min>
-                    <max>5000</max>
-                    <type>Range</type>
-                  </seconds>
+                <TreeNode xsi:type="TreeNodeSequence">
+                  <childs>
+                    <TreeNode xsi:type="TreeNodeMoveRandom">
+                      <childs />
+                      <name>随机移动</name>
+                      <guid>26d690da-b06d-4399-95f1-6dedfcffb3f2</guid>
+                      <Forward>
+                        <min>0</min>
+                        <max>360</max>
+                        <type>Range</type>
+                      </Forward>
+                      <distance>
+                        <min>300</min>
+                        <max>500</max>
+                        <type>Range</type>
+                      </distance>
+                    </TreeNode>
+                    <TreeNode xsi:type="TreeNodeWaitForSeconds">
+                      <childs />
+                      <name>等待时间</name>
+                      <guid>68e8332c-21ee-4a86-ae58-a5cec42d9cd7</guid>
+                      <seconds>
+                        <min>4000</min>
+                        <max>5000</max>
+                        <type>Range</type>
+                      </seconds>
+                    </TreeNode>
+                  </childs>
+                  <name>顺序节点</name>
+                  <guid>b4b38c50-4070-42e9-9fb4-f158c1311efb</guid>
                 </TreeNode>
               </childs>
-              <name>顺序节点</name>
-              <guid>e29aba00-6e97-42f1-931f-13e67456553b</guid>
+              <name>选择节点</name>
+              <guid>92dc8290-b211-4a50-aa93-8c04a9a5bd19</guid>
             </TreeNode>
           </childs>
           <name>间隔时间执行</name>

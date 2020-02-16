@@ -42,6 +42,6 @@
 	{"ID":5001,"Name":"\u5929\u795E\u5934\u76D4","Quility":5,"PartType":0,"Properties":"6|7|8|12","PropertyValues":"15|15|15|2000"},
 	{"ID":5002,"Name":"\u5929\u795E\u6218\u9774","Quility":5,"PartType":3,"Properties":"6|7|8|9","PropertyValues":"20|20|20|2000"},
 	{"ID":5003,"Name":"\u5929\u795E\u62AB\u98CE","Quility":5,"PartType":2,"Properties":"6|7|8|1","PropertyValues":"40|40|40|40"},
-	{"ID":5004,"Name":"\u5929\u795E\u62A4\u7897","Quility":5,"PartType":1,"Properties":"6|7|8","PropertyValues":"30|30|30"},
+	{"ID":5004,"Name":"\u5929\u795E\u62A4\u7897","Quility":5,"PartType":1,"Properties":"6|7|8|10","PropertyValues":"30|30|30|3000"},
 	{"ID":5005,"Name":"\u5438\u8840\u9762\u7F69","Quility":5,"PartType":0,"Properties":"14","PropertyValues":"3000"}
 ]

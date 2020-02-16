@@ -10,7 +10,6 @@ using XNet.Libs.Utility;
 using ExcelConfig;
 using System.Collections;
 using System.Collections.Generic;
-using UVector3 = UnityEngine.Vector3;
 using GameLogic;
 using GameLogic.Game.Elements;
 using Vector3 = UnityEngine.Vector3;
@@ -66,7 +65,7 @@ public class BattleGate : UGate, IServerMessageHandler
         PreView = UPerceptionView.Create();
         player = new NotifyPlayer(PreView);
 
-        Client = new RequestClient<TaskHandler>(ServerInfo.Host, ServerInfo.Port,false);
+        Client = new RequestClient<TaskHandler>(ServerInfo.Host, ServerInfo.Port, false);
         Client.RegisterHandler(MessageClass.Notify, this);
         Client.OnConnectCompleted += (success) =>
         {
@@ -85,21 +84,20 @@ public class BattleGate : UGate, IServerMessageHandler
                 {
                     if (!r.Code.IsOk())
                     {
-                        UUITipDrawer.Singleton.ShowNotify("BattleServer:" + r.Code);
                         UApplication.Singleton.GoBackToMainGate();
+                        UApplication.S.ShowError(r.Code);
                     }
-                    UUIManager.Singleton.ShowMask(false);
+                    UUIManager.S.ShowMask(false);
                 });
             }
             else
             {
-                UUITipDrawer.Singleton.ShowNotify("Can't login BattleServer!");
-                UApplication.Singleton.GoBackToMainGate();
+                UUITipDrawer.S.ShowNotify("Can't login BattleServer!");
+                UApplication.S.GoBackToMainGate();
             }
         };
         Client.OnDisconnect += OnDisconnect;
         Client.Connect();
-
         player.OnCreateUser = (view) =>
         {
             var character = view as UCharacterView;
@@ -167,6 +165,15 @@ public class BattleGate : UGate, IServerMessageHandler
         }
     }
 
+    internal void DoNormalAttack()
+    {
+        if (!Owner) return;
+
+        Owner.ShowRange(2);
+
+        SendAction(new Action_NormalAttack());
+    }
+
     protected override void ExitGate()
     {
         Client?.Disconnect();
@@ -191,7 +198,7 @@ public class BattleGate : UGate, IServerMessageHandler
         }
     }
 
-    public void SendAction(IMessage action)
+    private void SendAction(IMessage action)
     {
         Client.SendMessage(action.ToAction());
     }

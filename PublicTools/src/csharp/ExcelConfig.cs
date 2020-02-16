@@ -170,15 +170,27 @@ namespace EConfig
         public String BossGroupID { set; get; }
         
         /// <summary>
-        /// boss出现需求杀怪数
+        /// 最大刷怪间隔时间(秒)
         /// </summary>
         [ExcelConfigColIndex(6)]
+        public float MaxRefrshTime { set; get; }
+        
+        /// <summary>
+        /// 怪物最大数量
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int MaxMonster { set; get; }
+        
+        /// <summary>
+        /// boss出现需求杀怪数
+        /// </summary>
+        [ExcelConfigColIndex(8)]
         public int BossNeedKilledNumber { set; get; }
         
         /// <summary>
         /// 描述
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(9)]
         public String Description { set; get; }
 
     }
@@ -749,15 +761,27 @@ namespace EConfig
     public class MagicLevelUpData:JSONConfigBase    {
         
         /// <summary>
-        /// 名称
+        /// ID
         /// </summary>
         [ExcelConfigColIndex(1)]
         public int MagicID { set; get; }
         
         /// <summary>
-        /// 等级
+        /// 需要等级
         /// </summary>
         [ExcelConfigColIndex(2)]
+        public int NeedLevel { set; get; }
+        
+        /// <summary>
+        /// 需求金币
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int NeedGold { set; get; }
+        
+        /// <summary>
+        /// 等级
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public int Level { set; get; }
         
         /// <summary>

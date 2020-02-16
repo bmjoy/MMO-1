@@ -28,31 +28,24 @@ namespace MongoTool
 
         static DataBase()
         {
-            BsonClassMap.RegisterClassMap<AccountEntity>(
-            (cm) =>
-            {
-                cm.AutoMap();
-                _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
-            });
-
             BsonClassMap.RegisterClassMap<GateServerInfoEntity>(
-            cm =>
-            {
-                cm.AutoMap();
-                _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
-            });
+             cm =>
+             {
+                 cm.AutoMap();
+                 _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
+             });
             BsonClassMap.RegisterClassMap<UserSessionInfoEntity>(
+             cm =>
+             {
+                 cm.AutoMap();
+                 _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
+             });
+            BsonClassMap.RegisterClassMap<PlayerBattleServerEntity>(
             cm =>
             {
                 cm.AutoMap();
                 _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
             });
-            BsonClassMap.RegisterClassMap<PlayerBattleServerEntity>(
-           cm =>
-           {
-               cm.AutoMap();
-               _ = cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
-           });
         }
 
         public void Init(string connectString, string db)

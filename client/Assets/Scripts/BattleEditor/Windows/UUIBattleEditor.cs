@@ -90,7 +90,8 @@ namespace Windows
                 EditorStarter.S.isChanged = true;
             });
 
-            bt_normal_att.onClick.AddListener(() => {
+            bt_normal_att.onClick.AddListener(() =>
+            {
                 EditorStarter.S.DoAction(new Proto.Action_NormalAttack());
             });
             //Write Code here

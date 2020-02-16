@@ -117,6 +117,19 @@ namespace Layout.AITree
 		public FieldValue distance =100;
 	}
 
+	[EditorAITreeNode("判断距离出生点", "Cond", "战斗节点/目标", AllowChildType.None)]
+	public class TreedNodeDistanceBornPos : TreeNode
+    {
+		[Label("取值来源")]
+		public DistanceValueOf valueOf = DistanceValueOf.Value;
+
+		[Label("比较类型")]
+		public CompareType compareType = CompareType.Less;
+
+		[Label("距离(cm)")]
+		public FieldValue distance = 100;
+	}
+
 	public enum MagicResultType
 	{
 		Random,

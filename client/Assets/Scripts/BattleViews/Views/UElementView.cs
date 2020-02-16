@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GameLogic.Game.Elements;
 using EngineCore.Simulater;
 using Google.Protobuf;
@@ -24,7 +23,7 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     {
         OnJoined();
         this.Index = index;
-#if UNITY_SERVER
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(ToInitNotify());
 #endif
         PerView.AttachView(this);
@@ -33,7 +32,7 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     void IBattleElement.ExitState(int index)
     {
         PerView.DeAttachView(this);
-#if UNITY_SERVER
+#if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_ElementExitState { Index = Index });
 #endif
         DestorySelf();  

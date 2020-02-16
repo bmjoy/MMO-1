@@ -92,7 +92,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
 
         LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
-        
+
         if (!Agent) return;
         if (MoveForward.HasValue)
         {
@@ -110,6 +110,14 @@ public class UCharacterView : UElementView,IBattleCharacter
         if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
         {
             targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
+        }
+
+        if (hideTime < Time.time)
+        {
+            if (range && range.activeSelf)
+            {
+                range.SetActive(false);
+            }
         }
     }
 
@@ -179,6 +187,10 @@ public class UCharacterView : UElementView,IBattleCharacter
     }
 
     private GameObject ViewRoot;
+
+    private GameObject range;
+    private float hideTime = 0f;
+
 
     public void SetCharacter(GameObject root, GameObject character)
     {
@@ -552,5 +564,20 @@ public class UCharacterView : UElementView,IBattleCharacter
     public bool IsLock(ActionLockType type)
     {
         return (LockValue &(1 << (int)type )) > 0;
+    }
+
+    public void ShowRange(float r)
+    {
+        if (range == null)
+        {
+            range = Instantiate( Resources.Load<GameObject>("Range"), this.GetBoneByName(BottomBone));
+           // range.transform.SetParent(this.GetBoneByName(BottomBone),false);
+            range.transform.RestRTS();
+        }
+
+        range.SetActive(  true);
+        hideTime = Time.time + .5f;
+        range.transform.localScale = Vector3.one * r;
+        
     }
 }

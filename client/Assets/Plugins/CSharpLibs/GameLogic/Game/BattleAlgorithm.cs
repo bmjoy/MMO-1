@@ -57,7 +57,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 攻击最小间隔
         /// </summary>
-        public static float ATTACK_MIN_WAIT = 100;//攻击最低间隔200毫秒
+        public static float ATTACK_MIN_WAIT = 300;//攻击最低间隔300毫秒
         /// <summary>
         /// 力量增加回血速度
         /// </summary>

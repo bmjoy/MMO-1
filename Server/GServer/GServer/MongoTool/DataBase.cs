@@ -12,10 +12,10 @@ using ServerUtility;
 
 namespace GateServer
 {
-    public class DataBase:XSingleton<DataBase>
+    public class DataBase : XSingleton<DataBase>
     {
 
-        public class GamePackageEntity 
+        public class GamePackageEntity
         {
             [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
             [BsonElement("id")]
@@ -56,7 +56,7 @@ namespace GateServer
             }
         }
 
-    public DataBase()
+        public DataBase()
         {
             BsonClassMap.RegisterClassMap<GamePlayerEntity>(
             (cm) =>
@@ -66,7 +66,7 @@ namespace GateServer
             });
 
             var map = new DictionaryInterfaceImplementerSerializer<MapField<string, ItemNum>>(DictionaryRepresentation.Document);
-        
+
 
             BsonClassMap.RegisterClassMap<GameHeroEntity>(
             (cm) =>
@@ -88,11 +88,9 @@ namespace GateServer
         {
             var mongo = new MongoClient(connectString);
             var db = mongo.GetDatabase(dbName);
-
             Playes = db.GetCollection<GamePlayerEntity>(PLAYER);
             Heros = db.GetCollection<GameHeroEntity>(HERO);
             Packages = db.GetCollection<GamePackageEntity>(PACKAGE);
-
         }
     }
 }

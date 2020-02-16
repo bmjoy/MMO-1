@@ -48,11 +48,11 @@ namespace GameLogic.Game.Elements
                 return maxMP;
             }
         }
+
         public float AttackSpeed
         {
             get
             {
-                //500  - 20 *100
                 var time = this[P.MagicWaitTime].FinalValue
                     - BattleAlgorithm.AGILITY_SUBWAITTIME
                     * this[P.Agility].FinalValue;
@@ -226,6 +226,7 @@ namespace GameLogic.Game.Elements
             if (dead) OnDeath();
 			return dead;
 		}
+
         public void AddHP(int hp)
         {
             var maxHP = MaxHP;
@@ -235,6 +236,7 @@ namespace GameLogic.Game.Elements
             if (HP >= maxHP) HP = maxHP;
             View.ShowHPChange(hp, HP, maxHP);
         }
+
         public bool SubMP(int mp)
         {
             if (mp <= 0)
@@ -244,6 +246,7 @@ namespace GameLogic.Game.Elements
             View.ShowMPChange(-mp, MP, this.MaxMP);
             return true;
         }
+
         public bool AddMP(int mp)
         {
             if (mp <= 0) return false;
@@ -253,6 +256,7 @@ namespace GameLogic.Game.Elements
             View.ShowMPChange(mp, MP, MaxMP);
             return true;
         }
+
         public void SetAITree(AITreeRoot root)
         {
             AIRoot = root;
@@ -263,7 +267,7 @@ namespace GameLogic.Game.Elements
             View.LookAtTarget(releaserTarget.Index);
         }
 
-        public void Init()
+        internal void Init()
 		{
             HP = MaxHP;
             MP = MaxMP;
@@ -310,7 +314,6 @@ namespace GameLogic.Game.Elements
 
             return datat;
         }
-
 
         public void AddNormalAttack(int att, int append)
         {
@@ -388,7 +391,7 @@ namespace GameLogic.Game.Elements
             isAppend = false;
             if (LastNormalAttackTime + this.AttackSpeed > now) return false;
 
-            if (AttackCount > 3 && NormalAppend != null)
+            if (AttackCount >2 && NormalAppend != null)
             {
                 isAppend = true;
                 att = NormalAppend;
@@ -397,8 +400,6 @@ namespace GameLogic.Game.Elements
             {
                 att = NormalAttack;
             }
-
-
             return att != null;
         }
 

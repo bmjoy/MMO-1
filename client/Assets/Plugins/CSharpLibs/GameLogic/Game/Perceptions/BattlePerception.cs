@@ -23,14 +23,15 @@ namespace GameLogic.Game.Perceptions
 	public class BattlePerception : GPerception
     {
 
-        /// <summary>
-        /// Distance the specified c1 and c2.
-        /// </summary>
-        /// <param name="c1">C1.</param>
-        /// <param name="c2">C2.</param>
+
         public static float Distance(BattleCharacter c1, BattleCharacter c2)
         {
             return Math.Max(0, (c1.Position - c2.Position).magnitude - 1);
+        }
+
+        public static float Distance(BattleCharacter c1, UVector3 c2)
+        {
+            return Math.Max(0, (c1.Position - c2).magnitude - .5f);
         }
 
         public static bool InviewSide(BattleCharacter ower , BattleCharacter target, float viewDistance, float angle)
