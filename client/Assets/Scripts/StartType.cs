@@ -20,9 +20,10 @@ public class StartType : MonoBehaviour
         yield return SceneManager.LoadSceneAsync("Welcome", LoadSceneMode.Additive);
 
         yield return new WaitForEndOfFrame();
-  
+
 #if UNITY_SERVER
         scene = "Server";
+        Application.targetFrameRate = 30;
 #else
 #if !UNITY_EDITOR
         scene = "Application";
