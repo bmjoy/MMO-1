@@ -25,7 +25,7 @@ namespace GServer
             else
             {
 
-                var testHost = "192.168.1.104";
+                var testHost = "129.211.9.75";
 
                 json = "{" +
                     "\"ListenPort\":1700," +

@@ -240,3 +240,4 @@ Icon\r
 /client/*.unityproj
 /client/client.sln
 /Server/GServer/.vs
+/ServerOut

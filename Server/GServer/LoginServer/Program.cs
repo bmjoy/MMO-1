@@ -19,11 +19,10 @@ namespace LoginServer
             {
                 var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, args[0]);
                 json = File.ReadAllText(file, new UTF8Encoding(false));
-               
             }
             else
             {
-                var testHost = "192.168.1.104";
+                var testHost = "129.211.9.75";
                 json = "{" +
                     "\"ListenPort\":1900," +
                     "\"ServicePort\":1800," +
