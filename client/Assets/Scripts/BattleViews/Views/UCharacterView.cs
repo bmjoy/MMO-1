@@ -371,7 +371,7 @@ public class UCharacterView : UElementView,IBattleCharacter
     bool IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
 
-        if (!this) return;
+        if (!this) return false;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveTo
         {
