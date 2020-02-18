@@ -28,7 +28,7 @@ namespace Windows
         }
 
 
-        protected GridLayoutGroup Grid;
+        protected RoundGridLayout Grid;
         protected Text Time;
         protected Button bt_Exit;
         protected RectTransform Text;
@@ -43,7 +43,7 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            Grid = FindChild<GridLayoutGroup>("Grid");
+            Grid = FindChild<RoundGridLayout>("Grid");
             Time = FindChild<Text>("Time");
             bt_Exit = FindChild<Button>("bt_Exit");
             Text = FindChild<RectTransform>("Text");

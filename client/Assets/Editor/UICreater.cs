@@ -234,6 +234,7 @@ namespace Windows
     private bool createModelFile = false;
 
     private static Type[] types = new Type[]{
+        typeof(RoundGridLayout),
         typeof(GridLayoutGroup),
         typeof(VerticalLayoutGroup),
         typeof(Button),
@@ -275,7 +276,7 @@ namespace Windows
                 if (!Names.ContainsKey(ui.name))
                 {
                     Names.Add(ui.name, ui.GetType().Name);
-					if (typeof(GridLayoutGroup) == ui.GetType())
+					if (typeof(GridLayoutGroup) == ui.GetType()||typeof(RoundGridLayout) == ui.GetType())
                     {
                         var table = new TableComponent();
                         table.Name = ui.name;

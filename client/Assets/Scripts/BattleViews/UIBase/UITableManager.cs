@@ -147,9 +147,9 @@ public class UITableManager<T> : IEnumerable<T> where T : UITableItem, new()
 		return this._items.Take(_count).GetEnumerator();
 	}
 
-	private GridLayoutGroup currentGrid;
+	private LayoutGroup currentGrid;
 	private VerticalLayoutGroup currentTable;
-    public void InitFromGrid(GridLayoutGroup grid)
+    public void InitFromGrid(LayoutGroup grid)
 	{
 		currentGrid = grid;
 		Init(grid.transform);
