@@ -237,3 +237,7 @@ Icon\r
 
 /Server/GServer/.vs
 .vs/
+/client/*.unityproj
+/client/client.sln
+/Server/GServer/.vs
+/ServerOut

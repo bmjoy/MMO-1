@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,10 +11,6 @@
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Class1.cs" />
-    <Compile Remove="Json\Class1.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Json\.DS_Store" />
     <None Remove="Json\obj\Json.csproj.nuget.cache" />
     <None Remove="Json\obj\Json.csproj.nuget.g.props" />
@@ -22,8 +18,5 @@
     <None Remove="Json\obj\project.assets.json" />
     <None Remove="Json\obj\Release\netstandard2.0\Json.assets.cache" />
     <None Remove="Json\obj\Release\netstandard2.0\Json.csprojAssemblyReference.cache" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
   </ItemGroup>
 </Project>

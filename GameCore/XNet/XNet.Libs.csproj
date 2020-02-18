@@ -8,13 +8,13 @@
     <NoStdLib>false</NoStdLib>
     <DocumentationFile>bin\Debug\netstandard2.0\XNet.Libs.xml</DocumentationFile>
     <Optimize>true</Optimize>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   
   <ItemGroup>
-    <Reference Include="mscorlib" />
     <Reference Include="Google.Protobuf">
       <HintPath>..\..\PublicTools\ToolBin\Google.Protobuf.dll</HintPath>
     </Reference>
