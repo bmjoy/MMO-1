@@ -7,10 +7,8 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="GServer" expanded="True">
-            <Node name="GateServer" expanded="True">
-              <Node name="Utility" expanded="True">
-                <Node name="ProtoExtends.cs" selected="True" />
-              </Node>
+            <Node name="LoginServer" expanded="True" selected="True">
+              <Node name="Dependencies" expanded="True" />
             </Node>
           </Node>
         </State>

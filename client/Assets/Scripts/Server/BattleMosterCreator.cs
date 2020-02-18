@@ -46,11 +46,12 @@ namespace Server
 
             if (CountKillCount < LevelData.BossNeedKilledNumber)
             {
-                CountKillCount = 0;
+                
                 groups = LevelData.MonsterGroupID.SplitToInt();
             }
             else
             {
+                CountKillCount = 0;
                 groups = LevelData.BossGroupID.SplitToInt();
             }
 

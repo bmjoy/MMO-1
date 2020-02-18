@@ -13,7 +13,6 @@ using GameLogic.Game.Elements;
 using XNet.Libs.Utility;
 using Google.Protobuf;
 using GameLogic.Game.AIBehaviorTree;
-using Layout.LayoutEffects;
 using System.Linq;
 using EConfig;
 using UGameTools;
@@ -340,15 +339,12 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             if (i.Value.Client.TryGetActionMessage(out Message msg))
             {
                 IMessage action = msg.AsAction();
-                //Debug.Log($"client {i.Key} {action}");
                 if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))
                 {
                     if (p.HeroCharacter?.AIRoot != null)
                     {
-                        //保存到AI
-                        Debug.Log($"[{p.HeroCharacter.Index}]{p.HeroCharacter.Name} {action}");
                         p.HeroCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
+                        //p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }
             }
