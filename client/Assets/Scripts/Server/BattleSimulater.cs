@@ -25,6 +25,8 @@ using Layout.AITree;
 using Layout;
 using System.Threading.Tasks;
 using Proto.GateBattleServerService;
+using System;
+using System.IO;
 
 public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRunner
 {
@@ -106,7 +108,20 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
     private IEnumerator Begin()
     {
+
+        string CommandLine = Environment.CommandLine;
+        string[] CommandLineArgs = Environment.GetCommandLineArgs();
         var config = ResourcesManager.S.ReadStreamingFile("server.json");
+
+        if (CommandLineArgs.Length >1)
+        {
+            var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CommandLineArgs[1]);
+            config = File.ReadAllText(file);
+            Debug.Log($"{file}");
+        }
+
+        Debug.Log($"{config}");
+
         var battleServer = BattleServerConfig.Parser.ParseJson(config); ;
         new CM(ResourcesManager.S);
 
