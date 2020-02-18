@@ -30,13 +30,16 @@ public class MissileFollowPath : MonoBehaviour
 	}
 	void Update()
 	{
+		if (!Target)
+		{
+			return;
+		}
 		switch (state)
 		{
 			case MissileMoveState.NoStart:
 				break;
 			case MissileMoveState.Actived:
-				if (Actived)
-					Actived.gameObject.SetActive(true);
+				if (Actived) Actived.gameObject.SetActive(true);
 				state = MissileMoveState.Moveing;
 				if (Moveing)
 				{
@@ -73,6 +76,4 @@ public class MissileFollowPath : MonoBehaviour
 		this.Speed = speed;
 		state = MissileMoveState.Actived;
 	}
-
-
 }

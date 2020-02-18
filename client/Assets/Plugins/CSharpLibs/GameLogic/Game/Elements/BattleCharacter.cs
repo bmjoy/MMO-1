@@ -215,17 +215,17 @@ namespace GameLogic.Game.Elements
             View.StopMove(Position.ToPV3());
         }
 
-		public bool SubHP(int hp)
-		{
-			if (hp <= 0)  return false;
-			if (HP == 0) return true;
-			HP -= hp;
-			if (HP <= 0) HP = 0;
-			var dead = HP == 0;//is dead
+        public bool SubHP(int hp)
+        {
+            if (hp <= 0) return false;
+            if (HP == 0) return true;
+            HP -= hp;
+            if (HP <= 0) HP = 0;
+            var dead = HP == 0;//is dead
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
-			return dead;
-		}
+            return dead;
+        }
 
         public void AddHP(int hp)
         {

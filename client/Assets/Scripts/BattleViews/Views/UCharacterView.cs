@@ -256,6 +256,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public float GetCdTime(int magicKey)
     {
+        
         if (TryGetMagicData(magicKey, out HeroMagicData cd)) return cd.CDTime;
         return 0;
     }
@@ -270,6 +271,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
+        if (!this) return;
         var f = forward.ToUV3();
         this.LookQuaternion = Quaternion.LookRotation(f);
 #if UNITY_SERVER||UNITY_EDITOR
@@ -310,6 +312,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
     {
+        if (!this) return ;
         this.Agent.Warp(pos.ToUV3());
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetPosition { Index = Index, Position = pos });
@@ -318,6 +321,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.LookAtTarget(int target)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
@@ -328,6 +332,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_PropertyValue { Index = Index, Type = type, FinallyValue = finalValue });
 #endif
@@ -335,6 +340,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetAlpha(float alpha)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
 #endif
@@ -343,6 +349,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.PlayMotion(string motion)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
 #endif
@@ -364,6 +371,7 @@ public class UCharacterView : UElementView,IBattleCharacter
     bool IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
 
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveTo
         {
@@ -399,7 +407,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         get
         {
             if (MoveForward.HasValue) return true;
-            if (!this.transform) return false;
+            if (!this) return false;
             return targetPos.HasValue && Vector3.Distance(targetPos.Value, this.transform.position) > 0.2f;
         }
     }
@@ -415,7 +423,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
-        if (!transform) return;
+        if (!this) return;
         if (Vector3.Distance(transform.localPosition, pos.ToUV3()) > 0.5f)
         {
             transform.position = pos.ToUV3();
@@ -428,6 +436,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.Death ()
 	{
+        if (!this) return;
         var view = this as IBattleCharacter;
 		view.PlayMotion (Die_Motion);
         StopMove();
@@ -442,6 +451,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetSpeed(float speed)
     {
+        if (!this) return;
         this.Speed = speed;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSpeed { Index = Index, Speed = speed });
@@ -450,7 +460,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetPriorityMove (float priorityMove)
     {
-        if (!Agent) return;
+        if (!this) return;
         Agent.avoidancePriority = (int)priorityMove;
 #if UNITY_SERVER|| UNITY_EDITOR
         CreateNotify(new Notify_CharacterPriorityMove { Index = Index, PriorityMove = priorityMove });
@@ -459,6 +469,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetScale(float scale)
     {
+        if (!this) return;
         this.gameObject.transform.localScale = Vector3.one * scale;
 #if UNITY_SERVER|| UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
@@ -467,6 +478,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.ShowHPChange(int hp,int cur,int max)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_HPChange { Index = Index, Cur = cur, Hp = hp, Max = max });
 #endif
@@ -491,6 +503,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
+        if (!this) return;
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
 #endif
@@ -499,6 +512,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
     {
+        if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterAttachMagic { Index = Index,
             MagicId = magicID, CompletedTime = cdCompletedTime });
@@ -520,6 +534,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
     {
+        if (!this) return;
         TryToSetPosition(pos.ToUV3());
         MoveForward = forward.ToUV3();
 #if UNITY_SERVER|| UNITY_EDITOR
@@ -553,6 +568,7 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     void IBattleCharacter.SetLock(int lockValue)
     {
+        if (!this) return;
         LockValue = lockValue;
 #if UNITY_SERVER|| UNITY_EDITOR
         CreateNotify(new Notify_CharacterLock { Index = Index, Lock = lockValue });

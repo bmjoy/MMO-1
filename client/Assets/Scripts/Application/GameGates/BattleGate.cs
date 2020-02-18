@@ -206,7 +206,7 @@ public class BattleGate : UGate, IServerMessageHandler
     public void Handle(Message message, SocketClient client)
     {
         var notify = message.AsNotify();
-        Debug.Log($"{notify.GetType()}->{notify}");
+        //Debug.Log($"{notify.GetType()}->{notify}");
         player.Process(notify);
     }
 
