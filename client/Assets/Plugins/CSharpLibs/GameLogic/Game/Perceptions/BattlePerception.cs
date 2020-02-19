@@ -468,7 +468,7 @@ namespace GameLogic.Game.Perceptions
 
                 if (c.TeamIndex == sources.TeamIndex)
                 {
-                    if (Distance(c, sources) < BattleAlgorithm.HURT_NOTIYY_R)
+                    if (Distance(c, sources) < BattleAlgorithm.HURT_NOTIFY_R)
                     {
                         c.FireEvent(BattleEventType.TeamBeAttack, sources);
                     }

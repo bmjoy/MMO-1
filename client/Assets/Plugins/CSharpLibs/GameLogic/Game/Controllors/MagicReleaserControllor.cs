@@ -15,7 +15,6 @@ namespace GameLogic.Game.Controllors
 		{
 			var releaser = current as MagicReleaser;
             releaser.TickTimeLines(time);
-
 			switch (releaser.State)
 			{
 				case ReleaserStates.NOStart:

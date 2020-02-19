@@ -130,20 +130,22 @@ namespace GameLogic.Game.LayoutLogics
 			if (string.IsNullOrEmpty (layout.effectKey))
 			{
 				return;
-				//throw new Exception ("No Found effect key!");
 			}
 
 			//完成一次目标判定
 			if (targets.Count > 0) 
 			{
-				if (layout.effectType == EffectType.EffectGroup) {
-					var group = linePlayer.TypeEvent.FindGroupByKey (layout.effectKey);
-					if (group == null)
-						return;
-					//相应效果处理
-					foreach (var i in group.effects) {
-						foreach (var t in targets)
-							EffectBaseLogic.EffectActive (t, i, releaser);
+				if (layout.effectType == EffectType.EffectGroup) 
+				{
+					var group = linePlayer.TypeEvent.FindGroupByKey(layout.effectKey);
+					if (group == null) return;
+					foreach (var t in targets)
+					{
+						if (!t) continue;
+						foreach (var i in group.effects)
+						{
+							EffectBaseLogic.EffectActive(t, i, releaser);
+						}
 					}
 				}
 			}

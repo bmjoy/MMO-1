@@ -5,32 +5,18 @@ using GameLogic.Game.Elements;
 using P = Proto.HeroPropertyType;
 namespace GameLogic.Game.States
 {
-	
-	public class BattleState:GState
-	{
-        public BattleState (IViewBase viewBase,IStateLoader loader, ITimeSimulater simulater)
-		{
-			ViewBase = viewBase;
-			Perception = new BattlePerception (this, viewBase.Create (simulater));
-			loader.Load (this);
-		}
 
-		public IViewBase ViewBase{ private set; get; }
-
-
-		protected override void OnInit ()
-		{
-			base.OnInit ();
-
-		}
-
-        protected override void Tick(GTime time)
+    public class BattleState : GState
+    {
+        public BattleState(IViewBase viewBase, IStateLoader loader, ITimeSimulater simulater)
         {
-            base.Tick(time);
-
+            ViewBase = viewBase;
+            Perception = new BattlePerception(this, viewBase.Create(simulater));
+            loader.Load(this);
         }
 
-        float lastHpCure = 0;
+        private float lastHpCure = 0;
+        public IViewBase ViewBase { private set; get; }
 
         private void CureHPAndMp(float time)
         {
@@ -48,6 +34,13 @@ namespace GameLogic.Game.States
                 });
             }
         }
+
+        protected override void Tick(GTime time)
+        {
+            base.Tick(time);
+            CureHPAndMp(time.Time);
+        }
+
     }
 }
 

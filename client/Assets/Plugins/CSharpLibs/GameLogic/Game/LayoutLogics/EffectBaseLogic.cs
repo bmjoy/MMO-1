@@ -53,7 +53,7 @@ namespace GameLogic.Game.LayoutLogics
             }
         }
 
-        [EffectHandleAttribute(typeof(NormalDamageEffect))]
+        [EffectHandle(typeof(NormalDamageEffect))]
         public static void NormalDamage(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var per = releaser.Controllor.Perception as BattlePerception;
@@ -79,17 +79,18 @@ namespace GameLogic.Game.LayoutLogics
             {
                 if (!result.IsMissed)
                 {
-                    var cureHP = (int)(result.Damage * releaser.ReleaserTarget.Releaser[Proto.HeroPropertyType.SuckingRate].FinalValue / 10000f);
+                    var cureHP = (int)(result.Damage *
+                        releaser.ReleaserTarget.Releaser[Proto.HeroPropertyType.SuckingRate].FinalValue / 10000f);
                     if (cureHP > 0)
                         per.CharacterAddHP(releaser.ReleaserTarget.Releaser, cureHP);
                 }
             }
-          
-            per.ProcessDamage(releaser.ReleaserTarget.Releaser,effectTarget, result);
+
+            per.ProcessDamage(releaser.ReleaserTarget.Releaser, effectTarget, result);
         }
 
         //CureEffect
-        [EffectHandleAttribute(typeof(CureEffect))]
+        [EffectHandle(typeof(CureEffect))]
         public static void Cure(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var per = releaser.Controllor.Perception as BattlePerception;

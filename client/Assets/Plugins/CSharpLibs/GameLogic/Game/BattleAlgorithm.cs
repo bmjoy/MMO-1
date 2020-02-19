@@ -37,7 +37,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 力量增加血量
         /// </summary>
-        public static float FORCE_HP = 10;
+        public static float FORCE_HP = 5;
         /// <summary>
         /// 智力增加Mp
         /// </summary>
@@ -61,7 +61,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 力量增加回血速度
         /// </summary>
-        public static float FORCE_CURE_HP =0.1f; //每点力量没秒增加血量
+        public static float FORCE_CURE_HP = 0.1f; //每点力量每秒增加血量
         /// <summary>
         /// 智力增加恢复MP
         /// </summary>
@@ -78,7 +78,7 @@ namespace GameLogic.Game
         /// <summary>
         /// hurt r
         /// </summary>
-        public static float HURT_NOTIYY_R = 10f;
+        public static float HURT_NOTIFY_R = 10f;
 		/// <summary>
 		/// 取中间数
 		/// </summary>

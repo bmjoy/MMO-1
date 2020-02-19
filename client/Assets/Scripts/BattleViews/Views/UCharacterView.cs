@@ -5,14 +5,10 @@ using GameLogic;
 using Quaternion = UnityEngine.Quaternion;
 using Proto;
 using Vector3 = UnityEngine.Vector3;
-using UVector3 = UnityEngine.Vector3;
 using UGameTools;
-using EngineCore.Simulater;
 using Google.Protobuf;
-using System;
 using System.Linq;
 using UnityEngine.AI;
-using GameLogic.Game;
 
 [
 	BoneName("Top","__Top"),
@@ -485,8 +481,10 @@ public class UCharacterView : UElementView,IBattleCharacter
         if (IsDead)  return;
         this.cur = cur;
         this.max = max;
+
+#if !UNITY_EDITOR
         if (hp < 0)
-        {
+        {           
             if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
             {
                 _tips.Add(new HpChangeTip
@@ -499,15 +497,15 @@ public class UCharacterView : UElementView,IBattleCharacter
             }
         }
         showHpBarTime = Time.time + 3;
+#endif
     }
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
 #endif
-        //throw new System.NotImplementedException();
     }
 
     void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
@@ -537,7 +535,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         if (!this) return;
         TryToSetPosition(pos.ToUV3());
         MoveForward = forward.ToUV3();
-#if UNITY_SERVER|| UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
 #endif
     }
@@ -570,7 +568,7 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         if (!this) return;
         LockValue = lockValue;
-#if UNITY_SERVER|| UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterLock { Index = Index, Lock = lockValue });
 #endif
     }

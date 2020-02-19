@@ -16,8 +16,6 @@ namespace GameLogic.Game
 
     public class ActionLock
     {
-        //private int value = 0xFFFFFFF;
-
         public int Value
         {
             get
