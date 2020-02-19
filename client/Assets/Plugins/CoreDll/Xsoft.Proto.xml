@@ -204,14 +204,6 @@
             移动速度
              </summary>
             </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.MagicIdFieldNumber">
-             <summary>Field number for the "MagicId" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CreateBattleCharacter.MagicId">
-             <summary>
-            魔法
-             </summary>
-            </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>
             创建一个飞行物
@@ -344,6 +336,12 @@
             </member>
         <member name="F:Proto.Notify_CharacterAttachMagic.CompletedTimeFieldNumber">
              <summary>Field number for the "CompletedTime" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterAttachMagic.MTypeFieldNumber">
+             <summary>Field number for the "mType" field.</summary>
+            </member>
+        <member name="T:Proto.Notify_CharacterAttachMagic.Types">
+             <summary>Container for nested types declared in the Notify_CharacterAttachMagic message type.</summary>
             </member>
         <member name="F:Proto.Notify_CharacterMoveForward.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>

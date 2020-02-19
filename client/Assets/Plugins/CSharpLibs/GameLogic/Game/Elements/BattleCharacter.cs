@@ -10,18 +10,13 @@ using UVector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using ExcelConfig;
 using Layout.AITree;
+using static Proto.Notify_CharacterAttachMagic.Types;
 
 namespace GameLogic.Game.Elements
 {
 
     public class BattleCharacterMagic
     {
-        public enum MagicType
-        {
-            NORMAL_ATT,
-            NORMAL_APPEND_ATT,
-            MAGIC
-        }
 
         public MagicType Type { private set; get; }
 
@@ -179,7 +174,7 @@ namespace GameLogic.Game.Elements
             foreach (var i in magics)
             {
                 if (Magics.ContainsKey(i.ID)) continue;
-                Magics.Add(i.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.MAGIC, i));
+                Magics.Add(i.ID, new BattleCharacterMagic(MagicType.MtMagic, i));
             }
             var enums = Enum.GetValues(typeof(P));
             foreach (var i in enums)
@@ -210,7 +205,7 @@ namespace GameLogic.Game.Elements
         public bool AddMagic(CharacterMagicData data)
         {
             if (Magics.ContainsKey(data.ID)) return false;
-            Magics.Add(data.ID, new BattleCharacterMagic( BattleCharacterMagic.MagicType.MAGIC, data));
+            Magics.Add(data.ID, new BattleCharacterMagic(MagicType.MtMagic, data));
             return true;
         }
 
@@ -320,7 +315,7 @@ namespace GameLogic.Game.Elements
             if (Magics.TryGetValue(magicID, out BattleCharacterMagic magic))
             {
                 magic.LastTime = now;
-                View.AttachMagic(magic.ConfigId, magic.LastTime + magic.CdTime);
+                View.AttachMagic(magic.Type, magic.ConfigId, magic.LastTime + magic.CdTime);
             }
         }
 
@@ -340,8 +335,8 @@ namespace GameLogic.Game.Elements
             var natt = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
             var nattapp = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
 
-            Magics.Add(natt.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.NORMAL_ATT, natt));
-            if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.NORMAL_ATT, nattapp));
+            Magics.Add(natt.ID, new BattleCharacterMagic(MagicType.MtNormal, natt));
+            if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(MagicType.MtNormalAppend, nattapp));
         }
 
         public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
@@ -393,7 +388,7 @@ namespace GameLogic.Game.Elements
             AttackCount = 0;
         }
 
-        private bool TryGetMaigcByType(BattleCharacterMagic.MagicType magicType, out BattleCharacterMagic magic)
+        private bool TryGetMaigcByType(MagicType magicType, out BattleCharacterMagic magic)
         {
             foreach (var i in Magics)
             {
@@ -407,7 +402,7 @@ namespace GameLogic.Game.Elements
             return false;
         }
 
-        public void EachActiveMagicByType(BattleCharacterMagic.MagicType ty, float time, EachWithBreak call)
+        public void EachActiveMagicByType(MagicType ty, float time, EachWithBreak call)
         {
             foreach (var i in Magics)
             {
@@ -422,12 +417,12 @@ namespace GameLogic.Game.Elements
             att = null;
             isAppend = false;
             if (LastNormalAttackTime + this.AttackSpeed > now) return false;
-            if (AttackCount > 2 && TryGetMaigcByType(BattleCharacterMagic.MagicType.NORMAL_APPEND_ATT, out BattleCharacterMagic m))
+            if (AttackCount > 2 && TryGetMaigcByType(MagicType.MtNormal, out BattleCharacterMagic m))
             {
                 isAppend = true;
                 att = m.Config;
             }
-            else if (TryGetMaigcByType(BattleCharacterMagic.MagicType.NORMAL_ATT, out BattleCharacterMagic n))
+            else if (TryGetMaigcByType(MagicType.MtNormalAppend, out BattleCharacterMagic n))
             {
                 att = n.Config;
             }

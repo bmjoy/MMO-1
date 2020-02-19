@@ -6,6 +6,7 @@ using ExcelConfig;
 using GameLogic.Game.Elements;
 using Layout.AITree;
 using Layout.EditorAttributes;
+using static Proto.Notify_CharacterAttachMagic.Types;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
@@ -21,7 +22,7 @@ namespace GameLogic.Game.AIBehaviorTree
             var root = context as AITreeRoot;
             var key = string.Empty;
             var list = new List<BattleCharacterMagic>();
-            root.Character.EachActiveMagicByType(BattleCharacterMagic.MagicType.MAGIC, root.Time,
+            root.Character.EachActiveMagicByType(MagicType.MtMagic, root.Time,
             (item) =>
             {
                 list.Add(item);

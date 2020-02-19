@@ -390,10 +390,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             return t.CharacterID == data.ID && (MagicReleaseType)t.ReleaseType == MagicReleaseType.MrtMagic;
         });
 
-        var pos = GRandomer.RandomArray(playerBornPositions).transform.position;
+        var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;
         
-        character = per.CreateCharacter(user.GetHero().Level,
-            data, magic.ToList(), 1, pos, new Vector3(0, 0, 0), user.AccountId, user.GetHero().Name);
+        character = per.CreateCharacter(user.GetHero().Level, data,
+            magic.ToList(), 1, pos.position,pos.rotation.eulerAngles , user.AccountId, user.GetHero().Name);
         if (cData != null) character.AddNormalAttack(cData.NormalAttack, cData.NormalAttackAppend);
         //处理装备加成
         foreach (var i in user.GetHero().Equips)

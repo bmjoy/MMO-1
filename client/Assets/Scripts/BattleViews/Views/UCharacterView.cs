@@ -9,6 +9,7 @@ using UGameTools;
 using Google.Protobuf;
 using System.Linq;
 using UnityEngine.AI;
+using static Proto.Notify_CharacterAttachMagic.Types;
 
 [
 	BoneName("Top","__Top"),
@@ -508,12 +509,17 @@ public class UCharacterView : UElementView,IBattleCharacter
 #endif
     }
 
-    void IBattleCharacter.AttachMagic(int magicID, float cdCompletedTime)
+    void IBattleCharacter.AttachMagic(MagicType type, int magicID, float cdCompletedTime)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterAttachMagic { Index = Index,
-            MagicId = magicID, CompletedTime = cdCompletedTime });
+        CreateNotify(new Notify_CharacterAttachMagic
+        {
+            Index = Index,
+            MagicId = magicID,
+            CompletedTime = cdCompletedTime,
+            MType = type
+        });
 #endif
         AddMagicCd(magicID, cdCompletedTime);
     }
