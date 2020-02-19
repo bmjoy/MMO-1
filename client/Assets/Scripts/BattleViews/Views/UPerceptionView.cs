@@ -179,7 +179,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
-        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed, IList<int> magics)
+        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
         var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
@@ -206,11 +206,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
-        if (magics != null)
-        {
-            foreach (var i in magics)
-                view.AddMagicCd(i, GetTime().Time);
-        }
         view.SetCharacter(body, ins);
         return view;
     }

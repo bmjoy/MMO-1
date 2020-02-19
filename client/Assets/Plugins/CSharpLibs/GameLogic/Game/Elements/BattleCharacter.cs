@@ -14,19 +14,52 @@ using Layout.AITree;
 namespace GameLogic.Game.Elements
 {
 
+    public class BattleCharacterMagic
+    {
+        public enum MagicType
+        {
+            NORMAL_ATT,
+            NORMAL_APPEND_ATT,
+            MAGIC
+        }
+
+        public MagicType Type { private set; get; }
+
+        public CharacterMagicData Config { private set; get; }
+
+        public int ConfigId { get { return Config.ID; } }
+
+        public BattleCharacterMagic(MagicType type, CharacterMagicData config)
+        {
+            Type = type;
+            Config = config;
+        }
+
+        public float LastTime { set; get; }
+        public float CdTime { get { return Config.TickTime; } }
+
+        public bool IsCoolDown(float time)
+        {
+            return time > LastTime + CdTime;
+        }
+
+        public float TimeToCd(float time)
+        {
+            return Math.Max(0, (LastTime + CdTime) - time);
+        }
+
+    }
+
+    public delegate bool EachWithBreak(BattleCharacterMagic item);
+
     public class BattleCharacter:BattleElement<IBattleCharacter>
 	{
-
-        private readonly Dictionary<int, ReleaseHistory> _history = new Dictionary<int, ReleaseHistory>();
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
-        public Dictionary<int,CharacterMagicData> Magics { private set; get; }
-        public CharacterMagicData NormalAttack { private set; get; }
-        public CharacterMagicData NormalAppend { private set; get; }
-        public event Action<BattleEventType,object> OnBattleEvent;
+        private Dictionary<int, BattleCharacterMagic> Magics {  set; get; }
         private float LastNormalAttackTime = 0;
 
+        public event Action<BattleEventType, object> OnBattleEvent;
         public string AcccountUuid { private set; get; }
-
         public int AttackCount { private set; get; }
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
@@ -142,11 +175,11 @@ namespace GameLogic.Game.Elements
             AcccountUuid = account_uuid;
 			HP = 0;
 			ConfigID = configID;
-            Magics = new Dictionary<int, CharacterMagicData>();
+            Magics = new Dictionary<int, BattleCharacterMagic>();
             foreach (var i in magics)
             {
                 if (Magics.ContainsKey(i.ID)) continue;
-                Magics.Add(i.ID, i);
+                Magics.Add(i.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.MAGIC, i));
             }
             var enums = Enum.GetValues(typeof(P));
             foreach (var i in enums)
@@ -177,7 +210,7 @@ namespace GameLogic.Game.Elements
         public bool AddMagic(CharacterMagicData data)
         {
             if (Magics.ContainsKey(data.ID)) return false;
-            Magics.Add(data.ID, data);
+            Magics.Add(data.ID, new BattleCharacterMagic( BattleCharacterMagic.MagicType.MAGIC, data));
             return true;
         }
 
@@ -271,7 +304,6 @@ namespace GameLogic.Game.Elements
 		{
             HP = MaxHP;
             MP = MaxMP;
-			_history.Clear();
 		}
 
 		protected void OnDeath()
@@ -285,21 +317,11 @@ namespace GameLogic.Game.Elements
 
         public void AttachMagicHistory(int magicID, float now)
         {
-            var data = ExcelToJSONConfigManager
-                                      .Current.GetConfigByID<CharacterMagicData>(magicID);
-            if (!_history.TryGetValue(magicID, out ReleaseHistory history))
+            if (Magics.TryGetValue(magicID, out BattleCharacterMagic magic))
             {
-                history = new ReleaseHistory
-                {
-                    MagicDataID = magicID,
-                    CdTime = data.TickTime,
-                    LastTime = now
-                };
-                _history.Add(magicID, history);
-
+                magic.LastTime = now;
+                View.AttachMagic(magic.ConfigId, magic.LastTime + magic.CdTime);
             }
-            history.LastTime = now;
-            View.AttachMagic(data.ID, history.LastTime + history.CdTime);
         }
 
         internal bool IsLock(ActionLockType type)
@@ -309,39 +331,25 @@ namespace GameLogic.Game.Elements
 
         public CharacterMagicData GetMagicById(int id)
         {
-
-            Magics.TryGetValue(id, out CharacterMagicData datat);
-
-            return datat;
+            if (!Magics.TryGetValue(id, out BattleCharacterMagic datat)) return null;
+            return datat.Config;
         }
 
         public void AddNormalAttack(int att, int append)
         {
-            NormalAttack = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
-            NormalAppend = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
+            var natt = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
+            var nattapp = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
+
+            Magics.Add(natt.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.NORMAL_ATT, natt));
+            if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(BattleCharacterMagic.MagicType.NORMAL_ATT, nattapp));
         }
 
-		public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
-		{
-            bool isOK = true;
-            if (_history.TryGetValue(magicID, out ReleaseHistory h))
-			{ 
-				isOK = h.IsCoolDown(now); 
-			}
-			if (autoAttach)
-			{
-				AttachMagicHistory(magicID, now);
-			}
-			return isOK;
-		}
-
-        public float GetCoolDwon(int magicID)
+        public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
         {
-            if (_history.TryGetValue(magicID, out ReleaseHistory h))
-            {
-                return h.CdTime;
-            }
-            return 0;
+            bool isOK = true;
+            if (Magics.TryGetValue(magicID, out BattleCharacterMagic h)) isOK = h.IsCoolDown(now);
+            if (autoAttach) AttachMagicHistory(magicID, now);
+            return isOK;
         }
 
         public void ModifyValue(P property, AddType addType, float resultValue)
@@ -385,20 +393,43 @@ namespace GameLogic.Game.Elements
             AttackCount = 0;
         }
 
+        private bool TryGetMaigcByType(BattleCharacterMagic.MagicType magicType, out BattleCharacterMagic magic)
+        {
+            foreach (var i in Magics)
+            {
+                if (i.Value.Type == magicType)
+                {
+                    magic = i.Value;
+                    return true;
+                }
+            }
+            magic = null;
+            return false;
+        }
+
+        public void EachActiveMagicByType(BattleCharacterMagic.MagicType ty, float time, EachWithBreak call)
+        {
+            foreach (var i in Magics)
+            {
+                if (i.Value.Type != ty) continue;
+                if (!i.Value.IsCoolDown(time)) continue;
+                if (call?.Invoke(i.Value) == true) break;
+            }
+        }
+
         public bool TryGetNormalAtt(float now, out CharacterMagicData att, out bool isAppend)
         {
             att = null;
             isAppend = false;
             if (LastNormalAttackTime + this.AttackSpeed > now) return false;
-
-            if (AttackCount >2 && NormalAppend != null)
+            if (AttackCount > 2 && TryGetMaigcByType(BattleCharacterMagic.MagicType.NORMAL_APPEND_ATT, out BattleCharacterMagic m))
             {
                 isAppend = true;
-                att = NormalAppend;
+                att = m.Config;
             }
-            else
+            else if (TryGetMaigcByType(BattleCharacterMagic.MagicType.NORMAL_ATT, out BattleCharacterMagic n))
             {
-                att = NormalAttack;
+                att = n.Config;
             }
             return att != null;
         }

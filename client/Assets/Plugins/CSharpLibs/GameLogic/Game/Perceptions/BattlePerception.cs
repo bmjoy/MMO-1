@@ -114,7 +114,7 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, magics.Select(t=>t.ID).ToList());
+                data.MoveSpeed);
 
             var battleCharacter = new BattleCharacter(data.ID, magics, this.BattleCharacterControllor, view, accountUuid);
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);

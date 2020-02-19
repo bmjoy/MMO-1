@@ -3,91 +3,73 @@ using System.Collections.Generic;
 using BehaviorTree;
 using EConfig;
 using ExcelConfig;
+using GameLogic.Game.Elements;
 using Layout.AITree;
 using Layout.EditorAttributes;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-	[TreeNodeParse(typeof(TreeNodeSelectCanReleaseMagic))]
-	public class ActionSelectCanReleaseMagic:ActionComposite<TreeNodeSelectCanReleaseMagic>
-	{
+    [TreeNodeParse(typeof(TreeNodeSelectCanReleaseMagic))]
+    public class ActionSelectCanReleaseMagic : ActionComposite<TreeNodeSelectCanReleaseMagic>
+    {
         public ActionSelectCanReleaseMagic(TreeNodeSelectCanReleaseMagic node) : base(node) { }
 
-		private readonly HashSet<int> releaseHistorys = new HashSet<int>();
-
-        [Label("当前魔法")]
-        public string key;
+        private readonly HashSet<int> releaseHistorys = new HashSet<int>();
 
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             var root = context as AITreeRoot;
-            key = string.Empty;
-
-            var magics = root.Character.Magics;
-            if (magics == null || magics.Count == 0)
+            var key = string.Empty;
+            var list = new List<BattleCharacterMagic>();
+            root.Character.EachActiveMagicByType(BattleCharacterMagic.MagicType.MAGIC, root.Time,
+            (item) =>
             {
-                yield return RunStatus.Failure;
-                yield break;
-            }
-
-            var list = new List<CharacterMagicData>();
-            foreach (var i in magics)
-            {
-                if (i.Value.ReleaseType == (int)Proto.MagicReleaseType.MrtNormalAttack)
-                {
-                    if (root.Character.IsCoolDown(i.Key, root.Time, false))
-                    {
-                        list.Add(i.Value);
-                    }
-                }
-            }
+                list.Add(item);
+                return false;
+            });
 
             if (list.Count == 0)
             {
-                if (context.IsDebug) Attach("normalAttack", list.Count);
+                if (root.IsDebug) Attach("failure", $"nofound {list.Count}");
                 yield return RunStatus.Failure;
                 yield break;
             }
-
-            int result = -1;
+            BattleCharacterMagic result = null;
             switch (Node.resultType)
             {
                 case MagicResultType.Random:
-                    result = GRandomer.RandomList(list).ID;
+                    result = GRandomer.RandomList(list);
                     break;
                 case MagicResultType.Frist:
-                    result = list[0].ID;
+                    result = list[0];
                     break;
                 case MagicResultType.Sequence:
                     foreach (var i in list)
                     {
-                        if (releaseHistorys.Contains(i.ID)) continue;
-                        result = i.ID;
+                        if (releaseHistorys.Contains(i.ConfigId)) continue;
+                        result = i;
                     }
-                    if (result == -1)
+                    if (result == null)
                     {
                         releaseHistorys.Clear();
-                        result = list[0].ID;
+                        result = list[0];
                     }
-                    releaseHistorys.Add(result);
+                    releaseHistorys.Add(result.ConfigId);
                     break;
             }
-            if (result == -1)
+            if (result == null)
             {
-
                 yield return RunStatus.Failure;
                 yield break;
             }
 
-            root[AITreeRoot.SELECT_MAGIC_ID] = result;
-            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(result);
+            root[AITreeRoot.SELECT_MAGIC_ID] = result.ConfigId;
+            var config = result.Config;
             if (config != null) key = config.MagicKey;
-            if (context.IsDebug) Attach("select result", key);
-
+            if (context.IsDebug) Attach("select result", $"{result.ConfigId}-{key}");
             yield return RunStatus.Success;
+            yield break;
         }
-
-
-	}
+    }
 }
 

@@ -82,7 +82,6 @@ message Notify_CreateBattleCharacter
 	 int32 Level=7; //等级
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
-	 repeated int32 MagicId = 16;//魔法
 }
 
 //创建一个飞行物
@@ -172,9 +171,16 @@ message Notify_CharacterSetScale
 
 message Notify_CharacterAttachMagic
 {
+	enum MagicType
+	{
+		 MT_Normal = 0;
+		 MT_Normal_Append =1;
+		 MT_Magic = 2;
+	}
 	int32 Index  =1;
 	int32 MagicId =2;
 	float CompletedTime = 3;
+	MagicType mType = 4;
 }
 message Notify_CharacterMoveForward
 {
@@ -251,6 +257,7 @@ message Notify_CharacterLock
 	int32 Index =1;
 	int32 Lock = 2;
 }
+
 
 service NotifyService
 {

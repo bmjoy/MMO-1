@@ -482,7 +482,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         this.cur = cur;
         this.max = max;
 
-#if !UNITY_EDITOR
+#if !UNITY_SERVER
         if (hp < 0)
         {           
             if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
@@ -543,7 +543,6 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public override IMessage ToInitNotify()
     {
-        
         var createNotity = new Notify_CreateBattleCharacter
         {
             Index =Index,
@@ -556,9 +555,6 @@ public class UCharacterView : UElementView,IBattleCharacter
             TeamIndex = TeamId,
             Speed = Speed
         };
-
-        foreach (var i in MagicCds) createNotity.MagicId.Add(i.Key);
-
         return createNotity;
     }
 
