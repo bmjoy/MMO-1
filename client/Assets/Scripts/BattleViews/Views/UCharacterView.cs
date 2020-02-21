@@ -20,7 +20,6 @@ using static Proto.Notify_CharacterAttachMagic.Types;
 ]
 public class UCharacterView : UElementView,IBattleCharacter
 {
-
     private class HpChangeTip
     {
         public int id = -1;
@@ -28,9 +27,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         public int hp;
         public Vector3 pos;
     }
-
     private readonly List<HpChangeTip> _tips = new List<HpChangeTip>();
-
     public string AccoundUuid = string.Empty;
 	private  const string SpeedStr ="Speed";
     private const string TopBone = "Top";
@@ -162,7 +159,6 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         set
         {
-            //Debug.Log($"look:{value} euler:{value.eulerAngles}");
             if (ViewRoot) ViewRoot.transform.rotation = value;
         }
         get
@@ -234,8 +230,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         if (look.magnitude <= 0.01f) return;
         look.y = 0;
         lockRotationTime = Time.time + 0.3f;
-        var qu = Quaternion.LookRotation(look, Vector3.up);
-        LookQuaternion = targetLookQuaternion = qu;
+        LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
     }
 
     private void StopMove()
@@ -251,13 +246,6 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     public bool ShowName { set; get; } = true;
 
-    public float GetCdTime(int magicKey)
-    {
-        
-        if (TryGetMagicData(magicKey, out HeroMagicData cd)) return cd.CDTime;
-        return 0;
-    }
-
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
     {
         if (MagicCds.TryGetValue(magicID, out data)) return true;
@@ -270,7 +258,7 @@ public class UCharacterView : UElementView,IBattleCharacter
     {
         if (!this) return;
         var f = forward.ToUV3();
-        this.LookQuaternion = Quaternion.LookRotation(f);
+        this.LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(f);
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetForword
         {
@@ -323,8 +311,8 @@ public class UCharacterView : UElementView,IBattleCharacter
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
         var v = PerView.GetViewByIndex(target);
-        if (v == null) return;
-        this.LookAt(v.transform);
+        if (!v) return;
+        LookAt(v.transform);
     }
 
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
@@ -595,5 +583,13 @@ public class UCharacterView : UElementView,IBattleCharacter
         hideTime = Time.time + .5f;
         range.transform.localScale = Vector3.one * r;
         
+    }
+
+    void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
+    {
+        if (this) return;
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CharacterPush { Index = Index,  Speed =speed, Length = length});
+#endif
     }
 }
