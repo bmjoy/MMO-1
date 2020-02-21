@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Proto.MongoDB
+namespace Proto
 {
-
     [AttributeUsage(AttributeTargets.Class,AllowMultiple =true)]
     public class IndexAttribute:Attribute
     {
@@ -12,92 +11,104 @@ namespace Proto.MongoDB
             this.Index = index;
             this.TypeOfMessage = tOm;
          }
-
         public int Index { set; get; }
-
         public Type TypeOfMessage { set; get; }
     }
 
-    [Index(10001,typeof(Void))]
-    [Index(10002,typeof(Notify_CharacterAlpha))]
-    [Index(10003,typeof(Notify_CharacterSetPosition))]
-    [Index(10004,typeof(Notify_CreateBattleCharacter))]
-    [Index(10005,typeof(Notify_CreateMissile))]
-    [Index(10006,typeof(Notify_CreateReleaser))]
-    [Index(10007,typeof(Notify_DamageResult))]
-    [Index(10008,typeof(Notify_Drop))]
-    [Index(10009,typeof(Notify_ElementExitState))]
-    [Index(10010,typeof(Notify_HPChange))]
-    [Index(10011,typeof(Notify_LayoutPlayMotion))]
-    [Index(10012,typeof(Notify_LayoutPlayParticle))]
-    [Index(10013,typeof(Notify_LookAtCharacter))]
-    [Index(10014,typeof(Notify_MPChange))]
-    [Index(10015,typeof(Notify_PlayerJoinState))]
-    [Index(10016,typeof(Notify_PropertyValue))]
-    [Index(10017,typeof(Notify_CharacterSetForword))]
-    [Index(10018,typeof(Notify_CharacterMoveTo))]
-    [Index(10019,typeof(Notify_CharacterStopMove))]
-    [Index(10020,typeof(Notify_CharacterDeath))]
-    [Index(10021,typeof(Notify_CharacterPriorityMove))]
-    [Index(10022,typeof(Notify_CharacterSetScale))]
-    [Index(10023,typeof(Notify_CharacterAttachMagic))]
-    [Index(10024,typeof(Notify_CharacterMoveForward))]
-    [Index(10025,typeof(Notify_CharacterSpeed))]
-    [Index(10026,typeof(Notify_CharacterLock))]
-    [Index(10027,typeof(Action_ClickSkillIndex))]
-    [Index(10028,typeof(Action_AutoFindTarget))]
-    [Index(10029,typeof(Action_MoveDir))]
-    [Index(10030,typeof(Action_NormalAttack))]
-    [Index(10031,typeof(C2B_ExitBattle))]
-    [Index(10032,typeof(B2C_ExitBattle))]
-    [Index(10033,typeof(C2B_JoinBattle))]
-    [Index(10034,typeof(B2C_JoinBattle))]
-    [Index(10035,typeof(C2G_Login))]
-    [Index(10036,typeof(G2C_Login))]
-    [Index(10037,typeof(C2G_CreateHero))]
-    [Index(10038,typeof(G2C_CreateHero))]
-    [Index(10039,typeof(C2G_BeginGame))]
-    [Index(10040,typeof(G2C_BeginGame))]
-    [Index(10041,typeof(C2G_GetLastBattle))]
-    [Index(10042,typeof(G2C_GetLastBattle))]
-    [Index(10043,typeof(C2G_OperatorEquip))]
-    [Index(10044,typeof(G2C_OperatorEquip))]
-    [Index(10045,typeof(C2G_SaleItem))]
-    [Index(10046,typeof(G2C_SaleItem))]
-    [Index(10047,typeof(C2G_EquipmentLevelUp))]
-    [Index(10048,typeof(G2C_EquipmentLevelUp))]
-    [Index(10049,typeof(C2G_GMTool))]
-    [Index(10050,typeof(G2C_GMTool))]
-    [Index(10051,typeof(C2G_BuyPackageSize))]
-    [Index(10052,typeof(G2C_BuyPackageSize))]
-    [Index(10053,typeof(Task_G2C_SyncPackage))]
-    [Index(10054,typeof(Task_G2C_SyncHero))]
-    [Index(10055,typeof(Task_G2C_JoinBattle))]
-    [Index(10056,typeof(B2G_GetPlayerInfo))]
-    [Index(10057,typeof(G2B_GetPlayerInfo))]
-    [Index(10058,typeof(B2G_BattleReward))]
-    [Index(10059,typeof(G2B_BattleReward))]
-    [Index(10060,typeof(C2L_Login))]
-    [Index(10061,typeof(L2C_Login))]
-    [Index(10062,typeof(C2L_Reg))]
-    [Index(10063,typeof(L2C_Reg))]
-    [Index(10064,typeof(B2L_RegBattleServer))]
-    [Index(10065,typeof(L2B_RegBattleServer))]
-    [Index(10066,typeof(B2L_EndBattle))]
-    [Index(10067,typeof(L2B_EndBattle))]
-    [Index(10068,typeof(B2L_CheckSession))]
-    [Index(10069,typeof(L2B_CheckSession))]
-    [Index(10070,typeof(G2L_GateServerReg))]
-    [Index(10071,typeof(L2G_GateServerReg))]
-    [Index(10072,typeof(G2L_GateCheckSession))]
-    [Index(10073,typeof(L2G_GateCheckSession))]
-    [Index(10074,typeof(G2L_BeginBattle))]
-    [Index(10075,typeof(L2G_BeginBattle))]
-    [Index(10076,typeof(G2L_GetLastBattle))]
-    [Index(10077,typeof(L2G_GetLastBattle))]
-    [Index(10078,typeof(Task_L2B_ExitUser))]
-    [Index(10079,typeof(Task_L2G_ExitUser))]
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple =false)]
+    public class ApiVersionAttribute : Attribute
+    {
+        public ApiVersionAttribute(int m, int dev, int bate)
+        {
+            if (m > 99 || dev > 99 || bate > 99) throw new Exception("must less then 100");
+            v = m* 10000 + dev* 100 + bate;
+        }
+        private readonly int v = 0;
+        public int Version { get { return v; } }
+    }
 
+
+    [Index(1001001,typeof(Void))]
+    [Index(1001002,typeof(Notify_CharacterAlpha))]
+    [Index(1001004,typeof(Notify_CharacterSetPosition))]
+    [Index(1001006,typeof(Notify_CreateBattleCharacter))]
+    [Index(1001008,typeof(Notify_CreateMissile))]
+    [Index(1001010,typeof(Notify_CreateReleaser))]
+    [Index(1001012,typeof(Notify_DamageResult))]
+    [Index(1001014,typeof(Notify_Drop))]
+    [Index(1001016,typeof(Notify_ElementExitState))]
+    [Index(1001018,typeof(Notify_HPChange))]
+    [Index(1001020,typeof(Notify_LayoutPlayMotion))]
+    [Index(1001022,typeof(Notify_LayoutPlayParticle))]
+    [Index(1001024,typeof(Notify_LookAtCharacter))]
+    [Index(1001026,typeof(Notify_MPChange))]
+    [Index(1001028,typeof(Notify_PlayerJoinState))]
+    [Index(1001030,typeof(Notify_PropertyValue))]
+    [Index(1001032,typeof(Notify_CharacterSetForword))]
+    [Index(1001034,typeof(Notify_CharacterMoveTo))]
+    [Index(1001036,typeof(Notify_CharacterStopMove))]
+    [Index(1001038,typeof(Notify_CharacterDeath))]
+    [Index(1001040,typeof(Notify_CharacterPriorityMove))]
+    [Index(1001042,typeof(Notify_CharacterSetScale))]
+    [Index(1001044,typeof(Notify_CharacterAttachMagic))]
+    [Index(1001046,typeof(Notify_CharacterMoveForward))]
+    [Index(1001048,typeof(Notify_CharacterSpeed))]
+    [Index(1001050,typeof(Notify_CharacterLock))]
+    [Index(1002001,typeof(Action_ClickSkillIndex))]
+    [Index(1002003,typeof(Action_AutoFindTarget))]
+    [Index(1002005,typeof(Action_MoveDir))]
+    [Index(1002007,typeof(Action_NormalAttack))]
+    [Index(1003001,typeof(C2B_ExitBattle))]
+    [Index(1003002,typeof(B2C_ExitBattle))]
+    [Index(1003003,typeof(C2B_JoinBattle))]
+    [Index(1003004,typeof(B2C_JoinBattle))]
+    [Index(1004001,typeof(C2G_Login))]
+    [Index(1004002,typeof(G2C_Login))]
+    [Index(1004003,typeof(C2G_CreateHero))]
+    [Index(1004004,typeof(G2C_CreateHero))]
+    [Index(1004005,typeof(C2G_BeginGame))]
+    [Index(1004006,typeof(G2C_BeginGame))]
+    [Index(1004007,typeof(C2G_GetLastBattle))]
+    [Index(1004008,typeof(G2C_GetLastBattle))]
+    [Index(1004009,typeof(C2G_OperatorEquip))]
+    [Index(1004010,typeof(G2C_OperatorEquip))]
+    [Index(1004011,typeof(C2G_SaleItem))]
+    [Index(1004012,typeof(G2C_SaleItem))]
+    [Index(1004013,typeof(C2G_EquipmentLevelUp))]
+    [Index(1004014,typeof(G2C_EquipmentLevelUp))]
+    [Index(1004015,typeof(C2G_GMTool))]
+    [Index(1004016,typeof(G2C_GMTool))]
+    [Index(1004017,typeof(C2G_BuyPackageSize))]
+    [Index(1004018,typeof(G2C_BuyPackageSize))]
+    [Index(1005001,typeof(Task_G2C_SyncPackage))]
+    [Index(1005003,typeof(Task_G2C_SyncHero))]
+    [Index(1005005,typeof(Task_G2C_JoinBattle))]
+    [Index(1006001,typeof(B2G_GetPlayerInfo))]
+    [Index(1006002,typeof(G2B_GetPlayerInfo))]
+    [Index(1006003,typeof(B2G_BattleReward))]
+    [Index(1006004,typeof(G2B_BattleReward))]
+    [Index(1007001,typeof(C2L_Login))]
+    [Index(1007002,typeof(L2C_Login))]
+    [Index(1007003,typeof(C2L_Reg))]
+    [Index(1007004,typeof(L2C_Reg))]
+    [Index(1008001,typeof(B2L_RegBattleServer))]
+    [Index(1008002,typeof(L2B_RegBattleServer))]
+    [Index(1008003,typeof(B2L_EndBattle))]
+    [Index(1008004,typeof(L2B_EndBattle))]
+    [Index(1008005,typeof(B2L_CheckSession))]
+    [Index(1008006,typeof(L2B_CheckSession))]
+    [Index(1008007,typeof(G2L_GateServerReg))]
+    [Index(1008008,typeof(L2G_GateServerReg))]
+    [Index(1008009,typeof(G2L_GateCheckSession))]
+    [Index(1008010,typeof(L2G_GateCheckSession))]
+    [Index(1008011,typeof(G2L_BeginBattle))]
+    [Index(1008012,typeof(L2G_BeginBattle))]
+    [Index(1008013,typeof(G2L_GetLastBattle))]
+    [Index(1008014,typeof(L2G_GetLastBattle))]
+    [Index(1009001,typeof(Task_L2B_ExitUser))]
+    [Index(1010001,typeof(Task_L2G_ExitUser))]
+
+    [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs
     {
         private static readonly Dictionary<int, Type> types = new Dictionary<int, Type>();
@@ -113,7 +124,11 @@ namespace Proto.MongoDB
                 types.Add(t.Index, t.TypeOfMessage);
                 indexs.Add(t.TypeOfMessage, t.Index);
             }
+            var ver = typeof(MessageTypeIndexs).GetCustomAttributes(typeof(ApiVersionAttribute), false) as ApiVersionAttribute[];
+            if (ver != null && ver.Length > 0)
+                Version = ver[0].Version;
         }
+        public static int Version { get; private set; }
 
         /// <summary>
         /// Tries the index of the get.

@@ -8,9 +8,9 @@ namespace Proto.BattleServerService
 {
 
     /// <summary>
-    /// 10030
+    /// 1
     /// </summary>    
-    [API(10030)]
+    [API(1)]
     public class ExitBattle:APIBase<C2B_ExitBattle, B2C_ExitBattle> 
     {
         private ExitBattle() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.BattleServerService
     
 
     /// <summary>
-    /// 10031
+    /// 3
     /// </summary>    
-    [API(10031)]
+    [API(3)]
     public class JoinBattle:APIBase<C2B_JoinBattle, B2C_JoinBattle> 
     {
         private JoinBattle() : base() { }
@@ -31,16 +31,16 @@ namespace Proto.BattleServerService
 
     public interface IBattleServerService
     {
-        [API(10031)]B2C_JoinBattle JoinBattle(C2B_JoinBattle req);
-        [API(10030)]B2C_ExitBattle ExitBattle(C2B_ExitBattle req);
+        [API(3)]B2C_JoinBattle JoinBattle(C2B_JoinBattle req);
+        [API(1)]B2C_ExitBattle ExitBattle(C2B_ExitBattle req);
 
     }
    
 
     public abstract class BattleServerService
     {
-        [API(10031)]public abstract Task<B2C_JoinBattle> JoinBattle(C2B_JoinBattle request);
-        [API(10030)]public abstract Task<B2C_ExitBattle> ExitBattle(C2B_ExitBattle request);
+        [API(3)]public abstract Task<B2C_JoinBattle> JoinBattle(C2B_JoinBattle request);
+        [API(1)]public abstract Task<B2C_ExitBattle> ExitBattle(C2B_ExitBattle request);
 
     }
 

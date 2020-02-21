@@ -29,7 +29,8 @@ namespace Layout.AITree
 
 	public enum BattleEventType
 	{
-        TeamBeAttack
+        TeamBeAttack,
+		Hit
     }
 
 	[EditorAITreeNode("战斗事件", "Event", "战斗节点", AllowChildType.One)]

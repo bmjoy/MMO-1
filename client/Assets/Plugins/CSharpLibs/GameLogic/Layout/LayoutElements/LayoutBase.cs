@@ -10,22 +10,20 @@ namespace Layout.LayoutElements
 		XmlInclude(typeof(DamageLayout)),
 		XmlInclude(typeof(ParticleLayout)),
 		XmlInclude(typeof(LookAtTarget)),
-        XmlInclude(typeof(CallUnitLayout))
+        XmlInclude(typeof(CallUnitLayout)),
+        XmlInclude(typeof(LaunchSelfLayout))
 	]
 	public class LayoutBase
 	{
-		public LayoutBase ()
-		{
-			
-		}
-
 		[HideInEditor]
 		public string GUID;
 
 		public static T CreateInstance<T> ()where T: LayoutBase, new()
 		{
-			var t= new T ();
-			t.GUID = Guid.NewGuid ().ToString ();
+			var t = new T
+			{
+				GUID = Guid.NewGuid().ToString()
+			};
 			return t;
 		}
 

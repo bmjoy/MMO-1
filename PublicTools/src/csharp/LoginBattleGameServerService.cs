@@ -8,9 +8,9 @@ namespace Proto.LoginBattleGameServerService
 {
 
     /// <summary>
-    /// 10048
+    /// 3
     /// </summary>    
-    [API(10048)]
+    [API(3)]
     public class RegBattleServer:APIBase<B2L_RegBattleServer, L2B_RegBattleServer> 
     {
         private RegBattleServer() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10049
+    /// 4
     /// </summary>    
-    [API(10049)]
+    [API(4)]
     public class EndBattle:APIBase<B2L_EndBattle, L2B_EndBattle> 
     {
         private EndBattle() : base() { }
@@ -30,9 +30,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10050
+    /// 5
     /// </summary>    
-    [API(10050)]
+    [API(5)]
     public class CheckSession:APIBase<B2L_CheckSession, L2B_CheckSession> 
     {
         private CheckSession() : base() { }
@@ -41,9 +41,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10051
+    /// 6
     /// </summary>    
-    [API(10051)]
+    [API(6)]
     public class RegGateServer:APIBase<G2L_GateServerReg, L2G_GateServerReg> 
     {
         private RegGateServer() : base() { }
@@ -52,9 +52,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10052
+    /// 7
     /// </summary>    
-    [API(10052)]
+    [API(7)]
     public class GateServerSession:APIBase<G2L_GateCheckSession, L2G_GateCheckSession> 
     {
         private GateServerSession() : base() { }
@@ -63,9 +63,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10053
+    /// 8
     /// </summary>    
-    [API(10053)]
+    [API(8)]
     public class BeginBattle:APIBase<G2L_BeginBattle, L2G_BeginBattle> 
     {
         private BeginBattle() : base() { }
@@ -74,9 +74,9 @@ namespace Proto.LoginBattleGameServerService
     
 
     /// <summary>
-    /// 10054
+    /// 9
     /// </summary>    
-    [API(10054)]
+    [API(9)]
     public class GetLastBattle:APIBase<G2L_GetLastBattle, L2G_GetLastBattle> 
     {
         private GetLastBattle() : base() { }
@@ -86,26 +86,26 @@ namespace Proto.LoginBattleGameServerService
 
     public interface ILoginBattleGameServerService
     {
-        [API(10054)]L2G_GetLastBattle GetLastBattle(G2L_GetLastBattle req);
-        [API(10053)]L2G_BeginBattle BeginBattle(G2L_BeginBattle req);
-        [API(10052)]L2G_GateCheckSession GateServerSession(G2L_GateCheckSession req);
-        [API(10051)]L2G_GateServerReg RegGateServer(G2L_GateServerReg req);
-        [API(10050)]L2B_CheckSession CheckSession(B2L_CheckSession req);
-        [API(10049)]L2B_EndBattle EndBattle(B2L_EndBattle req);
-        [API(10048)]L2B_RegBattleServer RegBattleServer(B2L_RegBattleServer req);
+        [API(9)]L2G_GetLastBattle GetLastBattle(G2L_GetLastBattle req);
+        [API(8)]L2G_BeginBattle BeginBattle(G2L_BeginBattle req);
+        [API(7)]L2G_GateCheckSession GateServerSession(G2L_GateCheckSession req);
+        [API(6)]L2G_GateServerReg RegGateServer(G2L_GateServerReg req);
+        [API(5)]L2B_CheckSession CheckSession(B2L_CheckSession req);
+        [API(4)]L2B_EndBattle EndBattle(B2L_EndBattle req);
+        [API(3)]L2B_RegBattleServer RegBattleServer(B2L_RegBattleServer req);
 
     }
    
 
     public abstract class LoginBattleGameServerService
     {
-        [API(10054)]public abstract Task<L2G_GetLastBattle> GetLastBattle(G2L_GetLastBattle request);
-        [API(10053)]public abstract Task<L2G_BeginBattle> BeginBattle(G2L_BeginBattle request);
-        [API(10052)]public abstract Task<L2G_GateCheckSession> GateServerSession(G2L_GateCheckSession request);
-        [API(10051)]public abstract Task<L2G_GateServerReg> RegGateServer(G2L_GateServerReg request);
-        [API(10050)]public abstract Task<L2B_CheckSession> CheckSession(B2L_CheckSession request);
-        [API(10049)]public abstract Task<L2B_EndBattle> EndBattle(B2L_EndBattle request);
-        [API(10048)]public abstract Task<L2B_RegBattleServer> RegBattleServer(B2L_RegBattleServer request);
+        [API(9)]public abstract Task<L2G_GetLastBattle> GetLastBattle(G2L_GetLastBattle request);
+        [API(8)]public abstract Task<L2G_BeginBattle> BeginBattle(G2L_BeginBattle request);
+        [API(7)]public abstract Task<L2G_GateCheckSession> GateServerSession(G2L_GateCheckSession request);
+        [API(6)]public abstract Task<L2G_GateServerReg> RegGateServer(G2L_GateServerReg request);
+        [API(5)]public abstract Task<L2B_CheckSession> CheckSession(B2L_CheckSession request);
+        [API(4)]public abstract Task<L2B_EndBattle> EndBattle(B2L_EndBattle request);
+        [API(3)]public abstract Task<L2B_RegBattleServer> RegBattleServer(B2L_RegBattleServer request);
 
     }
 

@@ -154,6 +154,14 @@ namespace GameLogic.Game.LayoutLogics
                 releaser.RevertLock(effectTarget, effect.lockType);
             }
         }
+
+
+        [EffectHandle(typeof(BreakEffect))]
+        public static void BreakEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
+        {
+            var per = releaser.Controllor.Perception as BattlePerception;
+            per.BreakReleaserByCharacter(effectTarget, BreakReleaserType.InStartLayoutMagic);
+        }
     }
 }
 

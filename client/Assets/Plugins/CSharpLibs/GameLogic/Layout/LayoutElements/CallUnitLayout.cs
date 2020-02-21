@@ -4,7 +4,7 @@ using Proto;
 
 namespace Layout.LayoutElements
 {
-    [EditorLayoutAttribute("召唤单位")]
+    [EditorLayout("召唤单位")]
     public class CallUnitLayout:LayoutBase
     {
         public CallUnitLayout()

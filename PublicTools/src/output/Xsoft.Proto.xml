@@ -6,22 +6,22 @@
     <members>
         <member name="T:Proto.ActionService.ClickSkillIndex">
             <summary>
-            10026
+            1
             </summary>    
         </member>
         <member name="T:Proto.ActionService.AutoFindTarget">
             <summary>
-            10027
+            2
             </summary>    
         </member>
         <member name="T:Proto.ActionService.MoveDir">
             <summary>
-            10028
+            3
             </summary>    
         </member>
         <member name="T:Proto.ActionService.NormalAttack">
             <summary>
-            10029
+            4
             </summary>    
         </member>
         <member name="T:Proto.BattleServerReflection">
@@ -488,12 +488,12 @@
         </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
             <summary>
-            10030
+            1
             </summary>    
         </member>
         <member name="T:Proto.BattleServerService.JoinBattle">
             <summary>
-            10031
+            3
             </summary>    
         </member>
         <member name="T:Proto.ConstReflection">
@@ -1879,12 +1879,12 @@
         </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
             <summary>
-            10044
+            1
             </summary>    
         </member>
         <member name="T:Proto.GateBattleServerService.BattleReward">
             <summary>
-            10045
+            2
             </summary>    
         </member>
         <member name="T:Proto.GateServerReflection">
@@ -2249,97 +2249,97 @@
         </member>
         <member name="T:Proto.GateServerService.Login">
             <summary>
-            10032
+            1
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.CreateHero">
             <summary>
-            10033
+            2
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.BeginGame">
             <summary>
-            10034
+            3
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.GetLastBattle">
             <summary>
-            10035
+            4
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.OperatorEquip">
             <summary>
-            10036
+            5
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.SaleItem">
             <summary>
-            10037
+            6
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.EquipmentLevelUp">
             <summary>
-            10038
+            7
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.GMTool">
             <summary>
-            10039
+            8
             </summary>    
         </member>
         <member name="T:Proto.GateServerService.BuyPackageSize">
             <summary>
-            10040
+            9
             </summary>    
         </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
             <summary>
-            10041
+            1
             </summary>    
         </member>
         <member name="T:Proto.GateServerTask.SyncHero">
             <summary>
-            10042
+            2
             </summary>    
         </member>
         <member name="T:Proto.GateServerTask.JoinBattle">
             <summary>
-            10043
+            3
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">
             <summary>
-            10048
+            3
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.EndBattle">
             <summary>
-            10049
+            4
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.CheckSession">
             <summary>
-            10050
+            5
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.RegGateServer">
             <summary>
-            10051
+            6
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.GateServerSession">
             <summary>
-            10052
+            7
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.BeginBattle">
             <summary>
-            10053
+            8
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.GetLastBattle">
             <summary>
-            10054
+            9
             </summary>    
         </member>
         <member name="T:Proto.LoginServerReflection">
@@ -2702,25 +2702,25 @@
         </member>
         <member name="T:Proto.LoginServerGateServerTaskServices.ExitUser">
             <summary>
-            10056
+            1
             </summary>    
         </member>
         <member name="T:Proto.LoginServerService.Login">
             <summary>
-            10046
+            1
             </summary>    
         </member>
         <member name="T:Proto.LoginServerService.Reg">
             <summary>
-            10047
+            2
             </summary>    
         </member>
         <member name="T:Proto.LoginServerTaskServices.ExitUser">
             <summary>
-            10055
+            2
             </summary>    
         </member>
-        <member name="M:Proto.MongoDB.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
+        <member name="M:Proto.MessageTypeIndexs.TryGetIndex(System.Type,System.Int32@)">
             <summary>
             Tries the index of the get.
             </summary>
@@ -2728,7 +2728,7 @@
             <param name="type">Type.</param>
             <param name="index">Index.</param>
         </member>
-        <member name="M:Proto.MongoDB.MessageTypeIndexs.TryGetType(System.Int32,System.Type@)">
+        <member name="M:Proto.MessageTypeIndexs.TryGetType(System.Int32,System.Type@)">
             <summary>
             Tries the type of the get.
             </summary>
@@ -2919,127 +2919,127 @@
         </member>
         <member name="T:Proto.NotifyService.CharacterAlpha">
             <summary>
-            10001
+            1
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterPosition">
             <summary>
-            10002
+            2
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CreateBattleCharacter">
             <summary>
-            10003
+            3
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CreateMissile">
             <summary>
-            10004
+            4
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CreateReleaser">
             <summary>
-            10005
+            5
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.DamageResult">
             <summary>
-            10006
+            6
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.Drop">
             <summary>
-            10007
+            7
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.ElementExitState">
             <summary>
-            10008
+            8
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.HPChange">
             <summary>
-            10009
+            11
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.LayoutPlayMotion">
             <summary>
-            10010
+            12
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.LayoutPlayParticle">
             <summary>
-            10011
+            13
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.LookAtCharacter">
             <summary>
-            10012
+            14
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.MPChange">
             <summary>
-            10013
+            15
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.PlayerJoinState">
             <summary>
-            10014
+            16
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.PropertyValue">
             <summary>
-            10015
+            17
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterSetForword">
             <summary>
-            10016
+            19
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterMoveTo">
             <summary>
-            10017
+            20
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterStopMove">
             <summary>
-            10018
+            21
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterDeath">
             <summary>
-            10019
+            22
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterPriorityMove">
             <summary>
-            10020
+            23
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterSetScale">
             <summary>
-            10021
+            24
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterAttachMagic">
             <summary>
-            10022
+            25
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterMoveForward">
             <summary>
-            10023
+            26
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterSpeed">
             <summary>
-            10024
+            27
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.CharacterLock">
             <summary>
-            10025
+            28
             </summary>    
         </member>
     </members>

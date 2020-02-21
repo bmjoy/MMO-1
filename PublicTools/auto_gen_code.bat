@@ -7,10 +7,10 @@ pushd ToolBin
 protoc.exe ../proto/*.proto --csharp_out=%CSHARP_PATH% -I=%IMPORT_PATH%
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 
-PServicePugin.exe dir:../proto file:*.proto saveto:%CSHARP_PATH% debug:false
+PServicePugin.exe dir:../proto file:*.proto saveto:%CSHARP_PATH% version:0.0.1
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 
-ExcelOut.exe dir:../econfigs namespace:EConfig exportJson:../src/json/ exportCs:%CSHARP_PATH%/ExcelConfig.cs ex:*.xlsx debug:true
+ExcelOut.exe dir:../econfigs namespace:EConfig exportJson:../src/json/ exportCs:%CSHARP_PATH%/ExcelConfig.cs ex:*.xlsx debug:false
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 popd
 

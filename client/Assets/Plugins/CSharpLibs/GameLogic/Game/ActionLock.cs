@@ -53,21 +53,37 @@ namespace GameLogic.Game
 
         public void Lock(ActionLockType type)
         {
-            bool isLocked = IsLock(type);
-            Locks[type]++;
-            if (isLocked != IsLock(type))
+            var vals = Enum.GetValues(typeof(ActionLockType));
+            foreach (var v in vals)
             {
-                OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) });
+                if (((int)v & (int)type) > 0)
+                {
+                    var ty = (ActionLockType)v;
+                    bool isLocked = IsLock(ty);
+                    Locks[ty]++;
+                    if (isLocked != IsLock(ty))
+                    {
+                        OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = ty, IsLocked = IsLock(ty) });
+                    }
+                }
             }
         }
 
         public void Unlock(ActionLockType type)
         {
-            bool isLocked = IsLock(type);
-            Locks[type]--;
-            if (isLocked != IsLock(type))
+            var vals = Enum.GetValues(typeof(ActionLockType));
+            foreach (var v in vals)
             {
-                OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = type, IsLocked = IsLock(type) });
+                if (((int)v & (int)type) > 0)
+                {
+                    var ty = (ActionLockType)v;
+                    bool isLocked = IsLock(ty);
+                    Locks[ty]--;
+                    if (isLocked != IsLock(ty))
+                    {
+                        OnStateOnchanged?.Invoke(this, new StateChangedEventArgs { Type = ty, IsLocked = IsLock(ty) });
+                    }
+                }
             }
         }
 

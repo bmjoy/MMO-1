@@ -11,6 +11,7 @@ using P = Proto.HeroPropertyType;
 using ExcelConfig;
 using Layout.AITree;
 using static Proto.Notify_CharacterAttachMagic.Types;
+using UnityEngine;
 
 namespace GameLogic.Game.Elements
 {
@@ -47,6 +48,24 @@ namespace GameLogic.Game.Elements
 
     public delegate bool EachWithBreak(BattleCharacterMagic item);
 
+    public class PushMove
+    {
+        public UVector3 dir;
+
+        public float distance;
+
+        public float speed;
+
+        public PushMove(Quaternion rotation, float dis, float speed)
+        {
+            dir = rotation *UVector3.forward ;
+            distance = dis;
+            this.speed = speed;
+        }
+
+        public Action FinishCall;
+    }
+
     public class BattleCharacter:BattleElement<IBattleCharacter>
 	{
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
@@ -60,7 +79,6 @@ namespace GameLogic.Game.Elements
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
         public UVector3 BronPosition { private set; get; }
-
         public int MaxHP
         {
             get
@@ -76,7 +94,6 @@ namespace GameLogic.Game.Elements
                 return maxMP;
             }
         }
-
         public float AttackSpeed
         {
             get
@@ -145,7 +162,7 @@ namespace GameLogic.Game.Elements
 
         public bool IsMoving { get { return View.IsMoving; } }
 
-        public UnityEngine.Quaternion Rototion
+        public Quaternion Rototion
         {
             get
             {
@@ -253,6 +270,11 @@ namespace GameLogic.Game.Elements
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
             return dead;
+        }
+
+        internal PushMove Push(Quaternion rototion, float distance, float speed)
+        {
+            return null;
         }
 
         public void AddHP(int hp)

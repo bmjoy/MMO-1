@@ -8,9 +8,9 @@ namespace Proto.ActionService
 {
 
     /// <summary>
-    /// 10026
+    /// 1
     /// </summary>    
-    [API(10026)]
+    [API(1)]
     public class ClickSkillIndex:APIBase<Action_ClickSkillIndex, Void> 
     {
         private ClickSkillIndex() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 10027
+    /// 2
     /// </summary>    
-    [API(10027)]
+    [API(2)]
     public class AutoFindTarget:APIBase<Action_AutoFindTarget, Void> 
     {
         private AutoFindTarget() : base() { }
@@ -30,9 +30,9 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 10028
+    /// 3
     /// </summary>    
-    [API(10028)]
+    [API(3)]
     public class MoveDir:APIBase<Action_MoveDir, Void> 
     {
         private MoveDir() : base() { }
@@ -41,9 +41,9 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 10029
+    /// 4
     /// </summary>    
-    [API(10029)]
+    [API(4)]
     public class NormalAttack:APIBase<Action_NormalAttack, Action_NormalAttack> 
     {
         private NormalAttack() : base() { }
@@ -53,20 +53,20 @@ namespace Proto.ActionService
 
     public interface IActionService
     {
-        [API(10029)]Action_NormalAttack NormalAttack(Action_NormalAttack req);
-        [API(10028)]Void MoveDir(Action_MoveDir req);
-        [API(10027)]Void AutoFindTarget(Action_AutoFindTarget req);
-        [API(10026)]Void ClickSkillIndex(Action_ClickSkillIndex req);
+        [API(4)]Action_NormalAttack NormalAttack(Action_NormalAttack req);
+        [API(3)]Void MoveDir(Action_MoveDir req);
+        [API(2)]Void AutoFindTarget(Action_AutoFindTarget req);
+        [API(1)]Void ClickSkillIndex(Action_ClickSkillIndex req);
 
     }
    
 
     public abstract class ActionService
     {
-        [API(10029)]public abstract Task<Action_NormalAttack> NormalAttack(Action_NormalAttack request);
-        [API(10028)]public abstract Task<Void> MoveDir(Action_MoveDir request);
-        [API(10027)]public abstract Task<Void> AutoFindTarget(Action_AutoFindTarget request);
-        [API(10026)]public abstract Task<Void> ClickSkillIndex(Action_ClickSkillIndex request);
+        [API(4)]public abstract Task<Action_NormalAttack> NormalAttack(Action_NormalAttack request);
+        [API(3)]public abstract Task<Void> MoveDir(Action_MoveDir request);
+        [API(2)]public abstract Task<Void> AutoFindTarget(Action_AutoFindTarget request);
+        [API(1)]public abstract Task<Void> ClickSkillIndex(Action_ClickSkillIndex request);
 
     }
 

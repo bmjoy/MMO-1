@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace [NAMESPACE]
+namespace Proto
 {
 
     [AttributeUsage(AttributeTargets.Class,AllowMultiple =true)]
@@ -18,8 +18,21 @@ namespace [NAMESPACE]
         public Type TypeOfMessage { set; get; }
     }
 
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple =false)]
+    public class ApiVersionAttribute : Attribute
+    {
+        public ApiVersionAttribute(int m, int dev, int bate)
+        {
+            if (m > 99 || dev > 99 || bate > 99) throw new Exception("must less then 100");
+            v = m * 10000 + dev * 100 + bate;
+        }
+        private readonly int v = 0;
+        public int Version { get { return v; } }
+    }
 
-    [ATTRIBUTES]
+
+    //[ATTRIBUTES]
+    [ApiVersion(1,1,1)]
     public static class MessageTypeIndexs
     {
         private static readonly Dictionary<int, Type> types = new Dictionary<int, Type>();
@@ -35,7 +48,14 @@ namespace [NAMESPACE]
                 types.Add(t.Index, t.TypeOfMessage);
                 indexs.Add(t.TypeOfMessage, t.Index);
             }
+
+            var ver = typeof(MessageTypeIndexs).GetCustomAttributes(typeof(ApiVersionAttribute), false) as ApiVersionAttribute[];
+            if (ver != null && ver.Length > 0)
+                Version = ver[0].Version;
         }
+
+
+        public static int Version { get; private set; }
 
         /// <summary>
         /// Tries the index of the get.

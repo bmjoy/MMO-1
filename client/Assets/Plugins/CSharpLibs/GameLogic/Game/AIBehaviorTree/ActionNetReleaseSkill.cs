@@ -87,8 +87,7 @@ namespace GameLogic.Game.AIBehaviorTree
             releaser = root
                 .Perception.CreateReleaser(magic.MagicKey, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
             while (!releaser.IsLayoutStartFinish) yield return RunStatus.Running;
-            
-
+           
             yield return RunStatus.Success;
 
         }

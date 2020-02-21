@@ -8,9 +8,9 @@ namespace Proto.LoginServerTaskServices
 {
 
     /// <summary>
-    /// 10055
+    /// 2
     /// </summary>    
-    [API(10055)]
+    [API(2)]
     public class ExitUser:APIBase<Task_L2B_ExitUser, Task_L2B_ExitUser> 
     {
         private ExitUser() : base() { }
@@ -20,14 +20,14 @@ namespace Proto.LoginServerTaskServices
 
     public interface ILoginServerTaskServices
     {
-        [API(10055)]Task_L2B_ExitUser ExitUser(Task_L2B_ExitUser req);
+        [API(2)]Task_L2B_ExitUser ExitUser(Task_L2B_ExitUser req);
 
     }
    
 
     public abstract class LoginServerTaskServices
     {
-        [API(10055)]public abstract Task<Task_L2B_ExitUser> ExitUser(Task_L2B_ExitUser request);
+        [API(2)]public abstract Task<Task_L2B_ExitUser> ExitUser(Task_L2B_ExitUser request);
 
     }
 

@@ -10,15 +10,12 @@ namespace Layout.LayoutEffects
         XmlInclude(typeof(CureEffect)),
         XmlInclude(typeof(AddPropertyEffect)),
         XmlInclude(typeof(BreakReleaserEffect)),
-        XmlInclude(typeof(ModifyLockEffect))
+        XmlInclude(typeof(ModifyLockEffect)),
+		XmlInclude(typeof(BreakEffect))
 	]
 	public class EffectBase
 	{
-		public EffectBase ()
-		{
-			
-		}
-			
+
 		public static T CreateInstance<T>() where T: EffectBase,new()
 		{
 			return new T ();

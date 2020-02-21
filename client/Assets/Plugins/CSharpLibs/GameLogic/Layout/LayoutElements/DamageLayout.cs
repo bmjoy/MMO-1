@@ -25,7 +25,7 @@ namespace Layout.LayoutElements
 		EffectConfig //config
 	}
 
-	[EditorLayoutAttribute("目标判定")]
+	[EditorLayout("目标判定")]
 	public class DamageLayout:LayoutBase
 	{
 		public DamageLayout ()

@@ -8,9 +8,9 @@ namespace Proto.LoginServerService
 {
 
     /// <summary>
-    /// 10046
+    /// 1
     /// </summary>    
-    [API(10046)]
+    [API(1)]
     public class Login:APIBase<C2L_Login, L2C_Login> 
     {
         private Login() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.LoginServerService
     
 
     /// <summary>
-    /// 10047
+    /// 2
     /// </summary>    
-    [API(10047)]
+    [API(2)]
     public class Reg:APIBase<C2L_Reg, L2C_Reg> 
     {
         private Reg() : base() { }
@@ -31,16 +31,16 @@ namespace Proto.LoginServerService
 
     public interface ILoginServerService
     {
-        [API(10047)]L2C_Reg Reg(C2L_Reg req);
-        [API(10046)]L2C_Login Login(C2L_Login req);
+        [API(2)]L2C_Reg Reg(C2L_Reg req);
+        [API(1)]L2C_Login Login(C2L_Login req);
 
     }
    
 
     public abstract class LoginServerService
     {
-        [API(10047)]public abstract Task<L2C_Reg> Reg(C2L_Reg request);
-        [API(10046)]public abstract Task<L2C_Login> Login(C2L_Login request);
+        [API(2)]public abstract Task<L2C_Reg> Reg(C2L_Reg request);
+        [API(1)]public abstract Task<L2C_Login> Login(C2L_Login request);
 
     }
 

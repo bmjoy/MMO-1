@@ -8,9 +8,9 @@ namespace Proto.GateServerTask
 {
 
     /// <summary>
-    /// 10041
+    /// 1
     /// </summary>    
-    [API(10041)]
+    [API(1)]
     public class SyncPackage:APIBase<Task_G2C_SyncPackage, Task_G2C_SyncPackage> 
     {
         private SyncPackage() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.GateServerTask
     
 
     /// <summary>
-    /// 10042
+    /// 2
     /// </summary>    
-    [API(10042)]
+    [API(2)]
     public class SyncHero:APIBase<Task_G2C_SyncHero, Task_G2C_SyncHero> 
     {
         private SyncHero() : base() { }
@@ -30,9 +30,9 @@ namespace Proto.GateServerTask
     
 
     /// <summary>
-    /// 10043
+    /// 3
     /// </summary>    
-    [API(10043)]
+    [API(3)]
     public class JoinBattle:APIBase<Task_G2C_JoinBattle, Task_G2C_JoinBattle> 
     {
         private JoinBattle() : base() { }
@@ -42,18 +42,18 @@ namespace Proto.GateServerTask
 
     public interface IGateServerTask
     {
-        [API(10043)]Task_G2C_JoinBattle JoinBattle(Task_G2C_JoinBattle req);
-        [API(10042)]Task_G2C_SyncHero SyncHero(Task_G2C_SyncHero req);
-        [API(10041)]Task_G2C_SyncPackage SyncPackage(Task_G2C_SyncPackage req);
+        [API(3)]Task_G2C_JoinBattle JoinBattle(Task_G2C_JoinBattle req);
+        [API(2)]Task_G2C_SyncHero SyncHero(Task_G2C_SyncHero req);
+        [API(1)]Task_G2C_SyncPackage SyncPackage(Task_G2C_SyncPackage req);
 
     }
    
 
     public abstract class GateServerTask
     {
-        [API(10043)]public abstract Task<Task_G2C_JoinBattle> JoinBattle(Task_G2C_JoinBattle request);
-        [API(10042)]public abstract Task<Task_G2C_SyncHero> SyncHero(Task_G2C_SyncHero request);
-        [API(10041)]public abstract Task<Task_G2C_SyncPackage> SyncPackage(Task_G2C_SyncPackage request);
+        [API(3)]public abstract Task<Task_G2C_JoinBattle> JoinBattle(Task_G2C_JoinBattle request);
+        [API(2)]public abstract Task<Task_G2C_SyncHero> SyncHero(Task_G2C_SyncHero request);
+        [API(1)]public abstract Task<Task_G2C_SyncPackage> SyncPackage(Task_G2C_SyncPackage request);
 
     }
 

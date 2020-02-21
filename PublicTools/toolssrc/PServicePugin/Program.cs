@@ -15,7 +15,21 @@ namespace PServicePugin
         public string Request;
         public string Response;
         public string Url;
+
+        public override string ToString()
+        {
+            return $"{API}:{Request}->{Response}";
+        }
     }
+
+
+    public class ServiceRpc
+    {
+        public int Index;
+        public List<RPCCall> call = new List<RPCCall>();
+        public string name;
+    }
+   
 
     class Program
     {
@@ -27,17 +41,17 @@ namespace PServicePugin
             regex = new Regex(str); //1 api name , 2 request 3 response
         }
 
-        private static int Index_OF_API = 10000;
         private static HashSet<string> types = new HashSet<string>();
+        private static int s_index = 1000;
+        
 
         static void Main(string[] args)
         {
-            //message class1,class 2
-            //args
             var root = string.Empty;
             var file = string.Empty;
             var fileSave = string.Empty;
             var indexFileName = "MessageIndex.cs";
+            var version = "0.0.0";
             foreach (var i in args)
             {
                 if (i.StartsWith("dir:", StringComparison.CurrentCultureIgnoreCase))
@@ -59,18 +73,21 @@ namespace PServicePugin
                 {
                     indexFileName = i.Replace("index:", "");
                 }
-            }
 
-            Console.WriteLine($"dir:{root} file:{file} saveto:{fileSave} index:{indexFileName}");
+                if (i.StartsWith("version:", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    version = i.Replace("version:", "");
+                }
+            }
+            Console.WriteLine($"dir:{root} file:{file} saveto:{fileSave} index:{indexFileName} version:{version}");
             StringBuilder sb = null;
             var paths = Directory.GetFiles(root, file);
-
             string comment = string.Empty;
             string serives = string.Empty;
             string nameSpace = string.Empty;
-
             Stack<RPCCall> calls =null;
-
+            List<ServiceRpc> callList = new List<ServiceRpc>();
+            ServiceRpc ser_current =null;
             foreach (var path in paths)
             {
                 using (var reader = new StreamReader(path))
@@ -86,15 +103,18 @@ namespace PServicePugin
                         switch (strs[0])
                         {
                             case "package":
-                                nameSpace = strs[1].Replace(";","");
+                                nameSpace = strs[1].Replace(";", "");
                                 //[NAMESPACE]
                                 Console.WriteLine("nameSpace:" + nameSpace);
                                 break;
                             case "service":
+                                s_index++;
                                 serives = strs[1];
                                 sb = new StringBuilder();
                                 Console.WriteLine("service:" + serives);
                                 calls = new Stack<RPCCall>();
+                                ser_current = new ServiceRpc() { Index = s_index, name = serives };
+                                callList.Add(ser_current);
                                 break;
                             case "}":
                                 if (sb != null)
@@ -102,6 +122,7 @@ namespace PServicePugin
 
                                     var callInvokes = new StringBuilder();
                                     var c_callInvokes = new StringBuilder();
+
                                     while (calls.Count > 0)
                                     {
                                         var c = calls.Pop();
@@ -140,17 +161,18 @@ namespace PServicePugin
                                 if (sb == null) throw new Exception("Rpc must in services");
                                 //regex 
                                 //1 api name , 2 request 3 response api url t[1]
-                                Index_OF_API++;
+                                //Index_OF_API++;
                                 ProcessRPC(line, out string api, out string re, out string res, out string url);
-                                url = $"{Index_OF_API}";
+                                //url = $"{Index_OF_API}";
                                 Console.WriteLine($"{url}->rpc {api} ( {re} )return( {res} )");
-                                AddType(re, res);
                                 var code = MessageTemplate.Replace("[Name]", api)
                                     .Replace("[Request]", re).Replace("[Response]", res)
                                     .Replace("[NOTE]", url)
                                     .Replace("[API]", url);
                                 sb.AppendLine(code);
-                                calls?.Push(new RPCCall { API = api, Request = re, Response = res, Url = url });
+                                var cl = new RPCCall { API = api, Request = re, Response = res, Url = url };
+                                calls?.Push(cl);
+                                if (ser_current != null) ser_current.call.Add(cl);
                                 break;
 
                         }
@@ -158,37 +180,39 @@ namespace PServicePugin
                 }
 
             }
-
             var index_sb = new StringBuilder();
+            Dictionary<string, int> types = new Dictionary<string, int>();
+            foreach (var i in callList)
+            {
+                int startIndex =  i.Index*1000;
+                foreach (var c in i.call)
+                {
+                    startIndex++;
+                    if (!types.ContainsKey(c.Request))
+                    {
+                        types.Add(c.Request, startIndex);
+                    }
+                    startIndex++;
+                    if (!types.ContainsKey(c.Response))
+                    {
+                        types.Add(c.Response, startIndex);
+                    }
 
-            short startIndex = 10000;
+                    Console.WriteLine(c.ToString());
+                }
+            }
+
             foreach (var i in types)
             {
-                startIndex++;
-                var str = $"    [Index({startIndex},typeof({i}))]";
+                var str = $"    [Index({i.Value},typeof({i.Key}))]";
                 index_sb.AppendLine(str);
             }
 
             var index_cs = Temple_Index
-            .Replace("[NAMESPACE]", nameSpace.Replace(";",""))
+            .Replace("[VERSION]", version.Replace(".",","))
                 .Replace("[ATTRIBUTES]",index_sb.ToString());
-
             File.WriteAllText(Path.Combine(root, $"{fileSave}/{indexFileName}"), index_cs);
-
         }
-
-        private static void AddType(params string[] tys)
-        {
-
-            foreach (var t in tys)
-            {
-               var  ty = t.Trim();
-                if (types.Contains(ty)) continue;
-                types.Add(ty);
-            }
-        }
-
-
 
         private static bool ProcessRPC(string line, out string api, out string request, out string response, out string apiurl)
         {
@@ -201,8 +225,8 @@ namespace PServicePugin
                 response = match.Groups[3].Value;
 
                 var google = "google.protobuf.";
-                request = request.Replace(google, "");
-                response = response.Replace(google, "");
+                request = request.Replace(google, "").Trim();
+                response = response.Replace(google, "").Trim();
             }
             else throw new Exception($"error:{line}");
             var temp = line.Replace(@"//", "\n");
@@ -253,9 +277,8 @@ namespace [NAMESPACE].[SERVICE]
         private static string Temple_Index = @"using System;
 using System.Collections.Generic;
 
-namespace [NAMESPACE]
+namespace Proto
 {
-
     [AttributeUsage(AttributeTargets.Class,AllowMultiple =true)]
     public class IndexAttribute:Attribute
     {
@@ -264,13 +287,25 @@ namespace [NAMESPACE]
             this.Index = index;
             this.TypeOfMessage = tOm;
          }
-
         public int Index { set; get; }
-
         public Type TypeOfMessage { set; get; }
     }
 
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple =false)]
+    public class ApiVersionAttribute : Attribute
+    {
+        public ApiVersionAttribute(int m, int dev, int bate)
+        {
+            if (m > 99 || dev > 99 || bate > 99) throw new Exception(""must less then 100"");
+            v = m* 10000 + dev* 100 + bate;
+        }
+        private readonly int v = 0;
+        public int Version { get { return v; } }
+    }
+
+
 [ATTRIBUTES]
+    [ApiVersion([VERSION])]
     public static class MessageTypeIndexs
     {
         private static readonly Dictionary<int, Type> types = new Dictionary<int, Type>();
@@ -286,7 +321,11 @@ namespace [NAMESPACE]
                 types.Add(t.Index, t.TypeOfMessage);
                 indexs.Add(t.TypeOfMessage, t.Index);
             }
+            var ver = typeof(MessageTypeIndexs).GetCustomAttributes(typeof(ApiVersionAttribute), false) as ApiVersionAttribute[];
+            if (ver != null && ver.Length > 0)
+                Version = ver[0].Version;
         }
+        public static int Version { get; private set; }
 
         /// <summary>
         /// Tries the index of the get.

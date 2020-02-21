@@ -222,7 +222,20 @@ namespace GameLogic.Game.LayoutLogics
             releaser.OnEvent( Layout.EventType.EVENT_UNIT_CREATE);
             per.ChangeCharacterAI(data.AIResourcePath,unit);
         }
-        #endregion
+		#endregion
+
+		#region LaunchSelfLayout
+
+		[HandleLayout(typeof(LaunchSelfLayout))]
+		public static void LaunchSelftActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
+		{
+			var launch  = layoutBase as LaunchSelfLayout;
+			var releaser = linePlayer.Releaser;
+			var charachter = releaser.ReleaserTarget.Releaser;
+			var push= charachter.Push(charachter.Rototion, launch.distance, launch.speed);
+		}
+		#endregion
+
 	}
 }
 
