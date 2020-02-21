@@ -8,9 +8,9 @@ namespace Proto.GateBattleServerService
 {
 
     /// <summary>
-    /// 10055
+    /// 10044
     /// </summary>    
-    [API(10055)]
+    [API(10044)]
     public class GetPlayerInfo:APIBase<B2G_GetPlayerInfo, G2B_GetPlayerInfo> 
     {
         private GetPlayerInfo() : base() { }
@@ -19,9 +19,9 @@ namespace Proto.GateBattleServerService
     
 
     /// <summary>
-    /// 10056
+    /// 10045
     /// </summary>    
-    [API(10056)]
+    [API(10045)]
     public class BattleReward:APIBase<B2G_BattleReward, G2B_BattleReward> 
     {
         private BattleReward() : base() { }
@@ -31,16 +31,16 @@ namespace Proto.GateBattleServerService
 
     public interface IGateBattleServerService
     {
-        [API(10056)]G2B_BattleReward BattleReward(B2G_BattleReward req);
-        [API(10055)]G2B_GetPlayerInfo GetPlayerInfo(B2G_GetPlayerInfo req);
+        [API(10045)]G2B_BattleReward BattleReward(B2G_BattleReward req);
+        [API(10044)]G2B_GetPlayerInfo GetPlayerInfo(B2G_GetPlayerInfo req);
 
     }
    
 
     public abstract class GateBattleServerService
     {
-        [API(10056)]public abstract Task<G2B_BattleReward> BattleReward(B2G_BattleReward request);
-        [API(10055)]public abstract Task<G2B_GetPlayerInfo> GetPlayerInfo(B2G_GetPlayerInfo request);
+        [API(10045)]public abstract Task<G2B_BattleReward> BattleReward(B2G_BattleReward request);
+        [API(10044)]public abstract Task<G2B_GetPlayerInfo> GetPlayerInfo(B2G_GetPlayerInfo request);
 
     }
 

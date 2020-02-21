@@ -38,7 +38,10 @@ namespace Proto.PServices
     {
 
 
-        protected APIBase() { }
+        protected APIBase() 
+        {
+            TimeOut = 10000;//10s
+        }
 
         public int API
         {
@@ -86,7 +89,8 @@ namespace Proto.PServices
         {
             this.QueryRespons = response;
             this.IsDone = true;
-            Callback?.Invoke(QueryRespons);
+            if(Callback!=null)
+               Callback.Invoke(QueryRespons);
             return this;
         }
 
@@ -99,7 +103,7 @@ namespace Proto.PServices
             this.SetResponse((Response)message);
         }
 
-        public float TimeOut{set;get;} = 10000; //10s
+        public float TimeOut{set;get;}
 
         public async Task<Response> SendAsync(IChannel channel, Request request)
         {
