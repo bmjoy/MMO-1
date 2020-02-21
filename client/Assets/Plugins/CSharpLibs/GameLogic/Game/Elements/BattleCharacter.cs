@@ -50,11 +50,11 @@ namespace GameLogic.Game.Elements
 
     public class PushMove
     {
-        public UVector3 dir;
+        private UVector3 dir;
 
-        public float distance;
+        private float distance;
 
-        public float speed;
+        private float speed;
 
         public PushMove(Quaternion rotation, float dis, float speed)
         {
@@ -64,6 +64,10 @@ namespace GameLogic.Game.Elements
         }
 
         public Action FinishCall;
+
+        public UVector3 Length { get { return dir * distance; } }
+
+        public UVector3 Speed { get { return dir * speed; } }
     }
 
     public class BattleCharacter:BattleElement<IBattleCharacter>
@@ -170,7 +174,7 @@ namespace GameLogic.Game.Elements
             }
         }
 
-        public UnityEngine.Transform Transform { get { return this.View.RootTransform; } }
+        public Transform Transform { get { return this.View.RootTransform; } }
         //property
         public ComplexValue this[P type]
         {
@@ -274,14 +278,15 @@ namespace GameLogic.Game.Elements
 
         internal PushMove Push(Quaternion rototion, float distance, float speed)
         {
-            return null;
+            var push = new PushMove(rototion, distance, speed);
+            View.Push(push.Length.ToPV3(), push.Speed.ToPV3());
+            return push;
         }
 
         public void AddHP(int hp)
         {
             var maxHP = MaxHP;
-            if (hp <= 0) return;
-            if (HP >= maxHP) return;
+            if (hp <= 0 || HP >= maxHP) return;
             HP += hp;
             if (HP >= maxHP) HP = maxHP;
             View.ShowHPChange(hp, HP, maxHP);
@@ -289,9 +294,7 @@ namespace GameLogic.Game.Elements
 
         public bool SubMP(int mp)
         {
-            if (mp <= 0)
-                return false;
-            if (MP - mp < 0) return false;
+            if (mp <= 0 || MP - mp < 0) return false;
             MP -= mp;
             View.ShowMPChange(-mp, MP, this.MaxMP);
             return true;
@@ -300,7 +303,6 @@ namespace GameLogic.Game.Elements
         public bool AddMP(int mp)
         {
             if (mp <= 0) return false;
-
             MP += mp;
             if (MP >= MaxMP) MP = MaxMP;
             View.ShowMPChange(mp, MP, MaxMP);

@@ -258,6 +258,12 @@ message Notify_CharacterLock
 	int32 Lock = 2;
 }
 
+message Notify_CharacterPush
+{
+	int32 Index =1;
+	Vector3 Length =2;
+	Vector3 Speed =3;
+}
 
 service NotifyService
 {
@@ -286,6 +292,7 @@ service NotifyService
 	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
 	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
 	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
+	rpc CharcaterPush(Void) returns (Notify_CharacterPush){};//29
 }
 
 service ActionService

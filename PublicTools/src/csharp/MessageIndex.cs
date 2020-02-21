@@ -54,6 +54,7 @@ namespace Proto
     [Index(1001046,typeof(Notify_CharacterMoveForward))]
     [Index(1001048,typeof(Notify_CharacterSpeed))]
     [Index(1001050,typeof(Notify_CharacterLock))]
+    [Index(1001052,typeof(Notify_CharacterPush))]
     [Index(1002001,typeof(Action_ClickSkillIndex))]
     [Index(1002003,typeof(Action_AutoFindTarget))]
     [Index(1002005,typeof(Action_MoveDir))]

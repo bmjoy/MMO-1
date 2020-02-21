@@ -6,16 +6,12 @@ namespace GameLogic.Game.Controllors
 {
 	public class BattleCharacterAIBehaviorTreeControllor:GControllor
 	{
-		public BattleCharacterAIBehaviorTreeControllor(GPerception per):base(per)
-		{
-			
-		}
+		public BattleCharacterAIBehaviorTreeControllor(GPerception per) : base(per) { }
 
 		public override GAction GetAction(GTime time, GObject current)
 		{
 			var character = current as BattleCharacter;
-			if (character.AIRoot != null)
-				character.AIRoot.Tick();
+			character.AIRoot?.Tick();
 			return GAction.Empty;
 		}
 	}

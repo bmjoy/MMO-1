@@ -486,6 +486,15 @@
         <member name="F:Proto.Notify_CharacterLock.LockFieldNumber">
             <summary>Field number for the "Lock" field.</summary>
         </member>
+        <member name="F:Proto.Notify_CharacterPush.IndexFieldNumber">
+            <summary>Field number for the "Index" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_CharacterPush.LengthFieldNumber">
+            <summary>Field number for the "Length" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_CharacterPush.SpeedFieldNumber">
+            <summary>Field number for the "Speed" field.</summary>
+        </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
             <summary>
             1
@@ -3040,6 +3049,11 @@
         <member name="T:Proto.NotifyService.CharacterLock">
             <summary>
             28
+            </summary>    
+        </member>
+        <member name="T:Proto.NotifyService.CharcaterPush">
+            <summary>
+            29
             </summary>    
         </member>
     </members>

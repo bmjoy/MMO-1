@@ -282,8 +282,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 29
+    /// </summary>    
+    [API(29)]
+    public class CharcaterPush:APIBase<Void, Notify_CharacterPush> 
+    {
+        private CharcaterPush() : base() { }
+        public  static CharcaterPush CreateQuery(){ return new CharcaterPush();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(29)]Notify_CharacterPush CharcaterPush(Void req);
         [API(28)]Notify_CharacterLock CharacterLock(Void req);
         [API(27)]Notify_CharacterSpeed CharacterSpeed(Void req);
         [API(26)]Notify_CharacterMoveForward CharacterMoveForward(Void req);
@@ -315,6 +327,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(29)]public abstract Task<Notify_CharacterPush> CharcaterPush(Void request);
         [API(28)]public abstract Task<Notify_CharacterLock> CharacterLock(Void request);
         [API(27)]public abstract Task<Notify_CharacterSpeed> CharacterSpeed(Void request);
         [API(26)]public abstract Task<Notify_CharacterMoveForward> CharacterMoveForward(Void request);
