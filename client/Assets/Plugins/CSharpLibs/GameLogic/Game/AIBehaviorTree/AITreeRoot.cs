@@ -221,7 +221,10 @@ namespace GameLogic.Game.AIBehaviorTree
 
         }
 
-
+        internal void Stop()
+        {
+            Current?.Stop(this);
+        }
     }
 }
 

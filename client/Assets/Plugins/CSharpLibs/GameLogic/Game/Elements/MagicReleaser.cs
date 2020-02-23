@@ -139,23 +139,25 @@ namespace GameLogic.Game.Elements
             public GObject Element;
             public float time;
             public bool HaveLeftTime;
+            public bool Managed = false;
         }
 
         private readonly Dictionary<int, AttachedElement> _objs = new Dictionary<int, AttachedElement>();
 
-        public void AttachElement(GObject el, float time = -1f)
+        public void AttachElement(GObject el, bool onlyWatch = false, float time = -1f)
         {
             if (_objs.ContainsKey(el.Index))
             {
                 return;
             }
-            _objs.Add(el.Index,
-                      new AttachedElement()
-                      {
-                          time = time,
-                          Element = el,
-                          HaveLeftTime = time >= 0f
-                      });
+            var att = new AttachedElement()
+            {
+                time = time,
+                Element = el,
+                HaveLeftTime = time >= 0f,
+                Managed = !onlyWatch
+            };
+            _objs.Add(el.Index, att); ;
         }
 
         internal void Cancel()
@@ -181,6 +183,7 @@ namespace GameLogic.Game.Elements
 
             foreach (var i in _objs)
             {
+                if (!i.Value.Managed) continue;
                 if (i.Value.Element.IsAliveAble)
                 {
                     if (i.Value.HaveLeftTime)
@@ -229,10 +232,8 @@ namespace GameLogic.Game.Elements
                 {
                     foreach (var i in _objs)
                     {
-                        if (i.Value.Element.Enable)
-                            return false;
+                        if (i.Value.Element.Enable) return false;
                     }
-
                 }
                 return true;
             }
@@ -271,7 +272,6 @@ namespace GameLogic.Game.Elements
 
         private void ReleaseAll(GObject el)
         {
-
             foreach (var i in reverts)
             {
                 if (i.target.Enable)
@@ -293,7 +293,8 @@ namespace GameLogic.Game.Elements
 
             foreach (var i in _objs)
             {
-                Destory(i.Value.Element);
+                if (!i.Value.Managed) continue;
+                Destroy(i.Value.Element);
             }
 
             _objs.Clear();
@@ -304,6 +305,11 @@ namespace GameLogic.Game.Elements
 
             _players.Clear();
 
+        }
+
+        internal void DeAttachElement(BattleCharacter battleCharacter)
+        {
+            _objs.Remove(battleCharacter.Index);
         }
 
         public bool IsRuning(EventType type)

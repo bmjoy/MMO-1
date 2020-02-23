@@ -43,7 +43,7 @@ namespace GameLogic.Game.Controllors
 					}
 					break;
 				case MissileState.Death:
-					GObject.Destory(missile);
+					GObject.Destroy(missile);
 					break;
 			}
 			return GAction.Empty;

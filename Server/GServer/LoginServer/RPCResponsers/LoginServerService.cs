@@ -23,7 +23,10 @@ namespace RPCResponsers
         [IgnoreAdmission]
         public L2C_Login Login(C2L_Login request)
         {
-
+            if (request.Version != MessageTypeIndexs.Version)
+            {
+                return new L2C_Login { Code = ErrorCode.Error };
+            }
             var users = DataBase.S.Account;
 
             var pwd = Md5Tool.GetMd5Hash(request.Password);
@@ -103,6 +106,9 @@ namespace RPCResponsers
         [IgnoreAdmission]
         public L2C_Reg Reg(C2L_Reg request)
         {
+            if (request.Version != MessageTypeIndexs.Version)
+                return new L2C_Reg { Code = ErrorCode.Error };
+
             if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
                 return new L2C_Reg { Code = ErrorCode.RegInputEmptyOrNull };
             if (request.UserName.Length > 100 || request.UserName.Length < 2)

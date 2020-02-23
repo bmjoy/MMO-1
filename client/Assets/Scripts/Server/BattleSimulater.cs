@@ -64,16 +64,17 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
     void IAIRunner.Attach(BattleCharacter character)
     {
         aiAttach = character;
-        if (character.AIRoot != null)
-            character.AIRoot.IsDebug = true;
-        //throw new System.NotImplementedException();
+        if (character.AiRoot == null) return;
+        character.AiRoot.IsDebug = true;
     }
+
     #endregion
 
     void IStateLoader.Load(GState state)
     {
 
     }
+
     private class BindPlayer
     {
         public Client Client;
@@ -170,7 +171,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 Host = battleServer.ListenHost,
                 Port = battleServer.ListenPort,
                 LevelId = battleServer.Level,
-                Version = 1
+                Version = MessageTypeIndexs.Version
             });
 
         if (req.QueryRespons.Code.IsOk())
@@ -279,11 +280,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
     private void ExitPlayer(BattlePlayer p)
     {
-        if (p.HeroCharacter)
-        {
-            GObject.Destory(p.HeroCharacter);
-        }
-
+        if (p.HeroCharacter) GObject.Destroy(p.HeroCharacter);
         Server.DisConnectClient(p.Client);
         BattlePlayers.Remove(p.AccountId);
         if (!p.Dirty) return;
@@ -356,9 +353,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 IMessage action = msg.AsAction();
                 if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))
                 {
-                    if (p.HeroCharacter?.AIRoot != null)
+                    if (p.HeroCharacter?.AiRoot != null)
                     {
-                        p.HeroCharacter.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
+                        p.HeroCharacter.AiRoot[AITreeRoot.ACTION_MESSAGE] = action;
                         //p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }

@@ -51,26 +51,25 @@ namespace EngineCore.Simulater
 
 		#endregion
 
-		private DateTime? destoryTime;
+		private DateTime? destroyTime;
 
 		public bool CanDestory
 		{
 			get
 			{
 				if (this.Enable) return false;
-				if (destoryTime.HasValue)
+				if (destroyTime.HasValue)
 				{
-					return destoryTime.Value < DateTime.Now;
+					return destroyTime.Value < DateTime.Now;
 				}
-
 				return true;
 			}
 		}
 
 		internal static void JoinState(GObject el)
 		{
-			if (!el.HadBeenDestory)
-				el.Enable = true;
+			if (el.HadBeenDestory) return;
+			el.Enable = true;
 			el.OnJoinState();
 		}
 
@@ -79,22 +78,11 @@ namespace EngineCore.Simulater
 			el.OnExitState();
 		}
 
-		public static void Destory(GObject el)
+		public static void Destroy(GObject el, float time = -1f)
 		{
+			if (time > 0) el.destroyTime = DateTime.Now.AddSeconds(time);
 			el.HadBeenDestory = true;
-			if (el.Enable)
-			{
-				el.Enable = false;
-			}
-
-		}
-
-
-		public static void Destory(GObject el, float time)
-		{
-			if (time > 0)
-				el.destoryTime = DateTime.Now.AddSeconds(time);
-			Destory(el);
+			if (el.Enable) el.Enable = false;
 		}
 
 		public static implicit operator bool(GObject el)

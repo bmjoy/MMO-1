@@ -75,7 +75,7 @@ namespace GameLogic.Game.Controllors
 					{
 						if (releaser.IsCompleted)
 						{
-							GObject.Destory(releaser);
+							GObject.Destroy(releaser);
 						}
 					}
 					break;

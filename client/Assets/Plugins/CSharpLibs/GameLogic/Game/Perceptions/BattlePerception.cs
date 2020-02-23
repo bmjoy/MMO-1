@@ -180,7 +180,7 @@ namespace GameLogic.Game.Perceptions
         {
             var comp = AITreeParse.CreateFrom(ai,View);
             var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
-            character.SetAITree(root);
+            character.SetAITreeRoot(root);
             character.SetControllor(AIControllor);
             return root;
         }
@@ -222,7 +222,7 @@ namespace GameLogic.Game.Perceptions
             State.Each<BattleCharacter>(t =>
             {
                 //隐身的不进入目标查找
-                if (t.IsLock(ActionLockType.Inhiden)) return false;
+                if (t.IsLock(ActionLockType.NoInhiden)) return false;
                 switch (type)
                 {
                     case TargetTeamType.Enemy:
@@ -414,7 +414,7 @@ namespace GameLogic.Game.Perceptions
                 if (t.ReleaserTarget.Releaser == character)
                 {
                     t.SetState(ReleaserStates.Ended);//防止AI错误
-                    GObject.Destory(t);
+                    GObject.Destroy(t);
                 }
                 return false;
             });

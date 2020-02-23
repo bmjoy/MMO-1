@@ -15,7 +15,7 @@ public class UCharacterViewEditor : Editor
 			var window = EditorWindow.GetWindow<AITreeEditor>();
 			if (window == null) return;
 			if (!(target.GElement is BattleCharacter character)) return;
-			var root = character.AIRoot;
+			var root = character.AiRoot;
 			if (root == null)
 			{
 				EditorUtility.DisplayDialog("Failuer", "Current character no ai tree", "OK");

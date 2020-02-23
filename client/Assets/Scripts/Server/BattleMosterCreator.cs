@@ -9,6 +9,7 @@ using UnityEngine;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
 using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
+using EngineCore.Simulater;
 
 namespace Server
 {
@@ -31,11 +32,11 @@ namespace Server
         public BattleMosterCreator(BattleSimulater sim)
         {
             Simulater = sim;
-            
         }
 
         private void CreateMonster()
         {
+           
             BattlePerception per = Per;
             //process Drop;
             var groupPos = this.MonsterGroups.Select(t => t.transform.position).ToArray();
@@ -46,7 +47,7 @@ namespace Server
 
             if (CountKillCount < LevelData.BossNeedKilledNumber)
             {
-                
+
                 groups = LevelData.MonsterGroupID.SplitToInt();
             }
             else
@@ -128,6 +129,7 @@ namespace Server
                 {
                     CountKillCount++;
                     AliveCount--;
+                    GObject.Destroy(el, 3f);
                 };
             }
         }
@@ -144,6 +146,7 @@ namespace Server
             if (AliveCount == 0)
             {
                 CreateMonster();
+                LastTime = time;
             }
         }
 

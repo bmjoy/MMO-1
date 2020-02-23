@@ -56,7 +56,7 @@ namespace EngineCore.Simulater
         {
             foreach (var i in _elements)
             {
-                GObject.Destory(i.Value);
+                GObject.Destroy(i.Value);
             }
             this.Tick(time);
             IsEnable = false;

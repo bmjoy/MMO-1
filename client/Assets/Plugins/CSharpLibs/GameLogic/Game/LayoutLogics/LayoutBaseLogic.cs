@@ -204,8 +204,8 @@ namespace GameLogic.Game.LayoutLogics
 
             var data = ExcelToJSONConfigManager
                 .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
-            var magics = ExcelToJSONConfigManager
-                .Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == unitLayout.characterID);
+            var magics = ExcelToJSONConfigManager.Current
+                .GetConfigs<CharacterMagicData>(t => t.CharacterID == unitLayout.characterID);
 
             var unit = per.CreateCharacter(
                 level,
@@ -218,8 +218,8 @@ namespace GameLogic.Game.LayoutLogics
             );
             //无限视野
             unit[Proto.HeroPropertyType.ViewDistance].SetAppendValue(100000);
-            releaser.AttachElement(unit,unitLayout.time);
-            releaser.OnEvent( Layout.EventType.EVENT_UNIT_CREATE);
+            releaser.AttachElement(unit, false,unitLayout.time);
+            releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
             per.ChangeCharacterAI(data.AIResourcePath,unit);
         }
 		#endregion
@@ -229,10 +229,20 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(LaunchSelfLayout))]
 		public static void LaunchSelftActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
-			var launch  = layoutBase as LaunchSelfLayout;
+			var launch = layoutBase as LaunchSelfLayout;
 			var releaser = linePlayer.Releaser;
 			var charachter = releaser.ReleaserTarget.Releaser;
-			var push= charachter.Push(charachter.Rototion, launch.distance, launch.speed);
+			charachter.BeginLauchSelf(charachter.Rototion,
+				launch.distance,
+				launch.speed,
+				(hit, obj) =>
+				{
+					if (obj is MagicReleaser r)
+					{
+						r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
+					}
+				},
+				releaser);
 		}
 		#endregion
 

@@ -62,7 +62,8 @@ enum ActionLockType
 	NO_SKILL = 1;//禁止释放主动技能
 	NO_MOVE  = 2;//禁止移动
 	NO_ATTACK = 4;//禁止攻击
-    INHIDEN =8 ;//隐形
+	NO_INHIDEN =8 ;//隐形
+	NO_Ai=16;//无ai
 }
 
 enum ItemType

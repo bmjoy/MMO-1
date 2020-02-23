@@ -27,11 +27,19 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         UScene = FindObjectOfType<UGameScene>();
 		_magicData = new Dictionary<string, MagicData> ();
 		_timeLines = new Dictionary<string, TimeLine> ();
-		var  magics = ResourcesManager.Singleton.LoadAll<TextAsset> ("Magics");
+		var  magics = ResourcesManager.S.LoadAll<TextAsset> ("Magics");
 		foreach (var i in magics) 
-        {           
-			var m = XmlParser.DeSerialize<MagicData> (i.text);
-			_magicData.Add (i.name, m);
+        {
+            try
+            {
+                var m = XmlParser.DeSerialize<MagicData>(i.text);
+                _magicData.Add(i.name, m);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"File : {i.name}");
+                Debug.LogException(ex);
+            }
 		}
 		magicCount = _magicData.Count;
 		var timeLines = ResourcesManager.Singleton.LoadAll<TextAsset> ("Layouts");

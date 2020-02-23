@@ -18,7 +18,6 @@ namespace GameLogic.Game.Elements
 
     public class BattleCharacterMagic
     {
-
         public MagicType Type { private set; get; }
 
         public CharacterMagicData Config { private set; get; }
@@ -75,7 +74,11 @@ namespace GameLogic.Game.Elements
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics {  set; get; }
         private float LastNormalAttackTime = 0;
+        private object tempObj;
 
+
+        public TreeNode DefaultTree { get; set; }
+        public string DefaultTreePath { set; get; }
         public event Action<BattleEventType, object> OnBattleEvent;
         public string AcccountUuid { private set; get; }
         public int AttackCount { private set; get; }
@@ -137,7 +140,23 @@ namespace GameLogic.Game.Elements
                 return HP == 0;
             }
         }
-        public AITreeRoot AIRoot { private set; get; }
+
+        private int tickAICount = 0;
+
+        private const int NEED_TICK_COUNT = 6; //AI更新频率
+
+        private AITreeRoot _AiRoot;// { private set; get; }
+
+        public AITreeRoot AiRoot
+        {
+            private set
+            {
+                _AiRoot = value;
+                Debug.Log($"{this}->{value}");
+            }
+            get { return _AiRoot; }
+        }
+
         //position
         public UVector3 Position
         {
@@ -215,9 +234,14 @@ namespace GameLogic.Game.Elements
                             StopMove();
                         }
                         break;
-                    case ActionLockType.Inhiden:
+                    case ActionLockType.NoInhiden:
                         view.SetAlpha(e.IsLocked ? 0.5f: 1);
                         break;
+                    case ActionLockType.NoAi:
+                        this.AiRoot?.Stop();
+                        break;
+
+
                 }
             };
             BronPosition = Position;
@@ -244,6 +268,28 @@ namespace GameLogic.Game.Elements
         {
             if (IsLock(ActionLockType.NoMove)) return false;
             return View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
+        }
+
+        private Action<BattleCharacter,object> launchHitCallback;
+
+        internal void BeginLauchSelf(Quaternion rototion, float distance, float speed, Action<BattleCharacter,object> hitCallback, MagicReleaser releaser)
+        {
+            if (TryStartPush(rototion, distance, speed,out PushMove push))
+            {
+                push.FinishCall = () =>
+                {
+                    launchHitCallback = null;
+                    releaser.DeAttachElement(this);
+                };
+                releaser.AttachElement(this, true);
+                tempObj = releaser;
+                launchHitCallback = hitCallback;
+            }
+        }
+
+        public void HitOther(BattleCharacter character)
+        {
+            launchHitCallback?.Invoke(character, tempObj);
         }
 
         public bool MoveForward(UVector3 forward, UVector3 posNext)
@@ -276,11 +322,22 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        internal PushMove Push(Quaternion rototion, float distance, float speed)
+        private PushMove currentPush;
+        internal bool TryStartPush(Quaternion rototion, float distance, float speed, out PushMove push)
         {
-            var push = new PushMove(rototion, distance, speed);
+            push = null;
+            if (currentPush != null) return false;
+            push = new PushMove(rototion, distance, speed);
             View.Push(push.Length.ToPV3(), push.Speed.ToPV3());
-            return push;
+            currentPush = push;
+            return true;
+        }
+
+        public void EndPush()
+        {
+            this.View.StopMove(this.Position.ToPV3());
+            currentPush?.FinishCall?.Invoke();
+            currentPush = null;
         }
 
         public void AddHP(int hp)
@@ -309,9 +366,28 @@ namespace GameLogic.Game.Elements
             return true;
         }
 
-        public void SetAITree(AITreeRoot root)
+        private readonly Queue<AITreeRoot> _next = new Queue<AITreeRoot>();
+
+        internal void SetAITreeRoot(AITreeRoot root, bool force = false)
         {
-            AIRoot = root;
+            if (force) _next.Clear();
+            _next.Enqueue(root);
+        }
+
+      
+        internal void TickAi()
+        {
+            if (_next.Count > 0)
+            {
+                AiRoot?.Stop();
+                AiRoot = _next.Dequeue();
+            }
+            if (Lock.IsLock(ActionLockType.NoAi)) return;
+            if (AiRoot == null) return;
+            tickAICount++;
+            if (tickAICount < NEED_TICK_COUNT) return;
+            tickAICount = 0;
+            AiRoot.Tick();
         }
 
         internal void LookAt(BattleCharacter releaserTarget)
@@ -331,7 +407,7 @@ namespace GameLogic.Game.Elements
             OnDead?.Invoke(this);
             var per = this.Controllor.Perception as BattlePerception;
             per.StopAllReleaserByCharacter(this);
-			Destory(this, 5.5f);
+			//Destory(this, 5.5f);
 		}
 
         public void AttachMagicHistory(int magicID, float now)
@@ -469,6 +545,8 @@ namespace GameLogic.Game.Elements
         {
             OnBattleEvent?.Invoke(ev, args);
         }
+
+
     }
 }
 

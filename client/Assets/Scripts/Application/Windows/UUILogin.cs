@@ -24,7 +24,7 @@ namespace Windows
                     if (gate == null) return;
                     Login.CreateQuery()
                     .SendRequest(gate.Client,
-                    new C2L_Login { Password = pwd, UserName = userName, Version = 1 },
+                    new C2L_Login { Password = pwd, UserName = userName, Version = MessageTypeIndexs.Version },
                     r =>
                     {
                         if (r.Code.IsOk())

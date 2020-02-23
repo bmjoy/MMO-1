@@ -22,7 +22,6 @@ namespace LoginServer
             }
             else
             {
-                var testHost = "129.211.9.75";
                 json = "{" +
                     "\"ListenPort\":1900," +
                     "\"ServicePort\":1800," +

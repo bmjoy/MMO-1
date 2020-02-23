@@ -2,12 +2,20 @@
 
 namespace Layout.LayoutElements
 {
+    public enum TargetReachType
+    {
+        MaxDistance,
+        ReachTarget
+    }
+
     [EditorLayout("发射自己")]
     public class LaunchSelfLayout: LayoutBase
-    {
-        [Label("长度")]
-        public float distance;
+    {    
         [Label("速度")]
         public float speed;
+        [Label("目标方式")]
+        public TargetReachType reachType = TargetReachType.MaxDistance;
+        [Label("长度")]
+        public float distance;
     }
 }

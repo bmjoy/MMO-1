@@ -98,7 +98,10 @@ namespace RPCResponsers
         [IgnoreAdmission]
         public L2G_GateServerReg RegGateServer(G2L_GateServerReg req)
         {
-            
+            if (req.Version != MessageTypeIndexs.Version)
+            {
+                return new L2G_GateServerReg { Code = ErrorCode.Error };
+            }
             Client.HaveAdmission = true;
             Client.UserState = req.ServerID;
             var server = new GateServerInfoEntity
@@ -154,6 +157,11 @@ namespace RPCResponsers
         [IgnoreAdmission]
         public L2B_RegBattleServer RegBattleServer(B2L_RegBattleServer req)
         {
+            if (req.Version != MessageTypeIndexs.Version) return new L2B_RegBattleServer
+            {
+                Code = ErrorCode.Error
+            };
+
             int id = BattleServerIndex++;
             if (BattleServerIndex == int.MaxValue) BattleServerIndex = 0;
 

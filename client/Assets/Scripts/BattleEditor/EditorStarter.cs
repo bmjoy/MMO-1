@@ -141,8 +141,8 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	public void DoAction(IMessage action)
 	{
 		if (this.releaser == null) return;
-		if (this.releaser.AIRoot == null) return;
-		this.releaser.AIRoot[AITreeRoot.ACTION_MESSAGE] = action;
+		if (this.releaser.AiRoot == null) return;
+		this.releaser.AiRoot[AITreeRoot.ACTION_MESSAGE] = action;
 		//this.releaser.AIRoot.BreakTree();
 	}
 
@@ -202,7 +202,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
     void IAIRunner.Attach(BattleCharacter character)
     {
 		releaser = character;
-		if (character.AIRoot != null) character.AIRoot.IsDebug = true;
+		if (character.AiRoot != null) character.AiRoot.IsDebug = true;
     }
 
     public void Load(GState state)

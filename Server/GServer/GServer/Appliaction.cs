@@ -128,7 +128,7 @@ namespace GServer
                     MaxPlayer = 10000,
                     Host = serverHostName,
                     Port = port,
-                    Version = 1,
+                    Version =  MessageTypeIndexs.Version,
                     ServiceHost = ServiceHost,
                     ServerID = ServerID,
                     ServicesProt =ServicePort

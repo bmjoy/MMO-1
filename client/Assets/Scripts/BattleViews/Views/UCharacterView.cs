@@ -11,15 +11,25 @@ using System.Linq;
 using UnityEngine.AI;
 using static Proto.Notify_CharacterAttachMagic.Types;
 
+
+
 [
-	BoneName("Top","__Top"),
-	BoneName("Bottom","__Bottom"),
-	BoneName("Body","__Body"),
-	//BoneName("HandLeft","bn_handleft"),
-	//BoneName("HandRight","bn_handright")
+    BoneName("Top", "__Top"),
+    BoneName("Bottom", "__Bottom"),
+    BoneName("Body", "__Body"),
+//BoneName("HandLeft","bn_handleft"),
+//BoneName("HandRight","bn_handright")
 ]
-public class UCharacterView : UElementView,IBattleCharacter
+public class UCharacterView : UElementView, IBattleCharacter
 {
+    private enum MoveCategory
+    {
+        NONE,
+        Destination,
+        Forward,
+        Push
+    }
+
     private class HpChangeTip
     {
         public int id = -1;
@@ -42,8 +52,11 @@ public class UCharacterView : UElementView,IBattleCharacter
     private int max;
     private int cur;
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
-
+    private MoveCategory MCategory = MoveCategory.Destination;
     private string NameInfo;
+
+    private Vector3 pushSpeed= Vector3.zero;//speed
+    private float pushLeftTime = -1;
 
     void Update()
     {
@@ -84,21 +97,41 @@ public class UCharacterView : UElementView,IBattleCharacter
             }
         }
 
-
         LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
 
         if (!Agent) return;
-        if (MoveForward.HasValue)
+        switch (MCategory)
         {
-            Agent.isStopped = true;
-            var v = MoveForward.Value * Agent.speed;
-            Agent.Move(v * Time.deltaTime);
-            targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
-            PlaySpeed(v.magnitude);
-        }
-        else
-        {
-            PlaySpeed(Agent.velocity.magnitude);
+
+            case MoveCategory.Forward:
+                {
+                    Agent.isStopped = true;
+                    var v = MoveForward.Value * Agent.speed;
+                    Agent.Move(v * Time.deltaTime);
+                    targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
+                    PlaySpeed(v.magnitude);
+                }
+                break;
+            case MoveCategory.Push:
+                if (pushLeftTime > 0)
+                {
+                    pushLeftTime -= Time.deltaTime;
+                    Agent.Move(pushSpeed * Time.deltaTime);
+                    targetLookQuaternion = Quaternion.LookRotation(pushSpeed);
+                    PlaySpeed(pushSpeed.magnitude);
+                }
+                else
+                {
+                    EndPush();
+                    MCategory = MoveCategory.NONE;
+                }
+                break;
+            case MoveCategory.Destination:
+            default:
+                {
+                    PlaySpeed(Agent.velocity.magnitude);
+                }
+                break;
         }
 
         if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
@@ -235,12 +268,15 @@ public class UCharacterView : UElementView,IBattleCharacter
 
     private void StopMove()
     {
+        MCategory = MoveCategory.NONE;
+        pushSpeed = Vector3.zero;
+        pushLeftTime = -1;
         MoveForward = null;
         IsStop = true;
         if (!Agent ||!Agent.enabled) return;
         Agent.velocity = Vector3.zero;
         Agent.ResetPath();
-        Agent.isStopped = true;// ();
+        Agent.isStopped = true;
         targetPos = null;
     }
 
@@ -384,6 +420,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         }
         this.Agent.stoppingDistance = stopDis;
         this.Agent.SetDestination(targetPos.Value);
+        MCategory = MoveCategory.Destination;
         return true;
     }
 
@@ -428,7 +465,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         showHpBarTime = -1;
 		if(Agent)  Agent.enabled = false;
 		IsDead = true;
-		MoveDown.BeginMove (ViewRoot, 1, 1, 5);
+		//MoveDown.BeginMove (ViewRoot, 1, 1, 5);
 #if UNITY_SERVER||UNITY_EDITOR
         CreateNotify(new Notify_CharacterDeath { Index = Index });
 #endif
@@ -529,6 +566,7 @@ public class UCharacterView : UElementView,IBattleCharacter
         if (!this) return;
         TryToSetPosition(pos.ToUV3());
         MoveForward = forward.ToUV3();
+        MCategory = MoveCategory.Forward;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
 #endif
@@ -591,5 +629,16 @@ public class UCharacterView : UElementView,IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterPush { Index = Index,  Speed =speed, Length = length});
 #endif
+        pushSpeed = speed.ToUV3();
+        pushLeftTime = length.ToUV3().magnitude / pushSpeed.magnitude;
+        MCategory = MoveCategory.Push;
+    }
+
+    private void EndPush()
+    {
+        if (GElement is BattleCharacter c)
+        {
+            c.EndPush();
+        }
     }
 }
