@@ -163,7 +163,25 @@ public class UCharacterView : UElementView, IBattleCharacter
         Agent.baseOffset = 0;//-0.15f;
         Agent.obstacleAvoidanceType =ObstacleAvoidanceType.MedQualityObstacleAvoidance;
         Agent.speed = Speed;
+        this.gameObject.AddComponent<Rigidbody>();
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var view = other.GetComponent<UCharacterView>();
+        if (view == null) return;
+        if (this.GElement is BattleCharacter o)
+        {
+            if (o == null) return;
+            if (view.GElement is BattleCharacter ot)
+            {
+                if (ot == null) return;
+                o.HitOther(ot);
+            }
+        }
+    }
+
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
