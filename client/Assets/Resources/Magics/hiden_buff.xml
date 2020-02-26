@@ -10,7 +10,7 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="ModifyLockEffect">
-              <lockType>Inhiden</lockType>
+              <lockType>NoInhiden</lockType>
               <revertType>ReleaserDeath</revertType>
             </EffectBase>
           </effects>
