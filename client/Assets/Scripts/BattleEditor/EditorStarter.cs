@@ -100,7 +100,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	public void ReplaceRelease(int level,CharacterData data, bool stay, bool ai)
 	{
 		var magics = ExcelToJSONConfigManager
-			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID).ToList();
+			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID &&t.ReleaseType == (int)Proto.MagicReleaseType.MrtMagic ).ToList();
 
 		if (!stay && this.releaser)
             this.releaser.SubHP(this.releaser.HP);

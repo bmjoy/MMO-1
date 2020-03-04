@@ -17,5 +17,10 @@ namespace Layout.LayoutElements
         public TargetReachType reachType = TargetReachType.MaxDistance;
         [Label("长度")]
         public float distance;
+
+        public override string ToString()
+        {
+            return $"发射自己 {reachType} {speed} m/s";
+        }
     }
 }

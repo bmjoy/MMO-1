@@ -22,7 +22,7 @@ using static Proto.Notify_CharacterAttachMagic.Types;
 ]
 public class UCharacterView : UElementView, IBattleCharacter
 {
-    private enum MoveCategory
+    public enum MoveCategory
     {
         NONE,
         Destination,
@@ -52,7 +52,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     private int max;
     private int cur;
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
-    private MoveCategory MCategory = MoveCategory.Destination;
+    public MoveCategory MCategory = MoveCategory.NONE;
     private string NameInfo;
 
     private Vector3 pushSpeed= Vector3.zero;//speed
@@ -161,9 +161,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         Agent.acceleration = 20;
         Agent.radius = 0.1f;
         Agent.baseOffset = 0;//-0.15f;
-        Agent.obstacleAvoidanceType =ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+        Agent.obstacleAvoidanceType =ObstacleAvoidanceType.NoObstacleAvoidance;
         Agent.speed = Speed;
-        this.gameObject.AddComponent<Rigidbody>();
+        var r =this.gameObject.AddComponent<Rigidbody>();
+        r.isKinematic = true;
+        r.useGravity = false;
     }
 
 
@@ -259,6 +261,12 @@ public class UCharacterView : UElementView, IBattleCharacter
         bones.Add(BodyBone, body.transform);    
         Agent.radius = collider.radius;
         Agent.height = collider.height;
+        var c = this.gameObject.AddComponent<CapsuleCollider>();
+        c.radius = collider.radius;
+        c.height = collider.height;
+        c.center = collider.center;
+        c.direction = collider.direction;
+        c.isTrigger = true;
 
 #if UNITY_SERVER
         Destroy(character);
@@ -643,7 +651,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
     {
-        if (this) return;
+        if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterPush { Index = Index,  Speed =speed, Length = length});
 #endif

@@ -7,39 +7,82 @@
       <guid>ec082a15-79f7-40a6-bf16-b2e27f1642ed</guid>
       <Path>AI/monster_idle.xml</Path>
     </TreeNode>
-    <TreeNode xsi:type="TreeNodeSequence">
+    <TreeNode xsi:type="TreeNodeProbabilitySelector">
       <childs>
-        <TreeNode xsi:type="TreeNodeMoveCloseTarget">
-          <childs />
-          <name>靠近目标</name>
-          <guid>89b0cfdc-2006-4d2f-8aa0-07bd623cc865</guid>
-          <valueOf>Value</valueOf>
-          <distance>
-            <min>100</min>
-            <max>300</max>
-            <type>Range</type>
-          </distance>
+        <TreeNode xsi:type="TreeNodeProbabilityNode">
+          <childs>
+            <TreeNode xsi:type="TreeNodeSequence">
+              <childs>
+                <TreeNode xsi:type="TreeNodeMoveCloseTarget">
+                  <childs />
+                  <name>靠近目标</name>
+                  <guid>89b0cfdc-2006-4d2f-8aa0-07bd623cc865</guid>
+                  <valueOf>Value</valueOf>
+                  <distance>
+                    <min>100</min>
+                    <max>300</max>
+                    <type>Range</type>
+                  </distance>
+                </TreeNode>
+                <TreeNode xsi:type="TreeNodeReleaseMagic">
+                  <childs />
+                  <name>释放技能</name>
+                  <guid>f5c8bdc2-2066-4a64-abcd-4ca8048cd5ec</guid>
+                  <magicKey>level01_king_att</magicKey>
+                  <valueOf>MagicKey</valueOf>
+                </TreeNode>
+                <TreeNode xsi:type="TreeNodeWaitForSeconds">
+                  <childs />
+                  <name>等待时间</name>
+                  <guid>e51445c1-90c8-47c1-bbb9-d0f91184b425</guid>
+                  <seconds>
+                    <min>1000</min>
+                    <max>1000</max>
+                    <type>Range</type>
+                  </seconds>
+                </TreeNode>
+              </childs>
+              <name>顺序节点</name>
+              <guid>245f203e-92b4-4fca-b143-5c4672102cb9</guid>
+            </TreeNode>
+          </childs>
+          <name>分段概率子节点</name>
+          <guid>6c9f7a16-7269-48ae-8c0b-374fbe682637</guid>
+          <probability>20</probability>
         </TreeNode>
-        <TreeNode xsi:type="TreeNodeReleaseMagic">
-          <childs />
-          <name>释放技能</name>
-          <guid>f5c8bdc2-2066-4a64-abcd-4ca8048cd5ec</guid>
-          <magicKey>level01_king_att</magicKey>
-          <valueOf>MagicKey</valueOf>
-        </TreeNode>
-        <TreeNode xsi:type="TreeNodeWaitForSeconds">
-          <childs />
-          <name>等待时间</name>
-          <guid>e51445c1-90c8-47c1-bbb9-d0f91184b425</guid>
-          <seconds>
-            <min>1000</min>
-            <max>1000</max>
-            <type>Range</type>
-          </seconds>
+        <TreeNode xsi:type="TreeNodeProbabilityNode">
+          <childs>
+            <TreeNode xsi:type="TreeNodeSequence">
+              <childs>
+                <TreeNode xsi:type="TreeNodeReleaseMagic">
+                  <childs />
+                  <name>释放技能</name>
+                  <guid>5113874c-1988-46ba-a4e6-21a39d46e3e6</guid>
+                  <magicKey>level_01_pushmagic</magicKey>
+                  <valueOf>MagicKey</valueOf>
+                </TreeNode>
+                <TreeNode xsi:type="TreeNodeWaitForSeconds">
+                  <childs />
+                  <name>等待时间</name>
+                  <guid>2910dc02-0b5c-4704-aa41-b44ce2bd9881</guid>
+                  <seconds>
+                    <min>1000</min>
+                    <max>1000</max>
+                    <type>Range</type>
+                  </seconds>
+                </TreeNode>
+              </childs>
+              <name>顺序节点</name>
+              <guid>66942237-84d3-442b-8e6d-dfe847b2d000</guid>
+            </TreeNode>
+          </childs>
+          <name>分段概率子节点</name>
+          <guid>cd9a4543-73bf-4af6-94a8-bb4656435caa</guid>
+          <probability>30</probability>
         </TreeNode>
       </childs>
-      <name>顺序节点</name>
-      <guid>245f203e-92b4-4fca-b143-5c4672102cb9</guid>
+      <name>分段概率选择节点</name>
+      <guid>472224a9-b51e-4383-9d0a-eb000f312d39</guid>
     </TreeNode>
   </childs>
   <name>顺序节点</name>

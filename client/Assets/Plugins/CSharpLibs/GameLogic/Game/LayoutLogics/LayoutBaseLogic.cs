@@ -237,9 +237,11 @@ namespace GameLogic.Game.LayoutLogics
 				launch.speed,
 				(hit, obj) =>
 				{
+					if (!hit.IsAliveAble) return;
 					if (obj is MagicReleaser r)
 					{
-						r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
+						if (r.TryHit(hit))
+							r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
 					}
 				},
 				releaser);

@@ -270,6 +270,15 @@ namespace GameLogic.Game.Elements
             _players.Clear();
         }
 
+        private readonly HashSet<int> hitList = new HashSet<int>();
+
+        internal bool TryHit(BattleCharacter hit)
+        {
+            if (hitList.Contains(hit.Index)) return false;
+            hitList.Add(hit.Index);
+            return true;
+        }
+
         private void ReleaseAll(GObject el)
         {
             foreach (var i in reverts)

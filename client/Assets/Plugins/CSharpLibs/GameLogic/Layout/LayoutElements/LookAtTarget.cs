@@ -10,6 +10,11 @@ namespace Layout.LayoutElements
 		{
 			
 		}
+
+		public override string ToString()
+		{
+			return $"看向目标";
+		}
 	}
 }
 

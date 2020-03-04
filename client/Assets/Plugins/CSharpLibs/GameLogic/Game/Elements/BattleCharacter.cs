@@ -434,7 +434,7 @@ namespace GameLogic.Game.Elements
         {
             var natt = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
             var nattapp = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
-
+      
             Magics.Add(natt.ID, new BattleCharacterMagic(MagicType.MtNormal, natt));
             if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(MagicType.MtNormalAppend, nattapp));
         }
