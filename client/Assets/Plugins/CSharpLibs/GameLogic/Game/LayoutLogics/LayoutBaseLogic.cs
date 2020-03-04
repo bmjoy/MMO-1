@@ -243,7 +243,7 @@ namespace GameLogic.Game.LayoutLogics
 				launch.speed,
 				(hit, obj) =>
 				{
-					if (!hit.IsAliveAble) return;
+					if (hit.IsDeath) return;
 					if (obj is MagicReleaser r)
 					{
 						if (hit.TeamIndex == r.ReleaserTarget.Releaser.TeamIndex) return;

@@ -52,7 +52,9 @@ public class UCharacterView : UElementView, IBattleCharacter
     private int max;
     private int cur;
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
-    public MoveCategory MCategory = MoveCategory.NONE;
+
+    public MoveCategory MCategory=MoveCategory.NONE;
+
     private string NameInfo;
 
     private Vector3 pushSpeed= Vector3.zero;//speed
@@ -102,7 +104,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (!Agent) return;
         switch (MCategory)
         {
-
             case MoveCategory.Forward:
                 {
                     Agent.isStopped = true;
@@ -122,8 +123,8 @@ public class UCharacterView : UElementView, IBattleCharacter
                 }
                 else
                 {
-                    EndPush();
                     MCategory = MoveCategory.NONE;
+                    EndPush();
                 }
                 break;
             case MoveCategory.Destination:

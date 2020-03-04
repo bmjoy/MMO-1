@@ -24,6 +24,13 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
+			if (target.IsDeath)
+			{
+				yield return RunStatus.Failure;
+				yield break;
+
+			}
+
             if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float distance))
             {
                 yield return RunStatus.Failure;
