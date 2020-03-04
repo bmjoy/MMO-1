@@ -172,14 +172,14 @@ namespace GameLogic.Game.Perceptions
         public AITreeRoot ChangeCharacterAI(string pathTree, BattleCharacter character)
         {
             TreeNode ai = View.GetAITree(pathTree);
-            return ChangeCharacterAI(ai, character);
+            return ChangeCharacterAI(ai, character,pathTree);
         }
 
 
-        public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character)
+        public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character, string path = null)
         {
             var comp = AITreeParse.CreateFrom(ai,View);
-            var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai);
+            var root = new AITreeRoot(View.GetTimeSimulater(), character, comp, ai,path);
             character.SetAITreeRoot(root);
             character.SetControllor(AIControllor);
             return root;
@@ -189,7 +189,6 @@ namespace GameLogic.Game.Perceptions
 
         #endregion
 
-        //获取一个非本阵营目标
         public BattleCharacter GetSingleTargetUseRandom(BattleCharacter owner)
         {
             BattleCharacter target = null;
@@ -206,7 +205,6 @@ namespace GameLogic.Game.Perceptions
 
             return target;
         }
-
       
         public BattleCharacter FindTarget(int target)
         {
@@ -460,7 +458,6 @@ namespace GameLogic.Game.Perceptions
                 return false;
             });
         }
-
 
         public void NotifyHurt(BattleCharacter sources)
         {

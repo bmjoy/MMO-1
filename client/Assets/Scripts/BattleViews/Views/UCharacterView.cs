@@ -60,7 +60,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void Update()
     {
-
+#if !UNITY_SERVER
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
             if (_tips.Count > 0)
@@ -96,7 +96,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
             }
         }
-
+#endif
         LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
 
         if (!Agent) return;
@@ -313,7 +313,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (!this) return;
         var f = forward.ToUV3();
         this.LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(f);
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetForword
         {
             Forward = forward,
@@ -353,7 +353,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return ;
         this.Agent.Warp(pos.ToUV3());
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetPosition { Index = Index, Position = pos });
 #endif
     }
@@ -361,7 +361,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.LookAtTarget(int target)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
         var v = PerView.GetViewByIndex(target);
@@ -372,7 +372,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PropertyValue { Index = Index, Type = type, FinallyValue = finalValue });
 #endif
     }
@@ -380,7 +380,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetAlpha(float alpha)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
 #endif
        //do nothing
@@ -389,7 +389,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.PlayMotion(string motion)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
 #endif
         var an = CharacterAnimator;
@@ -411,7 +411,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
 
         if (!this) return false;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveTo
         {
             Index = Index,
@@ -469,7 +469,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             transform.position = pos.ToUV3();
         }
         StopMove();
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
 #endif
 	}
@@ -484,7 +484,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 		if(Agent)  Agent.enabled = false;
 		IsDead = true;
 		//MoveDown.BeginMove (ViewRoot, 1, 1, 5);
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterDeath { Index = Index });
 #endif
 	}
@@ -502,7 +502,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return;
         Agent.avoidancePriority = (int)priorityMove;
-#if UNITY_SERVER|| UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterPriorityMove { Index = Index, PriorityMove = priorityMove });
 #endif
     }
@@ -511,7 +511,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return;
         this.gameObject.transform.localScale = Vector3.one * scale;
-#if UNITY_SERVER|| UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
 #endif
     }
@@ -519,7 +519,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.ShowHPChange(int hp,int cur,int max)
     {
         if (!this) return;
-#if UNITY_SERVER||UNITY_EDITOR
+#if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_HPChange { Index = Index, Cur = cur, Hp = hp, Max = max });
 #endif
         if (IsDead)  return;

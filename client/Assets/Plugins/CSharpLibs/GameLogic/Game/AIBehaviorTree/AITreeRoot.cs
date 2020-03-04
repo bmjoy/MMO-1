@@ -23,9 +23,12 @@ namespace GameLogic.Game.AIBehaviorTree
 
         private readonly Dictionary<string, object> _blackbroad = new Dictionary<string, object>();
 
-        public AITreeRoot(ITimeSimulater timeSimulater, BattleCharacter userstate, Composite root,
-                          TreeNode nodeRoot)
+        public string TreePath { private set; get; }
+
+        public AITreeRoot(ITimeSimulater timeSimulater, BattleCharacter userstate,
+            Composite root,TreeNode nodeRoot, string path)
         {
+            this.TreePath = path;
             TimeSimulater = timeSimulater;
             Character = userstate;
             Character = userstate;
@@ -224,6 +227,11 @@ namespace GameLogic.Game.AIBehaviorTree
         internal void Stop()
         {
             Current?.Stop(this);
+        }
+
+        public override string ToString()
+        {
+            return $"{TreePath}";
         }
     }
 }

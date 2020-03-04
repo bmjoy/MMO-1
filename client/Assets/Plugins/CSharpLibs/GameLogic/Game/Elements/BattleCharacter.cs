@@ -145,7 +145,7 @@ namespace GameLogic.Game.Elements
 
         private const int NEED_TICK_COUNT = 6; //AI更新频率
 
-        private AITreeRoot _AiRoot;// { private set; get; }
+        private AITreeRoot _AiRoot;
 
         public AITreeRoot AiRoot
         {
@@ -546,7 +546,10 @@ namespace GameLogic.Game.Elements
             OnBattleEvent?.Invoke(ev, args);
         }
 
-
+        public override string ToString()
+        {
+            return $"[{Index}]{Name}";
+        }
     }
 }
 
