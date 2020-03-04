@@ -113,16 +113,13 @@ namespace EngineCore.Simulater
 
         public void Each<T>(EachCondtion<T> cond) where T : GObject
         {
-            foreach (var i in _elements)
+            foreach (var i in _elementList)
             {
-                if (!i.Value.Enable) continue;
-                if (i.Value is T)
+                if (!i.Enable) continue;
+                if (i is T t)
                 {
-                    var temp = i.Value as T;
-                    if (cond(temp))
-                        return;
+                    if (cond(t)) return;
                 }
-                continue;
             }
         }
 

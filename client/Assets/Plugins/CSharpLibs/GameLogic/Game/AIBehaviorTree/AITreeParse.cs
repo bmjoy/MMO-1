@@ -41,7 +41,6 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		public static Composite CreateFrom(TreeNode node, ITreeLoader loader)
 		{
-
 			if (node is TreeNodeProbabilitySelector)
 			{
 				var sels = new List<ProbabilitySelection>();
@@ -122,13 +121,13 @@ namespace GameLogic.Game.AIBehaviorTree
 				var childNode = loader.Load(linkNode.Path);
 				var child = CreateFrom(childNode, loader);
 				linkNode.childs.Add(childNode);
-				return new DecoratorLinkChild(child);
+				return new DecoratorLinkChild(child) { Guid = node.guid };
 			}
 
 			else if (node is TreeNodeBattleEvent ev)
 			{
 				var t= CreateFrom(node.childs[0],loader);
-				return new EventBattle(t) { eventType = ev.eventType };
+				return new EventBattle(t) { eventType = ev.eventType , Guid = node.guid};
             }
 			else
 			{

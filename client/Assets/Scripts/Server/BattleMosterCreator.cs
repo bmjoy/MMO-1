@@ -138,14 +138,7 @@ namespace Server
         {
             if (LastTime + LevelData.MaxRefrshTime < time)
             {
-                if (AliveCount <= LevelData.MaxMonster)
-                    CreateMonster();
-                LastTime = time;
-            }
-
-            if (AliveCount == 0)
-            {
-                CreateMonster();
+                if (AliveCount <= LevelData.MaxMonster) CreateMonster();
                 LastTime = time;
             }
         }

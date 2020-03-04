@@ -17,29 +17,27 @@ namespace GameLogic.Game.AIBehaviorTree
 
             while (true)
             {
-				if (lastTime + (TickTime/1000f) >= context.Time)
+                if (lastTime + (TickTime / 1000f) <= context.Time)
                 {
-                    yield return BehaviorTree.RunStatus.Running;
-                }
+                    lastTime = context.Time;
+                    DecoratedChild.Start(context);
 
-				lastTime = context.Time;
-                DecoratedChild.Start(context);
-
-                while (DecoratedChild.Tick(context) == RunStatus.Running)
-                {
-                    yield return RunStatus.Running;
-                }
-                DecoratedChild.Stop(context);
-
-                if (DecoratedChild.LastStatus.HasValue)
-                {
-                    if (DecoratedChild.LastStatus.Value == RunStatus.Success)
+                    while (DecoratedChild.Tick(context) == RunStatus.Running)
                     {
-                        yield return RunStatus.Success;
-                        yield break;
+                        yield return RunStatus.Running;
+                    }
+                    DecoratedChild.Stop(context);
+
+                    if (DecoratedChild.LastStatus.HasValue)
+                    {
+                        if (DecoratedChild.LastStatus.Value == RunStatus.Success)
+                        {
+                            yield return RunStatus.Success;
+                            yield break;
+                        }
                     }
                 }
-
+                yield return RunStatus.Running;
             }
         }
 
