@@ -5,7 +5,7 @@ namespace Layout.LayoutElements
     public enum TargetReachType
     {
         MaxDistance,
-        ReachTarget
+        DistanceOfTaget
     }
 
     [EditorLayout("发射自己")]

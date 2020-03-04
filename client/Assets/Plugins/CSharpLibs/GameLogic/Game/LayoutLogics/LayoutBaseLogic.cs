@@ -231,17 +231,23 @@ namespace GameLogic.Game.LayoutLogics
 		{
 			var launch = layoutBase as LaunchSelfLayout;
 			var releaser = linePlayer.Releaser;
-			var charachter = releaser.ReleaserTarget.Releaser;
-			charachter.BeginLauchSelf(charachter.Rototion,
-				launch.distance,
+			var character = releaser.ReleaserTarget.Releaser;
+			var dis = launch.distance;
+			if (launch.reachType == TargetReachType.DistanceOfTaget)
+			{
+				dis = BattlePerception.Distance(character, releaser.ReleaserTarget.ReleaserTarget) + 2;
+			}
+
+			character.BeginLauchSelf(character.Rototion,
+				dis,
 				launch.speed,
 				(hit, obj) =>
 				{
 					if (!hit.IsAliveAble) return;
 					if (obj is MagicReleaser r)
 					{
-						if (r.TryHit(hit))
-							r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
+						if (hit.TeamIndex == r.ReleaserTarget.Releaser.TeamIndex) return;
+						if (r.TryHit(hit)) r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
 					}
 				},
 				releaser);
