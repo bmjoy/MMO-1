@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Layout.LayoutEffects;
 using Proto;
 
 namespace GameLogic.Game
@@ -122,6 +123,28 @@ namespace GameLogic.Game
 			var temp = obj as ComplexValue;
 			return temp.FinalValue == this.FinalValue;
 		}
-	}
+
+		public void ModifyValue(AddType addType, float resultValue)
+		{
+			switch (addType)
+			{
+				case AddType.Append:
+					{
+						SetAppendValue((int)resultValue);
+					}
+					break;
+				case AddType.Base:
+					{
+						SetBaseValue((int)resultValue);
+					}
+					break;
+				case AddType.Rate:
+					{
+						SetRate((int)resultValue);
+					}
+					break;
+			}
+		}
+    }
 }
 

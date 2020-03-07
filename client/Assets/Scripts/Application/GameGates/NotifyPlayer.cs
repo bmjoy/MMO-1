@@ -104,6 +104,10 @@ public class NotifyPlayer
             var index = (int)property.GetValue(notify);
             var per = PerView as UPerceptionView;
             var v = per.GetViewByIndex(index);
+            if (v == null)
+            {
+                Debug.LogError($"No found index {index} by {notify.GetType()} -> {notify}");
+            }
             //Debug.Log($"{v.GetType()} -> {notify.GetType()}");
             if (ElementInvokes.TryGetValue(notify.GetType(), out NotifyMapping elI))
             {

@@ -51,7 +51,7 @@ namespace GameLogic.Game.Elements
     {
         private UVector3 dir;
 
-        private float distance;
+        private readonly float distance;
 
         private float speed;
 
@@ -131,6 +131,7 @@ namespace GameLogic.Game.Elements
                 return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
             }
         }
+       
         public int HP { private set; get; }
         public int MP { private set; get; }
         public bool IsDeath
@@ -140,13 +141,7 @@ namespace GameLogic.Game.Elements
                 return HP == 0;
             }
         }
-
-        private int tickAICount = 0;
-
-        private const int NEED_TICK_COUNT = 6; //AI更新频率
-
         private AITreeRoot _AiRoot;
-
         public AITreeRoot AiRoot
         {
             private set
@@ -156,8 +151,6 @@ namespace GameLogic.Game.Elements
             }
             get { return _AiRoot; }
         }
-
-        //position
         public UVector3 Position
         {
             get
@@ -173,7 +166,6 @@ namespace GameLogic.Game.Elements
                 View.SetPosition(value.ToPV3());
             }
         }
-        //forward
         public UVector3 Forward {
             get
             {
@@ -182,9 +174,7 @@ namespace GameLogic.Game.Elements
                 return t.forward;
             }
         }
-
         public bool IsMoving { get { return View.IsMoving; } }
-
         public Quaternion Rototion
         {
             get
@@ -192,7 +182,6 @@ namespace GameLogic.Game.Elements
                 return View.Rotation;
             }
         }
-
         public Transform Transform { get { return this.View.RootTransform; } }
         //property
         public ComplexValue this[P type]
@@ -203,12 +192,14 @@ namespace GameLogic.Game.Elements
         public BattleCharacter (
             int configID,
             List<CharacterMagicData> magics,
+            float speed,
             GControllor controllor, 
             IBattleCharacter view, 
             string account_uuid):base(controllor,view)
 		{
             AcccountUuid = account_uuid;
 			HP = 0;
+            _speed = speed;
 			ConfigID = configID;
             Magics = new Dictionary<int, BattleCharacterMagic>();
             foreach (var i in magics)
@@ -240,7 +231,6 @@ namespace GameLogic.Game.Elements
                     case ActionLockType.NoAi:
                         this.AiRoot?.Stop();
                         break;
-
 
                 }
             };
@@ -374,7 +364,7 @@ namespace GameLogic.Game.Elements
             _next.Enqueue(root);
         }
 
-      
+
         internal void TickAi()
         {
             if (_next.Count > 0)
@@ -383,11 +373,7 @@ namespace GameLogic.Game.Elements
                 AiRoot = _next.Dequeue();
             }
             if (Lock.IsLock(ActionLockType.NoAi)) return;
-            if (AiRoot == null) return;
-            tickAICount++;
-            if (tickAICount < NEED_TICK_COUNT) return;
-            tickAICount = 0;
-            AiRoot.Tick();
+            AiRoot?.Tick();
         }
 
         internal void LookAt(BattleCharacter releaserTarget)
@@ -450,24 +436,7 @@ namespace GameLogic.Game.Elements
         public void ModifyValue(P property, AddType addType, float resultValue)
         {
             var value = this[property];
-            switch (addType)
-            {
-                case AddType.Append:
-                    {
-                        value.SetAppendValue((int)resultValue);
-                    }
-                    break;
-                case AddType.Base:
-                    {
-                        value.SetBaseValue((int)resultValue);
-                    }
-                    break;
-                case AddType.Rate:
-                    {
-                        value.SetRate((int)resultValue);
-                    }
-                    break;
-            }
+            value.ModifyValue(addType, resultValue);
             View.PropertyChange(property, value.FinalValue);
         }
 

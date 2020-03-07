@@ -116,7 +116,9 @@ namespace GameLogic.Game.Perceptions
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
                 data.MoveSpeed);
 
-            var battleCharacter = new BattleCharacter(data.ID, magics, this.BattleCharacterControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data.ID, magics,
+                data.MoveSpeed,
+                this.BattleCharacterControllor, view, accountUuid);
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
             battleCharacter[HeroPropertyType.Defance].SetBaseValue(data.Defance);
@@ -133,7 +135,7 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.Category = (HeroCategory)data.Category;
             battleCharacter.Name = data.Name;
             battleCharacter.TeamIndex = teamIndex;
-            battleCharacter.Speed = data.MoveSpeed;
+            //battleCharacter.Speed = data.MoveSpeed;
             view.SetPriorityMove(data.PriorityMove);
             battleCharacter.Init();
 
