@@ -20,7 +20,7 @@
       <GUID>8aae561c-ae90-4fb8-8966-72f0bab9f7e7</GUID>
       <speed>12</speed>
       <reachType>MaxDistance</reachType>
-      <distance>15</distance>
+      <distance>8</distance>
     </LayoutBase>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>1b9b9cf2-0304-4009-a139-8003f75a541d</GUID>

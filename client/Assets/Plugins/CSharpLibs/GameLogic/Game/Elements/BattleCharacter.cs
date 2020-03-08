@@ -15,7 +15,6 @@ using UnityEngine;
 
 namespace GameLogic.Game.Elements
 {
-
     public class BattleCharacterMagic
     {
         public MagicType Type { private set; get; }

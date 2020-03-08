@@ -55,7 +55,7 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
     public ThridPersionCameraContollor RotationY(float y)
     {
         rotationY -= y;
-        rotationY %= 360;
+        //rotationY %= 360;
         return this;
     }
 

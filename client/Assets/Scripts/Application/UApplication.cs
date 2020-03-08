@@ -103,7 +103,20 @@ public class UApplication : XSingleton<UApplication>
 
     void Start()
     {
-        GotoLoginGate();
+
+        var session = PlayerPrefs.GetString("_PlayerSession");
+        var accountID = PlayerPrefs.GetString("_UserID");
+        var port = PlayerPrefs.GetInt("_GateServerPort");
+        var host = PlayerPrefs.GetString("_GateServerHost");
+        var serverID = PlayerPrefs.GetInt("_GateServerID");
+        if (string.IsNullOrEmpty(session))
+        {
+            GotoLoginGate();
+        }
+        else
+        {
+            GoServerMainGate(new GameServerInfo { Host = host, Port = port, ServerId = serverID },accountID,session);
+        }
     }
 
     public void OnApplicationQuit()

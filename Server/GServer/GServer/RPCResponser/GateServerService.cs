@@ -67,11 +67,7 @@ namespace GateServer
         public G2C_EquipmentLevelUp EquipmentLevelUp(C2G_EquipmentLevelUp request)
         {
             var task = UserDataManager.S.EquipLevel(Client, AccountUuid, request.Guid, request.Level);
-
             task.Wait();
-
-            var r = task.Result;
-            
             return task.Result;
         }
 

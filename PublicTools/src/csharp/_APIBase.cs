@@ -41,6 +41,7 @@ namespace Proto.PServices
         protected APIBase() 
         {
             TimeOut = 10000;//10s
+            QueryRespons = new Response();
         }
 
         public int API
@@ -88,9 +89,9 @@ namespace Proto.PServices
         public APIBase<Request, Response> SetResponse(Response response)
         {
             this.QueryRespons = response;
+            if(QueryRespons==null) QueryRespons = new Response();
             this.IsDone = true;
-            if(Callback!=null)
-               Callback.Invoke(QueryRespons);
+            if(Callback!=null) Callback.Invoke(QueryRespons);
             return this;
         }
 

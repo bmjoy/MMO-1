@@ -125,7 +125,7 @@ namespace XNet.Libs.Net
             }
             else
             {
-                api.SetResponse(default);
+                api.SetResponse(new Response { });
             }
             return requestIndex;
         }

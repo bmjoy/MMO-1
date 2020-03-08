@@ -135,10 +135,8 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.Category = (HeroCategory)data.Category;
             battleCharacter.Name = data.Name;
             battleCharacter.TeamIndex = teamIndex;
-            //battleCharacter.Speed = data.MoveSpeed;
             view.SetPriorityMove(data.PriorityMove);
             battleCharacter.Init();
-
             this.JoinElement(battleCharacter);
             return battleCharacter;
         }

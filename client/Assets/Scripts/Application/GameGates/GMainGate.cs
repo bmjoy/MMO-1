@@ -100,7 +100,7 @@ public class GMainGate:UGate
                 }
                 else
                 {
-                    UApplication.S.GotoLoginGate();
+                    Invoke(() => { UApplication.S.GotoLoginGate(); });
                 }
             },
             OnDisconnect = OnDisconnect
@@ -119,16 +119,21 @@ public class GMainGate:UGate
                  Version = 1
              });
 
-        if (r.Code.IsOk())
+        Invoke(() =>
         {
-            ShowPlayer(r);
-        }
-        else
-        {
-            UUITipDrawer.S.ShowNotify("GateServer Response:" + r.Code);
-            UApplication.S.GotoLoginGate();
-        }
+            if (r.Code.IsOk())
+            {
+                ShowPlayer(r);
+            }
+            else
+            {
+                UUITipDrawer.S.ShowNotify("GateServer Response:" + r.Code);
+                UApplication.S.GotoLoginGate();
+            }
+        });
+
     }
+
 
     private void ShowPlayer(G2C_Login result)
     {
