@@ -14,6 +14,7 @@ using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using UnityEngine;
 using System.Linq;
+using static EngineCore.Simulater.GState;
 
 namespace GameLogic.Game.Perceptions
 {
@@ -461,8 +462,9 @@ namespace GameLogic.Game.Perceptions
 
         public void NotifyHurt(BattleCharacter sources)
         {
-            State.Each<BattleCharacter>((c) => {
-
+            State.Each<BattleCharacter>((c) => 
+            {
+                if (c.IsDeath) return false;
                 if (c.TeamIndex == sources.TeamIndex)
                 {
                     if (Distance(c, sources) < BattleAlgorithm.HURT_NOTIFY_R)

@@ -125,8 +125,8 @@ namespace XNet.Libs.Net
 		{
 			try
 			{
-				Socket.BeginSend(msg, 0, msg.Length, SocketFlags.None,
-					new AsyncCallback(OnEndSentData), this);
+				if (IsClose) return false;
+				Socket.BeginSend(msg, 0, msg.Length, SocketFlags.None,new AsyncCallback(OnEndSentData), this);
 				return true;
 			}
 			catch (Exception ex)

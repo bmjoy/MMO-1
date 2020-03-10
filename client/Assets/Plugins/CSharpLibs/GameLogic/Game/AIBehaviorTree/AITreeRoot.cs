@@ -201,7 +201,8 @@ namespace GameLogic.Game.AIBehaviorTree
             target = null;
             if (!TryGet(TRAGET_INDEX, out int index)) return false;
             target = Perception.FindTarget(index);
-            return target;
+            if (target == null) return false;
+            return !target.IsDeath;
         }
 
         public bool TryGetAction<T>(out T action)
@@ -218,7 +219,6 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 return false;
             }
-
             magicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
             return magicData != null;
 

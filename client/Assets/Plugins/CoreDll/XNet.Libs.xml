@@ -487,13 +487,6 @@
             停止
             </summary>
         </member>
-        <member name="M:XNet.Libs.Net.SocketServer.SendMessage(XNet.Libs.Net.Client,XNet.Libs.Net.Message)">
-            <summary>
-            发送消息
-            </summary>
-            <param name="client"></param>
-            <param name="msg"></param>
-        </member>
         <member name="M:XNet.Libs.Net.SocketServer.DisConnectClient(XNet.Libs.Net.Client)">
             <summary>
             关闭一个会话

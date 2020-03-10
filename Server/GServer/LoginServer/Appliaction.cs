@@ -2,11 +2,8 @@
 using XNet.Libs.Net;
 using ServerUtility;
 using org.vxwo.csharp.json;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.IdGenerators;
-using Proto.MongoDB;
 using MongoTool;
+using RPCResponsers;
 
 namespace LoginServer
 {
@@ -48,7 +45,7 @@ namespace LoginServer
             MonitorPool.Singleton.Start();
             IsRunning = true;
             //对外端口不能全部注册
-            var handeler = new RequestHandle<RPCResponsers.LoginServerService>();
+            var handeler = new RequestHandle<LoginServerService>();
             var manager = new ConnectionManager();
             Server = new SocketServer(manager, port)
             {

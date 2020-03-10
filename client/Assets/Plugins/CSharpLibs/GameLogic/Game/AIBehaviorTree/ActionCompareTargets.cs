@@ -29,6 +29,7 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
 			per.State.Each<BattleCharacter>(t =>
 			{
+				if (t.IsDeath) return false;
 				switch (Node.teamType)
 				{
 					case TargetTeamType.Enemy:

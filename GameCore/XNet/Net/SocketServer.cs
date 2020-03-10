@@ -53,31 +53,36 @@ namespace XNet.Libs.Net
 
         private void ReceivedMessag(Client client, Message msg)
         {
+            switch (msg.Class)
+            {
+                case MessageClass.Action:
+                    {
+                        client.SetActionMessage(msg);
+                    }
+                    break;
+                case MessageClass.Ping:
+                    { client?.SendMessage(msg); }
+                    break;
+                case MessageClass.Package:
+                    {
+                        var package = MessageBufferPackage.ParseFromMessage(msg);
+                        foreach (var i in package.Messages)
+                        {
+                            ReceivedMessag(client, i);
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        this.HandlerManager?.Handle(msg, client);
+                        if (this.HandlerManager == null)
+                        {
+                            Debuger.LogWaring($"No handle of {msg.Class}");
+                        }
+                    }
+                    break;
+            }
             client.LastMessageTime = DateTime.UtcNow;
-            if (msg.Class == MessageClass.Ping)
-            {
-                SendMessage(client, msg);
-            }
-            else if (msg.Class == MessageClass.Package)
-            {
-                var package = MessageBufferPackage.ParseFromMessage(msg);
-                foreach (var i in package.Messages)
-                {
-                    ReceivedMessag(client, i);
-                }
-            }
-            else if (msg.Class == MessageClass.Action)
-            {
-                client.SetActionMessage(msg);
-            }
-            else if (this.HandlerManager != null)
-            {
-                this.HandlerManager.Handle(msg, client);
-            }
-            else
-            {
-                Debuger.DebugLog("Server No Handler!");
-            }
         }
 
         private void OnAccept(IAsyncResult ar)
@@ -136,35 +141,6 @@ namespace XNet.Libs.Net
             catch (Exception ex)
             {
                 HandleException(nClient, ex);
-            }
-        }
-
-        private void OnEndSentData(IAsyncResult ar)
-        {
-            var client = ar.AsyncState as Client;
-            if (client?.Enable != true) return;
-            try
-            {
-                client.Socket.EndSend(ar);
-            }
-            catch (Exception ex)
-            {
-                HandleException(client, ex);
-            }
-        }
-
-        private bool BeginSendMessage(Client client, byte[] msg)
-        {
-            if (client?.Enable != true) return false;
-            try
-            {
-                client.Socket.BeginSend(msg, 0, msg.Length, SocketFlags.None, new AsyncCallback(OnEndSentData), client);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                HandleException(client, ex);
-                return false;
             }
         }
 
@@ -240,15 +216,7 @@ namespace XNet.Libs.Net
                 Debuger.DebugLog("Socket Stoped");
             }
         }
-        /// <summary>
-        /// 发送消息
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="msg"></param>
-        public bool SendMessage(Client client, Message msg)
-        {
-            return BeginSendMessage(client, msg.ToBytes());
-        }
+
         /// <summary>
         /// 关闭一个会话
         /// </summary>

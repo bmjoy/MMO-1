@@ -45,7 +45,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     private const string BottomBone = "Bottom";
     private const string Die_Motion = "Die";
     private Animator CharacterAnimator;
-	private bool IsStop = true;
     private int hpBar = -1;
     private int nameBar=-1;
     private float showHpBarTime =0;
@@ -59,6 +58,8 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     private Vector3 pushSpeed= Vector3.zero;//speed
     private float pushLeftTime = -1;
+
+    private Vector3 v;
 
     void Update()
     {
@@ -102,6 +103,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
 
         if (!Agent) return;
+        this.v = Vector3.zero;
         switch (MCategory)
         {
             case MoveCategory.Forward:
@@ -109,16 +111,17 @@ public class UCharacterView : UElementView, IBattleCharacter
                     Agent.isStopped = true;
                     var v = MoveForward.Value * Agent.speed;
                     Agent.Move(v * Time.deltaTime);
-                    targetLookQuaternion = Quaternion.LookRotation(MoveForward.Value);
+                    this.v = v;
                     PlaySpeed(v.magnitude);
                 }
                 break;
             case MoveCategory.Push:
                 if (pushLeftTime > 0)
                 {
+                    Agent.isStopped = true;
                     pushLeftTime -= Time.deltaTime;
                     Agent.Move(pushSpeed * Time.deltaTime);
-                    targetLookQuaternion = Quaternion.LookRotation(pushSpeed);
+                    this.v = pushSpeed;
                     PlaySpeed(pushSpeed.magnitude);
                 }
                 else
@@ -131,13 +134,15 @@ public class UCharacterView : UElementView, IBattleCharacter
             default:
                 {
                     PlaySpeed(Agent.velocity.magnitude);
+                    if (!this.Agent.isStopped)
+                        this.v = Agent.velocity;
                 }
                 break;
         }
 
-        if (lockRotationTime < Time.time && !IsStop && Agent.velocity.magnitude > 0)
+        if (lockRotationTime < Time.time && v.magnitude > 0.1f)
         {
-            targetLookQuaternion = Quaternion.LookRotation(Agent.velocity, Vector3.up);
+            targetLookQuaternion = Quaternion.LookRotation(v, Vector3.up);
         }
 
         if (hideTime < Time.time)
@@ -299,7 +304,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         pushSpeed = Vector3.zero;
         pushLeftTime = -1;
         MoveForward = null;
-        IsStop = true;
         if (!Agent ||!Agent.enabled) return;
         Agent.velocity = Vector3.zero;
         Agent.ResetPath();
@@ -430,9 +434,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         });
 #endif
 
-        if (!Agent || !Agent.enabled)
-            return false;
-        IsStop = false;
+        if (!Agent || !Agent.enabled) return false;
 
         TryToSetPosition(position.ToUV3());
         this.Agent.isStopped = false;

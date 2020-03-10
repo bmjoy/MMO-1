@@ -18,7 +18,7 @@
   <Layouts>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>8cbb36f3-dce8-4cb4-aeeb-4ab0f300b94c</GUID>
-      <motionName>Attack 01</motionName>
+      <motionName>attack 01</motionName>
       <targetType>Releaser</targetType>
     </LayoutBase>
     <LayoutBase xsi:type="LookAtTarget">

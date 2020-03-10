@@ -107,6 +107,5 @@ namespace XNet.Libs.Utility
             }
             throw new Exception($"No found index by type {msg.GetType()} {msg.ToString()}");
         }
-
     }
 }

@@ -79,7 +79,7 @@ namespace MongoTool
         public bool GetSessionInfo(string userID, out UserSessionInfoEntity serverInfo)
         {
             var filter = Builders<UserSessionInfoEntity>.Filter.Eq(t => t.AccountUuid, userID);
-            serverInfo = DataBase.S.Session.Find(filter).SingleOrDefault();
+            serverInfo = S.Session.Find(filter).SingleOrDefault();
             return serverInfo != null;
         }
 
