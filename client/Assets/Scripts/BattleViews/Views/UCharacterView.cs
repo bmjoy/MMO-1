@@ -84,11 +84,8 @@ public class UCharacterView : UElementView, IBattleCharacter
                         UUIManager.S.OffsetInUI(GetBoneByName(TopBone).position)
                     );
             }
-
-
             if (ShowName && !IsDead && ThridPersionCameraContollor.Current)
             {
-
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
                     nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar,
@@ -97,6 +94,14 @@ public class UCharacterView : UElementView, IBattleCharacter
                             );
                 }
 
+            }
+        }
+
+        if (hideTime < Time.time)
+        {
+            if (range && range.activeSelf)
+            {
+                range.SetActive(false);
             }
         }
 #endif
@@ -108,7 +113,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         {
             case MoveCategory.Forward:
                 {
-                    Agent.isStopped = true;
                     var v = MoveForward.Value * Agent.speed;
                     Agent.Move(v * Time.deltaTime);
                     this.v = v;
@@ -116,18 +120,19 @@ public class UCharacterView : UElementView, IBattleCharacter
                 }
                 break;
             case MoveCategory.Push:
-                if (pushLeftTime > 0)
                 {
-                    Agent.isStopped = true;
-                    pushLeftTime -= Time.deltaTime;
-                    Agent.Move(pushSpeed * Time.deltaTime);
-                    this.v = pushSpeed;
-                    PlaySpeed(pushSpeed.magnitude);
-                }
-                else
-                {
-                    MCategory = MoveCategory.NONE;
-                    EndPush();
+                    if (pushLeftTime > 0)
+                    {
+                        pushLeftTime -= Time.deltaTime;
+                        Agent.Move(pushSpeed * Time.deltaTime);
+                        this.v = pushSpeed;
+                        PlaySpeed(pushSpeed.magnitude);
+                    }
+                    else
+                    {
+                        MCategory = MoveCategory.NONE;
+                        EndPush();
+                    }
                 }
                 break;
             case MoveCategory.Destination:
@@ -145,13 +150,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             targetLookQuaternion = Quaternion.LookRotation(v, Vector3.up);
         }
 
-        if (hideTime < Time.time)
-        {
-            if (range && range.activeSelf)
-            {
-                range.SetActive(false);
-            }
-        }
+        
     }
 
     private void PlaySpeed(float speed)
@@ -173,7 +172,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         r.isKinematic = true;
         r.useGravity = false;
     }
-
 
     private void OnTriggerEnter(Collider other)
     {

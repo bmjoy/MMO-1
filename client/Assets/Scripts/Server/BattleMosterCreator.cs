@@ -136,11 +136,18 @@ namespace Server
 
         internal void TryCreateMonster(float time)
         {
-            if (LastTime + LevelData.MaxRefrshTime < time)
+
+            if (AliveCount == 0)
+            {
+                CreateMonster();
+                LastTime = time;
+            }
+            else if (LastTime + LevelData.MaxRefrshTime < time)
             {
                 if (AliveCount <= LevelData.MaxMonster) CreateMonster();
                 LastTime = time;
             }
+
         }
 
         /*

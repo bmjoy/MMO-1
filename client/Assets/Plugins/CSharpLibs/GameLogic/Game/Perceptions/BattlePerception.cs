@@ -47,7 +47,7 @@ namespace GameLogic.Game.Perceptions
         public BattlePerception(GState state, IBattlePerception view) : base(state)
         {
             View = view;
-            BattleCharacterControllor = new BattleCharacterControllor(this);
+
             ReleaserControllor = new MagicReleaserControllor(this);
             BattleMissileControllor = new BattleMissileControllor(this);
             AIControllor = new BattleCharacterAIBehaviorTreeControllor(this);
@@ -57,11 +57,7 @@ namespace GameLogic.Game.Perceptions
 
 
         #region controllor
-        //初始化游戏中的控制器 保证唯一性
-        public BattleCharacterControllor BattleCharacterControllor { private set; get; }
         public BattleMissileControllor BattleMissileControllor { private set; get; }
-
-
         public MagicReleaserControllor ReleaserControllor { private set; get; }
         public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
         #endregion
@@ -117,9 +113,8 @@ namespace GameLogic.Game.Perceptions
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
                 data.MoveSpeed);
 
-            var battleCharacter = new BattleCharacter(data.ID, magics,
-                data.MoveSpeed,
-                this.BattleCharacterControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data.ID, magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
+
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
             battleCharacter[HeroPropertyType.Defance].SetBaseValue(data.Defance);
