@@ -18,7 +18,7 @@
   <Layouts>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>8cbb36f3-dce8-4cb4-aeeb-4ab0f300b94c</GUID>
-      <motionName>attack 02</motionName>
+      <motionName>Attack 02</motionName>
       <targetType>Releaser</targetType>
     </LayoutBase>
     <LayoutBase xsi:type="LookAtTarget">
@@ -30,7 +30,7 @@
       <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
       <radius>1.6</radius>
-      <angle>140</angle>
+      <angle>130</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
         <x>0</x>

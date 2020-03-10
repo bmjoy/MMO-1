@@ -9,7 +9,7 @@ using GameLogic;
 using UVector3 = UnityEngine.Vector3;
 using System.Collections.Generic;
 
-public class UMagicReleaserView :UElementView,IMagicReleaser
+public class UMagicReleaserView : UElementView, IMagicReleaser
 {
     public void SetCharacter(IBattleCharacter releaser, IBattleCharacter target)
     {
@@ -17,8 +17,8 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
         CharacterReleaser = releaser;
     }
 
-	public IBattleCharacter CharacterTarget{private set; get;}
-	public IBattleCharacter CharacterReleaser{private set; get; }
+    public IBattleCharacter CharacterTarget { private set; get; }
+    public IBattleCharacter CharacterReleaser { private set; get; }
 
     public string Key { get; internal set; }
 
@@ -34,7 +34,7 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
         return createNotify;
     }
 
-    void IMagicReleaser.ShowDamageRanger( DamageLayout layout)
+    void IMagicReleaser.ShowDamageRanger(DamageLayout layout)
     {
 #if UNITY_EDITOR
         if (layout.damageType == Layout.LayoutElements.DamageType.Rangle)
@@ -50,7 +50,7 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
                 Radius = layout.radius,
                 targetsNums = 0,
                 time = Time.time + .3f
-            }) ;
+            });
         }
 #endif
     }
@@ -83,40 +83,27 @@ public class UMagicReleaserView :UElementView,IMagicReleaser
 
     private void DrawClire(UVector3 pos, Quaternion forward, float r, float a)
     {
-        var c = Gizmos.color;
+        if (a > 360) a = 360;
 
+        var c = Gizmos.color;
         Gizmos.color = Color.red;
-        if (a < 180)
+
+        var qu2 = forward * Quaternion.Euler(0, a / 2, 0);
+        var qu1 = forward * Quaternion.Euler(0, -a / 2, 0);
+        var pos1 = qu1 * UVector3.forward * r + pos;
+        var pos2 = qu2 * UVector3.forward * r + pos;
+        Gizmos.DrawLine(pos, pos1);
+        Gizmos.DrawLine(pos, pos2);
+        UVector3 start = pos1;
+        for (float i = -a/2; i < a/2 -5; )
         {
-            var qu1 = forward * Quaternion.Euler(0, a / 2, 0);
-            var qu2 = forward * Quaternion.Euler(0, -a / 2, 0);
-            var pos1 = qu1 * UVector3.forward * r + pos;
-            var pos2 = qu2 * UVector3.forward * r + pos;
-            Gizmos.DrawLine(pos, pos1);
-            Gizmos.DrawLine(pos, pos2);
-            UVector3 start = pos1;
-            for (float i = 0.1f; i < 1f; i += 0.1001f)
-            {
-                var diffQu = Quaternion.Lerp(qu1, qu2, i);
-                var temp = diffQu * UVector3.forward * r + pos;
-                Gizmos.DrawLine(start, temp);
-                start = temp;
-            }
-            Gizmos.DrawLine(start, pos2);
+            i += 5;
+            var diffQu = forward * Quaternion.Euler(0,i,0);
+            var temp = diffQu * UVector3.forward * r + pos;
+            Gizmos.DrawLine(start, temp);
+            start = temp;
         }
-        else
-        {
-            UVector3 start = forward * UVector3.forward * r + pos;
-            Gizmos.DrawLine(pos, start);
-            for (float i = 10f; i < 360f; i += 10.1001f)
-            {
-                var diffQu = forward * Quaternion.Euler(0, i, 0);
-                var temp = diffQu * UVector3.forward * r + pos;
-                Gizmos.DrawLine(start, temp);
-                start = temp;
-            }
-            Gizmos.DrawLine(start, forward * UVector3.forward * r + pos);
-        }
+       Gizmos.DrawLine(start, pos2);
         Gizmos.color = c;
     }
 #endif
