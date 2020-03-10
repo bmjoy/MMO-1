@@ -116,6 +116,11 @@ namespace GameLogic.Game.Elements
         public HanlderEvent OnDead;
         public int ConfigID { private set; get; }
         private ActionLock Lock {  set; get; }
+        public float Radius
+        {
+            get { return View.Radius; }
+        }
+
         private float _speed;
         public float Speed
         {

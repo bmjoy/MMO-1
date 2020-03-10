@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using GameLogic.Game.Elements;
 using Google.Protobuf;
 using Proto;
-using EngineCore.Simulater;
 using Layout.LayoutElements;
 using GameLogic;
 using UVector3 = UnityEngine.Vector3;

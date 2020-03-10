@@ -32,7 +32,7 @@ namespace GameLogic.Game.Perceptions
 
         public static float Distance(BattleCharacter c1, UVector3 c2)
         {
-            return Math.Max(0, (c1.Position - c2).magnitude - .5f);
+            return Math.Max(0, (c1.Position - c2).magnitude - c1.Radius);
         }
 
         public static bool InviewSide(BattleCharacter ower , BattleCharacter target, float viewDistance, float angle)
@@ -352,23 +352,19 @@ namespace GameLogic.Game.Perceptions
             float radius, float angle, float offsetAngle,
             UVector3 offset, int teamIndex)
         {
-            var sqrRadius = radius * radius;
+          
             switch (damageType)
             {
                 case Layout.LayoutElements.DamageType.Single://单体直接对目标
                     return new List<BattleCharacter> { target };
                 case Layout.LayoutElements.DamageType.Rangle:
                     {
-                        
                         var orgin = target.Position + target.Rototion * offset;
-                       
                         var q = Quaternion.Euler(0, offsetAngle, 0);
                         var forward = q * target.Rototion * UVector3.forward;
-
                         var list = new List<BattleCharacter>();
                         State.Each<BattleCharacter>((t) =>
                         {
-
                             //过滤
                             switch (fitler)
                             {
@@ -381,11 +377,8 @@ namespace GameLogic.Game.Perceptions
                                     break;
 
                             }
-
+                            if (Distance(t, orgin) > radius) return false;
                             var len =  t.Position- orgin;
-                            //不在目标区域内
-                            if (len.sqrMagnitude > sqrRadius) return false;
-
                             if (angle < 360)
                             {
                                 var an = UVector3.Angle(len, forward);

@@ -470,6 +470,15 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
+    float IBattleCharacter.Radius
+    {
+        get
+        {
+            if (ViewRoot) return Agent.radius;
+            return 0;
+        }
+    }
+
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (!this) return;

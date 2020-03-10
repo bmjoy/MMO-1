@@ -11,6 +11,7 @@ namespace GameLogic.Game.Elements
         bool IsMoving { get; }
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
+        float Radius { get; }
 
         [NeedNotify(typeof(Notify_CharacterSetPosition), "Position")]
         void SetPosition(Proto.Vector3 pos);//set position of the character

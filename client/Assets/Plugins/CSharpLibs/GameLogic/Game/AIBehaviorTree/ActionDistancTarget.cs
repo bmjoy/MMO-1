@@ -31,7 +31,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
 			}
 
-            if (!root.GetDistanceByValueType(Node.valueOf, Node.distance, out float distance))
+            if (!root.GetDistanceByValueType(Node.valueOf, Node.distance/100f, out float distance))
             {
                 yield return RunStatus.Failure;
                 yield break;
