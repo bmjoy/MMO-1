@@ -293,8 +293,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 30
+    /// </summary>    
+    [API(30)]
+    public class CharacterRelive:APIBase<Void, Notify_CharacterRelive> 
+    {
+        private CharacterRelive() : base() { }
+        public  static CharacterRelive CreateQuery(){ return new CharacterRelive();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(30)]Notify_CharacterRelive CharacterRelive(Void req);
         [API(29)]Notify_CharacterPush CharcaterPush(Void req);
         [API(28)]Notify_CharacterLock CharacterLock(Void req);
         [API(27)]Notify_CharacterSpeed CharacterSpeed(Void req);
@@ -327,6 +339,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(30)]public abstract Task<Notify_CharacterRelive> CharacterRelive(Void request);
         [API(29)]public abstract Task<Notify_CharacterPush> CharcaterPush(Void request);
         [API(28)]public abstract Task<Notify_CharacterLock> CharacterLock(Void request);
         [API(27)]public abstract Task<Notify_CharacterSpeed> CharacterSpeed(Void request);

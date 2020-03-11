@@ -338,9 +338,23 @@ namespace GameLogic.Game.Elements
         {
             var maxHP = MaxHP;
             if (hp <= 0 || HP >= maxHP) return;
+            if (HP == 0)
+            {
+                Debug.LogError($"{HP}==0");
+                return;
+            }
             HP += hp;
             if (HP >= maxHP) HP = maxHP;
             View.ShowHPChange(hp, HP, maxHP);
+        }
+
+        public bool Relive(int hp)
+        {
+            if (HP > 0) return true;
+            if (hp < 0) return false;
+            HP = hp;
+            View.Relive();
+            return true;
         }
 
         public bool SubMP(int mp)
@@ -490,12 +504,12 @@ namespace GameLogic.Game.Elements
             att = null;
             isAppend = false;
             if (LastNormalAttackTime + this.AttackSpeed > now) return false;
-            if (AttackCount > 2 && TryGetMaigcByType(MagicType.MtNormal, out BattleCharacterMagic m))
+            if (AttackCount > 2 && TryGetMaigcByType(MagicType.MtNormalAppend, out BattleCharacterMagic m))
             {
                 isAppend = true;
                 att = m.Config;
             }
-            else if (TryGetMaigcByType(MagicType.MtNormalAppend, out BattleCharacterMagic n))
+            else if (TryGetMaigcByType(MagicType.MtNormal, out BattleCharacterMagic n))
             {
                 att = n.Config;
             }

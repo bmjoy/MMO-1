@@ -26,6 +26,7 @@ namespace GameLogic.Game.States
                 lastHpCure = time;
                 Each<BattleCharacter>((el) =>
                 {
+                    if (el.IsDeath) return false;
                     var hp = (int)(el[P.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP * 3);
                     if (hp > 0) el.AddHP(hp);
                     var mp = (int)(el[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP * 3);

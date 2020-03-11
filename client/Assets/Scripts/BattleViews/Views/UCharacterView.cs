@@ -139,8 +139,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             default:
                 {
                     PlaySpeed(Agent.velocity.magnitude);
-                    if (!this.Agent.isStopped)
-                        this.v = Agent.velocity;
+                    this.v = Agent.velocity;
                 }
                 break;
         }
@@ -608,7 +607,6 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
-
     public override IMessage ToInitNotify()
     {
         var createNotity = new Notify_CreateBattleCharacter
@@ -675,6 +673,15 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (GElement is BattleCharacter c)
         {
             c.EndPush();
+        }
+    }
+
+    void IBattleCharacter.Relive()
+    {
+        if (this.CharacterAnimator)
+        {
+            this.CharacterAnimator.SetTrigger("Idle");
+            //todo
         }
     }
 }

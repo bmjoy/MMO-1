@@ -265,6 +265,11 @@ message Notify_CharacterPush
 	Vector3 Speed =3;
 }
 
+message Notify_CharacterRelive
+{
+	int32 Index =1;
+}
+
 service NotifyService
 {
 	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
@@ -293,6 +298,7 @@ service NotifyService
 	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
 	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
 	rpc CharcaterPush(Void) returns (Notify_CharacterPush){};//29
+	rpc CharacterRelive(Void) returns (Notify_CharacterRelive){};//30
 }
 
 service ActionService

@@ -13,6 +13,9 @@ namespace GameLogic.Game.Elements
         Transform RootTransform { get; }
         float Radius { get; }
 
+        [NeedNotify(typeof(Notify_CharacterRelive))]
+        void Relive();
+
         [NeedNotify(typeof(Notify_CharacterSetPosition), "Position")]
         void SetPosition(Proto.Vector3 pos);//set position of the character
         [NeedNotify(typeof(Notify_CharacterSetForword), "Forward")]
@@ -49,6 +52,7 @@ namespace GameLogic.Game.Elements
         void SetLock(int lockValue);
         [NeedNotify(typeof(Notify_CharacterPush), "Length", "Speed")]
         void Push(Proto.Vector3 length, Proto.Vector3 speed);
+  
     }
 }
 
