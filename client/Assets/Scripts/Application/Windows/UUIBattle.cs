@@ -111,6 +111,7 @@ namespace Windows
             var swipeEv = swipe.GetComponent<UIEventSwipe>();
             swipeEv.OnSwiping.AddListener((v) =>
             {
+                v = v * .5f;
                 ThridPersionCameraContollor.Current.RotationX(v.y).RotationY(v.x);
             });
 

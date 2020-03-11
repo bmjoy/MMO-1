@@ -37,11 +37,49 @@ namespace zFrame.UI
         }
         #region MonoBehaviour functions
         private void Awake() => backGroundOriginLocalPostion = backGround.localPosition;
-        void Update()=>OnValueChanged.Invoke(handle.localPosition / maxRadius); 
-        void OnDisable() => RestJoystick(); //意外被 Disable 各单位需要被重置
-        #endregion
+        void Update()
+        {
+            var off = handle.localPosition / maxRadius;
+#if UNITY_STANDALONE
+            int v = 0, h = 0;
 
-        #region The implement of pointer event Interface
+            if (Input.GetKey(KeyCode.W))
+            {
+                v += 1;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                v -= 1;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                h += 1;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                h -= 1;
+            }
+            var t = new Vector2(h, v);
+            if (t.sqrMagnitude > 0.1f)
+            {
+                off = t.normalized;
+                backGround.gameObject.SetActive(false);
+            }
+            else
+            {
+                backGround.gameObject.SetActive(true);
+            }
+#endif
+            OnValueChanged?.Invoke(off);
+        }
+
+
+
+        void OnDisable() => RestJoystick(); //意外被 Disable 各单位需要被重置
+#endregion
+
+#region The implement of pointer event Interface
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             if (eventData.pointerId < -1 || IsDraging) return; //适配 Touch：只响应一个Touch；适配鼠标：只响应左键
@@ -74,9 +112,9 @@ namespace zFrame.UI
             RestJoystick();
             OnPointerUp.Invoke(eventData.position);
         }
-        #endregion
+#endregion
 
-        #region Assistant functions / fields / structures
+#region Assistant functions / fields / structures
         void RestJoystick()
         {
             backGround.localPosition = backGroundOriginLocalPostion;
@@ -109,6 +147,6 @@ namespace zFrame.UI
             Horizontal = 1 << 0,
             Vertical = 1 << 1
         }
-        #endregion
+#endregion
     }
 }
