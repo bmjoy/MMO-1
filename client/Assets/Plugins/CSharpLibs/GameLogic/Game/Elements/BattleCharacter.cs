@@ -293,15 +293,17 @@ namespace GameLogic.Game.Elements
             {
                 View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
             }
-            else {
-                StopMove();
+            else
+            {
+                StopMove(posNext);
             }
             return true;
         }
 
-        public void StopMove()
+        public void StopMove(UVector3? pos =null)
         {
-            View.StopMove(Position.ToPV3());
+            var p = pos ?? Position;
+            View.StopMove(p.ToPV3());
         }
 
         public bool SubHP(int hp)
