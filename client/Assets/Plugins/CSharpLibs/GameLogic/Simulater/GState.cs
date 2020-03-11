@@ -101,8 +101,7 @@ namespace EngineCore.Simulater
         internal bool AddElement(GObject el)
         {
             var temp = el;
-            if (_elements.ContainsKey(temp.Index))
-                return false;
+            if (_elements.ContainsKey(temp.Index)) return false;
             _elements.Add(temp.Index, temp);
             _elementList.AddLast(temp);
             GObject.JoinState(temp);

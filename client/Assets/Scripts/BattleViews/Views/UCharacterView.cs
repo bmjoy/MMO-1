@@ -9,9 +9,6 @@ using UGameTools;
 using Google.Protobuf;
 using System.Linq;
 using UnityEngine.AI;
-using static Proto.Notify_CharacterAttachMagic.Types;
-
-
 
 [
     BoneName("Top", "__Top"),
@@ -316,6 +313,21 @@ public class UCharacterView : UElementView, IBattleCharacter
         return false;
     }
 
+    public bool TryGetMagicByType(MagicType type, out HeroMagicData data)
+    {
+        data = null;
+        foreach (var i in MagicCds)
+        {
+            if (i.Value.MType == type)
+            {
+                data = i.Value;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
@@ -581,10 +593,10 @@ public class UCharacterView : UElementView, IBattleCharacter
             MType = type
         });
 #endif
-        AddMagicCd(magicID, cdCompletedTime);
+        AddMagicCd(magicID, cdCompletedTime,type);
     }
 
-    public void AddMagicCd(int id, float cdTime)
+    public void AddMagicCd(int id, float cdTime, MagicType type)
     {
         if (MagicCds.ContainsKey(id))
         {

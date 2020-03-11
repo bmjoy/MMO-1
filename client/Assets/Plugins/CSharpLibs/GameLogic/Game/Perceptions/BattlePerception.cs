@@ -106,7 +106,9 @@ namespace GameLogic.Game.Perceptions
             List<CharacterMagicData> magics,
             int teamIndex,
             UVector3 position,
-            UVector3 forward, string accountUuid, string name)
+            UVector3 forward,
+            string accountUuid,
+            string name)
         {
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
@@ -131,9 +133,9 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.Category = (HeroCategory)data.Category;
             battleCharacter.Name = data.Name;
             battleCharacter.TeamIndex = teamIndex;
-            view.SetPriorityMove(data.PriorityMove);
             battleCharacter.Init();
             this.JoinElement(battleCharacter);
+            view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }
 

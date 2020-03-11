@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BehaviorTree;
-using EConfig;
-using ExcelConfig;
 using GameLogic.Game.Elements;
 using Layout.AITree;
-using Layout.EditorAttributes;
-using static Proto.Notify_CharacterAttachMagic.Types;
+using Proto;
 
 namespace GameLogic.Game.AIBehaviorTree
 {

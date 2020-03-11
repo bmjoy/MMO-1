@@ -8,7 +8,6 @@ using GameLogic.Game.Perceptions;
 using Layout.AITree;
 using Layout.LayoutElements;
 using Proto;
-using static Proto.Notify_CharacterAttachMagic.Types;
 using UVector3 = UnityEngine.Vector3;
 namespace GameLogic.Game.AIBehaviorTree
 {

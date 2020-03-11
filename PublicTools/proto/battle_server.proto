@@ -170,13 +170,7 @@ message Notify_CharacterSetScale
 }
 
 message Notify_CharacterAttachMagic
-{
-	enum MagicType
-	{
-		 MT_Normal = 0;
-		 MT_Normal_Append =1;
-		 MT_Magic = 2;
-	}
+{	
 	int32 Index  =1;
 	int32 MagicId =2;
 	float CompletedTime = 3;

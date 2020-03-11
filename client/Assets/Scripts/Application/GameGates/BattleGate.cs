@@ -170,7 +170,11 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         if (!Owner) return;
 
-        Owner.ShowRange(2);
+        if (Owner.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
+        {
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
+            if (config != null) Owner.ShowRange(config.RangeMax);
+        }
 
         SendAction(new Action_NormalAttack());
     }

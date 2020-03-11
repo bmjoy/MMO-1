@@ -406,7 +406,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             {
                 var equipLevelUp = CM
                     .Current
-                    .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quility == equipconfig.Quility);
+                    .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quality == equipconfig.Quality);
                 if (equipLevelUp != null)
                 {
                     addRate = equipLevelUp.AppendRate / 10000f;

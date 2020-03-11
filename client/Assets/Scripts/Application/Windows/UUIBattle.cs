@@ -115,7 +115,8 @@ namespace Windows
                 ThridPersionCameraContollor.Current.RotationX(v.y).RotationY(v.x);
             });
 
-            bt_normal_att.onClick.AddListener(() => {
+            bt_normal_att.onClick.AddListener(() =>
+            {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
                 g.DoNormalAttack();

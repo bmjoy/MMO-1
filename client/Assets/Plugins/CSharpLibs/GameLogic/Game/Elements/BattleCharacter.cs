@@ -10,7 +10,6 @@ using UVector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using ExcelConfig;
 using Layout.AITree;
-using static Proto.Notify_CharacterAttachMagic.Types;
 using UnityEngine;
 
 namespace GameLogic.Game.Elements

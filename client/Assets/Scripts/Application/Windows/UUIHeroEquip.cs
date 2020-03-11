@@ -154,9 +154,9 @@ namespace Windows
             des_Text.text = item.Description;
 
             var level = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level && t.Quility == item.Quility);
+                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level && t.Quality == item.Quality);
             var next = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level+1 && t.Quility == item.Quility);
+                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level+1 && t.Quality == item.Quality);
             LevelUp.ActiveSelfObject(next != null);
 
             if (next != null)
@@ -274,7 +274,7 @@ namespace Windows
                     var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
                     var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                     var level = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == pItem.Level && t.Quility == item.Quility);
+                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == pItem.Level && t.Quality == item.Quality);
 
                     var pro = equip.Properties.SplitToInt();
                     var val = equip.PropertyValues.SplitToInt();

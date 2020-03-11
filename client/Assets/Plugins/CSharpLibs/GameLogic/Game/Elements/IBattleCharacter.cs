@@ -1,7 +1,6 @@
 ﻿using GameLogic.Utility;
 using Proto;
 using UnityEngine;
-using static Proto.Notify_CharacterAttachMagic.Types;
 
 namespace GameLogic.Game.Elements
 {

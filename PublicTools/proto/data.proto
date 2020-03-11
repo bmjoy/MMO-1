@@ -28,6 +28,13 @@ message WearEquip
 	 EquipmentType Part=3; //部位
 }
 
+enum MagicType
+{
+	MT_Normal = 0;
+	MT_Normal_Append =1;
+	MT_Magic = 2;
+}
+
 message HeroMagic
 {
 	 int32 MagicKey=1;
@@ -89,6 +96,7 @@ message HeroMagicData
 {
 	 float CDTime=1;
 	 int32 MagicID=2;
+	 MagicType MType =3;
 }
 
 
