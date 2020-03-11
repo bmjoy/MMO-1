@@ -13,9 +13,9 @@ namespace GameLogic.Game.AIBehaviorTree
     public class AITreeRoot :  ITreeRoot
     {
 
-        public const string SELECT_MAGIC_ID = "MagicID";
-        public const string TRAGET_INDEX = "TargetIndex";
-        public const string ACTION_MESSAGE = "Action_Message";
+        public const string SELECT_MAGIC_ID = "__Magic_ID__";
+        public const string TRAGET_INDEX = "__Target_Index__";
+        public const string ACTION_MESSAGE = "__Action_Message__";
 
         public bool IsDebug { set; get; }
         public object UserState { get { return Character; } }
@@ -184,7 +184,6 @@ namespace GameLogic.Game.AIBehaviorTree
 			}
 		}
 
-
         public bool TryGet<T>(string key, out T v)
         {
             var t = this[key];
@@ -194,7 +193,6 @@ namespace GameLogic.Game.AIBehaviorTree
             if (v == null) return false;
             return true;
         }
-
 
         public bool TryGetTarget(out BattleCharacter target)
         {

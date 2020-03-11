@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
+<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeParallelSelector">
   <childs>
-    <TreeNode xsi:type="TreeNodeNetActionMove">
-      <childs />
-      <name>处理移动输入</name>
-      <guid>185346fc-6236-437a-a5b5-c01def28711f</guid>
+    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+      <childs>
+        <TreeNode xsi:type="TreeNodeNetActionMove">
+          <childs />
+          <name>处理移动输入</name>
+          <guid>2b0be4e7-5591-48f3-b306-58b8d18feeae</guid>
+        </TreeNode>
+      </childs>
+      <name>运行直到返回Success</name>
+      <guid>c0bc1ac9-1f5a-42fc-b3fa-9683f7207398</guid>
     </TreeNode>
-    <TreeNode xsi:type="TreeNodeNetActionSkill">
-      <childs />
-      <name>处理释放技能输入</name>
-      <guid>f1f7c163-4a7b-4b6c-8033-b4dde3a52da9</guid>
+    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+      <childs>
+        <TreeNode xsi:type="TreeNodeNetActionSkill">
+          <childs />
+          <name>处理释放技能输入</name>
+          <guid>eee74921-aafd-42c8-9034-8ca8f5dabf7b</guid>
+        </TreeNode>
+      </childs>
+      <name>运行直到返回Success</name>
+      <guid>443e43cc-9345-41d3-88aa-55d25ea04199</guid>
     </TreeNode>
-    <TreeNode xsi:type="TreedNodeNetNomarlAttack">
-      <childs />
-      <name>处理普通攻击</name>
-      <guid>2b8fa12f-9cb0-4880-8db3-376ef48be70d</guid>
+    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+      <childs>
+        <TreeNode xsi:type="TreedNodeNetNomarlAttack">
+          <childs />
+          <name>处理普通攻击</name>
+          <guid>a07ab92b-2c3a-4d1d-91cc-a0d1e20cde67</guid>
+        </TreeNode>
+      </childs>
+      <name>运行直到返回Success</name>
+      <guid>642e721a-97e9-4dac-99fd-c145a1580ddd</guid>
     </TreeNode>
   </childs>
-  <name>选择节点</name>
-  <guid>5e2c7cd4-8957-4b67-a1a7-a188d8e6e3af</guid>
+  <name>并行选择节点</name>
+  <guid>0625e31d-0ff9-4a7f-9f4c-b70429da1694</guid>
 </TreeNode>

@@ -11,7 +11,7 @@ namespace GameLogic.Game.Controllors
 		public override GAction GetAction(GTime time, GObject current)
 		{
 			var character = current as BattleCharacter;
-			character?.TickAi();
+			if (!character.IsDeath) character?.TickAi();
 			return GAction.Empty;
 		}
 	}

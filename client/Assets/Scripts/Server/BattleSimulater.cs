@@ -348,6 +348,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 KickUser(i.Key);
                 continue;
             }
+
             if (i.Value.Client.TryGetActionMessage(out Message msg))
             {
                 IMessage action = msg.AsAction();
@@ -356,7 +357,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                     if (p.HeroCharacter?.AiRoot != null)
                     {
                         p.HeroCharacter.AiRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        //p.HeroCharacter.AIRoot.BreakTree();//处理输入 重新启动行为树
+                        //p.HeroCharacter.AiRoot.BreakTree();//处理输入 重新启动行为树
                     }
                 }
             }

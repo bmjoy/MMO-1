@@ -72,15 +72,11 @@ namespace GameLogic.Game.Elements
 	{
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics {  set; get; }
-        private float LastNormalAttackTime = 0;
         private object tempObj;
-
-
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
         public event Action<BattleEventType, object> OnBattleEvent;
         public string AcccountUuid { private set; get; }
-        public int AttackCount { private set; get; }
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
@@ -413,7 +409,7 @@ namespace GameLogic.Game.Elements
             OnDead?.Invoke(this);
             var per = this.Controllor.Perception as BattlePerception;
             per.StopAllReleaserByCharacter(this);
-			//Destory(this, 5.5f);
+            AiRoot?.BreakTree();
 		}
 
         public void AttachMagicHistory(int magicID, float now)
@@ -465,19 +461,7 @@ namespace GameLogic.Game.Elements
             Init();
         }
 
-        public void IncreaseNormalAttack(float time)
-        {
-            LastNormalAttackTime = time;
-            AttackCount++;
-        }
-
-        public void ResetNormalAttack(float time)
-        {
-            LastNormalAttackTime = time;
-            AttackCount = 0;
-        }
-
-        private bool TryGetMaigcByType(MagicType magicType, out BattleCharacterMagic magic)
+        public bool TryGetMaigcByType(MagicType magicType, out BattleCharacterMagic magic)
         {
             foreach (var i in Magics)
             {
@@ -499,23 +483,6 @@ namespace GameLogic.Game.Elements
                 if (!i.Value.IsCoolDown(time)) continue;
                 if (call?.Invoke(i.Value) == true) break;
             }
-        }
-
-        public bool TryGetNormalAtt(float now, out CharacterMagicData att, out bool isAppend)
-        {
-            att = null;
-            isAppend = false;
-            if (LastNormalAttackTime + this.AttackSpeed > now) return false;
-            if (AttackCount > 2 && TryGetMaigcByType(MagicType.MtNormalAppend, out BattleCharacterMagic m))
-            {
-                isAppend = true;
-                att = m.Config;
-            }
-            else if (TryGetMaigcByType(MagicType.MtNormal, out BattleCharacterMagic n))
-            {
-                att = n.Config;
-            }
-            return att != null;
         }
 
         public void LockAction(ActionLockType type)
