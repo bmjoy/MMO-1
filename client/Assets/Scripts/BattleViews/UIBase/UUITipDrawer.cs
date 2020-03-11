@@ -3,6 +3,12 @@ using UnityEngine;
 using Tips;
 using System.Collections.Generic;
 
+public struct AppNotify
+{
+    public string Message;
+    public float endTime;
+}
+
 public class UUITipDrawer:XSingleton<UUITipDrawer>
 {
 
@@ -11,6 +17,11 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         public float time;
         public string message;
         public int ID = -1;
+
+        public static implicit operator NotifyMessage(AppNotify notify)
+        {
+            return new NotifyMessage() { message = notify.Message, time = notify.endTime };
+        }
     }
 
     public int DrawHPNumber(int instanceID,int hp, Vector2 offset)
@@ -63,6 +74,11 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
     private readonly List<NotifyMessage> notifys= new List<NotifyMessage>();
     private readonly Queue<NotifyMessage> _dels = new Queue<NotifyMessage>();
 
+
+    public void ShowNotify(AppNotify notify)
+    {
+        notifys.Add(notify);
+    }
     public void ShowNotify(string notify, float dur = 4.5f)
     {
         notifys.Add(new NotifyMessage{ message = notify, time = Time.time +dur });

@@ -12,6 +12,7 @@ using System.Collections;
 public class UApplication : XSingleton<UApplication>
 {
 
+
     public int ReceiveTotal;
     public int SendTotal;
     public float ConnectTime;
@@ -133,10 +134,12 @@ public class UApplication : XSingleton<UApplication>
         while (true)
         {
             yield return null;
+
             if (NotifyMessages.Count > 0)
             {
-                UUITipDrawer.Singleton.ShowNotify(NotifyMessages.Dequeue(), NotifyMessages.Count >3?1:3.2f);
-                yield return new WaitForSeconds(.8f);
+                var message = NotifyMessages.Dequeue();
+                UUITipDrawer.Singleton.ShowNotify(message);
+                yield return null;
             }
         }
     }
@@ -148,10 +151,10 @@ public class UApplication : XSingleton<UApplication>
 
     public void ShowNotify(string notify)
     {
-        NotifyMessages.Enqueue(notify);
+        NotifyMessages.Enqueue(new AppNotify { endTime = Time.time +3.2f });
     }
 
-    private Queue<string> NotifyMessages { get; } = new Queue<string>();
+    private Queue<AppNotify> NotifyMessages { get; } = new Queue<AppNotify>();
 
     #endregion
 
