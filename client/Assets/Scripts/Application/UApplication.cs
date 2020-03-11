@@ -149,9 +149,9 @@ public class UApplication : XSingleton<UApplication>
         ShowNotify("ErrorCode:" + code);
     }
 
-    public void ShowNotify(string notify)
+    public void ShowNotify(string msg)
     {
-        NotifyMessages.Enqueue(new AppNotify { endTime = Time.time +3.2f });
+        NotifyMessages.Enqueue(new AppNotify { Message =msg, endTime = Time.time +3.2f });
     }
 
     private Queue<AppNotify> NotifyMessages { get; } = new Queue<AppNotify>();
