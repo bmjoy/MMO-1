@@ -139,7 +139,7 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         if (!Owner) return;
 
-        if (Owner.IsLock(ActionLockType.NoMove)) return;
+       
 
         var fast = dir.magnitude > 0.8f;
         var pos = Owner.transform.position;
@@ -152,8 +152,9 @@ public class BattleGate : UGate, IServerMessageHandler
             Position = pos.ToPV3(),
             Forward = new Proto.Vector3 { X = dn.x, Z = dn.z }
         };
-
         SendAction(move);
+
+        if (Owner.IsLock(ActionLockType.NoMove)) return;
         if (dir.magnitude < 0.001f)
         {
             ch.StopMove(pos.ToPV3());

@@ -33,7 +33,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     Attach("failure", "nomove");
                 }
-                yield return RunStatus.Failure;
+                yield return RunStatus.Success;
                 yield break;
             }
             if (context.IsDebug)

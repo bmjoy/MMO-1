@@ -33,77 +33,87 @@ namespace GameLogic.Game.AIBehaviorTree
             int count = 0;
             while (true)
             {
-                MagicType mtype = count<3? MagicType.MtNormal: MagicType.MtNormalAppend;
+                MagicType mtype = count < 3 ? MagicType.MtNormal : MagicType.MtNormalAppend;
                 if (count >= 3) count = 0;
-                if (root.Character.TryGetMaigcByType(mtype, out BattleCharacterMagic mc))
+                BattleCharacterMagic mc = null;
+                while (mc == null)
                 {
-                    count++;
-                    var att = mc.Config;
-                    var aiType = (MagicReleaseAITarget)att.AITargetType;
-                    TargetTeamType type = TargetTeamType.All;
-                    switch (aiType)
+                    root.Character.EachActiveMagicByType(mtype, root.Time, (item) =>
                     {
-                        case MagicReleaseAITarget.MatEnemy:
-                            type = TargetTeamType.Enemy;
-                            break;
-                        case MagicReleaseAITarget.MatOwn:
-                            type = TargetTeamType.Own;
-                            break;
-                        case MagicReleaseAITarget.MatOwnTeam:
-                            type = TargetTeamType.OwnTeam;
-                            break;
-                        case MagicReleaseAITarget.MatOwnTeamWithOutSelf:
-                            type = TargetTeamType.OwnTeamWithOutSelf;
-                            break;
-                        case MagicReleaseAITarget.MatAll:
-                            break;
-                        default:
-                            type = TargetTeamType.All;
-                            break;
-                    }
-
-                    root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
-
-                    var target = root.Perception.FindTarget(root.Character, type, v, 360, TargetSelectType.Nearest);
-                    if (!target)
-                    {
-                        yield return RunStatus.Failure;
-                        yield break;
-                    }
-                    float last = 0;
-                    bool moving = false;
-                    while (BattlePerception.Distance(target, root.Character) > att.RangeMax)
-                    {
-                        if (last + 0.3f > root.Time)
-                        {
-                            yield return RunStatus.Running;
-                            continue;
-                        }
-                        last = root.Time;
-                        if (!root.Character.MoveTo(target.Position))
-                        {
-                            moving = true;
-                            if (context.IsDebug)
-                                Attach("failure", $"can move");
-                            yield return RunStatus.Failure;
-                            yield break;
-                        }
-                        yield return RunStatus.Running;
-                    }
-                    if (moving)  root.Character.StopMove();
-                    var rTarget = new ReleaseAtTarget(root.Character, target);
-                    releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic);
-                    while (!releaser.IsLayoutStartFinish)
-                    {
-                        yield return RunStatus.Running;
-                    }
+                        mc = item;
+                        return true;
+                    });
                     yield return RunStatus.Running;
                 }
-                else
+
+                if (mc == null)
                 {
                     yield return RunStatus.Failure;
                     yield break;
                 }
+
+                count++;
+                var att = mc.Config;
+                var aiType = (MagicReleaseAITarget)att.AITargetType;
+                TargetTeamType type = TargetTeamType.All;
+                switch (aiType)
+                {
+                    case MagicReleaseAITarget.MatEnemy:
+                        type = TargetTeamType.Enemy;
+                        break;
+                    case MagicReleaseAITarget.MatOwn:
+                        type = TargetTeamType.Own;
+                        break;
+                    case MagicReleaseAITarget.MatOwnTeam:
+                        type = TargetTeamType.OwnTeam;
+                        break;
+                    case MagicReleaseAITarget.MatOwnTeamWithOutSelf:
+                        type = TargetTeamType.OwnTeamWithOutSelf;
+                        break;
+                    case MagicReleaseAITarget.MatAll:
+                        break;
+                    default:
+                        type = TargetTeamType.All;
+                        break;
+                }
+
+                root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
+
+                var target = root.Perception.FindTarget(root.Character, type, v, 360, TargetSelectType.Nearest);
+                if (!target)
+                {
+                    yield return RunStatus.Failure;
+                    yield break;
+                }
+                float last = 0;
+                bool moving = false;
+                while (BattlePerception.Distance(target, root.Character) > att.RangeMax)
+                {
+                    if (last + 0.3f > root.Time)
+                    {
+                        yield return RunStatus.Running;
+                        continue;
+                    }
+                    last = root.Time;
+                    if (!root.Character.MoveTo(target.Position))
+                    {
+                        moving = true;
+                        if (context.IsDebug) Attach("failure", $"can move");
+                        yield return RunStatus.Failure;
+                        yield break;
+                    }
+                    yield return RunStatus.Running;
+                }
+                if (moving) root.Character.StopMove();
+                var rTarget = new ReleaseAtTarget(root.Character, target);
+                releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic);
+                root.Character.AttachMagicHistory(att.ID, root.Time, root.Character.AttackSpeed);
+                while (!releaser.IsLayoutStartFinish)
+                {
+                    yield return RunStatus.Running;
+                }
+                yield return RunStatus.Running;
+
             }
         }
 

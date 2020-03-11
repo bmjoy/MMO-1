@@ -40,12 +40,9 @@ namespace Windows
                 {
                     magicID = id;
                     MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
-
                     var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
                     var magic = per.GetMagicByKey(MagicData.MagicKey);
-
-                    if (magic != null)
-                        this.Template.Button.SetText(magic.name);
+                    if (magic != null) Template.Button.SetText(magic.name);
                 }
             }
 

@@ -29,17 +29,13 @@ namespace GameLogic.Game.Elements
             Config = config;
         }
 
-        public float LastTime { set; get; }
         public float CdTime { get { return Config.TickTime; } }
+
+        public float CdCompletedTime { set; get; }
 
         public bool IsCoolDown(float time)
         {
-            return time > LastTime + CdTime;
-        }
-
-        public float TimeToCd(float time)
-        {
-            return Math.Max(0, (LastTime + CdTime) - time);
+            return time > CdCompletedTime ;
         }
 
     }
@@ -100,9 +96,7 @@ namespace GameLogic.Game.Elements
         {
             get
             {
-                var time = this[P.MagicWaitTime].FinalValue
-                    - BattleAlgorithm.AGILITY_SUBWAITTIME
-                    * this[P.Agility].FinalValue;
+                var time = this[P.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[P.Agility].FinalValue;
                 return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
@@ -412,12 +406,12 @@ namespace GameLogic.Game.Elements
             AiRoot?.BreakTree();
 		}
 
-        public void AttachMagicHistory(int magicID, float now)
+        public void AttachMagicHistory(int magicID, float now, float? cdTime =null)
         {
             if (Magics.TryGetValue(magicID, out BattleCharacterMagic magic))
             {
-                magic.LastTime = now;
-                View.AttachMagic(magic.Type, magic.ConfigId, magic.LastTime + magic.CdTime);
+                magic.CdCompletedTime = now+ (cdTime ?? magic.CdTime);
+                View.AttachMagic(magic.Type, magic.ConfigId, magic.CdCompletedTime );
             }
         }
 
@@ -436,7 +430,6 @@ namespace GameLogic.Game.Elements
         {
             var natt = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
             var nattapp = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
-      
             Magics.Add(natt.ID, new BattleCharacterMagic(MagicType.MtNormal, natt));
             if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(MagicType.MtNormalAppend, nattapp));
         }
@@ -461,19 +454,7 @@ namespace GameLogic.Game.Elements
             Init();
         }
 
-        public bool TryGetMaigcByType(MagicType magicType, out BattleCharacterMagic magic)
-        {
-            foreach (var i in Magics)
-            {
-                if (i.Value.Type == magicType)
-                {
-                    magic = i.Value;
-                    return true;
-                }
-            }
-            magic = null;
-            return false;
-        }
+
 
         public void EachActiveMagicByType(MagicType ty, float time, EachWithBreak call)
         {
