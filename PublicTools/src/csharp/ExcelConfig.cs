@@ -784,6 +784,51 @@ namespace EConfig
     }
 
     /// <summary>
+    /// 商店表
+    /// </summary>
+    [ConfigFile("ItemShopData.json","ItemShopData")]
+    [global::System.Serializable]
+    public class ItemShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 商店ID
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int ShopId { set; get; }
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 商店道具
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String ItemIds { set; get; }
+        
+        /// <summary>
+        /// 道具数量
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String ItemNums { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String ItemPrices { set; get; }
+        
+        /// <summary>
+        /// 货币类型
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String CoinTypes { set; get; }
+
+    }
+
+    /// <summary>
     /// 英雄数据表
     /// </summary>
     [ConfigFile("MagicLevelUpData.json","MagicLevelUpData")]
