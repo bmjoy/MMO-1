@@ -1,4 +1,6 @@
 
+::Copy "C:\Users\xxp\Google 云端硬盘\MultplayerGame\Excel" .\econfigs\ /Y
+
 SET IMPORT_PATH=../proto/
 SET CSHARP_PATH=../src/csharp
 
