@@ -9,6 +9,7 @@ using UGameTools;
 using Google.Protobuf;
 using System.Linq;
 using UnityEngine.AI;
+using System;
 
 [
     BoneName("Top", "__Top"),
@@ -504,6 +505,8 @@ public class UCharacterView : UElementView, IBattleCharacter
             return 0;
         }
     }
+
+    public Action OnItemTrigger;
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
