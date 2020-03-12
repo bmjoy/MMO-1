@@ -245,7 +245,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         return view;
     }
         
-    IBattleMissile IBattlePerception.CreateMissile (int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
+    IBattleMissile IBattlePerception.CreateMissile(int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
         var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (res);
         GameObject ins;
@@ -263,10 +263,12 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
         missile.toBone = toBone;
         missile.speed = speed;
         missile.offset = offset.ToUV3();
-        missile.releaserIndex = releaseIndex;
         missile.res = res;
         missile.SetPrecpetion(this);
-		return missile;
+
+        missile.releaserIndex = releaseIndex;
+
+        return missile;
 	}
 
     IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,

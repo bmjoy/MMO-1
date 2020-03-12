@@ -121,7 +121,7 @@ namespace Windows
 
         private  EquipmentType? part;
 
-        public UUISelectEquip SetPartType(Proto.EquipmentType type)
+        public UUISelectEquip SetPartType(EquipmentType type)
         {
             this.part = type;
             return this;

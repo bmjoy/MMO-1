@@ -21,9 +21,9 @@ namespace GameLogic.Game.States
         private void CureHPAndMp(float time)
         {
             //处理生命,魔法恢复
-            if (lastHpCure + 3 < time)
+            if (lastHpCure  < time)
             {
-                lastHpCure = time;
+                lastHpCure = time + CureTicks;
                 Each<BattleCharacter>((el) =>
                 {
                     if (el.IsDeath) return false;
@@ -35,6 +35,8 @@ namespace GameLogic.Game.States
                 });
             }
         }
+
+        public int CureTicks = 30;
 
         protected override void Tick(GTime time)
         {

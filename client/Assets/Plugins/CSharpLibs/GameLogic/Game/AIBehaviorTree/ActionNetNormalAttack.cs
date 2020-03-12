@@ -106,6 +106,11 @@ namespace GameLogic.Game.AIBehaviorTree
                 if (moving) root.Character.StopMove();
                 var rTarget = new ReleaseAtTarget(root.Character, target);
                 releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic);
+                if (!releaser)
+                {
+                    yield return RunStatus.Failure;
+                    yield break;
+                }
                 root.Character.AttachMagicHistory(att.ID, root.Time, root.Character.AttackSpeed);
                 while (!releaser.IsLayoutStartFinish)
                 {
