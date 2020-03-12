@@ -137,14 +137,58 @@ message G2C_EquipmentLevelUp
 
 message C2G_GMTool
 {
-	 string GMCommand=1;
+	string GMCommand=1;
 }
 
 message G2C_GMTool
 {
-	 ErrorCode Code=1;
+	ErrorCode Code=1;
 }
 
+
+message C2G_MagicLevelUp
+{
+	int32 MagicId = 1;
+	int32 Level =2;
+}
+
+message G2C_MagicLevelUp
+{
+	ErrorCode Code=1;
+}
+
+message C2G_BuyItem
+{
+	int32 ItemId =1;
+	int32 Num = 2;
+}
+
+message G2C_BuyItem
+{
+	ErrorCode Code=1;
+}
+
+message C2G_Shop
+{
+	int32 ShopId = 1;
+}
+
+message G2C_Shop
+{
+	enum CoinType
+	{
+	   Gold = 0;
+	   Coin = 1;
+	}
+	message ShopItem
+	{
+		CoinType CType = 1;
+		int32 item_id = 2;
+		int32 prices = 3;
+		int32 num_limit = 4;
+	}
+	repeated ShopItem items = 1;
+}
 
 //请求获得玩家信息
 message B2G_GetPlayerInfo
@@ -193,7 +237,10 @@ service GateServerService
 	rpc SaleItem(C2G_SaleItem)returns(G2C_SaleItem){};//6
 	rpc EquipmentLevelUp(C2G_EquipmentLevelUp)returns(G2C_EquipmentLevelUp){};//7
 	rpc GMTool(C2G_GMTool)returns(G2C_GMTool){};//8
-	rpc BuyPackageSize (C2G_BuyPackageSize) returns (G2C_BuyPackageSize){};//9
+	rpc BuyPackageSize(C2G_BuyPackageSize) returns (G2C_BuyPackageSize){};//9
+	rpc MagicLevelUp(C2G_MagicLevelUp) returns(G2C_MagicLevelUp){};//10
+	rpc QueryShop(C2G_Shop) returns (G2C_Shop){};//11
+	rpc BuyItem(C2G_BuyItem) returns (G2C_BuyItem){};//12
 }
 
 service GateServerTask

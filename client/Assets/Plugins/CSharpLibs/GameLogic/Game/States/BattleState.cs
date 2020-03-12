@@ -27,9 +27,9 @@ namespace GameLogic.Game.States
                 Each<BattleCharacter>((el) =>
                 {
                     if (el.IsDeath) return false;
-                    var hp = (int)(el[P.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP * 3);
+                    var hp = (int)(el[P.Force].FinalValue * BattleAlgorithm.FORCE_CURE_HP * CureTicks);
                     if (hp > 0) el.AddHP(hp);
-                    var mp = (int)(el[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP * 3);
+                    var mp = (int)(el[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEDGE_CURE_MP * CureTicks);
                     if (mp > 0) el.AddMP(mp);
                     return false;
                 });

@@ -106,8 +106,44 @@ namespace Proto.GateServerService
     }
     
 
+    /// <summary>
+    /// 10
+    /// </summary>    
+    [API(10)]
+    public class MagicLevelUp:APIBase<C2G_MagicLevelUp, G2C_MagicLevelUp> 
+    {
+        private MagicLevelUp() : base() { }
+        public  static MagicLevelUp CreateQuery(){ return new MagicLevelUp();}
+    }
+    
+
+    /// <summary>
+    /// 11
+    /// </summary>    
+    [API(11)]
+    public class QueryShop:APIBase<C2G_Shop, G2C_Shop> 
+    {
+        private QueryShop() : base() { }
+        public  static QueryShop CreateQuery(){ return new QueryShop();}
+    }
+    
+
+    /// <summary>
+    /// 12
+    /// </summary>    
+    [API(12)]
+    public class BuyItem:APIBase<C2G_BuyItem, G2C_BuyItem> 
+    {
+        private BuyItem() : base() { }
+        public  static BuyItem CreateQuery(){ return new BuyItem();}
+    }
+    
+
     public interface IGateServerService
     {
+        [API(12)]G2C_BuyItem BuyItem(C2G_BuyItem req);
+        [API(11)]G2C_Shop QueryShop(C2G_Shop req);
+        [API(10)]G2C_MagicLevelUp MagicLevelUp(C2G_MagicLevelUp req);
         [API(9)]G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req);
         [API(8)]G2C_GMTool GMTool(C2G_GMTool req);
         [API(7)]G2C_EquipmentLevelUp EquipmentLevelUp(C2G_EquipmentLevelUp req);
@@ -123,6 +159,9 @@ namespace Proto.GateServerService
 
     public abstract class GateServerService
     {
+        [API(12)]public abstract Task<G2C_BuyItem> BuyItem(C2G_BuyItem request);
+        [API(11)]public abstract Task<G2C_Shop> QueryShop(C2G_Shop request);
+        [API(10)]public abstract Task<G2C_MagicLevelUp> MagicLevelUp(C2G_MagicLevelUp request);
         [API(9)]public abstract Task<G2C_BuyPackageSize> BuyPackageSize(C2G_BuyPackageSize request);
         [API(8)]public abstract Task<G2C_GMTool> GMTool(C2G_GMTool request);
         [API(7)]public abstract Task<G2C_EquipmentLevelUp> EquipmentLevelUp(C2G_EquipmentLevelUp request);

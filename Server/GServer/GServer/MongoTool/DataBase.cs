@@ -56,6 +56,7 @@ namespace GateServer
             }
         }
 
+
         public DataBase()
         {
             BsonClassMap.RegisterClassMap<GamePlayerEntity>(

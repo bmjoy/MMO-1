@@ -532,7 +532,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         CreateNotify(new Notify_CharacterDeath { Index = Index });
 #endif
 	}
-
     void IBattleCharacter.SetSpeed(float speed)
     {
         if (!this) return;
@@ -571,6 +570,9 @@ public class UCharacterView : UElementView, IBattleCharacter
         this.max = max;
 
 #if !UNITY_SERVER
+
+        if (hp > 0)  this.PerView.ShowHPCure(this.GetBoneByName(BodyBone).position, hp);
+        else showHpBarTime = Time.time + 3;
         /*
         if (hp < 0)
         {           
@@ -585,7 +587,7 @@ public class UCharacterView : UElementView, IBattleCharacter
                 });
             }
         }
-        showHpBarTime = Time.time + 3;*/
+       */
 #endif
     }
 

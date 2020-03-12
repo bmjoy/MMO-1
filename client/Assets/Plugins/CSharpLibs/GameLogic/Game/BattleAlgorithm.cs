@@ -61,7 +61,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 力量增加回血速度
         /// </summary>
-        public static float FORCE_CURE_HP = 0.1f; //每点力量每秒增加血量
+        public static float FORCE_CURE_HP = 0.01f; //每点力量每秒增加血量
         /// <summary>
         /// 智力增加恢复MP
         /// </summary>

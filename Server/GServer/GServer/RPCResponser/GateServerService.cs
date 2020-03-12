@@ -43,6 +43,11 @@ namespace GateServer
             };
         }
 
+        public G2C_BuyItem BuyItem(C2G_BuyItem req)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req)
         {
             var task = UserDataManager.S.BuyPackageSize(AccountUuid, req.SizeCurrent);
@@ -197,6 +202,11 @@ namespace GateServer
             }
         }
 
+        public G2C_MagicLevelUp MagicLevelUp(C2G_MagicLevelUp req)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public G2C_OperatorEquip OperatorEquip(C2G_OperatorEquip request)
         {
             //var manager = MonitorPool.G<UserDataManager>();
@@ -215,6 +225,11 @@ namespace GateServer
                 Code = !result ? ErrorCode.Error : ErrorCode.Ok,
                 // Hero = 
             };
+        }
+
+        public G2C_Shop QueryShop(C2G_Shop req)
+        {
+            throw new System.NotImplementedException();
         }
 
         public G2C_SaleItem SaleItem(C2G_SaleItem req)

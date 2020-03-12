@@ -32,6 +32,7 @@ message HeroMagic
 {
     int32 level = 1;
     int32 exp = 2;
+    bool actived = 3;
 }
 
 //游戏服务器信息
