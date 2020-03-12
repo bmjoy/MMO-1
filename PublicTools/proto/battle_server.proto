@@ -233,9 +233,10 @@ message Notify_DamageResult
 
 message Notify_Drop
 {
-	 int32 Gold=1;
-	 repeated PlayerItem Items=2;
-	 string AccountUuid=3;
+	 PlayerItem Item = 1;
+	 int32 TeamIndex = 2;
+	 string GroupIndex=3;
+	 Vector3 Pos = 4;
 }
 
 message Notify_PlayerJoinState
@@ -263,6 +264,7 @@ message Notify_CharacterRelive
 {
 	int32 Index =1;
 }
+
 
 service NotifyService
 {

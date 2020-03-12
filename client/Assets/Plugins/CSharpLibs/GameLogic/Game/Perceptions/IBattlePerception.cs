@@ -81,6 +81,19 @@ namespace GameLogic.Game.Perceptions
             string res,  Proto.Vector3 offset, string fromBone, string toBone, float speed);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="itemID"></param>
+        /// <param name="num"></param>
+        /// <param name="teamIndex"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        [NeedNotify(typeof(Notify_Drop),"Pos","Item","TeamIndex","GroupIndex")]
+        IBattleItem CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId);
+
+
+        /// <summary>
         /// 当前的时间仿真
         /// </summary>
         /// <returns>The time simulater.</returns>
@@ -101,6 +114,8 @@ namespace GameLogic.Game.Perceptions
         /// <param name="result"></param>
         [NeedNotify(typeof(Notify_DamageResult), "Index", "TargetIndex", "Damage", "IsMissed")]
         bool ProcessDamage(int owner, int target, int damage, bool isMissed);
+
+       
     }
 }
 

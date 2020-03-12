@@ -40,7 +40,7 @@ namespace zFrame.UI
         void Update()
         {
             var off = handle.localPosition / maxRadius;
-#if UNITY_STANDALONE
+#if UNITY_STANDALONE || UNITY_EDITOR 
             int v = 0, h = 0;
 
             if (Input.GetKey(KeyCode.W))

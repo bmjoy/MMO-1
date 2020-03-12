@@ -417,6 +417,25 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var root = XmlParser.DeSerialize<TreeNode>(xml);
         return root;
     }
+
+    IBattleItem IBattlePerception.CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId)
+    {
+        var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.ItemID);
+        var res = ResourcesManager.S.LoadModel(config);
+        var root = new GameObject(config.Name);
+        root.transform.SetParent(this.transform);
+        root.transform.RestRTS();
+        root.transform.position = pos.ToUV3();
+
+        var go =Instantiate(res,root.transform);
+        go.transform.RestRTS();
+        var bi = root.AddComponent<UBattleItem>();
+        bi.Item = item;
+        bi.GroupIndex = groupId;
+        bi.TeamIndex = teamIndex;
+        bi.SetPrecpetion(this);
+        return bi;
+    }
     #endregion
 
 }

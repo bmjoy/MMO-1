@@ -103,6 +103,10 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	public Texture2D LoadIcon(ItemData item)
 	{
 		return LoadResources<Texture2D>("Icon/" + item.Icon);
+	}
 
+	public GameObject LoadModel(ItemData item)
+	{
+		return LoadResources<GameObject>("ItemModel/" + item.Icon);
 	}
 }
