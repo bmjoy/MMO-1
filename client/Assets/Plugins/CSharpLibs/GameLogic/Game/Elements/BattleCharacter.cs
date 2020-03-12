@@ -325,18 +325,21 @@ namespace GameLogic.Game.Elements
             currentPush = null;
         }
 
-        public void AddHP(int hp)
+        public bool AddHP(int hp)
         {
             var maxHP = MaxHP;
-            if (hp <= 0 || HP >= maxHP) return;
+            if (hp <= 0 || HP >= maxHP) return false;
             if (HP == 0)
             {
                 Debug.LogError($"{HP}==0");
-                return;
+                return false;
             }
+            var t = HP;
             HP += hp;
             if (HP >= maxHP) HP = maxHP;
+            if (t == HP) return false;
             View.ShowHPChange(hp, HP, maxHP);
+            return true;
         }
 
         public bool Relive(int hp)
@@ -345,6 +348,7 @@ namespace GameLogic.Game.Elements
             if (hp < 0) return false;
             HP = hp;
             View.Relive();
+            View.ShowHPChange(hp, HP, MaxHP);
             return true;
         }
 
@@ -360,7 +364,10 @@ namespace GameLogic.Game.Elements
         {
             if (mp <= 0) return false;
             MP += mp;
+            var temp = MP;
             if (MP >= MaxMP) MP = MaxMP;
+            if (temp == MP) return false;
+
             View.ShowMPChange(mp, MP, MaxMP);
             return true;
         }

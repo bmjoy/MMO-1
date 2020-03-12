@@ -133,10 +133,25 @@ public class UCharacterView : UElementView, IBattleCharacter
                 }
                 break;
             case MoveCategory.Destination:
+                {
+                    this.v = Agent.velocity;
+                    PlaySpeed(Agent.velocity.magnitude);
+                    if (targetPos.HasValue)
+                    {
+                        if (Vector3.Distance(targetPos.Value, this.transform.position) < Agent.stoppingDistance + 0.1f)
+                        {
+                            StopMove();
+                        }
+                    }
+                    else
+                    {
+                        StopMove();
+                    }
+                    break;
+                }
             default:
                 {
-                    PlaySpeed(Agent.velocity.magnitude);
-                    this.v = Agent.velocity;
+                    PlaySpeed(0);
                 }
                 break;
         }
@@ -145,8 +160,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         {
             targetLookQuaternion = Quaternion.LookRotation(v, Vector3.up);
         }
-
-        
     }
 
     private void PlaySpeed(float speed)
@@ -154,6 +167,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (CharacterAnimator == null) return;
         CharacterAnimator.SetFloat(SpeedStr, speed);
     }
+
     void Awake()
     {
         Agent = this.gameObject.AddComponent<NavMeshAgent>();
@@ -191,8 +205,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         get
         {
-            if (!Agent) return 0;
-            return Agent.speed;
+            if (!Agent) return 0;return Agent.speed;
         }
         set
         {
@@ -298,11 +311,13 @@ public class UCharacterView : UElementView, IBattleCharacter
         pushSpeed = Vector3.zero;
         pushLeftTime = -1;
         MoveForward = null;
+        targetPos = null;
+
         if (!Agent ||!Agent.enabled) return;
         Agent.velocity = Vector3.zero;
         Agent.ResetPath();
         Agent.isStopped = true;
-        targetPos = null;
+        
     }
 
     public bool ShowName { set; get; } = true;
@@ -658,15 +673,12 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (range == null)
         {
-            range = Instantiate( Resources.Load<GameObject>("Range"), this.GetBoneByName(BottomBone));
-           // range.transform.SetParent(this.GetBoneByName(BottomBone),false);
+            range = Instantiate(Resources.Load<GameObject>("Range"), this.GetBoneByName(BottomBone));
             range.transform.RestRTS();
         }
-
-        range.SetActive(  true);
-        hideTime = Time.time + .5f;
+        range.SetActive(true);
+        hideTime = Time.time + .2f;
         range.transform.localScale = Vector3.one * r;
-        
     }
 
     void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
@@ -690,6 +702,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.Relive()
     {
+        IsDead = false;
         if (this.CharacterAnimator)
         {
             this.CharacterAnimator.SetTrigger("Idle");

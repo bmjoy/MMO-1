@@ -75,6 +75,8 @@ public class NotifyPlayer
     /// <param name="notify">Notify.</param>
     public void Process(IMessage notify)
     {
+
+        Debug.Log($"{notify.GetType().Name}->{notify}");
         //优先处理 perception 创建元素
         if (PerceptionInvokes.TryGetValue(notify.GetType(), out NotifyMapping m))
         {
@@ -95,7 +97,6 @@ public class NotifyPlayer
             }
             return;
         }
-
         //查找元素消息
         //index
         var property = notify.GetType().GetProperty("Index");
