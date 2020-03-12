@@ -17,18 +17,18 @@ using EConfig;
 using UGameTools;
 using GameLogic.Game.AIBehaviorTree;
 
-public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater, IViewBase
+public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater, IViewBase
 {
     public UGameScene UScene;
     public bool UseCache = true;
 
-	void Awake()
-	{
+    void Awake()
+    {
         UScene = FindObjectOfType<UGameScene>();
-		_magicData = new Dictionary<string, MagicData> ();
-		_timeLines = new Dictionary<string, TimeLine> ();
-		var  magics = ResourcesManager.S.LoadAll<TextAsset> ("Magics");
-		foreach (var i in magics) 
+        _magicData = new Dictionary<string, MagicData>();
+        _timeLines = new Dictionary<string, TimeLine>();
+        var magics = ResourcesManager.S.LoadAll<TextAsset>("Magics");
+        foreach (var i in magics)
         {
             try
             {
@@ -40,17 +40,49 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
                 Debug.LogError($"File : {i.name}");
                 Debug.LogException(ex);
             }
-		}
-		magicCount = _magicData.Count;
-		var timeLines = ResourcesManager.Singleton.LoadAll<TextAsset> ("Layouts");
-		foreach (var i in timeLines) 
-		{
-			var line = XmlParser.DeSerialize<TimeLine> (i.text);
-			_timeLines.Add ("Layouts/" + i.name+".xml",line);
-		}
-		timeLineCount = _timeLines.Count;
+        }
+        magicCount = _magicData.Count;
+        var timeLines = ResourcesManager.Singleton.LoadAll<TextAsset>("Layouts");
+        foreach (var i in timeLines)
+        {
+            var line = XmlParser.DeSerialize<TimeLine>(i.text);
+            _timeLines.Add("Layouts/" + i.name + ".xml", line);
+        }
+        timeLineCount = _timeLines.Count;
 
-	}
+        GPUBillboardBuffer.Instance.Init();
+        GPUBillboardBuffer.Instance.SetupBillboard(1000);
+        GPUBillboardBuffer.Instance.SetDisappear(1);
+        GPUBillboardBuffer.Instance.SetScaleParams(0f, 0.5f, 0.5f, 1f, 1f);
+
+        param = new DisplayNumerInputParam()
+        {
+            RandomXInitialSpeedMin = 0f,
+            RandomXInitialSpeedMax = 0f,
+
+            RandomYInitialSpeedMin = 1f,
+            RandomYInitialSpeedMax = 2f,
+
+            RandomXaccelerationMin = 0,
+            RandomXaccelerationMax = 0,
+
+            RandomYaccelerationMin = 1,
+            RandomYaccelerationMax = 3,
+
+            FadeTime = .8f,
+
+        };
+    }
+
+    private DisplayNumerInputParam param;
+
+    public void ShowHPCure(UnityEngine.Vector3 pos, int hp)
+    {
+        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{hp}",
+                    new Vector2(.2f, .2f), pos, Color.green,
+                        true, param);
+    }
+
 
     public UElementView GetViewByIndex(int releaseIndex)
     {
@@ -154,6 +186,27 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception , ITimeSimulater
             Damage = damage,
             IsMissed = isMissed
         });
+#endif
+
+#if !UNITY_SERVER
+
+        if (GetViewByIndex(target) is UCharacterView ch)
+        {
+            if (ch != null)
+            {
+                var bone = ch.GetBoneByName(UCharacterView.TopBone);
+                if (bone)
+                {
+                    var pos = bone.transform.position;
+                    GPUBillboardBuffer.Instance.DisplayNumberRandom(
+                     (isMissed ? "MISS" : $"{damage}"),
+                     new Vector2(.2f, .2f),
+                         pos,
+                         Color.red,
+                         true, param);
+                }
+            }
+        }
 #endif
         return true;
     }

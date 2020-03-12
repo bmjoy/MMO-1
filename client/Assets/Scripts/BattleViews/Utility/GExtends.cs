@@ -7,6 +7,11 @@ namespace UGameTools
 {
     public static class GExtends
 	{
+        public static void SetLayer(this UnityEngine.GameObject u, string layer)
+        {
+            u.layer = UnityEngine.LayerMask.NameToLayer(layer);
+        }
+
         public static UIMouseClick OnMouseClick(this Component mo,Action<object> callBack, object state = null)
         {
             var click = mo.gameObject.TryAdd<UIMouseClick>();

@@ -36,11 +36,11 @@ public class UCharacterView : UElementView, IBattleCharacter
     }
     private readonly List<HpChangeTip> _tips = new List<HpChangeTip>();
     public string AccoundUuid = string.Empty;
-	private  const string SpeedStr ="Speed";
-    private const string TopBone = "Top";
-    private const string BodyBone = "Body";
-    private const string BottomBone = "Bottom";
-    private const string Die_Motion = "Die";
+	public  const string SpeedStr ="Speed";
+    public const string TopBone = "Top";
+    public const string BodyBone = "Body";
+    public const string BottomBone = "Bottom";
+    public const string Die_Motion = "Die";
     private Animator CharacterAnimator;
     private int hpBar = -1;
     private int nameBar=-1;
@@ -571,6 +571,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         this.max = max;
 
 #if !UNITY_SERVER
+        /*
         if (hp < 0)
         {           
             if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
@@ -584,7 +585,7 @@ public class UCharacterView : UElementView, IBattleCharacter
                 });
             }
         }
-        showHpBarTime = Time.time + 3;
+        showHpBarTime = Time.time + 3;*/
 #endif
     }
 
