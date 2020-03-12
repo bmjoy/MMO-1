@@ -196,7 +196,7 @@ namespace GServer.Managers
                 .Current
                 .FirstConfig<EquipmentLevelUpData>(t =>
                 {
-                    return t.Level == level + 1 && t.Quility == equipconfig.Quility;
+                    return t.Level == level + 1 && t.Quality == equipconfig.Quality;
                 });
 
             if (levelconfig == null)
