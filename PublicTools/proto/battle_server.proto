@@ -235,7 +235,7 @@ message Notify_Drop
 {
 	 PlayerItem Item = 1;
 	 int32 TeamIndex = 2;
-	 string GroupIndex=3;
+	 int32 GroupIndex=3;
 	 Vector3 Pos = 4;
 }
 

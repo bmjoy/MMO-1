@@ -12,7 +12,7 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	List<T> IConfigLoader.Deserialize<T>()
 	{
 		var name = ExcelToJSONConfigManager.GetFileName<T>();
-		var json =LoadText("Json/" + name);
+		var json = LoadText("Json/" + name);
 		if (json == null) return null;
 		return JsonTool.Deserialize<List<T>>(json);
 	}
@@ -24,16 +24,15 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	}
 
 	public delegate void CallBackDele(Object res);
-	// Use this for initialization
-	void Awake () {
-		DontDestroyOnLoad (this.gameObject);
-	}
-	
+
+
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if (loaders.Count > 0) 
         {
-			foreach (var i in loaders) {
+			foreach (var i in loaders)
+            {
 				if (i.Request.isDone) {
 					_dones.Enqueue (i);	
 				}
@@ -45,7 +44,6 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 				d.CallBack (d.Request.asset);
 				loaders.Remove (d);
 			}
-
 		}
 	}
 
@@ -107,6 +105,6 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 
 	public GameObject LoadModel(ItemData item)
 	{
-		return LoadResources<GameObject>("ItemModel/" + item.Icon);
+		return LoadResources<GameObject>($"ItemModel/{item.ResModel}");
 	}
 }

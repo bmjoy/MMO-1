@@ -4,6 +4,7 @@ using Google.Protobuf;
 using Proto;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
+using UGameTools;
 
 public class UBattleItem : UElementView, IBattleItem
 {
@@ -30,8 +31,12 @@ public class UBattleItem : UElementView, IBattleItem
 
     public override IMessage ToInitNotify()
     {
-        //Notify_Drop
-
-        return new Notify_Drop { };
+        return new Notify_Drop
+        {
+            GroupIndex = GroupIndex,
+            Item = Item,
+            Pos = this.transform.position.ToPVer3(),
+            TeamIndex = TeamIndex
+        };
     }
 }

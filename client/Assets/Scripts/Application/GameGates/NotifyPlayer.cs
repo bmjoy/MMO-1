@@ -49,7 +49,7 @@ public class NotifyPlayer
         AddType<IBattleCharacter>();
         AddType<IBattleMissile>();
         AddType<IMagicReleaser>();
-
+        AddType<IBattleItem>();
     }
 
     private void AddType<T>()
@@ -128,22 +128,6 @@ public class NotifyPlayer
         if (notify is Notify_PlayerJoinState p)
         {
             OnJoined?.Invoke(p);
-        }
-        else if (notify is Notify_Drop drop)
-        {
-            OnDrop?.Invoke(drop);
-            //var drop = notify as Notify_Drop;
-            if (drop.Gold > 0)
-            {
-                //gold += drop.Gold;
-                UApplication.S.ShowNotify("Gold +" + drop.Gold);
-            }
-
-            foreach (var i in drop.Items)
-            {
-                var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
-                UApplication.S.ShowNotify(string.Format("{0}+{1}", item.Name, i.Num));
-            }
         }
         else
         {
