@@ -620,6 +620,11 @@
             账号或者密码长度不好
              </summary>
         </member>
+        <member name="F:Proto.ErrorCode.NeedHeroLevel">
+             <summary>
+            需要英雄等级
+             </summary>
+        </member>
         <member name="T:Proto.Void">
              <summary>
             empty text

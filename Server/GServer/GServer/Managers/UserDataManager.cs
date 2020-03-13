@@ -165,6 +165,8 @@ namespace GServer.Managers
 
         }
 
+
+
         public async Task<G2C_EquipmentLevelUp> EquipLevel(Client client, string account_uuid, string item_uuid, int level)
         {
             var player = await FindPlayerByAccountId(account_uuid);
@@ -233,6 +235,25 @@ namespace GServer.Managers
             await SyncToClient(client, player_uuid);
 
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
+        }
+
+        internal async Task<G2C_MagicLevelUp> MagicLevelUp(int magicId, int level, string accountUuid)
+        {
+            var player = await FindPlayerByAccountId(accountUuid);
+            var hero = await FindHeroByPlayerId(player.Uuid);
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(magicId);
+            if (config.CharacterID != hero.HeroId) return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+
+            var levelConfig = ExcelToJSONConfigManager.Current.FirstConfig<MagicLevelUpData>(t => t.Level == level && t.MagicID == magicId);
+
+            if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
+
+            // levelConfig.NeedGold
+
+            return new G2C_MagicLevelUp
+            {
+                Code = ErrorCode.Ok
+            };
         }
 
         internal async Task<int> HeroGetExprise(string uuid, int exp)

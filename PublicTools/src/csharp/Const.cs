@@ -22,7 +22,7 @@ namespace Proto {
     static ConstReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCqeAwoJRXJyb3JDb2RlEgkK",
+            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCqxAwoJRXJyb3JDb2RlEgkK",
             "BUVycm9yEAASBgoCT0sQARIQCgxMb2dpbkZhaWx1cmUQAhIUChBSZWdFeGlz",
             "dFVzZXJOYW1lEAMSFwoTUmVnSW5wdXRFbXB0eU9yTnVsbBAEEhQKEE5vR2Ft",
             "ZVBsYXllckRhdGEQBRIOCgpOb0hlcm9JbmZvEAYSEwoPTk9Gb3VuZFNlcnZl",
@@ -31,8 +31,8 @@ namespace Proto {
             "dW5kVXNlck9uQmF0dGxlU2VydmVyEAsSGwoXTk9Gb3VuZFVzZXJCYXR0bGVT",
             "ZXJ2ZXIQDBIPCgtOT0ZvdW5kSXRlbRANEhAKDE5PRW5vdWdoSXRlbRAOEhAK",
             "DElzV2Vhck9uSGVybxAPEhEKDU5vRW5vdWdodEdvbGQQEBIUChBOb0ZyZWVH",
-            "YXRlU2VydmVyEBESGwoXTmFtZU9yUHdkTGVnaHRJbmNvcnJlY3QQEmIGcHJv",
-            "dG8z"));
+            "YXRlU2VydmVyEBESGwoXTmFtZU9yUHdkTGVnaHRJbmNvcnJlY3QQEhIRCg1O",
+            "ZWVkSGVyb0xldmVsEBNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.ErrorCode), }, new pbr::GeneratedClrTypeInfo[] {
@@ -123,6 +123,10 @@ namespace Proto {
     ///账号或者密码长度不好
     /// </summary>
     [pbr::OriginalName("NameOrPwdLeghtIncorrect")] NameOrPwdLeghtIncorrect = 18,
+    /// <summary>
+    ///需要英雄等级
+    /// </summary>
+    [pbr::OriginalName("NeedHeroLevel")] NeedHeroLevel = 19,
   }
 
   #endregion
