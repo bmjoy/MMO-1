@@ -20,9 +20,9 @@ namespace XNet.Libs.Net
 		public static int BUFFER_SIZE = 1024;
 
         private volatile bool IsClose;
-		private Message _actionMessage;
-        //readonly ConcurrentQueue<Message> sendQueue = new ConcurrentQueue<Message>();
+		private readonly ConcurrentQueue<Message> _actionMessage = new ConcurrentQueue<Message>();
 
+		public const int MAX_ACTION_BUFFER = 10;
 
 		/// <summary>
 		/// 连接ID
@@ -148,19 +148,22 @@ namespace XNet.Libs.Net
 		/// <returns></returns>
 		public bool TryGetActionMessage(out Message message)
 		{
-			message = _actionMessage;
-			_actionMessage = null;
-			return message != null;
+			if (_actionMessage.Count > 0)
+				return _actionMessage.TryDequeue(out message);
+			message = null;
+			return false;
 		}
 
-        /// <summary>
-        /// save action
-        /// </summary>
-        /// <param name="action"></param>
-        public void SetActionMessage(Message action)
-        {
-            _actionMessage = action;
-        }
+		/// <summary>
+		/// save action
+		/// </summary>
+		/// <param name="action"></param>
+		public void SetActionMessage(Message action)
+		{
+			if (_actionMessage.Count >= MAX_ACTION_BUFFER)
+				_actionMessage.TryDequeue(out Message _);
+			_actionMessage.Enqueue(action);
+		}
 	}
 
 }
