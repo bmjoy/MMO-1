@@ -6,7 +6,9 @@ using EngineCore.Simulater;
 using ExcelConfig;
 using GameLogic.Game.Elements;
 using GameLogic.Game.Perceptions;
+using Google.Protobuf;
 using Layout.AITree;
+using UnityEngine;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
@@ -15,7 +17,10 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public const string SELECT_MAGIC_ID = "__Magic_ID__";
         public const string TRAGET_INDEX = "__Target_Index__";
-        public const string ACTION_MESSAGE = "__Action_Message__";
+        //public const string ACTION_MESSAGE = "__Action_Message__{0}";
+
+
+
 
         public bool IsDebug { set; get; }
         public object UserState { get { return Character; } }
@@ -36,6 +41,8 @@ namespace GameLogic.Game.AIBehaviorTree
             NodeRoot = nodeRoot;
         }
 
+
+        private readonly Dictionary<string, IMessage> NetActions = new Dictionary<string, IMessage>();
        
         public bool GetDistanceByValueType(DistanceValueOf type, float value, out float outValue)
         {
@@ -203,10 +210,25 @@ namespace GameLogic.Game.AIBehaviorTree
             return !target.IsDeath;
         }
 
-        public bool TryGetAction<T>(out T action)
+        public bool TryGetAction<T>(out T action) where T : class, IMessage
         {
-            if (!TryGet(ACTION_MESSAGE, out action)) return false;
-            this[ACTION_MESSAGE] = null;
+            action = default;
+            var n = typeof(T).Name;
+            if (NetActions.TryGetValue(n, out IMessage net))
+            {
+                if (net is T a) action = a;
+                NetActions.Remove(n);
+                return true;
+            }
+            return false;
+        }
+
+        public bool PushAction<T>(T net) where T : class, IMessage
+        {
+            var n =  net.GetType().Name;
+            NetActions.Remove(n);
+            NetActions.Add(n, net);
+            //Debug.Log($"push:{n}->{net}");
             return true;
         }
 

@@ -142,8 +142,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		if (this.releaser == null) return;
 		if (this.releaser.AiRoot == null) return;
-		this.releaser.AiRoot[AITreeRoot.ACTION_MESSAGE] = action;
-		//this.releaser.AIRoot.BreakTree();
+		this.releaser?.AiRoot?.PushAction(action);
 	}
 
     private bool isStarted = false;

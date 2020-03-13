@@ -354,11 +354,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 IMessage action = msg.AsAction();
                 if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))
                 {
-                    if (p.HeroCharacter?.AiRoot != null)
-                    {
-                        p.HeroCharacter.AiRoot[AITreeRoot.ACTION_MESSAGE] = action;
-                        //p.HeroCharacter.AiRoot.BreakTree();//处理输入 重新启动行为树
-                    }
+                    p.HeroCharacter?.AiRoot?.PushAction(action);
                 }
             }
         }

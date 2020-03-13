@@ -68,8 +68,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
             RandomYaccelerationMin = 1,
             RandomYaccelerationMax = 3,
-
-            FadeTime = .8f,
+            NormalTime =.2f,
+            FadeTime = .5f,
 
         };
     }
