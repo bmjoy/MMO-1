@@ -33,7 +33,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			if (!root.Character.MoveTo(target.Position))
+			if (!root.Character.MoveTo(target.Position,out _))
 			{
 				if (context.IsDebug)
 					Attach("failure", $"can move");
@@ -58,7 +58,7 @@ namespace GameLogic.Game.AIBehaviorTree
 					continue;
 				}
 
-				if (!root.Character.MoveTo(target.Position))
+				if (!root.Character.MoveTo(target.Position,out _))
 				{
 					if (context.IsDebug)
 						Attach("failure", $"can move");

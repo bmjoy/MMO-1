@@ -194,7 +194,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     }
     #region IBattlePerception implementation
 
-    bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed)
+    bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed,int crtmult)
     {
 #if UNITY_SERVER|| UNITY_EDITOR
         AddNotify(new Notify_DamageResult
@@ -202,12 +202,12 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             Index = owner,
             TargetIndex = target,
             Damage = damage,
-            IsMissed = isMissed
+            IsMissed = isMissed,
+            CrtMult = crtmult
         });
 #endif
 
 #if !UNITY_SERVER
-
         if (GetViewByIndex(target) is UCharacterView ch)
         {
             if (ch != null)
@@ -216,12 +216,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
                 if (bone)
                 {
                     var pos = bone.transform.position;
-                    GPUBillboardBuffer.Instance.DisplayNumberRandom(
-                     (isMissed ? "MISS" : $"{damage}"),
-                     new Vector2(.2f, .2f),
-                         pos,
-                         Color.red,
-                         true, param);
+                    GPUBillboardBuffer.Instance.
+                        DisplayNumberRandom((isMissed ? "MISS" : $"{damage}"),new Vector2(.2f, .2f) * crtmult, pos, Color.red,true, param);
                 }
             }
         }

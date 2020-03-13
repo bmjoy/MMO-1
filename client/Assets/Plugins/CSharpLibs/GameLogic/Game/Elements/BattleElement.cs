@@ -4,7 +4,7 @@ using GameLogic.Game.Perceptions;
 
 namespace GameLogic.Game.Elements
 {
-    public delegate void HanlderEvent(GObject el);
+    public delegate void HanlderEvent<T>(T el) where T  : GObject;
 
 	public class BattleElement<T> : GObject where T : IBattleElement
 	{
@@ -33,8 +33,8 @@ namespace GameLogic.Game.Elements
 
 		}
 
-		public HanlderEvent OnJoinedState;
-		public HanlderEvent OnExitedState;
+		public HanlderEvent<GObject> OnJoinedState;
+		public HanlderEvent<GObject> OnExitedState;
 	}
 }
 

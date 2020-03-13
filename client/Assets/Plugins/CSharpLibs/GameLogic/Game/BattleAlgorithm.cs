@@ -13,15 +13,17 @@ namespace GameLogic.Game
 
     public struct DamageResult
     {
-        public DamageResult(DamageType t, bool isMissed, int da)
+        public DamageResult(DamageType t, bool isMissed, int da,int crtm)
         {
             DType = t;
             IsMissed = isMissed;
             Damage = da;
+            CrtMult = crtm;
         }
         public DamageType DType;
         public bool IsMissed;
         public int Damage;
+        public int CrtMult;
     }
 	/// <summary>
 	/// 战斗中的算法
@@ -131,14 +133,23 @@ namespace GameLogic.Game
             return (int)result;
         }
 
-        public static DamageResult GetDamageResult(int damage,DamageType dType, BattleCharacter defencer)
+        public static DamageResult GetDamageResult(BattleCharacter sources, int damage,DamageType dType, BattleCharacter defencer)
         {
             bool isMissed = false;
+            int crtmult = 1;
+            var crt = sources[HeroPropertyType.Crt].FinalValue;
+
+            if (GRandomer.Probability10000(crt))
+            {
+                crtmult = 2;
+            }
             switch (dType)
             {
                 case DamageType.Physical:
                     {
-                        var d = defencer[HeroPropertyType.Defance].FinalValue + defencer[HeroPropertyType.Agility].FinalValue*AGILITY_DEFANCE;
+                        var d = defencer[HeroPropertyType.Defance].FinalValue +
+                            defencer[HeroPropertyType.Agility].FinalValue*AGILITY_DEFANCE;
+                        damage = damage * crtmult;
                         //处理防御((装甲)*0.006))/(1+0.006*(装甲) 
                         damage = damage - (int)(damage *
                             (d * DEFANCE_RATE) /(1 + DEFANCE_RATE * d));
@@ -157,6 +168,7 @@ namespace GameLogic.Game
 
             return new DamageResult
             {
+                CrtMult = crtmult,
                 Damage = damage,
                 DType = dType,
                 IsMissed = isMissed 

@@ -63,6 +63,14 @@ namespace GameLogic.Game.Elements
         public UVector3 Speed { get { return dir * speed; } }
     }
 
+    public class DamageWatch
+    {
+        public int Index { set; get; }
+        public int TotalDamage { set; get; }
+        public float LastTime { set; get; }
+        public float FristTime { get; internal set; }
+    }
+
     public class BattleCharacter:BattleElement<IBattleCharacter>
 	{
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
@@ -76,6 +84,8 @@ namespace GameLogic.Game.Elements
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
         public UVector3 BronPosition { private set; get; }
+        public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
+
         public int MaxHP
         {
             get
@@ -99,10 +109,11 @@ namespace GameLogic.Game.Elements
                 return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
+
         public string Name { set; get; }
         public int TeamIndex { set; get; }
         public int Level { set; get; }
-        public HanlderEvent OnDead;
+        public HanlderEvent<BattleCharacter> OnDead;
         public int ConfigID { private set; get; }
         private ActionLock Lock {  set; get; }
         public float Radius
@@ -247,10 +258,13 @@ namespace GameLogic.Game.Elements
             View.PlayMotion(motionName);
         }
 
-        public bool MoveTo(UVector3 target,float stopDis =0f)
+        public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis =0f)
         {
+            warpTarget = target;
             if (IsLock(ActionLockType.NoMove)) return false;
-            return View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
+            var r = View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
+            if (r.HasValue) warpTarget = r.Value;
+            return r.HasValue;
         }
 
         private Action<BattleCharacter,object> launchHitCallback;
@@ -487,6 +501,23 @@ namespace GameLogic.Game.Elements
         public void FireEvent(BattleEventType ev, object args)
         {
             OnBattleEvent?.Invoke(ev, args);
+        }
+
+        public void AttachDamage(int sources, int damage, float time)
+        {
+            if (damage > 0)
+            {
+                if (Watch.TryGetValue(sources, out DamageWatch w))
+                {
+                    w.TotalDamage += damage;
+                }
+                else
+                {
+                    w = new DamageWatch { Index = sources, TotalDamage = damage, FristTime = time };
+                    Watch.Add(sources, w);
+                }
+                w.LastTime = time;
+            }
         }
 
         public override string ToString()

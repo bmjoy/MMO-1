@@ -427,10 +427,10 @@ public class UCharacterView : UElementView, IBattleCharacter
         an.SetTrigger(motion);
     }
 
-    bool IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
+    Vector3? IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
 
-        if (!this) return false;
+        if (!this) return null;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterMoveTo
         {
@@ -441,23 +441,26 @@ public class UCharacterView : UElementView, IBattleCharacter
         });
 #endif
 
-        if (!Agent || !Agent.enabled) return false;
+        if (!Agent || !Agent.enabled) return null;
 
         TryToSetPosition(position.ToUV3());
         this.Agent.isStopped = false;
-        if (!NavMesh.SamplePosition(target.ToUV3(), out NavMeshHit hit, 10000, this.Agent.areaMask)) return false;
+        NavMeshPath path = new NavMeshPath ();
+        if (!Agent.CalculatePath(target.ToUV3(), path)) return null;
 
-        targetPos = hit.position;
+        targetPos = path.corners.LastOrDefault();
 
         if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f + stopDis)
         {
             StopMove();
-            return false;
+            return null;
         }
+
+
         this.Agent.stoppingDistance = stopDis;
         this.Agent.SetDestination(targetPos.Value);
         MCategory = MoveCategory.Destination;
-        return true;
+        return targetPos;
     }
 
     bool IBattleCharacter.IsMoving

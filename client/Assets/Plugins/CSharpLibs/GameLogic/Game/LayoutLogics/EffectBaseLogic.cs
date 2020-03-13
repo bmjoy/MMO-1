@@ -73,7 +73,7 @@ namespace GameLogic.Game.LayoutLogics
             }
 
             var result = BattleAlgorithm
-               .GetDamageResult(damage, releaser.ReleaserTarget.Releaser.TDamage, effectTarget);
+               .GetDamageResult(releaser.ReleaserTarget.Releaser, damage, releaser.ReleaserTarget.Releaser.TDamage, effectTarget);
 
             if (releaser.ReleaserTarget.Releaser.TDamage != Proto.DamageType.Magic)
             {

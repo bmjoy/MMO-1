@@ -1,6 +1,7 @@
 ﻿using GameLogic.Utility;
 using Proto;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.Elements
 {
@@ -24,7 +25,7 @@ namespace GameLogic.Game.Elements
         [NeedNotify(typeof(Notify_LayoutPlayMotion), "Motion")]
         void PlayMotion(string motion);//play motion
         [NeedNotify(typeof(Notify_CharacterMoveTo), "Position", "Target", "StopDis")]
-        bool MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis);//move to target
+        Vector3? MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis);//move to target
         [NeedNotify(typeof(Notify_CharacterStopMove), "Position")]
         void StopMove(Proto.Vector3 pos);//stop move
         [NeedNotify(typeof(Notify_CharacterDeath))]

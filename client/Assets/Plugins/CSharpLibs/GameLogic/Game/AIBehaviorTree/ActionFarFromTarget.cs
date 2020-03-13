@@ -37,7 +37,7 @@ namespace GameLogic.Game.AIBehaviorTree
 			var noraml = (root.Character.Position - targetCharacter.Position).normalized;
 			var target = noraml * distance + root.Character.Position;
 
-			if (!root.Character.MoveTo(target))
+			if (!root.Character.MoveTo(target,out _))
 			{
 				if (root.IsDebug) Attach("failure", "move failure");
 				yield return RunStatus.Failure;

@@ -94,7 +94,7 @@ namespace GameLogic.Game.AIBehaviorTree
                         continue;
                     }
                     last = root.Time;
-                    if (!root.Character.MoveTo(target.Position))
+                    if (!root.Character.MoveTo(target.Position,out _))
                     {
                         moving = true;
                         if (context.IsDebug) Attach("failure", $"can move");

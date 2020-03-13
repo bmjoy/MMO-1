@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EngineCore.Simulater
 {
@@ -6,6 +7,8 @@ namespace EngineCore.Simulater
 	{
 
 		public int Index { private set; get; }
+
+		private readonly Dictionary<string, object> values = new Dictionary<string, object>();
 
 		private GObject(int index)
 		{
@@ -19,6 +22,20 @@ namespace EngineCore.Simulater
 
 		public GControllor Controllor { private set; get; }
 
+        public object this[string key]
+        {
+			set
+            {
+				values.Remove(key);
+				values[key] = value;
+            }
+			get
+            {
+				if (values.TryGetValue(key, out object v)) return v;
+				return null;
+            }
+        }
+
 		public void SetControllor(GControllor controllor)
 		{
 			OnChangedControllor(this.Controllor, controllor);
@@ -28,7 +45,6 @@ namespace EngineCore.Simulater
 		private bool HadBeenDestory = false;
 
 		public bool Enable { private set; get; }
-
 
 		public bool IsAliveAble { get { return !HadBeenDestory; } }
 
