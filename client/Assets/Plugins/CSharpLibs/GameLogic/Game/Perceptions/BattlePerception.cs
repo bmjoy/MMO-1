@@ -113,7 +113,7 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed);
+                data.MoveSpeed, data.HPMax, data.HPMax);
 
             var battleCharacter = new BattleCharacter(data.ID, magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
 
@@ -134,6 +134,7 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.Name = data.Name;
             battleCharacter.TeamIndex = teamIndex;
             battleCharacter.Init();
+
             this.JoinElement(battleCharacter);
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;

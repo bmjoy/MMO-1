@@ -104,6 +104,7 @@ public class BattleGate : UGate, IServerMessageHandler
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;
+                Owner.ShowName = true;
                 FindObjectOfType<ThridPersionCameraContollor>()
                 .SetLookAt(character.GetBoneByName("Bottom"));
                 UUIManager.Singleton.ShowMask(false);
@@ -138,9 +139,8 @@ public class BattleGate : UGate, IServerMessageHandler
     internal void MoveDir(Vector3 dir)
     {
         if (!Owner) return;
-
+        if (Owner.IsDeath) return;
        
-
         var fast = dir.magnitude > 0.8f;
         var pos = Owner.transform.position;
         var dn = dir.normalized;

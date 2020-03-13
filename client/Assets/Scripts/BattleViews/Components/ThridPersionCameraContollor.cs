@@ -6,7 +6,7 @@ using System;
 public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
 {
     public static ThridPersionCameraContollor Current { private set; get; }
-    private Camera CurrenCamera;
+    public Camera CurrenCamera;
     private void Awake()
     {
         Current = this;

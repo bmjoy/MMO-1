@@ -22,6 +22,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     public UGameScene UScene;
     public bool UseCache = true;
 
+    private TreeNode LoadTreeXml(string pathTree)
+    {
+        var xml = ResourcesManager.Singleton.LoadText(pathTree);
+        var root = XmlParser.DeSerialize<TreeNode>(xml);
+        return root;
+    }
+
     void Awake()
     {
         UScene = FindObjectOfType<UGameScene>();
@@ -50,6 +57,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         }
         timeLineCount = _timeLines.Count;
 
+#if !UNITY_SERVER
         GPUBillboardBuffer.Instance.Init();
         GPUBillboardBuffer.Instance.SetupBillboard(1000);
         GPUBillboardBuffer.Instance.SetDisappear(1);
@@ -72,15 +80,16 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             FadeTime = .5f,
 
         };
+#endif
     }
 
     private DisplayNumerInputParam param;
 
     public void ShowHPCure(UnityEngine.Vector3 pos, int hp)
     {
-        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{hp}",
-                    new Vector2(.2f, .2f), pos, Color.green,
-                        true, param);
+#if !UNITY_SERVER
+        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{hp}", new Vector2(.2f, .2f), pos, Color.green, true, param);
+#endif
     }
 
 
@@ -174,6 +183,15 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return line;
     }
 
+    public void Each<T>(Func<T, bool> invoke) where T : UElementView
+    {
+        foreach (var i in AttachElements)
+        {
+            if (!i.Value) continue;
+            if (!(i.Value is T t)) continue;
+            if (invoke?.Invoke(t) == true) return;
+        }
+    }
     #region IBattlePerception implementation
 
     bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed)
@@ -240,7 +258,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
-        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed)
+        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed,int hp, int hpMax)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
         var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
@@ -267,18 +285,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
+        view.SetHp(hp, hpMax);
         view.SetCharacter(body, ins);
         return view;
-    }
-
-    public void Each<T>(Func<T, bool> invoke) where T:UElementView
-    {
-        foreach (var i in AttachElements)
-        {
-            if (!i.Value) continue;
-            if (!(i.Value is T t)) continue;
-            if (invoke?.Invoke(t) == true) return;
-        }
     }
 
     IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos)
@@ -410,14 +419,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     {
         return LoadTreeXml(path);
     }
-
-    private TreeNode LoadTreeXml(string pathTree)
-    {
-        var xml = ResourcesManager.Singleton.LoadText(pathTree);
-        var root = XmlParser.DeSerialize<TreeNode>(xml);
-        return root;
-    }
-
     IBattleItem IBattlePerception.CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId)
     {
         var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.ItemID);

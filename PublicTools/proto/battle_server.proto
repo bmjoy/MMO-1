@@ -80,6 +80,8 @@ message Notify_CreateBattleCharacter
 	 Vector3 Position=5;//位置
 	 Vector3 Forward=6;//朝向
 	 int32 Level=7; //等级
+	 int32 Hp = 8;
+	 int32 MaxHp = 9;
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
 }

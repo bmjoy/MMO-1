@@ -57,7 +57,7 @@ public sealed class EditorToolsItemMenu
             EditorApplication.Beep();
             return;
         }
-        var editor = "Assets/ScenesWelcome.unity";
+        var editor = "Assets/Scenes/Launch.unity";
         EditorSceneManager.OpenScene(editor);
         EditorApplication.isPlaying = true;
 

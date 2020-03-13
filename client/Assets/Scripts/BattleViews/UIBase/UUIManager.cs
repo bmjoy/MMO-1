@@ -134,9 +134,12 @@ public class UUIManager:XSingleton<UUIManager>
         return ui;
     }
 
-    public T CreateTip<T>() where T:UUITip, new()
+    public T CreateTip<T>(bool world = false) where T:UUITip, new()
     {
-        var tip=  UUITip.Create<T>(this.top.transform);
+
+        var root = world ? worldTop.transform : this.top.transform;
+
+        var tip=  UUITip.Create<T>(root, world);
         this._tips.Add(tip.InstanceID, tip);
         return tip;
     }
@@ -176,6 +179,7 @@ public class UUIManager:XSingleton<UUIManager>
 
 	public Image BackImage;
 	public GameObject top;
+    public GameObject worldTop;
     public Canvas BaseCanvas;
 
     private Transform rectTop;

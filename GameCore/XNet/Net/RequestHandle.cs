@@ -118,7 +118,7 @@ namespace XNet.Libs.Net
                 if (NetProtoTool.EnableLog)
                 {
                     var processTime = DateTime.Now - begin;
-                    Debuger.Log($"({processTime.TotalMilliseconds}ms)[{client.Socket.RemoteEndPoint}]{request.GetType()}{request}->{JsonFormatter.Default.Format(result)}");
+                    Debuger.Log($"({processTime.TotalMilliseconds}ms)[{client?.Socket?.RemoteEndPoint}]{request.GetType()}{request}->{JsonFormatter.Default.Format(result)}");
                 }
 
                 var response = new Message(MessageClass.Response,

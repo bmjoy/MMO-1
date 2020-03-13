@@ -35,7 +35,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         public int hp;
         public Vector3 pos;
     }
-    private readonly List<HpChangeTip> _tips = new List<HpChangeTip>();
+
     public string AccoundUuid = string.Empty;
 	public  const string SpeedStr ="Speed";
     public const string TopBone = "Top";
@@ -43,7 +43,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     public const string BottomBone = "Bottom";
     public const string Die_Motion = "Die";
     private Animator CharacterAnimator;
-    private int hpBar = -1;
     private int nameBar=-1;
     private float showHpBarTime =0;
     private int max;
@@ -64,34 +63,14 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if !UNITY_SERVER
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
-            if (_tips.Count > 0)
-            {
-                _tips.RemoveAll(t => t.hideTime < Time.time);
-                foreach (var i in _tips)
-                {
-                    i.id = UUITipDrawer.Singleton.DrawHPNumber(i.id,
-                        i.hp,
-                        UUIManager.Singleton.OffsetInUI(i.pos));
-                }
-            }
-
-            if (showHpBarTime > Time.time)
-            {
-                hpBar = UUITipDrawer.S.DrawUUITipHpBar(hpBar,
-                        cur, max,
-                        UUIManager.S.OffsetInUI(GetBoneByName(TopBone).position)
-                    );
-            }
-            if (ShowName && !IsDead && ThridPersionCameraContollor.Current)
+            //player
+            if ((showHpBarTime >Time.time || ShowName || TeamId == 1 ) && !IsDead && ThridPersionCameraContollor.Current)
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar,
-                                NameInfo,
-                                UUIManager.S.OffsetInUI(GetBoneByName(BottomBone).position)
-                            );
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max, TeamId == 1,
+                        GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
-
             }
         }
 
@@ -288,11 +267,9 @@ public class UCharacterView : UElementView, IBattleCharacter
         CharacterAnimator = character.GetComponent<Animator>();
 #endif
 
-        string color = TeamId ==1?"{0}" :"<color=red>{0}</color>";
-
-        NameInfo = string.Format(color, $"{Name} Lv:{Level}");
 
     }
+
 
     private float lockRotationTime = -1f;
 
@@ -304,6 +281,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         look.y = 0;
         lockRotationTime = Time.time + 0.3f;
         LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
+    }
+
+    internal void SetHp(int hp, int hpMax)
+    {
+        cur = hp; max = hpMax;
     }
 
     private void StopMove()
@@ -321,7 +303,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         
     }
 
-    public bool ShowName { set; get; } = true;
+    public bool ShowName { set; get; } = false;
 
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
     {
@@ -506,6 +488,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
+    public bool IsDeath
+    {
+        get { return IsDead; }
+    }
+
     public Action OnItemTrigger;
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
@@ -652,7 +639,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             Level = Level,
             Name = Name,
             TeamIndex = TeamId,
-            Speed = Speed
+            Speed = Speed, 
+            Hp = cur, MaxHp = max
+            
         };
         return createNotity;
     }

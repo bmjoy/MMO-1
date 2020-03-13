@@ -349,7 +349,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 continue;
             }
 
-            if (i.Value.Client.TryGetActionMessage(out Message msg))
+            while (i.Value.Client.TryGetActionMessage(out Message msg))
             {
                 IMessage action = msg.AsAction();
                 if (BattlePlayers.TryGetValue(i.Key, out BattlePlayer p))

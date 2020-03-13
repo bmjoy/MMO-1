@@ -24,38 +24,18 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         }
     }
 
-    public int DrawHPNumber(int instanceID,int hp, Vector2 offset)
-    {
-        UUIHpNumber tip;
-        if (!UUIManager.Singleton.TryToGetTip<UUIHpNumber>(instanceID,out tip))
-        {
-            tip = UUIManager.Singleton.CreateTip<UUIHpNumber>();
-            tip.SetHp(hp);
-        }
-        UUITip.Update(tip, offset);
-        return tip.InstanceID;
-    }
 
-    public  int DrawUUITipHpBar(int instanceId, int hp, int hpMax, Vector2 offset)
-    {
-        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUITipHpBar tip))
-        {
-            tip = UUIManager.Singleton.CreateTip<UUITipHpBar>();
-        }
-        tip.SetHp(hp,hpMax);
-        UUITip.Update(tip, offset);
-        return tip.InstanceID;
-    }
-
-    public int DrawUUITipNameBar(int instanceId, string name, Vector2 offset)
+    public int DrawUUITipNameBar(int instanceId, string name,int level, int hp,int hpMax , bool owner, Vector3 offset, Camera c)
     {
         // UUITipHpBar tip;
         if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUITipNameBar tip))
         {
-            tip = UUIManager.S.CreateTip<UUITipNameBar>();
+            tip = UUIManager.S.CreateTip<UUITipNameBar>(true);
         }
-        tip.SetName(name);
+        tip.SetInfo(name,level, hp, hpMax, owner);
+        tip.LookAt(c);
         UUITip.Update(tip, offset);
+       
         return tip.InstanceID;
     }
 
