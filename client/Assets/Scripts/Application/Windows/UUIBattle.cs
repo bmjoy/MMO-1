@@ -95,13 +95,13 @@ namespace Windows
 
             var bt = this.Joystick_Left.GetComponent<zFrame.UI.Joystick>();
             float lastTime = -1;
-            Vector2 last = Vector2.zero;
+            //Vector2 last = Vector2.zero;
             bt.OnValueChanged.AddListener((v) =>
             {
                 if (lastTime > UnityEngine.Time.time) return;
                 lastTime = UnityEngine.Time.time + .3f;
-                if ((v - last).magnitude <= 0.03f) return;
-                last = v;
+                //if ((v - last).magnitude <= 0.03f) return;
+                //last = v;
                 var dir = ThridPersionCameraContollor.Current.LookRotaion * new Vector3(v.x, 0, v.y);
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
