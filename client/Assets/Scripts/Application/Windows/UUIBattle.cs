@@ -57,7 +57,7 @@ namespace Windows
                 if (view.TryGetMagicData(magicID, out HeroMagicData data))
                 {
                     var time = Mathf.Max(0, data.CDTime - now);
-                    this.Template.Cost.text = time > 0 ? string.Format("{0:0.0}", time) : string.Empty;
+                    this.Template.CDTime.text = time > 0 ? string.Format("{0:0.0}", time) : string.Empty;
                     if (cdTime < time)
                         cdTime = time;
                     if (time > 0)

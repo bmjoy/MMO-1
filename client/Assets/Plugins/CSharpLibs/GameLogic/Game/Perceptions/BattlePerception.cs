@@ -227,7 +227,10 @@ namespace GameLogic.Game.Perceptions
             return this.State[target] as BattleCharacter;
         }
 
-        public BattleCharacter FindTarget(BattleCharacter character, TargetTeamType type, float distance,float view,
+        public BattleCharacter FindTarget(BattleCharacter character, TargetTeamType type,
+            float distance,
+            float view,
+            bool igDead = true,
             TargetSelectType sType = TargetSelectType.Nearest,
             TargetFilterType filterType = TargetFilterType.None)
         {
@@ -237,6 +240,7 @@ namespace GameLogic.Game.Perceptions
             {
                 //隐身的不进入目标查找
                 if (t.IsLock(ActionLockType.NoInhiden)) return false;
+                if (igDead && t.IsDeath) return false;
                 switch (type)
                 {
                     case TargetTeamType.Enemy:
@@ -370,7 +374,7 @@ namespace GameLogic.Game.Perceptions
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,
             float radius, float angle, float offsetAngle,
-            UVector3 offset, int teamIndex)
+            UVector3 offset, int teamIndex, bool igDeath = true)
         {
           
             switch (damageType)
@@ -385,6 +389,7 @@ namespace GameLogic.Game.Perceptions
                         var list = new List<BattleCharacter>();
                         State.Each<BattleCharacter>((t) =>
                         {
+                            if (igDeath && t.IsDeath) return false;//ig
                             //过滤
                             switch (fitler)
                             {

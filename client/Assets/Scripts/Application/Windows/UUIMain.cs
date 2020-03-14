@@ -13,27 +13,27 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            bt_fight.onClick.AddListener(() =>
+            MenuMission.onClick.AddListener(() =>
                 {
                     var ui = UUIManager.Singleton.CreateWindow<Windows.UUILevelList>();
                     ui.ShowWindow();
                     //UAppliaction.Singleton.GoToGameBattleGate(1);
                 });
 
-            bt_package.onClick.AddListener(() =>
+            MenuItems.onClick.AddListener(() =>
                 {
                     UUIManager.S.CreateWindow<UUIPackage>().ShowWindow();
                 });
 
-            bt_close.onClick.AddListener(() => {
+            MenuSetting.onClick.AddListener(() => {
                 UApplication.S.GotoLoginGate();
             });
 
-            bt_equip.onClick.AddListener(() => {
+            MenuWeapon.onClick.AddListener(() => {
                 UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
             });
 
-            var swipeEv = swipe.GetComponent<UIEventSwipe>();
+            var swipeEv = swip.GetComponent<UIEventSwipe>();
             swipeEv.OnSwiping.AddListener((v) => {
                 v = v * .5f;
                 ThridPersionCameraContollor.Current.RotationX(v.y);//.RotationY(v.x);
@@ -44,7 +44,7 @@ namespace Windows
         protected override void OnShow()
         {
             base.OnShow();
-            this.HeroName.text = string.Empty;
+            this.Username.text = string.Empty;
             OnUpdateUIData();
         }
         protected override void OnHide()
@@ -57,10 +57,15 @@ namespace Windows
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
 
-            lb_coin.text = gate.Coin.ToString("N0");
-            lb_gold.text = gate.Gold.ToString("N0");
+            lb_gold.text = gate.Coin.ToString("N0");
+            lb_gem.text = gate.Gold.ToString("N0");
             if (gate.hero == null) return;
-            this.HeroName.text = $"{gate.hero.Name} 等级{gate.hero.Level}";
+            this.Level_Number.text = $"{gate.hero.Level}";
+            this.Username.text = $"{gate.hero.Name}";
+
+            var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<EConfig.CharacterLevelUpData>(t => t.Level == gate.hero.Level);
+
+            lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
         }
     }
 }

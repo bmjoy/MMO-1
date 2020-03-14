@@ -13,15 +13,27 @@ namespace Windows
     {
 
 
-        protected Text lb_coin;
+        protected Button MenuSetting;
+        protected Button MenuWeapon;
+        protected Button MenuMission;
+        protected Image mission_notification;
+        protected Button MenuMessages;
+        protected Image message_notification;
+        protected Text MessagCountText;
+        protected Button MenuShop;
+        protected Image item_notification;
+        protected Button MenuItems;
+        protected Slider ExpSilder;
+        protected Text lb_exp;
+        protected Text Level_Number;
+        protected Text Username;
         protected Text lb_gold;
-        protected Button bt_package;
-        protected Button bt_fight;
-        protected Button bt_equip;
-        protected Button bt_magic;
-        protected Button bt_close;
-        protected Text HeroName;
-        protected Image swipe;
+        protected Button btn_goldadd;
+        protected Text lb_gem;
+        protected Image btn_addgem;
+        protected Button Button_AddFriend;
+        protected Button Button_Facebook;
+        protected Image swip;
 
 
 
@@ -29,15 +41,27 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            lb_coin = FindChild<Text>("lb_coin");
+            MenuSetting = FindChild<Button>("MenuSetting");
+            MenuWeapon = FindChild<Button>("MenuWeapon");
+            MenuMission = FindChild<Button>("MenuMission");
+            mission_notification = FindChild<Image>("mission_notification");
+            MenuMessages = FindChild<Button>("MenuMessages");
+            message_notification = FindChild<Image>("message_notification");
+            MessagCountText = FindChild<Text>("MessagCountText");
+            MenuShop = FindChild<Button>("MenuShop");
+            item_notification = FindChild<Image>("item_notification");
+            MenuItems = FindChild<Button>("MenuItems");
+            ExpSilder = FindChild<Slider>("ExpSilder");
+            lb_exp = FindChild<Text>("lb_exp");
+            Level_Number = FindChild<Text>("Level_Number");
+            Username = FindChild<Text>("Username");
             lb_gold = FindChild<Text>("lb_gold");
-            bt_package = FindChild<Button>("bt_package");
-            bt_fight = FindChild<Button>("bt_fight");
-            bt_equip = FindChild<Button>("bt_equip");
-            bt_magic = FindChild<Button>("bt_magic");
-            bt_close = FindChild<Button>("bt_close");
-            HeroName = FindChild<Text>("HeroName");
-            swipe = FindChild<Image>("swipe");
+            btn_goldadd = FindChild<Button>("btn_goldadd");
+            lb_gem = FindChild<Text>("lb_gem");
+            btn_addgem = FindChild<Image>("btn_addgem");
+            Button_AddFriend = FindChild<Button>("Button_AddFriend");
+            Button_Facebook = FindChild<Button>("Button_Facebook");
+            swip = FindChild<Image>("swip");
 
 
         }

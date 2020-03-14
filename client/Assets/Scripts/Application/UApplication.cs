@@ -43,12 +43,8 @@ public class UApplication : XSingleton<UApplication>
         Debug.Log(string.Format("{2} {0}:{1}", ServerHost, ServerPort, ServerName));
     }
 
-    public void GoBackToMainGate()
-    {
-        //GameServer = new GameServerInfo{ ServerID =  , Host = host, Port =port };
-        GoToMainGate(GameServer);
-    }
-
+    public void GoBackToMainGate()=> GoToMainGate(GameServer);
+  
     public void GoToMainGate(GameServerInfo info)
     {
         ChangeGate<GMainGate>().Init(info);
@@ -62,22 +58,12 @@ public class UApplication : XSingleton<UApplication>
         AccountUuid = userID;
         SesssionKey = session;
         GoToMainGate(server);
-        PlayerPrefs.SetString("_PlayerSession", session);
-        PlayerPrefs.SetString("_UserID", AccountUuid);
-        PlayerPrefs.SetInt("_GateServerPort", server.Port);
-        PlayerPrefs.SetString("_GateServerHost", server.Host);
-        PlayerPrefs.SetInt("_GateServerID", server.ServerId);
     }
 
-    public void GotoLoginGate()
-    {
-        ChangeGate<LoginGate>();
-    }
-
-    public void GotoBattleGate(GameServerInfo serverInfo, int mapID)
-    {
-        ChangeGate<BattleGate>().SetServer(serverInfo, mapID);
-    }
+    public void GotoLoginGate() => ChangeGate<LoginGate>();
+   
+    public void GotoBattleGate(GameServerInfo serverInfo, int mapID) => ChangeGate<BattleGate>().SetServer(serverInfo, mapID);
+   
 
     public T ChangeGate<T>() where T : UGate
     {
@@ -102,23 +88,8 @@ public class UApplication : XSingleton<UApplication>
         StartCoroutine(RunReader());
     }
 
-    void Start()
-    {
-
-        var session = PlayerPrefs.GetString("_PlayerSession");
-        var accountID = PlayerPrefs.GetString("_UserID");
-        var port = PlayerPrefs.GetInt("_GateServerPort");
-        var host = PlayerPrefs.GetString("_GateServerHost");
-        var serverID = PlayerPrefs.GetInt("_GateServerID");
-        if (string.IsNullOrEmpty(session))
-        {
-            GotoLoginGate();
-        }
-        else
-        {
-            GoServerMainGate(new GameServerInfo { Host = host, Port = port, ServerId = serverID },accountID,session);
-        }
-    }
+    void Start() => GotoLoginGate();
+  
 
     public void OnApplicationQuit()
     {

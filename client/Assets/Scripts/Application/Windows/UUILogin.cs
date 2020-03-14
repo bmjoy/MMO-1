@@ -6,22 +6,36 @@ using UnityEngine.UI;
 using UGameTools;
 using Proto;
 using Proto.LoginServerService;
+using UnityEngine;
 
 namespace Windows
 {
     partial class UUILogin
     {
 
+        private const string UserNameKey = "KEY_NAME";
+        private const string PasswordKey = "Key_Password";
+
         protected override void InitModel()
         {
             base.InitModel();
             //Write Code here
-            bt_submit.onClick.AddListener(() =>
+            this.ButtonBlue.onClick.AddListener(() =>
                 {
-                    var userName = if_userName.text;
-                    var pwd = if_pwd.text;
+                    var userName = TextInputBoxUserName.text;
+                    var pwd = TextInputBoxPassWord.text;
                     var gate = UApplication.G< LoginGate>();
                     if (gate == null) return;
+                    if (CheckBox.isOn)
+                    {
+                        UnityEngine.PlayerPrefs.SetString(UserNameKey, userName);
+                        UnityEngine.PlayerPrefs.SetString(PasswordKey, pwd);
+                    }
+                    else {
+                        PlayerPrefs.DeleteKey(UserNameKey);
+                        PlayerPrefs.DeleteKey(PasswordKey);
+                    }
+
                     Login.CreateQuery()
                     .SendRequest(gate.Client,
                     new C2L_Login { Password = pwd, UserName = userName, Version = MessageTypeIndexs.Version },
@@ -38,10 +52,10 @@ namespace Windows
                     }
                     );
                 });
-            bt_reg.onClick.AddListener(() =>
+            TextSignup.onClick.AddListener(() =>
                 {
-                    var userName = if_userName.text;
-                    var pwd = if_pwd.text;
+                    var userName = TextInputBoxUserName.text;
+                    var pwd = TextInputBoxPassWord.text;
                     var gate = UApplication.G<LoginGate>();
                     Reg.CreateQuery()
                       .SendRequest(gate.Client,
@@ -64,11 +78,19 @@ namespace Windows
                       });
 
                 });
+            ButtonClose.onClick.AddListener(() => {
+                //do nothing
+            });
         }
 
         protected override void OnShow()
         {
             base.OnShow();
+
+            TextInputBoxUserName.text = UnityEngine.PlayerPrefs.GetString(UserNameKey);
+            TextInputBoxPassWord.text = UnityEngine.PlayerPrefs.GetString(PasswordKey);
+
+            CheckBox.isOn = !string.IsNullOrEmpty(TextInputBoxUserName.text);
         }
 
         protected override void OnHide()

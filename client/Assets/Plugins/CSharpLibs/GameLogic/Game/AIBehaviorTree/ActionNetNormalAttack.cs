@@ -78,7 +78,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
                 root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
 
-                var target = root.Perception.FindTarget(root.Character, type, v, 360, TargetSelectType.Nearest);
+                var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.Nearest);
                 if (!target)
                 {
                     yield return RunStatus.Failure;
