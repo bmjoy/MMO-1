@@ -107,13 +107,16 @@ namespace GameLogic.Game.Perceptions
         TreeNode GetAITree(string pathTree);
 
         /// <summary>
-        /// Processes the damage.
+        /// Process damage
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="target"></param>
-        /// <param name="result"></param>
-        [NeedNotify(typeof(Notify_DamageResult), "Index", "TargetIndex", "Damage", "IsMissed")]
-        bool ProcessDamage(int owner, int target, int damage, bool isMissed);
+        /// <param name="damage"></param>
+        /// <param name="isMissed"></param>
+        /// <param name="crtMult"></param>
+        /// <returns></returns>
+        [NeedNotify(typeof(Notify_DamageResult), "Index", "TargetIndex", "Damage", "IsMissed", "CrtMult")]
+        bool ProcessDamage(int owner, int target, int damage, bool isMissed,int crtMult);
 
        
     }

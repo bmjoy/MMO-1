@@ -76,7 +76,7 @@ public class NotifyPlayer
     public void Process(IMessage notify)
     {
 
-        Debug.Log($"{notify.GetType().Name}->{notify}");
+        //Debug.Log($"{notify.GetType().Name}->{notify}");
         //优先处理 perception 创建元素
         if (PerceptionInvokes.TryGetValue(notify.GetType(), out NotifyMapping m))
         {
@@ -122,9 +122,7 @@ public class NotifyPlayer
                 return;
             }
         }
-
         //处理特别消息
-
         if (notify is Notify_PlayerJoinState p)
         {
             OnJoined?.Invoke(p);

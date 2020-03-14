@@ -13,12 +13,12 @@ namespace Windows
     {
 
 
-        protected Text t_userName;
-        protected Text t_pwd;
-        protected InputField if_userName;
-        protected InputField if_pwd;
-        protected Button bt_submit;
-        protected Button bt_reg;
+        protected Button ButtonClose;
+        protected Button TextSignup;
+        protected Button ButtonBlue;
+        protected InputField TextInputBoxUserName;
+        protected InputField TextInputBoxPassWord;
+        protected Toggle CheckBox;
 
 
 
@@ -26,12 +26,12 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            t_userName = FindChild<Text>("t_userName");
-            t_pwd = FindChild<Text>("t_pwd");
-            if_userName = FindChild<InputField>("if_userName");
-            if_pwd = FindChild<InputField>("if_pwd");
-            bt_submit = FindChild<Button>("bt_submit");
-            bt_reg = FindChild<Button>("bt_reg");
+            ButtonClose = FindChild<Button>("ButtonClose");
+            TextSignup = FindChild<Button>("TextSignup");
+            ButtonBlue = FindChild<Button>("ButtonBlue");
+            TextInputBoxUserName = FindChild<InputField>("TextInputBoxUserName");
+            TextInputBoxPassWord = FindChild<InputField>("TextInputBoxPassWord");
+            CheckBox = FindChild<Toggle>("CheckBox");
 
 
         }

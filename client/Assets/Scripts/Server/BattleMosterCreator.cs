@@ -121,15 +121,27 @@ namespace Server
                 Monster[P.Agility].SetBaseValue(Monster[P.Agility].BaseValue + monsterData.Agility);
                 Monster[P.Knowledge].SetBaseValue(Monster[P.Knowledge].BaseValue + monsterData.Knowledeg);
                 Monster[P.MaxHp].SetBaseValue(Monster[P.MaxHp].BaseValue + monsterData.HPMax);
-
                 Monster.Reset();
                 per.ChangeCharacterAI(data.AIResourcePath, Monster);
                 AliveCount++;
+
+                Monster["__Drop"] = drop;
+
                 Monster.OnDead = (el) =>
                 {
                     CountKillCount++;
                     AliveCount--;
+                    if (el["__Drop"] is DropGroupData d)
+                    {
+                        var o = el.Watch.Values.OrderBy(t => t.FristTime).FirstOrDefault();
+                        if (o != null)
+                        {
+                            var owner = per.FindTarget(o.Index);
+                            DoDrop(el.Position, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1);
+                        }
+                    }
                     GObject.Destroy(el, 3f);
+                    
                 };
             }
         }
@@ -150,35 +162,26 @@ namespace Server
 
         }
 
-        /*
-        private void DoDrop()
+
+        private void DoDrop(Vector3 pos, DropGroupData drop, int groupIndex, int teamIndex)
         {
             if (drop == null) return;
             var items = drop.DropItem.SplitToInt();
             var pors = drop.Pro.SplitToInt();
-            foreach (var i in BattlePlayers)
+            var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
+
+            if (items.Count > 0)
             {
-                var notify = new Notify_Drop
+                for (var index = 0; index < items.Count; index++)
                 {
-                    AccountUuid = i.Value.AccountId
-                };
-                var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
-                notify.Gold = gold;
-                i.Value.AddGold(gold);
-                if (items.Count > 0)
-                {
-                    for (var index = 0; index < items.Count; index++)
+                    if (GRandomer.Probability10000(pors[index]))
                     {
-                        if (GRandomer.Probability10000(pors[index]))
-                        {
-                            i.Value.AddDrop(items[index], 1);
-                            notify.Items.Add(new PlayerItem { ItemID = items[index], Num = 1 });
-                        }
+                        var item = new PlayerItem { ItemID = items[index], Num = 1 };
+                        Per.CreateItem(pos,item, groupIndex, teamIndex);
                     }
                 }
-                var message = notify.ToNotityMessage();
-                i.Value.Client.SendMessage(message);
             }
-        }*/
+            
+        }
     }
 }

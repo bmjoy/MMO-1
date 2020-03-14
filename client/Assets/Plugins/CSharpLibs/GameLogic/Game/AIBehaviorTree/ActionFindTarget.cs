@@ -37,8 +37,9 @@ namespace GameLogic.Game.AIBehaviorTree
 			if (!Node.findNew)
 			{
 				root.TryGetTarget(out BattleCharacter targetCharacter);
-				if (targetCharacter)
+				if (targetCharacter && !targetCharacter.IsDeath)
 				{
+                    
 					if (BattlePerception.InviewSide(root.Character, targetCharacter, distance, view))
 					{
 						yield return RunStatus.Success;
@@ -60,7 +61,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				type = (TargetTeamType)data.AITargetType;
 			}
 
-			var target = per.FindTarget(root.Character, type, distance, view, Node.selectType, Node.filter);
+			var target = per.FindTarget(root.Character, type, distance, view, true, Node.selectType, Node.filter);
 			if (!target)
 			{
 				if (root.IsDebug) Attach("failure", "nofound");

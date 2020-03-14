@@ -23,7 +23,14 @@ namespace GameLogic.Game.Perceptions
     /// </summary>
 	public class BattlePerception : GPerception
     {
-
+        public class EmptyControllor : GControllor
+        {
+            public EmptyControllor(BattlePerception p) : base(p) { }
+            public override GAction GetAction(GTime time, GObject current)
+            {
+                return GAction.Empty;
+            }
+        }
 
         public static float Distance(BattleCharacter c1, BattleCharacter c2)
         {
@@ -47,10 +54,11 @@ namespace GameLogic.Game.Perceptions
         public BattlePerception(GState state, IBattlePerception view) : base(state)
         {
             View = view;
-
+            Empty = new EmptyControllor(this);
             ReleaserControllor = new MagicReleaserControllor(this);
             BattleMissileControllor = new BattleMissileControllor(this);
             AIControllor = new BattleCharacterAIBehaviorTreeControllor(this);
+
         }
 
         public IBattlePerception View { private set; get; }
@@ -60,6 +68,7 @@ namespace GameLogic.Game.Perceptions
         public BattleMissileControllor BattleMissileControllor { private set; get; }
         public MagicReleaserControllor ReleaserControllor { private set; get; }
         public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
+        public EmptyControllor Empty { private set; get; }
         #endregion
 
 
@@ -150,16 +159,24 @@ namespace GameLogic.Game.Perceptions
 
         internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {
-            View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed);
+            View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed, result.CrtMult);
             NotifyHurt(effectTarget);
             if (result.IsMissed) return;
             CharacterSubHP(effectTarget, result.Damage);
-           
+            effectTarget.AttachDamage(sources.Index, result.Damage, View.GetTimeSimulater().Now.Time);
         }
 
         public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)
         {
             effectTarget.SubHP(lostHP);
+        }
+
+        public BattleItem CreateItem(UVector3 ps, PlayerItem item, int groupIndex, int teamIndex)
+        {
+            var view = View.CreateDropItem(ps.ToPV3(), item, teamIndex, groupIndex);
+            var ditem = new BattleItem(Empty, view, item);
+            JoinElement(ditem);
+            return ditem;
         }
 
         public void CharacterAddHP(BattleCharacter effectTarget, int addHp)
@@ -210,7 +227,10 @@ namespace GameLogic.Game.Perceptions
             return this.State[target] as BattleCharacter;
         }
 
-        public BattleCharacter FindTarget(BattleCharacter character, TargetTeamType type, float distance,float view,
+        public BattleCharacter FindTarget(BattleCharacter character, TargetTeamType type,
+            float distance,
+            float view,
+            bool igDead = true,
             TargetSelectType sType = TargetSelectType.Nearest,
             TargetFilterType filterType = TargetFilterType.None)
         {
@@ -220,6 +240,7 @@ namespace GameLogic.Game.Perceptions
             {
                 //隐身的不进入目标查找
                 if (t.IsLock(ActionLockType.NoInhiden)) return false;
+                if (igDead && t.IsDeath) return false;
                 switch (type)
                 {
                     case TargetTeamType.Enemy:
@@ -353,7 +374,7 @@ namespace GameLogic.Game.Perceptions
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,
             float radius, float angle, float offsetAngle,
-            UVector3 offset, int teamIndex)
+            UVector3 offset, int teamIndex, bool igDeath = true)
         {
           
             switch (damageType)
@@ -368,6 +389,7 @@ namespace GameLogic.Game.Perceptions
                         var list = new List<BattleCharacter>();
                         State.Each<BattleCharacter>((t) =>
                         {
+                            if (igDeath && t.IsDeath) return false;//ig
                             //过滤
                             switch (fitler)
                             {

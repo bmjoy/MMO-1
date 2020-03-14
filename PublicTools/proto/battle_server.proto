@@ -231,6 +231,7 @@ message Notify_DamageResult
 	 int32 TargetIndex=2;
 	 bool IsMissed=3;
 	 int32 Damage=4;
+	 int32 CrtMult = 5;//暴击
 }
 
 message Notify_Drop
