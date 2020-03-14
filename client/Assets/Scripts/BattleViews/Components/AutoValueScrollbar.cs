@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[ RequireComponent(typeof( Scrollbar))]
+[RequireComponent(typeof( Scrollbar))]
 public class AutoValueScrollbar : MonoBehaviour {
 
 
@@ -22,14 +22,14 @@ public class AutoValueScrollbar : MonoBehaviour {
     private IEnumerator RunBar(float durtion)
     {
         var start =Time.time;
-        bar.value = 0;
+        bar.size = 0;
         yield return null;
         while (Time.time - start < durtion)
         {
-            bar.value = (Time.time - start) / durtion;
+            bar.size = (Time.time - start) / durtion;
             yield return null;
         }
-        bar.value = 1;
+        bar.size = 1;
         yield return null;
     }
 }

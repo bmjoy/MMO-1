@@ -70,9 +70,14 @@ public class GMainGate:UGate
         return characterView;
     }
 
+    internal void RotationHero(float x)
+    {
+        characterView.targetLookQuaternion = characterView.LookQuaternion * Quaternion.Euler(x, 0, 0);
+    }
+
     #region implemented abstract members of UGate
 
-   
+
 
     protected override void JoinGate()
     {
