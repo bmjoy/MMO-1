@@ -31,6 +31,7 @@ namespace Windows
         protected Button btn_goldadd;
         protected Text lb_gem;
         protected Image btn_addgem;
+        protected Button Button_Play;
         protected Button Button_AddFriend;
         protected Button Button_Facebook;
         protected Image swip;
@@ -59,6 +60,7 @@ namespace Windows
             btn_goldadd = FindChild<Button>("btn_goldadd");
             lb_gem = FindChild<Text>("lb_gem");
             btn_addgem = FindChild<Image>("btn_addgem");
+            Button_Play = FindChild<Button>("Button_Play");
             Button_AddFriend = FindChild<Button>("Button_AddFriend");
             Button_Facebook = FindChild<Button>("Button_Facebook");
             swip = FindChild<Image>("swip");

@@ -161,7 +161,7 @@ public class UUIManager:XSingleton<UUIManager>
         if (show)
         {
             BackImage.ActiveSelfObject(true);
-            BackImage.transform.FindChild<AutoValueScrollbar>("Scrollbar").ResetValue(1);
+            BackImage.transform.FindChild<AutoValueScrollbar>("LoadingBg").ResetValue(1);
         }
         else
         {
@@ -172,7 +172,7 @@ public class UUIManager:XSingleton<UUIManager>
 	public void ShowLoading(float p,string text = "Loading")
 	{
 		BackImage.transform.FindChild<Scrollbar> ("Scrollbar").value =  p;
-        BackImage.transform.FindChild<Text>("Text").text = text;
+        BackImage.transform.FindChild<Text>("LoadingText").text = text;
 	}
 
     private float? duration;

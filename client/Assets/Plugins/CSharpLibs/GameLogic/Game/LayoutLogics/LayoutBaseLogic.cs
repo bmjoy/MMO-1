@@ -207,17 +207,21 @@ namespace GameLogic.Game.LayoutLogics
             var magics = ExcelToJSONConfigManager.Current
                 .GetConfigs<CharacterMagicData>(t => t.CharacterID == unitLayout.characterID);
 
-            var unit = per.CreateCharacter(
-                level,
-                data,
-                magics.ToList(),
-                charachter.TeamIndex,
-                charachter.Position,
-                charachter.Forward,
-                string.Empty,data.Name
-            );
-            //无限视野
-            unit[Proto.HeroPropertyType.ViewDistance].SetAppendValue(100000);
+
+
+
+			var unit = per.CreateCharacter(
+				level,
+				data,
+				magics.ToList(),
+				charachter.TeamIndex,
+				charachter.Position + charachter.Rototion * UVector3.forward * charachter.Radius,
+				charachter.Rototion.eulerAngles,
+				string.Empty, data.Name
+			);
+
+			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
+
             releaser.AttachElement(unit, false,unitLayout.time);
             releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
             per.ChangeCharacterAI(data.AIResourcePath,unit);

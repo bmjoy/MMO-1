@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>0.9</Time>
+  <Points>
+    <TimePoint>
+      <GUID>f7c95c4f-9317-4671-8a9d-ae4ab7279005</GUID>
+      <Time>0.830514669</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>7cad425d-4502-4d26-bdeb-375249f775d4</GUID>
+      <Time>0.020955883</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>f7c95c4f-9317-4671-8a9d-ae4ab7279005</GUID>
+      <Time>0.689889669</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="CallUnitLayout">
+      <GUID>f7c95c4f-9317-4671-8a9d-ae4ab7279005</GUID>
+      <characterID>10002</characterID>
+      <valueFrom>CurrentConfig</valueFrom>
+      <level>5</level>
+      <time>60</time>
+      <maxNum>10</maxNum>
+    </LayoutBase>
+    <LayoutBase xsi:type="MotionLayout">
+      <GUID>7cad425d-4502-4d26-bdeb-375249f775d4</GUID>
+      <motionName>enrage</motionName>
+      <targetType>Releaser</targetType>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>

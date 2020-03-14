@@ -14,33 +14,45 @@ namespace Windows
         {
             base.InitModel();
             MenuMission.onClick.AddListener(() =>
-                {
-                    var ui = UUIManager.Singleton.CreateWindow<Windows.UUILevelList>();
-                    ui.ShowWindow();
-                    //UAppliaction.Singleton.GoToGameBattleGate(1);
-                });
+            {
+                var ui = UUIManager.Singleton.CreateWindow<UUILevelList>();
+                ui.ShowWindow();
+            });
+
+            Button_Play.onClick.AddListener(() =>
+            {
+                UUIManager.Singleton
+                .CreateWindow<UUILevelList>().ShowWindow();
+            });
 
             MenuItems.onClick.AddListener(() =>
                 {
                     UUIManager.S.CreateWindow<UUIPackage>().ShowWindow();
                 });
 
-            MenuSetting.onClick.AddListener(() => {
+            MenuSetting.onClick.AddListener(() =>
+            {
                 UApplication.S.GotoLoginGate();
             });
 
-            MenuWeapon.onClick.AddListener(() => {
+            MenuWeapon.onClick.AddListener(() =>
+            {
                 UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
             });
 
             var swipeEv = swip.GetComponent<UIEventSwipe>();
-            swipeEv.OnSwiping.AddListener((v) => {
-                v = v * .5f;
-                ThridPersionCameraContollor.Current.RotationX(v.y);//.RotationY(v.x);
+            swipeEv.OnSwiping.AddListener((v) =>
+            {
+                v *= .5f;
+                ThridPersionCameraContollor.Current.RotationX(v.y);
+                var gate = UApplication.G<GMainGate>();
+                gate.RotationHero(v.x);
+                //.RotationY(v.x);
             });
 
             //Write Code here
         }
+
         protected override void OnShow()
         {
             base.OnShow();
@@ -66,6 +78,10 @@ namespace Windows
             var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<EConfig.CharacterLevelUpData>(t => t.Level == gate.hero.Level);
 
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
+            float v = 0;
+            if(leveUp!=null)
+            v = gate.hero.Exprices / leveUp.NeedExprices;
+            ExpSilder.value = v;
         }
     }
 }
