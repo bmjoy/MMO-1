@@ -82,13 +82,9 @@ namespace GameLogic.Game.AIBehaviorTree
                 }
             }
 
-            if (hadMove)
-                root.Character.StopMove();
-
-            
+            if (hadMove) root.Character.StopMove();
             releaser = root.Perception.CreateReleaser(magic.MagicKey,
                 new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
-
             root.Character.AttachMagicHistory(magic.ID, root.Time);
             if (releaser != null)
             {

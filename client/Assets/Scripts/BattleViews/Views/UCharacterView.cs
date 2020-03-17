@@ -472,6 +472,8 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     bool IBattleCharacter.IsForwardMoving { get { return MCategory == MoveCategory.Forward; } }
 
+    public bool IsCanForwardMoving { get { return MCategory == MoveCategory.NONE || MCategory == MoveCategory.Forward; } }
+
     bool IBattleCharacter.IsMoving
     {
         get
