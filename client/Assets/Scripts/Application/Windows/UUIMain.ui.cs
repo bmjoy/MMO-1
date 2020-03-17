@@ -15,7 +15,7 @@ namespace Windows
 
         protected Button MenuSetting;
         protected Button MenuWeapon;
-        protected Button MenuMission;
+        protected Button MenuSkill;
         protected Image mission_notification;
         protected Button MenuMessages;
         protected Image message_notification;
@@ -45,7 +45,7 @@ namespace Windows
             base.InitTemplate();
             MenuSetting = FindChild<Button>("MenuSetting");
             MenuWeapon = FindChild<Button>("MenuWeapon");
-            MenuMission = FindChild<Button>("MenuMission");
+            MenuSkill = FindChild<Button>("MenuSkill");
             mission_notification = FindChild<Image>("mission_notification");
             MenuMessages = FindChild<Button>("MenuMessages");
             message_notification = FindChild<Image>("message_notification");

@@ -13,7 +13,7 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            MenuMission.onClick.AddListener(() =>
+            MenuSkill.onClick.AddListener(() =>
             {
                 var ui = UUIManager.Singleton.CreateWindow<UUILevelList>();
                 ui.ShowWindow();
