@@ -86,7 +86,7 @@ namespace Windows
             t_num.text = $"{ item.Num}";
             t_descript.text = config.Description;
             t_name.text = config.Name;
-            t_prices.text = $"prices{ config.SalePrice}";
+            t_prices.text = $"售价:{ config.SalePrice}";
             icon.sprite = ResourcesManager.S.LoadIcon(config);
 
             ItemLevel.ActiveSelfObject(item.Level > 0);
