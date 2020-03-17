@@ -482,6 +482,17 @@ namespace GameLogic.Game.Elements
             }
         }
 
+        internal bool HaveMagicByType(MagicType ty)
+        {
+            foreach (var i in Magics)
+            {
+                if (i.Value.Type != ty) continue;
+
+                return true;
+            }
+            return false;
+        }
+
         public void LockAction(ActionLockType type)
         {
             Lock.Lock(type);
@@ -520,6 +531,8 @@ namespace GameLogic.Game.Elements
         {
             return $"[{Index}]{Name}";
         }
+
+
     }
 }
 

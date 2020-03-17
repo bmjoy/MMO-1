@@ -54,7 +54,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-
             var type = magic.GetTeamType();
             var target = root.Perception.FindTarget(root.Character, type, magic.RangeMax, 360, true, TargetSelectType.Nearest);
             if (!target)
@@ -62,7 +61,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield return RunStatus.Failure;
                 yield break;
             }
-
+            bool hadMove = false;
             while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
             {
                 if (!target)
@@ -76,13 +75,16 @@ namespace GameLogic.Game.AIBehaviorTree
                     yield break;
                 }
                 float lastTime = root.Time;
+                hadMove = true;
                 while (lastTime + .5 > root.Time)
                 {
                     yield return RunStatus.Running;
                 }
             }
 
-            root.Character.StopMove();
+            if (hadMove)
+                root.Character.StopMove();
+
             
             releaser = root.Perception.CreateReleaser(magic.MagicKey,
                 new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);

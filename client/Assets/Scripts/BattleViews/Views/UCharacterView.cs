@@ -54,7 +54,9 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
             //player
-            if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) && !IsDead && ThridPersionCameraContollor.Current)
+            if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) 
+                && !IsDead 
+                && ThridPersionCameraContollor.Current)
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
