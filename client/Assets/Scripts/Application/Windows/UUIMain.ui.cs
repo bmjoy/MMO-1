@@ -23,18 +23,19 @@ namespace Windows
         protected Button MenuShop;
         protected Image item_notification;
         protected Button MenuItems;
-        protected Slider ExpSilder;
+        protected Button Button_AddFriend;
+        protected Button Button_Facebook;
+        protected Scrollbar ExpSilder;
         protected Text lb_exp;
+        protected Button user_info;
         protected Text Level_Number;
         protected Text Username;
+        protected Button Button_Play;
+        protected Image swip;
         protected Text lb_gold;
         protected Button btn_goldadd;
         protected Text lb_gem;
         protected Image btn_addgem;
-        protected Button Button_Play;
-        protected Button Button_AddFriend;
-        protected Button Button_Facebook;
-        protected Image swip;
 
 
 
@@ -52,18 +53,19 @@ namespace Windows
             MenuShop = FindChild<Button>("MenuShop");
             item_notification = FindChild<Image>("item_notification");
             MenuItems = FindChild<Button>("MenuItems");
-            ExpSilder = FindChild<Slider>("ExpSilder");
+            Button_AddFriend = FindChild<Button>("Button_AddFriend");
+            Button_Facebook = FindChild<Button>("Button_Facebook");
+            ExpSilder = FindChild<Scrollbar>("ExpSilder");
             lb_exp = FindChild<Text>("lb_exp");
+            user_info = FindChild<Button>("user_info");
             Level_Number = FindChild<Text>("Level_Number");
             Username = FindChild<Text>("Username");
+            Button_Play = FindChild<Button>("Button_Play");
+            swip = FindChild<Image>("swip");
             lb_gold = FindChild<Text>("lb_gold");
             btn_goldadd = FindChild<Button>("btn_goldadd");
             lb_gem = FindChild<Text>("lb_gem");
             btn_addgem = FindChild<Image>("btn_addgem");
-            Button_Play = FindChild<Button>("Button_Play");
-            Button_AddFriend = FindChild<Button>("Button_AddFriend");
-            Button_Facebook = FindChild<Button>("Button_Facebook");
-            swip = FindChild<Image>("swip");
 
 
         }

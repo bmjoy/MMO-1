@@ -23,16 +23,11 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 yield return RunStatus.Running;
             }
-            DecoratedChild.Stop(context);
-            var last = DecoratedChild.LastStatus.Value;
-            if (last == RunStatus.Success)
-            {
-                yield return RunStatus.Failure;
-            }
-            else
-            {
-                yield return RunStatus.Success;
-            }
+
+            yield return DecoratedChild.LastStatus == RunStatus.Success ?
+                RunStatus.Failure : RunStatus.Success;
+
+
         }
     }
 }

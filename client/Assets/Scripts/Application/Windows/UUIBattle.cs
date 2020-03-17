@@ -43,6 +43,7 @@ namespace Windows
                     var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
                     var magic = per.GetMagicByKey(MagicData.MagicKey);
                     if (magic != null) Template.Button.SetText(magic.name);
+                    Template.Icon.sprite = ResourcesManager.S.LoadIcon(MagicData);
                 }
             }
 
@@ -83,14 +84,17 @@ namespace Windows
 
             bt_Exit.onClick.AddListener(() =>
                 {
-                    var gate = UApplication.G<BattleGate>();
-                    ExitBattle.CreateQuery()
-                    .SendRequest(gate.Client,
-                    new C2B_ExitBattle
+                    UUIPopup.ShowConfirm("Quit", "Do you want quit?", () =>
                     {
-                        AccountUuid = UApplication.S.AccountUuid
-                    }, null);
-                    UApplication.S.GoBackToMainGate();
+                        var gate = UApplication.G<BattleGate>();
+                        ExitBattle.CreateQuery()
+                        .SendRequest(gate.Client,
+                        new C2B_ExitBattle
+                        {
+                            AccountUuid = UApplication.S.AccountUuid
+                        }, null);
+                        UApplication.S.GoBackToMainGate();
+                    });
                 });
 
             var bt = this.Joystick_Left.GetComponent<zFrame.UI.Joystick>();
@@ -121,6 +125,17 @@ namespace Windows
                 if (g == null) return;
                 g.DoNormalAttack();
             });
+
+            bt_hp.onClick.AddListener(() => {
+                var g = UApplication.G<BattleGate>();
+                if (g == null) return;
+                g.SendUserItem(ItemType.ItHpitem);
+            });
+            bt_mp.onClick.AddListener(() => {
+                var g = UApplication.G<BattleGate>();
+                if (g == null) return;
+                g.SendUserItem(ItemType.ItMpitem);
+            });
         }
 
         protected override void OnShow()
@@ -149,21 +164,57 @@ namespace Windows
 
         public void InitCharacter(UCharacterView view)
         {
-            var magic = view.Magics.Where(t => IsMaigic(t.MagicID)).ToList();
-            this.GridTableManager.Count = magic.Count;
-            int index = 0;
-            foreach (var i in GridTableManager)
+            if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
             {
-                i.Model.SetMagic(magic[index].MagicID, magic[index].CDTime);
-                i.Model.OnClick = OnRelease;
-                index++;
+                //var magic = view.TryGetMagicByType.Where(t => IsMaigic(t.MagicID)).ToList();
+                this.GridTableManager.Count = list.Count;
+                int index = 0;
+                foreach (var i in GridTableManager)
+                {
+                    i.Model.SetMagic(list[index].MagicID, list[index].CDTime);
+                    i.Model.OnClick = OnRelease;
+                    index++;
+                }
+            }
+
+            if (view.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
+            {
+                var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
+                att_Icon.sprite = ResourcesManager.S.LoadIcon(config);
             }
             this.view = view;
         }
 
+
+        public void SetPackage(PlayerPackage package)
+        {
+            int hp = 0;
+            int mp = 0;
+
+            foreach (var i in package.Items)
+            {
+                var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
+                if ((ItemType)config.ItemType == ItemType.ItHpitem)
+                {
+                    hp += i.Value.Num;
+                    hp_item_Icon.sprite = ResourcesManager.S.LoadIcon(config);
+                }
+                if ((ItemType)config.ItemType == ItemType.ItMpitem)
+                {
+                    mp_item_Icon.sprite = ResourcesManager.S.LoadIcon(config);
+                    mp += i.Value.Num;
+                }
+            }
+
+            bt_hp.ActiveSelfObject(hp > 0);
+            bt_mp.ActiveSelfObject(mp > 0);
+            hp_num.text = $"{hp}";
+            mp_num.text = $"{mp}";
+        }
+        
+
         private void OnRelease(GridTableModel item)
         {
-            
             UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);
         }
 

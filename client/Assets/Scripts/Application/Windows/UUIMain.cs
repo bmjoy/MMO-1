@@ -32,25 +32,32 @@ namespace Windows
 
             MenuSetting.onClick.AddListener(() =>
             {
-                UApplication.S.GotoLoginGate();
+                UUIManager.S.CreateWindow<UUISettings>().ShowWindow();
             });
 
             MenuWeapon.onClick.AddListener(() =>
             {
-                UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
+                OpenEquip();
             });
+
+            user_info.onClick.AddListener(() => { OpenEquip(); });
 
             var swipeEv = swip.GetComponent<UIEventSwipe>();
             swipeEv.OnSwiping.AddListener((v) =>
             {
-                v *= .5f;
-                ThridPersionCameraContollor.Current.RotationX(v.y);
+                //v *= .5f;
+                //ThridPersionCameraContollor.Current.RotationX(v.y);
                 var gate = UApplication.G<GMainGate>();
                 gate.RotationHero(v.x);
                 //.RotationY(v.x);
             });
 
             //Write Code here
+        }
+
+        private void OpenEquip()
+        {
+            UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
         }
 
         protected override void OnShow()
@@ -80,8 +87,8 @@ namespace Windows
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
             float v = 0;
             if(leveUp!=null)
-            v = gate.hero.Exprices / leveUp.NeedExprices;
-            ExpSilder.value = v;
+            v = (float)gate.hero.Exprices / leveUp.NeedExprices;
+            ExpSilder.size = v;
         }
     }
 }

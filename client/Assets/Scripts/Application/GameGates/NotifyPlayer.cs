@@ -29,9 +29,7 @@ public class NotifyPlayer
 
     #region Events
     public Action<IBattleCharacter> OnCreateUser;
-    public Action<IBattleCharacter> OnDeath;
     public Action<Notify_PlayerJoinState> OnJoined;
-    public Action<Notify_Drop> OnDrop;
     #endregion
 
     public NotifyPlayer(UPerceptionView view)
@@ -69,6 +67,8 @@ public class NotifyPlayer
         }
     }
 
+    private const string INDEX = "Index";
+
     /// <summary>
     /// 处理网络包的解析
     /// </summary>
@@ -86,20 +86,27 @@ public class NotifyPlayer
                 ps.Add(notify.GetType().GetProperty(i).GetValue(notify));
             }
             var go = m.Method.Invoke(PerView, ps.ToArray());
+
             if (go is UElementView el)
             {
                 el.SetPrecpetion(PerView as UPerceptionView);
-                (el as IBattleElement).JoinState((int)notify.GetType().GetProperty("Index").GetValue(notify));
+                if((el is IBattleElement b)) b.JoinState((int)notify.GetType().GetProperty(INDEX).GetValue(notify));
             }
+
             if (go is UCharacterView c)
             {
                 OnCreateUser?.Invoke(c);
+            }
+
+            if (go is UBattleItem item)
+            {
+                Debug.Log($"Drop: {item}");
             }
             return;
         }
         //查找元素消息
         //index
-        var property = notify.GetType().GetProperty("Index");
+        var property = notify.GetType().GetProperty(INDEX);
         if (property != null)
         {
             var index = (int)property.GetValue(notify);
@@ -122,10 +129,15 @@ public class NotifyPlayer
                 return;
             }
         }
+
         //处理特别消息
         if (notify is Notify_PlayerJoinState p)
         {
             OnJoined?.Invoke(p);
+        }
+        else if (notify is Notify_DropGold dropGold)
+        {
+            UApplication.S.ShowNotify($"获得金币{dropGold.Gold}");
         }
         else
         {

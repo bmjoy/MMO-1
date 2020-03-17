@@ -38,7 +38,7 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 if (context.IsDebug)
                 {
-                    Attach("failure",$"nofound magic {message.MagicId}");
+                    Attach("failure", $"nofound magic {message.MagicId}");
                 }
                 yield return RunStatus.Failure;
                 yield break;
@@ -54,29 +54,28 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            var target = root.Perception.FindTarget(message.Target);
+
+            var type = magic.GetTeamType();
+            var target = root.Perception.FindTarget(root.Character, type, magic.RangeMax, 360, true, TargetSelectType.Nearest);
             if (!target)
             {
-                if (context.IsDebug)
-                {
-                    Attach("failure", $"target no found!");
-                }
+                yield return RunStatus.Failure;
+                yield break;
             }
 
-            var lastTime = root.Time;
             while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
             {
                 if (!target)
                 {
                     yield break;
                 }
-                if (!root.Character.MoveTo(target.Position,out _))
+                if (!root.Character.MoveTo(target.Position, out _, magic.RangeMax))
                 {
-                    if (context.IsDebug) Attach("failure", $"can move");
+                    if (context.IsDebug) Attach("failure", $"can't move");
                     yield return RunStatus.Failure;
                     yield break;
                 }
-                //root.Character.MoveTo(target.Position);
+                float lastTime = root.Time;
                 while (lastTime + .5 > root.Time)
                 {
                     yield return RunStatus.Running;
@@ -84,11 +83,25 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             root.Character.StopMove();
-            releaser = root
-                .Perception.CreateReleaser(magic.MagicKey, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
-            while (!releaser.IsLayoutStartFinish) yield return RunStatus.Running;
-           
-            yield return RunStatus.Success;
+            
+            releaser = root.Perception.CreateReleaser(magic.MagicKey,
+                new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
+
+            root.Character.AttachMagicHistory(magic.ID, root.Time);
+            if (releaser != null)
+            {
+                while (!releaser.IsLayoutStartFinish)
+                    yield return RunStatus.Running;
+                yield return RunStatus.Success;
+                yield break ;
+            }
+            else
+            {
+                yield return RunStatus.Failure;
+                yield break;
+
+            }
+
 
         }
 

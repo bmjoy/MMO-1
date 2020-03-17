@@ -19,77 +19,54 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            //Write Code here
+
             this.ButtonBlue.onClick.AddListener(() =>
+            {
+                var userName = TextInputBoxUserName.text;
+                var pwd = TextInputBoxPassWord.text;
+                var gate = UApplication.G<LoginGate>();
+                if (gate == null) return;
+                if (CheckBox.isOn)
                 {
-                    var userName = TextInputBoxUserName.text;
-                    var pwd = TextInputBoxPassWord.text;
-                    var gate = UApplication.G< LoginGate>();
-                    if (gate == null) return;
-                    if (CheckBox.isOn)
+                    PlayerPrefs.SetString(UserNameKey, userName);
+                    PlayerPrefs.SetString(PasswordKey, pwd);
+                }
+                else
+                {
+                    PlayerPrefs.DeleteKey(UserNameKey);
+                    PlayerPrefs.DeleteKey(PasswordKey);
+                }
+                UUIManager.S.MaskEvent();
+                gate.GoLogin(userName, pwd, (r) =>
+                {
+                    UUIManager.S.UnMaskEvent();
+                    if (r.Code.IsOk())
                     {
-                        UnityEngine.PlayerPrefs.SetString(UserNameKey, userName);
-                        UnityEngine.PlayerPrefs.SetString(PasswordKey, pwd);
+                        UApplication.Singleton.GoServerMainGate(r.GateServer, r.UserID, r.Session);
                     }
-                    else {
-                        PlayerPrefs.DeleteKey(UserNameKey);
-                        PlayerPrefs.DeleteKey(PasswordKey);
-                    }
-
-                    Login.CreateQuery()
-                    .SendRequest(gate.Client,
-                    new C2L_Login { Password = pwd, UserName = userName, Version = MessageTypeIndexs.Version },
-                    r =>
+                    else
                     {
-                        if (r.Code.IsOk())
-                        {
-                            UApplication.Singleton.GoServerMainGate(r.GateServer, r.UserID, r.Session);
-                        }
-                        else
-                        {
-                            UApplication.Singleton.ShowError(r.Code);
-                        }
+                        UApplication.Singleton.ShowError(r.Code);
                     }
-                    );
                 });
+            });
             TextSignup.onClick.AddListener(() =>
-                {
-                    var userName = TextInputBoxUserName.text;
-                    var pwd = TextInputBoxPassWord.text;
-                    var gate = UApplication.G<LoginGate>();
-                    Reg.CreateQuery()
-                      .SendRequest(gate.Client,
-                      new C2L_Reg
-                      {
-                          Password = pwd,
-                          UserName = userName,
-                          Version = 1
-                      },
-                      r =>
-                      {
-                          if (r.Code == ErrorCode.Ok)
-                          {
-                              UApplication.Singleton.GoServerMainGate(r.GateServer, r.UserID, r.Session);
-                          }
-                          else
-                          {
-                              UUITipDrawer.Singleton.ShowNotify("Server Response:" + r.Code);
-                          }
-                      });
-
-                });
-            ButtonClose.onClick.AddListener(() => {
+            {
+                UUIManager.S.CreateWindow<UUISignup>().ShowWindow();
+            });
+            ButtonClose.onClick.AddListener(() =>
+            {
                 //do nothing
             });
+
         }
 
         protected override void OnShow()
         {
             base.OnShow();
 
-            TextInputBoxUserName.text = UnityEngine.PlayerPrefs.GetString(UserNameKey);
-            TextInputBoxPassWord.text = UnityEngine.PlayerPrefs.GetString(PasswordKey);
-
+            TextInputBoxUserName.text = PlayerPrefs.GetString(UserNameKey);
+            TextInputBoxPassWord.text = PlayerPrefs.GetString(PasswordKey);
             CheckBox.isOn = !string.IsNullOrEmpty(TextInputBoxUserName.text);
         }
 

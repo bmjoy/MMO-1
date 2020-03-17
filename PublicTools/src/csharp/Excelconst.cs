@@ -37,21 +37,21 @@ namespace Proto {
             "ZXNpc3RpYmlsaXR5EAwSEQoNTWFnaWNXYWl0VGltZRANEg8KC1N1Y2tpbmdS",
             "YXRlEA4SEAoMVmlld0Rpc3RhbmNlEA8qYwoOQWN0aW9uTG9ja1R5cGUSDAoI",
             "QUxUX05vbmUQABIMCghOT19TS0lMTBABEgsKB05PX01PVkUQAhINCglOT19B",
-            "VFRBQ0sQBBIOCgpOT19JTkhJREVOEAgSCQoFTk9fQWkQECpGCghJdGVtVHlw",
-            "ZRILCgdJVF9Ob25lEAASDwoLSVRfVXNlTWFnaWMQARIOCgpJVF9Db25zdW1l",
-            "EAISDAoISVRfRXF1aXAQAypYChBNYWdpY1JlbGVhc2VUeXBlEgwKCE1SVF9O",
-            "T05FEAASFAoQTVJUX05vcm1hbEF0dGFjaxABEhEKDU1SVF9Cb3JuTWFnaWMQ",
-            "AhINCglNUlRfTWFnaWMQAypsChRNYWdpY1JlbGVhc2VBSVRhcmdldBILCgdN",
-            "QVRfQUxMEAASDQoJTUFUX0VuZW15EAESDwoLTUFUX093blRlYW0QAhIaChZN",
-            "QVRfT3duVGVhbVdpdGhPdXRTZWxmEAMSCwoHTUFUX093bhAEKjYKDUVxdWlw",
-            "bWVudFR5cGUSCAoESGVhZBAAEgcKA0FybRABEggKBEJvZHkQAhIICgRGb290",
-            "EAMqjwEKDEdldFZhbHVlRnJvbRIRCg1DdXJyZW50Q29uZmlnEAASFAoQTWFn",
-            "aWNMZXZlbFBhcmFtMRABEhQKEE1hZ2ljTGV2ZWxQYXJhbTIQAhIUChBNYWdp",
-            "Y0xldmVsUGFyYW0zEAMSFAoQTWFnaWNMZXZlbFBhcmFtNBAEEhQKEE1hZ2lj",
-            "TGV2ZWxQYXJhbTUQBSpSCg5UYXJnZXRUZWFtVHlwZRIHCgNBTEwQABIJCgVF",
-            "bmVteRABEgsKB093blRlYW0QAhIWChJPd25UZWFtV2l0aE91dFNlbGYQAxIH",
-            "CgNPd24QBCo2CglTdGFuZFR5cGUSCwoHU1RfTk9ORRAAEg0KCVNUX1JhbmRv",
-            "bRABEg0KCVNUX0Fyb3VuZBACYgZwcm90bzM="));
+            "VFRBQ0sQBBIOCgpOT19JTkhJREVOEAgSCQoFTk9fQWkQECpTCghJdGVtVHlw",
+            "ZRILCgdJVF9Ob25lEAASDQoJSVRfSFBJdGVtEAESDQoJSVRfTVBJdGVtEAIS",
+            "DAoISVRfRXF1aXAQAxIOCgpJVF9Db25zdW1lEAQqWAoQTWFnaWNSZWxlYXNl",
+            "VHlwZRIMCghNUlRfTk9ORRAAEhQKEE1SVF9Ob3JtYWxBdHRhY2sQARIRCg1N",
+            "UlRfQm9ybk1hZ2ljEAISDQoJTVJUX01hZ2ljEAMqbAoUTWFnaWNSZWxlYXNl",
+            "QUlUYXJnZXQSCwoHTUFUX0FMTBAAEg0KCU1BVF9FbmVteRABEg8KC01BVF9P",
+            "d25UZWFtEAISGgoWTUFUX093blRlYW1XaXRoT3V0U2VsZhADEgsKB01BVF9P",
+            "d24QBCo2Cg1FcXVpcG1lbnRUeXBlEggKBEhlYWQQABIHCgNBcm0QARIICgRC",
+            "b2R5EAISCAoERm9vdBADKo8BCgxHZXRWYWx1ZUZyb20SEQoNQ3VycmVudENv",
+            "bmZpZxAAEhQKEE1hZ2ljTGV2ZWxQYXJhbTEQARIUChBNYWdpY0xldmVsUGFy",
+            "YW0yEAISFAoQTWFnaWNMZXZlbFBhcmFtMxADEhQKEE1hZ2ljTGV2ZWxQYXJh",
+            "bTQQBBIUChBNYWdpY0xldmVsUGFyYW01EAUqUgoOVGFyZ2V0VGVhbVR5cGUS",
+            "BwoDQUxMEAASCQoFRW5lbXkQARILCgdPd25UZWFtEAISFgoST3duVGVhbVdp",
+            "dGhPdXRTZWxmEAMSBwoDT3duEAQqNgoJU3RhbmRUeXBlEgsKB1NUX05PTkUQ",
+            "ABINCglTVF9SYW5kb20QARINCglTVF9Bcm91bmQQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), typeof(global::Proto.StandType), }, null));
@@ -233,17 +233,18 @@ namespace Proto {
   public enum ItemType {
     [pbr::OriginalName("IT_None")] ItNone = 0,
     /// <summary>
-    ///魔法道具   使用后调用参数1的魔法
+    ///hp
     /// </summary>
-    [pbr::OriginalName("IT_UseMagic")] ItUseMagic = 1,
-    /// <summary>
-    ///消耗类道具 本身没有任何功能其他系统定义
-    /// </summary>
-    [pbr::OriginalName("IT_Consume")] ItConsume = 2,
+    [pbr::OriginalName("IT_HPItem")] ItHpitem = 1,
+    [pbr::OriginalName("IT_MPItem")] ItMpitem = 2,
     /// <summary>
     ///装备
     /// </summary>
     [pbr::OriginalName("IT_Equip")] ItEquip = 3,
+    /// <summary>
+    ///消耗类道具 本身没有任何功能其他系统定义
+    /// </summary>
+    [pbr::OriginalName("IT_Consume")] ItConsume = 4,
   }
 
   public enum MagicReleaseType {

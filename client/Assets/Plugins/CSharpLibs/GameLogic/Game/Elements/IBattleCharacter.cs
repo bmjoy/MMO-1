@@ -12,6 +12,7 @@ namespace GameLogic.Game.Elements
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
         float Radius { get; }
+        bool IsForwardMoving { get; }
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();

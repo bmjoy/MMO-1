@@ -37,6 +37,13 @@ namespace Windows
         protected Image Joystick_Left;
         protected Image swipe;
         protected Button bt_normal_att;
+        protected Image att_Icon;
+        protected Button bt_mp;
+        protected Image mp_item_Icon;
+        protected Text mp_num;
+        protected Button bt_hp;
+        protected Image hp_item_Icon;
+        protected Text hp_num;
 
 
         protected UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>> GridTableManager = new UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>>();
@@ -52,6 +59,13 @@ namespace Windows
             Joystick_Left = FindChild<Image>("Joystick_Left");
             swipe = FindChild<Image>("swipe");
             bt_normal_att = FindChild<Button>("bt_normal_att");
+            att_Icon = FindChild<Image>("att_Icon");
+            bt_mp = FindChild<Button>("bt_mp");
+            mp_item_Icon = FindChild<Image>("mp_item_Icon");
+            mp_num = FindChild<Text>("mp_num");
+            bt_hp = FindChild<Button>("bt_hp");
+            hp_item_Icon = FindChild<Image>("hp_item_Icon");
+            hp_num = FindChild<Text>("hp_num");
 
             GridTableManager.InitFromGrid(Grid);
 

@@ -15,11 +15,12 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
             DecoratedChild.Start(context);
+
             while (DecoratedChild.Tick(context) == RunStatus.Running)
             {
                 yield return RunStatus.Running;
             }
-            DecoratedChild.Stop(context);
+
             yield return RunStatus.Success;
         }
     }

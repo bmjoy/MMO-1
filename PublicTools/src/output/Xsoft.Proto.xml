@@ -24,6 +24,16 @@
              4
              </summary>    
             </member>
+        <member name="T:Proto.ActionService.CollectItem">
+             <summary>
+             5
+             </summary>    
+            </member>
+        <member name="T:Proto.ActionService.UseItem">
+             <summary>
+             6
+             </summary>    
+            </member>
         <member name="T:Proto.BattleServerReflection">
              <summary>Holder for reflection information generated from battle_server.proto</summary>
             </member>
@@ -66,6 +76,9 @@
         <member name="F:Proto.B2C_ExitBattle.CodeFieldNumber">
              <summary>Field number for the "Code" field.</summary>
             </member>
+        <member name="F:Proto.Action_CollectItem.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
         <member name="T:Proto.Action_ClickSkillIndex">
              <summary>
             点击释放技能
@@ -103,6 +116,9 @@
             </member>
         <member name="F:Proto.Action_MoveDir.PositionFieldNumber">
              <summary>Field number for the "Position" field.</summary>
+            </member>
+        <member name="F:Proto.Action_UseItem.ItemIdFieldNumber">
+             <summary>Field number for the "ItemId" field.</summary>
             </member>
         <member name="T:Proto.Notify_ElementExitState">
              <summary>
@@ -209,6 +225,9 @@
              <summary>
             移动速度
              </summary>
+            </member>
+        <member name="F:Proto.Notify_CreateBattleCharacter.CdsFieldNumber">
+             <summary>Field number for the "Cds" field.</summary>
             </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>
@@ -465,6 +484,9 @@
             暴击
              </summary>
             </member>
+        <member name="F:Proto.Notify_Drop.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
         <member name="F:Proto.Notify_Drop.ItemFieldNumber">
              <summary>Field number for the "Item" field.</summary>
             </member>
@@ -511,6 +533,18 @@
             </member>
         <member name="F:Proto.Notify_CharacterRelive.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_BattleItemChangeGroupIndex.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_BattleItemChangeGroupIndex.GroupIndexFieldNumber">
+             <summary>Field number for the "GroupIndex" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_DropGold.TotalGoldFieldNumber">
+             <summary>Field number for the "TotalGold" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_DropGold.GoldFieldNumber">
+             <summary>Field number for the "Gold" field.</summary>
             </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
@@ -1095,14 +1129,14 @@
              掉落ID
              </summary>
             </member>
-        <member name="P:EConfig.MonsterGroupData.Pro">
-             <summary>
-             掉落概率
-             </summary>
-            </member>
         <member name="P:EConfig.MonsterGroupData.MonsterID">
              <summary>
              怪物ID
+             </summary>
+            </member>
+        <member name="P:EConfig.MonsterGroupData.Pro">
+             <summary>
+             出现概率
              </summary>
             </member>
         <member name="P:EConfig.MonsterGroupData.MonsterNumberMin">
@@ -1133,6 +1167,21 @@
         <member name="P:EConfig.DropGroupData.Name">
              <summary>
              名称
+             </summary>
+            </member>
+        <member name="P:EConfig.DropGroupData.DropPro">
+             <summary>
+             万分比掉落
+             </summary>
+            </member>
+        <member name="P:EConfig.DropGroupData.DropMinNum">
+             <summary>
+             掉落种类小
+             </summary>
+            </member>
+        <member name="P:EConfig.DropGroupData.DropMaxNum">
+             <summary>
+             最大
              </summary>
             </member>
         <member name="P:EConfig.DropGroupData.DropItem">
@@ -1233,41 +1282,6 @@
         <member name="P:EConfig.BuffData.TickTime">
              <summary>
              触发间隔
-             </summary>
-            </member>
-        <member name="T:EConfig.EquipmentRefreshData">
-             <summary>
-             装备洗练属性表
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.Part">
-             <summary>
-             部位
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.Quility">
-             <summary>
-             装备品质
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.PropertyQuility">
-             <summary>
-             属性品质
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.Pro">
-             <summary>
-             分段概率
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.PropertyType">
-             <summary>
-             属性类型
-             </summary>
-            </member>
-        <member name="P:EConfig.EquipmentRefreshData.AppendValue">
-             <summary>
-             增加值
              </summary>
             </member>
         <member name="T:EConfig.ConstantValue">
@@ -1600,11 +1614,6 @@
              名称
              </summary>
             </member>
-        <member name="P:EConfig.ItemData.Description">
-             <summary>
-             描述
-             </summary>
-            </member>
         <member name="P:EConfig.ItemData.SalePrice">
              <summary>
              售卖价格
@@ -1638,6 +1647,11 @@
         <member name="P:EConfig.ItemData.MaxStackNum">
              <summary>
              最大堆叠数
+             </summary>
+            </member>
+        <member name="P:EConfig.ItemData.Description">
+             <summary>
+             描述
              </summary>
             </member>
         <member name="P:EConfig.ItemData.Params">
@@ -1846,19 +1860,19 @@
             无ai
              </summary>
             </member>
-        <member name="F:Proto.ItemType.ItUseMagic">
+        <member name="F:Proto.ItemType.ItHpitem">
              <summary>
-            魔法道具   使用后调用参数1的魔法
-             </summary>
-            </member>
-        <member name="F:Proto.ItemType.ItConsume">
-             <summary>
-            消耗类道具 本身没有任何功能其他系统定义
+            hp
              </summary>
             </member>
         <member name="F:Proto.ItemType.ItEquip">
              <summary>
             装备
+             </summary>
+            </member>
+        <member name="F:Proto.ItemType.ItConsume">
+             <summary>
+            消耗类道具 本身没有任何功能其他系统定义
              </summary>
             </member>
         <member name="F:Proto.MagicReleaseType.MrtNormalAttack">
@@ -2338,20 +2352,12 @@
             当前战斗地图
              </summary>
             </member>
-        <member name="F:Proto.B2G_BattleReward.DropItemsFieldNumber">
-             <summary>Field number for the "DropItems" field.</summary>
+        <member name="F:Proto.B2G_BattleReward.ItemsFieldNumber">
+             <summary>Field number for the "Items" field.</summary>
             </member>
-        <member name="P:Proto.B2G_BattleReward.DropItems">
+        <member name="P:Proto.B2G_BattleReward.Items">
              <summary>
             掉落物品
-             </summary>
-            </member>
-        <member name="F:Proto.B2G_BattleReward.ConsumeItemsFieldNumber">
-             <summary>Field number for the "ConsumeItems" field.</summary>
-            </member>
-        <member name="P:Proto.B2G_BattleReward.ConsumeItems">
-             <summary>
-            消耗道具
              </summary>
             </member>
         <member name="T:Proto.G2B_BattleReward">
@@ -3186,6 +3192,16 @@
         <member name="T:Proto.NotifyService.CharacterRelive">
              <summary>
              30
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.BattleItemChangeGroupIndex">
+             <summary>
+             31
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.DropGold">
+             <summary>
+             32
              </summary>    
             </member>
     </members>

@@ -148,7 +148,7 @@ namespace Windows
 
             var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(eq.ItemID);
             var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
-            icon_right.texture = ResourcesManager.S.LoadIcon(item);
+            //icon_right.texture = ResourcesManager.S.LoadIcon(item);
             equip_lvl.text = $"+{it.Level}";
             right_name.text = equip.Name;
             des_Text.text = item.Description;
@@ -293,7 +293,7 @@ namespace Windows
                     if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
                     {
                         partIcon.icon.ActiveSelfObject(true);
-                        partIcon.icon.texture = ResourcesManager.S.LoadIcon(item);
+                        //partIcon.icon.texture = ResourcesManager.S.LoadIcon(item);
                         if (pItem.Level > 0) partIcon.level.text = $"+{pItem.Level}";
                         //partIcon.bt.onClick.AddListener(() => { })
                     }

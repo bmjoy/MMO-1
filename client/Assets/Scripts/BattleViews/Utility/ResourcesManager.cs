@@ -98,9 +98,13 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		return File.ReadAllText(path);
     }
 
-	public Texture2D LoadIcon(ItemData item)
+	public Sprite LoadIcon(CharacterMagicData item)
 	{
-		return LoadResources<Texture2D>("Icon/" + item.Icon);
+		return LoadResources<Sprite>("Icon/" + item.IconKey);
+	}
+	public Sprite LoadIcon(ItemData item)
+	{
+		return LoadResources<Sprite>("Icon/" + item.Icon);
 	}
 
 	public GameObject LoadModel(ItemData item)

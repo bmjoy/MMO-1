@@ -56,6 +56,18 @@ namespace GateServer
             }
         }
 
+        public class GameWareroom
+        {
+            public int Size { set; get; }
+            [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+            [BsonElement("id")]
+            public string Uuid { set; get; }
+            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
+            [BsonElement("item")]
+            public Dictionary<string, ItemNum> Items { set; get; }
+            [BsonElement("puuid")]
+            public string PlayerUuid { set; get; }
+        }
 
         public DataBase()
         {
@@ -65,25 +77,18 @@ namespace GateServer
                 cm.AutoMap();
                 cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
             });
-
-            var map = new DictionaryInterfaceImplementerSerializer<MapField<string, ItemNum>>(DictionaryRepresentation.Document);
-
-
-            BsonClassMap.RegisterClassMap<GameHeroEntity>(
-            (cm) =>
-            {
-                cm.AutoMap();
-                cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
-            });
+         
         }
 
         public const string PLAYER = "Player";
         public const string HERO = "Hero";
         public const string PACKAGE = "Package";
+        public const string WEARROOM = "Wareroom";
 
         public IMongoCollection<GamePlayerEntity> Playes { get; private set; }
         public IMongoCollection<GameHeroEntity> Heros { get; private set; }
         public IMongoCollection<GamePackageEntity> Packages { get; private set; }
+        public IMongoCollection<GameWareroom> Warerooms { get; private set; }
 
         public void Init(string connectString, string dbName)
         {
@@ -92,6 +97,7 @@ namespace GateServer
             Playes = db.GetCollection<GamePlayerEntity>(PLAYER);
             Heros = db.GetCollection<GameHeroEntity>(HERO);
             Packages = db.GetCollection<GamePackageEntity>(PACKAGE);
+            Warerooms = db.GetCollection<GameWareroom>(WEARROOM);
         }
     }
 }

@@ -10,6 +10,8 @@ using CM = ExcelConfig.ExcelToJSONConfigManager;
 using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using EngineCore.Simulater;
+using GameLogic.Game.Elements;
+using XNet.Libs.Utility;
 
 namespace Server
 {
@@ -101,10 +103,10 @@ namespace Server
             {
                 var m = monsterGroup.MonsterID.SplitToInt();
                 var p = monsterGroup.Pro.SplitToInt().ToArray();
-                var monsterID = m[GRandomer.RandPro(p)];
-                var monsterData = CM.Current.GetConfigByID<MonsterData>(monsterID);
+                var id = m[GRandomer.RandPro(p)];
+                var monsterData = CM.Current.GetConfigByID<MonsterData>(id);
                 var data = CM.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
-                var magic = CM.Current.GetConfigs<CharacterMagicData>(t => { return t.CharacterID == data.ID; });
+                var magic = per.CreateHeroMagic(data.ID);
                 var mName = $"{data.Name}";
 
                 if (!string.IsNullOrEmpty(monsterData.NamePrefix))
@@ -112,16 +114,20 @@ namespace Server
                     mName = $"{monsterData.NamePrefix}.{data.Name}";
                 }
 
-                var Monster = per.CreateCharacter(monsterData.Level, data, magic.ToList(), 2,
-                    standPos[i].Pos, standPos[i].Forward, string.Empty, mName);
 
-                Monster[P.DamageMax].SetBaseValue(Monster[P.DamageMax].BaseValue + monsterData.DamageMax);
-                Monster[P.DamageMin].SetBaseValue(Monster[P.DamageMin].BaseValue + monsterData.DamageMin);
-                Monster[P.Force].SetBaseValue(Monster[P.Force].BaseValue + monsterData.Force);
-                Monster[P.Agility].SetBaseValue(Monster[P.Agility].BaseValue + monsterData.Agility);
-                Monster[P.Knowledge].SetBaseValue(Monster[P.Knowledge].BaseValue + monsterData.Knowledeg);
-                Monster[P.MaxHp].SetBaseValue(Monster[P.MaxHp].BaseValue + monsterData.HPMax);
-                Monster.Reset();
+                var append = new Dictionary<P, int>
+                {
+                    { P.DamageMax, monsterData.DamageMax },
+                    { P.DamageMin, monsterData.DamageMin },
+                    { P.Force, monsterData.Force },
+                    { P.Agility, monsterData.Agility },
+                    { P.Knowledge, monsterData.Knowledeg },
+                    { P.MaxHp, monsterData.HPMax }
+                };
+
+
+                var Monster = per.CreateCharacter(monsterData.Level, data, magic, append, 2,
+                    standPos[i].Pos, standPos[i].Forward, string.Empty, mName);
                 per.ChangeCharacterAI(data.AIResourcePath, Monster);
                 AliveCount++;
 
@@ -129,22 +135,25 @@ namespace Server
 
                 Monster.OnDead = (el) =>
                 {
+                    GObject.Destroy(el, 3f);
                     CountKillCount++;
                     AliveCount--;
+
                     if (el["__Drop"] is DropGroupData d)
                     {
                         var o = el.Watch.Values.OrderBy(t => t.FristTime).FirstOrDefault();
                         if (o != null)
                         {
                             var owner = per.FindTarget(o.Index);
-                            DoDrop(el.Position, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1);
+
+                            DoDrop(el.Position, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
                         }
                     }
-                    GObject.Destroy(el, 3f);
-                    
                 };
             }
         }
+
+       
 
         internal void TryCreateMonster(float time)
         {
@@ -163,25 +172,35 @@ namespace Server
         }
 
 
-        private void DoDrop(Vector3 pos, DropGroupData drop, int groupIndex, int teamIndex)
+        private void DoDrop(Vector3 pos, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
         {
             if (drop == null) return;
+            if (!GRandomer.Probability10000(drop.DropPro)) return;
             var items = drop.DropItem.SplitToInt();
             var pors = drop.Pro.SplitToInt();
-            var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
-
-            if (items.Count > 0)
+            if (owner)
             {
-                for (var index = 0; index < items.Count; index++)
+                var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
+                if (gold > 0)
                 {
-                    if (GRandomer.Probability10000(pors[index]))
+                    if (Simulater.TryGetBattlePlayer(owner.AcccountUuid, out BattlePlayer player))
                     {
-                        var item = new PlayerItem { ItemID = items[index], Num = 1 };
-                        Per.CreateItem(pos,item, groupIndex, teamIndex);
+                        player.AddGold(gold);
+                        var notify = new Notify_DropGold { Gold = gold, TotalGold = player.Gold };
+                        player.Client.SendMessage(notify.ToNotityMessage());
                     }
                 }
             }
-            
+
+            var count = GRandomer.RandomMinAndMax(drop.DropMinNum, drop.DropMaxNum);
+            while (count > 0)
+            {
+                count--;
+                var offset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f));
+                var index = GRandomer.RandPro(pors.ToArray());
+                var item = new PlayerItem { ItemID = items[index], Num = 1 };
+                Per.CreateItem(pos + offset, item, groupIndex, teamIndex);
+            }
         }
     }
 }

@@ -29,6 +29,10 @@ message B2C_ExitBattle
 	 ErrorCode Code=1;
 }
 
+message Action_CollectItem
+{
+	int32 Index =1;
+}
 //点击释放技能
 message Action_ClickSkillIndex
 {
@@ -51,6 +55,11 @@ message Action_MoveDir
 message Action_NormalAttack
 {
 
+}
+
+message Action_UseItem
+{
+	int32 ItemId =1;
 }
 //notify action
 
@@ -84,6 +93,7 @@ message Notify_CreateBattleCharacter
 	 int32 MaxHp = 9;
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
+	 repeated HeroMagicData Cds = 16;
 }
 
 //创建一个飞行物
@@ -236,10 +246,11 @@ message Notify_DamageResult
 
 message Notify_Drop
 {
-	 PlayerItem Item = 1;
-	 int32 TeamIndex = 2;
-	 int32 GroupIndex=3;
-	 Vector3 Pos = 4;
+	 int32 Index = 1;
+	 PlayerItem Item = 2;
+	 int32 TeamIndex = 3;
+	 int32 GroupIndex=4;
+	 Vector3 Pos = 5;
 }
 
 message Notify_PlayerJoinState
@@ -268,6 +279,17 @@ message Notify_CharacterRelive
 	int32 Index =1;
 }
 
+message Notify_BattleItemChangeGroupIndex
+{
+	int32 Index =1 ;
+	int32 GroupIndex =2;
+}
+
+message Notify_DropGold
+{
+	int32 TotalGold=1;
+	int32 Gold=2;
+}
 
 service NotifyService
 {
@@ -298,6 +320,9 @@ service NotifyService
 	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
 	rpc CharcaterPush(Void) returns (Notify_CharacterPush){};//29
 	rpc CharacterRelive(Void) returns (Notify_CharacterRelive){};//30
+	rpc BattleItemChangeGroupIndex (Void) returns (Notify_BattleItemChangeGroupIndex){};//31
+	rpc DropGold (Void) returns (Notify_DropGold){};//32
+
 }
 
 service ActionService
@@ -305,11 +330,13 @@ service ActionService
 	rpc ClickSkillIndex(Action_ClickSkillIndex)returns(Void){};//1
 	rpc AutoFindTarget(Action_AutoFindTarget)returns(Void){};//2
 	rpc MoveDir(Action_MoveDir)returns(Void){};//3
-	rpc NormalAttack (Action_NormalAttack) returns (Action_NormalAttack){};//4
+	rpc NormalAttack (Action_NormalAttack) returns (Void){};//4
+	rpc CollectItem (Action_CollectItem) returns (Void){};//5
+	rpc UseItem (Action_UseItem) returns (Void){};//6
 }
 
 service BattleServerService
 {
 	rpc ExitBattle(C2B_ExitBattle)returns(B2C_ExitBattle){};//1
-	rpc JoinBattle(C2B_JoinBattle) returns (B2C_JoinBattle){};//3
+	rpc JoinBattle(C2B_JoinBattle)returns (B2C_JoinBattle){};//3
 }

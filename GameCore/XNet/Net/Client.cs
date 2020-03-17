@@ -164,6 +164,11 @@ namespace XNet.Libs.Net
 				_actionMessage.TryDequeue(out Message _);
 			_actionMessage.Enqueue(action);
 		}
+
+		public override string ToString()
+		{
+			return $"{UserState}-{Socket?.RemoteEndPoint}";
+		}
 	}
 
 }

@@ -12,7 +12,6 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
-
             if (DecoratedChild == null)
             {
                 yield return RunStatus.Failure;
@@ -22,15 +21,11 @@ namespace GameLogic.Game.AIBehaviorTree
             DecoratedChild.Start(context);
             while (true)
             {
-                DecoratedChild.Tick(context);
-                if (DecoratedChild.LastStatus.HasValue && DecoratedChild.LastStatus.Value == RunStatus.Running)
+                while (DecoratedChild.Tick(context) == RunStatus.Running)
                 {
                     yield return RunStatus.Running;
-                    continue;
                 }
-                DecoratedChild.Stop(context);
-
-                if (DecoratedChild.LastStatus.HasValue && DecoratedChild.LastStatus.Value == RunStatus.Failure)
+                if (DecoratedChild.LastStatus == RunStatus.Failure)
                 {
                     yield return RunStatus.Failure;
                     yield break;

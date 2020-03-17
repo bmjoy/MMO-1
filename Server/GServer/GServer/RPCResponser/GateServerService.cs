@@ -120,12 +120,9 @@ namespace GateServer
                         int id = int.Parse(args[1]);
                         var num = 1;
                         if (args.Length > 2) num = int.Parse(args[2]);
-                        var dic = new List<PlayerItem>
-                        {
-                             new PlayerItem { ItemID = id, Num = num }
-                        };
 
-                        UserDataManager.S.ProcessItem(player.Uuid, dic).Wait();
+                        UserDataManager.S.AddItems(player.Uuid, new PlayerItem { ItemID = id, Num = num })
+                            .Wait();
                     }
                     break;
                 case "addgold":

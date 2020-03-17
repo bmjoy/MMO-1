@@ -22,8 +22,8 @@ namespace BehaviorTree
             {
                 i.Start(context);
             }
+
             var status = RunStatus.Running;
-            //如果没有为failure的返回
             while (status == RunStatus.Running)
             {
                 //默认执行完成
@@ -31,32 +31,19 @@ namespace BehaviorTree
                 foreach (var i in Children)
                 {
                     //如果已经执行完跳过
-                    if (i.LastStatus.HasValue && i.LastStatus.Value != RunStatus.Running)
+                    if (i.LastStatus.HasValue && i.LastStatus.Value != RunStatus.Running) continue;
+                    if (i.Tick(context) == RunStatus.Success)
                     {
-                        continue;
+                        status = RunStatus.Success;
+                        break;
                     }
-                    //运行结束
-                    if (i.Tick(context) != RunStatus.Running)
-                    {
-                        i.Stop(context);
-                        if (i.LastStatus.Value == RunStatus.Success)
-                        {
-                            status = RunStatus.Success;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        status = RunStatus.Running;
-                    }
+                    status = RunStatus.Running;
                 }
                 yield return status;
-                if (status != RunStatus.Running)
-                {
-                    yield break;
-                }  
+                if (status != RunStatus.Running) yield break;
             }
-            yield return status;
+
+            yield return  RunStatus.Failure;
         }
 
 

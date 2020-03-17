@@ -1,8 +1,8 @@
 [
-	{"ID":10001,"DropID":10001,"Pro":"100","MonsterID":"10001","MonsterNumberMin":2,"MonsterNumberMax":4,"StandType":1,"StandParams":[
+	{"ID":10001,"DropID":10001,"MonsterID":"10001","Pro":"100","MonsterNumberMin":2,"MonsterNumberMax":4,"StandType":2,"StandParams":[
 3]
 },
-	{"ID":10002,"DropID":10002,"Pro":"100","MonsterID":"10003","MonsterNumberMin":1,"MonsterNumberMax":1,"StandType":1,"StandParams":[
+	{"ID":10002,"DropID":10002,"MonsterID":"10003","Pro":"100","MonsterNumberMin":1,"MonsterNumberMax":1,"StandType":2,"StandParams":[
 1]
 }
 ]

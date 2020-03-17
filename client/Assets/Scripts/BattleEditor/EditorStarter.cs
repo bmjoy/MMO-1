@@ -99,37 +99,29 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 
 	public void ReplaceRelease(int level,CharacterData data, bool stay, bool ai)
 	{
-		var magics = ExcelToJSONConfigManager
-			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID &&t.ReleaseType == (int)Proto.MagicReleaseType.MrtMagic ).ToList();
-
+		
 		if (!stay && this.releaser)
             this.releaser.SubHP(this.releaser.HP);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
-		var releaser = per.CreateCharacter(level, data, magics, 1,
+		var magics = per.CreateHeroMagic(data.ID);
+		var releaser = per.CreateCharacter(level, data, magics,null, 1,
 			scene.startPoint.position + (UVector3.right * distanceCharacter / 2)
             , new UVector3(0, 90, 0), string.Empty, data.Name);
 		if (ai) per.ChangeCharacterAI(data.AIResourcePath, releaser);
 		this.releaser = releaser;
-
-		var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
-		if (cData != null)
-		{
-			releaser.AddNormalAttack(cData.NormalAttack, cData.NormalAttackAppend);
-        }
-
 		tcamera.SetLookAt(releaser.Transform);
 	}
 
 	public void ReplaceTarget(int level,CharacterData data, bool stay, bool ai)
 	{
-		var magics = ExcelToJSONConfigManager
-			.Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == data.ID).ToList();
+		
 		if (!stay&&this.target)
             this.target.SubHP(this.target.HP);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
-		var target = per.CreateCharacter(level, data, magics, 2, scene.enemyStartPoint.position + (UVector3.left * distanceCharacter / 2),
+		var magics = per.CreateHeroMagic(data.ID);
+		var target = per.CreateCharacter(level, data, magics,null, 2, scene.enemyStartPoint.position + (UVector3.left * distanceCharacter / 2),
 			new UVector3(0, -90, 0), string.Empty, data.Name); ;
 		if (ai) per.ChangeCharacterAI(data.AIResourcePath, target);
 		this.target = target;

@@ -60,7 +60,6 @@ namespace BehaviorTree
                     {
                         yield return RunStatus.Running;
                     }
-                    PossibleBranches[i].Branch.Stop(context);
                     yield return PossibleBranches[i].Branch.LastStatus.Value;
                     yield break;
                 }
@@ -70,7 +69,6 @@ namespace BehaviorTree
 
         public override void Stop(ITreeRoot context)
         {
-            base.Stop(context);
             foreach (var i in PossibleBranches)
             {
                 if (i.Branch.LastStatus == RunStatus.Running)
@@ -78,6 +76,7 @@ namespace BehaviorTree
                     i.Branch.Stop(context);
                 }
             }
+            base.Stop(context);
         }
 
 		public override Composite FindGuid(string id)

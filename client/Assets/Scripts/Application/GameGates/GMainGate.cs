@@ -13,6 +13,7 @@ using Windows;
 using System.Collections;
 using XNet.Libs.Net;
 using Vector3 = UnityEngine.Vector3;
+using GameLogic.Game.Elements;
 
 public class GMainGate:UGate
 {
@@ -58,12 +59,13 @@ public class GMainGate:UGate
         }
 
         var character = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(heroID);
+        
         var perView = view as IBattlePerception;
         characterView = perView.CreateBattleCharacterView(string.Empty,
             character.ID,0,
             Data.pos[3].position.ToPVer3(),
             Vector3.zero.ToPVer3(),1,heroname,
-            character.MoveSpeed, character.HPMax, character.HPMax) as UCharacterView;
+            character.MoveSpeed, character.HPMax, character.HPMax,null) as UCharacterView;
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName("Bottom"));
         characterView.ShowName = false;
@@ -72,12 +74,13 @@ public class GMainGate:UGate
 
     internal void RotationHero(float x)
     {
-        characterView.targetLookQuaternion = characterView.LookQuaternion * Quaternion.Euler(x, 0, 0);
+        characterView.targetLookQuaternion = characterView.targetLookQuaternion * Quaternion.Euler(0,x, 0);
+        timeTO = Time.time + 2;
     }
 
+    private float timeTO = -1f;
+
     #region implemented abstract members of UGate
-
-
 
     protected override void JoinGate()
     {
@@ -151,8 +154,6 @@ public class GMainGate:UGate
         }
         else
         {
-            //todo
-            //create  hero
             UUIManager.S.CreateWindow<UUIHeroCreate>().ShowWindow();
         }
     }
@@ -177,6 +178,17 @@ public class GMainGate:UGate
         UApplication.Singleton.ReceiveTotal = Client.ReceiveSize;
         UApplication.Singleton.SendTotal = Client.SendSize;
         UApplication.Singleton.PingDelay = (float)Client.Delay / (float)TimeSpan.TicksPerMillisecond;
+        if (timeTO > 0 && timeTO < Time.time)
+        {
+            timeTO = -1;
+            if (!characterView) return;
+            var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
+            if (characterView is IBattleCharacter c && !string.IsNullOrEmpty( character?.Motion))
+            {
+                c.PlayMotion(character.Motion);
+            }
+            characterView.targetLookQuaternion = Quaternion.identity;
+        }
     }
 
     private void OnDisconnect()

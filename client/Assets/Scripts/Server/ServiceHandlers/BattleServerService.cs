@@ -27,7 +27,6 @@ public class BattleServerService : Responser, IBattleServerService
             SessionKey = request.Session,
 
         };
-
         var seResult = CheckSession.CreateQuery().GetResult(gate.CenterServerClient, re);
         ErrorCode result = seResult.Code;
         if (seResult.Code == ErrorCode.Ok)

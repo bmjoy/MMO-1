@@ -71,39 +71,38 @@ namespace Proto {
             "VXVpZBgBIAEoCRIXCg9TZXJ2aWNlU2VydmVySUQYAiABKAUidgoRRzJCX0dl",
             "dFBsYXllckluZm8SHgoEQ29kZRgBIAEoDjIQLlByb3RvLkVycm9yQ29kZRIa",
             "CgRIZXJvGAIgASgLMgwuUHJvdG8uREhlcm8SJQoHUGFja2FnZRgDIAEoCzIU",
-            "LlByb3RvLlBsYXllclBhY2thZ2UikwEKEEIyR19CYXR0bGVSZXdhcmQSEwoL",
-            "QWNjb3VudFV1aWQYASABKAkSDAoER29sZBgCIAEoBRINCgVNYXBJRBgDIAEo",
-            "BRIkCglEcm9wSXRlbXMYBCADKAsyES5Qcm90by5QbGF5ZXJJdGVtEicKDENv",
-            "bnN1bWVJdGVtcxgFIAMoCzIRLlByb3RvLlBsYXllckl0ZW0iMgoQRzJCX0Jh",
-            "dHRsZVJld2FyZBIeCgRDb2RlGAEgASgOMhAuUHJvdG8uRXJyb3JDb2RlIjwK",
-            "E1Rhc2tfRzJDX0pvaW5CYXR0bGUSJQoGU2VydmVyGAEgASgLMhUuUHJvdG8u",
-            "R2FtZVNlcnZlckluZm8y9wUKEUdhdGVTZXJ2ZXJTZXJ2aWNlEi0KBUxvZ2lu",
-            "EhAuUHJvdG8uQzJHX0xvZ2luGhAuUHJvdG8uRzJDX0xvZ2luIgASPAoKQ3Jl",
-            "YXRlSGVybxIVLlByb3RvLkMyR19DcmVhdGVIZXJvGhUuUHJvdG8uRzJDX0Ny",
-            "ZWF0ZUhlcm8iABI5CglCZWdpbkdhbWUSFC5Qcm90by5DMkdfQmVnaW5HYW1l",
-            "GhQuUHJvdG8uRzJDX0JlZ2luR2FtZSIAEkUKDUdldExhc3RCYXR0bGUSGC5Q",
-            "cm90by5DMkdfR2V0TGFzdEJhdHRsZRoYLlByb3RvLkcyQ19HZXRMYXN0QmF0",
-            "dGxlIgASRQoNT3BlcmF0b3JFcXVpcBIYLlByb3RvLkMyR19PcGVyYXRvckVx",
-            "dWlwGhguUHJvdG8uRzJDX09wZXJhdG9yRXF1aXAiABI2CghTYWxlSXRlbRIT",
-            "LlByb3RvLkMyR19TYWxlSXRlbRoTLlByb3RvLkcyQ19TYWxlSXRlbSIAEk4K",
-            "EEVxdWlwbWVudExldmVsVXASGy5Qcm90by5DMkdfRXF1aXBtZW50TGV2ZWxV",
-            "cBobLlByb3RvLkcyQ19FcXVpcG1lbnRMZXZlbFVwIgASMAoGR01Ub29sEhEu",
-            "UHJvdG8uQzJHX0dNVG9vbBoRLlByb3RvLkcyQ19HTVRvb2wiABJICg5CdXlQ",
-            "YWNrYWdlU2l6ZRIZLlByb3RvLkMyR19CdXlQYWNrYWdlU2l6ZRoZLlByb3Rv",
-            "LkcyQ19CdXlQYWNrYWdlU2l6ZSIAEkIKDE1hZ2ljTGV2ZWxVcBIXLlByb3Rv",
-            "LkMyR19NYWdpY0xldmVsVXAaFy5Qcm90by5HMkNfTWFnaWNMZXZlbFVwIgAS",
-            "LwoJUXVlcnlTaG9wEg8uUHJvdG8uQzJHX1Nob3AaDy5Qcm90by5HMkNfU2hv",
-            "cCIAEjMKB0J1eUl0ZW0SEi5Qcm90by5DMkdfQnV5SXRlbRoSLlByb3RvLkcy",
-            "Q19CdXlJdGVtIgAy5QEKDkdhdGVTZXJ2ZXJUYXNrEkkKC1N5bmNQYWNrYWdl",
-            "EhsuUHJvdG8uVGFza19HMkNfU3luY1BhY2thZ2UaGy5Qcm90by5UYXNrX0cy",
-            "Q19TeW5jUGFja2FnZSIAEkAKCFN5bmNIZXJvEhguUHJvdG8uVGFza19HMkNf",
-            "U3luY0hlcm8aGC5Qcm90by5UYXNrX0cyQ19TeW5jSGVybyIAEkYKCkpvaW5C",
-            "YXR0bGUSGi5Qcm90by5UYXNrX0cyQ19Kb2luQmF0dGxlGhouUHJvdG8uVGFz",
-            "a19HMkNfSm9pbkJhdHRsZSIAMqQBChdHYXRlQmF0dGxlU2VydmVyU2Vydmlj",
-            "ZRJFCg1HZXRQbGF5ZXJJbmZvEhguUHJvdG8uQjJHX0dldFBsYXllckluZm8a",
-            "GC5Qcm90by5HMkJfR2V0UGxheWVySW5mbyIAEkIKDEJhdHRsZVJld2FyZBIX",
-            "LlByb3RvLkIyR19CYXR0bGVSZXdhcmQaFy5Qcm90by5HMkJfQmF0dGxlUmV3",
-            "YXJkIgBiBnByb3RvMw=="));
+            "LlByb3RvLlBsYXllclBhY2thZ2UiZgoQQjJHX0JhdHRsZVJld2FyZBITCgtB",
+            "Y2NvdW50VXVpZBgBIAEoCRIMCgRHb2xkGAIgASgFEg0KBU1hcElEGAMgASgF",
+            "EiAKBUl0ZW1zGAQgAygLMhEuUHJvdG8uUGxheWVySXRlbSIyChBHMkJfQmF0",
+            "dGxlUmV3YXJkEh4KBENvZGUYASABKA4yEC5Qcm90by5FcnJvckNvZGUiPAoT",
+            "VGFza19HMkNfSm9pbkJhdHRsZRIlCgZTZXJ2ZXIYASABKAsyFS5Qcm90by5H",
+            "YW1lU2VydmVySW5mbzL3BQoRR2F0ZVNlcnZlclNlcnZpY2USLQoFTG9naW4S",
+            "EC5Qcm90by5DMkdfTG9naW4aEC5Qcm90by5HMkNfTG9naW4iABI8CgpDcmVh",
+            "dGVIZXJvEhUuUHJvdG8uQzJHX0NyZWF0ZUhlcm8aFS5Qcm90by5HMkNfQ3Jl",
+            "YXRlSGVybyIAEjkKCUJlZ2luR2FtZRIULlByb3RvLkMyR19CZWdpbkdhbWUa",
+            "FC5Qcm90by5HMkNfQmVnaW5HYW1lIgASRQoNR2V0TGFzdEJhdHRsZRIYLlBy",
+            "b3RvLkMyR19HZXRMYXN0QmF0dGxlGhguUHJvdG8uRzJDX0dldExhc3RCYXR0",
+            "bGUiABJFCg1PcGVyYXRvckVxdWlwEhguUHJvdG8uQzJHX09wZXJhdG9yRXF1",
+            "aXAaGC5Qcm90by5HMkNfT3BlcmF0b3JFcXVpcCIAEjYKCFNhbGVJdGVtEhMu",
+            "UHJvdG8uQzJHX1NhbGVJdGVtGhMuUHJvdG8uRzJDX1NhbGVJdGVtIgASTgoQ",
+            "RXF1aXBtZW50TGV2ZWxVcBIbLlByb3RvLkMyR19FcXVpcG1lbnRMZXZlbFVw",
+            "GhsuUHJvdG8uRzJDX0VxdWlwbWVudExldmVsVXAiABIwCgZHTVRvb2wSES5Q",
+            "cm90by5DMkdfR01Ub29sGhEuUHJvdG8uRzJDX0dNVG9vbCIAEkgKDkJ1eVBh",
+            "Y2thZ2VTaXplEhkuUHJvdG8uQzJHX0J1eVBhY2thZ2VTaXplGhkuUHJvdG8u",
+            "RzJDX0J1eVBhY2thZ2VTaXplIgASQgoMTWFnaWNMZXZlbFVwEhcuUHJvdG8u",
+            "QzJHX01hZ2ljTGV2ZWxVcBoXLlByb3RvLkcyQ19NYWdpY0xldmVsVXAiABIv",
+            "CglRdWVyeVNob3ASDy5Qcm90by5DMkdfU2hvcBoPLlByb3RvLkcyQ19TaG9w",
+            "IgASMwoHQnV5SXRlbRISLlByb3RvLkMyR19CdXlJdGVtGhIuUHJvdG8uRzJD",
+            "X0J1eUl0ZW0iADLlAQoOR2F0ZVNlcnZlclRhc2sSSQoLU3luY1BhY2thZ2US",
+            "Gy5Qcm90by5UYXNrX0cyQ19TeW5jUGFja2FnZRobLlByb3RvLlRhc2tfRzJD",
+            "X1N5bmNQYWNrYWdlIgASQAoIU3luY0hlcm8SGC5Qcm90by5UYXNrX0cyQ19T",
+            "eW5jSGVybxoYLlByb3RvLlRhc2tfRzJDX1N5bmNIZXJvIgASRgoKSm9pbkJh",
+            "dHRsZRIaLlByb3RvLlRhc2tfRzJDX0pvaW5CYXR0bGUaGi5Qcm90by5UYXNr",
+            "X0cyQ19Kb2luQmF0dGxlIgAypAEKF0dhdGVCYXR0bGVTZXJ2ZXJTZXJ2aWNl",
+            "EkUKDUdldFBsYXllckluZm8SGC5Qcm90by5CMkdfR2V0UGxheWVySW5mbxoY",
+            "LlByb3RvLkcyQl9HZXRQbGF5ZXJJbmZvIgASQgoMQmF0dGxlUmV3YXJkEhcu",
+            "UHJvdG8uQjJHX0JhdHRsZVJld2FyZBoXLlByb3RvLkcyQl9CYXR0bGVSZXdh",
+            "cmQiAGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.DataReflection.Descriptor, global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -135,7 +134,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop), global::Proto.G2C_Shop.Parser, new[]{ "Items" }, null, new[]{ typeof(global::Proto.G2C_Shop.Types.CoinType) }, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop.Types.ShopItem), global::Proto.G2C_Shop.Types.ShopItem.Parser, new[]{ "CType", "ItemId", "Prices", "NumLimit" }, null, null, null)}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_GetPlayerInfo), global::Proto.B2G_GetPlayerInfo.Parser, new[]{ "AccountUuid", "ServiceServerID" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2B_GetPlayerInfo), global::Proto.G2B_GetPlayerInfo.Parser, new[]{ "Code", "Hero", "Package" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_BattleReward), global::Proto.B2G_BattleReward.Parser, new[]{ "AccountUuid", "Gold", "MapID", "DropItems", "ConsumeItems" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_BattleReward), global::Proto.B2G_BattleReward.Parser, new[]{ "AccountUuid", "Gold", "MapID", "Items" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2B_BattleReward), global::Proto.G2B_BattleReward.Parser, new[]{ "Code" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Task_G2C_JoinBattle), global::Proto.Task_G2C_JoinBattle.Parser, new[]{ "Server" }, null, null, null)
           }));
@@ -5077,8 +5076,7 @@ namespace Proto {
       accountUuid_ = other.accountUuid_;
       gold_ = other.gold_;
       mapID_ = other.mapID_;
-      dropItems_ = other.dropItems_.Clone();
-      consumeItems_ = other.consumeItems_.Clone();
+      items_ = other.items_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5129,30 +5127,17 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "DropItems" field.</summary>
-    public const int DropItemsFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_dropItems_codec
+    /// <summary>Field number for the "Items" field.</summary>
+    public const int ItemsFieldNumber = 4;
+    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_items_codec
         = pb::FieldCodec.ForMessage(34, global::Proto.PlayerItem.Parser);
-    private readonly pbc::RepeatedField<global::Proto.PlayerItem> dropItems_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
+    private readonly pbc::RepeatedField<global::Proto.PlayerItem> items_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
     /// <summary>
     ///掉落物品
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto.PlayerItem> DropItems {
-      get { return dropItems_; }
-    }
-
-    /// <summary>Field number for the "ConsumeItems" field.</summary>
-    public const int ConsumeItemsFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_consumeItems_codec
-        = pb::FieldCodec.ForMessage(42, global::Proto.PlayerItem.Parser);
-    private readonly pbc::RepeatedField<global::Proto.PlayerItem> consumeItems_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
-    /// <summary>
-    ///消耗道具
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto.PlayerItem> ConsumeItems {
-      get { return consumeItems_; }
+    public pbc::RepeatedField<global::Proto.PlayerItem> Items {
+      get { return items_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5171,8 +5156,7 @@ namespace Proto {
       if (AccountUuid != other.AccountUuid) return false;
       if (Gold != other.Gold) return false;
       if (MapID != other.MapID) return false;
-      if(!dropItems_.Equals(other.dropItems_)) return false;
-      if(!consumeItems_.Equals(other.consumeItems_)) return false;
+      if(!items_.Equals(other.items_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5182,8 +5166,7 @@ namespace Proto {
       if (AccountUuid.Length != 0) hash ^= AccountUuid.GetHashCode();
       if (Gold != 0) hash ^= Gold.GetHashCode();
       if (MapID != 0) hash ^= MapID.GetHashCode();
-      hash ^= dropItems_.GetHashCode();
-      hash ^= consumeItems_.GetHashCode();
+      hash ^= items_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5209,8 +5192,7 @@ namespace Proto {
         output.WriteRawTag(24);
         output.WriteInt32(MapID);
       }
-      dropItems_.WriteTo(output, _repeated_dropItems_codec);
-      consumeItems_.WriteTo(output, _repeated_consumeItems_codec);
+      items_.WriteTo(output, _repeated_items_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5228,8 +5210,7 @@ namespace Proto {
       if (MapID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MapID);
       }
-      size += dropItems_.CalculateSize(_repeated_dropItems_codec);
-      size += consumeItems_.CalculateSize(_repeated_consumeItems_codec);
+      size += items_.CalculateSize(_repeated_items_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -5250,8 +5231,7 @@ namespace Proto {
       if (other.MapID != 0) {
         MapID = other.MapID;
       }
-      dropItems_.Add(other.dropItems_);
-      consumeItems_.Add(other.consumeItems_);
+      items_.Add(other.items_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -5276,11 +5256,7 @@ namespace Proto {
             break;
           }
           case 34: {
-            dropItems_.AddEntriesFrom(input, _repeated_dropItems_codec);
-            break;
-          }
-          case 42: {
-            consumeItems_.AddEntriesFrom(input, _repeated_consumeItems_codec);
+            items_.AddEntriesFrom(input, _repeated_items_codec);
             break;
           }
         }

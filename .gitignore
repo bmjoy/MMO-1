@@ -1,5 +1,5 @@
 #################
-## Eclipse
+## Unity
 #################
 client/*.csproj
 *.pydevproject
@@ -19,8 +19,11 @@ local.properties
 .settings/
 .loadpath
 *.suo
+Thumbs.db.meta
+
 # External tool builders
 .externalToolBuilders/
+
 
 # Locally stored "Eclipse launch configurations"
 *.launch
@@ -30,7 +33,7 @@ local.properties
 
 # PDT-specific
 .buildpath
-
+*/Thumbs.db.meta
 
 
 #################
@@ -227,18 +230,12 @@ bin
 Temp
 client/Assembly-CSharp-firstpass.csproj
 client/Assembly-CSharp.csproj
-
 client/Assembly-CSharp-Editor.csproj
-
 client/Assembly-CSharp-firstpass.csproj
-
 client/Assembly-CSharp.csproj
-Icon\r
-
 /Server/GServer/.vs
 .vs/
 /client/*.unityproj
 /client/client.sln
 /Server/GServer/.vs
 /ServerOut
-Icon\r

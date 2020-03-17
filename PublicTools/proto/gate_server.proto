@@ -211,8 +211,7 @@ message B2G_BattleReward
 	string AccountUuid=1;			 //用户ID
 	int32 Gold=2;  			 //用户金币
 	int32 MapID=3; 			 //当前战斗地图
-	repeated PlayerItem DropItems=4;   //掉落物品
-	repeated PlayerItem ConsumeItems=5;//消耗道具
+	repeated PlayerItem Items=4;   //掉落物品
 }
 
 //返回战斗数据

@@ -81,8 +81,7 @@ namespace GameLogic.Game.LayoutLogics
                 {
                     var cureHP = (int)(result.Damage *
                         releaser.ReleaserTarget.Releaser[Proto.HeroPropertyType.SuckingRate].FinalValue / 10000f);
-                    if (cureHP > 0)
-                        per.CharacterAddHP(releaser.ReleaserTarget.Releaser, cureHP);
+                    if (cureHP > 0) releaser.ReleaserTarget.Releaser.AddHP(cureHP);
                 }
             }
 
@@ -109,9 +108,32 @@ namespace GameLogic.Game.LayoutLogics
 
             if (cure > 0)
             {
-                per.CharacterAddHP(effectTarget, cure);
+                effectTarget.AddHP(cure);// ;
             }
         }
+        //CureEffect
+        [EffectHandle(typeof(CureMPEffect))]
+        public static void CureMP(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
+        {
+            var effect = e as CureMPEffect;
+            int cure = -1;
+            switch (effect.valueType)
+            {
+                case ValueOf.FixedValue:
+                    cure = effect.value;
+                    break;
+                case ValueOf.NormalAttack:
+                    cure = BattleAlgorithm.CalNormalDamage(
+                        releaser.ReleaserTarget.Releaser);
+                    break;
+            }
+
+            if (cure > 0)
+            {
+                effectTarget.AddMP(cure);
+            }
+        }
+
 
         [EffectHandle(typeof(AddBufEffect))]
         public static void AddBuff(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)

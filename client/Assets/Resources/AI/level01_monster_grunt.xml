@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSequence">
   <childs>
-    <TreeNode xsi:type="TreeNodeLinkNode">
+    <TreeNode xsi:type="TreeNodeFindTarget">
       <childs />
-      <name>链接子树</name>
-      <guid>95630171-a08c-481c-8804-6d6c02eb9201</guid>
-      <Path>AI/monster_idle.xml</Path>
+      <name>查找目标</name>
+      <guid>d1dcc863-ae17-475a-8c07-e6a77f030171</guid>
+      <valueOf>ViewDistance</valueOf>
+      <Distance>
+        <min>0</min>
+        <max>0</max>
+        <type>Fixed</type>
+      </Distance>
+      <View>
+        <min>360</min>
+        <max>360</max>
+        <type>Fixed</type>
+      </View>
+      <selectType>Nearest</selectType>
+      <filter>None</filter>
+      <useMagicConfig>false</useMagicConfig>
+      <teamType>Enemy</teamType>
+      <findNew>false</findNew>
     </TreeNode>
     <TreeNode xsi:type="TreeNodeMoveCloseTarget">
       <childs />

@@ -19,7 +19,7 @@ namespace Windows
             public override void InitModel()
             {
                 //todo
-                Template.Button.onClick.AddListener(
+                Template.ItemBg.onClick.AddListener(
                     () =>
                     {
                         if (OnClickItem == null)
@@ -30,22 +30,26 @@ namespace Windows
             public Action<ContentTableModel> OnClickItem;
             public ItemData Config;
             public PlayerItem pItem;
-            public void SetItem(PlayerItem item)
+            public void SetItem(PlayerItem item,bool isWear)
             {
                 var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.ItemID);
                 Config = itemconfig;
                 pItem = item;
-                Template.Text.text = item.Num>1? item.Num.ToString():string.Empty;
-                Template.RawImage.texture = ResourcesManager.S.LoadIcon(itemconfig);
-                Template.level.text = item.Level > 0 ? $"+{item.Level}" : string.Empty;
-                Template.i_lock.ActiveSelfObject(item.Locked);
+                Template.ItemCount.ActiveSelfObject(item.Num > 1);
+                Template.lb_count.text = item.Num>1? item.Num.ToString():string.Empty;
+                Template.icon.sprite = ResourcesManager.S.LoadIcon(itemconfig);
+                Template.lb_level.text = item.Level > 0 ? $"+{item.Level}" : string.Empty;
+                Template.ItemLevel.ActiveSelfObject(item.Level > 0);
+                Template.lb_Name.text = itemconfig.Name;
+                Template.Locked.ActiveSelfObject(item.Locked);
+                Template.WearOn.ActiveSelfObject(isWear);
             }
         }
 
         protected override void InitModel()
         {
             base.InitModel();
-            bt_close.onClick.AddListener(
+            ButtonClose.onClick.AddListener(
                 () =>
                 {
                     HideWindow();
@@ -68,18 +72,24 @@ namespace Windows
             var gate = UApplication.G<GMainGate>();
 
             ContentTableManager.Count = gate.package.Items.Count;
+            var hero = gate.hero;
             int index = 0;
             foreach (var item in gate.package.Items)
             {
                 var i = ContentTableManager[index];
-                i.Model.SetItem(item.Value);
+                i.Model.SetItem(item.Value,IsWear(item.Key,hero));
                 i.Model.OnClickItem = ClickItem;
                 index++;
             }
-            t_size.text = string.Format("{0}/{1}", gate.package.Items.Count, gate.package.MaxSize);
+            //t_size.text = string.Format("{0}/{1}", gate.package.Items.Count, gate.package.MaxSize);
         }
 
-     
+        private bool IsWear(string guuid, DHero hero)
+        {
+            foreach (var i in hero.Equips)
+                if (i.GUID == guuid) return true;
+            return false;
+        }
 
         private void ClickItem(ContentTableModel item)
         {

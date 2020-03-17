@@ -304,8 +304,32 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 31
+    /// </summary>    
+    [API(31)]
+    public class BattleItemChangeGroupIndex:APIBase<Void, Notify_BattleItemChangeGroupIndex> 
+    {
+        private BattleItemChangeGroupIndex() : base() { }
+        public  static BattleItemChangeGroupIndex CreateQuery(){ return new BattleItemChangeGroupIndex();}
+    }
+    
+
+    /// <summary>
+    /// 32
+    /// </summary>    
+    [API(32)]
+    public class DropGold:APIBase<Void, Notify_DropGold> 
+    {
+        private DropGold() : base() { }
+        public  static DropGold CreateQuery(){ return new DropGold();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(32)]Notify_DropGold DropGold(Void req);
+        [API(31)]Notify_BattleItemChangeGroupIndex BattleItemChangeGroupIndex(Void req);
         [API(30)]Notify_CharacterRelive CharacterRelive(Void req);
         [API(29)]Notify_CharacterPush CharcaterPush(Void req);
         [API(28)]Notify_CharacterLock CharacterLock(Void req);
@@ -339,6 +363,8 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);
+        [API(31)]public abstract Task<Notify_BattleItemChangeGroupIndex> BattleItemChangeGroupIndex(Void request);
         [API(30)]public abstract Task<Notify_CharacterRelive> CharacterRelive(Void request);
         [API(29)]public abstract Task<Notify_CharacterPush> CharcaterPush(Void request);
         [API(28)]public abstract Task<Notify_CharacterLock> CharacterLock(Void request);

@@ -39,6 +39,19 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         return tip.InstanceID;
     }
 
+    public int DrawItemName(int instanceId, string name, bool owner, Vector3 offset, Camera c)
+    { 
+      // UUITipHpBar tip;
+        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUIName tip))
+        {
+            tip = UUIManager.S.CreateTip<UUIName>(true);
+        }
+        tip.ShowName(name,owner);
+        tip.LookAt(c);
+        UUITip.Update(tip, offset);
+        return tip.InstanceID;
+    }
+
     #region Notify
     private  int DrawUUINotify(int instanceId, string notify)
     {

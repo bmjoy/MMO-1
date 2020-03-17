@@ -23,12 +23,11 @@ namespace BehaviorTree
 
         public override void Stop(ITreeRoot context)
         {
-            base.Stop(context);
             foreach (var i in Children)
             {
-                if (i.LastStatus.HasValue&& i.LastStatus == RunStatus.Running)
-                    i.Stop(context);
+                if (LastStatus == RunStatus.Running) i.Stop(context);
             }
+            base.Stop(context);
         }
 
 		public override Composite FindGuid(string id)

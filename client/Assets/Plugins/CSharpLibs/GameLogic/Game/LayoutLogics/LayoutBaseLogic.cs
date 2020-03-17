@@ -8,6 +8,7 @@ using ExcelConfig;
 using System.Linq;
 using EConfig;
 using UVector3 = UnityEngine.Vector3;
+using EngineCore.Simulater;
 
 namespace GameLogic.Game.LayoutLogics
 {
@@ -204,16 +205,13 @@ namespace GameLogic.Game.LayoutLogics
 
             var data = ExcelToJSONConfigManager
                 .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
-            var magics = ExcelToJSONConfigManager.Current
-                .GetConfigs<CharacterMagicData>(t => t.CharacterID == unitLayout.characterID);
-
-
-
-
+           
+			var magics = per.CreateHeroMagic(data.ID);
 			var unit = per.CreateCharacter(
 				level,
 				data,
-				magics.ToList(),
+				magics,
+                null,
 				charachter.TeamIndex,
 				charachter.Position + charachter.Rototion * UVector3.forward * charachter.Radius,
 				charachter.Rototion.eulerAngles,
@@ -225,6 +223,7 @@ namespace GameLogic.Game.LayoutLogics
             releaser.AttachElement(unit, false,unitLayout.time);
             releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
             per.ChangeCharacterAI(data.AIResourcePath,unit);
+			unit.OnDead = (el) => { GObject.Destroy(el, 3); };
         }
 		#endregion
 

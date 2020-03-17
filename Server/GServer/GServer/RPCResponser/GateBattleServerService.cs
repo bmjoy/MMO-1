@@ -18,8 +18,6 @@ namespace GateServer
         [IgnoreAdmission]
         public G2B_BattleReward BattleReward(B2G_BattleReward request)
         {
-
-            //var manager = MonitorPool.G<UserDataManager>();
             var task = UserDataManager.S.FindPlayerByAccountId(request.AccountUuid);
             task.Wait();
             var player = task.Result;
@@ -27,33 +25,8 @@ namespace GateServer
             {
                 return new G2B_BattleReward { Code = ErrorCode.NoGamePlayerData };
             }
-
-            var diff = new Dictionary<int, PlayerItem>();
-            foreach (var i in request.DropItems)
-            {
-                if (diff.ContainsKey(i.ItemID))
-                {
-                    diff[i.ItemID].Num += i.Num;
-                }
-                else
-                {
-                    diff.Add(i.ItemID, i);
-                }
-            }
-            foreach (var i in request.ConsumeItems)
-            {
-                if (diff.ContainsKey(i.ItemID))
-                {
-                    diff[i.ItemID].Num -= i.Num;
-                }
-                else
-                {
-                    diff.Add(i.ItemID, i);
-                }
-            }
             ErrorCode code = ErrorCode.Ok;
-
-            var t = UserDataManager.S.ProcessItem(player.Uuid, diff.Values.ToList());
+            var t = UserDataManager.S.ProcessRewardItem(player.Uuid, request.Items);
             t.Wait();
             var r = t.Result;
             if (r)

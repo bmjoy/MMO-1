@@ -209,16 +209,16 @@ namespace EConfig
         public int DropID { set; get; }
         
         /// <summary>
-        /// 掉落概率
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String Pro { set; get; }
-        
-        /// <summary>
         /// 怪物ID
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(2)]
         public String MonsterID { set; get; }
+        
+        /// <summary>
+        /// 出现概率
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String Pro { set; get; }
         
         /// <summary>
         /// 最少刷怪数
@@ -260,33 +260,51 @@ namespace EConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 道具
+        /// 万分比掉落
         /// </summary>
         [ExcelConfigColIndex(2)]
+        public int DropPro { set; get; }
+        
+        /// <summary>
+        /// 掉落种类小
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int DropMinNum { set; get; }
+        
+        /// <summary>
+        /// 最大
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int DropMaxNum { set; get; }
+        
+        /// <summary>
+        /// 道具
+        /// </summary>
+        [ExcelConfigColIndex(5)]
         public String DropItem { set; get; }
         
         /// <summary>
         /// 掉落数
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(6)]
         public String DropNum { set; get; }
         
         /// <summary>
         /// 掉落概率
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(7)]
         public String Pro { set; get; }
         
         /// <summary>
         /// 掉落金币
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(8)]
         public int GoldMin { set; get; }
         
         /// <summary>
         /// 掉落金币大
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(9)]
         public int GoldMax { set; get; }
 
     }
@@ -384,51 +402,6 @@ namespace EConfig
         /// </summary>
         [ExcelConfigColIndex(3)]
         public int TickTime { set; get; }
-
-    }
-
-    /// <summary>
-    /// 装备洗练属性表
-    /// </summary>
-    [ConfigFile("EquipmentRefreshData.json","EquipmentRefreshData")]
-    [global::System.Serializable]
-    public class EquipmentRefreshData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 部位
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int Part { set; get; }
-        
-        /// <summary>
-        /// 装备品质
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public int Quility { set; get; }
-        
-        /// <summary>
-        /// 属性品质
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int PropertyQuility { set; get; }
-        
-        /// <summary>
-        /// 分段概率
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int Pro { set; get; }
-        
-        /// <summary>
-        /// 属性类型
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public int PropertyType { set; get; }
-        
-        /// <summary>
-        /// 增加值
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public int AppendValue { set; get; }
 
     }
 
@@ -851,52 +824,52 @@ namespace EConfig
         public String Name { set; get; }
         
         /// <summary>
-        /// 描述
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String Description { set; get; }
-        
-        /// <summary>
         /// 售卖价格
         /// </summary>
-        [ExcelConfigColIndex(3)]
+        [ExcelConfigColIndex(2)]
         public int SalePrice { set; get; }
         
         /// <summary>
         /// 类别
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(3)]
         public int ItemType { set; get; }
         
         /// <summary>
         /// 品质
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(4)]
         public int Quality { set; get; }
         
         /// <summary>
         /// 模型
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(5)]
         public String ResModel { set; get; }
         
         /// <summary>
         /// 图标
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(6)]
         public String Icon { set; get; }
         
         /// <summary>
         /// 是否可堆叠
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(9)]
         public int Unique { set; get; }
         
         /// <summary>
         /// 最大堆叠数
         /// </summary>
-        [ExcelConfigColIndex(11)]
+        [ExcelConfigColIndex(10)]
         public int MaxStackNum { set; get; }
+        
+        /// <summary>
+        /// 描述
+        /// </summary>
+        [ExcelConfigColIndex(11)]
+        public String Description { set; get; }
         
         /// <summary>
         /// 参数1

@@ -28,14 +28,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         Push
     }
 
-    private class HpChangeTip
-    {
-        public int id = -1;
-        public float hideTime;
-        public int hp;
-        public Vector3 pos;
-    }
-
     public string AccoundUuid = string.Empty;
 	public  const string SpeedStr ="Speed";
     public const string TopBone = "Top";
@@ -51,8 +43,6 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public MoveCategory MCategory=MoveCategory.NONE;
 
-    private string NameInfo;
-
     private Vector3 pushSpeed= Vector3.zero;//speed
     private float pushLeftTime = -1;
 
@@ -64,11 +54,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
             //player
-            if ((showHpBarTime >Time.time || ShowName || TeamId == 1 ) && !IsDead && ThridPersionCameraContollor.Current)
+            if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) && !IsDead && ThridPersionCameraContollor.Current)
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max, TeamId == 1,
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max, TeamId == PerView.OwerTeamIndex,
                         GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
             }
@@ -251,7 +241,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         var body = new GameObject("__Body");
         body.transform.SetParent(this.transform, false);
         body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
-        bones.Add(BodyBone, body.transform);    
+        bones.Add(BodyBone, body.transform);
         Agent.radius = collider.radius;
         Agent.height = collider.height;
         var c = this.gameObject.AddComponent<CapsuleCollider>();
@@ -268,6 +258,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
 
 
+        if (cur == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDead = true; };
     }
 
 
@@ -286,6 +277,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     internal void SetHp(int hp, int hpMax)
     {
         cur = hp; max = hpMax;
+        
     }
 
     private void StopMove()
@@ -325,6 +317,19 @@ public class UCharacterView : UElementView, IBattleCharacter
         return false;
     }
 
+    public bool TryGetMagicsType(MagicType type, out IList<HeroMagicData> data)
+    {
+        data =  new List<HeroMagicData>();
+        foreach (var i in MagicCds)
+        {
+            if (i.Value.MType == type)
+            {
+                data .Add(i.Value);
+                
+            }
+        }
+        return  data.Count >0;
+    }
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
@@ -450,7 +455,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
         targetPos = path.corners.LastOrDefault();
 
-        if (Vector3.Distance(targetPos.Value, this.transform.position) < 0.2f + stopDis)
+        if (Vector3.Distance(targetPos.Value, this.transform.position) < stopDis)
         {
             StopMove();
             return null;
@@ -462,6 +467,8 @@ public class UCharacterView : UElementView, IBattleCharacter
         MCategory = MoveCategory.Destination;
         return targetPos;
     }
+
+    bool IBattleCharacter.IsForwardMoving { get { return MCategory == MoveCategory.Forward; } }
 
     bool IBattleCharacter.IsMoving
     {
@@ -496,7 +503,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         get { return IsDead; }
     }
 
-    public Action OnItemTrigger;
+    public Action<UBattleItem> OnItemTrigger;
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
@@ -615,7 +622,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
         else
         {
-            MagicCds.Add(id, new HeroMagicData { MagicID = id, CDTime = cdTime });
+            MagicCds.Add(id, new HeroMagicData { MType = type, MagicID = id, CDTime = cdTime });
         }
     }
 
@@ -646,6 +653,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             Hp = cur, MaxHp = max
             
         };
+        foreach (var i in MagicCds)
+            createNotity.Cds.Add(new HeroMagicData { MType = i.Value.MType, CDTime = i.Value.CDTime, MagicID = i.Value.MagicID });
+
         return createNotity;
     }
 

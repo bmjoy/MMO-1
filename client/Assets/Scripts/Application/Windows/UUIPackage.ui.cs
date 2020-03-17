@@ -14,26 +14,33 @@ namespace Windows
         public class ContentTableTemplate : TableItemTemplate
         {
             public ContentTableTemplate(){}
-            public Button Button;
-            public RawImage RawImage;
-            public Text Text;
-            public Image i_lock;
-            public Text level;
+            public Text lb_Name;
+            public Button ItemBg;
+            public Image icon;
+            public Image ItemCount;
+            public Text lb_count;
+            public Image Locked;
+            public Image ItemLevel;
+            public Text lb_level;
+            public Image WearOn;
 
             public override void InitTemplate()
             {
-                Button = FindChild<Button>("Button");
-                RawImage = FindChild<RawImage>("RawImage");
-                Text = FindChild<Text>("Text");
-                i_lock = FindChild<Image>("i_lock");
-                level = FindChild<Text>("level");
+                lb_Name = FindChild<Text>("lb_Name");
+                ItemBg = FindChild<Button>("ItemBg");
+                icon = FindChild<Image>("icon");
+                ItemCount = FindChild<Image>("ItemCount");
+                lb_count = FindChild<Text>("lb_count");
+                Locked = FindChild<Image>("Locked");
+                ItemLevel = FindChild<Image>("ItemLevel");
+                lb_level = FindChild<Text>("lb_level");
+                WearOn = FindChild<Image>("WearOn");
 
             }
         }
 
 
-        protected Text t_size;
-        protected Button bt_close;
+        protected Button ButtonClose;
         protected GridLayoutGroup Content;
 
 
@@ -43,8 +50,7 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            t_size = FindChild<Text>("t_size");
-            bt_close = FindChild<Button>("bt_close");
+            ButtonClose = FindChild<Button>("ButtonClose");
             Content = FindChild<GridLayoutGroup>("Content");
 
             ContentTableManager.InitFromGrid(Content);

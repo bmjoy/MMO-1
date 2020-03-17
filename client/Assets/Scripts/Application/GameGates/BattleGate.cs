@@ -37,6 +37,8 @@ public class BattleGate : UGate, IServerMessageHandler
     private float startTime = -1f;
     private float ServerStartTime = 0;
 
+    public PlayerPackage Package { get; private set; }
+
     private MapData MapConfig;
 
     private  NotifyPlayer player;
@@ -87,7 +89,7 @@ public class BattleGate : UGate, IServerMessageHandler
                         UApplication.Singleton.GoBackToMainGate();
                         UApplication.S.ShowError(r.Code);
                     }
-                    UUIManager.S.ShowMask(false);
+                    
                 });
             }
             else
@@ -105,33 +107,46 @@ public class BattleGate : UGate, IServerMessageHandler
             {
                 Owner = character;
                 Owner.ShowName = true;
+
+                PreView.OwerTeamIndex = character.TeamId;
+                PreView.OwnerIndex = character.Index;
+
                 FindObjectOfType<ThridPersionCameraContollor>()
                 .SetLookAt(character.GetBoneByName("Bottom"));
                 UUIManager.Singleton.ShowMask(false);
                 var ui = UUIManager.Singleton.GetUIWindow<Windows.UUIBattle>();
                 ui.InitCharacter(character);
+                UUIManager.S.ShowMask(false);
+                character.OnItemTrigger = TriggerItem;
+
             }
         };
-        player.OnDeath = (view) =>
-        {
-            var character = view as UCharacterView;
-            if (UApplication.S.AccountUuid == character.AccoundUuid)
-            {
-                UApplication.S.GoBackToMainGate();
-            }
-        };
+        
         player.OnJoined = (initPack) =>
         {
-            if (UApplication.Singleton.AccountUuid == initPack.AccountUuid)
+            if (UApplication.S.AccountUuid == initPack.AccountUuid)
             {
                 startTime = Time.time;
                 ServerStartTime = initPack.TimeNow;
+                Package = initPack.Package;
+                UUIManager.S.GetUIWindow<Windows.UUIBattle>()?.SetPackage(Package);
             }
         };
-        player.OnDrop = (drop) =>
-        {
+        
+    }
 
-        };
+
+
+    private void TriggerItem(UBattleItem item)
+    {
+        if (item.IsOwner(Owner.Index))
+        {
+            SendAction(new Action_CollectItem { Index = item.Index });
+        }
+        else
+        {
+            UApplication.S.ShowNotify($"{item.config.Name} 不属于你，无法拾取!");
+        }
     }
 
     private UCharacterView Owner;
@@ -157,13 +172,27 @@ public class BattleGate : UGate, IServerMessageHandler
         if (Owner.IsLock(ActionLockType.NoMove)) return;
         if (dir.magnitude < 0.001f)
         {
-            ch.StopMove(pos.ToPV3());
+            if (ch.IsForwardMoving) ch.StopMove(pos.ToPV3());
         }
         else
         {
             var f = dn * (fast ? 1f : 0.5f);
-            ch.SetMoveDir(pos.ToPV3(),new Proto.Vector3 {  X = f.x, Z = f.z});
+            ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
         }
+    }
+
+    internal bool SendUserItem(ItemType type)
+    {
+        foreach (var i in Package.Items)
+        {
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
+            if ((ItemType)config.ItemType == type)
+            {
+                SendAction(new Action_UseItem { ItemId = i.Value.ItemID });
+                return true;
+            }
+        }
+        return false;
     }
 
     internal void DoNormalAttack()
@@ -217,39 +246,13 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void ReleaseSkill(CharacterMagicData magicData)
     {
-        int target = -1;
-        float dis = float.MaxValue;
-        IList<UCharacterView> views = new List<UCharacterView>(); ;
-        switch ((MagicReleaseAITarget)magicData.AITargetType)
+        SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID });
+        if (!Owner) return;
+        if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
         {
-            case MagicReleaseAITarget.MatAll:
-            case MagicReleaseAITarget.MatOwn:
-            case MagicReleaseAITarget.MatOwnTeam:
-                target = Owner.Index;
-                break;
-            case MagicReleaseAITarget.MatEnemy:
-                PreView.Each<UCharacterView>(t =>
-                {
-                    if (t.TeamId == Owner.TeamId) return false;
-                    var td = UnityEngine.Vector3.Distance(t.transform.position, Owner.transform.position);
-                    if (td < dis) { dis = td; target = t.Index; }
-                    return false;
-                });
-                break;
-            case MagicReleaseAITarget.MatOwnTeamWithOutSelf:
-                PreView.Each<UCharacterView>(t =>
-                {
-                    if (t.TeamId != Owner.TeamId) return false;
-                    if (t.Index == Owner.Index) return false;
-                    var td = UnityEngine.Vector3.Distance(t.transform.position, Owner.transform.position);
-                    if (td < dis) { dis = td; target = t.Index; }
-                    return false;
-                });
-                break;
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
+            if (config != null) Owner.ShowRange(config.RangeMax);
         }
-
-        SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID, Target = target });
-
     }
 
     #endregion

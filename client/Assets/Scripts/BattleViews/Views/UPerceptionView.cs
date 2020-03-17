@@ -29,6 +29,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return root;
     }
 
+    public int OwnerIndex { set; get; }
+
+    public int OwerTeamIndex { set; get; }
+
     void Awake()
     {
         UScene = FindObjectOfType<UGameScene>();
@@ -254,7 +258,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
-        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward, int level, string name, float speed,int hp, int hpMax)
+        int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward,
+        int level, string name, float speed,int hp, int hpMax ,IList<HeroMagicData> cds)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
         var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
@@ -282,6 +287,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.AccoundUuid = account_id;
         view.Name = name;
         view.SetHp(hp, hpMax);
+        if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
         view.SetCharacter(body, ins);
         return view;
     }
@@ -427,9 +433,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var go =Instantiate(res,root.transform);
         go.transform.RestRTS();
         var bi = root.AddComponent<UBattleItem>();
-        bi.Item = item;
-        bi.GroupIndex = groupId;
-        bi.TeamIndex = teamIndex;
+
+        bi.SetInfo(item, teamIndex, groupId);
         bi.SetPrecpetion(this);
         return bi;
     }

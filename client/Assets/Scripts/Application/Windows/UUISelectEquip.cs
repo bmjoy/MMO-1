@@ -40,7 +40,7 @@ namespace Windows
                 this.Template.level.text = playerItem.Level > 0 ? $"+{ playerItem.Level}" : string.Empty;
                 this.Template.t_name.text = $"{item.Name}";
                 this.Template.lb_qulity.text = $"品质 {Equip.Quality}";
-                this.Template.Icon.texture = ResourcesManager.S.LoadIcon(item);
+                //this.Template.Icon.texture = ResourcesManager.S.LoadIcon(item);
             }
         }
 

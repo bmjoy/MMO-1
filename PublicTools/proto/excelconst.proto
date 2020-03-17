@@ -69,9 +69,10 @@ enum ActionLockType
 enum ItemType
 {
     IT_None = 0;
-	IT_UseMagic =1; //魔法道具   使用后调用参数1的魔法
-	IT_Consume =2;  //消耗类道具 本身没有任何功能其他系统定义
+	IT_HPItem =1; //hp
+	IT_MPItem=2;
 	IT_Equip =3;    //装备
+	IT_Consume =4;  //消耗类道具 本身没有任何功能其他系统定义
 }
 
 

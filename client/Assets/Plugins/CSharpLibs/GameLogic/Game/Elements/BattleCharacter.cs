@@ -195,7 +195,7 @@ namespace GameLogic.Game.Elements
 
         public BattleCharacter (
             int configID,
-            List<CharacterMagicData> magics,
+            IList<BattleCharacterMagic> magics,
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
@@ -206,10 +206,11 @@ namespace GameLogic.Game.Elements
             _speed = speed;
 			ConfigID = configID;
             Magics = new Dictionary<int, BattleCharacterMagic>();
+            
             foreach (var i in magics)
             {
-                if (Magics.ContainsKey(i.ID)) continue;
-                Magics.Add(i.ID, new BattleCharacterMagic(MagicType.MtMagic, i));
+                if (Magics.ContainsKey(i.ConfigId)) continue;
+                Magics.Add(i.ConfigId, i);
             }
             var enums = Enum.GetValues(typeof(P));
             foreach (var i in enums)
@@ -292,14 +293,16 @@ namespace GameLogic.Game.Elements
         public bool MoveForward(UVector3 forward, UVector3 posNext)
         {
             if (IsLock(ActionLockType.NoMove)) return false;
+
             if (forward.magnitude > 0.001f)
             {
                 View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
             }
             else
             {
-                StopMove(posNext);
-            }
+                if (View.IsForwardMoving)
+                    StopMove(posNext);
+            } 
             return true;
         }
 
@@ -446,14 +449,7 @@ namespace GameLogic.Game.Elements
             return datat.Config;
         }
 
-        public void AddNormalAttack(int att, int append)
-        {
-            var natt = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(att);
-            var nattapp = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(append);
-            Magics.Add(natt.ID, new BattleCharacterMagic(MagicType.MtNormal, natt));
-            if (nattapp != null) Magics.Add(nattapp.ID, new BattleCharacterMagic(MagicType.MtNormalAppend, nattapp));
-        }
-
+      
         public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
         {
             bool isOK = true;

@@ -96,6 +96,38 @@
             <TreeNode xsi:type="TreeNodeFindTarget">
               <childs />
               <name>查找目标</name>
+              <guid>12db3a4b-f44d-412d-968c-461556736649</guid>
+              <valueOf>Value</valueOf>
+              <Distance>
+                <min>200</min>
+                <max>0</max>
+                <type>Fixed</type>
+              </Distance>
+              <View>
+                <min>360</min>
+                <max>360</max>
+                <type>Fixed</type>
+              </View>
+              <selectType>Nearest</selectType>
+              <filter>None</filter>
+              <useMagicConfig>false</useMagicConfig>
+              <teamType>Enemy</teamType>
+              <findNew>false</findNew>
+            </TreeNode>
+          </childs>
+          <name>间隔时间执行直到返回Success</name>
+          <guid>3ec72c12-a146-43ff-8846-8fd4a0821443</guid>
+          <tickTime>
+            <min>1000</min>
+            <max>1000</max>
+            <type>Fixed</type>
+          </tickTime>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeTickUntilSuccess">
+          <childs>
+            <TreeNode xsi:type="TreeNodeFindTarget">
+              <childs />
+              <name>查找目标</name>
               <guid>9ca6061d-5529-4e7d-baa9-3e4b328271aa</guid>
               <valueOf>ViewDistance</valueOf>
               <Distance>

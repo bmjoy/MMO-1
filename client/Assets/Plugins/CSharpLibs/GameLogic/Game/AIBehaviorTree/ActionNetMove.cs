@@ -23,6 +23,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
+            
             var target = message.Forward.ToUV3();
             if (target.magnitude > 0.001f) target = target.normalized * (message.Fast ? 1 : 0.5f);
             if (!root.Character.MoveForward(target, message.Position.ToUV3()))

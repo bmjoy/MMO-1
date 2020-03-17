@@ -43,10 +43,10 @@ namespace GameLogic.Game.Perceptions
  
         [NeedNotify(typeof(Notify_CreateBattleCharacter),
             "AccountUuid", "ConfigID", "TeamIndex",
-            "Position", "Forward", "Level", "Name", "Speed","Hp","MaxHp")]
+            "Position", "Forward", "Level", "Name", "Speed","Hp","MaxHp","Cds")]
         IBattleCharacter CreateBattleCharacterView
             (string account_id,int config, int teamId,
-            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed, int hp, int hpMax);
+            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed, int hp, int hpMax, IList<HeroMagicData> cds);
 
        
         [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position")]

@@ -28,13 +28,10 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                     DecoratedChild.Stop(context);
 
-                    if (DecoratedChild.LastStatus.HasValue)
+                    if (DecoratedChild.LastStatus == RunStatus.Success)
                     {
-                        if (DecoratedChild.LastStatus.Value == RunStatus.Success)
-                        {
-                            yield return RunStatus.Success;
-                            yield break;
-                        }
+                        yield return RunStatus.Success;
+                        yield break;
                     }
                 }
                 yield return RunStatus.Running;

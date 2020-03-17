@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>0.5</Time>
+  <Points>
+    <TimePoint>
+      <GUID>0ef07487-9d69-4cca-b1e5-2482be81c66f</GUID>
+      <Time>0</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>d22f6013-fd38-4c22-b240-bbc122bb6950</GUID>
+      <Time>0</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="DamageLayout">
+      <GUID>0ef07487-9d69-4cca-b1e5-2482be81c66f</GUID>
+      <target>Releaser</target>
+      <damageType>Single</damageType>
+      <fiterType>OwnerTeam</fiterType>
+      <radius>1</radius>
+      <angle>360</angle>
+      <offsetAngle>0</offsetAngle>
+      <offsetPosition>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offsetPosition>
+      <effectType>EffectGroup</effectType>
+      <effectKey>001</effectKey>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>d22f6013-fd38-4c22-b240-bbc122bb6950</GUID>
+      <path>Effects/Glitter.prefab</path>
+      <fromTarget>Releaser</fromTarget>
+      <toTarget>Releaser</toTarget>
+      <fromBoneName>Body</fromBoneName>
+      <toBoneName>Body</toBoneName>
+      <Bind>false</Bind>
+      <destoryType>Normal</destoryType>
+      <destoryTime>0</destoryTime>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>

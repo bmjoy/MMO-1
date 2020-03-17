@@ -25,7 +25,6 @@ namespace PServicePugin
 
     public class ServiceRpc
     {
-        public int Index;
         public List<RPCCall> call = new List<RPCCall>();
         public string name;
     }
@@ -40,10 +39,7 @@ namespace PServicePugin
             var str = @"rpc[ ]+([^ \(]+)[ \(]+([^\)]+)\)[ ]*returns[ \(]+([^\)]+)\)";
             regex = new Regex(str); //1 api name , 2 request 3 response
         }
-
-        private static HashSet<string> types = new HashSet<string>();
-        private static int s_index = 1000;
-        
+        private static readonly HashSet<string> types = new HashSet<string>();
 
         static void Main(string[] args)
         {
@@ -82,7 +78,6 @@ namespace PServicePugin
             Console.WriteLine($"dir:{root} file:{file} saveto:{fileSave} index:{indexFileName} version:{version}");
             StringBuilder sb = null;
             var paths = Directory.GetFiles(root, file);
-            string comment = string.Empty;
             string serives = string.Empty;
             string nameSpace = string.Empty;
             Stack<RPCCall> calls =null;
@@ -108,12 +103,11 @@ namespace PServicePugin
                                 Console.WriteLine("nameSpace:" + nameSpace);
                                 break;
                             case "service":
-                                s_index++;
                                 serives = strs[1];
                                 sb = new StringBuilder();
                                 Console.WriteLine("service:" + serives);
                                 calls = new Stack<RPCCall>();
-                                ser_current = new ServiceRpc() { Index = s_index, name = serives };
+                                ser_current = new ServiceRpc() { name = serives };
                                 callList.Add(ser_current);
                                 break;
                             case "}":
@@ -182,9 +176,11 @@ namespace PServicePugin
             }
             var index_sb = new StringBuilder();
             Dictionary<string, int> types = new Dictionary<string, int>();
-            foreach (var i in callList)
+            var orderCall = callList.OrderBy(t => t.name).ToArray();
+            var index = 1000;
+            foreach (var i in orderCall)
             {
-                int startIndex =  i.Index*1000;
+                int startIndex =  index*1000;
                 foreach (var c in i.call)
                 {
                     startIndex++;
@@ -200,6 +196,7 @@ namespace PServicePugin
 
                     Console.WriteLine(c.ToString());
                 }
+                index++;
             }
 
             foreach (var i in types)

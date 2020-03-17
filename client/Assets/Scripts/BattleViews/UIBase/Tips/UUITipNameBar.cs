@@ -25,7 +25,6 @@ namespace Tips
             Level = FindChild<Text>("Level");
             SkillGuageGreen = FindChild<Transform>("SkillGuageGreen");
             GreenSlider = FindChild<Slider>("GreenSlider");
-
             SkillGuageRed = FindChild<Transform>("SkillGuageRed");
             RedSlider = FindChild<Slider>("RedSlider");
         }

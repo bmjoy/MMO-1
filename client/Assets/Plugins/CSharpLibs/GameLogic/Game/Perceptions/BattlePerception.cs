@@ -15,6 +15,7 @@ using UVector3 = UnityEngine.Vector3;
 using UnityEngine;
 using System.Linq;
 using static EngineCore.Simulater.GState;
+using ExcelConfig;
 
 namespace GameLogic.Game.Perceptions
 {
@@ -34,7 +35,8 @@ namespace GameLogic.Game.Perceptions
 
         public static float Distance(BattleCharacter c1, BattleCharacter c2)
         {
-            return Math.Max(0, (c1.Position - c2.Position).magnitude - 1);
+            var size = c2.Radius + c1.Radius;
+            return Math.Max(0, (c1.Position - c2.Position).magnitude - size);
         }
 
         public static float Distance(BattleCharacter c1, UVector3 c2)
@@ -58,7 +60,7 @@ namespace GameLogic.Game.Perceptions
             ReleaserControllor = new MagicReleaserControllor(this);
             BattleMissileControllor = new BattleMissileControllor(this);
             AIControllor = new BattleCharacterAIBehaviorTreeControllor(this);
-
+            BattleItemControllor = new BattleItemControllor(this);
         }
 
         public IBattlePerception View { private set; get; }
@@ -68,6 +70,7 @@ namespace GameLogic.Game.Perceptions
         public BattleMissileControllor BattleMissileControllor { private set; get; }
         public MagicReleaserControllor ReleaserControllor { private set; get; }
         public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
+        public BattleItemControllor BattleItemControllor { private set; get; }
         public EmptyControllor Empty { private set; get; }
         #endregion
 
@@ -108,23 +111,65 @@ namespace GameLogic.Game.Perceptions
 
         #endregion
 
+
+
+
         #region Character
+
+        public IList<BattleCharacterMagic> CreateHeroMagic(int characterID)
+        {
+            var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(characterID);
+            var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
+            
+            var magics = ExcelToJSONConfigManager.Current.GetConfigs<CharacterMagicData>(t =>
+            {
+                return t.CharacterID == data.ID && (MagicReleaseType)t.ReleaseType == MagicReleaseType.MrtMagic;
+            });
+
+            var list = new List<BattleCharacterMagic>();
+            foreach (var i in magics)
+            {
+                list.Add(new BattleCharacterMagic( MagicType.MtMagic, i)); 
+            }
+
+            if (cData != null)
+            {
+                if (cData.NormalAttack > 0)
+                {
+                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttack);
+                    list.Add(new BattleCharacterMagic(MagicType.MtNormal, config));
+                }
+
+                if (cData.NormalAttackAppend > 0)
+                {
+                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttackAppend);
+                    list.Add(new BattleCharacterMagic(MagicType.MtNormalAppend, config));
+                }
+            }
+
+            return list;
+        }
+
         public BattleCharacter CreateCharacter(
             int level,
             CharacterData data,
-            List<CharacterMagicData> magics,
+            IList<BattleCharacterMagic> magics,
+            Dictionary<HeroPropertyType, int > appendProperties,
             int teamIndex,
             UVector3 position,
             UVector3 forward,
             string accountUuid,
             string name)
         {
+            var now = this.View.GetTimeSimulater().Now.Time;
+            var cds = magics.Select(t => new HeroMagicData { CDTime = now, MagicID = t.ConfigId, MType = t.Type })
+                .ToList();
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax);
+                data.MoveSpeed, data.HPMax, data.HPMax,cds);
 
-            var battleCharacter = new BattleCharacter(data.ID, magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data.ID,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -142,6 +187,16 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.Category = (HeroCategory)data.Category;
             battleCharacter.Name = data.Name;
             battleCharacter.TeamIndex = teamIndex;
+
+            if (appendProperties != null)
+            {
+                foreach (var i in appendProperties)
+                {
+                    var p = battleCharacter[i.Key];
+                    p.SetBaseValue(p.BaseValue + i.Value);
+                }
+            }
+
             battleCharacter.Init();
 
             this.JoinElement(battleCharacter);
@@ -174,14 +229,9 @@ namespace GameLogic.Game.Perceptions
         public BattleItem CreateItem(UVector3 ps, PlayerItem item, int groupIndex, int teamIndex)
         {
             var view = View.CreateDropItem(ps.ToPV3(), item, teamIndex, groupIndex);
-            var ditem = new BattleItem(Empty, view, item);
+            var ditem = new BattleItem(this.BattleItemControllor, view, item);
             JoinElement(ditem);
             return ditem;
-        }
-
-        public void CharacterAddHP(BattleCharacter effectTarget, int addHp)
-        {
-            effectTarget.AddHP(addHp);
         }
 
 

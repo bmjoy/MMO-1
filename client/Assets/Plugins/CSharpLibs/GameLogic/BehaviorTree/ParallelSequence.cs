@@ -41,7 +41,6 @@ namespace BehaviorTree
                     //运行结束
                     if (i.Tick(context) != RunStatus.Running)
                     {
-                        i.Stop(context);
                         if (i.LastStatus.Value == RunStatus.Failure)
                         {
                             status = RunStatus.Failure;

@@ -9,6 +9,7 @@ using Layout.AITree;
 using Layout.LayoutElements;
 using Proto;
 using UVector3 = UnityEngine.Vector3;
+using GameLogic;
 namespace GameLogic.Game.AIBehaviorTree
 {
 
@@ -37,13 +38,15 @@ namespace GameLogic.Game.AIBehaviorTree
                 BattleCharacterMagic mc = null;
                 while (mc == null)
                 {
-                    root.Character.EachActiveMagicByType(mtype, root.Time, (item) =>
+                    root.Character.EachActiveMagicByType(mtype,
+                        root.Time, (item) =>
                     {
                         mc = item;
                         return true;
                     });
                     yield return RunStatus.Running;
                 }
+
 
                 if (mc == null)
                 {
@@ -53,31 +56,8 @@ namespace GameLogic.Game.AIBehaviorTree
 
                 count++;
                 var att = mc.Config;
-                var aiType = (MagicReleaseAITarget)att.AITargetType;
-                TargetTeamType type = TargetTeamType.All;
-                switch (aiType)
-                {
-                    case MagicReleaseAITarget.MatEnemy:
-                        type = TargetTeamType.Enemy;
-                        break;
-                    case MagicReleaseAITarget.MatOwn:
-                        type = TargetTeamType.Own;
-                        break;
-                    case MagicReleaseAITarget.MatOwnTeam:
-                        type = TargetTeamType.OwnTeam;
-                        break;
-                    case MagicReleaseAITarget.MatOwnTeamWithOutSelf:
-                        type = TargetTeamType.OwnTeamWithOutSelf;
-                        break;
-                    case MagicReleaseAITarget.MatAll:
-                        break;
-                    default:
-                        type = TargetTeamType.All;
-                        break;
-                }
-
+                TargetTeamType type = mc.Config.GetTeamType();
                 root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
-
                 var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.Nearest);
                 if (!target)
                 {
@@ -86,24 +66,27 @@ namespace GameLogic.Game.AIBehaviorTree
                 }
                 float last = 0;
                 bool moving = false;
-                while (BattlePerception.Distance(target, root.Character) > att.RangeMax)
+                while (BattlePerception.Distance(root.Character, target) > att.RangeMax)
                 {
-                    if (last + 0.3f > root.Time)
+                    if (last + 0.5f > root.Time)
                     {
                         yield return RunStatus.Running;
                         continue;
                     }
                     last = root.Time;
-                    if (!root.Character.MoveTo(target.Position,out _))
+
+                    if (!root.Character.MoveTo(target.Position,out _, att.RangeMax))
                     {
-                        moving = true;
                         if (context.IsDebug) Attach("failure", $"can move");
                         yield return RunStatus.Failure;
                         yield break;
                     }
+                    moving = true;
                     yield return RunStatus.Running;
                 }
+               
                 if (moving) root.Character.StopMove();
+
                 var rTarget = new ReleaseAtTarget(root.Character, target);
                 releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic);
                 if (!releaser)

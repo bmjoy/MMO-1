@@ -379,26 +379,16 @@ namespace GServer.Managers
             return true;
         }
 
-        internal async Task<bool> ProcessItem(string player_uuid, List<PlayerItem> diff)
+        internal async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
         {
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();
-            if (package.PackageSize < package.Items.Count) return false;
+            package.Items.Clear();
             foreach (var i in diff)
             {
-                if (i.Num > 0)
-                {
-                    if (!AddItems(package, i)) return false;
-                }
-                else
-                {
-                    if (!CusumeItem(package, i)) return
-                          false;
-                }
+                package.Items.Add(i.GUID, new ItemNum { Id= i.ItemID, IsLock = i.Locked, Level =i.Level, Num = i.Num, Uuid = i.GUID });
             }
-
             var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
-
             await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
 
             return true;
@@ -418,92 +408,43 @@ namespace GServer.Managers
             return null;
         }
 
-        private bool AddItems(GamePackageEntity package, PlayerItem i)
+        public async Task<bool> AddItems(string uuid, PlayerItem i)
         {
-            if (i.Num <= 0)  return false ;
-            //new item no guid
-            if (string.IsNullOrEmpty(i.GUID))
-            {
-                var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
-                if (it == null) return false;
-                if (it.MaxStackNum <= i.Num)
-                {
-                    var num = i.Num;
-                    while (num > 0)
-                    {
-                        var cItem = GetCanStackItem(i.ItemID, package);
-                        if (cItem != null)
-                        {
-                            var remainNum = it.MaxStackNum - cItem.Num;
-                            var add = Math.Min(remainNum, num);
-                            cItem.Num = add;
-                            num -= add;
-                        }
-                        else
-                        {
-                            var add = Math.Min(num, it.MaxStackNum);
-                            num -= add;
-                            var itemNum = new ItemNum
-                            {
-                                Id = i.ItemID,
-                                IsLock = i.Locked,
-                                Level = i.Level,
-                                Num = add,
-                                Uuid = Guid.NewGuid().ToString()
-                            };
-                            package.Items.Add(itemNum.Uuid, itemNum);
-                        }
-                    }
-                }
-            }
-
-
-            return true;
-        }
-
-        private ItemNum GetItemByID(GamePackageEntity package, int itemId)
-        {
-            foreach (var i in package.Items)
-            {
-                if (i.Value.Id == itemId) return i.Value;
-            }
-            return null;
-        }
-
-        private bool CusumeItem(GamePackageEntity package, PlayerItem i)
-        {
+            GamePackageEntity package = await FindPackageByPlayerID(uuid);
+            if (i.Num <= 0) return false;
 
             var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
-            if (it.MaxStackNum > 1)
+            if (it == null) return false;
+            var num = i.Num;
+            while (num > 0)
             {
-
-                int cusume = i.Num;
-                while (cusume < 0)
+                var cItem = GetCanStackItem(i.ItemID, package);
+                if (cItem != null)
                 {
-                    var item = GetItemByID(package, i.ItemID);
-                    if (item == null) return false;
-                    int left = item.Num + cusume;
-                    if (left < 0)
-                    {
-                        package.Items.Remove(item.Uuid);
-                    }
-                    else
-                    {
-                        item.Num = left;
-                    }
+                    var remainNum = it.MaxStackNum - cItem.Num;
+                    var add = Math.Min(remainNum, num);
+                    cItem.Num = add;
+                    num -= add;
                 }
-
+                else
+                {
+                    var add = Math.Min(num, it.MaxStackNum);
+                    num -= add;
+                    var itemNum = new ItemNum
+                    {
+                        Id = i.ItemID,
+                        IsLock = i.Locked,
+                        Level = i.Level,
+                        Num = add,
+                        Uuid = Guid.NewGuid().ToString()
+                    };
+                    package.Items.Add(itemNum.Uuid, itemNum);
+                }
             }
-            else
-            {
-                if (!string.IsNullOrEmpty(i.GUID))
-                    package.Items.Remove(i.GUID);
-                var item = GetItemByID(package, i.ItemID);
-                if (item == null) return false;
-                package.Items.Remove(item.Uuid);
-            }
 
-
+            var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, uuid);
+            var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
+            await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
             return true;
         }
 
