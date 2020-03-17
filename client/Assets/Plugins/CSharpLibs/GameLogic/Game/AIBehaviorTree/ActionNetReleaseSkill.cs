@@ -55,12 +55,17 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             var type = magic.GetTeamType();
-            var target = root.Perception.FindTarget(root.Character, type, magic.RangeMax, 360, true, TargetSelectType.Nearest);
+            var dis = magic.RangeMax;
+            root.GetDistanceByValueType(DistanceValueOf.ViewDistance, dis, out dis);
+
+            var target = root.Perception.FindTarget(root.Character, type, dis, 360, true, TargetSelectType.Nearest);
+
             if (!target)
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
+
             bool hadMove = false;
             while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
             {
