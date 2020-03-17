@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>0.5</Time>
+  <Points>
+    <TimePoint>
+      <GUID>74e1b1c6-e60a-4304-a442-84cc7fd460bf</GUID>
+      <Time>0</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="LaunchSelfLayout">
+      <GUID>74e1b1c6-e60a-4304-a442-84cc7fd460bf</GUID>
+      <speed>15</speed>
+      <reachType>MaxDistance</reachType>
+      <distance>8</distance>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>
