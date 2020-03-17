@@ -12,7 +12,7 @@
       <GUID>74e1b1c6-e60a-4304-a442-84cc7fd460bf</GUID>
       <speed>15</speed>
       <reachType>MaxDistance</reachType>
-      <distance>8</distance>
+      <distance>4</distance>
     </LayoutBase>
   </Layouts>
 </TimeLine>
