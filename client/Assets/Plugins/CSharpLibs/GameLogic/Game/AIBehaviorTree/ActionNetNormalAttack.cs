@@ -36,22 +36,20 @@ namespace GameLogic.Game.AIBehaviorTree
                 MagicType mtype = count < 3 ? MagicType.MtNormal : MagicType.MtNormalAppend;
                 if (count >= 3) count = 0;
                 BattleCharacterMagic mc = null;
+                if (!root.Character.HaveMagicByType(mtype))
+                {
+                    mtype = MagicType.MtNormal;
+                }
                 while (mc == null)
                 {
-                    root.Character.EachActiveMagicByType(mtype,
-                        root.Time, (item) =>
-                    {
-                        mc = item;
-                        return true;
-                    });
+                    root.Character.EachActiveMagicByType(mtype, root.Time,
+                        (item) =>
+                        {
+                            mc = item;
+                            return true;
+                        });
+
                     yield return RunStatus.Running;
-                }
-
-
-                if (mc == null)
-                {
-                    yield return RunStatus.Failure;
-                    yield break;
                 }
 
                 count++;
@@ -66,6 +64,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 }
                 float last = 0;
                 bool moving = false;
+
                 while (BattlePerception.Distance(root.Character, target) > att.RangeMax)
                 {
                     if (last + 0.5f > root.Time)
@@ -83,10 +82,8 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                     moving = true;
                     yield return RunStatus.Running;
-                }
-               
+                }             
                 if (moving) root.Character.StopMove();
-
                 var rTarget = new ReleaseAtTarget(root.Character, target);
                 releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic);
                 if (!releaser)

@@ -170,14 +170,18 @@ public class BattleGate : UGate, IServerMessageHandler
         SendAction(move);
 
         if (Owner.IsLock(ActionLockType.NoMove)) return;
-        if (dir.magnitude < 0.001f)
+
+        if (Owner.IsCanForwardMoving) 
         {
-            if (ch.IsForwardMoving) ch.StopMove(pos.ToPV3());
-        }
-        else
-        {
-            var f = dn * (fast ? 1f : 0.5f);
-            ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
+            if (dir.magnitude < 0.001f)
+            {
+              ch.StopMove(pos.ToPV3());
+            }
+            else
+            {
+                var f = dn * (fast ? 1f : 0.5f);
+                ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
+            }
         }
     }
 

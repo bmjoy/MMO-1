@@ -10,13 +10,12 @@ using EConfig;
 public class UBattleItem : UElementView, IBattleItem
 {
     public PlayerItem Item { private set; get; }
-    public string AccountId { private set; get; }
     public int TeamIndex { private set; get; }
     public int GroupIndex { private set; get; }
 
-    int IBattleItem.TeamIndex => throw new NotImplementedException();
+    int IBattleItem.TeamIndex { get { return TeamIndex; } }
 
-    int IBattleItem.GroupIndex => throw new NotImplementedException();
+    int IBattleItem.GroupIndex { get { return GroupIndex; } }
 
     public ItemData config;
 
@@ -73,7 +72,7 @@ public class UBattleItem : UElementView, IBattleItem
     void IBattleItem.ChangeGroupIndex(int groupIndex)
     {
 #if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Proto.Notify_BattleItemChangeGroupIndex { GroupIndex = groupIndex, Index = Index });
+        CreateNotify(new Notify_BattleItemChangeGroupIndex { GroupIndex = groupIndex, Index = Index });
 #endif
         GroupIndex = groupIndex;
     }

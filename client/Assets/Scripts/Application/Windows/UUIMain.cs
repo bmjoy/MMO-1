@@ -76,18 +76,16 @@ namespace Windows
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
 
-            lb_gold.text = gate.Coin.ToString("N0");
-            lb_gem.text = gate.Gold.ToString("N0");
+            lb_gold.text = gate.Gold.ToString("N0");
+            lb_gem.text = gate.Coin.ToString("N0");
             if (gate.hero == null) return;
             this.Level_Number.text = $"{gate.hero.Level}";
             this.Username.text = $"{gate.hero.Name}";
-
             var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<EConfig.CharacterLevelUpData>(t => t.Level == gate.hero.Level);
-
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
             float v = 0;
-            if(leveUp!=null)
-            v = (float)gate.hero.Exprices / leveUp.NeedExprices;
+            if (leveUp != null)
+                v = (float)gate.hero.Exprices / leveUp.NeedExprices;
             ExpSilder.size = v;
         }
     }

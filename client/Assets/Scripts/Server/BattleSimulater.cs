@@ -391,6 +391,12 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 }
                 else
                 {
+
+                    if (action is Action_ClickSkillIndex)
+                    {
+                        i.Value.HeroCharacter?.AiRoot.BreakTree();
+                    }
+
                     i.Value.HeroCharacter?.AiRoot?.PushAction(action);
                 }
             }

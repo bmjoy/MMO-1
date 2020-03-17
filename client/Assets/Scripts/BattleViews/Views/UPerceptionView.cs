@@ -29,9 +29,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return root;
     }
 
-    public int OwnerIndex { set; get; }
+    public int OwnerIndex { set; get; } = -1;
 
-    public int OwerTeamIndex { set; get; }
+    public int OwerTeamIndex { set; get; } = -1;
 
     void Awake()
     {
@@ -424,16 +424,18 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     IBattleItem IBattlePerception.CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId)
     {
         var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.ItemID);
-        var res = ResourcesManager.S.LoadModel(config);
         var root = new GameObject(config.Name);
         root.transform.SetParent(this.transform);
         root.transform.RestRTS();
         root.transform.position = pos.ToUV3();
 
+#if !UNITY_SERVER
+       
+        var res = ResourcesManager.S.LoadModel(config);
         var go =Instantiate(res,root.transform);
         go.transform.RestRTS();
+#endif
         var bi = root.AddComponent<UBattleItem>();
-
         bi.SetInfo(item, teamIndex, groupId);
         bi.SetPrecpetion(this);
         return bi;

@@ -54,7 +54,9 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
             //player
-            if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) && !IsDead && ThridPersionCameraContollor.Current)
+            if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) 
+                && !IsDead 
+                && ThridPersionCameraContollor.Current)
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
@@ -469,6 +471,8 @@ public class UCharacterView : UElementView, IBattleCharacter
     }
 
     bool IBattleCharacter.IsForwardMoving { get { return MCategory == MoveCategory.Forward; } }
+
+    public bool IsCanForwardMoving { get { return MCategory == MoveCategory.NONE || MCategory == MoveCategory.Forward; } }
 
     bool IBattleCharacter.IsMoving
     {

@@ -23,7 +23,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            
             var target = message.Forward.ToUV3();
             if (target.magnitude > 0.001f) target = target.normalized * (message.Fast ? 1 : 0.5f);
             if (!root.Character.MoveForward(target, message.Position.ToUV3()))
@@ -32,17 +31,15 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     Attach("failure", "nomove");
                 }
-                yield return RunStatus.Success;
+                yield return RunStatus.Failure;
                 yield break;
             }
             if (context.IsDebug)
             {
                 Attach("move_dir", target);
             }
-            if (target.magnitude > 0.01)
-                yield return RunStatus.Success;
-            else
-                yield return RunStatus.Failure;
+            if (target.magnitude > 0.1f)  yield return RunStatus.Success;
+            else yield return RunStatus.Failure;
         }
 
         public override void Stop(ITreeRoot context)
