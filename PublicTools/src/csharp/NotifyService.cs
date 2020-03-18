@@ -326,8 +326,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 33
+    /// </summary>    
+    [API(33)]
+    public class SyncServerTime:APIBase<Void, Notify_SyncServerTime> 
+    {
+        private SyncServerTime() : base() { }
+        public  static SyncServerTime CreateQuery(){ return new SyncServerTime();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
         [API(32)]Notify_DropGold DropGold(Void req);
         [API(31)]Notify_BattleItemChangeGroupIndex BattleItemChangeGroupIndex(Void req);
         [API(30)]Notify_CharacterRelive CharacterRelive(Void req);
@@ -363,6 +375,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);
         [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);
         [API(31)]public abstract Task<Notify_BattleItemChangeGroupIndex> BattleItemChangeGroupIndex(Void request);
         [API(30)]public abstract Task<Notify_CharacterRelive> CharacterRelive(Void request);

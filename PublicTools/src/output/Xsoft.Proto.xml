@@ -546,6 +546,9 @@
         <member name="F:Proto.Notify_DropGold.GoldFieldNumber">
              <summary>Field number for the "Gold" field.</summary>
             </member>
+        <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
+             <summary>Field number for the "ServerNow" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
              1
@@ -665,6 +668,21 @@
         <member name="F:Proto.ErrorCode.NeedHeroLevel">
              <summary>
             需要英雄等级
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoItemsShop">
+             <summary>
+            没有道具商店
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoFoundItemInShop">
+             <summary>
+            商店中没有该道具
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoEnoughtCoin">
+             <summary>
+            钻石不足
              </summary>
             </member>
         <member name="T:Proto.Void">
@@ -2246,32 +2264,38 @@
         <member name="F:Proto.C2G_BuyItem.ItemIdFieldNumber">
              <summary>Field number for the "ItemId" field.</summary>
             </member>
-        <member name="F:Proto.C2G_BuyItem.NumFieldNumber">
-             <summary>Field number for the "Num" field.</summary>
+        <member name="F:Proto.C2G_BuyItem.ShopIdFieldNumber">
+             <summary>Field number for the "ShopId" field.</summary>
             </member>
         <member name="F:Proto.G2C_BuyItem.CodeFieldNumber">
              <summary>Field number for the "Code" field.</summary>
             </member>
-        <member name="F:Proto.C2G_Shop.ShopIdFieldNumber">
+        <member name="F:Proto.ItemsShop.ShopIdFieldNumber">
              <summary>Field number for the "ShopId" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.ItemsFieldNumber">
+        <member name="F:Proto.ItemsShop.ItemsFieldNumber">
              <summary>Field number for the "items" field.</summary>
             </member>
-        <member name="T:Proto.G2C_Shop.Types">
-             <summary>Container for nested types declared in the G2C_Shop message type.</summary>
+        <member name="T:Proto.ItemsShop.Types">
+             <summary>Container for nested types declared in the ItemsShop message type.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.CTypeFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.CTypeFieldNumber">
              <summary>Field number for the "CType" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.ItemIdFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.ItemIdFieldNumber">
              <summary>Field number for the "item_id" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.PricesFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.PricesFieldNumber">
              <summary>Field number for the "prices" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.NumLimitFieldNumber">
-             <summary>Field number for the "num_limit" field.</summary>
+        <member name="F:Proto.ItemsShop.Types.ShopItem.PackageNumFieldNumber">
+             <summary>Field number for the "package_num" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_Shop.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_Shop.ShopsFieldNumber">
+             <summary>Field number for the "Shops" field.</summary>
             </member>
         <member name="T:Proto.B2G_GetPlayerInfo">
              <summary>
@@ -3202,6 +3226,11 @@
         <member name="T:Proto.NotifyService.DropGold">
              <summary>
              32
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.SyncServerTime">
+             <summary>
+             33
              </summary>    
             </member>
     </members>

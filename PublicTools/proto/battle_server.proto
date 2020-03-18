@@ -291,6 +291,11 @@ message Notify_DropGold
 	int32 Gold=2;
 }
 
+message Notify_SyncServerTime
+{
+	float ServerNow = 1;
+}
+
 service NotifyService
 {
 	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
@@ -322,6 +327,7 @@ service NotifyService
 	rpc CharacterRelive(Void) returns (Notify_CharacterRelive){};//30
 	rpc BattleItemChangeGroupIndex (Void) returns (Notify_BattleItemChangeGroupIndex){};//31
 	rpc DropGold (Void) returns (Notify_DropGold){};//32
+	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
 
 }
 

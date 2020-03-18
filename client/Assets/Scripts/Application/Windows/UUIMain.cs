@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine.UI;
 using UGameTools;
+using Proto.GateServerService;
 
 namespace Windows
 {
@@ -15,8 +16,7 @@ namespace Windows
             base.InitModel();
             MenuSkill.onClick.AddListener(() =>
             {
-                var ui = UUIManager.Singleton.CreateWindow<UUILevelList>();
-                ui.ShowWindow();
+                
             });
 
             Button_Play.onClick.AddListener(() =>
@@ -38,6 +38,21 @@ namespace Windows
             MenuWeapon.onClick.AddListener(() =>
             {
                 OpenEquip();
+            });
+
+            MenuShop.onClick.AddListener(() => {
+                UUIManager.S.MaskEvent();
+                var gate = UApplication.G<GMainGate>();
+                QueryShop.CreateQuery().SendRequest(gate.Client,new Proto.C2G_Shop { }, (res)=>
+                {
+                    UUIManager.S.UnMaskEvent();
+                    if (res.Code.IsOk())
+                    {
+                        return;
+                    }
+                    UApplication.S.ShowError(res.Code);
+                });
+
             });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });

@@ -27,6 +27,9 @@ enum ErrorCode
     NoFreeGateServer =17;//没有空闲网关服务器
     NameOrPwdLeghtIncorrect = 18;//账号或者密码长度不好
     NeedHeroLevel = 19;//需要英雄等级
+    NoItemsShop = 20;//没有道具商店
+    NoFoundItemInShop = 21;//商店中没有该道具
+    NoEnoughtCoin = 22 ;//钻石不足
 }
 
 //empty text

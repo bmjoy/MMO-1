@@ -119,6 +119,7 @@ namespace Proto
     [Index(1009054,typeof(Notify_CharacterRelive))]
     [Index(1009056,typeof(Notify_BattleItemChangeGroupIndex))]
     [Index(1009058,typeof(Notify_DropGold))]
+    [Index(1009060,typeof(Notify_SyncServerTime))]
 
     [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs

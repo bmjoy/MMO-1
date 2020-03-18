@@ -60,49 +60,51 @@ namespace Proto {
             "ASgJIiwKCkcyQ19HTVRvb2wSHgoEQ29kZRgBIAEoDjIQLlByb3RvLkVycm9y",
             "Q29kZSIyChBDMkdfTWFnaWNMZXZlbFVwEg8KB01hZ2ljSWQYASABKAUSDQoF",
             "TGV2ZWwYAiABKAUiMgoQRzJDX01hZ2ljTGV2ZWxVcBIeCgRDb2RlGAEgASgO",
-            "MhAuUHJvdG8uRXJyb3JDb2RlIioKC0MyR19CdXlJdGVtEg4KBkl0ZW1JZBgB",
-            "IAEoBRILCgNOdW0YAiABKAUiLQoLRzJDX0J1eUl0ZW0SHgoEQ29kZRgBIAEo",
-            "DjIQLlByb3RvLkVycm9yQ29kZSIaCghDMkdfU2hvcBIOCgZTaG9wSWQYASAB",
-            "KAUivAEKCEcyQ19TaG9wEicKBWl0ZW1zGAEgAygLMhguUHJvdG8uRzJDX1No",
-            "b3AuU2hvcEl0ZW0aZwoIU2hvcEl0ZW0SJwoFQ1R5cGUYASABKA4yGC5Qcm90",
-            "by5HMkNfU2hvcC5Db2luVHlwZRIPCgdpdGVtX2lkGAIgASgFEg4KBnByaWNl",
-            "cxgDIAEoBRIRCgludW1fbGltaXQYBCABKAUiHgoIQ29pblR5cGUSCAoER29s",
-            "ZBAAEggKBENvaW4QASJBChFCMkdfR2V0UGxheWVySW5mbxITCgtBY2NvdW50",
-            "VXVpZBgBIAEoCRIXCg9TZXJ2aWNlU2VydmVySUQYAiABKAUidgoRRzJCX0dl",
-            "dFBsYXllckluZm8SHgoEQ29kZRgBIAEoDjIQLlByb3RvLkVycm9yQ29kZRIa",
-            "CgRIZXJvGAIgASgLMgwuUHJvdG8uREhlcm8SJQoHUGFja2FnZRgDIAEoCzIU",
-            "LlByb3RvLlBsYXllclBhY2thZ2UiZgoQQjJHX0JhdHRsZVJld2FyZBITCgtB",
-            "Y2NvdW50VXVpZBgBIAEoCRIMCgRHb2xkGAIgASgFEg0KBU1hcElEGAMgASgF",
-            "EiAKBUl0ZW1zGAQgAygLMhEuUHJvdG8uUGxheWVySXRlbSIyChBHMkJfQmF0",
-            "dGxlUmV3YXJkEh4KBENvZGUYASABKA4yEC5Qcm90by5FcnJvckNvZGUiPAoT",
-            "VGFza19HMkNfSm9pbkJhdHRsZRIlCgZTZXJ2ZXIYASABKAsyFS5Qcm90by5H",
-            "YW1lU2VydmVySW5mbzL3BQoRR2F0ZVNlcnZlclNlcnZpY2USLQoFTG9naW4S",
-            "EC5Qcm90by5DMkdfTG9naW4aEC5Qcm90by5HMkNfTG9naW4iABI8CgpDcmVh",
-            "dGVIZXJvEhUuUHJvdG8uQzJHX0NyZWF0ZUhlcm8aFS5Qcm90by5HMkNfQ3Jl",
-            "YXRlSGVybyIAEjkKCUJlZ2luR2FtZRIULlByb3RvLkMyR19CZWdpbkdhbWUa",
-            "FC5Qcm90by5HMkNfQmVnaW5HYW1lIgASRQoNR2V0TGFzdEJhdHRsZRIYLlBy",
-            "b3RvLkMyR19HZXRMYXN0QmF0dGxlGhguUHJvdG8uRzJDX0dldExhc3RCYXR0",
-            "bGUiABJFCg1PcGVyYXRvckVxdWlwEhguUHJvdG8uQzJHX09wZXJhdG9yRXF1",
-            "aXAaGC5Qcm90by5HMkNfT3BlcmF0b3JFcXVpcCIAEjYKCFNhbGVJdGVtEhMu",
-            "UHJvdG8uQzJHX1NhbGVJdGVtGhMuUHJvdG8uRzJDX1NhbGVJdGVtIgASTgoQ",
-            "RXF1aXBtZW50TGV2ZWxVcBIbLlByb3RvLkMyR19FcXVpcG1lbnRMZXZlbFVw",
-            "GhsuUHJvdG8uRzJDX0VxdWlwbWVudExldmVsVXAiABIwCgZHTVRvb2wSES5Q",
-            "cm90by5DMkdfR01Ub29sGhEuUHJvdG8uRzJDX0dNVG9vbCIAEkgKDkJ1eVBh",
-            "Y2thZ2VTaXplEhkuUHJvdG8uQzJHX0J1eVBhY2thZ2VTaXplGhkuUHJvdG8u",
-            "RzJDX0J1eVBhY2thZ2VTaXplIgASQgoMTWFnaWNMZXZlbFVwEhcuUHJvdG8u",
-            "QzJHX01hZ2ljTGV2ZWxVcBoXLlByb3RvLkcyQ19NYWdpY0xldmVsVXAiABIv",
-            "CglRdWVyeVNob3ASDy5Qcm90by5DMkdfU2hvcBoPLlByb3RvLkcyQ19TaG9w",
-            "IgASMwoHQnV5SXRlbRISLlByb3RvLkMyR19CdXlJdGVtGhIuUHJvdG8uRzJD",
-            "X0J1eUl0ZW0iADLlAQoOR2F0ZVNlcnZlclRhc2sSSQoLU3luY1BhY2thZ2US",
-            "Gy5Qcm90by5UYXNrX0cyQ19TeW5jUGFja2FnZRobLlByb3RvLlRhc2tfRzJD",
-            "X1N5bmNQYWNrYWdlIgASQAoIU3luY0hlcm8SGC5Qcm90by5UYXNrX0cyQ19T",
-            "eW5jSGVybxoYLlByb3RvLlRhc2tfRzJDX1N5bmNIZXJvIgASRgoKSm9pbkJh",
-            "dHRsZRIaLlByb3RvLlRhc2tfRzJDX0pvaW5CYXR0bGUaGi5Qcm90by5UYXNr",
-            "X0cyQ19Kb2luQmF0dGxlIgAypAEKF0dhdGVCYXR0bGVTZXJ2ZXJTZXJ2aWNl",
-            "EkUKDUdldFBsYXllckluZm8SGC5Qcm90by5CMkdfR2V0UGxheWVySW5mbxoY",
-            "LlByb3RvLkcyQl9HZXRQbGF5ZXJJbmZvIgASQgoMQmF0dGxlUmV3YXJkEhcu",
-            "UHJvdG8uQjJHX0JhdHRsZVJld2FyZBoXLlByb3RvLkcyQl9CYXR0bGVSZXdh",
-            "cmQiAGIGcHJvdG8z"));
+            "MhAuUHJvdG8uRXJyb3JDb2RlIi0KC0MyR19CdXlJdGVtEg4KBkl0ZW1JZBgB",
+            "IAEoBRIOCgZTaG9wSWQYAiABKAUiLQoLRzJDX0J1eUl0ZW0SHgoEQ29kZRgB",
+            "IAEoDjIQLlByb3RvLkVycm9yQ29kZSIKCghDMkdfU2hvcCLRAQoJSXRlbXNT",
+            "aG9wEg4KBlNob3BJZBgBIAEoBRIoCgVpdGVtcxgCIAMoCzIZLlByb3RvLkl0",
+            "ZW1zU2hvcC5TaG9wSXRlbRpqCghTaG9wSXRlbRIoCgVDVHlwZRgBIAEoDjIZ",
+            "LlByb3RvLkl0ZW1zU2hvcC5Db2luVHlwZRIPCgdpdGVtX2lkGAIgASgFEg4K",
+            "BnByaWNlcxgDIAEoBRITCgtwYWNrYWdlX251bRgEIAEoBSIeCghDb2luVHlw",
+            "ZRIICgRHb2xkEAASCAoEQ29pbhABIksKCEcyQ19TaG9wEh4KBENvZGUYASAB",
+            "KA4yEC5Qcm90by5FcnJvckNvZGUSHwoFU2hvcHMYAiADKAsyEC5Qcm90by5J",
+            "dGVtc1Nob3AiQQoRQjJHX0dldFBsYXllckluZm8SEwoLQWNjb3VudFV1aWQY",
+            "ASABKAkSFwoPU2VydmljZVNlcnZlcklEGAIgASgFInYKEUcyQl9HZXRQbGF5",
+            "ZXJJbmZvEh4KBENvZGUYASABKA4yEC5Qcm90by5FcnJvckNvZGUSGgoESGVy",
+            "bxgCIAEoCzIMLlByb3RvLkRIZXJvEiUKB1BhY2thZ2UYAyABKAsyFC5Qcm90",
+            "by5QbGF5ZXJQYWNrYWdlImYKEEIyR19CYXR0bGVSZXdhcmQSEwoLQWNjb3Vu",
+            "dFV1aWQYASABKAkSDAoER29sZBgCIAEoBRINCgVNYXBJRBgDIAEoBRIgCgVJ",
+            "dGVtcxgEIAMoCzIRLlByb3RvLlBsYXllckl0ZW0iMgoQRzJCX0JhdHRsZVJl",
+            "d2FyZBIeCgRDb2RlGAEgASgOMhAuUHJvdG8uRXJyb3JDb2RlIjwKE1Rhc2tf",
+            "RzJDX0pvaW5CYXR0bGUSJQoGU2VydmVyGAEgASgLMhUuUHJvdG8uR2FtZVNl",
+            "cnZlckluZm8y9wUKEUdhdGVTZXJ2ZXJTZXJ2aWNlEi0KBUxvZ2luEhAuUHJv",
+            "dG8uQzJHX0xvZ2luGhAuUHJvdG8uRzJDX0xvZ2luIgASPAoKQ3JlYXRlSGVy",
+            "bxIVLlByb3RvLkMyR19DcmVhdGVIZXJvGhUuUHJvdG8uRzJDX0NyZWF0ZUhl",
+            "cm8iABI5CglCZWdpbkdhbWUSFC5Qcm90by5DMkdfQmVnaW5HYW1lGhQuUHJv",
+            "dG8uRzJDX0JlZ2luR2FtZSIAEkUKDUdldExhc3RCYXR0bGUSGC5Qcm90by5D",
+            "MkdfR2V0TGFzdEJhdHRsZRoYLlByb3RvLkcyQ19HZXRMYXN0QmF0dGxlIgAS",
+            "RQoNT3BlcmF0b3JFcXVpcBIYLlByb3RvLkMyR19PcGVyYXRvckVxdWlwGhgu",
+            "UHJvdG8uRzJDX09wZXJhdG9yRXF1aXAiABI2CghTYWxlSXRlbRITLlByb3Rv",
+            "LkMyR19TYWxlSXRlbRoTLlByb3RvLkcyQ19TYWxlSXRlbSIAEk4KEEVxdWlw",
+            "bWVudExldmVsVXASGy5Qcm90by5DMkdfRXF1aXBtZW50TGV2ZWxVcBobLlBy",
+            "b3RvLkcyQ19FcXVpcG1lbnRMZXZlbFVwIgASMAoGR01Ub29sEhEuUHJvdG8u",
+            "QzJHX0dNVG9vbBoRLlByb3RvLkcyQ19HTVRvb2wiABJICg5CdXlQYWNrYWdl",
+            "U2l6ZRIZLlByb3RvLkMyR19CdXlQYWNrYWdlU2l6ZRoZLlByb3RvLkcyQ19C",
+            "dXlQYWNrYWdlU2l6ZSIAEkIKDE1hZ2ljTGV2ZWxVcBIXLlByb3RvLkMyR19N",
+            "YWdpY0xldmVsVXAaFy5Qcm90by5HMkNfTWFnaWNMZXZlbFVwIgASLwoJUXVl",
+            "cnlTaG9wEg8uUHJvdG8uQzJHX1Nob3AaDy5Qcm90by5HMkNfU2hvcCIAEjMK",
+            "B0J1eUl0ZW0SEi5Qcm90by5DMkdfQnV5SXRlbRoSLlByb3RvLkcyQ19CdXlJ",
+            "dGVtIgAy5QEKDkdhdGVTZXJ2ZXJUYXNrEkkKC1N5bmNQYWNrYWdlEhsuUHJv",
+            "dG8uVGFza19HMkNfU3luY1BhY2thZ2UaGy5Qcm90by5UYXNrX0cyQ19TeW5j",
+            "UGFja2FnZSIAEkAKCFN5bmNIZXJvEhguUHJvdG8uVGFza19HMkNfU3luY0hl",
+            "cm8aGC5Qcm90by5UYXNrX0cyQ19TeW5jSGVybyIAEkYKCkpvaW5CYXR0bGUS",
+            "Gi5Qcm90by5UYXNrX0cyQ19Kb2luQmF0dGxlGhouUHJvdG8uVGFza19HMkNf",
+            "Sm9pbkJhdHRsZSIAMqQBChdHYXRlQmF0dGxlU2VydmVyU2VydmljZRJFCg1H",
+            "ZXRQbGF5ZXJJbmZvEhguUHJvdG8uQjJHX0dldFBsYXllckluZm8aGC5Qcm90",
+            "by5HMkJfR2V0UGxheWVySW5mbyIAEkIKDEJhdHRsZVJld2FyZBIXLlByb3Rv",
+            "LkIyR19CYXR0bGVSZXdhcmQaFy5Qcm90by5HMkJfQmF0dGxlUmV3YXJkIgBi",
+            "BnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.DataReflection.Descriptor, global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -128,10 +130,11 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_GMTool), global::Proto.G2C_GMTool.Parser, new[]{ "Code" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_MagicLevelUp), global::Proto.C2G_MagicLevelUp.Parser, new[]{ "MagicId", "Level" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_MagicLevelUp), global::Proto.G2C_MagicLevelUp.Parser, new[]{ "Code" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_BuyItem), global::Proto.C2G_BuyItem.Parser, new[]{ "ItemId", "Num" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_BuyItem), global::Proto.C2G_BuyItem.Parser, new[]{ "ItemId", "ShopId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_BuyItem), global::Proto.G2C_BuyItem.Parser, new[]{ "Code" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_Shop), global::Proto.C2G_Shop.Parser, new[]{ "ShopId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop), global::Proto.G2C_Shop.Parser, new[]{ "Items" }, null, new[]{ typeof(global::Proto.G2C_Shop.Types.CoinType) }, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop.Types.ShopItem), global::Proto.G2C_Shop.Types.ShopItem.Parser, new[]{ "CType", "ItemId", "Prices", "NumLimit" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_Shop), global::Proto.C2G_Shop.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.ItemsShop), global::Proto.ItemsShop.Parser, new[]{ "ShopId", "Items" }, null, new[]{ typeof(global::Proto.ItemsShop.Types.CoinType) }, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Proto.ItemsShop.Types.ShopItem), global::Proto.ItemsShop.Types.ShopItem.Parser, new[]{ "CType", "ItemId", "Prices", "PackageNum" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop), global::Proto.G2C_Shop.Parser, new[]{ "Code", "Shops" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_GetPlayerInfo), global::Proto.B2G_GetPlayerInfo.Parser, new[]{ "AccountUuid", "ServiceServerID" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2B_GetPlayerInfo), global::Proto.G2B_GetPlayerInfo.Parser, new[]{ "Code", "Hero", "Package" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_BattleReward), global::Proto.B2G_BattleReward.Parser, new[]{ "AccountUuid", "Gold", "MapID", "Items" }, null, null, null),
@@ -3935,7 +3938,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public C2G_BuyItem(C2G_BuyItem other) : this() {
       itemId_ = other.itemId_;
-      num_ = other.num_;
+      shopId_ = other.shopId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3955,14 +3958,14 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "Num" field.</summary>
-    public const int NumFieldNumber = 2;
-    private int num_;
+    /// <summary>Field number for the "ShopId" field.</summary>
+    public const int ShopIdFieldNumber = 2;
+    private int shopId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Num {
-      get { return num_; }
+    public int ShopId {
+      get { return shopId_; }
       set {
-        num_ = value;
+        shopId_ = value;
       }
     }
 
@@ -3980,7 +3983,7 @@ namespace Proto {
         return true;
       }
       if (ItemId != other.ItemId) return false;
-      if (Num != other.Num) return false;
+      if (ShopId != other.ShopId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3988,7 +3991,7 @@ namespace Proto {
     public override int GetHashCode() {
       int hash = 1;
       if (ItemId != 0) hash ^= ItemId.GetHashCode();
-      if (Num != 0) hash ^= Num.GetHashCode();
+      if (ShopId != 0) hash ^= ShopId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4006,9 +4009,9 @@ namespace Proto {
         output.WriteRawTag(8);
         output.WriteInt32(ItemId);
       }
-      if (Num != 0) {
+      if (ShopId != 0) {
         output.WriteRawTag(16);
-        output.WriteInt32(Num);
+        output.WriteInt32(ShopId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -4021,8 +4024,8 @@ namespace Proto {
       if (ItemId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ItemId);
       }
-      if (Num != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Num);
+      if (ShopId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ShopId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4038,8 +4041,8 @@ namespace Proto {
       if (other.ItemId != 0) {
         ItemId = other.ItemId;
       }
-      if (other.Num != 0) {
-        Num = other.Num;
+      if (other.ShopId != 0) {
+        ShopId = other.ShopId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4057,7 +4060,7 @@ namespace Proto {
             break;
           }
           case 16: {
-            Num = input.ReadInt32();
+            ShopId = input.ReadInt32();
             break;
           }
         }
@@ -4220,24 +4223,12 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public C2G_Shop(C2G_Shop other) : this() {
-      shopId_ = other.shopId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public C2G_Shop Clone() {
       return new C2G_Shop(this);
-    }
-
-    /// <summary>Field number for the "ShopId" field.</summary>
-    public const int ShopIdFieldNumber = 1;
-    private int shopId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int ShopId {
-      get { return shopId_; }
-      set {
-        shopId_ = value;
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4253,7 +4244,132 @@ namespace Proto {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(C2G_Shop other) {
+      if (other == null) {
+        return;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ItemsShop : pb::IMessage<ItemsShop> {
+    private static readonly pb::MessageParser<ItemsShop> _parser = new pb::MessageParser<ItemsShop>(() => new ItemsShop());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ItemsShop> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[25]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ItemsShop() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ItemsShop(ItemsShop other) : this() {
+      shopId_ = other.shopId_;
+      items_ = other.items_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ItemsShop Clone() {
+      return new ItemsShop(this);
+    }
+
+    /// <summary>Field number for the "ShopId" field.</summary>
+    public const int ShopIdFieldNumber = 1;
+    private int shopId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int ShopId {
+      get { return shopId_; }
+      set {
+        shopId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "items" field.</summary>
+    public const int ItemsFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Proto.ItemsShop.Types.ShopItem> _repeated_items_codec
+        = pb::FieldCodec.ForMessage(18, global::Proto.ItemsShop.Types.ShopItem.Parser);
+    private readonly pbc::RepeatedField<global::Proto.ItemsShop.Types.ShopItem> items_ = new pbc::RepeatedField<global::Proto.ItemsShop.Types.ShopItem>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto.ItemsShop.Types.ShopItem> Items {
+      get { return items_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ItemsShop);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ItemsShop other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
       if (ShopId != other.ShopId) return false;
+      if(!items_.Equals(other.items_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4261,6 +4377,7 @@ namespace Proto {
     public override int GetHashCode() {
       int hash = 1;
       if (ShopId != 0) hash ^= ShopId.GetHashCode();
+      hash ^= items_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4278,6 +4395,7 @@ namespace Proto {
         output.WriteRawTag(8);
         output.WriteInt32(ShopId);
       }
+      items_.WriteTo(output, _repeated_items_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4289,6 +4407,7 @@ namespace Proto {
       if (ShopId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ShopId);
       }
+      size += items_.CalculateSize(_repeated_items_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -4296,13 +4415,14 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(C2G_Shop other) {
+    public void MergeFrom(ItemsShop other) {
       if (other == null) {
         return;
       }
       if (other.ShopId != 0) {
         ShopId = other.ShopId;
       }
+      items_.Add(other.items_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -4318,124 +4438,7 @@ namespace Proto {
             ShopId = input.ReadInt32();
             break;
           }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class G2C_Shop : pb::IMessage<G2C_Shop> {
-    private static readonly pb::MessageParser<G2C_Shop> _parser = new pb::MessageParser<G2C_Shop>(() => new G2C_Shop());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<G2C_Shop> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[25]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public G2C_Shop() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public G2C_Shop(G2C_Shop other) : this() {
-      items_ = other.items_.Clone();
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public G2C_Shop Clone() {
-      return new G2C_Shop(this);
-    }
-
-    /// <summary>Field number for the "items" field.</summary>
-    public const int ItemsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Proto.G2C_Shop.Types.ShopItem> _repeated_items_codec
-        = pb::FieldCodec.ForMessage(10, global::Proto.G2C_Shop.Types.ShopItem.Parser);
-    private readonly pbc::RepeatedField<global::Proto.G2C_Shop.Types.ShopItem> items_ = new pbc::RepeatedField<global::Proto.G2C_Shop.Types.ShopItem>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto.G2C_Shop.Types.ShopItem> Items {
-      get { return items_; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as G2C_Shop);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(G2C_Shop other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if(!items_.Equals(other.items_)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      hash ^= items_.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      items_.WriteTo(output, _repeated_items_codec);
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      size += items_.CalculateSize(_repeated_items_codec);
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(G2C_Shop other) {
-      if (other == null) {
-        return;
-      }
-      items_.Add(other.items_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
+          case 18: {
             items_.AddEntriesFrom(input, _repeated_items_codec);
             break;
           }
@@ -4444,7 +4447,7 @@ namespace Proto {
     }
 
     #region Nested types
-    /// <summary>Container for nested types declared in the G2C_Shop message type.</summary>
+    /// <summary>Container for nested types declared in the ItemsShop message type.</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum CoinType {
@@ -4460,7 +4463,7 @@ namespace Proto {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::Proto.G2C_Shop.Descriptor.NestedTypes[0]; }
+          get { return global::Proto.ItemsShop.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4480,7 +4483,7 @@ namespace Proto {
           cType_ = other.cType_;
           itemId_ = other.itemId_;
           prices_ = other.prices_;
-          numLimit_ = other.numLimit_;
+          packageNum_ = other.packageNum_;
           _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -4491,9 +4494,9 @@ namespace Proto {
 
         /// <summary>Field number for the "CType" field.</summary>
         public const int CTypeFieldNumber = 1;
-        private global::Proto.G2C_Shop.Types.CoinType cType_ = 0;
+        private global::Proto.ItemsShop.Types.CoinType cType_ = 0;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public global::Proto.G2C_Shop.Types.CoinType CType {
+        public global::Proto.ItemsShop.Types.CoinType CType {
           get { return cType_; }
           set {
             cType_ = value;
@@ -4522,14 +4525,14 @@ namespace Proto {
           }
         }
 
-        /// <summary>Field number for the "num_limit" field.</summary>
-        public const int NumLimitFieldNumber = 4;
-        private int numLimit_;
+        /// <summary>Field number for the "package_num" field.</summary>
+        public const int PackageNumFieldNumber = 4;
+        private int packageNum_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-        public int NumLimit {
-          get { return numLimit_; }
+        public int PackageNum {
+          get { return packageNum_; }
           set {
-            numLimit_ = value;
+            packageNum_ = value;
           }
         }
 
@@ -4549,7 +4552,7 @@ namespace Proto {
           if (CType != other.CType) return false;
           if (ItemId != other.ItemId) return false;
           if (Prices != other.Prices) return false;
-          if (NumLimit != other.NumLimit) return false;
+          if (PackageNum != other.PackageNum) return false;
           return Equals(_unknownFields, other._unknownFields);
         }
 
@@ -4559,7 +4562,7 @@ namespace Proto {
           if (CType != 0) hash ^= CType.GetHashCode();
           if (ItemId != 0) hash ^= ItemId.GetHashCode();
           if (Prices != 0) hash ^= Prices.GetHashCode();
-          if (NumLimit != 0) hash ^= NumLimit.GetHashCode();
+          if (PackageNum != 0) hash ^= PackageNum.GetHashCode();
           if (_unknownFields != null) {
             hash ^= _unknownFields.GetHashCode();
           }
@@ -4585,9 +4588,9 @@ namespace Proto {
             output.WriteRawTag(24);
             output.WriteInt32(Prices);
           }
-          if (NumLimit != 0) {
+          if (PackageNum != 0) {
             output.WriteRawTag(32);
-            output.WriteInt32(NumLimit);
+            output.WriteInt32(PackageNum);
           }
           if (_unknownFields != null) {
             _unknownFields.WriteTo(output);
@@ -4606,8 +4609,8 @@ namespace Proto {
           if (Prices != 0) {
             size += 1 + pb::CodedOutputStream.ComputeInt32Size(Prices);
           }
-          if (NumLimit != 0) {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(NumLimit);
+          if (PackageNum != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PackageNum);
           }
           if (_unknownFields != null) {
             size += _unknownFields.CalculateSize();
@@ -4629,8 +4632,8 @@ namespace Proto {
           if (other.Prices != 0) {
             Prices = other.Prices;
           }
-          if (other.NumLimit != 0) {
-            NumLimit = other.NumLimit;
+          if (other.PackageNum != 0) {
+            PackageNum = other.PackageNum;
           }
           _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
         }
@@ -4644,7 +4647,7 @@ namespace Proto {
                 _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                 break;
               case 8: {
-                CType = (global::Proto.G2C_Shop.Types.CoinType) input.ReadEnum();
+                CType = (global::Proto.ItemsShop.Types.CoinType) input.ReadEnum();
                 break;
               }
               case 16: {
@@ -4656,7 +4659,7 @@ namespace Proto {
                 break;
               }
               case 32: {
-                NumLimit = input.ReadInt32();
+                PackageNum = input.ReadInt32();
                 break;
               }
             }
@@ -4667,6 +4670,155 @@ namespace Proto {
 
     }
     #endregion
+
+  }
+
+  public sealed partial class G2C_Shop : pb::IMessage<G2C_Shop> {
+    private static readonly pb::MessageParser<G2C_Shop> _parser = new pb::MessageParser<G2C_Shop>(() => new G2C_Shop());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<G2C_Shop> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[26]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public G2C_Shop() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public G2C_Shop(G2C_Shop other) : this() {
+      code_ = other.code_;
+      shops_ = other.shops_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public G2C_Shop Clone() {
+      return new G2C_Shop(this);
+    }
+
+    /// <summary>Field number for the "Code" field.</summary>
+    public const int CodeFieldNumber = 1;
+    private global::Proto.ErrorCode code_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto.ErrorCode Code {
+      get { return code_; }
+      set {
+        code_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "Shops" field.</summary>
+    public const int ShopsFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Proto.ItemsShop> _repeated_shops_codec
+        = pb::FieldCodec.ForMessage(18, global::Proto.ItemsShop.Parser);
+    private readonly pbc::RepeatedField<global::Proto.ItemsShop> shops_ = new pbc::RepeatedField<global::Proto.ItemsShop>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto.ItemsShop> Shops {
+      get { return shops_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as G2C_Shop);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(G2C_Shop other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Code != other.Code) return false;
+      if(!shops_.Equals(other.shops_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Code != 0) hash ^= Code.GetHashCode();
+      hash ^= shops_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Code != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Code);
+      }
+      shops_.WriteTo(output, _repeated_shops_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Code != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Code);
+      }
+      size += shops_.CalculateSize(_repeated_shops_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(G2C_Shop other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Code != 0) {
+        Code = other.Code;
+      }
+      shops_.Add(other.shops_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Code = (global::Proto.ErrorCode) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            shops_.AddEntriesFrom(input, _repeated_shops_codec);
+            break;
+          }
+        }
+      }
+    }
 
   }
 
@@ -4681,7 +4833,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4847,7 +4999,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5056,7 +5208,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5276,7 +5428,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5405,7 +5557,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Proto.GateServerReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
