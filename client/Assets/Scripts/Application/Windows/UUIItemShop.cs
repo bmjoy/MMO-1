@@ -80,6 +80,28 @@ namespace Windows
         protected override void OnShow()
         {
             base.OnShow();
+
+            UUIManager.S.MaskEvent();
+            var gate = UApplication.G<GMainGate>();
+            QueryShop.CreateQuery().SendRequest(gate.Client, new Proto.C2G_Shop { }, (res) =>
+            {
+                UUIManager.S.UnMaskEvent();
+                if (res.Code.IsOk())
+                {
+                    this.Shops = res.Shops;
+                    ShowData();
+                    return;
+                }
+                HideWindow();
+                UApplication.S.ShowError(res.Code);
+            });
+
+        }
+
+        private void ShowData()
+        {
+
+
             this.ShopTabTableManager.Count = Shops.Count;
             int index = 0;
             foreach (var i in ShopTabTableManager)
@@ -89,7 +111,7 @@ namespace Windows
                 index++;
             }
             //todo 
-            if(Shops.Count>0) ShopTabTableManager[0].Template.ToggleSelected.isOn = true;
+            if (Shops.Count > 0) ShopTabTableManager[0].Template.ToggleSelected.isOn = true;
         }
 
         //private int last = -1;
@@ -132,11 +154,6 @@ namespace Windows
             base.OnHide();
         }
 
-        internal void ShowWindow(RepeatedField<ItemsShop> shops)
-        {
-            this.Shops = shops;
 
-            ShowWindow();
-        }
     }
 }

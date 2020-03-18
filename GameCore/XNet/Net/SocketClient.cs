@@ -278,7 +278,7 @@ namespace XNet.Libs.Net
 
         private void UpdateHandle()
         {
-            Debuger.Log("UpdateHandle");
+           // Debuger.Log("UpdateHandle");
 
             while (Actions.Count > 0)
             {

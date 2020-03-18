@@ -40,20 +40,10 @@ namespace Windows
                 OpenEquip();
             });
 
-            MenuShop.onClick.AddListener(() => {
-                UUIManager.S.MaskEvent();
-                var gate = UApplication.G<GMainGate>();
-                QueryShop.CreateQuery().SendRequest(gate.Client,new Proto.C2G_Shop { }, (res)=>
-                {
-                    UUIManager.S.UnMaskEvent();
-                    if (res.Code.IsOk())
-                    {
-                        var ui = UUIManager.S.CreateWindow<UUIItemShop>();
-                        ui.ShowWindow(res.Shops);
-                        return;
-                    }
-                    UApplication.S.ShowError(res.Code);
-                });
+            MenuShop.onClick.AddListener(() =>
+            {
+                var ui = UUIManager.S.CreateWindow<UUIItemShop>();
+                ui.ShowWindow();
 
             });
 
