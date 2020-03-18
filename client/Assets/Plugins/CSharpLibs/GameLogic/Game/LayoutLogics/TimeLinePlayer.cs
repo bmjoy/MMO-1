@@ -31,7 +31,7 @@ namespace GameLogic.Game.LayoutLogics
 			if (lastTime < 0) 
 			{
 				startTime = time.Time;
-				lastTime = time.Time - 0.001f;
+				lastTime = time.Time - 0.01f;
 				return false;
 			}
 			var old = lastTime - startTime;
@@ -40,12 +40,12 @@ namespace GameLogic.Game.LayoutLogics
 			for(var i  = 0;i<Line.Points.Count;i++)
 			{
 				var point = Line.Points [i];
-				if (point.Time > old && point.Time <= now) {
+				if (point.Time > old && point.Time <= now)
+                {
 					var layout = Line.FindLayoutByGuid(point.GUID);
 					LayoutBaseLogic.EnableLayout (layout, this);
 				}
 			}
-
 			lastTime = time.Time;
 			var result=  now > Line.Time ;
 			IsFinshed = result;

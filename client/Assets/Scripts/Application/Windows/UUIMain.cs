@@ -48,6 +48,8 @@ namespace Windows
                     UUIManager.S.UnMaskEvent();
                     if (res.Code.IsOk())
                     {
+                        var ui = UUIManager.S.CreateWindow<UUIItemShop>();
+                        ui.ShowWindow(res.Shops);
                         return;
                     }
                     UApplication.S.ShowError(res.Code);

@@ -62,6 +62,10 @@ namespace Windows
                 Template.Name.text = Config.Name;
                 Template.ItemCount.ActiveSelfObject(shopItem.PackageNum > 1);
                 Template.t_num.text = $"{ShopItem.PackageNum}";
+                Template.ButtonCoin.ActiveSelfObject(ShopItem.CType == ItemsShop.Types.CoinType.Coin);
+                Template.ButtonGold.ActiveSelfObject(ShopItem.CType == ItemsShop.Types.CoinType.Gold);
+                Template.ButtonGold.SetText($"{shopItem.Prices}");
+                Template.ButtonCoin.SetText($"{shopItem.Prices}");
             }
         }
 

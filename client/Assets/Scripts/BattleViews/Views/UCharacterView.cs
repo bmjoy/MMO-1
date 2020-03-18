@@ -60,7 +60,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max, TeamId == PerView.OwerTeamIndex,
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max,
+                        mpCur,mpMax,
+                        TeamId == PerView.OwerTeamIndex,
                         GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
             }
@@ -595,8 +597,13 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
+    private int mpCur;
+    private int mpMax;
+
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
+        mpMax = maxMP;
+        mpCur = cur;
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
