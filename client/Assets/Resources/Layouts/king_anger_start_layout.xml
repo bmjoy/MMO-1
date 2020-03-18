@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>1</Time>
+  <Time>0.9</Time>
   <Points>
     <TimePoint>
       <GUID>89148e43-c2b2-4ef6-a711-2e576a556d52</GUID>
@@ -8,15 +8,15 @@
     </TimePoint>
     <TimePoint>
       <GUID>46c8b533-7d3e-44b8-9ee2-b51288868c76</GUID>
-      <Time>0.959558845</Time>
+      <Time>0.8271208</Time>
     </TimePoint>
     <TimePoint>
       <GUID>0289beab-73e1-4982-8864-76de8f73d750</GUID>
-      <Time>0.8663239</Time>
+      <Time>0.784318745</Time>
     </TimePoint>
     <TimePoint>
       <GUID>61805086-ce18-41a7-b44a-ac5428a0484d</GUID>
-      <Time>0.925449848</Time>
+      <Time>0.7785347</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -65,7 +65,7 @@
     </LayoutBase>
     <LayoutBase xsi:type="PlaySoundLayout">
       <GUID>61805086-ce18-41a7-b44a-ac5428a0484d</GUID>
-      <resourcesPath>Sound/Impact/lightningimpact.wav</resourcesPath>
+      <resourcesPath>Sound/MagicSounds/General Spell/Cast 01.wav</resourcesPath>
       <target>Releaser</target>
       <fromBone>Bottom</fromBone>
       <value>1</value>
