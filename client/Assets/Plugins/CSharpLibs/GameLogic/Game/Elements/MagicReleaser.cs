@@ -91,11 +91,6 @@ namespace GameLogic.Game.Elements
         public void SetState(ReleaserStates state)
         {
             State = state;
-            if (state == ReleaserStates.Releasing)
-            {
-                CancelLock(startLock);
-                startLock = null;
-            }
         }
 
         public void OnEvent(EventType eventType)
@@ -121,7 +116,7 @@ namespace GameLogic.Game.Elements
                         startLayout = player;
                         var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
                         this.ReleaserTarget.Releaser.LockAction(actionLock);
-                        startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
+                        //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
                     }
                 }
             }
@@ -130,7 +125,7 @@ namespace GameLogic.Game.Elements
         }
 
 
-        private RevertActionLock startLock;
+        //private RevertActionLock startLock;
 
         private TimeLinePlayer startLayout;
 
