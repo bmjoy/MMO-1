@@ -55,6 +55,16 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     void IMagicReleaser.PlaySound(int target, string resourcesPath, string fromBone, float value)
     {
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_ReleaserPlaySound
+        {
+            Index = this.Index,
+            BoneName = fromBone,
+            ResourcesPath = resourcesPath,
+            TargetType = target,
+            Value = value
+        });
+#endif
         var tar = (Layout.TargetType)target;
         if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
         {
