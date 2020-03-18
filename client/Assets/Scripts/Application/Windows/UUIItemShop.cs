@@ -83,7 +83,8 @@ namespace Windows
 
             UUIManager.S.MaskEvent();
             var gate = UApplication.G<GMainGate>();
-            QueryShop.CreateQuery().SendRequest(gate.Client, new Proto.C2G_Shop { }, (res) =>
+            QueryShop.CreateQuery()
+                .SendRequest(gate.Client, new C2G_Shop { }, (res) =>
             {
                 UUIManager.S.UnMaskEvent();
                 if (res.Code.IsOk())
