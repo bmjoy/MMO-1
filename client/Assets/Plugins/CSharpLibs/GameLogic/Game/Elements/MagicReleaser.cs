@@ -114,8 +114,8 @@ namespace GameLogic.Game.Elements
                             throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
-                        var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
-                        this.ReleaserTarget.Releaser.LockAction(actionLock);
+                        //var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
+                        //this.ReleaserTarget.Releaser.LockAction(actionLock);
                         //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
                     }
                 }
