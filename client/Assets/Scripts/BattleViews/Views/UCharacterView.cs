@@ -591,6 +591,9 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = maxMP, Mp = mp });
 #endif
+#if !UNITY_SERVER
+        if (mp > 0) this.PerView.ShowMPCure(this.GetBoneByName(BodyBone).position, mp);
+#endif
     }
 
     void IBattleCharacter.AttachMagic(MagicType type, int magicID, float cdCompletedTime)

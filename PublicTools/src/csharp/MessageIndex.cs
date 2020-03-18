@@ -120,6 +120,7 @@ namespace Proto
     [Index(1009056,typeof(Notify_BattleItemChangeGroupIndex))]
     [Index(1009058,typeof(Notify_DropGold))]
     [Index(1009060,typeof(Notify_SyncServerTime))]
+    [Index(1009062,typeof(Notify_ReleaserPlaySound))]
 
     [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs

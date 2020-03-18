@@ -552,6 +552,21 @@
         <member name="F:Proto.Notify_DropGold.GoldFieldNumber">
             <summary>Field number for the "Gold" field.</summary>
         </member>
+        <member name="F:Proto.Notify_ReleaserPlaySound.IndexFieldNumber">
+            <summary>Field number for the "Index" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_ReleaserPlaySound.TargetTypeFieldNumber">
+            <summary>Field number for the "TargetType" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_ReleaserPlaySound.ResourcesPathFieldNumber">
+            <summary>Field number for the "ResourcesPath" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_ReleaserPlaySound.BoneNameFieldNumber">
+            <summary>Field number for the "BoneName" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_ReleaserPlaySound.ValueFieldNumber">
+            <summary>Field number for the "Value" field.</summary>
+        </member>
         <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
             <summary>Field number for the "ServerNow" field.</summary>
         </member>
@@ -3237,6 +3252,11 @@
         <member name="T:Proto.NotifyService.SyncServerTime">
             <summary>
             33
+            </summary>    
+        </member>
+        <member name="T:Proto.NotifyService.ReleaserPlaySound">
+            <summary>
+            34
             </summary>    
         </member>
     </members>

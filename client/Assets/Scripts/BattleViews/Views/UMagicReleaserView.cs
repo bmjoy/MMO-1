@@ -53,6 +53,17 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 #endif
     }
 
+    void IMagicReleaser.PlaySound(int target, string resourcesPath, string fromBone, float value)
+    {
+        var tar = (Layout.TargetType)target;
+        if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
+        {
+            var pos = orgin.GetBoneByName(fromBone).position;
+            var clip = ResourcesManager.S.LoadResources<AudioClip>(resourcesPath);
+
+            AudioSource.PlayClipAtPoint(clip, pos, value);
+        }
+    }
 
 #if UNITY_EDITOR
 
@@ -93,18 +104,20 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         Gizmos.DrawLine(pos, pos1);
         Gizmos.DrawLine(pos, pos2);
         UVector3 start = pos1;
-        for (float i = -a/2; i < a/2 -5; )
+        for (float i = -a / 2; i < a / 2 - 5;)
         {
             i += 5;
-            var diffQu = forward * Quaternion.Euler(0,i,0);
+            var diffQu = forward * Quaternion.Euler(0, i, 0);
             var temp = diffQu * UVector3.forward * r + pos;
             Gizmos.DrawLine(start, temp);
             start = temp;
         }
-       Gizmos.DrawLine(start, pos2);
+        Gizmos.DrawLine(start, pos2);
         Gizmos.color = c;
     }
-#endif
+
+#endif   
+
 
 
 }

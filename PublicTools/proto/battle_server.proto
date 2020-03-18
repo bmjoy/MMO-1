@@ -293,6 +293,15 @@ message Notify_DropGold
 	int32 Gold=2;
 }
 
+message Notify_ReleaserPlaySound
+{
+	int32 Index = 1;
+	int32 TargetType =2;
+	string ResourcesPath = 3;
+	string BoneName = 4;
+	float Value = 5;
+}
+
 message Notify_SyncServerTime
 {
 	float ServerNow = 1;
@@ -330,7 +339,7 @@ service NotifyService
 	rpc BattleItemChangeGroupIndex (Void) returns (Notify_BattleItemChangeGroupIndex){};//31
 	rpc DropGold (Void) returns (Notify_DropGold){};//32
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
-
+	rpc ReleaserPlaySound (Void) returns (Notify_ReleaserPlaySound){};//34
 }
 
 service ActionService

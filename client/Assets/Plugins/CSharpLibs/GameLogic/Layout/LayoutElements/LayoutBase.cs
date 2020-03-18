@@ -11,6 +11,7 @@ namespace Layout.LayoutElements
 		XmlInclude(typeof(ParticleLayout)),
 		XmlInclude(typeof(LookAtTarget)),
         XmlInclude(typeof(CallUnitLayout)),
+		XmlInclude(typeof(PlaySoundLayout)),
         XmlInclude(typeof(LaunchSelfLayout))
 	]
 	public class LayoutBase

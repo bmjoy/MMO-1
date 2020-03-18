@@ -316,6 +316,11 @@ namespace GameLogic.Game.Elements
 
         }
 
+        internal void PlaySound(TargetType target, string resourcesPath, string fromBone, float value)
+        {
+            View.PlaySound((int)target, resourcesPath, fromBone, value);
+        }
+
         internal void DeAttachElement(BattleCharacter battleCharacter)
         {
             _objs.Remove(battleCharacter.Index);

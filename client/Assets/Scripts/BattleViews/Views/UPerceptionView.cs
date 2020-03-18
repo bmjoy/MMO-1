@@ -96,6 +96,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 #endif
     }
 
+    internal void ShowMPCure(UnityEngine.Vector3 pos, int mp)
+    {
+#if !UNITY_SERVER
+        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{mp}", new Vector2(.2f, .2f), pos, Color.blue, true, param);
+#endif
+    }
+
 
     public UElementView GetViewByIndex(int releaseIndex)
     {
@@ -441,6 +448,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         bi.SetPrecpetion(this);
         return bi;
     }
+
+
     #endregion
 
 }

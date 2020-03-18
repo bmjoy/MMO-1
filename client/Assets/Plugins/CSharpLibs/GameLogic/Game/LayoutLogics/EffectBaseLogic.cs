@@ -184,6 +184,8 @@ namespace GameLogic.Game.LayoutLogics
             var per = releaser.Controllor.Perception as BattlePerception;
             per.BreakReleaserByCharacter(effectTarget, BreakReleaserType.InStartLayoutMagic);
         }
+
+        
     }
 }
 

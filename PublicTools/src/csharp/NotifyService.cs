@@ -337,8 +337,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 34
+    /// </summary>    
+    [API(34)]
+    public class ReleaserPlaySound:APIBase<Void, Notify_ReleaserPlaySound> 
+    {
+        private ReleaserPlaySound() : base() { }
+        public  static ReleaserPlaySound CreateQuery(){ return new ReleaserPlaySound();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(34)]Notify_ReleaserPlaySound ReleaserPlaySound(Void req);
         [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
         [API(32)]Notify_DropGold DropGold(Void req);
         [API(31)]Notify_BattleItemChangeGroupIndex BattleItemChangeGroupIndex(Void req);
@@ -375,6 +387,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(34)]public abstract Task<Notify_ReleaserPlaySound> ReleaserPlaySound(Void request);
         [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);
         [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);
         [API(31)]public abstract Task<Notify_BattleItemChangeGroupIndex> BattleItemChangeGroupIndex(Void request);

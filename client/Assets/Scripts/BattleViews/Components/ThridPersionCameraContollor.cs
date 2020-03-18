@@ -26,6 +26,7 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
         this.transform.LookAt(targetPos);
     }
 
+
     public float distance = 10;
     private float rx = 0;
     private float ry = 0;
@@ -68,4 +69,5 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
         var vp = CurrenCamera.WorldToViewportPoint(position);
         return vp.z > 0;
     }
+
 }

@@ -250,8 +250,6 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void ReleaseSkill(CharacterMagicData magicData)
     {
-
-
         if (!Owner) return;
         if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
         {

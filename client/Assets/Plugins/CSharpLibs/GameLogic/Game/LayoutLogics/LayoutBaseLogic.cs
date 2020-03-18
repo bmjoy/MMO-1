@@ -257,6 +257,16 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
+
+		#region PlaySoundLayout
+		[HandleLayout(typeof(PlaySoundLayout))]
+		public static void PlaySoundLayout(TimeLinePlayer linePlayer, LayoutBase layoutBase)
+		{
+			var releaser = linePlayer.Releaser;
+			var sound = layoutBase as PlaySoundLayout;
+			releaser.PlaySound(sound.target, sound.resourcesPath, sound.fromBone, sound.value);
+		}
+		#endregion
 	}
 }
 
