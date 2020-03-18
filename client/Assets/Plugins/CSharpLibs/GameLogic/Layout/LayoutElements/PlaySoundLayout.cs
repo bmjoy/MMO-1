@@ -16,6 +16,6 @@ namespace Layout.LayoutElements
         [EditorBone]
         public string fromBone;
         [Label("音量")]
-        public float value;
+        public float value =1;
     }
 }

@@ -14,6 +14,14 @@
       <GUID>b0239091-a1fe-48e9-8b62-77c5ab341240</GUID>
       <Time>0.4751838</Time>
     </TimePoint>
+    <TimePoint>
+      <GUID>7a0ccd9c-9bd4-4545-bb4c-1538e5e1165e</GUID>
+      <Time>0.4562982</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>6428b792-5271-462b-8ce1-824016213f71</GUID>
+      <Time>0.428020567</Time>
+    </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="MotionLayout">
@@ -29,7 +37,7 @@
       <target>Releaser</target>
       <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
-      <radius>2</radius>
+      <radius>3</radius>
       <angle>100</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
@@ -39,6 +47,35 @@
       </offsetPosition>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>7a0ccd9c-9bd4-4545-bb4c-1538e5e1165e</GUID>
+      <path>Effects/Slash/ArcaneSlash.prefab</path>
+      <fromTarget>Releaser</fromTarget>
+      <toTarget>Releaser</toTarget>
+      <fromBoneName>Body</fromBoneName>
+      <toBoneName>Body</toBoneName>
+      <Bind>false</Bind>
+      <destoryType>Time</destoryType>
+      <destoryTime>1</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
+    </LayoutBase>
+    <LayoutBase xsi:type="PlaySoundLayout">
+      <GUID>6428b792-5271-462b-8ce1-824016213f71</GUID>
+      <resourcesPath>Sound/Impact/lightimpact2.wav</resourcesPath>
+      <target>Releaser</target>
+      <fromBone>Bottom</fromBone>
+      <value>1</value>
     </LayoutBase>
   </Layouts>
 </TimeLine>

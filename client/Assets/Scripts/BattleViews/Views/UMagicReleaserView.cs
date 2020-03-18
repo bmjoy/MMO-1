@@ -59,8 +59,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
         {
             var pos = orgin.GetBoneByName(fromBone).position;
-            var clip = ResourcesManager.S.LoadResources<AudioClip>(resourcesPath);
-
+            var clip = ResourcesManager.S.LoadResourcesWithExName<AudioClip>(resourcesPath);
             AudioSource.PlayClipAtPoint(clip, pos, value);
         }
     }

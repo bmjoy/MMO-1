@@ -344,7 +344,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 	}
 
     IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
-        string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime)
+        string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime, Proto.Vector3 offset, 
+        Proto.Vector3 rotation, float size)
     {
 #if UNITY_SERVER||UNITY_EDITOR
         AddNotify(new Notify_LayoutPlayParticle
@@ -356,7 +357,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             FromTarget = fromTarget,
             Path = path,
             ReleaseIndex = releaser,
-            ToBoneName = toBone??string.Empty
+            ToBoneName = toBone ?? string.Empty,
+            Offset = offset,
+            Rotation = rotation,
+            Size = size
         });
 #endif
 
@@ -371,9 +375,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             return null;
         } else
         {
-            ins =Instantiate (obj);
-            ins.transform.SetParent(viewRoot.transform);
-            ins.transform.RestRTS();
+            ins =Instantiate (obj, viewRoot.transform);
         }
         var viewRelease = GetViewByIndex(releaser) as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
@@ -394,6 +396,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
         }
 
+        viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(rotation.ToUV3());
+        viewRoot.transform.position += viewRoot.transform.rotation * offset.ToUV3();
+        viewRoot.transform.localScale =  UnityEngine.Vector3 .one* size;
         switch ((ParticleDestoryType)destoryType)
         {
             case  ParticleDestoryType.Time:

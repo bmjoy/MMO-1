@@ -42,6 +42,13 @@ namespace Layout.LayoutElements
       
 		[Label("销毁时间")]
 		public float destoryTime;
+		[Label("偏移")]
+		public Vector3 offet= new Vector3();
+		[Label("旋转")]
+		public Vector3 rotation = new Vector3();
+
+		[Label("大小")]
+		public float localsize = 1;
 		public override string ToString ()
 		{
 			return string.Format ("资源{0}",path);

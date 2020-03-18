@@ -208,6 +208,9 @@ message Notify_LayoutPlayParticle
 	 int32 DestoryType=7;
 	 float DestoryTime=8;
 	 string Path=9;
+	 Vector3 Offset = 10;
+	 Vector3 Rotation = 11;
+	 float Size = 12;
 }
 
 //属性修改

@@ -407,6 +407,15 @@
         <member name="F:Proto.Notify_LayoutPlayParticle.PathFieldNumber">
             <summary>Field number for the "Path" field.</summary>
         </member>
+        <member name="F:Proto.Notify_LayoutPlayParticle.OffsetFieldNumber">
+            <summary>Field number for the "Offset" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_LayoutPlayParticle.RotationFieldNumber">
+            <summary>Field number for the "Rotation" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_LayoutPlayParticle.SizeFieldNumber">
+            <summary>Field number for the "Size" field.</summary>
+        </member>
         <member name="T:Proto.Notify_PropertyValue">
              <summary>
             属性修改

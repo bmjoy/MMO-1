@@ -14,6 +14,14 @@
       <GUID>760fabeb-704a-4095-a05e-05a5f2a17a40</GUID>
       <Time>0.7481618</Time>
     </TimePoint>
+    <TimePoint>
+      <GUID>96b46739-7109-410b-8296-7c8d3993e712</GUID>
+      <Time>0.6349614</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>d9c6c906-3e3f-453f-b21e-703b82358e66</GUID>
+      <Time>0.562982</Time>
+    </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="LookAtTarget">
@@ -29,16 +37,45 @@
       <target>Releaser</target>
       <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
-      <radius>5</radius>
+      <radius>15</radius>
       <angle>15</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
         <x>0</x>
         <y>0</y>
-        <z>0.5</z>
+        <z>1</z>
       </offsetPosition>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>96b46739-7109-410b-8296-7c8d3993e712</GUID>
+      <path>Effects/Cleave/LightningCleave.prefab</path>
+      <fromTarget>Releaser</fromTarget>
+      <toTarget>Releaser</toTarget>
+      <fromBoneName>Bottom</fromBoneName>
+      <toBoneName>Body</toBoneName>
+      <Bind>false</Bind>
+      <destoryType>LayoutTimeOut</destoryType>
+      <destoryTime>0.5</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>0</y>
+        <z>1</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
+    </LayoutBase>
+    <LayoutBase xsi:type="PlaySoundLayout">
+      <GUID>d9c6c906-3e3f-453f-b21e-703b82358e66</GUID>
+      <resourcesPath>Sound/Impact/lightimpact2.wav</resourcesPath>
+      <target>Releaser</target>
+      <fromBone>Body</fromBone>
+      <value>1</value>
     </LayoutBase>
   </Layouts>
 </TimeLine>

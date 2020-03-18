@@ -60,10 +60,11 @@ namespace GameLogic.Game.Perceptions
         /// <param name="layout">Layout.</param>
         [NeedNotify(typeof(Notify_LayoutPlayParticle),
             "ReleaseIndex", 
-            "Path", "FromTarget", "Bind", "FromBoneName", "ToBoneName", "DestoryType", "DestoryTime")
+            "Path", "FromTarget", "Bind", "FromBoneName", "ToBoneName", "DestoryType", "DestoryTime","Offset", "Rotation","Size")
         ]
         IParticlePlayer CreateParticlePlayer(int releaser,
-        string path, int fromTarget, bool bind, string fromBone, string toBone, int destoryType, float destoryTime);
+        string path, int fromTarget, bool bind, string fromBone, string toBone, int destoryType, float destoryTime,
+        Proto.Vector3 offset,Proto.Vector3 rotation, float size);
 
         /// <summary>
         /// Creates the missile.
