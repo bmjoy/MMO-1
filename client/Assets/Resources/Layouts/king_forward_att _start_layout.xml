@@ -72,7 +72,7 @@
     </LayoutBase>
     <LayoutBase xsi:type="PlaySoundLayout">
       <GUID>d9c6c906-3e3f-453f-b21e-703b82358e66</GUID>
-      <resourcesPath>Sound/Impact/lightimpact2.wav</resourcesPath>
+      <resourcesPath>Sound/MagicSounds/Medieval/Whoosh 1_2.wav</resourcesPath>
       <target>Releaser</target>
       <fromBone>Body</fromBone>
       <value>1</value>
