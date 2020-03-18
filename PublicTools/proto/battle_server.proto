@@ -94,6 +94,8 @@ message Notify_CreateBattleCharacter
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
 	 repeated HeroMagicData Cds = 16;
+	 int32 Mp =17;
+	 int32 MpMax = 18;
 }
 
 //创建一个飞行物

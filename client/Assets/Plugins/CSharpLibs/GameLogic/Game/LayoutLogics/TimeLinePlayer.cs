@@ -4,21 +4,28 @@ using GameLogic.Game.Elements;
 using EngineCore.Simulater;
 using Layout;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameLogic.Game.LayoutLogics
 {
 	public class TimeLinePlayer
 	{
-		public TimeLinePlayer (TimeLine timeLine, MagicReleaser releaser, EventContainer eventType)
+		public TimeLinePlayer(TimeLine timeLine, MagicReleaser releaser, EventContainer eventType)
 		{
 			Line = timeLine;
 			Releaser = releaser;
 			TypeEvent = eventType;
-			players = new List<IParticlePlayer> ();
+			players = new List<IParticlePlayer>();
+			var orpoint = Line.Points.OrderBy(t => t.Time).ToList();
+			foreach (var i in orpoint)
+			{
+				NoActivedPoints.Enqueue(i);
+			}
 		}
 
-		private float lastTime = -1;
-		private float startTime = 0;
+		private float startTime = -1;
+
+		private readonly Queue<TimePoint> NoActivedPoints = new Queue<TimePoint>();
 
         public TimeLine Line{ private set; get; }
 
@@ -28,29 +35,21 @@ namespace GameLogic.Game.LayoutLogics
 
 		public bool Tick(GTime time)
 		{
-			if (lastTime < 0) 
+			if (startTime < 0)
 			{
 				startTime = time.Time;
-				lastTime = time.Time - 0.01f;
 				return false;
 			}
-			var old = lastTime - startTime;
-			var now = time.Time- startTime;
+			PlayTime = time.Time - startTime;
 
-			for(var i  = 0;i<Line.Points.Count;i++)
+			while (NoActivedPoints.Count > 0 && NoActivedPoints.Peek().Time < PlayTime)
 			{
-				var point = Line.Points [i];
-				if (point.Time > old && point.Time <= now)
-                {
-					var layout = Line.FindLayoutByGuid(point.GUID);
-					LayoutBaseLogic.EnableLayout (layout, this);
-				}
+				var point = NoActivedPoints.Dequeue();
+				var layout = Line.FindLayoutByGuid(point.GUID);
+				LayoutBaseLogic.EnableLayout(layout, this);
 			}
-			lastTime = time.Time;
-			var result=  now > Line.Time ;
-			IsFinshed = result;
-			PlayTime = now;
-			return result;
+			IsFinshed = PlayTime>= Line.Time;
+			return IsFinshed;
 		}
 
         public bool IsFinshed { get; private set; } = false;

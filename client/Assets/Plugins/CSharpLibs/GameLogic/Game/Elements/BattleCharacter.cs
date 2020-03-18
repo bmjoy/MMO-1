@@ -384,7 +384,6 @@ namespace GameLogic.Game.Elements
             var temp = MP;
             if (MP >= MaxMP) MP = MaxMP;
             if (temp == MP) return false;
-
             View.ShowMPChange(mp, MP, MaxMP);
             return true;
         }

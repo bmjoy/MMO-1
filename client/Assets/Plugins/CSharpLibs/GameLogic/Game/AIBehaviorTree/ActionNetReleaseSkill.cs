@@ -88,6 +88,13 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             if (hadMove) root.Character.StopMove();
+
+            if (!root.Character.SubMP(magic.MPCost))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
+
             releaser = root.Perception.CreateReleaser(magic.MagicKey,
                 new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
             root.Character.AttachMagicHistory(magic.ID, root.Time);
@@ -96,7 +103,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 while (!releaser.IsLayoutStartFinish)
                     yield return RunStatus.Running;
                 yield return RunStatus.Success;
-                yield break ;
+                yield break;
             }
             else
             {
@@ -104,9 +111,8 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
 
             }
-
-
         }
+
 
         public override void Stop(ITreeRoot context)
         {

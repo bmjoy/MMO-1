@@ -37,8 +37,8 @@ public class UCharacterView : UElementView, IBattleCharacter
     private Animator CharacterAnimator;
     private int nameBar=-1;
     private float showHpBarTime =0;
-    private int max;
-    private int cur;
+    private int maxHp;
+    private int curHp;
     private readonly Dictionary<int, HeroMagicData> MagicCds = new Dictionary<int, HeroMagicData>();
 
     public MoveCategory MCategory=MoveCategory.NONE;
@@ -60,8 +60,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, cur, max,
-                        mpCur,mpMax,
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, mpCur,mpMax,
                         TeamId == PerView.OwerTeamIndex,
                         GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
@@ -262,7 +261,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
 
 
-        if (cur == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDead = true; };
+        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDead = true; };
     }
 
 
@@ -278,10 +277,10 @@ public class UCharacterView : UElementView, IBattleCharacter
         LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
     }
 
-    internal void SetHp(int hp, int hpMax)
+    internal void SetHpMp(int hp, int hpMax,int mp ,int mpMax)
     {
-        cur = hp; max = hpMax;
-        
+        curHp = hp; maxHp = hpMax;
+        mpCur = mp;  this.mpMax = mpMax;
     }
 
     private void StopMove()
@@ -300,6 +299,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     }
 
     public bool ShowName { set; get; } = false;
+    public int MP { get { return mpCur; } }
 
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
     {
@@ -572,28 +572,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         CreateNotify(new Notify_HPChange { Index = Index, Cur = cur, Hp = hp, Max = max });
 #endif
         if (IsDead)  return;
-        this.cur = cur;
-        this.max = max;
-
+        this.curHp = cur;
+        this.maxHp = max;
 #if !UNITY_SERVER
-
         if (hp > 0)  this.PerView.ShowHPCure(this.GetBoneByName(BodyBone).position, hp);
         else showHpBarTime = Time.time + 3;
-        /*
-        if (hp < 0)
-        {           
-            if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
-            {
-                _tips.Add(new HpChangeTip
-                {
-                    id = -1,
-                    hp = hp,
-                    hideTime = Time.time + 3,
-                    pos = GetBoneByName(TopBone).position
-                });
-            }
-        }
-       */
 #endif
     }
 
@@ -602,11 +585,11 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
+        if (!this) return;
         mpMax = maxMP;
         mpCur = cur;
-        if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = max, Mp = mp });
+        CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = maxMP, Mp = mp });
 #endif
     }
 
@@ -652,17 +635,19 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         var createNotity = new Notify_CreateBattleCharacter
         {
-            Index =Index,
+            Index = Index,
             AccountUuid = this.AccoundUuid,
             ConfigID = ConfigID,
             Position = transform.position.ToPVer3(),
-            Forward =  LookQuaternion.eulerAngles.ToPVer3(),
+            Forward = LookQuaternion.eulerAngles.ToPVer3(),
             Level = Level,
             Name = Name,
             TeamIndex = TeamId,
-            Speed = Speed, 
-            Hp = cur, MaxHp = max
-            
+            Speed = Speed,
+            Hp = curHp,
+            MaxHp = maxHp,
+            Mp = mpCur,
+            MpMax = mpMax
         };
         foreach (var i in MagicCds)
             createNotity.Cds.Add(new HeroMagicData { MType = i.Value.MType, CDTime = i.Value.CDTime, MagicID = i.Value.MagicID });

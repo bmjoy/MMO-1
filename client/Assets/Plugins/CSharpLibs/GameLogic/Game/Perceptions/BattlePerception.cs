@@ -167,7 +167,7 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax,cds);
+                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds);
 
             var battleCharacter = new BattleCharacter(data.ID,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
 

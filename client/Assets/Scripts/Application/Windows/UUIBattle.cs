@@ -223,8 +223,7 @@ namespace Windows
         public bool IsMaigic(int id)
         {
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
-            if (data == null)
-                return false;
+            if (data == null) return false;
             return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
 
