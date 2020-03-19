@@ -27,7 +27,8 @@ public class MagicEditorWindow : EditorWindow
 		public Vector2 point;
 		public float withd;
 	}
-    
+
+	[System.NonSerialized]
 	private MagicData data;    
 
 	[MenuItem("GAME/Editor/MagicEditor &1")]
@@ -37,11 +38,6 @@ public class MagicEditorWindow : EditorWindow
         MagicEditorWindow window = (MagicEditorWindow)GetWindow(typeof(MagicEditorWindow),false, "Magic Editor");
 		window.position = new Rect(300, 200, 700, 400);
 		window.minSize = new Vector2 (400, 300);
-		//window.ShowTab ();
-		//window.TestData();
-		//window.Show();
-
-		//currentEventType = Layout.EventType.EVENT_START;
 	}
 	
     Vector2 scrollProperty; 
@@ -64,16 +60,18 @@ public class MagicEditorWindow : EditorWindow
 
 	private void OnGUI()
 	{
-		Repaint ();
-		//GetPlayingInfo ();
+		Repaint();
 		Color color = Color.black;
 		float lS = 230;
-        DrawOp();
+		DrawOp();
 		GUI.Label(new Rect(0, 0, this.position.width, 30), currentPath);
 
 		if (data == null)
+		{
+			if (!string.IsNullOrEmpty(currentPath))
+				OpenPath(currentPath);
 			return;
-		
+		}
 		_scroll = GUI.BeginScrollView(new Rect(0, 0, position.width - lS, position.height), _scroll,view);
 
 		var currentView = new Rect (_scroll.x, _scroll.y, position.width - lS, position.height);
@@ -277,11 +275,15 @@ public class MagicEditorWindow : EditorWindow
 				return;
 		}
 		var path = EditorUtility.OpenFilePanel ("Open", Application.dataPath+ SAVE_PATH, "xml");
-		if (string.IsNullOrEmpty (path))
-			return;
-		var xml = File.ReadAllText (path,XmlParser.UTF8);
-		data = XmlParser.DeSerialize<MagicData> (xml);
+		OpenPath(path);
 		currentPath = path;
+	}
+
+	private void OpenPath(string path)
+	{
+		if (string.IsNullOrEmpty(path)) return;
+		var xml = File.ReadAllText(path, XmlParser.UTF8);
+		data = XmlParser.DeSerialize<MagicData>(xml);
 	}
 
 	private void Save(object userstate)
@@ -303,7 +305,6 @@ public class MagicEditorWindow : EditorWindow
 
 	public const string SAVE_PATH = "/Resources/Magics/";
 
-	[System.NonSerialized]
 	private string currentPath;
 
 	private void SaveAs(object userstate)
