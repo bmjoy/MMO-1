@@ -11,6 +11,8 @@ namespace GameLogic.Game.Elements
 
         [NeedNotify(typeof(Notify_PlayTimeLine),"Path")]
         void PlayTimeLine(string layoutPath);
+
+        void PlayTest(TimeLine line);
     }
 }
 

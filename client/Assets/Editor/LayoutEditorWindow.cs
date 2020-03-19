@@ -62,16 +62,12 @@ public class LayoutEditorWindow:EditorWindow
         if (!EditorApplication.isPlaying)
             return;
 
-        var testMaigc = new Layout.MagicData
-        {
-
-        };
-
-        testMaigc.Containers.Add(
-            new Layout.EventContainer
+        var testMaigc = new Layout.MagicData();
+        testMaigc.Containers.Add(new Layout.EventContainer
             {
                 type = Layout.EventType.EVENT_START,
-                layoutPath = shortPath
+                layoutPath = shortPath,
+                line = line
             }
         );
         var g = EditorStarter.G();

@@ -58,6 +58,9 @@ namespace Layout
 
 		public List<EffectGroup> effectGroup;
 
+		[XmlIgnore]
+		public TimeLine line;
+
 		public EffectGroup FindGroupByKey(string key)
 		{
 			foreach (var i in effectGroup) {

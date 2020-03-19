@@ -36,10 +36,18 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Index = Index
         });
 #endif
+        PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath));
+    }
 
-        var timeLine =( PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath);
+    private void PlayLine(TimeLine timeLine)
+    {
         if (timeLine == null) return;
         _players.AddLast(new TimeLineViewPlayer(timeLine, this));
+    }
+
+    void IMagicReleaser.PlayTest(TimeLine line)
+    {
+        PlayLine(line);
     }
 
     private void TickTimeLine(GTime time)
@@ -155,6 +163,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         Gizmos.DrawLine(start, pos2);
         Gizmos.color = c;
     }
+
+
 
 #endif
 

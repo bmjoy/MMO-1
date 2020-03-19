@@ -103,11 +103,16 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
-                    var timeLine = per.View.GetTimeLineByPath(i.layoutPath);
+                    var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
                     var player = new TimeLinePlayer(timeLine, this, i);
                     _players.AddLast(player);
-                    View.PlayTimeLine(i.layoutPath);
+
+                    if (i.line == null)
+                        View.PlayTimeLine(i.layoutPath);//for runtime
+                    else
+                        View.PlayTest(i.line);//for editor
+
                     if (i.type == EventType.EVENT_START)
                     {
                         if (startLayout != null)
