@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>1</Time>
+  <Time>4</Time>
   <Points>
     <TimePoint>
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <Time>0.4456328</Time>
+      <Time>0.668380439</Time>
     </TimePoint>
     <TimePoint>
       <GUID>78164013-d316-4f24-90c1-e2218581082a</GUID>
@@ -16,11 +16,31 @@
     </TimePoint>
     <TimePoint>
       <GUID>a4fa31fe-f794-464c-8cae-847da9238d6a</GUID>
-      <Time>0.320855618</Time>
+      <Time>0.3033419</Time>
     </TimePoint>
     <TimePoint>
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <Time>0.837789655</Time>
+      <Time>1.7994858</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
+      <Time>2.77120829</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
+      <Time>0.277634948</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
+      <Time>2.62724924</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
+      <Time>1.73264778</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
+      <Time>1.00257075</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -29,7 +49,7 @@
       <target>Target</target>
       <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
-      <radius>3</radius>
+      <radius>2</radius>
       <angle>360</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
@@ -50,14 +70,32 @@
     </LayoutBase>
     <LayoutBase xsi:type="ParticleLayout">
       <GUID>a4fa31fe-f794-464c-8cae-847da9238d6a</GUID>
-      <path>Effects/Range.prefab</path>
+      <path>Effects/Rain/RainWater.prefab</path>
       <fromTarget>Target</fromTarget>
       <toTarget>Releaser</toTarget>
-      <fromBoneName>Top</fromBoneName>
-      <toBoneName>Top</toBoneName>
+      <fromBoneName>Bottom</fromBoneName>
+      <toBoneName>Bottom</toBoneName>
       <Bind>false</Bind>
       <destoryType>Normal</destoryType>
       <destoryTime>1</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
+    </LayoutBase>
+    <LayoutBase xsi:type="PlaySoundLayout">
+      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
+      <resourcesPath>Sound/MagicSounds/Element Scholls/Shadow/Shadow Spell 13.wav</resourcesPath>
+      <target>Target</target>
+      <fromBone>Bottom</fromBone>
+      <value>1</value>
     </LayoutBase>
   </Layouts>
 </TimeLine>

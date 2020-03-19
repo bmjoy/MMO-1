@@ -14,7 +14,6 @@
             </EffectBase>
             <EffectBase xsi:type="AddBufEffect">
               <buffMagicKey>show_hit_buff</buffMagicKey>
-              <timeVauleOf>MagicConfig</timeVauleOf>
               <durationTime>-1</durationTime>
             </EffectBase>
           </effects>
