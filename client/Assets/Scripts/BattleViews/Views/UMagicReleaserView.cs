@@ -29,6 +29,14 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     void IMagicReleaser.PlayTimeLine(string layoutPath)
     {
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_PlayTimeLine
+        {
+            Path = layoutPath,
+            Index = Index
+        });
+#endif
+
         var timeLine =( PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath);
         if (timeLine == null) return;
         _players.AddLast(new TimeLineViewPlayer(timeLine, this));
