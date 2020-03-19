@@ -381,7 +381,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                             case ItemType.ItMpitem:
                                 {
                                     var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                    per.CreateReleaser(config.Params[0], rTarget, ReleaserType.Magic);
+                                    per.CreateReleaser(config.Params[0], rTarget, ReleaserType.Magic,-1);
                                     needNotifyPackage = true;
                                 }
                                 break;

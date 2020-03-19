@@ -93,7 +93,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 		var per = curState.Perception as BattlePerception;
 		this.currentReleaser =per.CreateReleaser(string.Empty,magic,
             new GameLogic.Game.LayoutLogics.ReleaseAtTarget(this.releaser, this.target),
-			ReleaserType.Magic);
+			ReleaserType.Magic,0);
 
 	}
 

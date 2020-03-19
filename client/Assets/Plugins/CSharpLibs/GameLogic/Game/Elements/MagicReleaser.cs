@@ -52,15 +52,17 @@ namespace GameLogic.Game.Elements
             IReleaserTarget target,
             GControllor controllor,
             IMagicReleaser view,
-            ReleaserType type)
+            ReleaserType type,float durtime)
             : base(controllor, view)
         {
             ReleaserTarget = target;
             Magic = magic;
             RType = type;
             OnExitedState = ReleaseAll;
+            this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
 
+        public float Durtime { private set; get; }
         public void SetParam(params string[] parms)
         {
             Params = parms;
@@ -168,8 +170,10 @@ namespace GameLogic.Game.Elements
         private readonly LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
         private readonly Queue<long> _removeTemp = new Queue<long>();
 
-        public void TickTimeLines(GTime time)
+        public void Tick(GTime time)
         {
+            if (Durtime > 0)
+                Durtime -= time.DeltaTime;
             var current = _players.First;
             while (current != null)
             {

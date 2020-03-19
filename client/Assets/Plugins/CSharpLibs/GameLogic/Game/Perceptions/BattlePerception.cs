@@ -76,7 +76,7 @@ namespace GameLogic.Game.Perceptions
 
 
         #region create Elements 
-        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty)
+        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty, float durtime)
         {
             var magic = View.GetMagicByKey(key);
             if (magic == null)
@@ -84,17 +84,17 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(key, magic, target, ty);
+            var releaser = CreateReleaser(key, magic, target, ty, durtime);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty)
+        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
         { 
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
                                                target.TargetPosition.ToPV3());
-            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty);
+            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty, durtime);
             this.JoinElement(mReleaser);
             return mReleaser;
         }

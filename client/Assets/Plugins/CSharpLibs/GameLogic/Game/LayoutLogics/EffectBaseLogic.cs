@@ -121,11 +121,8 @@ namespace GameLogic.Game.LayoutLogics
         {
             var effect = e as AddBufEffect;
             var per = releaser.Controllor.Perception as BattlePerception;
-            per.CreateReleaser(
-                effect.buffMagicKey,
-                new ReleaseAtTarget(releaser.ReleaserTarget.Releaser, effectTarget),
-                ReleaserType.Buff
-            );
+            var rT = new ReleaseAtTarget(releaser.ReleaserTarget.Releaser, effectTarget);
+            per.CreateReleaser( effect.buffMagicKey,rT, ReleaserType.Buff, effect.durationTime);
         }
 
         [EffectHandle(typeof(BreakReleaserEffect))]

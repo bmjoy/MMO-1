@@ -107,17 +107,6 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 12
-    /// </summary>    
-    [API(12)]
-    public class LayoutPlayMotion:APIBase<Void, Notify_LayoutPlayMotion> 
-    {
-        private LayoutPlayMotion() : base() { }
-        public  static LayoutPlayMotion CreateQuery(){ return new LayoutPlayMotion();}
-    }
-    
-
-    /// <summary>
     /// 14
     /// </summary>    
     [API(14)]
@@ -359,7 +348,6 @@ namespace Proto.NotifyService
         [API(16)]Notify_PlayerJoinState PlayerJoinState(Void req);
         [API(15)]Notify_MPChange MPChange(Void req);
         [API(14)]Notify_LookAtCharacter LookAtCharacter(Void req);
-        [API(12)]Notify_LayoutPlayMotion LayoutPlayMotion(Void req);
         [API(11)]Notify_HPChange HPChange(Void req);
         [API(8)]Notify_ElementExitState ElementExitState(Void req);
         [API(7)]Notify_Drop Drop(Void req);
@@ -395,7 +383,6 @@ namespace Proto.NotifyService
         [API(16)]public abstract Task<Notify_PlayerJoinState> PlayerJoinState(Void request);
         [API(15)]public abstract Task<Notify_MPChange> MPChange(Void request);
         [API(14)]public abstract Task<Notify_LookAtCharacter> LookAtCharacter(Void request);
-        [API(12)]public abstract Task<Notify_LayoutPlayMotion> LayoutPlayMotion(Void request);
         [API(11)]public abstract Task<Notify_HPChange> HPChange(Void request);
         [API(8)]public abstract Task<Notify_ElementExitState> ElementExitState(Void request);
         [API(7)]public abstract Task<Notify_Drop> Drop(Void request);

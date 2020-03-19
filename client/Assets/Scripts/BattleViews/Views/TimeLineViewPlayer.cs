@@ -52,8 +52,9 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
                 particle.AutoDestory(layout.destoryTime);
                 break;
             case ParticleDestoryType.Normal:
-                //自动销亡
+                player.RView.AttachParticle(particle);
                 break;
+                
         }
     }
 

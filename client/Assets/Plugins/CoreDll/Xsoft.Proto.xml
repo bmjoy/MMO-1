@@ -304,12 +304,6 @@
         <member name="F:Proto.Notify_CharacterSpeed.SpeedFieldNumber">
             <summary>Field number for the "Speed" field.</summary>
         </member>
-        <member name="F:Proto.Notify_LayoutPlayMotion.IndexFieldNumber">
-            <summary>Field number for the "Index" field.</summary>
-        </member>
-        <member name="F:Proto.Notify_LayoutPlayMotion.MotionFieldNumber">
-            <summary>Field number for the "Motion" field.</summary>
-        </member>
         <member name="F:Proto.Notify_LookAtCharacter.IndexFieldNumber">
             <summary>Field number for the "Index" field.</summary>
         </member>
@@ -3111,11 +3105,6 @@
         <member name="T:Proto.NotifyService.HPChange">
             <summary>
             11
-            </summary>    
-        </member>
-        <member name="T:Proto.NotifyService.LayoutPlayMotion">
-            <summary>
-            12
             </summary>    
         </member>
         <member name="T:Proto.NotifyService.LookAtCharacter">

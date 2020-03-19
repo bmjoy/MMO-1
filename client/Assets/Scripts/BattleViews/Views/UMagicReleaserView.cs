@@ -75,6 +75,13 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         }
     }
 
+    private readonly List<IParticlePlayer> pPlayers  = new List<IParticlePlayer>();
+
+    internal void AttachParticle(IParticlePlayer particle)
+    {
+        pPlayers.Add(particle);
+    }
+
     public override IMessage ToInitNotify()
     {
         var createNotify = new Notify_CreateReleaser
@@ -164,6 +171,13 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         Gizmos.color = c;
     }
 
+
+    private void OnDestroy()
+    {
+        foreach (var i in pPlayers)
+            i.DestoryParticle();
+        pPlayers.Clear();
+    }
 
 
 #endif

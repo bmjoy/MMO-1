@@ -415,21 +415,15 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
 #endif
-       //do nothing
     }
 
     void IBattleCharacter.PlayMotion(string motion)
     {
         if (!this) return;
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_LayoutPlayMotion { Index = Index, Motion = motion });
-#endif
         var an = CharacterAnimator;
         if (an == null) return;
-
         if (motion == "Hit") { if (last + 0.3f > Time.time) return; }
         if (IsDead) return;
-
         if (!string.IsNullOrEmpty(lastMotion) && lastMotion != motion)
         {
             an.ResetTrigger(lastMotion);
