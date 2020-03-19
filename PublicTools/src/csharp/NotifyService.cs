@@ -118,17 +118,6 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 13
-    /// </summary>    
-    [API(13)]
-    public class LayoutPlayParticle:APIBase<Void, Notify_LayoutPlayParticle> 
-    {
-        private LayoutPlayParticle() : base() { }
-        public  static LayoutPlayParticle CreateQuery(){ return new LayoutPlayParticle();}
-    }
-    
-
-    /// <summary>
     /// 14
     /// </summary>    
     [API(14)]
@@ -338,19 +327,19 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 34
+    /// 35
     /// </summary>    
-    [API(34)]
-    public class ReleaserPlaySound:APIBase<Void, Notify_ReleaserPlaySound> 
+    [API(35)]
+    public class PlayTimeLine:APIBase<Void, Notify_PlayTimeLine> 
     {
-        private ReleaserPlaySound() : base() { }
-        public  static ReleaserPlaySound CreateQuery(){ return new ReleaserPlaySound();}
+        private PlayTimeLine() : base() { }
+        public  static PlayTimeLine CreateQuery(){ return new PlayTimeLine();}
     }
     
 
     public interface INotifyService
     {
-        [API(34)]Notify_ReleaserPlaySound ReleaserPlaySound(Void req);
+        [API(35)]Notify_PlayTimeLine PlayTimeLine(Void req);
         [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
         [API(32)]Notify_DropGold DropGold(Void req);
         [API(31)]Notify_BattleItemChangeGroupIndex BattleItemChangeGroupIndex(Void req);
@@ -370,7 +359,6 @@ namespace Proto.NotifyService
         [API(16)]Notify_PlayerJoinState PlayerJoinState(Void req);
         [API(15)]Notify_MPChange MPChange(Void req);
         [API(14)]Notify_LookAtCharacter LookAtCharacter(Void req);
-        [API(13)]Notify_LayoutPlayParticle LayoutPlayParticle(Void req);
         [API(12)]Notify_LayoutPlayMotion LayoutPlayMotion(Void req);
         [API(11)]Notify_HPChange HPChange(Void req);
         [API(8)]Notify_ElementExitState ElementExitState(Void req);
@@ -387,7 +375,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
-        [API(34)]public abstract Task<Notify_ReleaserPlaySound> ReleaserPlaySound(Void request);
+        [API(35)]public abstract Task<Notify_PlayTimeLine> PlayTimeLine(Void request);
         [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);
         [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);
         [API(31)]public abstract Task<Notify_BattleItemChangeGroupIndex> BattleItemChangeGroupIndex(Void request);
@@ -407,7 +395,6 @@ namespace Proto.NotifyService
         [API(16)]public abstract Task<Notify_PlayerJoinState> PlayerJoinState(Void request);
         [API(15)]public abstract Task<Notify_MPChange> MPChange(Void request);
         [API(14)]public abstract Task<Notify_LookAtCharacter> LookAtCharacter(Void request);
-        [API(13)]public abstract Task<Notify_LayoutPlayParticle> LayoutPlayParticle(Void request);
         [API(12)]public abstract Task<Notify_LayoutPlayMotion> LayoutPlayMotion(Void request);
         [API(11)]public abstract Task<Notify_HPChange> HPChange(Void request);
         [API(8)]public abstract Task<Notify_ElementExitState> ElementExitState(Void request);

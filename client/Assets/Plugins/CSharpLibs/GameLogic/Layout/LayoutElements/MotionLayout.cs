@@ -4,7 +4,7 @@ using Layout.EditorAttributes;
 
 namespace Layout.LayoutElements
 {
-	[EditorLayoutAttribute("动画状态播放器")]
+	[EditorLayout("动画状态播放器",ViewOnly = true)]
 	public class MotionLayout:LayoutBase
 	{
 		public MotionLayout ()

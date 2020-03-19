@@ -3,7 +3,7 @@
 namespace Layout.LayoutElements
 {
 
-    [EditorLayout("播放声音")]
+    [EditorLayout("播放声音", ViewOnly = true)]
     public  class PlaySoundLayout:LayoutBase
     {
         [Label("子物体资源目录")]

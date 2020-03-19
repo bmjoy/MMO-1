@@ -79,23 +79,6 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
-		#region MotionLayout
-		[HandleLayout(typeof(MotionLayout))]
-		public static void MotionActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
-		{
-			var layout = layoutBase as MotionLayout;
-			var releaser = linePlayer.Releaser;
-			if (layout.targetType == Layout.TargetType.Releaser)
-			{
-				releaser.ReleaserTarget?.Releaser?.PlayMotion(layout.motionName);
-			}
-			else if (layout.targetType == Layout.TargetType.Target)
-			{
-				releaser.ReleaserTarget?.ReleaserTarget?.PlayMotion(layout.motionName);
-			}
-		}
-        #endregion
-
         #region DamageLayout
 		[HandleLayout(typeof(DamageLayout))]
 		public static void DamageActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
@@ -151,29 +134,6 @@ namespace GameLogic.Game.LayoutLogics
 				}
 			}
 
-		}
-        #endregion
-
-        #region ParticleLayout
-		[HandleLayout(typeof(ParticleLayout))]
-		public static void ParticleActive(TimeLinePlayer linePlayer,LayoutBase layoutBase)
-		{
-			var layout = layoutBase as ParticleLayout;
-			var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
-            var particle = per.CreateParticlePlayer (linePlayer.Releaser, layout);
-            if (particle == null) return;
-			switch (layout.destoryType) 
-			{
-			case  ParticleDestoryType.LayoutTimeOut:
-				linePlayer.AttachParticle (particle);
-				break;
-			case ParticleDestoryType.Time:
-				particle.AutoDestory (layout.destoryTime);
-				break;
-			case ParticleDestoryType.Normal:
-				//自动销亡
-				break;
-			}
 		}
         #endregion
 
@@ -257,16 +217,6 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
-
-		#region PlaySoundLayout
-		[HandleLayout(typeof(PlaySoundLayout))]
-		public static void PlaySoundLayout(TimeLinePlayer linePlayer, LayoutBase layoutBase)
-		{
-			var releaser = linePlayer.Releaser;
-			var sound = layoutBase as PlaySoundLayout;
-			releaser.PlaySound(sound.target, sound.resourcesPath, sound.fromBone, sound.value);
-		}
-		#endregion
 	}
 }
 

@@ -6,6 +6,11 @@ using Layout.LayoutElements;
 using GameLogic;
 using UVector3 = UnityEngine.Vector3;
 using System.Collections.Generic;
+using GameLogic.Game.LayoutLogics;
+using System.Reflection;
+using System;
+using GameLogic.Game.Perceptions;
+using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
@@ -19,6 +24,40 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
     public IBattleCharacter CharacterReleaser { private set; get; }
 
     public string Key { get; internal set; }
+
+    private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
+
+    void IMagicReleaser.PlayTimeLine(string layoutPath)
+    {
+        var timeLine =( PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath);
+        if (timeLine == null) return;
+        _players.AddLast(new TimeLineViewPlayer(timeLine, this));
+    }
+
+    private void TickTimeLine(GTime time)
+    {
+        var current = _players.First;
+        while (current != null)
+        {
+            if (current.Value.Tick(time))
+            {
+                current.Value.Destory();
+                _players.Remove(current);
+            }
+            current = current.Next;
+        }
+    }
+
+    public void PlaySound(Layout.TargetType target, string resourcesPath, string fromBone, float value)
+    {
+        var tar = target;
+        if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
+        {
+            var pos = orgin.GetBoneByName(fromBone).position;
+            var clip = ResourcesManager.S.LoadResourcesWithExName<AudioClip>(resourcesPath);
+            AudioSource.PlayClipAtPoint(clip, pos, value);
+        }
+    }
 
     public override IMessage ToInitNotify()
     {
@@ -53,25 +92,9 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 #endif
     }
 
-    void IMagicReleaser.PlaySound(int target, string resourcesPath, string fromBone, float value)
+    private void Update()
     {
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_ReleaserPlaySound
-        {
-            Index = this.Index,
-            BoneName = fromBone,
-            ResourcesPath = resourcesPath,
-            TargetType = target,
-            Value = value
-        });
-#endif
-        var tar = (Layout.TargetType)target;
-        if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
-        {
-            var pos = orgin.GetBoneByName(fromBone).position;
-            var clip = ResourcesManager.S.LoadResourcesWithExName<AudioClip>(resourcesPath);
-            AudioSource.PlayClipAtPoint(clip, pos, value);
-        }
+        TickTimeLine(PerView.GetTime());
     }
 
 #if UNITY_EDITOR
@@ -125,7 +148,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         Gizmos.color = c;
     }
 
-#endif   
+#endif
 
 
 

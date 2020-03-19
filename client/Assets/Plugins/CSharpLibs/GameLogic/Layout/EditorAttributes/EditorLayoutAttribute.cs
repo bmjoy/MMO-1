@@ -10,6 +10,7 @@ namespace Layout.EditorAttributes
 			Name = name;
 		}
 		public string Name{set;get;}
+        public bool ViewOnly { set; get; }
 	}
 }
 

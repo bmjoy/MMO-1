@@ -8,14 +8,11 @@ using System.Linq;
 
 namespace GameLogic.Game.LayoutLogics
 {
-	public class TimeLinePlayer
+	public abstract class TimeLinePlayerBase
 	{
-		public TimeLinePlayer(TimeLine timeLine, MagicReleaser releaser, EventContainer eventType)
+		public TimeLinePlayerBase(TimeLine timeLine)
 		{
 			Line = timeLine;
-			Releaser = releaser;
-			TypeEvent = eventType;
-			players = new List<IParticlePlayer>();
 			var orpoint = Line.Points.OrderBy(t => t.Time).ToList();
 			foreach (var i in orpoint)
 			{
@@ -27,12 +24,7 @@ namespace GameLogic.Game.LayoutLogics
 
 		private readonly Queue<TimePoint> NoActivedPoints = new Queue<TimePoint>();
 
-        public TimeLine Line{ private set; get; }
-
-		public MagicReleaser Releaser{ private set; get; }
-
-		public EventContainer TypeEvent{ private set; get; }
-
+		public TimeLine Line { private set; get; }
 		public bool Tick(GTime time)
 		{
 			if (startTime < 0)
@@ -46,32 +38,42 @@ namespace GameLogic.Game.LayoutLogics
 			{
 				var point = NoActivedPoints.Dequeue();
 				var layout = Line.FindLayoutByGuid(point.GUID);
-				LayoutBaseLogic.EnableLayout(layout, this);
+				EnableLayout(layout);
 			}
-			IsFinshed = PlayTime>= Line.Time;
+			IsFinshed = PlayTime >= Line.Time;
 			return IsFinshed;
 		}
 
-        public bool IsFinshed { get; private set; } = false;
+		protected abstract void EnableLayout(LayoutBase layout);
 
-        private readonly List<IParticlePlayer> players;
+		public bool IsFinshed { get; private set; } = false;
 
-		public void AttachParticle(IParticlePlayer particle)
+		protected virtual void OnDestory()
 		{
-			players.Add (particle);
+
 		}
 
-		public void Destory()
-		{
-			foreach (var i in players) 
-            {
-				if (i.CanDestory) {
-					i.DestoryParticle ();
-				}
-			}
-		}
+		public void Destory() { this.OnDestory(); }
 
-        public float PlayTime { get; private set; } = 0f;
-    }
+		public float PlayTime { get; private set; } = 0f;
+	}
+
+	public class TimeLinePlayer : TimeLinePlayerBase
+	{
+		public TimeLinePlayer(TimeLine timeLine, MagicReleaser releaser, EventContainer eventType) : base(timeLine)
+		{
+			this.Releaser = releaser;
+			this.TypeEvent = eventType;
+		}
+		public EventContainer TypeEvent { private set; get; }
+		public MagicReleaser Releaser { private set; get; }
+
+		protected override void EnableLayout(LayoutBase layout)
+		{
+			if (LayoutBase.IsViewLayout(layout)) return;
+			LayoutBaseLogic.EnableLayout(layout, this);
+		}
+	}
+
 }
 

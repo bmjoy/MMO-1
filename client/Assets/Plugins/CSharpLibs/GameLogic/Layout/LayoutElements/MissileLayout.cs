@@ -11,7 +11,7 @@ namespace Layout.LayoutElements
 	}
 
 
-	[EditorLayoutAttribute("子物体发射器")]
+	[EditorLayout("子物体发射器")]
 	public class MissileLayout:LayoutBase
 	{
 		public MissileLayout ()

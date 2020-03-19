@@ -34,6 +34,18 @@ namespace Layout.LayoutElements
 			instance.GUID = Guid.NewGuid ().ToString ();
 			return instance;
 		}
+
+		public static bool IsViewLayout(LayoutBase layout)
+		{
+			if (layout.GetType().GetCustomAttributes(typeof(EditorLayoutAttribute), false) is EditorLayoutAttribute[] att)
+			{
+				if (att == null || att.Length == 0)
+                    throw new Exception($"no found EditorLayoutAttribute in type {layout.GetType()}");
+				return att[0].ViewOnly;
+            }
+			return false;
+
+		}
 	}
 }
 

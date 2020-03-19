@@ -89,7 +89,7 @@ namespace GameLogic.Game.Perceptions
         }
 
         public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty)
-        {
+        { 
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
@@ -203,15 +203,6 @@ namespace GameLogic.Game.Perceptions
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }
-
-        internal IParticlePlayer CreateParticlePlayer(MagicReleaser relaser, ParticleLayout layout)
-        {
-            var p = View.CreateParticlePlayer(relaser.Index, layout.path, (int)layout.fromTarget,
-                layout.Bind, layout.fromBoneName, layout.toBoneName,
-                (int)layout.destoryType, layout.destoryTime, layout.offet.ToV3(), layout.rotation.ToV3(),layout.localsize);
-            return p;
-        }
-
 
         internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {

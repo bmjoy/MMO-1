@@ -343,32 +343,11 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return missile;
 	}
 
-    IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
-        string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime, Proto.Vector3 offset, 
-        Proto.Vector3 rotation, float size)
+    public IParticlePlayer CreateParticlePlayer(IMagicReleaser releaser, ParticleLayout layout)
     {
-#if UNITY_SERVER||UNITY_EDITOR
-        AddNotify(new Notify_LayoutPlayParticle
-        {
-            Bind = bind,
-            DestoryTime = destoryTime,
-            DestoryType = destoryType,
-            FromBoneName = fromBone ?? string.Empty,
-            FromTarget = fromTarget,
-            Path = path,
-            ReleaseIndex = releaser,
-            ToBoneName = toBone ?? string.Empty,
-            Offset = offset,
-            Rotation = rotation,
-            Size = size
-        });
-#endif
-
-        var viewRoot = new GameObject(path);
+        var viewRoot = new GameObject(layout.path);
         var view = viewRoot.AddComponent<UParticlePlayer>();
-
-#if !UNITY_SERVER
-        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (path);
+        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (layout.path);
         GameObject ins;
         if (obj == null)
         {
@@ -377,13 +356,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         {
             ins =Instantiate (obj, viewRoot.transform);
         }
-        var viewRelease = GetViewByIndex(releaser) as UMagicReleaserView;
+        var viewRelease = releaser as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
       
-        var form = (TargetType)fromTarget == TargetType.Releaser ? characterView : viewTarget;
-        var bone = form.GetBoneByName(fromBone);
-        if (bind)
+        var form = layout.fromTarget == TargetType.Releaser ? characterView : viewTarget;
+        var bone = form.GetBoneByName(layout.fromBoneName);
+        if (layout.Bind)
         {
             if (bone) viewRoot.transform.SetParent(bone, false);
             viewRoot.transform.RestRTS();
@@ -396,13 +375,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
         }
 
-        viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(rotation.ToUV3());
-        viewRoot.transform.position += viewRoot.transform.rotation * offset.ToUV3();
-        viewRoot.transform.localScale =  UnityEngine.Vector3 .one* size;
-        switch ((ParticleDestoryType)destoryType)
+        viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(layout.rotation.ToUV3());
+        viewRoot.transform.position += viewRoot.transform.rotation * layout.offet.ToUV3();
+        viewRoot.transform.localScale =  UnityEngine.Vector3 .one* layout.localsize;
+        switch (layout.destoryType)
         {
             case  ParticleDestoryType.Time:
-                Destroy(ins, destoryTime);
+                Destroy(ins, layout.destoryTime);
                 break;
             case ParticleDestoryType.Normal:
                 Destroy(ins, 3);
@@ -411,7 +390,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
                 Destroy(ins, 1);
                 break;
         }
-#endif
         return view;
     }
         

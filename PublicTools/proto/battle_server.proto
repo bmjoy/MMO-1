@@ -197,22 +197,6 @@ message Notify_CharacterMoveForward
 	Vector3 Forward = 3;
 }
 
-message Notify_LayoutPlayParticle
-{
-	 int32 ReleaseIndex=1;
-	 int32 FromTarget=2;
-	 int32 ToTarget=3;
-	 string FromBoneName=4;
-	 string ToBoneName=5;
-	 bool Bind=6;
-	 int32 DestoryType=7;
-	 float DestoryTime=8;
-	 string Path=9;
-	 Vector3 Offset = 10;
-	 Vector3 Rotation = 11;
-	 float Size = 12;
-}
-
 //属性修改
 message Notify_PropertyValue
 {
@@ -296,19 +280,18 @@ message Notify_DropGold
 	int32 Gold=2;
 }
 
-message Notify_ReleaserPlaySound
+message Notify_PlayTimeLine
 {
 	int32 Index = 1;
-	int32 TargetType =2;
-	string ResourcesPath = 3;
-	string BoneName = 4;
-	float Value = 5;
+	string Path = 2;
 }
 
 message Notify_SyncServerTime
 {
 	float ServerNow = 1;
 }
+
+
 
 service NotifyService
 {
@@ -322,7 +305,7 @@ service NotifyService
 	rpc ElementExitState(Void) returns (Notify_ElementExitState){};//8
 	rpc HPChange(Void) returns (Notify_HPChange); //11
 	rpc LayoutPlayMotion(Void) returns (Notify_LayoutPlayMotion);//12
-	rpc LayoutPlayParticle(Void) returns (Notify_LayoutPlayParticle);//13
+	//rpc LayoutPlayParticle(Void) returns (Notify_LayoutPlayParticle);//13
 	rpc LookAtCharacter(Void) returns (Notify_LookAtCharacter);//14
 	rpc MPChange(Void) returns (Notify_MPChange);//15
 	rpc PlayerJoinState(Void) returns (Notify_PlayerJoinState);//16
@@ -342,7 +325,8 @@ service NotifyService
 	rpc BattleItemChangeGroupIndex (Void) returns (Notify_BattleItemChangeGroupIndex){};//31
 	rpc DropGold (Void) returns (Notify_DropGold){};//32
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
-	rpc ReleaserPlaySound (Void) returns (Notify_ReleaserPlaySound){};//34
+	//rpc ReleaserPlaySound (Void) returns (Notify_ReleaserPlaySound){};//34
+	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
 }
 
 service ActionService

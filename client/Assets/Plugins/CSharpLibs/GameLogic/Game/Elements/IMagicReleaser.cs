@@ -9,8 +9,8 @@ namespace GameLogic.Game.Elements
     {
         void ShowDamageRanger(DamageLayout layout);
 
-        [NeedNotify(typeof(Notify_ReleaserPlaySound), "TargetType", "ResourcesPath", "BoneName", "Value")]
-        void PlaySound(int target, string resourcesPath, string fromBone, float value);
+        [NeedNotify(typeof(Notify_PlayTimeLine),"Path")]
+        void PlayTimeLine(string layoutPath);
     }
 }
 

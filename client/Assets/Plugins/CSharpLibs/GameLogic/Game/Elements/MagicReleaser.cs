@@ -107,6 +107,7 @@ namespace GameLogic.Game.Elements
                     if (timeLine == null) continue;
                     var player = new TimeLinePlayer(timeLine, this, i);
                     _players.AddLast(player);
+                    View.PlayTimeLine(i.layoutPath);
                     if (i.type == EventType.EVENT_START)
                     {
                         if (startLayout != null)
@@ -114,6 +115,7 @@ namespace GameLogic.Game.Elements
                             throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
+
                         //var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
                         //this.ReleaserTarget.Releaser.LockAction(actionLock);
                         //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
@@ -123,9 +125,6 @@ namespace GameLogic.Game.Elements
 
            
         }
-
-
-        //private RevertActionLock startLock;
 
         private TimeLinePlayer startLayout;
 
@@ -171,6 +170,7 @@ namespace GameLogic.Game.Elements
             {
                 if (current.Value.Tick(time))
                 {
+                    current.Value.Destory();
                     _players.Remove(current);
                 }
                 current = current.Next;
@@ -311,10 +311,6 @@ namespace GameLogic.Game.Elements
 
         }
 
-        internal void PlaySound(TargetType target, string resourcesPath, string fromBone, float value)
-        {
-            View.PlaySound((int)target, resourcesPath, fromBone, value);
-        }
 
         internal void DeAttachElement(BattleCharacter battleCharacter)
         {

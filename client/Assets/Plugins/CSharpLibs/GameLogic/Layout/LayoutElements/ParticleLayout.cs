@@ -10,7 +10,7 @@ namespace Layout.LayoutElements
 		Time
 	}
 
-	[EditorLayout("粒子播放器")]
+	[EditorLayout("粒子播放器", ViewOnly = true)]
 	public class ParticleLayout:LayoutBase
 	{
 		public ParticleLayout ()
