@@ -17,6 +17,7 @@ namespace Layout.LayoutEffects
     }
 
     [EditorEffect("修改属性")]
+    [EffectId(6)]
     public class AddPropertyEffect : EffectBase
     {
         public AddPropertyEffect()

@@ -5,7 +5,7 @@ namespace Layout.LayoutEffects
 {
 	public enum ValueOf
 	{
-		NormalAttack = 0,//普攻
+		NormalAttack = 0,//普攻 附加取值倍数10000万分比
 		FixedValue,// 固定值
 		MPMaxPro,//魔法最大值万分比
 		HPMaxPro,//生命最大值万分比
@@ -14,13 +14,14 @@ namespace Layout.LayoutEffects
 	}
 
 	[EditorEffect("攻击伤害")]
+	[EffectId(1)]
 	public class NormalDamageEffect:EffectBase
 	{
 		[Label("取值来源")]
-		public ValueOf valueOf;
+		public ValueOf valueOf = ValueOf.NormalAttack;
 
 		[Label("固定伤害值")]
-		public int DamageValue;
+		public int DamageValue = 0;
 
 		public override string ToString()
 		{

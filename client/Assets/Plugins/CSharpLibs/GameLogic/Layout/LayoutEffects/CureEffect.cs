@@ -4,18 +4,14 @@ using Layout.EditorAttributes;
 namespace Layout.LayoutEffects
 {
     [EditorEffect("恢复生命")]
+    [EffectId(4)]
     public class CureEffect:EffectBase
     {
-        public CureEffect()
-        {
-            valueType = ValueOf.NormalAttack;
-        }
-
         [Label("取值来源")]
-        public ValueOf valueType;
+        public ValueOf valueType = ValueOf.NormalAttack;
 
         [Label("值")]
-        public int value;
+        public int value =0;
     }
 }
 

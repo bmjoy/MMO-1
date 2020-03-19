@@ -6,19 +6,14 @@ namespace Layout.LayoutEffects
 {
 
     [EditorEffect("行为锁")]
+    [EffectId(2)]
     public class ModifyLockEffect:EffectBase
     {
-        public ModifyLockEffect()
-        {
-            lockType = ActionLockType.NoAttack;
-            revertType = RevertType.ReleaserDeath;
-        }
-
         [Label("类型")]
-        public ActionLockType lockType;
+        public ActionLockType lockType = ActionLockType.NoAttack;
 
         [Label("回滚方式")]
-        public RevertType revertType;
+        public RevertType revertType = RevertType.ReleaserDeath;
     }
 }
 

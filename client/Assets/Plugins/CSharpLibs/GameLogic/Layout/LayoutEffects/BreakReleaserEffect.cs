@@ -11,6 +11,7 @@ namespace Layout.LayoutEffects
     }
 
     [EditorEffect("打断施法")]
+    [EffectId(5)]
     public class BreakReleaserEffect :EffectBase
     {
         public BreakReleaserEffect()

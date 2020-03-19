@@ -3,16 +3,13 @@ using Layout.EditorAttributes;
 
 namespace Layout.LayoutEffects
 {
-	public enum DurationTimeValueOf
-	{
-		MagicConfig =0 ,
-		DurationTime
-	}
 
-	[EditorEffect("添加持续效果(释放技能buf)")]
+	[EditorEffect("释放技能buf")]
+	[EffectId(5)]
 	public class AddBufEffect:EffectBase
 	{
 		[Label("配置KEY")]
+		
 		public string buffMagicKey;
 
 		[Label("持续时间")]

@@ -62,10 +62,10 @@ namespace GameLogic.Game.LayoutLogics
                 case ValueOf.MPMaxPro: return (int)(target.MaxHP * (value / 10000f));
                 case ValueOf.MPPro: return (int)(target.MP * (value / 10000f));
                 case ValueOf.NormalAttack:
-                    return BattleAlgorithm.CalFinalDamage(
+                    return (int)(BattleAlgorithm.CalFinalDamage(
                      BattleAlgorithm.CalNormalDamage(owner),
                      owner.TDamage,
-                     target.TDefance);
+                     target.TDefance) *(1f + value/10000f));
                 case ValueOf.FixedValue:
                 default: return value;
 
