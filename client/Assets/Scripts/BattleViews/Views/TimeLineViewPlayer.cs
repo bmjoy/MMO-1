@@ -10,7 +10,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     #region  EnableLayout
     static TimeLineViewPlayer()
     {
-        var type = typeof(LayoutBaseLogic);
+        var type = typeof(TimeLineViewPlayer);
         var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
         foreach (var i in methods)
         {
@@ -84,6 +84,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
         player.RView.PlaySound(sound.target, sound.resourcesPath, sound.fromBone, sound.value);
     }
     #endregion
+ 
 
 
     public TimeLineViewPlayer(TimeLine line, UMagicReleaserView view)
