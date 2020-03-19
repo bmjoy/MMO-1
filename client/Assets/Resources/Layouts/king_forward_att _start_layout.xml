@@ -29,7 +29,7 @@
     </LayoutBase>
     <LayoutBase xsi:type="MotionLayout">
       <GUID>115037cd-bde5-475a-a50d-4982ccb81b28</GUID>
-      <motionName>attack 01</motionName>
+      <motionName>attack 02</motionName>
       <targetType>Releaser</targetType>
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
@@ -37,20 +37,20 @@
       <target>Releaser</target>
       <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
-      <radius>15</radius>
-      <angle>15</angle>
+      <radius>3</radius>
+      <angle>120</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
         <x>0</x>
         <y>0</y>
-        <z>1</z>
+        <z>-0.05</z>
       </offsetPosition>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
     <LayoutBase xsi:type="ParticleLayout">
       <GUID>96b46739-7109-410b-8296-7c8d3993e712</GUID>
-      <path>Effects/Cleave/LightningCleave.prefab</path>
+      <path>Effects/Slash/ArcaneSlash.prefab</path>
       <fromTarget>Releaser</fromTarget>
       <toTarget>Releaser</toTarget>
       <fromBoneName>Bottom</fromBoneName>
