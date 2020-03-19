@@ -41,28 +41,6 @@ namespace GameLogic.Game.Elements
 
     public delegate bool EachWithBreak(BattleCharacterMagic item);
 
-    public class PushMove
-    {
-        private UVector3 dir;
-
-        private readonly float distance;
-
-        private float speed;
-
-        public PushMove(Quaternion rotation, float dis, float speed)
-        {
-            dir = rotation *UVector3.forward ;
-            distance = dis;
-            this.speed = speed;
-        }
-
-        public Action FinishCall;
-
-        public UVector3 Length { get { return dir * distance; } }
-
-        public UVector3 Speed { get { return dir * speed; } }
-    }
-
     public class DamageWatch
     {
         public int Index { set; get; }
@@ -272,9 +250,9 @@ namespace GameLogic.Game.Elements
 
         internal void BeginLauchSelf(Quaternion rototion, float distance, float speed, Action<BattleCharacter,object> hitCallback, MagicReleaser releaser)
         {
-            if (TryStartPush(rototion, distance, speed,out PushMove push))
+            if (TryStartPush(rototion, distance, speed))
             {
-                push.FinishCall = () =>
+                PushEnd = () =>
                 {
                     launchHitCallback = null;
                     releaser.DeAttachElement(this);
@@ -293,16 +271,7 @@ namespace GameLogic.Game.Elements
         public bool MoveForward(UVector3 forward, UVector3 posNext)
         {
             if (IsLock(ActionLockType.NoMove)) return false;
-
-            if (forward.magnitude > 0.001f)
-            {
-                View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
-            }
-            else
-            {
-                if (View.IsForwardMoving)
-                    StopMove(posNext);
-            } 
+            View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
             return true;
         }
 
@@ -324,22 +293,22 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        private PushMove currentPush;
-        internal bool TryStartPush(Quaternion rototion, float distance, float speed, out PushMove push)
+        public Action PushEnd;
+
+        internal bool TryStartPush(Quaternion rotation, float distance, float speed)
         {
-            push = null;
-            if (currentPush != null) return false;
-            push = new PushMove(rototion, distance, speed);
-            View.Push(push.Length.ToPV3(), push.Speed.ToPV3());
-            currentPush = push;
+            if (Lock.IsLock(ActionLockType.NoMove)) return false;
+            var dir = rotation * UVector3.forward;
+            var dis = dir * distance;
+            var ps = dir * speed;
+            View.Push(dis.ToPV3(), ps.ToPV3());
             return true;
         }
 
         public void EndPush()
         {
-            this.View.StopMove(this.Position.ToPV3());
-            currentPush?.FinishCall?.Invoke();
-            currentPush = null;
+            PushEnd?.Invoke();
+            PushEnd = null;
         }
 
         public bool AddHP(int hp)
