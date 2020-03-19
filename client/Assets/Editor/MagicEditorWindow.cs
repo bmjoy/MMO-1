@@ -53,8 +53,6 @@ public class MagicEditorWindow : EditorWindow
 		if (!EditorApplication.isPlaying)
 			return;
 		if (data == null) return;
-
-		foreach (var i in data.Containers) i.line = null;
 		AIRunner.Current?.ReleaseMagic(data);
 	}
 

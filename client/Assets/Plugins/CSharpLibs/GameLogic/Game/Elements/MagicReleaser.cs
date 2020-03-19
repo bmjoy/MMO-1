@@ -103,7 +103,7 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
-                    var timeLine = i.line ?? per.View.GetTimeLineByPath(i.layoutPath);
+                    var timeLine = per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
                     var player = new TimeLinePlayer(timeLine, this, i);
                     _players.AddLast(player);

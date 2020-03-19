@@ -71,8 +71,7 @@ public class LayoutEditorWindow:EditorWindow
             new Layout.EventContainer
             {
                 type = Layout.EventType.EVENT_START,
-                layoutPath = shortPath,
-                line = this.line
+                layoutPath = shortPath
             }
         );
         var g = EditorStarter.G();
