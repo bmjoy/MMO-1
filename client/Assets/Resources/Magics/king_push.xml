@@ -13,10 +13,12 @@
       <effectGroup>
         <EffectGroup>
           <effects>
-            <EffectBase xsi:type="BreakEffect" />
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
               <DamageValue>0</DamageValue>
+            </EffectBase>
+            <EffectBase xsi:type="BreakReleaserEffect">
+              <breakType>InStartLayoutMagic</breakType>
             </EffectBase>
           </effects>
           <key>001</key>

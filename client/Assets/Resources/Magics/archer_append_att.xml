@@ -17,7 +17,6 @@
               <valueOf>NormalAttack</valueOf>
               <DamageValue>0</DamageValue>
             </EffectBase>
-            <EffectBase xsi:type="BreakEffect" />
           </effects>
           <Des>普通攻击</Des>
           <key>001</key>

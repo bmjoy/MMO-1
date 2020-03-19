@@ -9,8 +9,8 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="CureEffect">
-              <valueType>NormalAttack</valueType>
-              <value>0</value>
+              <valueType>HPMaxPro</valueType>
+              <value>5000</value>
             </EffectBase>
           </effects>
           <key>001</key>

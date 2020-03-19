@@ -256,6 +256,10 @@ namespace GameLogic.Game.Elements
             }
         }
 
+        public BattleCharacter Releaser { get { return ReleaserTarget.Releaser; } }
+
+        public BattleCharacter Target { get { return ReleaserTarget.ReleaserTarget; } }
+
         public void StopAllPlayer()
         {
             foreach (var i in _players)

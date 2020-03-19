@@ -8,7 +8,6 @@
       <effectGroup>
         <EffectGroup>
           <effects>
-            <EffectBase xsi:type="BreakEffect" />
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
               <DamageValue>0</DamageValue>

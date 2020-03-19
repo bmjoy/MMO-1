@@ -33,7 +33,7 @@ namespace GameLogic.Game.LayoutLogics
             }
         }
 
-        private static Dictionary<Type, MethodInfo> _handlers;
+        private static readonly Dictionary<Type, MethodInfo> _handlers;
 
         /// <summary>
         /// Effects the active.
@@ -53,28 +53,32 @@ namespace GameLogic.Game.LayoutLogics
             }
         }
 
+        private static int GetVauleBy(BattleCharacter owner, BattleCharacter target, ValueOf vOf, int value)
+        {
+            switch (vOf)
+            {
+                case ValueOf.HPMaxPro: return (int)(target.MaxHP * (value / 10000f));
+                case ValueOf.HPPro: return (int)(target.HP * (value / 10000f));
+                case ValueOf.MPMaxPro: return (int)(target.MaxHP * (value / 10000f));
+                case ValueOf.MPPro: return (int)(target.MP * (value / 10000f));
+                case ValueOf.NormalAttack:
+                    return BattleAlgorithm.CalFinalDamage(
+                     BattleAlgorithm.CalNormalDamage(owner),
+                     owner.TDamage,
+                     target.TDefance);
+                case ValueOf.FixedValue:
+                default: return value;
+
+            }
+        }
+
         [EffectHandle(typeof(NormalDamageEffect))]
         public static void NormalDamage(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var per = releaser.Controllor.Perception as BattlePerception;
             var effect = e as NormalDamageEffect;
-            int damage = -1;
-            switch (effect.valueOf)
-            {
-                case ValueOf.FixedValue:
-                    damage = effect.DamageValue;
-                    break;
-                case ValueOf.NormalAttack:
-                    damage = BattleAlgorithm.CalFinalDamage(
-                        BattleAlgorithm.CalNormalDamage(releaser.ReleaserTarget.Releaser),
-                        releaser.ReleaserTarget.Releaser.TDamage,
-                        effectTarget.TDefance);
-                    break;
-            }
-
-            var result = BattleAlgorithm
-               .GetDamageResult(releaser.ReleaserTarget.Releaser, damage, releaser.ReleaserTarget.Releaser.TDamage, effectTarget);
-
+            int damage = GetVauleBy(releaser.Releaser, effectTarget, effect.valueOf, effect.DamageValue);
+            var result = BattleAlgorithm.GetDamageResult(releaser.Releaser, damage, releaser.Releaser.TDamage, effectTarget);
             if (releaser.ReleaserTarget.Releaser.TDamage != Proto.DamageType.Magic)
             {
                 if (!result.IsMissed)
@@ -92,20 +96,8 @@ namespace GameLogic.Game.LayoutLogics
         [EffectHandle(typeof(CureEffect))]
         public static void Cure(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
-            var per = releaser.Controllor.Perception as BattlePerception;
             var effect = e as CureEffect;
-            int cure = -1;
-            switch (effect.valueType)
-            {
-                case ValueOf.FixedValue:
-                    cure = effect.value;
-                    break;
-                case ValueOf.NormalAttack:
-                    cure = BattleAlgorithm.CalNormalDamage(
-                        releaser.ReleaserTarget.Releaser);
-                    break;
-            }
-
+            int cure =  GetVauleBy(releaser.Releaser, effectTarget, effect.valueType, effect.value);
             if (cure > 0)
             {
                 effectTarget.AddHP(cure);// ;
@@ -116,18 +108,7 @@ namespace GameLogic.Game.LayoutLogics
         public static void CureMP(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var effect = e as CureMPEffect;
-            int cure = -1;
-            switch (effect.valueType)
-            {
-                case ValueOf.FixedValue:
-                    cure = effect.value;
-                    break;
-                case ValueOf.NormalAttack:
-                    cure = BattleAlgorithm.CalNormalDamage(
-                        releaser.ReleaserTarget.Releaser);
-                    break;
-            }
-
+            int cure = GetVauleBy(releaser.Releaser, effectTarget, effect.valueType, effect.value);
             if (cure > 0)
             {
                 effectTarget.AddMP(cure);
@@ -177,15 +158,6 @@ namespace GameLogic.Game.LayoutLogics
             }
         }
 
-
-        [EffectHandle(typeof(BreakEffect))]
-        public static void BreakEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
-        {
-            var per = releaser.Controllor.Perception as BattlePerception;
-            per.BreakReleaserByCharacter(effectTarget, BreakReleaserType.InStartLayoutMagic);
-        }
-
-        
     }
 }
 

@@ -21,7 +21,6 @@ public sealed class XmlParser
     public static string Serialize<T>(T obj)
     {
         var xml = new XmlSerializer(typeof(T));
-
         var mem = new StringBuilder();
         {
             using (var sw = new System.IO.StringWriter(mem))
@@ -40,19 +39,10 @@ public sealed class XmlParser
     /// <returns></returns>
     public static T DeSerialize<T>(string xml)
     {
-        try
+        var xmler = new XmlSerializer(typeof(T));
+        using (var tr = new System.IO.StringReader(xml))
         {
-            var xmler = new XmlSerializer(typeof(T));
-
-            using (var tr = new System.IO.StringReader(xml))
-            {
-                return (T)(xmler.Deserialize(tr));
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogException(ex);
-            return default;
+            return (T)(xmler.Deserialize(tr));
         }
     }
 
