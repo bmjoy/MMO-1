@@ -301,6 +301,9 @@ public class UCharacterView : UElementView, IBattleCharacter
     public bool ShowName { set; get; } = false;
     public int MP { get { return mpCur; } }
 
+    public bool IsFullMp { get { return mpCur == mpMax; } }
+    public bool IsFullHp { get { return curHp == maxHp; } }
+
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
     {
         if (MagicCds.TryGetValue(magicID, out data)) return true;

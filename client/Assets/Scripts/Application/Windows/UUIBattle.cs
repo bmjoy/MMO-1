@@ -126,14 +126,17 @@ namespace Windows
                 g.DoNormalAttack();
             });
 
-            bt_hp.onClick.AddListener(() => {
+            bt_hp.onClick.AddListener(() => 
+            {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
+                if (g.IsHpFull()) { UApplication.S.ShowNotify($"Hp 已经满"); }
                 g.SendUserItem(ItemType.ItHpitem);
             });
             bt_mp.onClick.AddListener(() => {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
+                if (g.IsMpFull()) { UApplication.S.ShowNotify($"Mp 已经满"); }
                 g.SendUserItem(ItemType.ItMpitem);
             });
         }

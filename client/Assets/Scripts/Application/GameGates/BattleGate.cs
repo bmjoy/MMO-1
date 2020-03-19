@@ -185,6 +185,18 @@ public class BattleGate : UGate, IServerMessageHandler
         }
     }
 
+
+    public bool IsMpFull()
+    {
+        if (!this.Owner) return true;
+        return Owner.IsFullMp;
+    }
+
+    public bool IsHpFull()
+    {
+        if (!this.Owner) return true;
+        return Owner.IsFullHp;
+    }
     internal bool SendUserItem(ItemType type)
     {
         foreach (var i in Package.Items)
