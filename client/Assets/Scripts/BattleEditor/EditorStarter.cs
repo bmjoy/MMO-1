@@ -15,6 +15,7 @@ using Layout;
 using GameLogic.Game.States;
 using XNet.Libs.Utility;
 using Layout.AITree;
+using GameLogic.Game.LayoutLogics;
 //#if UNITY_EDITOR
 
 public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
@@ -92,7 +93,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
         }
 		var per = curState.Perception as BattlePerception;
 		this.currentReleaser =per.CreateReleaser(string.Empty,magic,
-            new GameLogic.Game.LayoutLogics.ReleaseAtTarget(this.releaser, this.target),
+            new ReleaseAtTarget(this.releaser, this.target),
 			ReleaserType.Magic,0);
 
 	}

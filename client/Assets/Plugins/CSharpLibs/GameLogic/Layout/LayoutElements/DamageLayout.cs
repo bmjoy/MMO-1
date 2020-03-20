@@ -28,7 +28,7 @@ namespace Layout.LayoutElements
 	[EditorLayout("目标判定")]
 	public class DamageLayout:LayoutBase
 	{
-		public DamageLayout ()
+		public DamageLayout()
 		{
 			target = TargetType.Releaser;
 			damageType = DamageType.Rangle;
@@ -36,7 +36,7 @@ namespace Layout.LayoutElements
 			radius = 1;
 			angle = 360;
 			offsetAngle = 0;
-			offsetPosition = new Vector3(){ x = 0, y=0,z=0};
+			offsetPosition = new Vector3() { x = 0, y = 0, z = 0 };
 			effectType = EffectType.EffectGroup;
 		}
 

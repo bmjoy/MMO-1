@@ -59,7 +59,7 @@ namespace GameLogic.Game.Perceptions
             Empty = new EmptyControllor(this);
             ReleaserControllor = new MagicReleaserControllor(this);
             BattleMissileControllor = new BattleMissileControllor(this);
-            AIControllor = new BattleCharacterAIBehaviorTreeControllor(this);
+            AIControllor = new AIControllor(this);
             BattleItemControllor = new BattleItemControllor(this);
         }
 
@@ -69,7 +69,7 @@ namespace GameLogic.Game.Perceptions
         #region controllor
         public BattleMissileControllor BattleMissileControllor { private set; get; }
         public MagicReleaserControllor ReleaserControllor { private set; get; }
-        public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
+        public AIControllor AIControllor { private set; get; }
         public BattleItemControllor BattleItemControllor { private set; get; }
         public EmptyControllor Empty { private set; get; }
         #endregion

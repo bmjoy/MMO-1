@@ -4,9 +4,9 @@ using GameLogic.Game.Elements;
 
 namespace GameLogic.Game.Controllors
 {
-	public class BattleCharacterAIBehaviorTreeControllor:GControllor
+	public class AIControllor:GControllor
 	{
-		public BattleCharacterAIBehaviorTreeControllor(GPerception per) : base(per) { }
+		public AIControllor(GPerception per) : base(per) { }
 
 		public override GAction GetAction(GTime time, GObject current)
 		{

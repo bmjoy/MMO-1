@@ -13,10 +13,6 @@ namespace Layout.LayoutElements
 	[EditorLayout("粒子播放器", ViewOnly = true)]
 	public class ParticleLayout:LayoutBase
 	{
-		public ParticleLayout ()
-		{
-			
-		}
 
 		[Label("资源","客户端显示的资源目录")]
 		[EditorResourcePath]

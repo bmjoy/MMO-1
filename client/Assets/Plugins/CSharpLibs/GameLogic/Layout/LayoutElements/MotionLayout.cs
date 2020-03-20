@@ -7,10 +7,6 @@ namespace Layout.LayoutElements
 	[EditorLayout("动画状态播放器",ViewOnly = true)]
 	public class MotionLayout:LayoutBase
 	{
-		public MotionLayout ()
-		{
-			
-		}
 
 		[Label("动画名称","settrigger")]
 		public string motionName;
