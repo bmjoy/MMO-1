@@ -17,9 +17,10 @@ namespace Windows
     {
         public class HeroPartData
         {
-            public RawImage icon;
+            public Image icon;
             public Text level;
             public Button bt;
+            public Image rootLvl;
         }
 
         public class PropertyListTableModel : TableItemModel<PropertyListTableTemplate>
@@ -57,10 +58,10 @@ namespace Windows
             bt_Exit.onClick.AddListener(() => { HideWindow(); });
 
             Equips = new Dictionary<EquipmentType, HeroPartData> {
-                { EquipmentType.Arm, new HeroPartData{ bt =equip_weapon, icon = icon_weapon, level = weapon_Lvl } },
-                { EquipmentType.Head, new HeroPartData{ bt =equip_head, icon = icon_head, level = head_Lvl } },
-                { EquipmentType.Foot, new HeroPartData{ bt = equip_shose, icon = icon_shose, level = shose_Lvl } },
-                { EquipmentType.Body, new HeroPartData{ bt = equip_cloth, icon = icon_cloth, level = cloth_Lvl } }
+                { EquipmentType.Arm, new HeroPartData{ bt =equip_weapon, icon = icon_weapon, level = weapon_Lvl, rootLvl=weapLeveRoot } },
+                { EquipmentType.Head, new HeroPartData{ bt =equip_head, icon = icon_head, level = head_Lvl , rootLvl=HeadLevelRoot} },
+                { EquipmentType.Foot, new HeroPartData{ bt = equip_shose, icon = icon_shose, level = shose_Lvl , rootLvl =ShoseLeveRoot } },
+                { EquipmentType.Body, new HeroPartData{ bt = equip_cloth, icon = icon_cloth, level = cloth_Lvl, rootLvl = ClothLeveRoot } }
             };
 
             foreach (var i in Equips)
@@ -148,11 +149,11 @@ namespace Windows
 
             var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(eq.ItemID);
             var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
-            //icon_right.texture = ResourcesManager.S.LoadIcon(item);
+            icon_right.sprite = ResourcesManager.S.LoadIcon(item);
             equip_lvl.text = $"+{it.Level}";
             right_name.text = equip.Name;
             des_Text.text = item.Description;
-
+            RightERoot.ActiveSelfObject(it.Level > 0);
             var level = ExcelToJSONConfigManager.Current
                         .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level && t.Quality == item.Quality);
             var next = ExcelToJSONConfigManager.Current
@@ -265,6 +266,7 @@ namespace Windows
             {
                 i.Value.icon.ActiveSelfObject(false);
                 i.Value.level.text = string.Empty;
+                i.Value.rootLvl.ActiveSelfObject(false);
             }
 
             foreach (var i in dHero.Equips)
@@ -293,9 +295,9 @@ namespace Windows
                     if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
                     {
                         partIcon.icon.ActiveSelfObject(true);
-                        //partIcon.icon.texture = ResourcesManager.S.LoadIcon(item);
+                        partIcon.icon.sprite = ResourcesManager.S.LoadIcon(item);
                         if (pItem.Level > 0) partIcon.level.text = $"+{pItem.Level}";
-                        //partIcon.bt.onClick.AddListener(() => { })
+                        partIcon.rootLvl.ActiveSelfObject(pItem.Level > 0);
                     }
                 }
             }

@@ -36,22 +36,27 @@ namespace Windows
 
 
         protected Button equip_head;
-        protected RawImage icon_head;
+        protected Image icon_head;
+        protected Image HeadLevelRoot;
         protected Text head_Lvl;
         protected Button equip_weapon;
-        protected RawImage icon_weapon;
+        protected Image icon_weapon;
+        protected Image weapLeveRoot;
         protected Text weapon_Lvl;
         protected Button equip_cloth;
-        protected RawImage icon_cloth;
+        protected Image icon_cloth;
+        protected Image ClothLeveRoot;
         protected Text cloth_Lvl ;
         protected Button equip_shose;
-        protected RawImage icon_shose;
+        protected Image icon_shose;
+        protected Image ShoseLeveRoot;
         protected Text shose_Lvl;
         protected Text Level;
         protected GridLayoutGroup PropertyList;
         protected RectTransform Right;
         protected Image EquipRight;
-        protected RawImage icon_right;
+        protected Image icon_right;
+        protected Image RightERoot;
         protected Text equip_lvl;
         protected Text right_name;
         protected Button take_off;
@@ -76,22 +81,27 @@ namespace Windows
         {
             base.InitTemplate();
             equip_head = FindChild<Button>("equip_head");
-            icon_head = FindChild<RawImage>("icon_head");
+            icon_head = FindChild<Image>("icon_head");
+            HeadLevelRoot = FindChild<Image>("HeadLevelRoot");
             head_Lvl = FindChild<Text>("head_Lvl");
             equip_weapon = FindChild<Button>("equip_weapon");
-            icon_weapon = FindChild<RawImage>("icon_weapon");
+            icon_weapon = FindChild<Image>("icon_weapon");
+            weapLeveRoot = FindChild<Image>("weapLeveRoot");
             weapon_Lvl = FindChild<Text>("weapon_Lvl");
             equip_cloth = FindChild<Button>("equip_cloth");
-            icon_cloth = FindChild<RawImage>("icon_cloth");
+            icon_cloth = FindChild<Image>("icon_cloth");
+            ClothLeveRoot = FindChild<Image>("ClothLeveRoot");
             cloth_Lvl  = FindChild<Text>("cloth_Lvl ");
             equip_shose = FindChild<Button>("equip_shose");
-            icon_shose = FindChild<RawImage>("icon_shose");
+            icon_shose = FindChild<Image>("icon_shose");
+            ShoseLeveRoot = FindChild<Image>("ShoseLeveRoot");
             shose_Lvl = FindChild<Text>("shose_Lvl");
             Level = FindChild<Text>("Level");
             PropertyList = FindChild<GridLayoutGroup>("PropertyList");
             Right = FindChild<RectTransform>("Right");
             EquipRight = FindChild<Image>("EquipRight");
-            icon_right = FindChild<RawImage>("icon_right");
+            icon_right = FindChild<Image>("icon_right");
+            RightERoot = FindChild<Image>("RightERoot");
             equip_lvl = FindChild<Text>("equip_lvl");
             right_name = FindChild<Text>("right_name");
             take_off = FindChild<Button>("take_off");
@@ -107,8 +117,8 @@ namespace Windows
             bt_Exit = FindChild<Button>("bt_Exit");
             Text = FindChild<RectTransform>("Text");
 
-            PropertyListTableManager.InitFromGrid(PropertyList);
-            EquipmentPropertyTableManager.InitFromGrid(EquipmentProperty);
+            PropertyListTableManager.InitFromLayout(PropertyList);
+            EquipmentPropertyTableManager.InitFromLayout(EquipmentProperty);
 
         }
     }

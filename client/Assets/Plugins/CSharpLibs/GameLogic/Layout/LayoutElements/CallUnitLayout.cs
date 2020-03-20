@@ -4,6 +4,12 @@ using Proto;
 
 namespace Layout.LayoutElements
 {
+    public enum CharacterType
+    { 
+        ConfigID, //配表
+        OwnerID //复制自己
+    }
+
     [EditorLayout("召唤单位")]
     public class CallUnitLayout:LayoutBase
     {
@@ -12,6 +18,9 @@ namespace Layout.LayoutElements
             valueFrom = GetValueFrom.CurrentConfig;
             level = 1;
         }
+
+        [Label("召唤ID来源")]
+        public CharacterType CType = CharacterType.ConfigID;
 
         [Label("召唤角色ID")]
         public int characterID;

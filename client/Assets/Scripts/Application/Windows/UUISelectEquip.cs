@@ -38,9 +38,8 @@ namespace Windows
                 Equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                 this.Template.lb_level.text = playerItem.Level > 0 ? $"+{ playerItem.Level}" : string.Empty;
                 this.Template.lb_Name.text = $"{item.Name}";
-                this.Template.ItemCount.ActiveSelfObject(false);
                 this.Template.ItemLevel.ActiveSelfObject(playerItem.Level > 0);
-
+                this.Template.icon.sprite = ResourcesManager.S.LoadIcon(item);
             }
         }
 

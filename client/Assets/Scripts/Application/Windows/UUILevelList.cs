@@ -17,11 +17,9 @@ namespace Windows
             public ContentTableModel(){}
             public override void InitModel()
             {
-                this.Template.Button =this.Item.Root.GetComponent<Button>();
-                
-                this.Template.Button.onClick.AddListener(()=>{
-                    if(Onclick ==null) return;
-                    Onclick(this);
+                this.Template.ButtonGreen.onClick.AddListener(() =>
+                {
+                    Onclick?.Invoke(this);
                 });
             }
 
@@ -30,8 +28,11 @@ namespace Windows
 
             public void SetLevel(BattleLevelData level)
             {
+                Template.ButtonBrown.ActiveSelfObject(false);
                 Data = level;
-                this.Template.Button.SetText($"{level.Name} Lv:{level.LimitLevel}");
+                this.Template.Name.text = $"{level.Name} 最大等级:{level.LimitLevel}";
+                this.Template.Desc.text = $"{level.Description}";
+                this.Template.missionImage.sprite = ResourcesManager.S.LoadIcon(level);
             }
         }
 
@@ -54,12 +55,9 @@ namespace Windows
             {
                 i.Model.SetLevel(levels[index]);
                 i.Model.Onclick = OnItemClick;
+                
                 index++;
             }
-
-
-
-            ScrollView.SetLayoutVertical();
         }
 
         private void OnItemClick(ContentTableModel item)

@@ -31,7 +31,6 @@ namespace GameLogic.Utility
 
     }
 
-    
 
     public class NB<T> where T : IMessage, new()
     {

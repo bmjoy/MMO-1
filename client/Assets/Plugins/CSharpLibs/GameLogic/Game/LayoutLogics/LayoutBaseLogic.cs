@@ -162,7 +162,7 @@ namespace GameLogic.Game.LayoutLogics
 
             //判断是否达到上限
             if (unitLayout.maxNum <= releaser.UnitCount) return;
-
+			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
             var data = ExcelToJSONConfigManager
                 .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
            
