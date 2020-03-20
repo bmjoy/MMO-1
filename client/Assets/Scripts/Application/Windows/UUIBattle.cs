@@ -92,8 +92,13 @@ namespace Windows
                         new C2B_ExitBattle
                         {
                             AccountUuid = UApplication.S.AccountUuid
-                        }, null, UUIManager.S);
-                        UApplication.S.GoBackToMainGate();
+                        },
+                        (r)=>
+                        {
+                            UApplication.S.GoBackToMainGate();
+                            if (!r.Code.IsOk())
+                                UApplication.S.ShowError(r.Code);
+                        }, UUIManager.S);
                     });
                 });
 

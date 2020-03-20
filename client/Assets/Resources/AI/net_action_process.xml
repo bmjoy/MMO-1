@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-16"?>
-<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeParallelSelector">
+<TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
   <childs>
-    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
-      <childs>
-        <TreeNode xsi:type="TreeNodeNetActionMove">
-          <childs />
-          <name>处理移动输入</name>
-          <guid>2b0be4e7-5591-48f3-b306-58b8d18feeae</guid>
-        </TreeNode>
-      </childs>
-      <name>运行直到返回Success</name>
-      <guid>c0bc1ac9-1f5a-42fc-b3fa-9683f7207398</guid>
+    <TreeNode xsi:type="TreeNodeNetActionSkill">
+      <childs />
+      <name>处理释放技能输入</name>
+      <guid>57f331ab-7775-4725-8859-4a53b50d28f4</guid>
     </TreeNode>
-    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+    <TreeNode xsi:type="TreeNodeParallelSelector">
       <childs>
-        <TreeNode xsi:type="TreeNodeNetActionSkill">
-          <childs />
-          <name>处理释放技能输入</name>
-          <guid>eee74921-aafd-42c8-9034-8ca8f5dabf7b</guid>
+        <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+          <childs>
+            <TreeNode xsi:type="TreeNodeNetActionMove">
+              <childs />
+              <name>处理移动输入</name>
+              <guid>400b843c-6a51-4208-8aac-f0f0ac5c8b44</guid>
+            </TreeNode>
+          </childs>
+          <name>运行直到返回Success</name>
+          <guid>db9680ce-1be6-4e1a-bb15-32ba59779299</guid>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+          <childs>
+            <TreeNode xsi:type="TreedNodeNetNomarlAttack">
+              <childs />
+              <name>处理普通攻击</name>
+              <guid>997faab3-5771-4e34-a97e-2dd5386b8266</guid>
+            </TreeNode>
+          </childs>
+          <name>运行直到返回Success</name>
+          <guid>305ddcea-b472-443d-873b-7506be6fed92</guid>
         </TreeNode>
       </childs>
-      <name>运行直到返回Success</name>
-      <guid>443e43cc-9345-41d3-88aa-55d25ea04199</guid>
-    </TreeNode>
-    <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
-      <childs>
-        <TreeNode xsi:type="TreedNodeNetNomarlAttack">
-          <childs />
-          <name>处理普通攻击</name>
-          <guid>a07ab92b-2c3a-4d1d-91cc-a0d1e20cde67</guid>
-        </TreeNode>
-      </childs>
-      <name>运行直到返回Success</name>
-      <guid>642e721a-97e9-4dac-99fd-c145a1580ddd</guid>
+      <name>并行选择节点</name>
+      <guid>8772398a-1f01-4302-aba0-a043ae26763c</guid>
     </TreeNode>
   </childs>
-  <name>并行选择节点</name>
-  <guid>0625e31d-0ff9-4a7f-9f4c-b70429da1694</guid>
+  <name>选择节点</name>
+  <guid>9b54c5a0-745b-4bf1-8a6c-e3c0d6aca420</guid>
 </TreeNode>
