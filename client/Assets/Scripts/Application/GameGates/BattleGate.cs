@@ -155,7 +155,7 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         if (!Owner) return;
         if (Owner.IsDeath) return;
-       
+
         var fast = dir.magnitude > 0.8f;
         var pos = Owner.transform.position;
         var dn = dir.normalized;
@@ -168,21 +168,9 @@ public class BattleGate : UGate, IServerMessageHandler
             Forward = new Proto.Vector3 { X = dn.x, Z = dn.z }
         };
         SendAction(move);
-
         if (Owner.IsLock(ActionLockType.NoMove)) return;
-
-        if (Owner.IsCanForwardMoving) 
-        {
-            if (dir.magnitude < 0.001f)
-            {
-              ch.StopMove(pos.ToPV3());
-            }
-            else
-            {
-                var f = dn * (fast ? 1f : 0.5f);
-                ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
-            }
-        }
+        var f = dn * (fast ? 1f : 0.5f);
+        ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
     }
 
 
