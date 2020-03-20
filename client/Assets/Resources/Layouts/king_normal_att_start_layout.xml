@@ -30,11 +30,11 @@
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>b0239091-a1fe-48e9-8b62-77c5ab341240</GUID>
-      <target>Target</target>
-      <damageType>Single</damageType>
+      <target>Releaser</target>
+      <damageType>Rangle</damageType>
       <fiterType>EmenyTeam</fiterType>
-      <radius>0</radius>
-      <angle>0</angle>
+      <radius>2.3</radius>
+      <angle>20</angle>
       <offsetAngle>0</offsetAngle>
       <offsetPosition>
         <x>0</x>
