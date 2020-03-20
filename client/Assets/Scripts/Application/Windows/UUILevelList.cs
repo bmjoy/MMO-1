@@ -30,7 +30,7 @@ namespace Windows
             {
                 Template.ButtonBrown.ActiveSelfObject(false);
                 Data = level;
-                this.Template.Name.text = $"{level.Name} 最大等级:{level.LimitLevel}";
+                this.Template.Name.text = $"{level.Name} Lvl:{level.LimitLevel}";
                 this.Template.Desc.text = $"{level.Description}";
                 this.Template.missionImage.sprite = ResourcesManager.S.LoadIcon(level);
             }
@@ -40,10 +40,9 @@ namespace Windows
         {
             base.InitModel();
             Bt_Return.onClick.AddListener(() =>
-                {
-                    this.HideWindow();
-                });
-            //Write Code here
+            {
+                this.HideWindow();
+            });
         }
         protected override void OnShow()
         {
@@ -62,11 +61,10 @@ namespace Windows
 
         private void OnItemClick(ContentTableModel item)
         {
-            var gate = UApplication.G< GMainGate>();
+            var gate = UApplication.G<GMainGate>();
             if (gate == null) return;
 
-            BeginGame.CreateQuery()
-                .SendRequest(gate.Client,
+            BeginGame.CreateQuery().SendRequest(gate.Client,
                 new C2G_BeginGame { LevelID = item.Data.ID },
                 r =>
                 {
@@ -78,7 +76,7 @@ namespace Windows
                     {
                         UApplication.Singleton.ShowError(r.Code);
                     }
-                });
+                }, UUIManager.S);
         }
            
 

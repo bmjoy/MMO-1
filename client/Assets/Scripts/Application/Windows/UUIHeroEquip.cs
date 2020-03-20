@@ -76,10 +76,9 @@ namespace Windows
 
                 var g = UApplication.G<GMainGate>();
                 if (!g.package.Items.TryGetValue(selected.GUID, out PlayerItem item)) return;
-
+                var req = new C2G_EquipmentLevelUp{ Guid = selected.GUID, Level = item.Level };
                 EquipmentLevelUp.CreateQuery()
-                .SendRequest(g.Client, new
-                C2G_EquipmentLevelUp { Guid = selected.GUID, Level = item.Level }, (r) => {
+                .SendRequest(g.Client,req , (r) => {
                     if (r.Code.IsOk())
                     {
                         if (r.Level > item.Level)
@@ -90,8 +89,7 @@ namespace Windows
                     else {
                         UApplication.S.ShowError(r.Code);
                     }
-                });
-
+                },UUIManager.S);
             });
 
             take_off.onClick.AddListener(() =>
@@ -116,7 +114,7 @@ namespace Windows
                         selected = null;
                     }
                     else { UApplication.S.ShowError(r.Code); }
-                });
+                },UUIManager.S);
             });
 
             

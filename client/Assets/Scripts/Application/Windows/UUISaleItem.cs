@@ -42,7 +42,7 @@ namespace Windows
                         }
                         else
                             UApplication.S.ShowError(r.Code);
-                    });
+                    },UUIManager.S);
                 });
             //Write Code here
         }

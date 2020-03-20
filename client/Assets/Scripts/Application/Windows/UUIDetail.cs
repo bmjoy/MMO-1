@@ -49,14 +49,14 @@ namespace Windows
             {
                 var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(config.Params[0]));
                 if (equip == null) return;
-                OperatorEquip.CreateQuery()
-                .SendRequest(UApplication.G<GMainGate>().Client,
-                new C2G_OperatorEquip
+                var requ = new C2G_OperatorEquip
                 {
                     IsWear = true,
                     Guid = item.GUID,
                     Part = (EquipmentType)equip.PartType
-                },
+                };
+                OperatorEquip.CreateQuery()
+                .SendRequest(UApplication.G<GMainGate>().Client,requ,
                 (r) =>
                 {
                     if (r.Code.IsOk())
@@ -67,7 +67,7 @@ namespace Windows
                     else {
                         UApplication.S.ShowError(r.Code);
                     }
-                });
+                },UUIManager.S);
             });
 
             this.uiRoot.transform.OnMouseClick((obj) => {

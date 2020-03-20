@@ -46,13 +46,14 @@ namespace Windows
             base.InitModel();
             Bt_create.onClick.AddListener(() =>
             {
-                if (string.IsNullOrEmpty(InputField.text) ||  InputField.text.Length<2)
+                if (string.IsNullOrEmpty(InputField.text) || InputField.text.Length < 2)
                 {
                     UApplication.S.ShowNotify($"英雄的名称不能为空或者长度小于2");
                     return;
                 }
-                CreateHero.CreateQuery().SendRequest(UApplication.G<GMainGate>().Client,
-                    new Proto.C2G_CreateHero { HeroID = selectedID, HeroName = InputField.text },
+
+                var request = new Proto.C2G_CreateHero { HeroID = selectedID, HeroName = InputField.text };
+                CreateHero.CreateQuery().SendRequest(UApplication.G<GMainGate>().Client, request,
                     (r) =>
                     {
                         if (r.Code.IsOk())
@@ -62,7 +63,7 @@ namespace Windows
                         }
                         else
                             UApplication.S.ShowError(r.Code);
-                    });
+                    }, UUIManager.S);
             });
         }
 

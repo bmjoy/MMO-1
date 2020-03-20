@@ -81,12 +81,12 @@ namespace Windows
         {
             base.OnShow();
 
-            UUIManager.S.MaskEvent();
+            //UUIManager.S.MaskEvent();
             var gate = UApplication.G<GMainGate>();
             QueryShop.CreateQuery()
                 .SendRequest(gate.Client, new C2G_Shop { }, (res) =>
             {
-                UUIManager.S.UnMaskEvent();
+                //UUIManager.S.UnMaskEvent();
                 if (res.Code.IsOk())
                 {
                     this.Shops = res.Shops;
@@ -95,7 +95,7 @@ namespace Windows
                 }
                 HideWindow();
                 UApplication.S.ShowError(res.Code);
-            });
+            },UUIManager.S);
 
         }
 
@@ -131,7 +131,7 @@ namespace Windows
 
         private void Buy(ContentTableModel obj)
         {
-            UUIManager.S.MaskEvent();
+            //UUIManager.S.MaskEvent();
             var gate = UApplication.G<GMainGate>();
             BuyItem.CreateQuery().SendRequest(gate.Client, new C2G_BuyItem
             {
@@ -139,7 +139,7 @@ namespace Windows
                 ShopId = obj.Shop.ShopId
             }, (r) =>
             {
-                UUIManager.S.UnMaskEvent();
+                //UUIManager.S.UnMaskEvent();
                 if (r.Code.IsOk())
                 {
                     UApplication.S.ShowNotify($"购买 {obj.Config.Name}*{obj.ShopItem.PackageNum}");
@@ -147,7 +147,7 @@ namespace Windows
                 else {
                     UApplication.S.ShowError(r.Code);
                 }
-            });
+            },UUIManager.S);
         }
 
         protected override void OnHide()

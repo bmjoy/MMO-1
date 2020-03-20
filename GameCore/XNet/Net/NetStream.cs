@@ -81,7 +81,7 @@ namespace XNet.Libs.Net
         {
             message = null;
             _position = 0;
-            if (_length > HeadLength)
+            if (_length >= HeadLength)
             {
                 message = new Message();
                 message.Class = (MessageClass)ReadByte();

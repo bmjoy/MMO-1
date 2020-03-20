@@ -102,19 +102,21 @@ namespace Windows
         private void WearClick(ContentTableModel obj)
         {
             var g = UApplication.G<GMainGate>();
-            OperatorEquip.CreateQuery().SendRequest(g.Client, new C2G_OperatorEquip
+            var req = new C2G_OperatorEquip
             {
                 Guid = obj.IItem.GUID,
                 IsWear = true,
                 Part = (EquipmentType)obj.Equip.PartType
-            },
-                (r) =>
+            };
+            OperatorEquip.CreateQuery().SendRequest(g.Client,req,
+            (r) =>
+            {
+                if (!r.Code.IsOk())
                 {
-                    if (!r.Code.IsOk())
-                    {
-                        UApplication.S.ShowError(r.Code);
-                    }
-                });
+                    UApplication.S.ShowError(r.Code);
+                }
+            },UUIManager.S);
+
             HideWindow();
         }
 

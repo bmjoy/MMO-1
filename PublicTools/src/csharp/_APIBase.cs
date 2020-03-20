@@ -25,6 +25,12 @@ namespace Proto.PServices
             where Response : IMessage, new();
     }
 
+    public interface IEventMasker
+    {
+        void Mask();
+        void UnMask();
+    }
+
     public interface IApiBase
     {
         int? RequestIndex { get; }
@@ -73,21 +79,25 @@ namespace Proto.PServices
             return this;
         }
 
-        public  APIBase<Request, Response> SendRequest(IChannel channel, Request request, ReqeustCallback<Response> callback)
+        private  IEventMasker masker;
+        public  APIBase<Request, Response> SendRequest(IChannel channel, Request request, ReqeustCallback<Response> callback, IEventMasker masker = null)
         {
+            this.masker = masker;
             return this.SetCallBack(callback).SetRequest(request).SendRequest(channel);
         }
 
         private APIBase<Request, Response> SendRequest(IChannel channel)
         {
+            masker?.Mask();
             if (RequestIndex.HasValue) throw new Exception("Exsist request");
             IsDone = false;
             RequestIndex = channel.ProcessRequest(this);
             return this;
         }
 
-        public APIBase<Request, Response> SetResponse(Response response)
+        private APIBase<Request, Response> SetResponse(Response response)
         {
+            
             this.QueryRespons = response;
             if(QueryRespons==null) QueryRespons = new Response();
             this.IsDone = true;
@@ -101,6 +111,7 @@ namespace Proto.PServices
 
         public void FinishResponse(IMessage message)
         {
+            masker?.UnMask();
             this.SetResponse((Response)message);
         }
 
@@ -130,8 +141,9 @@ namespace Proto.PServices
             return task.Result;
         }
 
-        public System.Collections.IEnumerator Send(IChannel channel,Request request)
+        public System.Collections.IEnumerator Send(IChannel channel,Request request, IEventMasker mask = null)
         {
+            this.masker = mask;
             this.SetRequest(request);
             SendRequest(channel);
             while (!IsDone)  yield return null;
