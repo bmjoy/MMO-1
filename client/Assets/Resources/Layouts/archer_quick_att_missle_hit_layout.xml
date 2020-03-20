@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-16"?>
+<TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Time>0.5</Time>
+  <Points>
+    <TimePoint>
+      <GUID>dac7692e-3434-4719-b097-4d7578409726</GUID>
+      <Time>0.0771208256</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>47a5d781-dd12-4c77-8621-5e2e4fb5751c</GUID>
+      <Time>0.0282776356</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>1b2f1f0e-c57b-44ec-8c12-cd8f32cb7d1d</GUID>
+      <Time>0.0880462751</Time>
+    </TimePoint>
+    <TimePoint>
+      <GUID>fd584289-cd71-450d-a4f5-cf37141b737e</GUID>
+      <Time>0.0404884331</Time>
+    </TimePoint>
+  </Points>
+  <Layouts>
+    <LayoutBase xsi:type="PlaySoundLayout">
+      <GUID>dac7692e-3434-4719-b097-4d7578409726</GUID>
+      <resourcesPath>Sound/MagicSounds/General Spell/Magic Explosion 4.wav</resourcesPath>
+      <target>Target</target>
+      <fromBone>Body</fromBone>
+      <value>1</value>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>47a5d781-dd12-4c77-8621-5e2e4fb5751c</GUID>
+      <path />
+      <fromTarget>Target</fromTarget>
+      <toTarget>Target</toTarget>
+      <fromBoneName>Body</fromBoneName>
+      <toBoneName>Body</toBoneName>
+      <Bind>false</Bind>
+      <destoryType>Normal</destoryType>
+      <destoryTime>0</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
+    </LayoutBase>
+    <LayoutBase xsi:type="DamageLayout">
+      <GUID>1b2f1f0e-c57b-44ec-8c12-cd8f32cb7d1d</GUID>
+      <target>Target</target>
+      <damageType>Rangle</damageType>
+      <fiterType>EmenyTeam</fiterType>
+      <radius>2</radius>
+      <angle>360</angle>
+      <offsetAngle>0</offsetAngle>
+      <offsetPosition>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offsetPosition>
+      <effectType>EffectGroup</effectType>
+      <effectKey>001</effectKey>
+    </LayoutBase>
+    <LayoutBase xsi:type="ParticleLayout">
+      <GUID>fd584289-cd71-450d-a4f5-cf37141b737e</GUID>
+      <path>Effects/Missiles &amp; Explosions/Lightning/LightningExplosionNormal.prefab</path>
+      <fromTarget>Target</fromTarget>
+      <toTarget>Target</toTarget>
+      <fromBoneName>Bottom</fromBoneName>
+      <toBoneName>Bottom</toBoneName>
+      <Bind>false</Bind>
+      <destoryType>Normal</destoryType>
+      <destoryTime>0</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>1</y>
+        <z>0</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
+    </LayoutBase>
+  </Layouts>
+</TimeLine>
