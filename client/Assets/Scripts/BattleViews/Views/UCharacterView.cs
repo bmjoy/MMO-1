@@ -399,6 +399,19 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
+    void IBattleCharacter.SetLookRotation(Proto.Vector3 eu)
+    {
+        if (!this) return;
+        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(eu.ToUV3());
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CharacterRotation
+        {
+            Rotation = eu,
+            Index = Index
+        });
+#endif
+    }
+
     void IBattleCharacter.SetForward(Proto.Vector3 forward)
     {
         if (!this) return;
@@ -753,4 +766,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             
         }
     }
+
+
+   
 }

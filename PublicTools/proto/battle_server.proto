@@ -37,7 +37,8 @@ message Action_CollectItem
 message Action_ClickSkillIndex
 {
 	 int32 MagicId = 1;//技能id
-	 int32 Target =  2;//技能目标
+	 Vector3 Rotation = 3;
+	 Vector3 Position =4;
 }
 //自动寻敌
 message Action_AutoFindTarget
@@ -285,6 +286,11 @@ message Notify_SyncServerTime
 	float ServerNow = 1;
 }
 
+message Notify_CharacterRotation
+{
+	int32 Index=1;
+	Vector3 Rotation = 2;
+}
 
 
 service NotifyService
@@ -318,6 +324,7 @@ service NotifyService
 	rpc DropGold (Void) returns (Notify_DropGold){};//32
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
 	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
+	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
 }
 
 service ActionService

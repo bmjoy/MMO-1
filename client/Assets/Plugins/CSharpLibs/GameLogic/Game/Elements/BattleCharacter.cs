@@ -11,6 +11,7 @@ using P = Proto.HeroPropertyType;
 using ExcelConfig;
 using Layout.AITree;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.Elements
 {
@@ -380,6 +381,11 @@ namespace GameLogic.Game.Elements
         internal void LookAt(BattleCharacter releaserTarget)
         {
             View.LookAtTarget(releaserTarget.Index);
+        }
+
+        internal void LookAt(Vector3 rotation)
+        {
+            View.SetLookRotation(rotation.ToPV3());
         }
 
         internal void Init()

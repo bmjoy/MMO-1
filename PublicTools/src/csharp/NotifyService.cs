@@ -326,8 +326,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 36
+    /// </summary>    
+    [API(36)]
+    public class CharacterRotation:APIBase<Void, Notify_CharacterRotation> 
+    {
+        private CharacterRotation() : base() { }
+        public  static CharacterRotation CreateQuery(){ return new CharacterRotation();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(36)]Notify_CharacterRotation CharacterRotation(Void req);
         [API(35)]Notify_PlayTimeLine PlayTimeLine(Void req);
         [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
         [API(32)]Notify_DropGold DropGold(Void req);
@@ -363,6 +375,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(36)]public abstract Task<Notify_CharacterRotation> CharacterRotation(Void request);
         [API(35)]public abstract Task<Notify_PlayTimeLine> PlayTimeLine(Void request);
         [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);
         [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);

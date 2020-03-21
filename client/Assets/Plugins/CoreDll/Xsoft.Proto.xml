@@ -92,13 +92,11 @@
             技能id
              </summary>
             </member>
-        <member name="F:Proto.Action_ClickSkillIndex.TargetFieldNumber">
-             <summary>Field number for the "Target" field.</summary>
+        <member name="F:Proto.Action_ClickSkillIndex.RotationFieldNumber">
+             <summary>Field number for the "Rotation" field.</summary>
             </member>
-        <member name="P:Proto.Action_ClickSkillIndex.Target">
-             <summary>
-            技能目标
-             </summary>
+        <member name="F:Proto.Action_ClickSkillIndex.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
             </member>
         <member name="T:Proto.Action_AutoFindTarget">
              <summary>
@@ -527,6 +525,12 @@
             </member>
         <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
              <summary>Field number for the "ServerNow" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterRotation.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterRotation.RotationFieldNumber">
+             <summary>Field number for the "Rotation" field.</summary>
             </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
@@ -3210,6 +3214,11 @@
         <member name="T:Proto.NotifyService.PlayTimeLine">
              <summary>
              35
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterRotation">
+             <summary>
+             36
              </summary>    
             </member>
     </members>

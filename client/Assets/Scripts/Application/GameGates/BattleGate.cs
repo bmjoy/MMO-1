@@ -253,10 +253,16 @@ public class BattleGate : UGate, IServerMessageHandler
         if (!Owner) return;
         if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
         {
+            var character = Owner as IBattleCharacter;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
             if (config != null) Owner.ShowRange(config.RangeMax);
             if (config.MPCost <= Owner.MP)
-                SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID });
+                SendAction(new Action_ClickSkillIndex
+                {
+                    MagicId = magicData.ID,
+                    Position = character.Transform.position.ToPV3(),
+                    Rotation = character.Rotation.eulerAngles.ToPV3()
+                });
             else
                 UApplication.S.ShowNotify($"MP不足无法释放{config.Name}");
         }

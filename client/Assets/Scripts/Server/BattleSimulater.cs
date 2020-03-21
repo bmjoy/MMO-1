@@ -328,6 +328,8 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             {
                 buffer.AddMessage(i.ToNotityMessage());
             }
+            var syncTime = new Notify_SyncServerTime { ServerNow = PerView.GetTime().Time };
+            buffer.AddMessage(syncTime.ToNotityMessage());
             var pack = buffer.ToPackage();
             foreach (var i in BattlePlayers)
             {
