@@ -7,10 +7,6 @@
       <Time>0</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>d50ae65b-0f07-473e-b687-1018c60142e9</GUID>
-      <Time>0</Time>
-    </TimePoint>
-    <TimePoint>
       <GUID>1424e234-f361-402d-a4d0-893803c212b1</GUID>
       <Time>0.03907455</Time>
     </TimePoint>
@@ -22,11 +18,6 @@
       <target>Releaser</target>
       <fromBone>Body</fromBone>
       <value>1</value>
-    </LayoutBase>
-    <LayoutBase xsi:type="MotionLayout">
-      <GUID>d50ae65b-0f07-473e-b687-1018c60142e9</GUID>
-      <motionName>Defend</motionName>
-      <targetType>Releaser</targetType>
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>1424e234-f361-402d-a4d0-893803c212b1</GUID>

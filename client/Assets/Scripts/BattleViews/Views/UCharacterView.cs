@@ -12,6 +12,14 @@ using UnityEngine.AI;
 using System;
 using EngineCore.Simulater;
 
+
+[Serializable]
+public class CharacterProperty
+{
+    public HeroPropertyType PType;
+    public int FinalValue;
+}
+
 [
     BoneName("Top", "__Top"),
     BoneName("Bottom", "__Bottom"),
@@ -473,12 +481,23 @@ public class UCharacterView : UElementView, IBattleCharacter
         LookAt(v.transform);
     }
 
+    public List<CharacterProperty> properties = new List<CharacterProperty>();
+
     void IBattleCharacter.PropertyChange(HeroPropertyType type, int finalValue)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PropertyValue { Index = Index, Type = type, FinallyValue = finalValue });
 #endif
+        foreach (var i in properties)
+        {
+            if (i.PType == type)
+            {
+                i.FinalValue = finalValue;
+                return;
+            }
+        }
+        properties.Add(new CharacterProperty { PType = type, FinalValue = finalValue });
     }
 
     void IBattleCharacter.SetAlpha(float alpha)

@@ -62,7 +62,7 @@ namespace GameLogic.Game.Elements
             this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
 
-        public float Durtime { private set; get; }
+        public float Durtime { set; get; }
         public void SetParam(params string[] parms)
         {
             Params = parms;
@@ -172,8 +172,7 @@ namespace GameLogic.Game.Elements
 
         public void Tick(GTime time)
         {
-            if (Durtime > 0)
-                Durtime -= time.DeltaTime;
+           
             var current = _players.First;
             while (current != null)
             {
@@ -293,7 +292,7 @@ namespace GameLogic.Game.Elements
             {
                 if (i.target.Enable)
                 {
-                    i.target.ModifyValue(i.property, i.addtype, -i.addValue);
+                    i.target.ModifyValueMinutes(i.property, i.addtype, i.addValue);
                 }
             }
 

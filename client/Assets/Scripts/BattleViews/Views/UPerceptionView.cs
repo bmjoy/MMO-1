@@ -348,18 +348,17 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var viewRoot = new GameObject(layout.path);
         var view = viewRoot.AddComponent<UParticlePlayer>();
         var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (layout.path);
-        GameObject ins;
         if (obj == null)
         {
             return null;
-        } else
+        }
+        else
         {
-            ins =Instantiate (obj, viewRoot.transform);
+            Instantiate(obj, viewRoot.transform);
         }
         var viewRelease = releaser as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
-      
         var form = layout.fromTarget == TargetType.Releaser ? characterView : viewTarget;
         var bone = form.GetBoneByName(layout.fromBoneName);
         if (layout.Bind)
@@ -378,18 +377,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(layout.rotation.ToUV3());
         viewRoot.transform.position += viewRoot.transform.rotation * layout.offet.ToUV3();
         viewRoot.transform.localScale =  UnityEngine.Vector3 .one* layout.localsize;
-        switch (layout.destoryType)
-        {
-            case  ParticleDestoryType.Time:
-                Destroy(ins, layout.destoryTime);
-                break;
-            case ParticleDestoryType.Normal:
-                Destroy(ins, 3);
-                break;
-            case ParticleDestoryType.LayoutTimeOut:
-                Destroy(ins, 1);
-                break;
-        }
         return view;
     }
         

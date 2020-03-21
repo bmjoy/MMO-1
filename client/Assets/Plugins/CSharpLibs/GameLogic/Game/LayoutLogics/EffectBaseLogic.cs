@@ -137,7 +137,7 @@ namespace GameLogic.Game.LayoutLogics
         public static void AddProperty(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
             var effect = e as AddPropertyEffect;
-            effectTarget.ModifyValue( effect.property, effect.addType, effect.addValue);
+            effectTarget.ModifyValueAdd(effect.property, effect.addType, effect.addValue);
             if (effect.revertType == RevertType.ReleaserDeath)
             {
                 releaser.RevertProperty(effectTarget, effect.property, effect.addType, effect.addValue);

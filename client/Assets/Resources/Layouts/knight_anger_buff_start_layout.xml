@@ -3,22 +3,22 @@
   <Time>1</Time>
   <Points>
     <TimePoint>
-      <GUID>7a43382f-72ee-4fcd-ab49-be82074bad3a</GUID>
-      <Time>0</Time>
+      <GUID>2a81d653-6160-43a1-bb22-05b3636bc18e</GUID>
+      <Time>0.233990148</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>d711719d-2805-44b5-b991-1cafc7bcef6c</GUID>
-      <Time>0</Time>
+      <GUID>22dee8c1-82a2-41bb-a8b3-2b94804ad995</GUID>
+      <Time>0.024630541</Time>
     </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="ParticleLayout">
-      <GUID>7a43382f-72ee-4fcd-ab49-be82074bad3a</GUID>
-      <path>Effects/Shields/Shield Sphere/LightShield.prefab</path>
-      <fromTarget>Releaser</fromTarget>
-      <toTarget>Releaser</toTarget>
-      <fromBoneName>Body</fromBoneName>
-      <toBoneName>Body</toBoneName>
+      <GUID>2a81d653-6160-43a1-bb22-05b3636bc18e</GUID>
+      <path>Effects/Flames/FireFlame.prefab</path>
+      <fromTarget>Target</fromTarget>
+      <toTarget>Target</toTarget>
+      <fromBoneName>Bottom</fromBoneName>
+      <toBoneName>Bottom</toBoneName>
       <Bind>true</Bind>
       <destoryType>Normal</destoryType>
       <destoryTime>0</destoryTime>
@@ -35,8 +35,8 @@
       <localsize>1</localsize>
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
-      <GUID>d711719d-2805-44b5-b991-1cafc7bcef6c</GUID>
-      <target>Releaser</target>
+      <GUID>22dee8c1-82a2-41bb-a8b3-2b94804ad995</GUID>
+      <target>Target</target>
       <damageType>Single</damageType>
       <fiterType>ALL</fiterType>
       <radius>1</radius>

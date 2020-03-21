@@ -421,10 +421,17 @@ namespace GameLogic.Game.Elements
             return isOK;
         }
 
-        public void ModifyValue(P property, AddType addType, float resultValue)
+        public void ModifyValueAdd(P property, AddType addType, float resultValue)
         {
             var value = this[property];
-            value.ModifyValue(addType, resultValue);
+            value.ModifyValueAdd(addType, resultValue);
+            View.PropertyChange(property, value.FinalValue);
+        }
+
+        public void ModifyValueMinutes(P property, AddType miType, float resultValue)
+        {
+            var value = this[property];
+            value.ModifyValueMinutes(miType, resultValue);
             View.PropertyChange(property, value.FinalValue);
         }
 

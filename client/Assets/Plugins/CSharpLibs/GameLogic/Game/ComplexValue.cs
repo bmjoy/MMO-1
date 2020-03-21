@@ -124,6 +124,28 @@ namespace GameLogic.Game
 			return temp.FinalValue == this.FinalValue;
 		}
 
+		public void ModifyValueAdd(AddType addType, float add)
+		{
+			switch (addType)
+			{
+				case AddType.Append:
+					{
+						SetAppendValue((int)add + AppendValue);
+					}
+					break;
+				case AddType.Base:
+					{
+						SetBaseValue((int)add+BaseValue);
+					}
+					break;
+				case AddType.Rate:
+					{
+						SetRate((int)add+Rate);
+					}
+					break;
+			}
+		}
+
 		public void ModifyValue(AddType addType, float resultValue)
 		{
 			switch (addType)
@@ -141,6 +163,29 @@ namespace GameLogic.Game
 				case AddType.Rate:
 					{
 						SetRate((int)resultValue);
+					}
+					break;
+			}
+		}
+
+        internal void ModifyValueMinutes(AddType miType, float mi)
+        {
+            
+			switch (miType)
+			{
+				case AddType.Append:
+					{
+						SetAppendValue( AppendValue-(int)mi);
+					}
+					break;
+				case AddType.Base:
+					{
+						SetBaseValue(BaseValue - (int)mi);
+					}
+					break;
+				case AddType.Rate:
+					{
+						SetRate( Rate - (int)mi);
 					}
 					break;
 			}

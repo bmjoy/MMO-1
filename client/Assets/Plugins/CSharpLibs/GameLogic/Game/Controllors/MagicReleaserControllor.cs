@@ -40,6 +40,7 @@ namespace GameLogic.Game.Controllors
 					{
 						if (releaser.Durtime > 0)
 						{
+							releaser.Durtime -= time.DeltaTime;
 							if (releaser.LastTickTime + releaser.Magic.triggerTicksTime < time.Time)
 							{
 								releaser.LastTickTime = time.Time;
