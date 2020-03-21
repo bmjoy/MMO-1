@@ -1,6 +1,5 @@
 ﻿#define USEGM
 
-using System.Collections.Generic;
 using EConfig;
 using ExcelConfig;
 using GServer;
@@ -9,7 +8,6 @@ using MongoDB.Driver;
 using Proto;
 using Proto.GateServerService;
 using Proto.LoginBattleGameServerService;
-using Proto.MongoDB;
 using XNet.Libs.Net;
 using static GateServer.DataBase;
 using static Proto.ItemsShop.Types;

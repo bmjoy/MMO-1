@@ -85,11 +85,11 @@ namespace GameLogic.Game.LayoutLogics
                 {
                     var cureHP = (int)(result.Damage *
                         releaser.ReleaserTarget.Releaser[Proto.HeroPropertyType.SuckingRate].FinalValue / 10000f);
-                    if (cureHP > 0) releaser.ReleaserTarget.Releaser.AddHP(cureHP);
+                    if (cureHP > 0) releaser.Releaser.AddHP(cureHP);
                 }
             }
 
-            per.ProcessDamage(releaser.ReleaserTarget.Releaser, effectTarget, result);
+            per.ProcessDamage(releaser.Releaser, effectTarget, result);
         }
 
         //CureEffect

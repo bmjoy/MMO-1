@@ -20,6 +20,19 @@ namespace GameLogic.Game.Perceptions
     public interface IBattlePerception:ITreeLoader
     {
         /// <summary>
+        /// 当前的时间仿真
+        /// </summary>
+        /// <returns>The time simulater.</returns>
+        ITimeSimulater GetTimeSimulater();
+
+        /// <summary>
+        /// Gets the AIT ree.
+        /// </summary>
+        /// <returns>The AIT ree.</returns>
+        /// <param name="pathTree">Path tree.</param>
+        TreeNode GetAITree(string pathTree);
+
+        /// <summary>
         /// 获取当前的layout
         /// </summary>
         /// <returns>The time line by path.</returns>
@@ -80,19 +93,7 @@ namespace GameLogic.Game.Perceptions
         IBattleItem CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId);
 
 
-        /// <summary>
-        /// 当前的时间仿真
-        /// </summary>
-        /// <returns>The time simulater.</returns>
-        ITimeSimulater GetTimeSimulater();
-
-        /// <summary>
-        /// Gets the AIT ree.
-        /// </summary>
-        /// <returns>The AIT ree.</returns>
-        /// <param name="pathTree">Path tree.</param>
-        TreeNode GetAITree(string pathTree);
-
+    
         /// <summary>
         /// Process damage
         /// </summary>

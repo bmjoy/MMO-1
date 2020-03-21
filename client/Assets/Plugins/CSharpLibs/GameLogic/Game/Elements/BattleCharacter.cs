@@ -50,10 +50,10 @@ namespace GameLogic.Game.Elements
         public float FristTime { get; internal set; }
     }
 
-    public class BattleCharacter:BattleElement<IBattleCharacter>
-	{
+    public class BattleCharacter : BattleElement<IBattleCharacter>
+    {
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
-        private Dictionary<int, BattleCharacterMagic> Magics {  set; get; }
+        private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
@@ -64,7 +64,7 @@ namespace GameLogic.Game.Elements
         public DamageType TDamage { set; get; }
         public UVector3 BronPosition { private set; get; }
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
-
+        public int GroupIndex {set;get;}
         public int MaxHP
         {
             get
@@ -88,7 +88,6 @@ namespace GameLogic.Game.Elements
                 return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
-
         public string Name { set; get; }
         public int TeamIndex { set; get; }
         public int Level { set; get; }
@@ -100,21 +99,22 @@ namespace GameLogic.Game.Elements
             get { return View.Radius; }
         }
 
-        private float _speed;
+        private float BaseSpeed;
         public float Speed
         {
             set
             {
-                _speed = value;
+                BaseSpeed = value;
+
                 View.SetSpeed(Speed);
             }
             get
             {
-                var speed = this[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
+                var speed = this[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + BaseSpeed;
                 return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
             }
         }
-       
+  
         public int HP { private set; get; }
         public int MP { private set; get; }
         public bool IsDeath
@@ -124,16 +124,7 @@ namespace GameLogic.Game.Elements
                 return HP == 0;
             }
         }
-        private AITreeRoot _AiRoot;
-        public AITreeRoot AiRoot
-        {
-            private set
-            {
-                _AiRoot = value;
-                Debug.Log($"{this}->{value}");
-            }
-            get { return _AiRoot; }
-        }
+        public AITreeRoot AiRoot { private set; get; }
         public UVector3 Position
         {
             get
@@ -182,8 +173,9 @@ namespace GameLogic.Game.Elements
 		{
             AcccountUuid = account_uuid;
 			HP = 0;
-            _speed = speed;
+            BaseSpeed = speed;
 			ConfigID = configID;
+
             Magics = new Dictionary<int, BattleCharacterMagic>();
             
             foreach (var i in magics)
@@ -204,10 +196,7 @@ namespace GameLogic.Game.Elements
                 switch (e.Type)
                 {
                     case ActionLockType.NoMove:
-                        if (e.IsLocked)
-                        {
-                            StopMove();
-                        }
+                        if (e.IsLocked)StopMove();
                         break;
                     case ActionLockType.NoInhiden:
                         view.SetAlpha(e.IsLocked ? 0.5f: 1);
