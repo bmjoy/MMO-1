@@ -12,6 +12,9 @@
               <lockType>NoAi</lockType>
               <revertType>ReleaserDeath</revertType>
             </EffectBase>
+            <EffectBase xsi:type="BreakReleaserEffect">
+              <breakType>InStartLayoutMagic</breakType>
+            </EffectBase>
           </effects>
           <key>001</key>
         </EffectGroup>

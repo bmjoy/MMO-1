@@ -52,16 +52,18 @@
     <LayoutBase xsi:type="DamageLayout">
       <GUID>1b2f1f0e-c57b-44ec-8c12-cd8f32cb7d1d</GUID>
       <target>Target</target>
-      <damageType>Rangle</damageType>
-      <fiterType>EmenyTeam</fiterType>
-      <radius>2</radius>
-      <angle>360</angle>
-      <offsetAngle>0</offsetAngle>
-      <offsetPosition>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offsetPosition>
+      <RangeType>
+        <damageType>Rangle</damageType>
+        <fiterType>EmenyTeam</fiterType>
+        <radius>2</radius>
+        <angle>360</angle>
+        <offsetAngle>0</offsetAngle>
+        <offsetPosition>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </offsetPosition>
+      </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>

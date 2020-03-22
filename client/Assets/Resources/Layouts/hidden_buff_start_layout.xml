@@ -3,17 +3,17 @@
   <Time>1</Time>
   <Points>
     <TimePoint>
-      <GUID>aeb31811-091f-43ba-a4e5-34455150af7f</GUID>
-      <Time>0.00280898879</Time>
+      <GUID>d70e161d-f377-4f0a-a14f-56ff31452d50</GUID>
+      <Time>0.182266012</Time>
     </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
-      <GUID>aeb31811-091f-43ba-a4e5-34455150af7f</GUID>
-      <target>Target</target>
+      <GUID>d70e161d-f377-4f0a-a14f-56ff31452d50</GUID>
+      <target>Releaser</target>
       <RangeType>
         <damageType>Single</damageType>
-        <fiterType>EmenyTeam</fiterType>
+        <fiterType>ALL</fiterType>
         <radius>1</radius>
         <angle>360</angle>
         <offsetAngle>0</offsetAngle>

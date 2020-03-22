@@ -35,16 +35,18 @@
     <LayoutBase xsi:type="DamageLayout">
       <GUID>760fabeb-704a-4095-a05e-05a5f2a17a40</GUID>
       <target>Releaser</target>
-      <damageType>Rangle</damageType>
-      <fiterType>EmenyTeam</fiterType>
-      <radius>3</radius>
-      <angle>120</angle>
-      <offsetAngle>0</offsetAngle>
-      <offsetPosition>
-        <x>0</x>
-        <y>0</y>
-        <z>-0.05</z>
-      </offsetPosition>
+      <RangeType>
+        <damageType>Rangle</damageType>
+        <fiterType>EmenyTeam</fiterType>
+        <radius>2.5</radius>
+        <angle>120</angle>
+        <offsetAngle>0</offsetAngle>
+        <offsetPosition>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </offsetPosition>
+      </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>

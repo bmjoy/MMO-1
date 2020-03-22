@@ -15,7 +15,7 @@
           <effects>
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
-              <DamageValue>-5000</DamageValue>
+              <DamageValue>0</DamageValue>
             </EffectBase>
           </effects>
           <key>001</key>

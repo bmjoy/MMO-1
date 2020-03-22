@@ -37,16 +37,18 @@
     <LayoutBase xsi:type="DamageLayout">
       <GUID>d711719d-2805-44b5-b991-1cafc7bcef6c</GUID>
       <target>Releaser</target>
-      <damageType>Single</damageType>
-      <fiterType>ALL</fiterType>
-      <radius>1</radius>
-      <angle>360</angle>
-      <offsetAngle>0</offsetAngle>
-      <offsetPosition>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offsetPosition>
+      <RangeType>
+        <damageType>Single</damageType>
+        <fiterType>ALL</fiterType>
+        <radius>1</radius>
+        <angle>360</angle>
+        <offsetAngle>0</offsetAngle>
+        <offsetPosition>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </offsetPosition>
+      </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
