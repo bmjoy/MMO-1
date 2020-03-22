@@ -209,8 +209,9 @@ namespace GameLogic.Game.Perceptions
             View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed, result.CrtMult);
             NotifyHurt(effectTarget);
             if (result.IsMissed) return;
-            CharacterSubHP(effectTarget, result.Damage);
             effectTarget.AttachDamage(sources.Index, result.Damage, View.GetTimeSimulater().Now.Time);
+            CharacterSubHP(effectTarget, result.Damage);
+            
         }
 
         public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)
