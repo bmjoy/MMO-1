@@ -61,7 +61,8 @@ public class BattlePlayer
         {
             AccountUuid = AccountId,
             Gold = Gold,
-            Package = GetCompletedPackage()
+            Package = GetCompletedPackage(),
+            Hero = Hero
         };
         return notify;
 
