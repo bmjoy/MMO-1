@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using GameLogic;
 using GameLogic.Game.Elements;
 using Vector3 = UnityEngine.Vector3;
+using Windows;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -131,6 +132,20 @@ public class BattleGate : UGate, IServerMessageHandler
                 Package = initPack.Package;
                 UUIManager.S.GetUIWindow<Windows.UUIBattle>()?.SetPackage(Package);
             }
+        };
+
+        player.OnAddExp = (exp) => {
+
+            if (exp.Level != exp.OldLeve)
+            {
+                UUIManager.S.CreateWindow<UUILevelUp>().ShowWindow(exp.Level);
+            }
+        };
+
+        player.OnDropGold = (gold) =>
+        {
+
+            UApplication.S.ShowNotify($"获得金币{gold.Gold}");
         };
         
     }

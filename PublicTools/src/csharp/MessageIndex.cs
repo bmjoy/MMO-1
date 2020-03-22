@@ -120,6 +120,7 @@ namespace Proto
     [Index(1009056,typeof(Notify_SyncServerTime))]
     [Index(1009058,typeof(Notify_PlayTimeLine))]
     [Index(1009060,typeof(Notify_CharacterRotation))]
+    [Index(1009061,typeof(Notify_CharacterExp))]
 
     [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs

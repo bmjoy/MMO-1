@@ -532,6 +532,18 @@
         <member name="F:Proto.Notify_CharacterRotation.RotationFieldNumber">
              <summary>Field number for the "Rotation" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CharacterExp.ExpFieldNumber">
+             <summary>Field number for the "Exp" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.OldExpFieldNumber">
+             <summary>Field number for the "OldExp" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.OldLeveFieldNumber">
+             <summary>Field number for the "OldLeve" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
              1
@@ -2387,6 +2399,22 @@
             掉落物品
              </summary>
             </member>
+        <member name="F:Proto.B2G_BattleReward.ExpFieldNumber">
+             <summary>Field number for the "Exp" field.</summary>
+            </member>
+        <member name="P:Proto.B2G_BattleReward.Exp">
+             <summary>
+            经验
+             </summary>
+            </member>
+        <member name="F:Proto.B2G_BattleReward.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="P:Proto.B2G_BattleReward.Level">
+             <summary>
+            等级
+             </summary>
+            </member>
         <member name="T:Proto.G2B_BattleReward">
              <summary>
             返回战斗数据
@@ -3234,6 +3262,11 @@
         <member name="T:Proto.NotifyService.CharacterRotation">
              <summary>
              36
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterExp">
+             <summary>
+             37
              </summary>    
             </member>
     </members>

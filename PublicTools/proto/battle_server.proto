@@ -292,6 +292,13 @@ message Notify_CharacterRotation
 	Vector3 Rotation = 2;
 }
 
+message Notify_CharacterExp
+{
+	int32 Exp = 1;
+	int32 OldExp = 2;
+	int32 Level = 3;
+	int32 OldLeve = 4;
+}
 
 service NotifyService
 {
@@ -325,6 +332,7 @@ service NotifyService
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
 	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
 	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
+	rpc CharacterExp(Notify_CharacterExp) returns (Notify_CharacterExp){};//37
 }
 
 service ActionService

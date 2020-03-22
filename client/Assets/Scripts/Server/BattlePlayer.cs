@@ -172,5 +172,37 @@ public class BattlePlayer
         var sererid = BattleSimulater.S.ServerID;
         return $"{sererid}-{DateTime.Now.Ticks}{Guid.NewGuid().ToString()}";
     }
+
+    private bool AddExp(int addExp, int curExp, int level, out int exLevel, out int exExp)
+    {
+        exLevel = level;
+        exExp = addExp;
+        var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
+        if (herolevel == null) return false;
+
+        if (curExp + addExp >= herolevel.NeedExprices)
+        {
+            exLevel += 1;
+            exExp = curExp + addExp - herolevel.NeedExprices;
+            if (exExp > 0)
+            {
+                AddExp(exExp, 0, exLevel, out exLevel, out exExp);
+            }
+        }
+        return true;
+    }
+
+
+    public bool AddExp(int exp,out int oldLevel, out int newLevel)
+    {
+        oldLevel = newLevel = Hero.Level;
+        if (AddExp(exp, Hero.Exprices, Hero.Level, out int level, out int exLimit))
+        {
+            Hero.Level = level;
+            Hero.Exprices = exLimit;
+            newLevel = Hero.Level;
+        }
+        return true;
+    }
 }
 

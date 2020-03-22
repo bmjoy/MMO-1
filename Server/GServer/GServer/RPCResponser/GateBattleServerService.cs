@@ -18,24 +18,23 @@ namespace GateServer
         [IgnoreAdmission]
         public G2B_BattleReward BattleReward(B2G_BattleReward request)
         {
-            var task = UserDataManager.S.FindPlayerByAccountId(request.AccountUuid);
-            task.Wait();
-            var player = task.Result;
-            if (player == null)
-            {
-                return new G2B_BattleReward { Code = ErrorCode.NoGamePlayerData };
-            }
             ErrorCode code = ErrorCode.Ok;
-            var t = UserDataManager.S.ProcessRewardItem(player.Uuid, request.Items);
+
+            var t = UserDataManager.S
+                .ProcessBattleReward(request.AccountUuid, request.Items, request.Exp, request.Level, request.Gold);
             t.Wait();
-            var r = t.Result;
-            if (r)
+            var uuid = t.Result;
+            if (!string.IsNullOrEmpty(uuid))
             {
-                var userClient = Application.Current.GetClientByUserID(player.Uuid);
+                var userClient = Application.Current.GetClientByUserID(uuid);
                 if (userClient != null)
                 {
-                    UserDataManager.S.SyncToClient(userClient, player.Uuid).Wait();
+                    UserDataManager.S.SyncToClient(userClient, uuid).Wait();
                 }
+            }
+            else
+            {
+                code = ErrorCode.Error;
             }
 
             return new G2B_BattleReward { Code = code };

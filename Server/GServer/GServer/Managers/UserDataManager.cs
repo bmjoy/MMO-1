@@ -41,6 +41,21 @@ namespace GServer.Managers
             return query.Single();
         }
 
+        internal async Task<string> ProcessBattleReward(string account_uuid, RepeatedField<PlayerItem> items, int exp, int level, int gold)
+        {
+            var player = await FindPlayerByAccountId(account_uuid);
+            if (player == null) return null;
+            var pupdate = Builders<GameHeroEntity>.Update.Set(t => gold, gold);
+            var pfilter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            await DataBase.S.Heros.UpdateOneAsync(pfilter, pupdate);
+            await ProcessRewardItem(player.Uuid, items);
+            var hero = await FindHeroByPlayerId(player.Uuid);
+            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp).Set(t => t.Level, level);
+            var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
+            await DataBase.S.Heros.UpdateOneAsync(filter, update);
+            return  player.Uuid;
+        }
+
         internal async Task SyncToClient(Client userClient, string playerUuid, bool packageOnly = false)
         {
             // var playerUuid = (string)userClient.UserState;
@@ -424,7 +439,7 @@ namespace GServer.Managers
             return true;
         }
 
-        internal async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
+        private async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
         {
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();

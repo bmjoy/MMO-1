@@ -11,6 +11,7 @@ using Google.Protobuf;
 using EConfig;
 using System.Reflection;
 using GameLogic.Utility;
+using Windows;
 
 /// <summary>
 /// 游戏中的通知播放者
@@ -27,9 +28,12 @@ public class NotifyPlayer
 
     public IBattlePerception PerView { set; get; }
 
+
     #region Events
+    public Action<Notify_CharacterExp> OnAddExp;
     public Action<IBattleCharacter> OnCreateUser;
     public Action<Notify_PlayerJoinState> OnJoined;
+    public Action<Notify_DropGold> OnDropGold;
     #endregion
 
     public NotifyPlayer(UPerceptionView view)
@@ -137,7 +141,11 @@ public class NotifyPlayer
         }
         else if (notify is Notify_DropGold dropGold)
         {
-            UApplication.S.ShowNotify($"获得金币{dropGold.Gold}");
+            OnDropGold?.Invoke(dropGold);
+        }
+        else if (notify is Notify_CharacterExp exp)
+        {
+            OnAddExp?.Invoke(exp);
         }
         else
         {
