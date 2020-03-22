@@ -98,15 +98,14 @@ namespace GameLogic.Game.LayoutLogics
 			if (orginTarget == null) {
 				throw new Exception ("Do not have target of orgin. type:" + layout.target.ToString ());
 			}
-			var offsetPos = new UVector3 (layout.offsetPosition.x, 
-				layout.offsetPosition.y, layout.offsetPosition.z);
+			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
 			var per = releaser.Controllor.Perception  as BattlePerception;
 			var targets = per.FindTarget (orginTarget,
-				layout.fiterType, 
-				layout.damageType, 
-				layout.radius,
-				layout.angle, 
-				layout.offsetAngle,
+				layout.RangeType.fiterType, 
+				layout.RangeType.damageType, 
+				layout.RangeType.radius,
+				layout.RangeType.angle, 
+				layout.RangeType.offsetAngle,
                 offsetPos,releaser.ReleaserTarget.Releaser.TeamIndex);
 
 			releaser.ShowDamageRange(layout);

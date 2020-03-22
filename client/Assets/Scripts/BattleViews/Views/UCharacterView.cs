@@ -669,7 +669,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         return createNotity;
     }
 
-    private int LockValue = 0;
+    public int LockValue = 0;
 
     void IBattleCharacter.SetLock(int lockValue)
     {
@@ -728,6 +728,11 @@ public class UCharacterView : UElementView, IBattleCharacter
                 if (GElement == null) return;
                 if (GElement is BattleCharacter c) c.EndPush();
             };
+    }
+
+    void IBattleCharacter.TrySetPosition(Vector3 pos)
+    {
+        TryToSetPosition(pos);
     }
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)

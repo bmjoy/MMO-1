@@ -64,6 +64,8 @@ namespace GameLogic.Game.Elements
         public DamageType TDamage { set; get; }
         public UVector3 BronPosition { private set; get; }
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
+
+      
         public int GroupIndex {set;get;}
         public int MaxHP
         {
@@ -281,6 +283,11 @@ namespace GameLogic.Game.Elements
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
             return dead;
+        }
+
+        internal void TryToSetPosition(UVector3 vector3)
+        {
+            this.View.TrySetPosition(vector3);
         }
 
         public Action PushEnd;

@@ -14,7 +14,7 @@
   <Layouts>
     <LayoutBase xsi:type="PlaySoundLayout">
       <GUID>1396b6ca-5742-46f6-a67c-d4d13e1a2873</GUID>
-      <resourcesPath>Sound/MagicSounds/General Spell/Positive Effect 1.wav</resourcesPath>
+      <resourcesPath>Sound/MagicSounds/General Spell/Buff Defense 06.wav</resourcesPath>
       <target>Releaser</target>
       <fromBone>Body</fromBone>
       <value>1</value>

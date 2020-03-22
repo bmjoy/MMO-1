@@ -434,6 +434,7 @@ public class LayoutEditorWindow:EditorWindow
         {
             line = XmlParser.DeSerialize<TimeLine>(File.ReadAllText(path, XmlParser.UTF8));
             shortPath = path.Replace(Application.dataPath + "/Resources/", "");
+            currentObj = null;
         } 
     }
 

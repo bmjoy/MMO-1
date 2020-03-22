@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>4</Time>
+  <Time>1</Time>
   <Points>
     <TimePoint>
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
@@ -19,44 +19,26 @@
       <Time>0.3033419</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <Time>1.7994858</Time>
-    </TimePoint>
-    <TimePoint>
-      <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <Time>2.77120829</Time>
-    </TimePoint>
-    <TimePoint>
       <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
       <Time>0.277634948</Time>
-    </TimePoint>
-    <TimePoint>
-      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
-      <Time>2.62724924</Time>
-    </TimePoint>
-    <TimePoint>
-      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
-      <Time>1.73264778</Time>
-    </TimePoint>
-    <TimePoint>
-      <GUID>f7195cbd-19be-4844-b134-4c16447a18f3</GUID>
-      <Time>1.00257075</Time>
     </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
       <target>Target</target>
-      <damageType>Rangle</damageType>
-      <fiterType>EmenyTeam</fiterType>
-      <radius>2</radius>
-      <angle>360</angle>
-      <offsetAngle>0</offsetAngle>
-      <offsetPosition>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offsetPosition>
+      <RangeType>
+        <damageType>Rangle</damageType>
+        <fiterType>EmenyTeam</fiterType>
+        <radius>2</radius>
+        <angle>360</angle>
+        <offsetAngle>0</offsetAngle>
+        <offsetPosition>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </offsetPosition>
+      </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>

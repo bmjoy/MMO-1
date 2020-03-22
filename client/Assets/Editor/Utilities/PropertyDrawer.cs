@@ -57,7 +57,7 @@ public class PropertyDrawer
 
 	private static Dictionary<Type,MethodInfo> _handlers;
 
-    private static Dictionary<string, object> _dic = new Dictionary<string, object>();
+    private static readonly Dictionary<string, object> _dic = new Dictionary<string, object>();
 
 	public static void DrawObject(object obj,string key)
 	{
@@ -90,7 +90,6 @@ public class PropertyDrawer
 		}
 	}
 
-
 	private static void DrawProperty(FieldInfo field,object obj)
 	{
 		 
@@ -111,46 +110,57 @@ public class PropertyDrawer
 				return;
 			}
 		}
-	
+
 		//GUILayout.BeginVertical ();
 
-		if (field.FieldType == typeof(int)) {
-			GUILayout.Label (name);
-			var value = EditorGUILayout.IntField ((int)field.GetValue (obj));
-			field.SetValue (obj, value);
-        } else if (field.FieldType == typeof(bool)) {
-            EditorGUILayout.BeginHorizontal();
-            var value = EditorGUILayout.Toggle ((bool)field.GetValue (obj),GUILayout.Width(50));
-            field.SetValue (obj, value);
-            GUILayout.Label (name);
-            EditorGUILayout.EndHorizontal();
-        }else if (field.FieldType == typeof(string)) {
-			GUILayout.Label (name);
-			var value = EditorGUILayout.TextField ((string)field.GetValue (obj));
-			field.SetValue (obj, value);
-		} else if (field.FieldType == typeof(long)) {
-			GUILayout.Label (name);
-			var value = EditorGUILayout.LongField ((long)field.GetValue (obj));
-			field.SetValue (obj, value);
-		} else if (field.FieldType == typeof(float)) {
-			GUILayout.Label (name);
-			var value = EditorGUILayout.FloatField ((float)field.GetValue (obj));
-			field.SetValue (obj, value);
-		} else if (field.FieldType == typeof(Layout.Vector3)) {
+		if (field.FieldType == typeof(int))
+		{
+			GUILayout.Label(name);
+			var value = EditorGUILayout.IntField((int)field.GetValue(obj));
+			field.SetValue(obj, value);
+		}
+		else if (field.FieldType == typeof(bool))
+		{
+			EditorGUILayout.BeginHorizontal();
+			var value = EditorGUILayout.Toggle((bool)field.GetValue(obj), GUILayout.Width(50));
+			field.SetValue(obj, value);
+			GUILayout.Label(name);
+			EditorGUILayout.EndHorizontal();
+		}
+		else if (field.FieldType == typeof(string))
+		{
+			GUILayout.Label(name);
+			var value = EditorGUILayout.TextField((string)field.GetValue(obj));
+			field.SetValue(obj, value);
+		}
+		else if (field.FieldType == typeof(long))
+		{
+			GUILayout.Label(name);
+			var value = EditorGUILayout.LongField((long)field.GetValue(obj));
+			field.SetValue(obj, value);
+		}
+		else if (field.FieldType == typeof(float))
+		{
+			GUILayout.Label(name);
+			var value = EditorGUILayout.FloatField((float)field.GetValue(obj));
+			field.SetValue(obj, value);
+		}
+		else if (field.FieldType == typeof(Layout.Vector3))
+		{
 			//GUILayout.Label (name);
-			var v = (Layout.Vector3)field.GetValue (obj);
-			var value = EditorGUILayout.Vector3Field(name,new UnityEngine.Vector3 (v.x, v.y, v.z));
-			field.SetValue (obj, new Layout.Vector3 { x= value.x, y=value.y, z=value.z});
+			var v = (Layout.Vector3)field.GetValue(obj);
+			var value = EditorGUILayout.Vector3Field(name, new UnityEngine.Vector3(v.x, v.y, v.z));
+			field.SetValue(obj, new Layout.Vector3 { x = value.x, y = value.y, z = value.z });
 		}
 		else if (field.FieldType == typeof(FieldValue))
 		{
 			GUILayout.Label(name);
-            if (!(field.GetValue(obj) is FieldValue value))
-            {
-                value = 1000;
-            }
+			if (!(field.GetValue(obj) is FieldValue value))
+			{
+				value = 1000;
+			}
 
-            GUILayout.BeginHorizontal();
+			GUILayout.BeginHorizontal();
 			value.type = (FieldValue.ValueType)EditorGUILayout.EnumPopup(value.type);
 			switch (value.type)
 			{
@@ -170,25 +180,65 @@ public class PropertyDrawer
 
 			field.SetValue(obj, value);
 		}
-		else if (field.FieldType.IsEnum) {
-			GUILayout.Label (name);
-            var value = EditorGUILayout.EnumPopup ((Enum)field.GetValue (obj));
-            field.SetValue (obj, value);
+		else if (field.FieldType == typeof(DamageRange))
+		{
+			GUILayout.Label(name);
+			if (!(field.GetValue(obj) is DamageRange value))
+			{
+				value = new DamageRange();
+			}
+
+			GUILayout.BeginVertical();
+			GUILayout.BeginHorizontal();
+			GUILayout.Label(GetLable(typeof(DamageRange).GetField("fiterType")));
+			value.fiterType =  (FilterType)EditorGUILayout.EnumPopup((Enum)value.fiterType);
+			GUILayout.EndHorizontal();
+			GUILayout.BeginHorizontal();
+			GUILayout.Label(GetLable(typeof(DamageRange).GetField("damageType")));
+			value.damageType =(DamageType) EditorGUILayout.EnumPopup((Enum)value.damageType);
+			GUILayout.EndHorizontal();
+            
+
+			if (value.damageType == DamageType.Rangle)
+			{
+				var fieldNames = new string[] { "radius","angle", "offsetAngle" , "offsetPosition"};
+				foreach (var i in fieldNames)
+				{
+					DrawProperty(typeof(DamageRange).GetField(i), value);
+                }
+            }
+			GUILayout.EndVertical();
+
+			
+		}
+		else if (field.FieldType.IsEnum)
+		{
+			GUILayout.Label(name);
+			var value = EditorGUILayout.EnumPopup((Enum)field.GetValue(obj));
+			field.SetValue(obj, value);
 		}
 
+	}
 
-		//GUILayout.EndVertical ();
+	private static string GetLable(FieldInfo field)
+	{
+		var label = field.GetCustomAttributes(typeof(LabelAttribute), false) as LabelAttribute[];
+		var name = field.Name;
+		if (label.Length > 0)
+		{
+			name = label[0].DisplayName;
+		}
+
+		return name;
 	}
 
 
 	[DrawerHandler(typeof(EditorResourcePathAttribute))]
 	public static void ResourcesSelect(object obj,FieldInfo field, string label, object attr)
-	{
-		//var eAtt = attr as EditorResourcePathAttribute;
+	{ 
 		var resources = "Assets/Resources/";
 		var path = (string)field.GetValue (obj);
-
-		var res = AssetDatabase.LoadAssetAtPath<UnityEngine.Object> (resources + path);
+		var res = AssetDatabase.LoadAssetAtPath<Object> (resources + path);
 		GUILayout.Label (label);
 		res= EditorGUILayout.ObjectField (res,typeof(Object), false);
 		path = AssetDatabase.GetAssetPath (res);
@@ -202,9 +252,7 @@ public class PropertyDrawer
 		var resources = "Assets/Resources/";
 		var path = (string)field.GetValue (obj);
 		var res = AssetDatabase.LoadAssetAtPath<UnityEngine.TextAsset> (resources + path);
-		//GUILayout.BeginVertical ();
 		GUILayout.Label (label);
-
 		GUILayout.BeginHorizontal ();
 		res= EditorGUILayout.ObjectField (res,typeof(TextAsset), false,GUILayout.Width(100)) as TextAsset;
 		path = AssetDatabase.GetAssetPath (res);
@@ -212,7 +260,7 @@ public class PropertyDrawer
 		field.SetValue (obj, path);
 
 		if (GUILayout.Button ("New")) {
-			var fPath = EditorUtility.SaveFilePanel ("新建Layout",Application.dataPath+"/Resources/", "layout", "xml");
+			var fPath = EditorUtility.SaveFilePanel ("Create Layout",Application.dataPath+"/Resources/", "layout", "xml");
 			if (!string.IsNullOrEmpty (fPath)) {
 				path = fPath.Replace (Application.dataPath+"/Resources/", "");
 				var layout = new TimeLine ();
@@ -266,6 +314,9 @@ public class PropertyDrawer
 			field.SetValue (obj, names [indexOfBone]);
 	    }
 	}
+
+
+    //[DrawerHandler(typeof(DamageRange)]
 }
 
 

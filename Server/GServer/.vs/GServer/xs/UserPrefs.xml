@@ -1,9 +1,9 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Appliaction.cs">
     <Files>
-      <File FileName="GServer/Program.cs" Line="28" Column="46" />
+      <File FileName="GServer/Program.cs" Line="51" Column="34" />
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" />
-      <File FileName="GServer/Appliaction.cs" />
+      <File FileName="GServer/Appliaction.cs" Line="168" Column="34" />
       <File FileName="GServer/RPCResponser/GateBattleServerService.cs" />
       <File FileName="GServer/MongoTool/DataBase.cs" />
     </Files>
@@ -16,8 +16,9 @@
             </Node>
             <Node name="GateServer" expanded="True">
               <Node name="RPCTaskHandlers" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Appliaction.cs" selected="True" />
             </Node>
+            <Node name="LoginServer" expanded="True" />
           </Node>
         </State>
       </Pad>

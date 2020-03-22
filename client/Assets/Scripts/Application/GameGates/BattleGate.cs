@@ -153,9 +153,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void MoveDir(Vector3 dir)
     {
-        if (!Owner) return;
-        if (Owner.IsDeath) return;
-
+        if (!CanNetAction()) return;
         var fast = dir.magnitude > 0.8f;
         var pos = Owner.transform.position;
         var dn = dir.normalized;
@@ -187,6 +185,9 @@ public class BattleGate : UGate, IServerMessageHandler
     }
     internal bool SendUserItem(ItemType type)
     {
+        if (!Owner) return false;
+        if (Owner.IsDeath) return false;
+        //if (!CanNetAction()) return false;
         foreach (var i in Package.Items)
         {
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
@@ -201,8 +202,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void DoNormalAttack()
     {
-        if (!Owner) return;
-
+        if (!CanNetAction()) return;
         if (Owner.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
         {
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
@@ -248,9 +248,17 @@ public class BattleGate : UGate, IServerMessageHandler
         player.Process(notify);
     }
 
+    private bool CanNetAction()
+    {
+        if (!Owner) return false;
+        if (Owner.IsDeath) return false;
+        if (Owner.IsLock(ActionLockType.NoAi)) return false;
+        return true;
+    }
+
     internal void ReleaseSkill(CharacterMagicData magicData)
     {
-        if (!Owner) return;
+        if (!CanNetAction()) return;
         if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
         {
             var character = Owner as IBattleCharacter;

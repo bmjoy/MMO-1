@@ -14,6 +14,7 @@ namespace GameLogic.Game.Elements
         Transform RootTransform { get; }
         float Radius { get; }
         bool IsForwardMoving { get; }
+        void TrySetPosition(Vector3 vector3);
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();
@@ -55,6 +56,7 @@ namespace GameLogic.Game.Elements
         void Push(Proto.Vector3 length, Proto.Vector3 speed);
         [NeedNotify(typeof(Notify_CharacterRotation),"Rotation")]
         void SetLookRotation(Proto.Vector3 eu);//use angle
+        
     }
 }
 
