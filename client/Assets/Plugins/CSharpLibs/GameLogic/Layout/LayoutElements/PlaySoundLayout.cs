@@ -17,5 +17,10 @@ namespace Layout.LayoutElements
         public string fromBone;
         [Label("音量")]
         public float value =1;
+
+        public override string ToString()
+        {
+            return $"Play:{resourcesPath}";
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Layout.LayoutElements
         [Label("目标方式")]
         public TargetReachType reachType = TargetReachType.MaxDistance;
         [Label("长度")]
-        public float distance;
+        public float distance=5;
 
         public override string ToString()
         {
