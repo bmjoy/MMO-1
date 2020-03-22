@@ -36,7 +36,9 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Index = Index
         });
 #endif
+#if !UNITY_SERVER
         PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath));
+#endif
     }
 
     private void PlayLine(TimeLine timeLine)

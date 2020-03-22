@@ -45,12 +45,13 @@ namespace GServer.Managers
         {
             var player = await FindPlayerByAccountId(account_uuid);
             if (player == null) return null;
-            var pupdate = Builders<GameHeroEntity>.Update.Set(t => gold, gold);
-            var pfilter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-            await DataBase.S.Heros.UpdateOneAsync(pfilter, pupdate);
+            var pupdate = Builders<GamePlayerEntity>.Update.Set(t =>t.Gold, gold);
+            var pfilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            await DataBase.S.Playes.UpdateOneAsync(pfilter, pupdate);
             await ProcessRewardItem(player.Uuid, items);
             var hero = await FindHeroByPlayerId(player.Uuid);
-            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp).Set(t => t.Level, level);
+            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp)
+                .Set(t => t.Level, level);
             var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
             await DataBase.S.Heros.UpdateOneAsync(filter, update);
             return  player.Uuid;
