@@ -56,7 +56,8 @@ namespace GameLogic.Game.Elements
         void Push(Proto.Vector3 length, Proto.Vector3 speed);
         [NeedNotify(typeof(Notify_CharacterRotation),"Rotation")]
         void SetLookRotation(Proto.Vector3 eu);//use angle
-        
+        [NeedNotify(typeof(Notify_CharacterLevel),"Level")]
+        void SetLevel(int level);
     }
 }
 

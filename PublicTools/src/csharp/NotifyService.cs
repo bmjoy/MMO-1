@@ -348,8 +348,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 38
+    /// </summary>    
+    [API(38)]
+    public class CharacterLevel:APIBase<Notify_CharacterLevel, Notify_CharacterLevel> 
+    {
+        private CharacterLevel() : base() { }
+        public  static CharacterLevel CreateQuery(){ return new CharacterLevel();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(38)]Notify_CharacterLevel CharacterLevel(Notify_CharacterLevel req);
         [API(37)]Notify_CharacterExp CharacterExp(Notify_CharacterExp req);
         [API(36)]Notify_CharacterRotation CharacterRotation(Void req);
         [API(35)]Notify_PlayTimeLine PlayTimeLine(Void req);
@@ -387,6 +399,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(38)]public abstract Task<Notify_CharacterLevel> CharacterLevel(Notify_CharacterLevel request);
         [API(37)]public abstract Task<Notify_CharacterExp> CharacterExp(Notify_CharacterExp request);
         [API(36)]public abstract Task<Notify_CharacterRotation> CharacterRotation(Void request);
         [API(35)]public abstract Task<Notify_PlayTimeLine> PlayTimeLine(Void request);

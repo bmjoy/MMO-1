@@ -263,6 +263,12 @@ message Notify_CharacterRelive
 	int32 Index =1;
 }
 
+message Notify_CharacterLevel
+{
+	int32 Index =1 ;
+	int32 Level =2;
+}
+
 message Notify_BattleItemChangeGroupIndex
 {
 	int32 Index =1 ;
@@ -333,6 +339,7 @@ service NotifyService
 	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
 	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
 	rpc CharacterExp(Notify_CharacterExp) returns (Notify_CharacterExp){};//37
+	rpc CharacterLevel (Notify_CharacterLevel) returns (Notify_CharacterLevel){};//38
 }
 
 service ActionService

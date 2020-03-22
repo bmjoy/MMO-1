@@ -306,11 +306,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 Debug.LogError($"Gate Server {p.GateServer} nofound");
                 return;
             }
+
             var req = new B2G_BattleReward
             {
                 AccountUuid = p.AccountId,
                 MapID = LevelData.ID,
-                Gold = p.Gold
+                Gold = p.Gold,
+                Exp = p.GetHero().Exprices,
+                Level = p.GetHero().Level
             };
             foreach (var c in p.Items)
             {

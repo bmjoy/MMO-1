@@ -1,5 +1,5 @@
 [
 	{"ID":10001,"NamePrefix":"","CharacterID":10001,"Exp":5,"Level":1,"HPMax":0,"DamageMin":0,"DamageMax":0,"Force":0,"Agility":0,"Knowledeg":0},
 	{"ID":10002,"NamePrefix":"","CharacterID":10002,"Exp":5,"Level":1,"HPMax":0,"DamageMin":0,"DamageMax":0,"Force":0,"Agility":0,"Knowledeg":0},
-	{"ID":10003,"NamePrefix":"\u7981","CharacterID":10003,"Exp":5,"Level":20,"HPMax":1000,"DamageMin":100,"DamageMax":120,"Force":20,"Agility":0,"Knowledeg":0}
+	{"ID":10003,"NamePrefix":"\u7981","CharacterID":10003,"Exp":100,"Level":20,"HPMax":1000,"DamageMin":100,"DamageMax":120,"Force":20,"Agility":0,"Knowledeg":0}
 ]
