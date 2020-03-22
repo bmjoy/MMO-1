@@ -487,6 +487,9 @@
             道具列表
              </summary>
             </member>
+        <member name="F:Proto.Notify_PlayerJoinState.HeroFieldNumber">
+             <summary>Field number for the "Hero" field.</summary>
+            </member>
         <member name="F:Proto.Notify_CharacterLock.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>

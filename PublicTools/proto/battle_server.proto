@@ -243,6 +243,7 @@ message Notify_PlayerJoinState
      float TimeNow=2;
 	 int32 Gold=3;
 	 PlayerPackage Package=4;//道具列表
+	 DHero Hero = 5;
 }
 
 message Notify_CharacterLock

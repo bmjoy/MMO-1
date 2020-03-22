@@ -39,6 +39,7 @@ public class BattleGate : UGate, IServerMessageHandler
     private float ServerStartTime = 0;
 
     public PlayerPackage Package { get; private set; }
+    public DHero Hero { private set; get; }
 
     private MapData MapConfig;
 
@@ -130,17 +131,24 @@ public class BattleGate : UGate, IServerMessageHandler
                 startTime = Time.time;
                 ServerStartTime = initPack.TimeNow;
                 Package = initPack.Package;
-                UUIManager.S.GetUIWindow<Windows.UUIBattle>()?.SetPackage(Package);
+                Hero = initPack.Hero;
+                UUIManager.S.GetUIWindow<UUIBattle>()?.InitData(Package,Hero);
+                
             }
         };
 
-        player.OnAddExp = (exp) => {
+        player.OnAddExp = (exp) =>
+        {
+            Hero.Exprices = exp.Exp;
+            Hero.Level = exp.Level;
 
-            
             if (exp.Level != exp.OldLeve)
             {
                 UUIManager.S.CreateWindow<UUILevelUp>().ShowWindow(exp.Level);
             }
+
+            UUIManager.S.GetUIWindow<UUIBattle>()?.InitHero( Hero);
+
         };
 
         player.OnDropGold = (gold) =>

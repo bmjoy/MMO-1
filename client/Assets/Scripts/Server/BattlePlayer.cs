@@ -180,10 +180,10 @@ public class BattlePlayer
         var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
         if (herolevel == null) return false;
 
-        if (curExp + addExp >= herolevel.NeedExprices)
+        if (curExp + exExp >= herolevel.NeedExprices)
         {
             exLevel += 1;
-            exExp = curExp + addExp - herolevel.NeedExprices;
+            exExp = curExp + exExp - herolevel.NeedExprices;
             if (exExp > 0)
             {
                 AddExp(exExp, 0, exLevel, out exLevel, out exExp);
