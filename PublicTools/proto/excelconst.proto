@@ -126,3 +126,10 @@ enum StandType
 	ST_Random = 1;
 	ST_Around = 2;
 }
+
+enum MapType 
+{
+	MT_None =0;
+	Boss = 1;//boss挑战
+	PK =2; //玩家挑战
+}

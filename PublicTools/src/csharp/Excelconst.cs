@@ -51,10 +51,11 @@ namespace Proto {
             "bTQQBBIUChBNYWdpY0xldmVsUGFyYW01EAUqUgoOVGFyZ2V0VGVhbVR5cGUS",
             "BwoDQUxMEAASCQoFRW5lbXkQARILCgdPd25UZWFtEAISFgoST3duVGVhbVdp",
             "dGhPdXRTZWxmEAMSBwoDT3duEAQqNgoJU3RhbmRUeXBlEgsKB1NUX05PTkUQ",
-            "ABINCglTVF9SYW5kb20QARINCglTVF9Bcm91bmQQAmIGcHJvdG8z"));
+            "ABINCglTVF9SYW5kb20QARINCglTVF9Bcm91bmQQAiooCgdNYXBUeXBlEgsK",
+            "B01UX05vbmUQABIICgRCb3NzEAESBgoCUEsQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), typeof(global::Proto.StandType), }, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.DefanceType), typeof(global::Proto.HeroCategory), typeof(global::Proto.DamageType), typeof(global::Proto.LevelUnlockType), typeof(global::Proto.HeroPropertyType), typeof(global::Proto.ActionLockType), typeof(global::Proto.ItemType), typeof(global::Proto.MagicReleaseType), typeof(global::Proto.MagicReleaseAITarget), typeof(global::Proto.EquipmentType), typeof(global::Proto.GetValueFrom), typeof(global::Proto.TargetTeamType), typeof(global::Proto.StandType), typeof(global::Proto.MapType), }, null));
     }
     #endregion
 
@@ -347,6 +348,18 @@ namespace Proto {
     [pbr::OriginalName("ST_NONE")] StNone = 0,
     [pbr::OriginalName("ST_Random")] StRandom = 1,
     [pbr::OriginalName("ST_Around")] StAround = 2,
+  }
+
+  public enum MapType {
+    [pbr::OriginalName("MT_None")] MtNone = 0,
+    /// <summary>
+    ///boss挑战
+    /// </summary>
+    [pbr::OriginalName("Boss")] Boss = 1,
+    /// <summary>
+    ///玩家挑战
+    /// </summary>
+    [pbr::OriginalName("PK")] Pk = 2,
   }
 
   #endregion

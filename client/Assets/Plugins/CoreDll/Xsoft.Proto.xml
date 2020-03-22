@@ -1085,6 +1085,11 @@
              地图ID
              </summary>
             </member>
+        <member name="P:EConfig.BattleLevelData.MapType">
+             <summary>
+             关卡类型
+             </summary>
+            </member>
         <member name="P:EConfig.BattleLevelData.LimitLevel">
              <summary>
              最大进入等级
@@ -1974,6 +1979,16 @@
         <member name="F:Proto.TargetTeamType.Own">
              <summary>
             只有自己
+             </summary>
+            </member>
+        <member name="F:Proto.MapType.Boss">
+             <summary>
+            boss挑战
+             </summary>
+            </member>
+        <member name="F:Proto.MapType.Pk">
+             <summary>
+            玩家挑战
              </summary>
             </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
