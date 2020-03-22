@@ -184,7 +184,7 @@ public class BattlePlayer
         if (exExp >= herolevel.NeedExprices)
         {
             exLevel += 1;
-            exExp = exExp - herolevel.NeedExprices;
+            exExp -= herolevel.NeedExprices;
             if (exExp > 0)
             {
                 AddExp(exExp, exLevel, out exLevel, out exExp);
@@ -194,11 +194,11 @@ public class BattlePlayer
     }
 
 
-    public bool AddExp(int exp,out int oldLevel, out int newLevel)
+    public int AddExp(int exp,out int oldLevel, out int newLevel)
     {
         
         oldLevel = newLevel = Hero.Level;
-        if (exp <= 0) return false;
+        if (exp <= 0) return  Hero.Exprices;
         if (AddExp(exp+Hero.Exprices, Hero.Level, out int level, out int exLimit))
         {
             Hero.Level = level;
@@ -206,7 +206,7 @@ public class BattlePlayer
             newLevel = Hero.Level;
         }
         Dirty = true;
-        return true;
+        return Hero.Exprices;
     }
 }
 
