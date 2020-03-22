@@ -9,7 +9,7 @@ public class UCharacterViewEditor : Editor
 	public override void OnInspectorGUI()
 	{
 		EditorGUILayout.BeginVertical();
-		if (GUILayout.Button("Open AI Tree"))
+		if (GUILayout.Button("View AI Tree"))
 		{
 			var target = this.target as UCharacterView;
 			var window = EditorWindow.GetWindow<AITreeEditor>();

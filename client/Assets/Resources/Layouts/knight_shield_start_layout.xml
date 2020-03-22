@@ -23,8 +23,8 @@
       <GUID>1424e234-f361-402d-a4d0-893803c212b1</GUID>
       <target>Releaser</target>
       <RangeType>
-        <damageType>Rangle</damageType>
-        <fiterType>EmenyTeam</fiterType>
+        <damageType>Single</damageType>
+        <fiterType>ALL</fiterType>
         <radius>1</radius>
         <angle>360</angle>
         <offsetAngle>0</offsetAngle>

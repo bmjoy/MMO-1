@@ -34,10 +34,10 @@ public class PropertyDrawer
 		var type = typeof(PropertyDrawer);
 		var methods = type.GetMethods ();
 		foreach (var i in methods) {
-			var atts = i.GetCustomAttributes (typeof(DrawerHandlerAttribute), false) as DrawerHandlerAttribute[];
-			if (atts == null || atts.Length == 0)
-				continue;
-			_handlers.Add (atts [0].HandleType, i);
+            if (!(i.GetCustomAttributes(typeof(DrawerHandlerAttribute), false)
+                is DrawerHandlerAttribute[] atts) || atts.Length == 0)
+                continue;
+            _handlers.Add (atts [0].HandleType, i);
 		}
 
 		var att = typeof(UCharacterView).GetCustomAttributes(typeof(BoneNameAttribute),false) as BoneNameAttribute[];
@@ -232,7 +232,6 @@ public class PropertyDrawer
 		return name;
 	}
 
-
 	[DrawerHandler(typeof(EditorResourcePathAttribute))]
 	public static void ResourcesSelect(object obj,FieldInfo field, string label, object attr)
 	{ 
@@ -314,9 +313,6 @@ public class PropertyDrawer
 			field.SetValue (obj, names [indexOfBone]);
 	    }
 	}
-
-
-    //[DrawerHandler(typeof(DamageRange)]
 }
 
 
