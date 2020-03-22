@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Managers/UserDataManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateBattleServerService.cs">
     <Files>
       <File FileName="GServer/Program.cs" Line="51" Column="34" />
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" />
@@ -8,7 +8,6 @@
       <File FileName="GServer/MongoTool/DataBase.cs" />
       <File FileName="GServer/RPCTaskHandlers/LoginServerGateServerTaskServices.cs" Line="1" Column="1" />
       <File FileName="GServer/RPCResponser/GateServerService.cs" Line="1" Column="1" />
-      <File FileName="GServer/Managers/UserDataManager.cs" Line="50" Column="67" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,10 +17,10 @@
               <Node name="XNet.Libs" expanded="True" />
             </Node>
             <Node name="GateServer" expanded="True">
-              <Node name="Managers" expanded="True">
-                <Node name="UserDataManager.cs" selected="True" />
+              <Node name="Managers" expanded="True" />
+              <Node name="RPCResponser" expanded="True">
+                <Node name="GateBattleServerService.cs" selected="True" />
               </Node>
-              <Node name="RPCResponser" expanded="True" />
               <Node name="RPCTaskHandlers" expanded="True" />
             </Node>
             <Node name="LoginServer" expanded="True" />
