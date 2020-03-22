@@ -136,6 +136,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
         player.OnAddExp = (exp) => {
 
+            
             if (exp.Level != exp.OldLeve)
             {
                 UUIManager.S.CreateWindow<UUILevelUp>().ShowWindow(exp.Level);
@@ -146,6 +147,12 @@ public class BattleGate : UGate, IServerMessageHandler
         {
 
             UApplication.S.ShowNotify($"获得金币{gold.Gold}");
+        };
+
+        player.OnSyncServerTime = (sTime) =>
+        {
+            startTime = Time.time;
+            ServerStartTime = sTime.ServerNow;
         };
         
     }

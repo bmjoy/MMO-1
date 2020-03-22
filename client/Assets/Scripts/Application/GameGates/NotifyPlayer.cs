@@ -27,6 +27,7 @@ public class NotifyPlayer
     private readonly Dictionary<Type, NotifyMapping> ElementInvokes = new Dictionary<Type, NotifyMapping>();
 
     public IBattlePerception PerView { set; get; }
+    
 
 
     #region Events
@@ -34,6 +35,7 @@ public class NotifyPlayer
     public Action<IBattleCharacter> OnCreateUser;
     public Action<Notify_PlayerJoinState> OnJoined;
     public Action<Notify_DropGold> OnDropGold;
+    public Action<Notify_SyncServerTime> OnSyncServerTime;
     #endregion
 
     public NotifyPlayer(UPerceptionView view)
@@ -146,6 +148,10 @@ public class NotifyPlayer
         else if (notify is Notify_CharacterExp exp)
         {
             OnAddExp?.Invoke(exp);
+        }
+        else if (notify is Notify_SyncServerTime sTime)
+        {
+            OnSyncServerTime?.Invoke(sTime);
         }
         else
         {

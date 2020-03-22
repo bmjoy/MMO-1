@@ -177,6 +177,9 @@ namespace Server
             {
                 var exp = player.GetHero().Exprices;
                 player.AddExp(monster.Exp, out int old, out int newLevel);
+                if (newLevel != old)
+                    player.HeroCharacter.SetLevel(newLevel);
+
                 var expNotify = new Notify_CharacterExp { Exp = monster.Exp, Level = newLevel, OldExp = exp, OldLeve = old };
                 player.Client.SendMessage(expNotify.ToNotityMessage());
             }

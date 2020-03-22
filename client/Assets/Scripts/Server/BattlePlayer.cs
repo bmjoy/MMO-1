@@ -195,13 +195,16 @@ public class BattlePlayer
 
     public bool AddExp(int exp,out int oldLevel, out int newLevel)
     {
+        
         oldLevel = newLevel = Hero.Level;
+        if (exp <= 0) return false;
         if (AddExp(exp, Hero.Exprices, Hero.Level, out int level, out int exLimit))
         {
             Hero.Level = level;
             Hero.Exprices = exLimit;
             newLevel = Hero.Level;
         }
+        Dirty = true;
         return true;
     }
 }
