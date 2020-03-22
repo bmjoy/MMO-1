@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine.UI;
 using UGameTools;
+using Proto.GateServerService;
 
 namespace Windows
 {
@@ -13,10 +14,9 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            MenuMission.onClick.AddListener(() =>
+            MenuSkill.onClick.AddListener(() =>
             {
-                var ui = UUIManager.Singleton.CreateWindow<UUILevelList>();
-                ui.ShowWindow();
+                
             });
 
             Button_Play.onClick.AddListener(() =>
@@ -38,6 +38,13 @@ namespace Windows
             MenuWeapon.onClick.AddListener(() =>
             {
                 OpenEquip();
+            });
+
+            MenuShop.onClick.AddListener(() =>
+            {
+                var ui = UUIManager.S.CreateWindow<UUIItemShop>();
+                ui.ShowWindow();
+
             });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });

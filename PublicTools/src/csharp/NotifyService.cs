@@ -107,28 +107,6 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 12
-    /// </summary>    
-    [API(12)]
-    public class LayoutPlayMotion:APIBase<Void, Notify_LayoutPlayMotion> 
-    {
-        private LayoutPlayMotion() : base() { }
-        public  static LayoutPlayMotion CreateQuery(){ return new LayoutPlayMotion();}
-    }
-    
-
-    /// <summary>
-    /// 13
-    /// </summary>    
-    [API(13)]
-    public class LayoutPlayParticle:APIBase<Void, Notify_LayoutPlayParticle> 
-    {
-        private LayoutPlayParticle() : base() { }
-        public  static LayoutPlayParticle CreateQuery(){ return new LayoutPlayParticle();}
-    }
-    
-
-    /// <summary>
     /// 14
     /// </summary>    
     [API(14)]
@@ -326,8 +304,44 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 33
+    /// </summary>    
+    [API(33)]
+    public class SyncServerTime:APIBase<Void, Notify_SyncServerTime> 
+    {
+        private SyncServerTime() : base() { }
+        public  static SyncServerTime CreateQuery(){ return new SyncServerTime();}
+    }
+    
+
+    /// <summary>
+    /// 35
+    /// </summary>    
+    [API(35)]
+    public class PlayTimeLine:APIBase<Void, Notify_PlayTimeLine> 
+    {
+        private PlayTimeLine() : base() { }
+        public  static PlayTimeLine CreateQuery(){ return new PlayTimeLine();}
+    }
+    
+
+    /// <summary>
+    /// 36
+    /// </summary>    
+    [API(36)]
+    public class CharacterRotation:APIBase<Void, Notify_CharacterRotation> 
+    {
+        private CharacterRotation() : base() { }
+        public  static CharacterRotation CreateQuery(){ return new CharacterRotation();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(36)]Notify_CharacterRotation CharacterRotation(Void req);
+        [API(35)]Notify_PlayTimeLine PlayTimeLine(Void req);
+        [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
         [API(32)]Notify_DropGold DropGold(Void req);
         [API(31)]Notify_BattleItemChangeGroupIndex BattleItemChangeGroupIndex(Void req);
         [API(30)]Notify_CharacterRelive CharacterRelive(Void req);
@@ -346,8 +360,6 @@ namespace Proto.NotifyService
         [API(16)]Notify_PlayerJoinState PlayerJoinState(Void req);
         [API(15)]Notify_MPChange MPChange(Void req);
         [API(14)]Notify_LookAtCharacter LookAtCharacter(Void req);
-        [API(13)]Notify_LayoutPlayParticle LayoutPlayParticle(Void req);
-        [API(12)]Notify_LayoutPlayMotion LayoutPlayMotion(Void req);
         [API(11)]Notify_HPChange HPChange(Void req);
         [API(8)]Notify_ElementExitState ElementExitState(Void req);
         [API(7)]Notify_Drop Drop(Void req);
@@ -363,6 +375,9 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(36)]public abstract Task<Notify_CharacterRotation> CharacterRotation(Void request);
+        [API(35)]public abstract Task<Notify_PlayTimeLine> PlayTimeLine(Void request);
+        [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);
         [API(32)]public abstract Task<Notify_DropGold> DropGold(Void request);
         [API(31)]public abstract Task<Notify_BattleItemChangeGroupIndex> BattleItemChangeGroupIndex(Void request);
         [API(30)]public abstract Task<Notify_CharacterRelive> CharacterRelive(Void request);
@@ -381,8 +396,6 @@ namespace Proto.NotifyService
         [API(16)]public abstract Task<Notify_PlayerJoinState> PlayerJoinState(Void request);
         [API(15)]public abstract Task<Notify_MPChange> MPChange(Void request);
         [API(14)]public abstract Task<Notify_LookAtCharacter> LookAtCharacter(Void request);
-        [API(13)]public abstract Task<Notify_LayoutPlayParticle> LayoutPlayParticle(Void request);
-        [API(12)]public abstract Task<Notify_LayoutPlayMotion> LayoutPlayMotion(Void request);
         [API(11)]public abstract Task<Notify_HPChange> HPChange(Void request);
         [API(8)]public abstract Task<Notify_ElementExitState> ElementExitState(Void request);
         [API(7)]public abstract Task<Notify_Drop> Drop(Void request);

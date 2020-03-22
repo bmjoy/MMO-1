@@ -1,15 +1,16 @@
 ﻿#define USEGM
 
-using System.Collections.Generic;
+using EConfig;
+using ExcelConfig;
 using GServer;
 using GServer.Managers;
 using MongoDB.Driver;
 using Proto;
 using Proto.GateServerService;
 using Proto.LoginBattleGameServerService;
-using Proto.MongoDB;
 using XNet.Libs.Net;
 using static GateServer.DataBase;
+using static Proto.ItemsShop.Types;
 
 namespace GateServer
 {
@@ -43,10 +44,7 @@ namespace GateServer
             };
         }
 
-        public G2C_BuyItem BuyItem(C2G_BuyItem req)
-        {
-            throw new System.NotImplementedException();
-        }
+      
 
         public G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req)
         {
@@ -226,7 +224,42 @@ namespace GateServer
 
         public G2C_Shop QueryShop(C2G_Shop req)
         {
-            throw new System.NotImplementedException();
+            var shops = ExcelToJSONConfigManager.Current.GetConfigs<ItemShopData>();
+
+            if (shops.Length == 0) return new G2C_Shop { Code = ErrorCode.NoItemsShop };
+
+            var res = new G2C_Shop { Code = ErrorCode.Ok };
+            foreach (var i in shops)
+            {
+                res.Shops.Add(i.ToItemShop());
+            }
+            return res;
+        }
+
+        public G2C_BuyItem BuyItem(C2G_BuyItem req)
+        {
+            var shop = ExcelToJSONConfigManager.Current.GetConfigByID<ItemShopData>(req.ShopId);
+            if (shop == null)
+            {
+                return new G2C_BuyItem { Code = ErrorCode.NoItemsShop };
+            }
+
+            var itemShop = shop.ToItemShop();
+            ShopItem item =null;
+            foreach (var i in itemShop.Items)
+            {
+                if (i.ItemId == req.ItemId)
+                {
+                    item = i;
+                    break;
+                }
+            }
+            if (item == null) return new G2C_BuyItem { Code = ErrorCode.NoFoundItemInShop };
+            var task = UserDataManager.S.BuyItem(Client, AccountUuid, item);
+            task.Wait();
+            ErrorCode res = task.Result;
+            
+            return new G2C_BuyItem { Code = res };
         }
 
         public G2C_SaleItem SaleItem(C2G_SaleItem req)

@@ -1,4 +1,5 @@
-﻿using GameLogic.Utility;
+﻿using EngineCore.Simulater;
+using GameLogic.Utility;
 using Proto;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -13,6 +14,7 @@ namespace GameLogic.Game.Elements
         Transform RootTransform { get; }
         float Radius { get; }
         bool IsForwardMoving { get; }
+        void TrySetPosition(Vector3 vector3);
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();
@@ -23,7 +25,6 @@ namespace GameLogic.Game.Elements
         void SetForward(Proto.Vector3 forward);//forward use lookup
         [NeedNotify(typeof(Notify_LookAtCharacter), "Target")]
         void LookAtTarget(int target); //target for look
-        [NeedNotify(typeof(Notify_LayoutPlayMotion), "Motion")]
         void PlayMotion(string motion);//play motion
         [NeedNotify(typeof(Notify_CharacterMoveTo), "Position", "Target", "StopDis")]
         Vector3? MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis);//move to target
@@ -53,7 +54,9 @@ namespace GameLogic.Game.Elements
         void SetLock(int lockValue);
         [NeedNotify(typeof(Notify_CharacterPush), "Length", "Speed")]
         void Push(Proto.Vector3 length, Proto.Vector3 speed);
-  
+        [NeedNotify(typeof(Notify_CharacterRotation),"Rotation")]
+        void SetLookRotation(Proto.Vector3 eu);//use angle
+        
     }
 }
 

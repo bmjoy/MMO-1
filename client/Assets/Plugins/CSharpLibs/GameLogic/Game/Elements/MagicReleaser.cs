@@ -52,15 +52,17 @@ namespace GameLogic.Game.Elements
             IReleaserTarget target,
             GControllor controllor,
             IMagicReleaser view,
-            ReleaserType type)
+            ReleaserType type,float durtime)
             : base(controllor, view)
         {
             ReleaserTarget = target;
             Magic = magic;
             RType = type;
             OnExitedState = ReleaseAll;
+            this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
 
+        public float Durtime { set; get; }
         public void SetParam(params string[] parms)
         {
             Params = parms;
@@ -91,11 +93,6 @@ namespace GameLogic.Game.Elements
         public void SetState(ReleaserStates state)
         {
             State = state;
-            if (state == ReleaserStates.Releasing)
-            {
-                CancelLock(startLock);
-                startLock = null;
-            }
         }
 
         public void OnEvent(EventType eventType)
@@ -108,10 +105,16 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
-                    var timeLine = i.line ?? per.View.GetTimeLineByPath(i.layoutPath);
+                    var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
                     var player = new TimeLinePlayer(timeLine, this, i);
                     _players.AddLast(player);
+
+                    if (i.line == null)
+                        View.PlayTimeLine(i.layoutPath);//for runtime
+                    else
+                        View.PlayTest(i.line);//for editor
+
                     if (i.type == EventType.EVENT_START)
                     {
                         if (startLayout != null)
@@ -119,18 +122,16 @@ namespace GameLogic.Game.Elements
                             throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
-                        var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
-                        this.ReleaserTarget.Releaser.LockAction(actionLock);
-                        startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
+
+                        //var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
+                        //this.ReleaserTarget.Releaser.LockAction(actionLock);
+                        //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
                     }
                 }
             }
 
            
         }
-
-
-        private RevertActionLock startLock;
 
         private TimeLinePlayer startLayout;
 
@@ -169,13 +170,15 @@ namespace GameLogic.Game.Elements
         private readonly LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
         private readonly Queue<long> _removeTemp = new Queue<long>();
 
-        public void TickTimeLines(GTime time)
+        public void Tick(GTime time)
         {
+           
             var current = _players.First;
             while (current != null)
             {
                 if (current.Value.Tick(time))
                 {
+                    current.Value.Destory();
                     _players.Remove(current);
                 }
                 current = current.Next;
@@ -261,6 +264,10 @@ namespace GameLogic.Game.Elements
             }
         }
 
+        public BattleCharacter Releaser { get { return ReleaserTarget.Releaser; } }
+
+        public BattleCharacter Target { get { return ReleaserTarget.ReleaserTarget; } }
+
         public void StopAllPlayer()
         {
             foreach (var i in _players)
@@ -285,7 +292,7 @@ namespace GameLogic.Game.Elements
             {
                 if (i.target.Enable)
                 {
-                    i.target.ModifyValue(i.property, i.addtype, -i.addValue);
+                    i.target.ModifyValueMinutes(i.property, i.addtype, i.addValue);
                 }
             }
 
@@ -315,6 +322,7 @@ namespace GameLogic.Game.Elements
             _players.Clear();
 
         }
+
 
         internal void DeAttachElement(BattleCharacter battleCharacter)
         {

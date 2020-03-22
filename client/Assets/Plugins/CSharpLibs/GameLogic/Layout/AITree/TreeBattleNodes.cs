@@ -113,11 +113,13 @@ namespace Layout.AITree
 		[Label("取值来源")]
 		public DistanceValueOf valueOf = DistanceValueOf.Value;
 
+		[Label("距离(cm)")]
+		public FieldValue distance = 100;
+
 		[Label("比较类型")]
 		public CompareType compareType = CompareType.Less;
 
-		[Label("距离(cm)")]
-		public FieldValue distance =100;
+		
 	}
 
 	[EditorAITreeNode("判断距离出生点", "Cond", "战斗节点/目标", AllowChildType.None)]
@@ -125,12 +127,12 @@ namespace Layout.AITree
     {
 		[Label("取值来源")]
 		public DistanceValueOf valueOf = DistanceValueOf.Value;
-
+		[Label("距离(cm)")]
+		public FieldValue distance = 100;
 		[Label("比较类型")]
 		public CompareType compareType = CompareType.Less;
 
-		[Label("距离(cm)")]
-		public FieldValue distance = 100;
+	
 	}
 
 	public enum MagicResultType
@@ -158,7 +160,11 @@ namespace Layout.AITree
 
 	[EditorAITreeNode("比较目标数", "Cond", "战斗节点/目标", AllowChildType.None)]
 	public class TreeNodeCompareTargets : TreeNode
-	{ 
+	{
+
+		[Label("阵营类型")]
+		public TargetTeamType teamType;
+
 		[Label("距离取值来源")]
 		public DistanceValueOf valueOf = DistanceValueOf.Value;
 
@@ -171,14 +177,12 @@ namespace Layout.AITree
 		[Label("比较类型")]
 		public CompareType compareType;
 
-		[Label("阵营类型")]
-		public TargetTeamType teamType;
 	}
 
 	[EditorAITreeNode("靠近目标", "Act", "战斗节点/移动", AllowChildType.None)]
 	public class TreeNodeMoveCloseTarget : TreeNode
 	{
-		[Label("取值方式")]
+		[Label("停止取值方式")]
 		public DistanceValueOf valueOf = DistanceValueOf.Value;
 		[Label("停止距离(cm)")]
 		public FieldValue distance = 100;

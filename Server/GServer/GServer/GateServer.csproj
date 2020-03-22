@@ -30,11 +30,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver.Core" Version="2.10.1" />
-    <PackageReference Include="MongoDB.Bson" Version="2.10.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.10.1" />
-    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.10.1" />
-    <PackageReference Include="mongocsharpdriver" Version="2.10.1" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.10.2" />
+    <PackageReference Include="MongoDB.Bson" Version="2.10.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.10.2" />
+    <PackageReference Include="mongocsharpdriver" Version="2.10.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="RPCResponser\" />

@@ -62,17 +62,12 @@ public class LayoutEditorWindow:EditorWindow
         if (!EditorApplication.isPlaying)
             return;
 
-        var testMaigc = new Layout.MagicData
-        {
-
-        };
-
-        testMaigc.Containers.Add(
-            new Layout.EventContainer
+        var testMaigc = new Layout.MagicData();
+        testMaigc.Containers.Add(new Layout.EventContainer
             {
                 type = Layout.EventType.EVENT_START,
                 layoutPath = shortPath,
-                line = this.line
+                line = line
             }
         );
         var g = EditorStarter.G();
@@ -439,6 +434,7 @@ public class LayoutEditorWindow:EditorWindow
         {
             line = XmlParser.DeSerialize<TimeLine>(File.ReadAllText(path, XmlParser.UTF8));
             shortPath = path.Replace(Application.dataPath + "/Resources/", "");
+            currentObj = null;
         } 
     }
 

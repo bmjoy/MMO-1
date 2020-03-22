@@ -106,7 +106,7 @@ private static string templateFields =
     private static string templateFieldFind=
 @"            [Name] = FindChild<[Type]>("+"\"[Name]\""+");";
     private static string templateInitTable =
-@"            [TableName]TableManager.InitFrom[TableType]([TableName]);";
+@"            [TableName]TableManager.InitFromLayout([TableName]);";
     private static string templateFile =
 @"using System;
 using System.Collections.Generic;
@@ -237,6 +237,7 @@ namespace Windows
         typeof(RoundGridLayout),
         typeof(GridLayoutGroup),
         typeof(VerticalLayoutGroup),
+        typeof(HorizontalLayoutGroup),
         typeof(Button),
         typeof(Slider),
         typeof(Text),
@@ -276,7 +277,7 @@ namespace Windows
                 if (!Names.ContainsKey(ui.name))
                 {
                     Names.Add(ui.name, ui.GetType().Name);
-					if (typeof(GridLayoutGroup) == ui.GetType()||typeof(RoundGridLayout) == ui.GetType())
+                    if(ui.GetType().IsSubclassOf(typeof(LayoutGroup)))
                     {
                         var table = new TableComponent();
                         table.Name = ui.name;
@@ -289,18 +290,6 @@ namespace Windows
                         return;
                     }
 
-					if (typeof(VerticalLayoutGroup) == ui.GetType())
-                    {
-                        var table = new TableComponent();
-                        table.Name = ui.name;
-                        table.Type = TableTypes.UITable;
-                        for (var i = 0; i < root.childCount; i++)
-                        {
-                            GetChildExportItems(root.GetChild(i), table.Components);
-                        }
-                        Tables.Add(table.Name, table);
-                        return;
-                    }
                 }
             }
             else

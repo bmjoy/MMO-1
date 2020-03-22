@@ -92,8 +92,13 @@ namespace Windows
                         new C2B_ExitBattle
                         {
                             AccountUuid = UApplication.S.AccountUuid
-                        }, null);
-                        UApplication.S.GoBackToMainGate();
+                        },
+                        (r)=>
+                        {
+                            UApplication.S.GoBackToMainGate();
+                            if (!r.Code.IsOk())
+                                UApplication.S.ShowError(r.Code);
+                        }, UUIManager.S);
                     });
                 });
 
@@ -126,14 +131,17 @@ namespace Windows
                 g.DoNormalAttack();
             });
 
-            bt_hp.onClick.AddListener(() => {
+            bt_hp.onClick.AddListener(() => 
+            {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
+                if (g.IsHpFull()) { UApplication.S.ShowNotify($"Hp 已经满"); }
                 g.SendUserItem(ItemType.ItHpitem);
             });
             bt_mp.onClick.AddListener(() => {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
+                if (g.IsMpFull()) { UApplication.S.ShowNotify($"Mp 已经满"); }
                 g.SendUserItem(ItemType.ItMpitem);
             });
         }
@@ -223,8 +231,7 @@ namespace Windows
         public bool IsMaigic(int id)
         {
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
-            if (data == null)
-                return false;
+            if (data == null) return false;
             return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
 

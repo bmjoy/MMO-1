@@ -20,6 +20,19 @@ namespace GameLogic.Game.Perceptions
     public interface IBattlePerception:ITreeLoader
     {
         /// <summary>
+        /// 当前的时间仿真
+        /// </summary>
+        /// <returns>The time simulater.</returns>
+        ITimeSimulater GetTimeSimulater();
+
+        /// <summary>
+        /// Gets the AIT ree.
+        /// </summary>
+        /// <returns>The AIT ree.</returns>
+        /// <param name="pathTree">Path tree.</param>
+        TreeNode GetAITree(string pathTree);
+
+        /// <summary>
         /// 获取当前的layout
         /// </summary>
         /// <returns>The time line by path.</returns>
@@ -43,27 +56,14 @@ namespace GameLogic.Game.Perceptions
  
         [NeedNotify(typeof(Notify_CreateBattleCharacter),
             "AccountUuid", "ConfigID", "TeamIndex",
-            "Position", "Forward", "Level", "Name", "Speed","Hp","MaxHp","Cds")]
+            "Position", "Forward", "Level", "Name", "Speed","Hp","MaxHp", "Mp", "MpMax", "Cds")]
         IBattleCharacter CreateBattleCharacterView
             (string account_id,int config, int teamId,
-            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed, int hp, int hpMax, IList<HeroMagicData> cds);
+            Proto.Vector3 pos, Proto.Vector3 forward,int level,string name, float speed, int hp, int hpMax, int mp, int mpMax, IList<HeroMagicData> cds);
 
        
         [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position")]
         IMagicReleaser CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos);
-
-        /// <summary>
-        /// Creates the particle player.
-        /// </summary>
-        /// <returns>The particle player.</returns>
-        /// <param name="releaser">Releaser.</param>
-        /// <param name="layout">Layout.</param>
-        [NeedNotify(typeof(Notify_LayoutPlayParticle),
-            "ReleaseIndex", 
-            "Path", "FromTarget", "Bind", "FromBoneName", "ToBoneName", "DestoryType", "DestoryTime")
-        ]
-        IParticlePlayer CreateParticlePlayer(int releaser,
-        string path, int fromTarget, bool bind, string fromBone, string toBone, int destoryType, float destoryTime);
 
         /// <summary>
         /// Creates the missile.
@@ -93,19 +93,7 @@ namespace GameLogic.Game.Perceptions
         IBattleItem CreateDropItem(Proto.Vector3 pos, PlayerItem item, int teamIndex, int groupId);
 
 
-        /// <summary>
-        /// 当前的时间仿真
-        /// </summary>
-        /// <returns>The time simulater.</returns>
-        ITimeSimulater GetTimeSimulater();
-
-        /// <summary>
-        /// Gets the AIT ree.
-        /// </summary>
-        /// <returns>The AIT ree.</returns>
-        /// <param name="pathTree">Path tree.</param>
-        TreeNode GetAITree(string pathTree);
-
+    
         /// <summary>
         /// Process damage
         /// </summary>

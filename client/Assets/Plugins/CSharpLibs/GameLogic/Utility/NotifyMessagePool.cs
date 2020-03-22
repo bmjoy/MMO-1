@@ -8,7 +8,6 @@ using Proto;
 
 namespace GameLogic.Utility
 {
-
     public class NotifyMessagePool
     {
         public class Frame

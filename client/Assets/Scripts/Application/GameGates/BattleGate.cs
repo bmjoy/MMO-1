@@ -153,9 +153,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void MoveDir(Vector3 dir)
     {
-        if (!Owner) return;
-        if (Owner.IsDeath) return;
-       
+        if (!CanNetAction()) return;
         var fast = dir.magnitude > 0.8f;
         var pos = Owner.transform.position;
         var dn = dir.normalized;
@@ -168,25 +166,28 @@ public class BattleGate : UGate, IServerMessageHandler
             Forward = new Proto.Vector3 { X = dn.x, Z = dn.z }
         };
         SendAction(move);
-
         if (Owner.IsLock(ActionLockType.NoMove)) return;
-
-        if (Owner.IsCanForwardMoving) 
-        {
-            if (dir.magnitude < 0.001f)
-            {
-              ch.StopMove(pos.ToPV3());
-            }
-            else
-            {
-                var f = dn * (fast ? 1f : 0.5f);
-                ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
-            }
-        }
+        var f = dn * (fast ? 1f : 0.5f);
+        ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
     }
 
+
+    public bool IsMpFull()
+    {
+        if (!this.Owner) return true;
+        return Owner.IsFullMp;
+    }
+
+    public bool IsHpFull()
+    {
+        if (!this.Owner) return true;
+        return Owner.IsFullHp;
+    }
     internal bool SendUserItem(ItemType type)
     {
+        if (!Owner) return false;
+        if (Owner.IsDeath) return false;
+        //if (!CanNetAction()) return false;
         foreach (var i in Package.Items)
         {
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
@@ -201,8 +202,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     internal void DoNormalAttack()
     {
-        if (!Owner) return;
-
+        if (!CanNetAction()) return;
         if (Owner.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
         {
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
@@ -248,15 +248,34 @@ public class BattleGate : UGate, IServerMessageHandler
         player.Process(notify);
     }
 
+    private bool CanNetAction()
+    {
+        if (!Owner) return false;
+        if (Owner.IsDeath) return false;
+        if (Owner.IsLock(ActionLockType.NoAi)) return false;
+        return true;
+    }
+
     internal void ReleaseSkill(CharacterMagicData magicData)
     {
-        SendAction(new Action_ClickSkillIndex { MagicId = magicData.ID });
-        if (!Owner) return;
+        if (!CanNetAction()) return;
         if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
         {
+            var character = Owner as IBattleCharacter;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
             if (config != null) Owner.ShowRange(config.RangeMax);
+            if (config.MPCost <= Owner.MP)
+                SendAction(new Action_ClickSkillIndex
+                {
+                    MagicId = magicData.ID,
+                    Position = character.Transform.position.ToPV3(),
+                    Rotation = character.Rotation.eulerAngles.ToPV3()
+                });
+            else
+                UApplication.S.ShowNotify($"MP不足无法释放{config.Name}");
         }
+
+       
     }
 
     #endregion

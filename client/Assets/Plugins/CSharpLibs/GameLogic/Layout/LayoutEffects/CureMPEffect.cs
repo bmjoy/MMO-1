@@ -10,17 +10,14 @@ namespace Layout.LayoutEffects
 
 
     [EditorEffect("恢复魔法")]
+    [EffectId(3)]
     public class CureMPEffect : EffectBase
     {
-        public CureMPEffect()
-        {
-            valueType = ValueOf.NormalAttack;
-        }
 
         [Label("取值来源")]
-        public ValueOf valueType;
+        public ValueOf valueType = ValueOf.NormalAttack;
 
         [Label("值")]
-        public int value;
+        public int value = 0;
     }
 }

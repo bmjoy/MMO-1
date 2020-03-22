@@ -67,7 +67,6 @@ namespace Layout
 				if (i.key == key)
 					return i;
 			}
-
 			return null;
 		}
 

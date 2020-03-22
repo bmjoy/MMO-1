@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UGameTools;
 using UnityEngine.UI;
 using UnityEngine;
-
+using Proto.PServices;
 
 public abstract class UUIElement
 {
@@ -36,7 +36,7 @@ public abstract class UUIElement
     }
 }
 
-public class UUIManager:XSingleton<UUIManager>
+public class UUIManager:XSingleton<UUIManager>,IEventMasker
 {
 	public void Awake()
 	{
@@ -218,5 +218,15 @@ public class UUIManager:XSingleton<UUIManager>
     {
         maskCount--;
         eventMask.SetActive(maskCount > 0);
+    }
+
+    void IEventMasker.Mask()
+    {
+        MaskEvent();
+    }
+
+    void IEventMasker.UnMask()
+    {
+        UnMaskEvent();
     }
 }

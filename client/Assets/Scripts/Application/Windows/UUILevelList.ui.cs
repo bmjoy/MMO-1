@@ -14,18 +14,26 @@ namespace Windows
         public class ContentTableTemplate : TableItemTemplate
         {
             public ContentTableTemplate(){}
-            public Button Button;
+            public Button ButtonBrown;
+            public Button ButtonGreen;
+            public Image missionImage;
+            public Text Name;
+            public Text Desc;
 
             public override void InitTemplate()
             {
-                Button = FindChild<Button>("Button");
+                ButtonBrown = FindChild<Button>("ButtonBrown");
+                ButtonGreen = FindChild<Button>("ButtonGreen");
+                missionImage = FindChild<Image>("missionImage");
+                Name = FindChild<Text>("Name");
+                Desc = FindChild<Text>("Desc");
+
             }
         }
 
 
-        protected ScrollRect ScrollView;
-        protected GridLayoutGroup Content;
         protected Button Bt_Return;
+        protected VerticalLayoutGroup Content;
 
 
         protected UITableManager<AutoGenTableItem<ContentTableTemplate, ContentTableModel>> ContentTableManager = new UITableManager<AutoGenTableItem<ContentTableTemplate, ContentTableModel>>();
@@ -34,11 +42,10 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            ScrollView = FindChild<ScrollRect>("ScrollView");
-            Content = FindChild<GridLayoutGroup>("Content");
             Bt_Return = FindChild<Button>("Bt_Return");
+            Content = FindChild<VerticalLayoutGroup>("Content");
 
-            ContentTableManager.InitFromGrid(Content);
+            ContentTableManager.InitFromLayout(Content);
 
         }
     }

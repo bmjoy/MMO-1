@@ -96,6 +96,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 #endif
     }
 
+    internal void ShowMPCure(UnityEngine.Vector3 pos, int mp)
+    {
+#if !UNITY_SERVER
+        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{mp}", new Vector2(.2f, .2f), pos, Color.blue, true, param);
+#endif
+    }
+
 
     public UElementView GetViewByIndex(int releaseIndex)
     {
@@ -259,7 +266,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
         int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward,
-        int level, string name, float speed,int hp, int hpMax ,IList<HeroMagicData> cds)
+        int level, string name, float speed,int hp, int hpMax,int mp,int mpMax ,IList<HeroMagicData> cds)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
         var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
@@ -286,7 +293,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
-        view.SetHp(hp, hpMax);
+        view.SetHpMp(hp, hpMax,mp, mpMax);
+
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
         view.SetCharacter(body, ins);
         return view;
@@ -294,7 +302,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos)
     {
-        var obj = new GameObject("MagicReleaser");
+        var obj = new GameObject($"Rleaser:{magicKey}");
         obj.transform.SetParent(this.transform, false);
         var view = obj.AddComponent<UMagicReleaserView>();
         if (AttachElements.TryGetValue(releaser, out UElementView r))
@@ -335,45 +343,25 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return missile;
 	}
 
-    IParticlePlayer IBattlePerception.CreateParticlePlayer(int releaser,
-        string path,int fromTarget,bool bind ,string fromBone, string toBone, int destoryType, float destoryTime)
+    public IParticlePlayer CreateParticlePlayer(IMagicReleaser releaser, ParticleLayout layout)
     {
-#if UNITY_SERVER||UNITY_EDITOR
-        AddNotify(new Notify_LayoutPlayParticle
-        {
-            Bind = bind,
-            DestoryTime = destoryTime,
-            DestoryType = destoryType,
-            FromBoneName = fromBone ?? string.Empty,
-            FromTarget = fromTarget,
-            Path = path,
-            ReleaseIndex = releaser,
-            ToBoneName = toBone??string.Empty
-        });
-#endif
-
-        var viewRoot = new GameObject(path);
+        var viewRoot = new GameObject(layout.path);
         var view = viewRoot.AddComponent<UParticlePlayer>();
-
-#if !UNITY_SERVER
-        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (path);
-        GameObject ins;
+        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (layout.path);
         if (obj == null)
         {
             return null;
-        } else
-        {
-            ins =Instantiate (obj);
-            ins.transform.SetParent(viewRoot.transform);
-            ins.transform.RestRTS();
         }
-        var viewRelease = GetViewByIndex(releaser) as UMagicReleaserView;
+        else
+        {
+            Instantiate(obj, viewRoot.transform);
+        }
+        var viewRelease = releaser as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
-      
-        var form = (TargetType)fromTarget == TargetType.Releaser ? characterView : viewTarget;
-        var bone = form.GetBoneByName(fromBone);
-        if (bind)
+        var form = layout.fromTarget == TargetType.Releaser ? characterView : viewTarget;
+        var bone = form.GetBoneByName(layout.fromBoneName);
+        if (layout.Bind)
         {
             if (bone) viewRoot.transform.SetParent(bone, false);
             viewRoot.transform.RestRTS();
@@ -386,19 +374,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
         }
 
-        switch ((ParticleDestoryType)destoryType)
-        {
-            case  ParticleDestoryType.Time:
-                Destroy(ins, destoryTime);
-                break;
-            case ParticleDestoryType.Normal:
-                Destroy(ins, 3);
-                break;
-            case ParticleDestoryType.LayoutTimeOut:
-                Destroy(ins, 1);
-                break;
-        }
-#endif
+        viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(layout.rotation.ToUV3());
+        viewRoot.transform.position += viewRoot.transform.rotation * layout.offet.ToUV3();
+        viewRoot.transform.localScale =  UnityEngine.Vector3 .one* layout.localsize;
         return view;
     }
         
@@ -440,6 +418,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         bi.SetPrecpetion(this);
         return bi;
     }
+
+
     #endregion
 
 }

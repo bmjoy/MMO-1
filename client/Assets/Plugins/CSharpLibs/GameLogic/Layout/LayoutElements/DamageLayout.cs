@@ -25,35 +25,45 @@ namespace Layout.LayoutElements
 		EffectConfig //config
 	}
 
+	public class DamageRange
+	{
+		[Label("伤害筛选类型")]
+		public DamageType damageType= DamageType.Rangle;
+		[Label("过滤方式")]
+		public FilterType fiterType = FilterType.EmenyTeam;
+
+		[Label("半径")]
+		public float radius = 1;
+		[Label("范围角度方向")]
+		public float angle = 360;
+		[Label("方向偏移角")]
+		public float offsetAngle =0;
+		[Label("偏移向量")]
+		public Vector3 offsetPosition = Vector3.zero;
+
+        public override string ToString()
+        {
+			if (damageType == DamageType.Single)
+				return $"{damageType}";
+			return $"{damageType} R:{radius} offsetAngle:{ offsetAngle} of Angle:{angle}";
+        }
+    }
+
 	[EditorLayout("目标判定")]
 	public class DamageLayout:LayoutBase
 	{
-		public DamageLayout ()
+		public DamageLayout()
 		{
 			target = TargetType.Releaser;
-			damageType = DamageType.Rangle;
-			fiterType = FilterType.EmenyTeam;
-			radius = 1;
-			angle = 360;
-			offsetAngle = 0;
-			offsetPosition = new Vector3(){ x = 0, y=0,z=0};
 			effectType = EffectType.EffectGroup;
 		}
 
 		[Label("目标")]
 		public TargetType target;
-		[Label("伤害筛选类型")]
-		public DamageType damageType;
-		[Label("过滤方式")]
-		public FilterType fiterType;
-		[Label("半径")]
-		public float radius;
-		[Label("范围角度方向")]
-		public float angle;
-		[Label("方向偏移角")]
-		public float offsetAngle;
-		[Label("偏移向量")]
-		public Vector3 offsetPosition;
+
+        [Label("范围")]
+		public DamageRange RangeType = new DamageRange();
+
 		[Label("效果取值来源")]
 		public EffectType effectType;
 		[Label("执行的效果组Key")]
@@ -61,7 +71,7 @@ namespace Layout.LayoutElements
 
 		public override string ToString ()
 		{
-			return string.Format ("目标{0} 范围{1} 效果 {2}",target , damageType, effectKey);
+			return string.Format ("目标{0} 范围{1} 效果 {2}",target , RangeType, effectKey);
 		}
 	}
 }

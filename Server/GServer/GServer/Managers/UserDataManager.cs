@@ -13,6 +13,7 @@ using ServerUtility;
 using XNet.Libs.Net;
 using XNet.Libs.Utility;
 using static GateServer.DataBase;
+using static Proto.ItemsShop.Types;
 
 namespace GServer.Managers
 {
@@ -256,6 +257,50 @@ namespace GServer.Managers
             };
         }
 
+        internal async Task<ErrorCode> BuyItem(Client c,string acount_id, ShopItem item)
+        {
+            var player =  await FindPlayerByAccountId(acount_id);
+
+
+           
+            var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid , player.Uuid);
+            FilterDefinition<GamePlayerEntity> query_player = id;
+
+            bool update = false;
+            if (item.CType == CoinType.Coin)
+            {
+                if (item.Prices > player.Coin) return ErrorCode.NoEnoughtCoin;
+
+                var coin = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Coin);
+                query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
+                var update_player = Builders<GamePlayerEntity>.Update
+                    .Set(t => t.Coin ,player.Coin -  item.Prices);
+               var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
+                update = res.ModifiedCount > 0;
+            }
+
+            if (item.CType == CoinType.Gold)
+            {
+                if (item.Prices > player.Gold) return ErrorCode.NoEnoughtGold;
+                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Gold);
+                query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
+                var update_player = Builders<GamePlayerEntity>.Update
+                   .Set(t => t.Gold, player.Gold - item.Prices);
+                var res = await DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
+                update = res.ModifiedCount > 0;
+            }
+
+            //使用同步
+            if (await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum }))
+            {
+                await SyncToClient(c, player.Uuid, true);
+                return ErrorCode.Ok;
+
+            }
+
+            return ErrorCode.Error;
+        }
+
         internal async Task<int> HeroGetExprise(string uuid, int exp)
         {
 
@@ -408,11 +453,16 @@ namespace GServer.Managers
             return null;
         }
 
+        /// <summary>
+        /// add item new
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public async Task<bool> AddItems(string uuid, PlayerItem i)
         {
-            GamePackageEntity package = await FindPackageByPlayerID(uuid);
             if (i.Num <= 0) return false;
-
+            GamePackageEntity package = await FindPackageByPlayerID(uuid);
             var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
             if (it == null) return false;
             var num = i.Num;
@@ -423,7 +473,7 @@ namespace GServer.Managers
                 {
                     var remainNum = it.MaxStackNum - cItem.Num;
                     var add = Math.Min(remainNum, num);
-                    cItem.Num = add;
+                    cItem.Num += add;
                     num -= add;
                 }
                 else

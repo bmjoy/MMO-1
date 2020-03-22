@@ -43,7 +43,7 @@ namespace Windows
             Bt_create = FindChild<Button>("Bt_create");
             lb_description = FindChild<Text>("lb_description");
 
-            ListTableManager.InitFromTable(List);
+            ListTableManager.InitFromLayout(List);
 
         }
     }

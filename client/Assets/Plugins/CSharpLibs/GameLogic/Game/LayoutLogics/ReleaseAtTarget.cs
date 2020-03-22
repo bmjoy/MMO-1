@@ -9,6 +9,7 @@ namespace GameLogic.Game.LayoutLogics
 		{
 			Releaser = releaser;
 			ReleaserTarget = target;
+			TargetPosition = target.Position;
 		}
 
 		public BattleCharacter Releaser { get; private set; }
@@ -17,9 +18,9 @@ namespace GameLogic.Game.LayoutLogics
 
 		public UVector3 TargetPosition
 		{
-			get { return ReleaserTarget.Position; }
+			get;
+			private set;
 		}
-
 	}
 }
 

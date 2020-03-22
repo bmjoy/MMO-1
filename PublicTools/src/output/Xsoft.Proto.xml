@@ -92,13 +92,11 @@
             技能id
              </summary>
             </member>
-        <member name="F:Proto.Action_ClickSkillIndex.TargetFieldNumber">
-             <summary>Field number for the "Target" field.</summary>
+        <member name="F:Proto.Action_ClickSkillIndex.RotationFieldNumber">
+             <summary>Field number for the "Rotation" field.</summary>
             </member>
-        <member name="P:Proto.Action_ClickSkillIndex.Target">
-             <summary>
-            技能目标
-             </summary>
+        <member name="F:Proto.Action_ClickSkillIndex.PositionFieldNumber">
+             <summary>Field number for the "Position" field.</summary>
             </member>
         <member name="T:Proto.Action_AutoFindTarget">
              <summary>
@@ -229,6 +227,12 @@
         <member name="F:Proto.Notify_CreateBattleCharacter.CdsFieldNumber">
              <summary>Field number for the "Cds" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CreateBattleCharacter.MpFieldNumber">
+             <summary>Field number for the "Mp" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CreateBattleCharacter.MpMaxFieldNumber">
+             <summary>Field number for the "MpMax" field.</summary>
+            </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>
             创建一个飞行物
@@ -297,12 +301,6 @@
             </member>
         <member name="F:Proto.Notify_CharacterSpeed.SpeedFieldNumber">
              <summary>Field number for the "Speed" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayMotion.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayMotion.MotionFieldNumber">
-             <summary>Field number for the "Motion" field.</summary>
             </member>
         <member name="F:Proto.Notify_LookAtCharacter.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
@@ -373,33 +371,6 @@
             </member>
         <member name="F:Proto.Notify_CharacterMoveForward.ForwardFieldNumber">
              <summary>Field number for the "Forward" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.ReleaseIndexFieldNumber">
-             <summary>Field number for the "ReleaseIndex" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.FromTargetFieldNumber">
-             <summary>Field number for the "FromTarget" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.ToTargetFieldNumber">
-             <summary>Field number for the "ToTarget" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.FromBoneNameFieldNumber">
-             <summary>Field number for the "FromBoneName" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.ToBoneNameFieldNumber">
-             <summary>Field number for the "ToBoneName" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.BindFieldNumber">
-             <summary>Field number for the "Bind" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.DestoryTypeFieldNumber">
-             <summary>Field number for the "DestoryType" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.DestoryTimeFieldNumber">
-             <summary>Field number for the "DestoryTime" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_LayoutPlayParticle.PathFieldNumber">
-             <summary>Field number for the "Path" field.</summary>
             </member>
         <member name="T:Proto.Notify_PropertyValue">
              <summary>
@@ -546,6 +517,21 @@
         <member name="F:Proto.Notify_DropGold.GoldFieldNumber">
              <summary>Field number for the "Gold" field.</summary>
             </member>
+        <member name="F:Proto.Notify_PlayTimeLine.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_PlayTimeLine.PathFieldNumber">
+             <summary>Field number for the "Path" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
+             <summary>Field number for the "ServerNow" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterRotation.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterRotation.RotationFieldNumber">
+             <summary>Field number for the "Rotation" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
              1
@@ -665,6 +651,21 @@
         <member name="F:Proto.ErrorCode.NeedHeroLevel">
              <summary>
             需要英雄等级
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoItemsShop">
+             <summary>
+            没有道具商店
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoFoundItemInShop">
+             <summary>
+            商店中没有该道具
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.NoEnoughtCoin">
+             <summary>
+            钻石不足
              </summary>
             </member>
         <member name="T:Proto.Void">
@@ -1087,6 +1088,11 @@
         <member name="P:EConfig.BattleLevelData.LimitLevel">
              <summary>
              最大进入等级
+             </summary>
+            </member>
+        <member name="P:EConfig.BattleLevelData.Icon">
+             <summary>
+             图标
              </summary>
             </member>
         <member name="P:EConfig.BattleLevelData.MonsterGroupID">
@@ -2246,32 +2252,38 @@
         <member name="F:Proto.C2G_BuyItem.ItemIdFieldNumber">
              <summary>Field number for the "ItemId" field.</summary>
             </member>
-        <member name="F:Proto.C2G_BuyItem.NumFieldNumber">
-             <summary>Field number for the "Num" field.</summary>
+        <member name="F:Proto.C2G_BuyItem.ShopIdFieldNumber">
+             <summary>Field number for the "ShopId" field.</summary>
             </member>
         <member name="F:Proto.G2C_BuyItem.CodeFieldNumber">
              <summary>Field number for the "Code" field.</summary>
             </member>
-        <member name="F:Proto.C2G_Shop.ShopIdFieldNumber">
+        <member name="F:Proto.ItemsShop.ShopIdFieldNumber">
              <summary>Field number for the "ShopId" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.ItemsFieldNumber">
+        <member name="F:Proto.ItemsShop.ItemsFieldNumber">
              <summary>Field number for the "items" field.</summary>
             </member>
-        <member name="T:Proto.G2C_Shop.Types">
-             <summary>Container for nested types declared in the G2C_Shop message type.</summary>
+        <member name="T:Proto.ItemsShop.Types">
+             <summary>Container for nested types declared in the ItemsShop message type.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.CTypeFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.CTypeFieldNumber">
              <summary>Field number for the "CType" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.ItemIdFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.ItemIdFieldNumber">
              <summary>Field number for the "item_id" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.PricesFieldNumber">
+        <member name="F:Proto.ItemsShop.Types.ShopItem.PricesFieldNumber">
              <summary>Field number for the "prices" field.</summary>
             </member>
-        <member name="F:Proto.G2C_Shop.Types.ShopItem.NumLimitFieldNumber">
-             <summary>Field number for the "num_limit" field.</summary>
+        <member name="F:Proto.ItemsShop.Types.ShopItem.PackageNumFieldNumber">
+             <summary>Field number for the "package_num" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_Shop.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_Shop.ShopsFieldNumber">
+             <summary>Field number for the "Shops" field.</summary>
             </member>
         <member name="T:Proto.B2G_GetPlayerInfo">
              <summary>
@@ -3104,16 +3116,6 @@
              11
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.LayoutPlayMotion">
-             <summary>
-             12
-             </summary>    
-            </member>
-        <member name="T:Proto.NotifyService.LayoutPlayParticle">
-             <summary>
-             13
-             </summary>    
-            </member>
         <member name="T:Proto.NotifyService.LookAtCharacter">
              <summary>
              14
@@ -3202,6 +3204,21 @@
         <member name="T:Proto.NotifyService.DropGold">
              <summary>
              32
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.SyncServerTime">
+             <summary>
+             33
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.PlayTimeLine">
+             <summary>
+             35
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterRotation">
+             <summary>
+             36
              </summary>    
             </member>
     </members>

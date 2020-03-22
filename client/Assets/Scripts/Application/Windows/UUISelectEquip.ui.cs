@@ -14,19 +14,29 @@ namespace Windows
         public class ContentTableTemplate : TableItemTemplate
         {
             public ContentTableTemplate(){}
-            public RawImage Icon;
-            public Text level;
-            public Text t_name;
+            public Text lb_Name;
+            public Button ItemBg;
+            public Image icon;
+            public Image ItemCount;
+            public Text lb_count;
+            public Image Locked;
+            public Image WearOn;
+            public Image ItemLevel;
+            public Text lb_level;
             public Button bt_equip;
-            public Text lb_qulity;
 
             public override void InitTemplate()
             {
-                Icon = FindChild<RawImage>("Icon");
-                level = FindChild<Text>("level");
-                t_name = FindChild<Text>("t_name");
+                lb_Name = FindChild<Text>("lb_Name");
+                ItemBg = FindChild<Button>("ItemBg");
+                icon = FindChild<Image>("icon");
+                ItemCount = FindChild<Image>("ItemCount");
+                lb_count = FindChild<Text>("lb_count");
+                Locked = FindChild<Image>("Locked");
+                WearOn = FindChild<Image>("WearOn");
+                ItemLevel = FindChild<Image>("ItemLevel");
+                lb_level = FindChild<Text>("lb_level");
                 bt_equip = FindChild<Button>("bt_equip");
-                lb_qulity = FindChild<Text>("lb_qulity");
 
             }
         }

@@ -24,7 +24,7 @@ namespace Proto {
     static ConstReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCqxAwoJRXJyb3JDb2RlEgkK",
+            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCrsAwoJRXJyb3JDb2RlEgkK",
             "BUVycm9yEAASBgoCT0sQARIQCgxMb2dpbkZhaWx1cmUQAhIUChBSZWdFeGlz",
             "dFVzZXJOYW1lEAMSFwoTUmVnSW5wdXRFbXB0eU9yTnVsbBAEEhQKEE5vR2Ft",
             "ZVBsYXllckRhdGEQBRIOCgpOb0hlcm9JbmZvEAYSEwoPTk9Gb3VuZFNlcnZl",
@@ -34,7 +34,8 @@ namespace Proto {
             "ZXJ2ZXIQDBIPCgtOT0ZvdW5kSXRlbRANEhAKDE5PRW5vdWdoSXRlbRAOEhAK",
             "DElzV2Vhck9uSGVybxAPEhEKDU5vRW5vdWdodEdvbGQQEBIUChBOb0ZyZWVH",
             "YXRlU2VydmVyEBESGwoXTmFtZU9yUHdkTGVnaHRJbmNvcnJlY3QQEhIRCg1O",
-            "ZWVkSGVyb0xldmVsEBNiBnByb3RvMw=="));
+            "ZWVkSGVyb0xldmVsEBMSDwoLTm9JdGVtc1Nob3AQFBIVChFOb0ZvdW5kSXRl",
+            "bUluU2hvcBAVEhEKDU5vRW5vdWdodENvaW4QFmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.ErrorCode), }, new pbr::GeneratedClrTypeInfo[] {
@@ -129,6 +130,18 @@ namespace Proto {
     ///需要英雄等级
     /// </summary>
     [pbr::OriginalName("NeedHeroLevel")] NeedHeroLevel = 19,
+    /// <summary>
+    ///没有道具商店
+    /// </summary>
+    [pbr::OriginalName("NoItemsShop")] NoItemsShop = 20,
+    /// <summary>
+    ///商店中没有该道具
+    /// </summary>
+    [pbr::OriginalName("NoFoundItemInShop")] NoFoundItemInShop = 21,
+    /// <summary>
+    ///钻石不足
+    /// </summary>
+    [pbr::OriginalName("NoEnoughtCoin")] NoEnoughtCoin = 22,
   }
 
   #endregion

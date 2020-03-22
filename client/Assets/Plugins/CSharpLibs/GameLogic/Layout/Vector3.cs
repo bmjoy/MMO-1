@@ -14,6 +14,8 @@ namespace Layout
 		public float x;
 		public float y;
 		public float z;
-	}
+
+        internal static Vector3 zero = new Vector3();
+    }
 }
 

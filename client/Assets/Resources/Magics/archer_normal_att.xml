@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
 <MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <key>archer_normal_att</key>
   <name>普通攻击</name>
   <Containers>
     <EventContainer>

@@ -1,6 +1,7 @@
 ﻿using System;
 using GameLogic.Game.Elements;
 using Proto;
+using UnityEngine;
 
 namespace GameLogic.Game
 {
@@ -39,11 +40,11 @@ namespace GameLogic.Game
         /// <summary>
         /// 力量增加血量
         /// </summary>
-        public static float FORCE_HP = 5;
+        public static float FORCE_HP = 10;
         /// <summary>
         /// 智力增加Mp
         /// </summary>
-        public static float KNOWLEGDE_MP = 10;
+        public static float KNOWLEGDE_MP = 5;
         /// <summary>
         /// 敏捷增加防御
         /// </summary>
@@ -51,7 +52,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 敏捷减少普攻间隔时间 ms
         /// </summary>
-        public static float AGILITY_SUBWAITTIME = 2;//每点敏捷降低攻击间隔时间毫秒
+        public static float AGILITY_SUBWAITTIME = 3;//每点敏捷降低攻击间隔时间毫秒
         /// <summary>
         /// 敏捷增加移动速度
         /// </summary>
@@ -67,11 +68,11 @@ namespace GameLogic.Game
         /// <summary>
         /// 智力增加恢复MP
         /// </summary>
-        public static float KNOWLEDGE_CURE_MP = 0.1f;//每点智力增加魔法
+        public static float KNOWLEDGE_CURE_MP = 0.01f;//每点智力增加魔法
         /// <summary>
         /// 最快的移动速度
         /// </summary>
-        public static float MAX_SPEED = 5.4f;//最大速度
+        public static float MAX_SPEED = 6.5f;//最大速度
         /// <summary>
         /// 伤害减免参数
         /// </summary>
@@ -89,14 +90,14 @@ namespace GameLogic.Game
 		/// <param name="max">Max.</param>
 		public static float Clamp(float value, float min, float max)
 		{
-			if (value > max)
-				return max;
-			if (value < min)
-				return min;
-			return value;
+            return Mathf.Clamp(value, min, max);
 		}
 
-
+        /// <summary>
+        /// 计算普通攻击
+        /// </summary>
+        /// <param name="attack"></param>
+        /// <returns></returns>
         public static int CalNormalDamage(BattleCharacter attack)
         {
             float damage = Randomer.RandomMinAndMax(
@@ -133,6 +134,14 @@ namespace GameLogic.Game
             return (int)result;
         }
 
+        /// <summary>
+        /// damage
+        /// </summary>
+        /// <param name="sources"></param>
+        /// <param name="damage"></param>
+        /// <param name="dType"></param>
+        /// <param name="defencer"></param>
+        /// <returns></returns>
         public static DamageResult GetDamageResult(BattleCharacter sources, int damage,DamageType dType, BattleCharacter defencer)
         {
             bool isMissed = false;

@@ -79,23 +79,6 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
-		#region MotionLayout
-		[HandleLayout(typeof(MotionLayout))]
-		public static void MotionActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
-		{
-			var layout = layoutBase as MotionLayout;
-			var releaser = linePlayer.Releaser;
-			if (layout.targetType == Layout.TargetType.Releaser)
-			{
-				releaser.ReleaserTarget?.Releaser?.PlayMotion(layout.motionName);
-			}
-			else if (layout.targetType == Layout.TargetType.Target)
-			{
-				releaser.ReleaserTarget?.ReleaserTarget?.PlayMotion(layout.motionName);
-			}
-		}
-        #endregion
-
         #region DamageLayout
 		[HandleLayout(typeof(DamageLayout))]
 		public static void DamageActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
@@ -115,15 +98,14 @@ namespace GameLogic.Game.LayoutLogics
 			if (orginTarget == null) {
 				throw new Exception ("Do not have target of orgin. type:" + layout.target.ToString ());
 			}
-			var offsetPos = new UVector3 (layout.offsetPosition.x, 
-				layout.offsetPosition.y, layout.offsetPosition.z);
+			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
 			var per = releaser.Controllor.Perception  as BattlePerception;
 			var targets = per.FindTarget (orginTarget,
-				layout.fiterType, 
-				layout.damageType, 
-				layout.radius,
-				layout.angle, 
-				layout.offsetAngle,
+				layout.RangeType.fiterType, 
+				layout.RangeType.damageType, 
+				layout.RangeType.radius,
+				layout.RangeType.angle, 
+				layout.RangeType.offsetAngle,
                 offsetPos,releaser.ReleaserTarget.Releaser.TeamIndex);
 
 			releaser.ShowDamageRange(layout);
@@ -154,29 +136,6 @@ namespace GameLogic.Game.LayoutLogics
 		}
         #endregion
 
-        #region ParticleLayout
-		[HandleLayout(typeof(ParticleLayout))]
-		public static void ParticleActive(TimeLinePlayer linePlayer,LayoutBase layoutBase)
-		{
-			var layout = layoutBase as ParticleLayout;
-			var per = linePlayer.Releaser.Controllor.Perception as BattlePerception;
-            var particle = per.CreateParticlePlayer (linePlayer.Releaser, layout);
-            if (particle == null) return;
-			switch (layout.destoryType) 
-			{
-			case  ParticleDestoryType.LayoutTimeOut:
-				linePlayer.AttachParticle (particle);
-				break;
-			case ParticleDestoryType.Time:
-				particle.AutoDestory (layout.destoryTime);
-				break;
-			case ParticleDestoryType.Normal:
-				//自动销亡
-				break;
-			}
-		}
-        #endregion
-
         #region CallUnitLayout
         [HandleLayout(typeof(CallUnitLayout))]
         public static void CallUnitActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
@@ -202,7 +161,7 @@ namespace GameLogic.Game.LayoutLogics
 
             //判断是否达到上限
             if (unitLayout.maxNum <= releaser.UnitCount) return;
-
+			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
             var data = ExcelToJSONConfigManager
                 .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
            

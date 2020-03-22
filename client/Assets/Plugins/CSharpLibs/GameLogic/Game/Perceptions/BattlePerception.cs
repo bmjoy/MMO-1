@@ -59,7 +59,7 @@ namespace GameLogic.Game.Perceptions
             Empty = new EmptyControllor(this);
             ReleaserControllor = new MagicReleaserControllor(this);
             BattleMissileControllor = new BattleMissileControllor(this);
-            AIControllor = new BattleCharacterAIBehaviorTreeControllor(this);
+            AIControllor = new AIControllor(this);
             BattleItemControllor = new BattleItemControllor(this);
         }
 
@@ -69,14 +69,14 @@ namespace GameLogic.Game.Perceptions
         #region controllor
         public BattleMissileControllor BattleMissileControllor { private set; get; }
         public MagicReleaserControllor ReleaserControllor { private set; get; }
-        public BattleCharacterAIBehaviorTreeControllor AIControllor { private set; get; }
+        public AIControllor AIControllor { private set; get; }
         public BattleItemControllor BattleItemControllor { private set; get; }
         public EmptyControllor Empty { private set; get; }
         #endregion
 
 
         #region create Elements 
-        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty)
+        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty, float durtime)
         {
             var magic = View.GetMagicByKey(key);
             if (magic == null)
@@ -84,17 +84,17 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(key, magic, target, ty);
+            var releaser = CreateReleaser(key, magic, target, ty, durtime);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty)
-        {
+        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
+        { 
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
                                                target.TargetPosition.ToPV3());
-            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty);
+            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty, durtime);
             this.JoinElement(mReleaser);
             return mReleaser;
         }
@@ -167,7 +167,7 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax,cds);
+                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds);
 
             var battleCharacter = new BattleCharacter(data.ID,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
 
@@ -203,14 +203,6 @@ namespace GameLogic.Game.Perceptions
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }
-
-        internal IParticlePlayer CreateParticlePlayer(MagicReleaser relaser, ParticleLayout layout)
-        {
-            var p = View.CreateParticlePlayer(relaser.Index, layout.path, (int)layout.fromTarget,
-                layout.Bind, layout.fromBoneName, layout.toBoneName, (int)layout.destoryType, layout.destoryTime);
-            return p;
-        }
-
 
         internal void ProcessDamage(BattleCharacter sources, BattleCharacter effectTarget, DamageResult result)
         {

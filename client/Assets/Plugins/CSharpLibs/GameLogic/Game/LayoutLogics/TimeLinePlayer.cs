@@ -4,75 +4,76 @@ using GameLogic.Game.Elements;
 using EngineCore.Simulater;
 using Layout;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameLogic.Game.LayoutLogics
 {
-	public class TimeLinePlayer
+	public abstract class TimeLinePlayerBase
 	{
-		public TimeLinePlayer (TimeLine timeLine, MagicReleaser releaser, EventContainer eventType)
+		public TimeLinePlayerBase(TimeLine timeLine)
 		{
 			Line = timeLine;
-			Releaser = releaser;
-			TypeEvent = eventType;
-			players = new List<IParticlePlayer> ();
+			var orpoint = Line.Points.OrderBy(t => t.Time).ToList();
+			foreach (var i in orpoint)
+			{
+				NoActivedPoints.Enqueue(i);
+			}
 		}
 
-		private float lastTime = -1;
-		private float startTime = 0;
+		private float startTime = -1;
 
-        public TimeLine Line{ private set; get; }
+		private readonly Queue<TimePoint> NoActivedPoints = new Queue<TimePoint>();
 
-		public MagicReleaser Releaser{ private set; get; }
-
-		public EventContainer TypeEvent{ private set; get; }
-
+		public TimeLine Line { private set; get; }
 		public bool Tick(GTime time)
 		{
-			if (lastTime < 0) 
+			if (startTime < 0)
 			{
 				startTime = time.Time;
-				lastTime = time.Time - 0.001f;
 				return false;
 			}
-			var old = lastTime - startTime;
-			var now = time.Time- startTime;
+			PlayTime = time.Time - startTime;
 
-			for(var i  = 0;i<Line.Points.Count;i++)
+			while (NoActivedPoints.Count > 0 && NoActivedPoints.Peek().Time < PlayTime)
 			{
-				var point = Line.Points [i];
-				if (point.Time > old && point.Time <= now) {
-					var layout = Line.FindLayoutByGuid(point.GUID);
-					LayoutBaseLogic.EnableLayout (layout, this);
-				}
+				var point = NoActivedPoints.Dequeue();
+				var layout = Line.FindLayoutByGuid(point.GUID);
+				EnableLayout(layout);
 			}
-
-			lastTime = time.Time;
-			var result=  now > Line.Time ;
-			IsFinshed = result;
-			PlayTime = now;
-			return result;
+			IsFinshed = PlayTime >= Line.Time;
+			return IsFinshed;
 		}
 
-        public bool IsFinshed { get; private set; } = false;
+		protected abstract void EnableLayout(LayoutBase layout);
 
-        private readonly List<IParticlePlayer> players;
+		public bool IsFinshed { get; private set; } = false;
 
-		public void AttachParticle(IParticlePlayer particle)
+		protected virtual void OnDestory()
 		{
-			players.Add (particle);
+
 		}
 
-		public void Destory()
+		public void Destory() { this.OnDestory(); }
+
+		public float PlayTime { get; private set; } = 0f;
+	}
+
+	public class TimeLinePlayer : TimeLinePlayerBase
+	{
+		public TimeLinePlayer(TimeLine timeLine, MagicReleaser releaser, EventContainer eventType) : base(timeLine)
 		{
-			foreach (var i in players) 
-            {
-				if (i.CanDestory) {
-					i.DestoryParticle ();
-				}
-			}
+			this.Releaser = releaser;
+			this.TypeEvent = eventType;
 		}
+		public EventContainer TypeEvent { private set; get; }
+		public MagicReleaser Releaser { private set; get; }
 
-        public float PlayTime { get; private set; } = 0f;
-    }
+		protected override void EnableLayout(LayoutBase layout)
+		{
+			if (LayoutBase.IsViewLayout(layout)) return;
+			LayoutBaseLogic.EnableLayout(layout, this);
+		}
+	}
+
 }
 

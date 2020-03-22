@@ -55,12 +55,20 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             var type = magic.GetTeamType();
-            var target = root.Perception.FindTarget(root.Character, type, magic.RangeMax, 360, true, TargetSelectType.Nearest);
+            var dis = magic.RangeMax;
+            root.GetDistanceByValueType(DistanceValueOf.ViewDistance, dis, out dis);
+
+            var target = root.Perception.FindTarget(root.Character, type, dis, 360, true, TargetSelectType.Nearest);
+
             if (!target)
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
+            //modify position
+            root.Character.TryToSetPosition(message.Position.ToUV3());
+            root.Character.LookAt(message.Rotation.ToUV3());
+
             bool hadMove = false;
             while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
             {
@@ -83,15 +91,21 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             if (hadMove) root.Character.StopMove();
-            releaser = root.Perception.CreateReleaser(magic.MagicKey,
-                new ReleaseAtTarget(root.Character, target), ReleaserType.Magic);
+
+            if (!root.Character.SubMP(magic.MPCost))
+            {
+                yield return RunStatus.Failure;
+                yield break;
+            }
+
+            releaser = root.Perception.CreateReleaser(magic.MagicKey,new ReleaseAtTarget(root.Character, target), ReleaserType.Magic,0);
             root.Character.AttachMagicHistory(magic.ID, root.Time);
             if (releaser != null)
             {
                 while (!releaser.IsLayoutStartFinish)
                     yield return RunStatus.Running;
                 yield return RunStatus.Success;
-                yield break ;
+                yield break;
             }
             else
             {
@@ -99,8 +113,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
 
             }
-
-
         }
 
         public override void Stop(ITreeRoot context)

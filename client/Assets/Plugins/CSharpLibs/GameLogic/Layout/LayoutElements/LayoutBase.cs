@@ -11,6 +11,7 @@ namespace Layout.LayoutElements
 		XmlInclude(typeof(ParticleLayout)),
 		XmlInclude(typeof(LookAtTarget)),
         XmlInclude(typeof(CallUnitLayout)),
+		XmlInclude(typeof(PlaySoundLayout)),
         XmlInclude(typeof(LaunchSelfLayout))
 	]
 	public class LayoutBase
@@ -32,6 +33,18 @@ namespace Layout.LayoutElements
 			var instance = Activator.CreateInstance (t) as LayoutBase;
 			instance.GUID = Guid.NewGuid ().ToString ();
 			return instance;
+		}
+
+		public static bool IsViewLayout(LayoutBase layout)
+		{
+			if (layout.GetType().GetCustomAttributes(typeof(EditorLayoutAttribute), false) is EditorLayoutAttribute[] att)
+			{
+				if (att == null || att.Length == 0)
+                    throw new Exception($"no found EditorLayoutAttribute in type {layout.GetType()}");
+				return att[0].ViewOnly;
+            }
+			return false;
+
 		}
 	}
 }

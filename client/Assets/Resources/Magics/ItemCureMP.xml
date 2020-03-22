@@ -9,8 +9,8 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="CureMPEffect">
-              <valueType>NormalAttack</valueType>
-              <value>0</value>
+              <valueType>MPMaxPro</valueType>
+              <value>5000</value>
             </EffectBase>
           </effects>
           <key>001</key>

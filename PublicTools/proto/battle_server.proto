@@ -37,7 +37,8 @@ message Action_CollectItem
 message Action_ClickSkillIndex
 {
 	 int32 MagicId = 1;//技能id
-	 int32 Target =  2;//技能目标
+	 Vector3 Rotation = 3;
+	 Vector3 Position =4;
 }
 //自动寻敌
 message Action_AutoFindTarget
@@ -94,6 +95,8 @@ message Notify_CreateBattleCharacter
 	 string Name=14; //名字
 	 float Speed=15;//移动速度
 	 repeated HeroMagicData Cds = 16;
+	 int32 Mp =17;
+	 int32 MpMax = 18;
 }
 
 //创建一个飞行物
@@ -138,12 +141,6 @@ message Notify_CharacterSpeed
 	int32 Index =1 ;
 	float Speed = 2;
 }
-message Notify_LayoutPlayMotion
-{
-	 int32 Index=1;
-	 string Motion=2;
-}
-
 message Notify_LookAtCharacter
 {
 	 int32 Index=1;//源
@@ -193,19 +190,6 @@ message Notify_CharacterMoveForward
 	int32 Index =1;
 	Vector3 Position = 2;
 	Vector3 Forward = 3;
-}
-
-message Notify_LayoutPlayParticle
-{
-	 int32 ReleaseIndex=1;
-	 int32 FromTarget=2;
-	 int32 ToTarget=3;
-	 string FromBoneName=4;
-	 string ToBoneName=5;
-	 bool Bind=6;
-	 int32 DestoryType=7;
-	 float DestoryTime=8;
-	 string Path=9;
 }
 
 //属性修改
@@ -291,6 +275,24 @@ message Notify_DropGold
 	int32 Gold=2;
 }
 
+message Notify_PlayTimeLine
+{
+	int32 Index = 1;
+	string Path = 2;
+}
+
+message Notify_SyncServerTime
+{
+	float ServerNow = 1;
+}
+
+message Notify_CharacterRotation
+{
+	int32 Index=1;
+	Vector3 Rotation = 2;
+}
+
+
 service NotifyService
 {
 	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
@@ -302,8 +304,6 @@ service NotifyService
 	rpc Drop(Void) returns (Notify_Drop){};//7
 	rpc ElementExitState(Void) returns (Notify_ElementExitState){};//8
 	rpc HPChange(Void) returns (Notify_HPChange); //11
-	rpc LayoutPlayMotion(Void) returns (Notify_LayoutPlayMotion);//12
-	rpc LayoutPlayParticle(Void) returns (Notify_LayoutPlayParticle);//13
 	rpc LookAtCharacter(Void) returns (Notify_LookAtCharacter);//14
 	rpc MPChange(Void) returns (Notify_MPChange);//15
 	rpc PlayerJoinState(Void) returns (Notify_PlayerJoinState);//16
@@ -322,7 +322,9 @@ service NotifyService
 	rpc CharacterRelive(Void) returns (Notify_CharacterRelive){};//30
 	rpc BattleItemChangeGroupIndex (Void) returns (Notify_BattleItemChangeGroupIndex){};//31
 	rpc DropGold (Void) returns (Notify_DropGold){};//32
-
+	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
+	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
+	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
 }
 
 service ActionService

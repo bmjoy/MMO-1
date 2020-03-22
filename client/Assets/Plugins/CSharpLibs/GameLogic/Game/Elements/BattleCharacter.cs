@@ -11,6 +11,7 @@ using P = Proto.HeroPropertyType;
 using ExcelConfig;
 using Layout.AITree;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.Elements
 {
@@ -41,28 +42,6 @@ namespace GameLogic.Game.Elements
 
     public delegate bool EachWithBreak(BattleCharacterMagic item);
 
-    public class PushMove
-    {
-        private UVector3 dir;
-
-        private readonly float distance;
-
-        private float speed;
-
-        public PushMove(Quaternion rotation, float dis, float speed)
-        {
-            dir = rotation *UVector3.forward ;
-            distance = dis;
-            this.speed = speed;
-        }
-
-        public Action FinishCall;
-
-        public UVector3 Length { get { return dir * distance; } }
-
-        public UVector3 Speed { get { return dir * speed; } }
-    }
-
     public class DamageWatch
     {
         public int Index { set; get; }
@@ -71,10 +50,10 @@ namespace GameLogic.Game.Elements
         public float FristTime { get; internal set; }
     }
 
-    public class BattleCharacter:BattleElement<IBattleCharacter>
-	{
+    public class BattleCharacter : BattleElement<IBattleCharacter>
+    {
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
-        private Dictionary<int, BattleCharacterMagic> Magics {  set; get; }
+        private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
@@ -86,6 +65,8 @@ namespace GameLogic.Game.Elements
         public UVector3 BronPosition { private set; get; }
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
 
+      
+        public int GroupIndex {set;get;}
         public int MaxHP
         {
             get
@@ -109,7 +90,6 @@ namespace GameLogic.Game.Elements
                 return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
-
         public string Name { set; get; }
         public int TeamIndex { set; get; }
         public int Level { set; get; }
@@ -121,21 +101,22 @@ namespace GameLogic.Game.Elements
             get { return View.Radius; }
         }
 
-        private float _speed;
+        private float BaseSpeed;
         public float Speed
         {
             set
             {
-                _speed = value;
+                BaseSpeed = value;
+
                 View.SetSpeed(Speed);
             }
             get
             {
-                var speed = this[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + _speed;
+                var speed = this[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED + BaseSpeed;
                 return Math.Min(BattleAlgorithm.MAX_SPEED, speed);
             }
         }
-       
+  
         public int HP { private set; get; }
         public int MP { private set; get; }
         public bool IsDeath
@@ -145,16 +126,7 @@ namespace GameLogic.Game.Elements
                 return HP == 0;
             }
         }
-        private AITreeRoot _AiRoot;
-        public AITreeRoot AiRoot
-        {
-            private set
-            {
-                _AiRoot = value;
-                Debug.Log($"{this}->{value}");
-            }
-            get { return _AiRoot; }
-        }
+        public AITreeRoot AiRoot { private set; get; }
         public UVector3 Position
         {
             get
@@ -203,8 +175,9 @@ namespace GameLogic.Game.Elements
 		{
             AcccountUuid = account_uuid;
 			HP = 0;
-            _speed = speed;
+            BaseSpeed = speed;
 			ConfigID = configID;
+
             Magics = new Dictionary<int, BattleCharacterMagic>();
             
             foreach (var i in magics)
@@ -225,10 +198,7 @@ namespace GameLogic.Game.Elements
                 switch (e.Type)
                 {
                     case ActionLockType.NoMove:
-                        if (e.IsLocked)
-                        {
-                            StopMove();
-                        }
+                        if (e.IsLocked)StopMove();
                         break;
                     case ActionLockType.NoInhiden:
                         view.SetAlpha(e.IsLocked ? 0.5f: 1);
@@ -272,9 +242,9 @@ namespace GameLogic.Game.Elements
 
         internal void BeginLauchSelf(Quaternion rototion, float distance, float speed, Action<BattleCharacter,object> hitCallback, MagicReleaser releaser)
         {
-            if (TryStartPush(rototion, distance, speed,out PushMove push))
+            if (TryStartPush(rototion, distance, speed))
             {
-                push.FinishCall = () =>
+                PushEnd = () =>
                 {
                     launchHitCallback = null;
                     releaser.DeAttachElement(this);
@@ -293,16 +263,7 @@ namespace GameLogic.Game.Elements
         public bool MoveForward(UVector3 forward, UVector3 posNext)
         {
             if (IsLock(ActionLockType.NoMove)) return false;
-
-            if (forward.magnitude > 0.001f)
-            {
-                View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
-            }
-            else
-            {
-                if (View.IsForwardMoving)
-                    StopMove(posNext);
-            } 
+            View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
             return true;
         }
 
@@ -324,22 +285,27 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        private PushMove currentPush;
-        internal bool TryStartPush(Quaternion rototion, float distance, float speed, out PushMove push)
+        internal void TryToSetPosition(UVector3 vector3)
         {
-            push = null;
-            if (currentPush != null) return false;
-            push = new PushMove(rototion, distance, speed);
-            View.Push(push.Length.ToPV3(), push.Speed.ToPV3());
-            currentPush = push;
+            this.View.TrySetPosition(vector3);
+        }
+
+        public Action PushEnd;
+
+        internal bool TryStartPush(Quaternion rotation, float distance, float speed)
+        {
+            if (Lock.IsLock(ActionLockType.NoMove)) return false;
+            var dir = rotation * UVector3.forward;
+            var dis = dir * distance;
+            var ps = dir * speed;
+            View.Push(dis.ToPV3(), ps.ToPV3());
             return true;
         }
 
         public void EndPush()
         {
-            this.View.StopMove(this.Position.ToPV3());
-            currentPush?.FinishCall?.Invoke();
-            currentPush = null;
+            PushEnd?.Invoke();
+            PushEnd = null;
         }
 
         public bool AddHP(int hp)
@@ -384,7 +350,6 @@ namespace GameLogic.Game.Elements
             var temp = MP;
             if (MP >= MaxMP) MP = MaxMP;
             if (temp == MP) return false;
-
             View.ShowMPChange(mp, MP, MaxMP);
             return true;
         }
@@ -412,6 +377,11 @@ namespace GameLogic.Game.Elements
         internal void LookAt(BattleCharacter releaserTarget)
         {
             View.LookAtTarget(releaserTarget.Index);
+        }
+
+        internal void LookAt(Vector3 rotation)
+        {
+            View.SetLookRotation(rotation.ToPV3());
         }
 
         internal void Init()
@@ -458,10 +428,17 @@ namespace GameLogic.Game.Elements
             return isOK;
         }
 
-        public void ModifyValue(P property, AddType addType, float resultValue)
+        public void ModifyValueAdd(P property, AddType addType, float resultValue)
         {
             var value = this[property];
-            value.ModifyValue(addType, resultValue);
+            value.ModifyValueAdd(addType, resultValue);
+            View.PropertyChange(property, value.FinalValue);
+        }
+
+        public void ModifyValueMinutes(P property, AddType miType, float resultValue)
+        {
+            var value = this[property];
+            value.ModifyValueMinutes(miType, resultValue);
             View.PropertyChange(property, value.FinalValue);
         }
 

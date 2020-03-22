@@ -22,20 +22,33 @@
       <Bind>false</Bind>
       <destoryType>Normal</destoryType>
       <destoryTime>1</destoryTime>
+      <offet>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </offet>
+      <rotation>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </rotation>
+      <localsize>1</localsize>
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>f143c33c-9278-4653-9239-fb2ce173be64</GUID>
       <target>Releaser</target>
-      <damageType>Single</damageType>
-      <fiterType>OwnerTeam</fiterType>
-      <radius>1</radius>
-      <angle>360</angle>
-      <offsetAngle>0</offsetAngle>
-      <offsetPosition>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offsetPosition>
+      <RangeType>
+        <damageType>Single</damageType>
+        <fiterType>ALL</fiterType>
+        <radius>1</radius>
+        <angle>360</angle>
+        <offsetAngle>0</offsetAngle>
+        <offsetPosition>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </offsetPosition>
+      </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>

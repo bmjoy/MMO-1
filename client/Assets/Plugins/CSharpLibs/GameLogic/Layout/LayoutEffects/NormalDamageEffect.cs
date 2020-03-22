@@ -5,32 +5,27 @@ namespace Layout.LayoutEffects
 {
 	public enum ValueOf
 	{
-		NormalAttack = 0,
-		FixedValue
+		NormalAttack = 0,//普攻 附加取值倍数10000万分比
+		FixedValue,// 固定值
+		MPMaxPro,//魔法最大值万分比
+		HPMaxPro,//生命最大值万分比
+		HPPro,//生命万分比
+		MPPro,//魔法万分比
 	}
 
 	[EditorEffect("攻击伤害")]
+	[EffectId(1)]
 	public class NormalDamageEffect:EffectBase
 	{
-		public NormalDamageEffect ()
-		{
-			
-		}
 		[Label("取值来源")]
-		public ValueOf valueOf;
+		public ValueOf valueOf = ValueOf.NormalAttack;
 
 		[Label("固定伤害值")]
-		public int DamageValue;
+		public int DamageValue = 0;
 
 		public override string ToString()
 		{
-			if (valueOf == ValueOf.FixedValue)
-			{
-				return string.Format("对目标造成固定伤害{0}", DamageValue);
-			}
-			else {
-				return "对目标造普通攻击伤害";
-			}
+			return $"取值方式:{valueOf} -参数 {DamageValue}";
 		}
 	}
 }

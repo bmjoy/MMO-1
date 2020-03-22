@@ -160,7 +160,7 @@ message G2C_MagicLevelUp
 message C2G_BuyItem
 {
 	int32 ItemId =1;
-	int32 Num = 2;
+	int32 ShopId = 2;
 }
 
 message G2C_BuyItem
@@ -168,12 +168,13 @@ message G2C_BuyItem
 	ErrorCode Code=1;
 }
 
+
 message C2G_Shop
 {
-	int32 ShopId = 1;
+	
 }
 
-message G2C_Shop
+message ItemsShop
 {
 	enum CoinType
 	{
@@ -185,9 +186,18 @@ message G2C_Shop
 		CoinType CType = 1;
 		int32 item_id = 2;
 		int32 prices = 3;
-		int32 num_limit = 4;
+		int32 package_num = 4;
 	}
-	repeated ShopItem items = 1;
+
+	int32 ShopId = 1;
+	repeated ShopItem items = 2;
+
+}
+
+message G2C_Shop
+{
+	ErrorCode Code=1;
+	repeated ItemsShop Shops =2;
 }
 
 //请求获得玩家信息

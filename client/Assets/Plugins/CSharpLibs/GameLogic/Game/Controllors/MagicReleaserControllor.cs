@@ -14,7 +14,7 @@ namespace GameLogic.Game.Controllors
 		public override GAction GetAction(GTime time, GObject current)
 		{
 			var releaser = current as MagicReleaser;
-            releaser.TickTimeLines(time);
+            releaser.Tick(time);
 			switch (releaser.State)
 			{
 				case ReleaserStates.NOStart:
@@ -38,18 +38,16 @@ namespace GameLogic.Game.Controllors
 					break;
 				case ReleaserStates.Releasing:
 					{
-                        if (releaser.Magic.triggerTicksTime > 0)
-                        {
-                            if (releaser.tickStartTime + releaser.Magic.triggerDurationTime > time.Time)
-                            {
-                                if (releaser.LastTickTime + releaser.Magic.triggerTicksTime < time.Time)
-                                {
-                                    releaser.LastTickTime = time.Time;
-                                    releaser.OnEvent(Layout.EventType.EVENT_TRIGGER);
-                                }
-                                break;
-                            }
-                        }
+						if (releaser.Durtime > 0)
+						{
+							releaser.Durtime -= time.DeltaTime;
+							if (releaser.LastTickTime + releaser.Magic.triggerTicksTime < time.Time)
+							{
+								releaser.LastTickTime = time.Time;
+								releaser.OnEvent(Layout.EventType.EVENT_TRIGGER);
+							}
+							break;
+						}
 
 						if (releaser.IsCompleted)
 						{

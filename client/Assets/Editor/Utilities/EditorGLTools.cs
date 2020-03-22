@@ -17,7 +17,7 @@ public sealed class EditorGLTools
 		GUI.Label (bRect, content);
 	}
 
-	private static GUIStyle label = new GUIStyle(){ fontSize =20};
+	private static readonly GUIStyle label = new GUIStyle(){ fontSize =20};
 
 	public static bool DrawExpandBox(Rect rect, string title, string content , bool expand ,Color color, Color bg,float width)
 	{

@@ -36,11 +36,10 @@ namespace Windows
                 this.IItem = playerItem;
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(playerItem.ItemID);
                 Equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
-
-                this.Template.level.text = playerItem.Level > 0 ? $"+{ playerItem.Level}" : string.Empty;
-                this.Template.t_name.text = $"{item.Name}";
-                this.Template.lb_qulity.text = $"品质 {Equip.Quality}";
-                //this.Template.Icon.texture = ResourcesManager.S.LoadIcon(item);
+                this.Template.lb_level.text = playerItem.Level > 0 ? $"+{ playerItem.Level}" : string.Empty;
+                this.Template.lb_Name.text = $"{item.Name}";
+                this.Template.ItemLevel.ActiveSelfObject(playerItem.Level > 0);
+                this.Template.icon.sprite = ResourcesManager.S.LoadIcon(item);
             }
         }
 
@@ -103,19 +102,21 @@ namespace Windows
         private void WearClick(ContentTableModel obj)
         {
             var g = UApplication.G<GMainGate>();
-            OperatorEquip.CreateQuery().SendRequest(g.Client, new C2G_OperatorEquip
+            var req = new C2G_OperatorEquip
             {
                 Guid = obj.IItem.GUID,
                 IsWear = true,
                 Part = (EquipmentType)obj.Equip.PartType
-            },
-                (r) =>
+            };
+            OperatorEquip.CreateQuery().SendRequest(g.Client,req,
+            (r) =>
+            {
+                if (!r.Code.IsOk())
                 {
-                    if (!r.Code.IsOk())
-                    {
-                        UApplication.S.ShowError(r.Code);
-                    }
-                });
+                    UApplication.S.ShowError(r.Code);
+                }
+            },UUIManager.S);
+
             HideWindow();
         }
 

@@ -278,6 +278,8 @@ namespace XNet.Libs.Net
 
         private void UpdateHandle()
         {
+           // Debuger.Log("UpdateHandle");
+
             while (Actions.Count > 0)
             {
                 if (Actions.TryDequeue(out Action a))  a?.Invoke();

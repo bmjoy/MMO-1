@@ -10,10 +10,6 @@ namespace GateServer
     [TaskHandler(typeof(ILoginServerGateServerTaskServices))]
     public class LoginServerGateServerTaskServices: TaskHandler, ILoginServerGateServerTaskServices
     {
-        public LoginServerGateServerTaskServices()
-        {
-        }
-
         Task_L2G_ExitUser ILoginServerGateServerTaskServices.ExitUser(Task_L2G_ExitUser req)
         {
             Client client = null;

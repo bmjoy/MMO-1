@@ -106,6 +106,10 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	{
 		return LoadResources<Sprite>("Icon/" + item.Icon);
 	}
+	public Sprite LoadIcon(BattleLevelData item)
+	{
+		return LoadResources<Sprite>("Icon/" + item.Icon);
+	}
 
 	public GameObject LoadModel(ItemData item)
 	{

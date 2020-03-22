@@ -37,8 +37,7 @@ namespace EngineCore.Simulater
         {
             get
             {
-                GObject outObj;
-                if (_elements.TryGetValue(index, out outObj))
+                if (_elements.TryGetValue(index, out GObject outObj))
                 {
                     if (outObj.Enable) return outObj;
                 }

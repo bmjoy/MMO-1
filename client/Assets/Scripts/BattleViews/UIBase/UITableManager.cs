@@ -109,12 +109,6 @@ public class UITableManager<T> : IEnumerable<T> where T : UITableItem, new()
             currentGrid.SetLayoutVertical();
             currentGrid.SetLayoutHorizontal();
         }
-
-        if (currentTable != null)
-        {
-            currentTable.SetLayoutHorizontal();
-            currentTable.SetLayoutVertical();
-        }
 	}
 
 	private List<T> _items = new List<T>();
@@ -148,17 +142,15 @@ public class UITableManager<T> : IEnumerable<T> where T : UITableItem, new()
 	}
 
 	private LayoutGroup currentGrid;
-	private VerticalLayoutGroup currentTable;
     public void InitFromGrid(LayoutGroup grid)
 	{
-		currentGrid = grid;
-		Init(grid.transform);
+		InitFromLayout(grid);
 	}
 
-    public void InitFromTable(VerticalLayoutGroup grid)
+	public void InitFromLayout(LayoutGroup group)
 	{
-		currentTable = grid;
-		Init(grid.transform);
+		currentGrid = group;
+		Init(group.transform);
 	}
 }
 

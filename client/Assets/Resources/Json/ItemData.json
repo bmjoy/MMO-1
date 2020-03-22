@@ -1,9 +1,9 @@
 [
-	{"ID":1,"Name":"\u9B54\u6CD5\u836F\u6C34\u5C0F","SalePrice":10,"ItemType":2,"Quality":1,"ResModel":"Potions/Potion-Cyan","Icon":"res/Res_39","Unique":1,"MaxStackNum":999,"Description":"\u6062\u590D\u9B54\u6CD5\u7684\u836F\u6C34\u3002","Params":[
+	{"ID":1,"Name":"\u9B54\u6CD5\u836F\u6C34","SalePrice":10,"ItemType":2,"Quality":1,"ResModel":"Potions/Potion-Cyan","Icon":"res/Res_39","Unique":1,"MaxStackNum":999,"Description":"\u77AC\u95F4\u6062\u590D\u9B54\u6CD5\u7684\u836F\u6C34\u3002","Params":[
 "ItemCureMP",
 ""]
 },
-	{"ID":2,"Name":"\u751F\u547D\u836F\u6C34\u5C0F","SalePrice":10,"ItemType":1,"Quality":1,"ResModel":"Potions/Potion-Red","Icon":"res/Res_40","Unique":1,"MaxStackNum":999,"Description":"\u6062\u590D\u751F\u547D\u7684\u836F\u6C34\u3002","Params":[
+	{"ID":2,"Name":"\u751F\u547D\u836F\u6C34","SalePrice":10,"ItemType":1,"Quality":1,"ResModel":"Potions/Potion-Red","Icon":"res/Res_40","Unique":1,"MaxStackNum":999,"Description":"\u77AC\u95F4\u6062\u590D\u751F\u547D\u7684\u836F\u6C34\u3002","Params":[
 "ItemCureHP",
 ""]
 },
@@ -171,7 +171,7 @@
 "5001",
 ""]
 },
-	{"ID":5002,"Name":"\u5929\u795E\u6218\u9774","SalePrice":5000,"ItemType":3,"Quality":5,"ResModel":"Chests/Chest01A-Red","Icon":"armors/Gloves_24","Unique":0,"MaxStackNum":1,"Description":"\u795E\u65CF\u9057\u7559\u4EBA\u95F4\u7684\u7EDD\u4E16\u73CD\u5B9D\uFF0C\u5E26\u4E0A\u4ED6\u5F81\u6218\u5427\u3002","Params":[
+	{"ID":5002,"Name":"\u5929\u795E\u6218\u9774","SalePrice":5000,"ItemType":3,"Quality":5,"ResModel":"Chests/Chest01A-Red","Icon":"armors/Boots_21","Unique":0,"MaxStackNum":1,"Description":"\u795E\u65CF\u9057\u7559\u4EBA\u95F4\u7684\u7EDD\u4E16\u73CD\u5B9D\uFF0C\u5E26\u4E0A\u4ED6\u5F81\u6218\u5427\u3002","Params":[
 "5002",
 ""]
 },

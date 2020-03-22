@@ -328,6 +328,8 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             {
                 buffer.AddMessage(i.ToNotityMessage());
             }
+            var syncTime = new Notify_SyncServerTime { ServerNow = PerView.GetTime().Time };
+            buffer.AddMessage(syncTime.ToNotityMessage());
             var pack = buffer.ToPackage();
             foreach (var i in BattlePlayers)
             {
@@ -381,7 +383,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                             case ItemType.ItMpitem:
                                 {
                                     var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                    per.CreateReleaser(config.Params[0], rTarget, ReleaserType.Magic);
+                                    per.CreateReleaser(config.Params[0], rTarget, ReleaserType.Magic,-1);
                                     needNotifyPackage = true;
                                 }
                                 break;

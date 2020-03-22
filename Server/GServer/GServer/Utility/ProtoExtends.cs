@@ -1,6 +1,9 @@
-﻿using Proto;
+﻿using System.Collections.Generic;
+using EConfig;
+using Proto;
 using Proto.MongoDB;
 using static GateServer.DataBase;
+using static Proto.ItemsShop.Types;
 
 namespace GateServer
 {
@@ -57,6 +60,36 @@ namespace GateServer
             }
 
             return p;
+        }
+
+        public static IList<int> SplitToInt(this string str, char sKey = '|')
+        {
+            var arrs = str.Split(sKey);
+            var list = new List<int>();
+            foreach (var i in arrs) list.Add(int.Parse(i));
+            return list;
+        }
+
+
+        public static ItemsShop ToItemShop(this ItemShopData config)
+        {
+            var shop = new ItemsShop { ShopId = config.ID };
+            var items = config.ItemIds.SplitToInt();
+            var nums = config.ItemNums.SplitToInt();
+            var prices = config.ItemPrices.SplitToInt();
+            var coinType = config.CoinTypes.SplitToInt();
+            for (var index = 0; index < items.Count; index++)
+            {
+                shop.Items.Add(new ShopItem
+                {
+                    CType = (CoinType)coinType[index],
+                    ItemId = items[index],
+                    PackageNum = nums[index],
+                    Prices = prices[index]
+                });
+            }
+
+            return shop;
         }
     }
 }
