@@ -321,7 +321,7 @@ namespace GServer.Managers
         {
 
             var hero = await FindHeroByPlayerId(uuid);
-            if (AddExp(exp, hero.Exp, hero.Level, out int level, out int exExp))
+            if (AddExp(exp+hero.Exp, hero.Level, out int level, out int exExp))
             {
                 var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
                 var update = Builders<GameHeroEntity>.Update.Set(t => t.Level, level).Set(t => t.Exp, exExp);
@@ -333,24 +333,26 @@ namespace GServer.Managers
 
         }
 
-        private bool AddExp(int addExp, int curExp, int level, out int exLevel,out int exExp)
+
+        private bool AddExp(int totalExp, int level, out int exLevel, out int exExp)
         {
             exLevel = level;
-            exExp = addExp;
-            var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t=>t.Level==level+1);
+            exExp = totalExp;
+            var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
             if (herolevel == null) return false;
 
-            if (curExp + exExp >= herolevel.NeedExprices)
+            if (exExp >= herolevel.NeedExprices)
             {
                 exLevel += 1;
-                exExp = curExp + exExp - herolevel.NeedExprices;
+                exExp -= herolevel.NeedExprices;
                 if (exExp > 0)
                 {
-                    AddExp(exExp, 0, exLevel, out exLevel, out exExp);
+                    AddExp(exExp, exLevel, out exLevel, out exExp);
                 }
             }
             return true;
         }
+
 
         public async Task<G2C_SaleItem> SaleItem(Client client, string account, IList<C2G_SaleItem.Types.SaleItem> items)
         {

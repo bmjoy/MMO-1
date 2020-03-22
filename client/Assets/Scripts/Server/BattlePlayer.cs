@@ -174,20 +174,20 @@ public class BattlePlayer
         return $"{sererid}-{DateTime.Now.Ticks}{Guid.NewGuid().ToString()}";
     }
 
-    private bool AddExp(int addExp, int curExp, int level, out int exLevel, out int exExp)
+    private bool AddExp(int totalExp, int level, out int exLevel, out int exExp)
     {
         exLevel = level;
-        exExp = addExp;
+        exExp = totalExp;
         var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
         if (herolevel == null) return false;
 
-        if (curExp + exExp >= herolevel.NeedExprices)
+        if (exExp >= herolevel.NeedExprices)
         {
             exLevel += 1;
-            exExp = curExp + exExp - herolevel.NeedExprices;
+            exExp = exExp - herolevel.NeedExprices;
             if (exExp > 0)
             {
-                AddExp(exExp, 0, exLevel, out exLevel, out exExp);
+                AddExp(exExp, exLevel, out exLevel, out exExp);
             }
         }
         return true;
@@ -199,7 +199,7 @@ public class BattlePlayer
         
         oldLevel = newLevel = Hero.Level;
         if (exp <= 0) return false;
-        if (AddExp(exp, Hero.Exprices, Hero.Level, out int level, out int exLimit))
+        if (AddExp(exp+Hero.Exprices, Hero.Level, out int level, out int exLimit))
         {
             Hero.Level = level;
             Hero.Exprices = exLimit;
