@@ -124,12 +124,6 @@ message Notify_CharacterSetPosition
 	 Vector3 Position = 2;//
 }
 
-message Notify_CharacterAlpha
-{
-	 int32 Index=1; //角色
-	 float Alpha=2; //最终的Alpha
-}
-
 message Notify_CharacterSetForword
 {
 	int32 Index =1;
@@ -309,7 +303,7 @@ message Notify_CharacterExp
 
 service NotifyService
 {
-	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
+	
 	rpc CharacterPosition(Void) returns (Notify_CharacterSetPosition){};//2
 	rpc CreateBattleCharacter(Void) returns (Notify_CreateBattleCharacter){};//3
 	rpc CreateMissile(Void) returns (Notify_CreateMissile){};//4

@@ -203,9 +203,6 @@ namespace GameLogic.Game.Elements
                     case ActionLockType.NoMove:
                         if (e.IsLocked)StopMove();
                         break;
-                    case ActionLockType.NoInhiden:
-                        view.SetAlpha(e.IsLocked ? 0.5f: 1);
-                        break;
                     case ActionLockType.NoAi:
                         this.AiRoot?.Stop();
                         break;

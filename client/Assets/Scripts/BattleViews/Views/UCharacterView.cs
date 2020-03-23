@@ -159,13 +159,29 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void Update()
     {
+        LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
+
+        if (State == null || State?.Tick(PerView.GetTime()) == true)
+        {
+            GoToEmpty();
+        }
+        
+        if (lockRotationTime < Time.time && State?.Velocity.magnitude > 0.1f)
+        {
+            targetLookQuaternion = Quaternion.LookRotation(State.Velocity, Vector3.up);
+        }
+
 #if !UNITY_SERVER
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
+
+
             //player
             if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) 
                 && !IsDeath 
-                && ThridPersionCameraContollor.Current)
+                && ThridPersionCameraContollor.Current
+                && ViewRoot.activeSelf
+                )
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
@@ -183,20 +199,9 @@ public class UCharacterView : UElementView, IBattleCharacter
                 range.SetActive(false);
             }
         }
-#endif
-        LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
-
-        if (State ==null || State?.Tick(PerView.GetTime()) == true)
-        {
-            GoToEmpty();
-        }
-
         PlaySpeed(State?.Velocity.magnitude ?? 0);
-       
-        if (lockRotationTime < Time.time && State?.Velocity.magnitude > 0.1f)
-        {
-            targetLookQuaternion = Quaternion.LookRotation(State.Velocity, Vector3.up);
-        }
+#endif
+        
     }
 
     private CharacterMoveState State;
@@ -500,21 +505,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         properties.Add(new CharacterProperty { PType = type, FinalValue = finalValue });
     }
 
-    void IBattleCharacter.SetAlpha(float alpha)
-    {
-        if (!this) return;
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
-#endif
-        if (alpha > 0.8f)
-        {
-            var g = this.ViewRoot.GetComponent<AlphaOperator>();
-            if (g) Destroy(g);
-        }
-        else
-            AlphaOperator.Operator(this.ViewRoot);
-
-    }
 
     void IBattleCharacter.PlayMotion(string motion)
     {
@@ -686,6 +676,20 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterLock { Index = Index, Lock = lockValue });
 #endif
+        if (Index == PerView.OwnerIndex)
+        {
+            if (!IsLock(ActionLockType.NoInhiden))
+            {
+                var g = this.ViewRoot.GetComponent<AlphaOperator>();
+                if (g) Destroy(g);
+            }
+            else
+                AlphaOperator.Operator(this.ViewRoot);
+        }
+        else
+        {
+            this.ViewRoot.SetActive(!IsLock(ActionLockType.NoInhiden));
+        }
     }
 
 

@@ -170,11 +170,11 @@ namespace GameLogic.Game.LayoutLogics
 				level,
 				data,
 				magics,
-                null,
+				null,
 				charachter.TeamIndex,
 				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
-				string.Empty, data.Name
+			    charachter.AcccountUuid, data.Name
 			);
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);

@@ -62,6 +62,11 @@ namespace MongoTool
             BattleServer.DeleteMany(Builders<PlayerBattleServerEntity>.Filter.Exists(t => t.Host, true));
         }
 
+        internal GateServerInfoEntity GetGateServrByIndex(int serverID)
+        {
+            var finder = Builders<GateServerInfoEntity>.Filter.Eq(t => t.ServerId, serverID);
+            return GateServer.Find(finder).SingleOrDefault();
+        }
 
         public GameServerInfo ToServerInfo(GateServerInfoEntity entity)
         {

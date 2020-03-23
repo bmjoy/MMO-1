@@ -46,8 +46,7 @@ namespace GameLogic.Game.Elements
         void PropertyChange(HeroPropertyType type, int finalValue);//property changed
         [NeedNotify(typeof(Notify_CharacterAttachMagic), "MType", "MagicId", "CompletedTime")]
         void AttachMagic(MagicType mType, int magicID, float cdCompletedTime);//magic
-        [NeedNotify(typeof(Notify_CharacterAlpha), "Alpha")]
-        void SetAlpha(float alpha);//alpha
+
         [NeedNotify(typeof(Notify_CharacterMoveForward), "Position", "Forward")]
         void SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward);
         [NeedNotify(typeof(Notify_CharacterLock), "Lock")]

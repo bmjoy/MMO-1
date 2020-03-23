@@ -30,8 +30,11 @@ namespace RPCResponsers
                     //踢当前用户下线
                     var task = new Task_L2B_ExitUser { UserID = session.AccountUuid };
                     var b = DataBase.S.GetBattleServerByServerID(session.BattleServerId);
-                    if (b != null) Appliaction.Current.GetServerConnectByClientID(b.ClientId)?.CreateTask(task).Send();
-                    //return new L2G_BeginBattle { Code = ErrorCode.PlayerIsInBattle };
+                    if (b != null)
+                    {
+                        var bServer  = Appliaction.Current.GetServerConnectByClientID(b.ClientId);
+                        bServer?.CreateTask(task).Send();
+                    }
                 }
 
                 var free_filter = Builders<PlayerBattleServerEntity>.Filter.Eq(t => t.LevelId, req.LevelId);

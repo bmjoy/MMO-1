@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>0.3</Time>
+  <Time>0.2</Time>
   <Points>
     <TimePoint>
       <GUID>0cd45a5a-7d4a-41ad-b8b8-ea23f43e68e2</GUID>
-      <Time>0.181340337</Time>
+      <Time>0.0694581345</Time>
     </TimePoint>
     <TimePoint>
       <GUID>69f9ab33-c389-4ff8-a542-c81975a89bf0</GUID>
-      <Time>0.06206897</Time>
+      <Time>0.0310344845</Time>
     </TimePoint>
   </Points>
   <Layouts>
