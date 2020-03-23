@@ -5,7 +5,7 @@ using UnityEngine;
 public class LanguageManager : XSingleton<LanguageManager>
 {
 
-    public Dictionary<string, string> Keys = new Dictionary<string, string>();
+    public readonly Dictionary<string, string> Keys = new Dictionary<string, string>();
 
     void Awake()
     {
@@ -33,6 +33,8 @@ public class LanguageManager : XSingleton<LanguageManager>
 
     public string Format(string key, params object[] pars)
     {
-        return string.Format(this[key], pars);
+        if (pars.Length > 0)
+            return string.Format(this[key], pars);
+        return this[key];
     }
 }
