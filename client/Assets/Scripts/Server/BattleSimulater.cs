@@ -27,6 +27,7 @@ using Proto.GateBattleServerService;
 using System;
 using System.IO;
 using GameLogic.Game.LayoutLogics;
+using Server;
 
 public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRunner
 {
@@ -188,7 +189,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
         State = new BattleState(PerView, this, PerView);
         State.Start(this.GetTime());
-        MonsterCreator = new Server.BattleMosterCreator(this);
+        //todo
+        //if(M)
+        MonsterCreator = new BattleMosterCreator(this);
     }
 
     private void StopAll()
@@ -303,11 +306,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 Debug.LogError($"Gate Server {p.GateServer} nofound");
                 return;
             }
+
             var req = new B2G_BattleReward
             {
                 AccountUuid = p.AccountId,
                 MapID = LevelData.ID,
-                Gold = p.Gold
+                Gold = p.Gold,
+                Exp = p.GetHero().Exprices,
+                Level = p.GetHero().Level
             };
             foreach (var c in p.Items)
             {

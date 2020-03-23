@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using GameLogic;
 using GameLogic.Game.Elements;
 using Vector3 = UnityEngine.Vector3;
+using Windows;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -38,6 +39,7 @@ public class BattleGate : UGate, IServerMessageHandler
     private float ServerStartTime = 0;
 
     public PlayerPackage Package { get; private set; }
+    public DHero Hero { private set; get; }
 
     private MapData MapConfig;
 
@@ -129,8 +131,36 @@ public class BattleGate : UGate, IServerMessageHandler
                 startTime = Time.time;
                 ServerStartTime = initPack.TimeNow;
                 Package = initPack.Package;
-                UUIManager.S.GetUIWindow<Windows.UUIBattle>()?.SetPackage(Package);
+                Hero = initPack.Hero;
+                UUIManager.S.GetUIWindow<UUIBattle>()?.InitData(Package,Hero);
+                
             }
+        };
+
+        player.OnAddExp = (exp) =>
+        {
+            Hero.Exprices = exp.Exp;
+            Hero.Level = exp.Level;
+
+            if (exp.Level != exp.OldLeve)
+            {
+                UUIManager.S.CreateWindow<UUILevelUp>().ShowWindow(exp.Level);
+            }
+
+            UUIManager.S.GetUIWindow<UUIBattle>()?.InitHero( Hero);
+
+        };
+
+        player.OnDropGold = (gold) =>
+        {
+
+            UApplication.S.ShowNotify($"获得金币{gold.Gold}");
+        };
+
+        player.OnSyncServerTime = (sTime) =>
+        {
+            startTime = Time.time;
+            ServerStartTime = sTime.ServerNow;
         };
         
     }
@@ -220,7 +250,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private void OnDisconnect()
     {
-        //UUITipDrawer.Singleton.ShowNotify("Can't login BattleServer!");
+       UUITipDrawer.S.ShowNotify("Can't login BattleServer!");
         UApplication.S.GoBackToMainGate();  
     }
 
@@ -272,7 +302,7 @@ public class BattleGate : UGate, IServerMessageHandler
                     Rotation = character.Rotation.eulerAngles.ToPV3()
                 });
             else
-                UApplication.S.ShowNotify($"MP不足无法释放{config.Name}");
+                UApplication.S.ShowNotify(LanguageManager.S.Format("BATTLE_NO_MP_TO_CAST", config.Name));
         }
 
        

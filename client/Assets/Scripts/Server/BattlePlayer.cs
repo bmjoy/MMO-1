@@ -61,7 +61,8 @@ public class BattlePlayer
         {
             AccountUuid = AccountId,
             Gold = Gold,
-            Package = GetCompletedPackage()
+            Package = GetCompletedPackage(),
+            Hero = Hero
         };
         return notify;
 
@@ -171,6 +172,41 @@ public class BattlePlayer
     {
         var sererid = BattleSimulater.S.ServerID;
         return $"{sererid}-{DateTime.Now.Ticks}{Guid.NewGuid().ToString()}";
+    }
+
+    private bool AddExp(int totalExp, int level, out int exLevel, out int exExp)
+    {
+        exLevel = level;
+        exExp = totalExp;
+        var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
+        if (herolevel == null) return false;
+
+        if (exExp >= herolevel.NeedExprices)
+        {
+            exLevel += 1;
+            exExp -= herolevel.NeedExprices;
+            if (exExp > 0)
+            {
+                AddExp(exExp, exLevel, out exLevel, out exExp);
+            }
+        }
+        return true;
+    }
+
+
+    public int AddExp(int exp,out int oldLevel, out int newLevel)
+    {
+        
+        oldLevel = newLevel = Hero.Level;
+        if (exp <= 0) return  Hero.Exprices;
+        if (AddExp(exp+Hero.Exprices, Hero.Level, out int level, out int exLimit))
+        {
+            Hero.Level = level;
+            Hero.Exprices = exLimit;
+            newLevel = Hero.Level;
+        }
+        Dirty = true;
+        return Hero.Exprices;
     }
 }
 

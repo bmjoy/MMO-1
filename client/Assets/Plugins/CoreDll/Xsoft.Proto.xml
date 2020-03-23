@@ -487,6 +487,9 @@
             道具列表
              </summary>
             </member>
+        <member name="F:Proto.Notify_PlayerJoinState.HeroFieldNumber">
+             <summary>Field number for the "Hero" field.</summary>
+            </member>
         <member name="F:Proto.Notify_CharacterLock.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
@@ -504,6 +507,12 @@
             </member>
         <member name="F:Proto.Notify_CharacterRelive.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterLevel.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterLevel.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
             </member>
         <member name="F:Proto.Notify_BattleItemChangeGroupIndex.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
@@ -531,6 +540,18 @@
             </member>
         <member name="F:Proto.Notify_CharacterRotation.RotationFieldNumber">
              <summary>Field number for the "Rotation" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.ExpFieldNumber">
+             <summary>Field number for the "Exp" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.OldExpFieldNumber">
+             <summary>Field number for the "OldExp" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterExp.OldLeveFieldNumber">
+             <summary>Field number for the "OldLeve" field.</summary>
             </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
@@ -1083,6 +1104,11 @@
         <member name="P:EConfig.BattleLevelData.MapID">
              <summary>
              地图ID
+             </summary>
+            </member>
+        <member name="P:EConfig.BattleLevelData.MapType">
+             <summary>
+             关卡类型
              </summary>
             </member>
         <member name="P:EConfig.BattleLevelData.LimitLevel">
@@ -1976,6 +2002,16 @@
             只有自己
              </summary>
             </member>
+        <member name="F:Proto.MapType.Boss">
+             <summary>
+            boss挑战
+             </summary>
+            </member>
+        <member name="F:Proto.MapType.Pk">
+             <summary>
+            玩家挑战
+             </summary>
+            </member>
         <member name="T:Proto.GateBattleServerService.GetPlayerInfo">
              <summary>
              1
@@ -2370,6 +2406,22 @@
         <member name="P:Proto.B2G_BattleReward.Items">
              <summary>
             掉落物品
+             </summary>
+            </member>
+        <member name="F:Proto.B2G_BattleReward.ExpFieldNumber">
+             <summary>Field number for the "Exp" field.</summary>
+            </member>
+        <member name="P:Proto.B2G_BattleReward.Exp">
+             <summary>
+            经验
+             </summary>
+            </member>
+        <member name="F:Proto.B2G_BattleReward.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="P:Proto.B2G_BattleReward.Level">
+             <summary>
+            等级
              </summary>
             </member>
         <member name="T:Proto.G2B_BattleReward">
@@ -3219,6 +3271,16 @@
         <member name="T:Proto.NotifyService.CharacterRotation">
              <summary>
              36
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterExp">
+             <summary>
+             37
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CharacterLevel">
+             <summary>
+             38
              </summary>    
             </member>
     </members>

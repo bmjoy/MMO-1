@@ -152,51 +152,57 @@ namespace EConfig
         public int MapID { set; get; }
         
         /// <summary>
-        /// 最大进入等级
+        /// 关卡类型
         /// </summary>
         [ExcelConfigColIndex(3)]
+        public int MapType { set; get; }
+        
+        /// <summary>
+        /// 最大进入等级
+        /// </summary>
+        [ExcelConfigColIndex(4)]
         public int LimitLevel { set; get; }
         
         /// <summary>
         /// 图标
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(5)]
         public String Icon { set; get; }
         
         /// <summary>
         /// 怪物刷新组
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(6)]
         public String MonsterGroupID { set; get; }
         
         /// <summary>
         /// Boss刷新组
         /// </summary>
-        [ExcelConfigColIndex(6)]
+        [ExcelConfigColIndex(7)]
         public String BossGroupID { set; get; }
         
         /// <summary>
         /// 最大刷怪间隔时间(秒)
         /// </summary>
-        [ExcelConfigColIndex(7)]
+        [ExcelConfigColIndex(8)]
         public float MaxRefrshTime { set; get; }
         
         /// <summary>
         /// 怪物最大数量
         /// </summary>
-        [ExcelConfigColIndex(8)]
+        [ExcelConfigColIndex(9)]
         public int MaxMonster { set; get; }
         
         /// <summary>
         /// boss出现需求杀怪数
         /// </summary>
-        [ExcelConfigColIndex(9)]
+        [ExcelConfigColIndex(10)]
         public int BossNeedKilledNumber { set; get; }
         
         /// <summary>
         /// 描述
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public String Description { set; get; }
 
     }

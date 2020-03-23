@@ -165,18 +165,21 @@ namespace GameLogic.Game.Elements
             get { return Properties[type]; }
         }
 
+        public CharacterData Config { private set; get; }
+
         public BattleCharacter (
-            int configID,
+            CharacterData data,
             IList<BattleCharacterMagic> magics,
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
             string account_uuid):base(controllor,view)
 		{
+            this.Config = data;
             AcccountUuid = account_uuid;
 			HP = 0;
             BaseSpeed = speed;
-			ConfigID = configID;
+			ConfigID = data.ID;
 
             Magics = new Dictionary<int, BattleCharacterMagic>();
             
@@ -502,6 +505,19 @@ namespace GameLogic.Game.Elements
                 }
                 w.LastTime = time;
             }
+        }
+
+        public void SetLevel(int level)
+        {
+            var diff = level - this.Level;
+            if (diff > 0)
+            {
+
+                ModifyValueAdd(P.Agility, AddType.Base,(int)(diff * Config.AgilityGrowth));
+                ModifyValueAdd(P.Force,AddType.Base , (int)(diff * Config.ForceGrowth));
+                ModifyValueAdd(P.Knowledge,AddType.Base, (int)(diff * Config.KnowledgeGrowth));
+            }
+            View.SetLevel(level);
         }
 
         public override string ToString()

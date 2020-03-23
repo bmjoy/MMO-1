@@ -243,6 +243,7 @@ message Notify_PlayerJoinState
      float TimeNow=2;
 	 int32 Gold=3;
 	 PlayerPackage Package=4;//道具列表
+	 DHero Hero = 5;
 }
 
 message Notify_CharacterLock
@@ -261,6 +262,12 @@ message Notify_CharacterPush
 message Notify_CharacterRelive
 {
 	int32 Index =1;
+}
+
+message Notify_CharacterLevel
+{
+	int32 Index =1 ;
+	int32 Level =2;
 }
 
 message Notify_BattleItemChangeGroupIndex
@@ -292,6 +299,13 @@ message Notify_CharacterRotation
 	Vector3 Rotation = 2;
 }
 
+message Notify_CharacterExp
+{
+	int32 Exp = 1;
+	int32 OldExp = 2;
+	int32 Level = 3;
+	int32 OldLeve = 4;
+}
 
 service NotifyService
 {
@@ -325,6 +339,8 @@ service NotifyService
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
 	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
 	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
+	rpc CharacterExp(Notify_CharacterExp) returns (Notify_CharacterExp){};//37
+	rpc CharacterLevel (Notify_CharacterLevel) returns (Notify_CharacterLevel){};//38
 }
 
 service ActionService

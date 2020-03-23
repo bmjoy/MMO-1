@@ -30,6 +30,11 @@ namespace Windows
         }
 
 
+        protected Scrollbar ExpSilder;
+        protected Text lb_exp;
+        protected Button user_info;
+        protected Text Level_Number;
+        protected Text Username;
         protected RoundGridLayout Grid;
         protected Text Time;
         protected Button bt_Exit;
@@ -52,6 +57,11 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
+            ExpSilder = FindChild<Scrollbar>("ExpSilder");
+            lb_exp = FindChild<Text>("lb_exp");
+            user_info = FindChild<Button>("user_info");
+            Level_Number = FindChild<Text>("Level_Number");
+            Username = FindChild<Text>("Username");
             Grid = FindChild<RoundGridLayout>("Grid");
             Time = FindChild<Text>("Time");
             bt_Exit = FindChild<Button>("bt_Exit");
@@ -67,7 +77,7 @@ namespace Windows
             hp_item_Icon = FindChild<Image>("hp_item_Icon");
             hp_num = FindChild<Text>("hp_num");
 
-            GridTableManager.InitFromGrid(Grid);
+            GridTableManager.InitFromLayout(Grid);
 
         }
     }

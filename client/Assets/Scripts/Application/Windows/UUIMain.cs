@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine.UI;
 using UGameTools;
 using Proto.GateServerService;
+using EConfig;
 
 namespace Windows
 {
@@ -88,7 +89,8 @@ namespace Windows
             if (gate.hero == null) return;
             this.Level_Number.text = $"{gate.hero.Level}";
             this.Username.text = $"{gate.hero.Name}";
-            var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current.FirstConfig<EConfig.CharacterLevelUpData>(t => t.Level == gate.hero.Level);
+            var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current
+                .FirstConfig<CharacterLevelUpData>(t => t.Level == gate.hero.Level+1);
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
             float v = 0;
             if (leveUp != null)

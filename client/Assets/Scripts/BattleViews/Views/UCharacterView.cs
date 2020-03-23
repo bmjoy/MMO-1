@@ -783,6 +783,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.Relive()
     {
+        if (!this) return;
         IsDeath = false;
         if (this.CharacterAnimator)
         {
@@ -790,7 +791,18 @@ public class UCharacterView : UElementView, IBattleCharacter
             
         }
     }
+    void IBattleCharacter.SetLevel(int level)
+    {
+        if (!this) return;
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CharacterLevel
+        {
+            Index = Index,
+            Level = level
+        });
+#endif
+        this.Level = level;
+    }
 
 
-   
 }

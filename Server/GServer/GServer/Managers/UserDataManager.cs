@@ -41,6 +41,22 @@ namespace GServer.Managers
             return query.Single();
         }
 
+        internal async Task<string> ProcessBattleReward(string account_uuid, RepeatedField<PlayerItem> items, int exp, int level, int gold)
+        {
+            var player = await FindPlayerByAccountId(account_uuid);
+            if (player == null) return null;
+            var pupdate = Builders<GamePlayerEntity>.Update.Set(t =>t.Gold, gold);
+            var pfilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            await DataBase.S.Playes.UpdateOneAsync(pfilter, pupdate);
+            await ProcessRewardItem(player.Uuid, items);
+            var hero = await FindHeroByPlayerId(player.Uuid);
+            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp)
+                .Set(t => t.Level, level);
+            var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
+            await DataBase.S.Heros.UpdateOneAsync(filter, update);
+            return  player.Uuid;
+        }
+
         internal async Task SyncToClient(Client userClient, string playerUuid, bool packageOnly = false)
         {
             // var playerUuid = (string)userClient.UserState;
@@ -305,7 +321,7 @@ namespace GServer.Managers
         {
 
             var hero = await FindHeroByPlayerId(uuid);
-            if (AddExp(exp, hero.Exp, hero.Level, out int level, out int exExp))
+            if (AddExp(exp+hero.Exp, hero.Level, out int level, out int exExp))
             {
                 var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
                 var update = Builders<GameHeroEntity>.Update.Set(t => t.Level, level).Set(t => t.Exp, exExp);
@@ -317,24 +333,26 @@ namespace GServer.Managers
 
         }
 
-        private bool AddExp(int addExp, int curExp, int level, out int exLevel,out int exExp)
+
+        private bool AddExp(int totalExp, int level, out int exLevel, out int exExp)
         {
             exLevel = level;
-            exExp = addExp;
-            var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t=>t.Level==level+1);
+            exExp = totalExp;
+            var herolevel = ExcelToJSONConfigManager.Current.FirstConfig<CharacterLevelUpData>(t => t.Level == level + 1);
             if (herolevel == null) return false;
 
-            if (curExp + addExp >= herolevel.NeedExprices)
+            if (exExp >= herolevel.NeedExprices)
             {
                 exLevel += 1;
-                exExp = curExp + addExp - herolevel.NeedExprices;
+                exExp -= herolevel.NeedExprices;
                 if (exExp > 0)
                 {
-                    AddExp(exExp, 0, exLevel, out exLevel, out exExp);
+                    AddExp(exExp, exLevel, out exLevel, out exExp);
                 }
             }
             return true;
         }
+
 
         public async Task<G2C_SaleItem> SaleItem(Client client, string account, IList<C2G_SaleItem.Types.SaleItem> items)
         {
@@ -424,7 +442,7 @@ namespace GServer.Managers
             return true;
         }
 
-        internal async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
+        private async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
         {
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();

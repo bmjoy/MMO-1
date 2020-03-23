@@ -169,7 +169,7 @@ namespace GameLogic.Game.Perceptions
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
                 data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds);
 
-            var battleCharacter = new BattleCharacter(data.ID,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -209,8 +209,9 @@ namespace GameLogic.Game.Perceptions
             View.ProcessDamage(sources.Index, effectTarget.Index, result.Damage, result.IsMissed, result.CrtMult);
             NotifyHurt(effectTarget);
             if (result.IsMissed) return;
-            CharacterSubHP(effectTarget, result.Damage);
             effectTarget.AttachDamage(sources.Index, result.Damage, View.GetTimeSimulater().Now.Time);
+            CharacterSubHP(effectTarget, result.Damage);
+            
         }
 
         public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)

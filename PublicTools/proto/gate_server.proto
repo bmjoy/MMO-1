@@ -222,6 +222,8 @@ message B2G_BattleReward
 	int32 Gold=2;  			 //用户金币
 	int32 MapID=3; 			 //当前战斗地图
 	repeated PlayerItem Items=4;   //掉落物品
+	int32 Exp = 5;//经验
+	int32 Level = 6;//等级
 }
 
 //返回战斗数据

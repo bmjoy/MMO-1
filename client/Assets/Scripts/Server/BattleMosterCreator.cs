@@ -132,6 +132,7 @@ namespace Server
                 AliveCount++;
 
                 Monster["__Drop"] = drop;
+                Monster["__Monster"] = monsterData;
 
                 Monster.OnDead = (el) =>
                 {
@@ -139,15 +140,12 @@ namespace Server
                     CountKillCount++;
                     AliveCount--;
 
-                    if (el["__Drop"] is DropGroupData d)
+                    if (el["__Drop"] is DropGroupData d && el["__Monster"] is MonsterData mdata)
                     {
                         var o = el.Watch.Values.OrderBy(t => t.FristTime).FirstOrDefault();
-                        if (o != null)
-                        {
-                            var owner = per.FindTarget(o.Index);
-
-                            DoDrop(el.Position, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
-                        }
+                        if (o == null) return;
+                        var owner = per.FindTarget(o.Index);
+                        DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
                     }
                 };
             }
@@ -172,8 +170,20 @@ namespace Server
         }
 
 
-        private void DoDrop(Vector3 pos, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
+        private void DoDrop(Vector3 pos, MonsterData monster, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
         {
+            BattlePlayer player = null;
+            if (owner && Simulater.TryGetBattlePlayer(owner.AcccountUuid, out  player))
+            {
+                var exp = player.GetHero().Exprices;
+                int expNew = player.AddExp(monster.Exp, out int old, out int newLevel);
+                if (newLevel != old)
+                    player.HeroCharacter.SetLevel(newLevel);
+
+                var expNotify = new Notify_CharacterExp { Exp = expNew, Level = newLevel, OldExp = exp, OldLeve = old };
+                player.Client.SendMessage(expNotify.ToNotityMessage());
+            }
+
             if (drop == null) return;
             if (!GRandomer.Probability10000(drop.DropPro)) return;
             var items = drop.DropItem.SplitToInt();
@@ -183,7 +193,7 @@ namespace Server
                 var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
                 if (gold > 0)
                 {
-                    if (Simulater.TryGetBattlePlayer(owner.AcccountUuid, out BattlePlayer player))
+                    if (player != null)
                     {
                         player.AddGold(gold);
                         var notify = new Notify_DropGold { Gold = gold, TotalGold = player.Gold };

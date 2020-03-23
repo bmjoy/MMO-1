@@ -146,6 +146,25 @@ namespace Windows
             });
         }
 
+        internal void InitHero(DHero hero)
+        {
+            this.Level_Number.text = $"{hero.Level}";
+            this.Username.text = $"{hero.Name}";
+            var leveUp = ExcelToJSONConfigManager.Current
+                .FirstConfig<CharacterLevelUpData>(t => t.Level == hero.Level + 1);
+            lb_exp.text = $"{hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
+            float v = 0;
+            if (leveUp != null)
+                v = (float)hero.Exprices / leveUp.NeedExprices;
+            ExpSilder.size = v;
+        }
+
+        internal void InitData(PlayerPackage package, DHero hero)
+        {
+            SetPackage(package);
+            InitHero(hero);
+        }
+
         protected override void OnShow()
         {
             base.OnShow();
