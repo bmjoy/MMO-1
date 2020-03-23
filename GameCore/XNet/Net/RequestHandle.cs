@@ -91,14 +91,12 @@ namespace XNet.Libs.Net
 
                 var rType = m.Info.GetParameters().First().ParameterType;
                 var request = Activator.CreateInstance(rType) as IMessage;
-                if (message.Content == null)
-                {
-                    Debuger.LogError($"empty request ->{request}");
-                }
-                else
+
+                if (message.Content != null)
                 {
                     request.MergeFrom(message.Content);
                 }
+
                 var responser = Activator.CreateInstance(typeof(T), client) as T;
                 IMessage result = null;
                 try
