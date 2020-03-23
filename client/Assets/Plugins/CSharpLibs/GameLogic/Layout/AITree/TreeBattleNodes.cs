@@ -32,7 +32,8 @@ namespace Layout.AITree
         TeamBeAttack,
 		Hit,
         Killed,
-        Death
+        Death,
+		Skill //magic and normal attack
     }
 
 	[EditorAITreeNode("战斗事件", "Event", "战斗节点", AllowChildType.One)]

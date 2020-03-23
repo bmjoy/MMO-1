@@ -87,7 +87,7 @@ namespace GameLogic.Game.Elements
             get
             {
                 var time = this[P.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[P.Agility].FinalValue;
-                return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
+                return Mathf.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
         public string Name { set; get; }
@@ -395,6 +395,7 @@ namespace GameLogic.Game.Elements
 
 		protected void OnDeath()
 		{
+            FireEvent(BattleEventType.Death, this);
 			View.Death();
             OnDead?.Invoke(this);
             var per = this.Controllor.Perception as BattlePerception;
@@ -422,7 +423,6 @@ namespace GameLogic.Game.Elements
             return datat.Config;
         }
 
-      
         public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
         {
             bool isOK = true;
@@ -444,13 +444,6 @@ namespace GameLogic.Game.Elements
             value.ModifyValueMinutes(miType, resultValue);
             View.PropertyChange(property, value.FinalValue);
         }
-
-        public void Reset()
-        {
-            Init();
-        }
-
-
 
         public void EachActiveMagicByType(MagicType ty, float time, EachWithBreak call)
         {
@@ -524,7 +517,6 @@ namespace GameLogic.Game.Elements
         {
             return $"[{Index}]{Name}";
         }
-
 
     }
 }

@@ -98,7 +98,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            releaser = root.Perception.CreateReleaser(magic.MagicKey,new ReleaseAtTarget(root.Character, target), ReleaserType.Magic,0);
+            releaser = root.Perception.CreateReleaser(magic.MagicKey,root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic,0);
             root.Character.AttachMagicHistory(magic.ID, root.Time);
             if (releaser != null)
             {

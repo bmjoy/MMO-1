@@ -9,6 +9,7 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
+              <DiType>-1</DiType>
               <buffMagicKey>knight_shield_buff</buffMagicKey>
               <durationTime>5</durationTime>
             </EffectBase>

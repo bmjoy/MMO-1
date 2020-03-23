@@ -13,11 +13,9 @@ using GameLogic.Game.Elements;
 using XNet.Libs.Utility;
 using Google.Protobuf;
 using GameLogic.Game.AIBehaviorTree;
-using System.Linq;
 using EConfig;
 using UGameTools;
 using UnityEngine.SceneManagement;
-using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
 using Layout.AITree;
@@ -389,7 +387,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                             case ItemType.ItMpitem:
                                 {
                                     var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                    per.CreateReleaser(config.Params[0], rTarget, ReleaserType.Magic,-1);
+                                    per.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic,-1);
                                     needNotifyPackage = true;
                                 }
                                 break;

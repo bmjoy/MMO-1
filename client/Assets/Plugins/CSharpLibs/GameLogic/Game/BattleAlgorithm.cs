@@ -32,19 +32,14 @@ namespace GameLogic.Game
 	/// </summary>
 	public sealed class BattleAlgorithm
 	{
-		public BattleAlgorithm ()
-		{
-            //HeroPropertyType.Agility
-		}
-
         /// <summary>
         /// 力量增加血量
         /// </summary>
-        public static float FORCE_HP = 10;
+        public static float FORCE_HP = 5;
         /// <summary>
         /// 智力增加Mp
         /// </summary>
-        public static float KNOWLEGDE_MP = 5;
+        public static float KNOWLEGDE_MP = 1.5f;
         /// <summary>
         /// 敏捷增加防御
         /// </summary>
@@ -82,16 +77,6 @@ namespace GameLogic.Game
         /// hurt r
         /// </summary>
         public static float HURT_NOTIFY_R = 10f;
-		/// <summary>
-		/// 取中间数
-		/// </summary>
-		/// <param name="value">Value.</param>
-		/// <param name="min">Minimum.</param>
-		/// <param name="max">Max.</param>
-		public static float Clamp(float value, float min, float max)
-		{
-            return Mathf.Clamp(value, min, max);
-		}
 
         /// <summary>
         /// 计算普通攻击

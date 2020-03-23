@@ -85,7 +85,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 }             
                 if (moving) root.Character.StopMove();
                 var rTarget = new ReleaseAtTarget(root.Character, target);
-                releaser = root.Perception.CreateReleaser(att.MagicKey, rTarget, ReleaserType.Magic, -1);
+                releaser = root.Perception.CreateReleaser(att.MagicKey, root.Character, rTarget, ReleaserType.Magic, -1);
                 if (!releaser)
                 {
                     yield return RunStatus.Failure;

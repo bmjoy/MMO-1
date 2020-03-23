@@ -49,18 +49,22 @@ namespace GameLogic.Game.Elements
 
         public MagicReleaser(
             MagicData magic,
+            BattleCharacter owner,
             IReleaserTarget target,
             GControllor controllor,
             IMagicReleaser view,
             ReleaserType type,float durtime)
             : base(controllor, view)
         {
+            Owner = owner;
             ReleaserTarget = target;
             Magic = magic;
             RType = type;
             OnExitedState = ReleaseAll;
             this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
+
+        public BattleCharacter Owner { set; private get; }
 
         public float Durtime { set; get; }
         public void SetParam(params string[] parms)

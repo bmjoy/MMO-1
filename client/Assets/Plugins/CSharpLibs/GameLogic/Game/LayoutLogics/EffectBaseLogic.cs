@@ -100,7 +100,7 @@ namespace GameLogic.Game.LayoutLogics
             int cure =  GetVauleBy(releaser.Releaser, effectTarget, effect.valueType, effect.value);
             if (cure > 0)
             {
-                effectTarget.AddHP(cure);// ;
+                effectTarget.AddHP(cure);
             }
         }
         //CureEffect
@@ -121,8 +121,11 @@ namespace GameLogic.Game.LayoutLogics
         {
             var effect = e as AddBufEffect;
             var per = releaser.Controllor.Perception as BattlePerception;
-            var rT = new ReleaseAtTarget(releaser.ReleaserTarget.Releaser, effectTarget);
-            per.CreateReleaser( effect.buffMagicKey,rT, ReleaserType.Buff, effect.durationTime);
+
+            
+            
+            var rT = new ReleaseAtTarget(releaser.Releaser, effectTarget);
+            per.CreateReleaser(effect.buffMagicKey, releaser.Releaser, rT, ReleaserType.Buff, effect.durationTime);
         }
 
         [EffectHandle(typeof(BreakReleaserEffect))]

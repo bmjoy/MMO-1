@@ -20,13 +20,8 @@ public class DrawerHandlerAttribute:Attribute
 	public Type HandleType{ set; get; }
 }
 
-public class PropertyDrawer
+public static class PropertyDrawer
 {
-
-	static PropertyDrawer()
-	{
-		
-	}
 
 	private static void Init()
 	{
@@ -83,27 +78,78 @@ public class PropertyDrawer
         if (_handlers == null) {
 			Init (); 
 		}
-		var fields= obj.GetType ().GetFields ();
+		var members = obj.GetType().GetMembers();
 
-		foreach (var i in fields) {
-			DrawProperty (i, obj);
+		foreach (var i in members) 
+		{
+			
+
+			if (i is FieldInfo)
+			{
+				DrawProperty(i, obj);
+				continue;
+			}
+			if (i is PropertyInfo)
+			{
+				DrawProperty(i, obj);
+				continue;
+			}
+			
 		}
 	}
 
-	private static void DrawProperty(FieldInfo field,object obj)
+	private static object GetMemberValue(this MemberInfo info, object obj)
+	{
+		if (info is FieldInfo field)
+		{
+			return field.GetValue(obj);
+		}
+		if (info is PropertyInfo property)
+		{
+			return property.GetValue(obj);
+		}
+		return null;
+	}
+
+	private static void SetMemberValue(this MemberInfo info, object obj, object value)
+	{
+		if (info is FieldInfo field)
+		{
+			 field.SetValue(obj,value);
+		}
+		if (info is PropertyInfo property)
+		{
+			 property.SetValue(obj,value);
+		}
+
+	}
+
+	private static Type GetFieldType(this MemberInfo info)
+	{
+		if (info is FieldInfo field)
+		{
+			return field.FieldType;
+		}
+		if (info is PropertyInfo property)
+		{
+			return property.PropertyType;
+		}
+		return null;
+	}
+
+
+	private static void DrawProperty(MemberInfo field,object obj)
 	{
 		 
 		var hide = field.GetCustomAttributes (typeof(HideInEditorAttribute), false) as  HideInEditorAttribute[];
-		if (hide.Length > 0)
-			return;
+		if (hide.Length > 0) return;
 		
 		var label = field.GetCustomAttributes (typeof(LabelAttribute), false) as  LabelAttribute[];
 		var name = field.Name;
-		if (label.Length > 0) {
-			name = label [0].DisplayName;
-		}
+		if (label.Length > 0) name = label [0].DisplayName;
 
-		foreach (var i in _handlers) {
+		foreach (var i in _handlers) 
+		{
 			var attrs = field.GetCustomAttributes (i.Key, false);
 			if (attrs.Length > 0) {
 				i.Value.Invoke (null, new object[]{ obj,field,name , attrs[0] });
@@ -111,51 +157,52 @@ public class PropertyDrawer
 			}
 		}
 
-		//GUILayout.BeginVertical ();
+		var fType = field.GetFieldType();
 
-		if (field.FieldType == typeof(int))
+
+		if (fType == typeof(int))
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.IntField((int)field.GetValue(obj));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.IntField((int)GetMemberValue(field,obj));
+			field.SetMemberValue(obj, value);
 		}
-		else if (field.FieldType == typeof(bool))
+		else if (fType == typeof(bool))
 		{
 			EditorGUILayout.BeginHorizontal();
-			var value = EditorGUILayout.Toggle((bool)field.GetValue(obj), GUILayout.Width(50));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.Toggle((bool)field.GetMemberValue(obj), GUILayout.Width(50));
+			field.SetMemberValue(obj, value);
 			GUILayout.Label(name);
 			EditorGUILayout.EndHorizontal();
 		}
-		else if (field.FieldType == typeof(string))
+		else if (fType == typeof(string))
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.TextField((string)field.GetValue(obj));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.TextField((string)field.GetMemberValue(obj));
+			field.SetMemberValue(obj, value);
 		}
-		else if (field.FieldType == typeof(long))
+		else if (fType == typeof(long))
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.LongField((long)field.GetValue(obj));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.LongField((long)field.GetMemberValue(obj));
+			field.SetMemberValue(obj, value);
 		}
-		else if (field.FieldType == typeof(float))
+		else if (fType == typeof(float))
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.FloatField((float)field.GetValue(obj));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.FloatField((float)field.GetMemberValue(obj));
+			field.SetMemberValue(obj, value);
 		}
-		else if (field.FieldType == typeof(Layout.Vector3))
+		else if (fType == typeof(Layout.Vector3))
 		{
 			//GUILayout.Label (name);
-			var v = (Layout.Vector3)field.GetValue(obj);
+			var v = (Layout.Vector3)field.GetMemberValue(obj);
 			var value = EditorGUILayout.Vector3Field(name, new UnityEngine.Vector3(v.x, v.y, v.z));
-			field.SetValue(obj, new Layout.Vector3 { x = value.x, y = value.y, z = value.z });
+			field.SetMemberValue(obj, new Layout.Vector3 { x = value.x, y = value.y, z = value.z });
 		}
-		else if (field.FieldType == typeof(FieldValue))
+		else if (fType == typeof(FieldValue))
 		{
 			GUILayout.Label(name);
-			if (!(field.GetValue(obj) is FieldValue value))
+			if (!(field.GetMemberValue(obj) is FieldValue value))
 			{
 				value = 1000;
 			}
@@ -178,12 +225,12 @@ public class PropertyDrawer
 			}
 			GUILayout.EndHorizontal();
 
-			field.SetValue(obj, value);
+			field.SetMemberValue(obj, value);
 		}
-		else if (field.FieldType == typeof(DamageRange))
+		else if (fType == typeof(DamageRange))
 		{
 			GUILayout.Label(name);
-			if (!(field.GetValue(obj) is DamageRange value))
+			if (!(field.GetMemberValue(obj) is DamageRange value))
 			{
 				value = new DamageRange();
 			}
@@ -211,11 +258,11 @@ public class PropertyDrawer
 
 			
 		}
-		else if (field.FieldType.IsEnum)
+		else if (fType.IsEnum)
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.EnumPopup((Enum)field.GetValue(obj));
-			field.SetValue(obj, value);
+			var value = EditorGUILayout.EnumPopup((Enum)field.GetMemberValue(obj));
+			field.SetMemberValue(obj, value);
 		}
 
 	}
@@ -232,31 +279,39 @@ public class PropertyDrawer
 		return name;
 	}
 
+	[DrawerHandler(typeof(EnumMaskerAttribute))]
+	public static void EnumMasker(object obj, MemberInfo field, string label, object attr)
+	{
+		GUILayout.Label(label);
+		var masker = EditorGUILayout.EnumFlagsField((Enum)field.GetMemberValue(obj));
+		field.SetMemberValue(obj, masker);
+	}
+
 	[DrawerHandler(typeof(EditorResourcePathAttribute))]
-	public static void ResourcesSelect(object obj,FieldInfo field, string label, object attr)
+	public static void ResourcesSelect(object obj, MemberInfo field, string label, object attr)
 	{ 
 		var resources = "Assets/Resources/";
-		var path = (string)field.GetValue (obj);
+		var path = (string)field.GetMemberValue (obj);
 		var res = AssetDatabase.LoadAssetAtPath<Object> (resources + path);
 		GUILayout.Label (label);
 		res= EditorGUILayout.ObjectField (res,typeof(Object), false);
 		path = AssetDatabase.GetAssetPath (res);
 		path = path.Replace (resources, "");
-		field.SetValue (obj, path);
+		field.SetMemberValue (obj, path);
 
 	}
 	[DrawerHandler(typeof(LayoutPathAttribute))]
-	public static void LayoutPathSelect(object obj, FieldInfo field,string label, object attr)
+	public static void LayoutPathSelect(object obj, MemberInfo field,string label, object attr)
 	{
 		var resources = "Assets/Resources/";
-		var path = (string)field.GetValue (obj);
+		var path = (string)field.GetMemberValue (obj);
 		var res = AssetDatabase.LoadAssetAtPath<UnityEngine.TextAsset> (resources + path);
 		GUILayout.Label (label);
 		GUILayout.BeginHorizontal ();
 		res= EditorGUILayout.ObjectField (res,typeof(TextAsset), false,GUILayout.Width(100)) as TextAsset;
 		path = AssetDatabase.GetAssetPath (res);
 		path = path.Replace (resources, "");
-		field.SetValue (obj, path);
+		field.SetMemberValue (obj, path);
 
 		if (GUILayout.Button ("New")) {
 			var fPath = EditorUtility.SaveFilePanel ("Create Layout",Application.dataPath+"/Resources/", "layout", "xml");
@@ -266,7 +321,7 @@ public class PropertyDrawer
 				var xml = XmlParser.Serialize (layout);
 				File.WriteAllText (fPath, xml, XmlParser.UTF8);
 				AssetDatabase.Refresh ();
-				field.SetValue (obj, path);
+				field.SetMemberValue (obj, path);
 			}
 		}
 
@@ -282,22 +337,21 @@ public class PropertyDrawer
 	}
 
 	[DrawerHandler(typeof(EditorEffectsAttribute))]
-	public static void EffectGroupSelect(object obj, FieldInfo field,string label, object attr)
+	public static void EffectGroupSelect(object obj, MemberInfo field,string label, object attr)
 	{
 		//GUILayout.BeginVertical ();
 		if (GUILayout.Button ("Open Effect Group",GUILayout.MinWidth(150))) {
-			var effectGroup = field.GetValue(obj) as List<EffectBase>; 
+			var effectGroup = field.GetMemberValue(obj) as List<EffectBase>; 
 			EffectGroupEditorWindow.ShowEffectGroup (effectGroup);
 		}
-		//GUILayout.EndVertical ();
 	}
 
 	private static int indexOfBone=-1;
 	//EditorBoneAttribute
 	[DrawerHandler(typeof(EditorBoneAttribute))]
-	public static void BoneSelected(object obj, FieldInfo field,string label, object attr)
+	public static void BoneSelected(object obj, MemberInfo field,string label, object attr)
 	{
-		var boneName = (string)field.GetValue (obj);
+		var boneName = (string)field.GetMemberValue (obj);
 		indexOfBone = -1;
 		for (var i = 0; i < names.Length; i++) {
 			if (names [i] == boneName) {
@@ -310,7 +364,7 @@ public class PropertyDrawer
 		indexOfBone = EditorGUILayout.Popup (indexOfBone, names);
 		if(indexOfBone>=0 && indexOfBone<names.Length)
 		{
-			field.SetValue (obj, names [indexOfBone]);
+			field.SetMemberValue (obj, names [indexOfBone]);
 	    }
 	}
 }

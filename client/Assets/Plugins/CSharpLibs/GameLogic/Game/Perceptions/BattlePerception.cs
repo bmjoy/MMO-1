@@ -74,9 +74,8 @@ namespace GameLogic.Game.Perceptions
         public EmptyControllor Empty { private set; get; }
         #endregion
 
-
         #region create Elements 
-        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty, float durtime)
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, float durtime)
         {
             var magic = View.GetMagicByKey(key);
             if (magic == null)
@@ -84,17 +83,18 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(key, magic, target, ty, durtime);
+            var releaser = CreateReleaser(key, owner, magic, target, ty, durtime);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
         { 
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
                                                target.TargetPosition.ToPV3());
-            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty, durtime);
+            var mReleaser = new MagicReleaser(magic,owner, target, this.ReleaserControllor, view, ty, durtime);
+            if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Killed, mReleaser);
             this.JoinElement(mReleaser);
             return mReleaser;
         }
@@ -110,9 +110,6 @@ namespace GameLogic.Game.Perceptions
         }
 
         #endregion
-
-
-
 
         #region Character
 
