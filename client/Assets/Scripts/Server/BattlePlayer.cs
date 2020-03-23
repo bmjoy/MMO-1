@@ -29,10 +29,11 @@ public class BattlePlayer
 
     public GameServerInfo GateServer { set; get; }
    
-    public BattlePlayer(string account, PlayerPackage package, DHero hero, Client client, GameServerInfo info)
+    public BattlePlayer(string account, PlayerPackage package, DHero hero, int gold, Client client, GameServerInfo info)
     {
         Package = package;
         Hero = hero;
+        Gold = gold;
         this.AccountId = account;
         this.Client = client;
         GateServer = info;

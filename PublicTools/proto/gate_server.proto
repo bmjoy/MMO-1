@@ -211,6 +211,7 @@ message B2G_GetPlayerInfo
 message G2B_GetPlayerInfo
 {
 	 ErrorCode Code=1;//返回信息
+	 int32 Gold = 4;//金币
 	 DHero Hero=2;    //英雄数据
 	 PlayerPackage Package=3;//道具列表
 }

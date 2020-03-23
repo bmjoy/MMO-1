@@ -62,6 +62,7 @@ namespace GateServer
             return new G2B_GetPlayerInfo
             {
                 Code = ErrorCode.Ok,
+                Gold = player.Gold,
                 Package = package.ToPackage(),
                 Hero = hero.ToDhero(package)
             };

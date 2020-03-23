@@ -88,7 +88,7 @@ namespace Proto.PServices
 
         private APIBase<Request, Response> SendRequest(IChannel channel)
         {
-            masker?.Mask();
+             if(masker !=null) masker.Mask();
             if (RequestIndex.HasValue) throw new Exception("Exsist request");
             IsDone = false;
             RequestIndex = channel.ProcessRequest(this);
@@ -111,7 +111,7 @@ namespace Proto.PServices
 
         public void FinishResponse(IMessage message)
         {
-            masker?.UnMask();
+            if(masker !=null) masker.UnMask();
             this.SetResponse((Response)message);
         }
 

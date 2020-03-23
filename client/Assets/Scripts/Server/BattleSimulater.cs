@@ -482,9 +482,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
         return character;
     }
 
-    internal bool BindUser(string accountUuid, Client c, PlayerPackage package, DHero hero, GameServerInfo info)
+    internal bool BindUser(string accountUuid, Client c, PlayerPackage package, DHero hero,int gold, GameServerInfo info)
     {
-        var player = new BattlePlayer(accountUuid, package, hero, c,info);
+        var player = new BattlePlayer(accountUuid, package, hero, gold, c,info);
         _addTemp.Enqueue(new BindPlayer { Client = c, Player = player, Account = accountUuid, });
         return true;
     }
