@@ -13,6 +13,6 @@ public class LanguageSetting
         [XmlText]
         public string Value { set; get; }
     }
-
+    [XmlElement(ElementName ="Add")]
     public List<LanguageKey> Keys = new List<LanguageKey>();
 }
