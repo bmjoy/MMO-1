@@ -250,7 +250,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private void OnDisconnect()
     {
-        //UUITipDrawer.Singleton.ShowNotify("Can't login BattleServer!");
+       UUITipDrawer.S.ShowNotify("Can't login BattleServer!");
         UApplication.S.GoBackToMainGate();  
     }
 
@@ -302,7 +302,7 @@ public class BattleGate : UGate, IServerMessageHandler
                     Rotation = character.Rotation.eulerAngles.ToPV3()
                 });
             else
-                UApplication.S.ShowNotify($"MP不足无法释放{config.Name}");
+                UApplication.S.ShowNotify(LanguageManager.S.Format("BATTLE_NO_MP_TO_CAST", config.Name));
         }
 
        
