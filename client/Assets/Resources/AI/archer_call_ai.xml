@@ -26,9 +26,9 @@
       <childs />
       <name>靠近目标</name>
       <guid>a7d97240-623d-4ba4-886c-528eb10ea7a5</guid>
-      <valueOf>ViewDistance</valueOf>
+      <valueOf>Value</valueOf>
       <distance>
-        <min>100</min>
+        <min>400</min>
         <max>100</max>
         <type>Fixed</type>
       </distance>
