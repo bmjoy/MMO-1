@@ -506,6 +506,14 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
 #endif
+        if (alpha > 0.8f)
+        {
+            var g = this.ViewRoot.GetComponent<AlphaOperator>();
+            if (g) Destroy(g);
+        }
+        else
+            AlphaOperator.Operator(this.ViewRoot);
+
     }
 
     void IBattleCharacter.PlayMotion(string motion)

@@ -31,11 +31,19 @@ namespace Layout.LayoutElements
         [Label("等级")]
         public int level;
 
+
+        [Label("AIPath(默认角色表AI)")]
+        [EditorResourcePath]
+        public string AIPath;
+
         [Label("持续时间(秒)")]
         public float time;
 
         [Label("召唤物最大数量")]
         public int maxNum;
+
+        [Label("偏移")]
+        public Vector3 offset = new Vector3(0,0,1);
 
         public override string ToString()
         {

@@ -46,8 +46,9 @@ namespace GameLogic.Game.Elements
         public float tickStartTime = -1;
         private readonly List<RevertActionLock> actionReverts = new List<RevertActionLock>();
         private readonly List<RevertData> reverts = new List<RevertData>();
-
+        
         public MagicReleaser(
+            string key,
             MagicData magic,
             BattleCharacter owner,
             IReleaserTarget target,
@@ -56,6 +57,7 @@ namespace GameLogic.Game.Elements
             ReleaserType type,float durtime)
             : base(controllor, view)
         {
+            MagicKey = key;
             Owner = owner;
             ReleaserTarget = target;
             Magic = magic;
@@ -63,6 +65,8 @@ namespace GameLogic.Game.Elements
             OnExitedState = ReleaseAll;
             this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
+
+        public string MagicKey { private set; get; }
 
         public BattleCharacter Owner { set; private get; }
 

@@ -24,6 +24,9 @@ namespace Layout
 
 		[Label("触发持续时间")]
 		public float triggerDurationTime;
+
+		[Label("唯一(唯一不允许多个释放实例)")]
+		public bool unique = false;
 	}
 }
 

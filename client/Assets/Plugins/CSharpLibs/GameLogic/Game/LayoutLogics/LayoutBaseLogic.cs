@@ -163,7 +163,7 @@ namespace GameLogic.Game.LayoutLogics
             if (unitLayout.maxNum <= releaser.UnitCount) return;
 			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
             var data = ExcelToJSONConfigManager
-                .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
+                .Current.GetConfigByID<CharacterData>(id);
            
 			var magics = per.CreateHeroMagic(data.ID);
 			var unit = per.CreateCharacter(
@@ -172,7 +172,7 @@ namespace GameLogic.Game.LayoutLogics
 				magics,
                 null,
 				charachter.TeamIndex,
-				charachter.Position + charachter.Rototion * UVector3.forward * charachter.Radius,
+				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
 				string.Empty, data.Name
 			);
@@ -181,7 +181,9 @@ namespace GameLogic.Game.LayoutLogics
 
             releaser.AttachElement(unit, false,unitLayout.time);
             releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
-            per.ChangeCharacterAI(data.AIResourcePath,unit);
+			var ai = unitLayout.AIPath ?? data.AIResourcePath;
+
+			per.ChangeCharacterAI(ai,unit);
 			unit.OnDead = (el) => { GObject.Destroy(el, 3); };
         }
 		#endregion

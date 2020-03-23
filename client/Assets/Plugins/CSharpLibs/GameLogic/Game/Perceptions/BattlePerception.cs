@@ -88,12 +88,30 @@ namespace GameLogic.Game.Perceptions
         }
 
         public MagicReleaser CreateReleaser(string key, BattleCharacter owner, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
-        { 
+        {
+            if (magic.unique)
+            {
+                bool have = false;
+                State.Each<MagicReleaser>(t =>
+                {
+                    if (t.Releaser.Index == owner.Index)
+                    {
+                        if (t.MagicKey == key)
+                        {
+                            have = true;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                );
+                if (have) return null;
+            }
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
                                                target.TargetPosition.ToPV3());
-            var mReleaser = new MagicReleaser(magic,owner, target, this.ReleaserControllor, view, ty, durtime);
+            var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
             if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Killed, mReleaser);
             this.JoinElement(mReleaser);
             return mReleaser;
