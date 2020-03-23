@@ -108,7 +108,11 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
             UUITip.Destory(tip);
         }
 
-
+        if (maskTime > 0 && maskTime < Time.time)
+        {
+            maskTime = -1;
+            eventMask.SetActive(false);
+        }
     }
 
 	public T GetUIWindow<T>()where T:UUIWindow, new()
@@ -206,18 +210,18 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
     /// <summary>
     /// 当前mask
     /// </summary>
-    public int maskCount = 0;
+    private float maskTime = 0;
 
     public void MaskEvent()
     {
-        maskCount++;
-        eventMask.SetActive(maskCount > 0);
+        maskTime = Time.time+ 2f;
+        eventMask.SetActive(true);
     }
 
     public void UnMaskEvent()
     {
-        maskCount--;
-        eventMask.SetActive(maskCount > 0);
+        maskTime = -1;
+        eventMask.SetActive(false);
     }
 
     void IEventMasker.Mask()
