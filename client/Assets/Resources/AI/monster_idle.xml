@@ -5,9 +5,9 @@
       <childs />
       <name>判断目标距离</name>
       <guid>14ef1600-cc9b-40f3-b11a-dbfb954acde2</guid>
-      <valueOf>Value</valueOf>
+      <valueOf>ViewDistance</valueOf>
       <distance>
-        <min>2000</min>
+        <min>0</min>
         <max>100</max>
         <type>Fixed</type>
       </distance>
