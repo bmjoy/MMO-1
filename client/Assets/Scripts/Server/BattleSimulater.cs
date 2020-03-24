@@ -27,75 +27,16 @@ using System.IO;
 using GameLogic.Game.LayoutLogics;
 using Server;
 
-public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRunner
+public class BattleSimulater : XSingleton<BattleSimulater>
 {
 
-    #region AI RUN
-    private BattleCharacter aiAttach;
-
-    AITreeRoot IAIRunner.RunAI(TreeNode ai)
-    {
-        if (aiAttach == null)
-        {
-            Debug.LogError($"Need attach a battlecharacter");
-            return null;
-        }
-
-        if (this.State.Perception is BattlePerception p)
-        {
-            var root = p.ChangeCharacterAI(ai, this.aiAttach);
-            root.IsDebug = true;
-            return root;
-        }
-
-        return null;
-    }
-
-    bool IAIRunner.IsRuning(Layout.EventType eventType)
-    {
-        return false;
-    }
-
-    bool IAIRunner.ReleaseMagic(MagicData data)
-    {
-        return false;
-    }
-
-    void IAIRunner.Attach(BattleCharacter character)
-    {
-        aiAttach = character;
-        if (character.AiRoot == null) return;
-        character.AiRoot.IsDebug = true;
-    }
-
-    #endregion
-
-    void IStateLoader.Load(GState state)
-    {
-
-    }
-
-    private class BindPlayer
-    {
-        public Client Client;
-        public BattlePlayer Player;
-        public string Account;
-    }
-    private PlayerBornPosition[] playerBornPositions;
     private SocketServer Server;
-    private Server.BattleMosterCreator MonsterCreator { set; get; }
 
     [Header("Server ID")]
     public int ServerID;
 
-    public GTime GetTime() { return (PerView as ITimeSimulater).Now; }
     public ConnectionManager Manager { get { return Server.CurrentConnectionManager; } }
     public RequestClient<LoginServerTaskServiceHandler> CenterServerClient { private set; get; }
-    public UPerceptionView PerView {private set; get; }
-    public BattleLevelData LevelData { get; private set; }
-    public MapData MapConfig { get; private set; }
-    public BattleState State { private set; get; }
-    public MonsterGroupPosition[] MonsterGroup { private set; get; }
 
     private readonly ConcurrentQueue<BindPlayer> _addTemp = new ConcurrentQueue<BindPlayer>();
     private readonly ConcurrentQueue<string> _kickUsers = new ConcurrentQueue<string>();
@@ -105,6 +46,8 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
     {
         StartCoroutine(Begin());
     }
+
+    private BattleLevelSimulater Simulater;
 
     private IEnumerator Begin()
     {
@@ -124,27 +67,17 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
         var battleServer = BattleServerConfig.Parser.ParseJson(config); ;
         new CM(ResourcesManager.S);
+        Simulater = BattleLevelSimulater.Create(battleServer.Level);
 
-        LevelData = CM.Current.GetConfigByID<BattleLevelData>(battleServer.Level);
-        MapConfig = CM.Current.GetConfigByID<MapData>(LevelData.MapID);
-        yield return SceneManager.LoadSceneAsync(MapConfig.LevelName, LoadSceneMode.Single);
-
-        yield return new WaitForEndOfFrame();
-        PerView = UPerceptionView.Create();
-
-        MonsterGroup = FindObjectsOfType<MonsterGroupPosition>();
-        playerBornPositions = FindObjectsOfType<PlayerBornPosition>();
-
+        yield return StartCoroutine( Simulater.Start());
         var handler = new RequestHandle<BattleServerService>();
         Server = new SocketServer(new ConnectionManager(), battleServer.ListenPort)
         {
             HandlerManager = handler
         };
-
         Server.Start();
 
         yield return new WaitForEndOfFrame();
-
         CenterServerClient = new RequestClient<LoginServerTaskServiceHandler>(battleServer.LoginServiceHost, battleServer.LoginServerPort);
         bool connecting = true;
         CenterServerClient.OnConnectCompleted = (e) =>
@@ -185,11 +118,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             Server.Stop();
         }
 
-        State = new BattleState(PerView, this, PerView);
-        State.Start(this.GetTime());
-        //todo
-        //if(M)
-        MonsterCreator = new BattleMosterCreator(this);
     }
 
     private void StopAll()
@@ -197,9 +125,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
         Debug.Log("Exit");
         Server?.Stop();
         CenterServerClient?.Disconnect();
-        State?.Stop(GetTime());
+        Simulater.Stop();
+        Simulater = null;
         Server = null;
-        State = null;
         CenterServerClient = null;
     }
 
@@ -215,17 +143,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
     private void Update()
     {
-        if (State == null) return;
-        GState.Tick(State, GetTime());
-        MonsterCreator?.TryCreateMonster(GetTime().Time);
         ProcessJoinClient();
         ProcessAction();
-        SendNotify(PerView.GetAndClearNotify());
-    }
-
-    internal bool TryGetBattlePlayer(string acccountUuid, out BattlePlayer player)
-    {
-        return BattlePlayers.TryGetValue(acccountUuid, out player);
+        SendNotify(Simulater.Tick());
     }
 
     private void OnDestroy()
@@ -235,8 +155,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
 
     private void ProcessJoinClient()
     {
-        var per = State.Perception as BattlePerception;
-        var view = per.View as UPerceptionView;
         //send Init message.
         while (_addTemp.Count > 0)
         {
@@ -249,15 +167,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                     BattlePlayers.Remove(client.Account);
                 }
 
-                var createNotify = view.GetInitNotify();
-          
-                var c = CreateUser(client.Player);
+                var createNotify = Simulater.GetInitNotify();
+                var c = Simulater.CreateUser(client.Player);
                 if (c != null)
                 {
                     client.Player.HeroCharacter = c;
                     BattlePlayers.Add(client.Account, client.Player);
                     var package = client.Player.GetNotifyPackage();
-                    package.TimeNow = GetTime().Time;
+                    package.TimeNow =Simulater.TimeNow .Time;
                     var buffer = new MessageBufferPackage();
                     buffer.AddMessage(package.ToNotityMessage());
                     foreach (var i in createNotify)
@@ -308,7 +225,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             var req = new B2G_BattleReward
             {
                 AccountUuid = p.AccountId,
-                MapID = LevelData.ID,
+                MapID = Simulater.LevelData.ID,
                 Gold = p.Gold,
                 Exp = p.GetHero().Exprices,
                 Level = p.GetHero().Level
@@ -323,6 +240,11 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
         });
     }
 
+    internal bool TryGetPlayer(string acccountUuid, out BattlePlayer player)
+    {
+        return BattlePlayers.TryGetValue(acccountUuid, out player);
+    }
+
     private void SendNotify(IMessage[] notify)
     {
         if (notify.Length > 0)
@@ -332,7 +254,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             {
                 buffer.AddMessage(i.ToNotityMessage());
             }
-            var syncTime = new Notify_SyncServerTime { ServerNow = PerView.GetTime().Time };
+            var syncTime = new Notify_SyncServerTime { ServerNow = Simulater.TimeNow.Time };
             buffer.AddMessage(syncTime.ToNotityMessage());
             var pack = buffer.ToPackage();
             foreach (var i in BattlePlayers)
@@ -356,21 +278,22 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                 KickUser(i.Key);
                 continue;
             }
-
-            var per = State.Perception as BattlePerception;
             bool needNotifyPackage = false;
             while (i.Value.Client.TryGetActionMessage(out Message msg))
             {
                 IMessage action = msg.AsAction();
                 if (action is Action_CollectItem collect)
                 {
-                    var item = per.State[collect.Index] as BattleItem;
-                    if (item?.IsAliveAble == true && item.CanBecollect(i.Value.HeroCharacter) )
+
+                    if (Simulater.TryGetElementByIndex(collect.Index, out BattleItem item))
                     {
-                        if (i.Value.AddDrop(item.DropItem))
+                        if (item.IsAliveAble == true && item.CanBecollect(i.Value.HeroCharacter))
                         {
-                            needNotifyPackage = true;
-                            GObject.Destroy(item);
+                            if (i.Value.AddDrop(item.DropItem))
+                            {
+                                needNotifyPackage = true;
+                                GObject.Destroy(item);
+                            }
                         }
                     }
                 }
@@ -387,7 +310,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
                             case ItemType.ItMpitem:
                                 {
                                     var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                    per.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic,-1);
+                                    Simulater.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic,-1);
                                     needNotifyPackage = true;
                                 }
                                 break;
@@ -409,75 +332,10 @@ public class BattleSimulater : XSingleton<BattleSimulater>, IStateLoader, IAIRun
             if (needNotifyPackage)
             {
                 var init = i.Value.GetNotifyPackage();
-                init.TimeNow = GetTime().Time;
+                init.TimeNow = Simulater.TimeNow.Time;
                 i.Value.Client.SendMessage(init.ToNotityMessage());
             }
         }    
-    }
-
-    private BattleCharacter CreateUser(BattlePlayer user)
-    {
-        BattleCharacter character = null;
-        State.Each<BattleCharacter>(t =>
-        {
-            if (!t.Enable) return false;
-            if (t.AcccountUuid == user.AccountId)
-            {
-                character = t;
-                return true;
-            }
-            return false;
-        });
-
-        if (character != null) return character;
-
-        var per = State.Perception as BattlePerception;
-        var data = CM.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
-
-        var magic = per.CreateHeroMagic(data.ID);
-
-        var appendProperties = new Dictionary<P, int>();
-        foreach (var i in user.GetHero().Equips)
-        {
-            var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
-            var equipId = int.Parse(itemsConfig.Params[0]);
-            var equipconfig = CM.Current.GetConfigByID<EquipmentData>(equipId);
-            if (equipconfig == null) continue;
-            var equip = user.GetEquipByGuid(i.GUID);
-            float addRate = 0f;
-            if (equip != null)
-            {
-                var equipLevelUp = CM
-                    .Current
-                    .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quality == equipconfig.Quality);
-                if (equipLevelUp != null)
-                {
-                    addRate = equipLevelUp.AppendRate / 10000f;
-                }
-            }
-            //基础加成
-            var properties = equipconfig.Properties.SplitToInt();
-            var values = equipconfig.PropertyValues.SplitToInt();
-            for (var index = 0; index < properties.Count; index++)
-            {
-                var p = (P)properties[index];
-                int v = (int)(values[index] * (1 + addRate));
-                if (appendProperties.TryGetValue(p, out int value))
-                {
-                    appendProperties[p] = v + value;
-                }
-                else
-                {
-                    appendProperties.Add(p, v);
-                }
-            }
-        }
-        var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;        
-        character = per.CreateCharacter(user.GetHero().Level, data,
-            magic, appendProperties,
-            1, pos.position,pos.rotation.eulerAngles , user.AccountId, user.GetHero().Name);
-        per.ChangeCharacterAI(data.AIResourcePath, character);
-        return character;
     }
 
     internal bool BindUser(string accountUuid, Client c, PlayerPackage package, DHero hero,int gold, GameServerInfo info)

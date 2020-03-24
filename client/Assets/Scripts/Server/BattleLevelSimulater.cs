@@ -1,0 +1,245 @@
+﻿using EConfig;
+using EngineCore.Simulater;
+using GameLogic;
+using GameLogic.Game.AIBehaviorTree;
+using GameLogic.Game.Elements;
+using GameLogic.Game.Perceptions;
+using GameLogic.Game.States;
+using Layout;
+using Layout.AITree;
+using Proto;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+using P = Proto.HeroPropertyType;
+using CM = ExcelConfig.ExcelToJSONConfigManager;
+using UnityEngine.SceneManagement;
+using UGameTools;
+using Google.Protobuf;
+using GameLogic.Game.LayoutLogics;
+
+namespace Server
+{
+
+    public class LevelSimulaterAttribute : Attribute
+    {
+        public MapType MType { set; get; }
+    }
+
+   // [LevelSimulater(MType = MapType.MtNone)]
+    public class BattleLevelSimulater : IStateLoader, IAIRunner
+    {
+        #region AI RUN
+        private BattleCharacter aiAttach;
+        AITreeRoot IAIRunner.RunAI(TreeNode ai)
+        {
+            if (aiAttach == null)
+            {
+                Debug.LogError($"Need attach a battlecharacter");
+                return null;
+            }
+
+            if (this.State.Perception is BattlePerception p)
+            {
+                var root = p.ChangeCharacterAI(ai, this.aiAttach);
+                root.IsDebug = true;
+                return root;
+            }
+
+            return null;
+        }
+
+        bool IAIRunner.IsRuning(Layout.EventType eventType)
+        {
+            return false;
+        }
+
+        bool IAIRunner.ReleaseMagic(MagicData data)
+        {
+            return false;
+        }
+
+        void IAIRunner.Attach(BattleCharacter character)
+        {
+            aiAttach = character;
+            if (character.AiRoot == null) return;
+            character.AiRoot.IsDebug = true;
+        }
+
+        #endregion
+
+        protected BattleLevelSimulater(BattleLevelData data)
+        {
+            LevelData = data;
+        }
+        void IStateLoader.Load(GState state)
+        {
+
+        }
+        ITimeSimulater timeSimulater;
+        public UPerceptionView PerView { private set; get; }
+        public BattleLevelData LevelData { get; private set; }
+        public MapData MapConfig { get; private set; }
+        public BattleState State { private set; get; }
+        public GTime GetTime() { return timeSimulater.Now; }
+        public MonsterGroupPosition[] MonsterGroup { private set; get; }
+        private PlayerBornPosition[] playerBornPositions;
+
+        public GTime TimeNow { get { return GetTime(); } }
+
+        public IEnumerator Start()
+        {
+            AIRunner.Current = this;
+            MapConfig = CM.Current.GetConfigByID<MapData>(LevelData.MapID);
+            yield return SceneManager.LoadSceneAsync(MapConfig.LevelName, LoadSceneMode.Single);
+            yield return new WaitForEndOfFrame();
+            PerView = UPerceptionView.Create();
+            timeSimulater = PerView as ITimeSimulater;
+            MonsterGroup = GameObject.FindObjectsOfType<MonsterGroupPosition>();
+            playerBornPositions = GameObject.FindObjectsOfType<PlayerBornPosition>();
+            yield return new WaitForEndOfFrame();
+            State = new BattleState(PerView, this, PerView);
+            State.Start(this.GetTime());
+          
+
+        }
+
+        public bool TryGetElementByIndex<T>(int index, out T el) where T : GObject
+        {
+            if (this.State[index] is T e)
+            {
+                el = e;
+                return true;
+            }
+            el = null;
+            return false;
+        }
+
+        protected virtual int PlayerTeamIndex  { get; } = 1;
+
+        public BattleCharacter CreateUser(BattlePlayer user)
+        {
+            BattleCharacter character = null;
+            State.Each<BattleCharacter>(t =>
+            {
+                if (!t.Enable) return false;
+                if (t.AcccountUuid == user.AccountId)
+                {
+                    character = t;
+                    return true;
+                }
+                return false;
+            });
+
+            if (character != null) return character;
+
+            var per = State.Perception as BattlePerception;
+            var data = CM.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
+
+            var magic = per.CreateHeroMagic(data.ID);
+
+            var appendProperties = new Dictionary<P, int>();
+            foreach (var i in user.GetHero().Equips)
+            {
+                var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
+                var equipId = int.Parse(itemsConfig.Params[0]);
+                var equipconfig = CM.Current.GetConfigByID<EquipmentData>(equipId);
+                if (equipconfig == null) continue;
+                var equip = user.GetEquipByGuid(i.GUID);
+                float addRate = 0f;
+                if (equip != null)
+                {
+                    var equipLevelUp = CM
+                        .Current
+                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quality == equipconfig.Quality);
+                    if (equipLevelUp != null)
+                    {
+                        addRate = equipLevelUp.AppendRate / 10000f;
+                    }
+                }
+                //基础加成
+                var properties = equipconfig.Properties.SplitToInt();
+                var values = equipconfig.PropertyValues.SplitToInt();
+                for (var index = 0; index < properties.Count; index++)
+                {
+                    var p = (P)properties[index];
+                    int v = (int)(values[index] * (1 + addRate));
+                    if (appendProperties.TryGetValue(p, out int value))
+                    {
+                        appendProperties[p] = v + value;
+                    }
+                    else
+                    {
+                        appendProperties.Add(p, v);
+                    }
+                }
+            }
+            var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;        
+            character = per.CreateCharacter(user.GetHero().Level, data,
+                magic, appendProperties,
+                PlayerTeamIndex, pos.position, pos.rotation.eulerAngles, user.AccountId, user.GetHero().Name);
+            per.ChangeCharacterAI(data.AIResourcePath, character);
+            return character;
+        }
+
+        public void Stop()
+        {
+            State?.Stop(TimeNow);
+        }
+
+        public IMessage[] GetInitNotify()
+        {
+            return PerView.GetInitNotify();
+        }
+
+        public IMessage[] Tick()
+        {
+            OnTick();
+            GState.Tick(State, TimeNow);
+            
+            return PerView.GetAndClearNotify();
+        }
+
+        protected virtual void OnTick() { }
+
+        internal void CreateReleaser(string key, BattleCharacter heroCharacter, ReleaseAtTarget rTarget, ReleaserType Rt, int dur)
+        {
+            if (State.Perception is BattlePerception per)
+            {
+                per.CreateReleaser(key, heroCharacter, rTarget, Rt, dur);
+            }
+        }
+
+        private static readonly Dictionary<MapType, Type> Types = new Dictionary<MapType, Type>();
+
+        static BattleLevelSimulater()
+        {
+            var t = typeof(BattleLevelSimulater);
+            var types =t .Assembly.GetTypes();
+            foreach (var i in types)
+            {
+                if (!i.IsSubclassOf(t)) continue;
+                var atts = i.GetCustomAttributes(typeof(LevelSimulaterAttribute), false) as LevelSimulaterAttribute[];
+                if (atts == null || atts.Length == 0) continue;
+                Types.Add(atts[0].MType, i);
+            }
+        }
+
+        public static BattleLevelSimulater Create(int levelID )
+        {
+            var level = CM.Current.GetConfigByID<BattleLevelData>(levelID);
+            var MType = (MapType)level.MapType;
+
+            if (Types.TryGetValue(MType, out Type t))
+            {
+                return System.Activator.CreateInstance(t, level) as BattleLevelSimulater;
+            }
+
+            return null;
+        }
+    }
+}

@@ -15,9 +15,16 @@ using XNet.Libs.Utility;
 
 namespace Server
 {
+    public struct BattleStandData
+    {
+        public Vector3 Pos;
+        public Vector3 Forward;
+    }
+
+
     public class BattleMosterCreator
     {
-        public BattleSimulater Simulater { get; private set; }
+        public BattleLevelSimulater Simulater { get; private set; }
 
         public BattlePerception Per { get { return Simulater.State.Perception as BattlePerception; } }
 
@@ -31,22 +38,17 @@ namespace Server
 
         private float LastTime = 0;
 
-        public BattleMosterCreator(BattleSimulater sim)
+        public BattleMosterCreator(BattleLevelSimulater sim)
         {
             Simulater = sim;
         }
 
         private void CreateMonster()
         {
-           
             BattlePerception per = Per;
-            //process Drop;
             var groupPos = this.MonsterGroups.Select(t => t.transform.position).ToArray();
-
             var pos = GRandomer.RandomArray(groupPos);
-
             IList<int> groups = null;
-
             if (CountKillCount < LevelData.BossNeedKilledNumber)
             {
 
@@ -151,8 +153,6 @@ namespace Server
             }
         }
 
-       
-
         internal void TryCreateMonster(float time)
         {
 
@@ -169,17 +169,14 @@ namespace Server
 
         }
 
-
         private void DoDrop(Vector3 pos, MonsterData monster, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
         {
             BattlePlayer player = null;
-            if (owner && Simulater.TryGetBattlePlayer(owner.AcccountUuid, out  player))
+            if (owner && BattleSimulater.S.TryGetPlayer(owner.AcccountUuid, out  player))
             {
                 var exp = player.GetHero().Exprices;
                 int expNew = player.AddExp(monster.Exp, out int old, out int newLevel);
-                if (newLevel != old)
-                    player.HeroCharacter.SetLevel(newLevel);
-
+                if (newLevel != old) player.HeroCharacter.SetLevel(newLevel);
                 var expNotify = new Notify_CharacterExp { Exp = expNew, Level = newLevel, OldExp = exp, OldLeve = old };
                 player.Client.SendMessage(expNotify.ToNotityMessage());
             }
