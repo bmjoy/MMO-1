@@ -257,7 +257,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             }
         }
     }
-
+    public bool CallUnit { get; internal set; }
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
@@ -659,7 +659,8 @@ public class UCharacterView : UElementView, IBattleCharacter
             Hp = curHp,
             MaxHp = maxHp,
             Mp = MP,
-            MpMax = mpMax
+            MpMax = mpMax,
+            CallUnit = CallUnit
         };
         foreach (var i in MagicCds)
             createNotity.Cds.Add(new HeroMagicData { MType = i.Value.MType, CDTime = i.Value.CDTime, MagicID = i.Value.MagicID });
@@ -691,7 +692,6 @@ public class UCharacterView : UElementView, IBattleCharacter
             this.ViewRoot.SetActive(!IsLock(ActionLockType.NoInhiden));
         }
     }
-
 
     public bool IsLock(ActionLockType type)
     {
@@ -769,6 +769,8 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
+   
+
     Vector3? IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {
         if (!this) return null;
@@ -797,11 +799,12 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return;
         IsDeath = false;
+#if !UNITY_SERVER 
         if (this.CharacterAnimator)
         {
             this.CharacterAnimator.SetTrigger("Idle");
-            
         }
+#endif
     }
     void IBattleCharacter.SetLevel(int level)
     {

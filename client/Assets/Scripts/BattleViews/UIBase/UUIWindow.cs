@@ -39,7 +39,7 @@ public abstract class UUIWindow:UUIElement
 
 	protected  override void OnDestory()
 	{
-		GameObject.Destroy (uiRoot);
+        UnityEngine.Object.Destroy(uiRoot);
 	}
 
     protected virtual void OnUpdateUIData()

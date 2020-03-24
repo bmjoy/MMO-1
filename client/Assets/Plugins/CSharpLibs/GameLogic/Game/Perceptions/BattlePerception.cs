@@ -165,6 +165,8 @@ namespace GameLogic.Game.Perceptions
             return list;
         }
 
+        
+
         public BattleCharacter CreateCharacter(
             int level,
             CharacterData data,
@@ -174,17 +176,18 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name)
+            string name,bool callUnit = false)
         {
+            
             var now = this.View.GetTimeSimulater().Now.Time;
             var cds = magics.Select(t => new HeroMagicData { CDTime = now, MagicID = t.ConfigId, MType = t.Type })
                 .ToList();
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds);
+                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, callUnit );
 
-            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid,callUnit);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -242,13 +245,11 @@ namespace GameLogic.Game.Perceptions
             return ditem;
         }
 
-
         public AITreeRoot ChangeCharacterAI(string pathTree, BattleCharacter character)
         {
             TreeNode ai = View.GetAITree(pathTree);
             return ChangeCharacterAI(ai, character,pathTree);
         }
-
 
         public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character, string path = null)
         {
@@ -258,8 +259,6 @@ namespace GameLogic.Game.Perceptions
             character.SetControllor(AIControllor);
             return root;
         }
-
-      
 
         #endregion
 

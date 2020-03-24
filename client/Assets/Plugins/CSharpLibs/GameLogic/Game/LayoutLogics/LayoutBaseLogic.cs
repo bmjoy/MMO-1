@@ -174,7 +174,7 @@ namespace GameLogic.Game.LayoutLogics
 				charachter.TeamIndex,
 				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
-			    charachter.AcccountUuid, data.Name
+			    charachter.AcccountUuid, data.Name,true
 			);
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);

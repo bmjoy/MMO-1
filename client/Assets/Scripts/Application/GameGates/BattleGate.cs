@@ -105,18 +105,17 @@ public class BattleGate : UGate, IServerMessageHandler
         player.OnCreateUser = (view) =>
         {
             var character = view as UCharacterView;
+            if (character.CallUnit) return;
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;
                 Owner.ShowName = true;
-
                 PreView.OwerTeamIndex = character.TeamId;
                 PreView.OwnerIndex = character.Index;
-
                 FindObjectOfType<ThridPersionCameraContollor>()
-                .SetLookAt(character.GetBoneByName("Bottom"));
+                .SetLookAt(character.GetBoneByName(UCharacterView.BottomBone));
                 UUIManager.Singleton.ShowMask(false);
-                var ui = UUIManager.Singleton.GetUIWindow<Windows.UUIBattle>();
+                var ui = UUIManager.Singleton.GetUIWindow<UUIBattle>();
                 ui.InitCharacter(character);
                 UUIManager.S.ShowMask(false);
                 character.OnItemTrigger = TriggerItem;

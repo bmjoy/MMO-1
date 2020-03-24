@@ -8,17 +8,6 @@ namespace Proto.NotifyService
 {
 
     /// <summary>
-    /// 1
-    /// </summary>    
-    [API(1)]
-    public class CharacterAlpha:APIBase<Void, Notify_CharacterAlpha> 
-    {
-        private CharacterAlpha() : base() { }
-        public  static CharacterAlpha CreateQuery(){ return new CharacterAlpha();}
-    }
-    
-
-    /// <summary>
     /// 2
     /// </summary>    
     [API(2)]
@@ -392,7 +381,6 @@ namespace Proto.NotifyService
         [API(4)]Notify_CreateMissile CreateMissile(Void req);
         [API(3)]Notify_CreateBattleCharacter CreateBattleCharacter(Void req);
         [API(2)]Notify_CharacterSetPosition CharacterPosition(Void req);
-        [API(1)]Notify_CharacterAlpha CharacterAlpha(Void req);
 
     }
    
@@ -430,7 +418,6 @@ namespace Proto.NotifyService
         [API(4)]public abstract Task<Notify_CreateMissile> CreateMissile(Void request);
         [API(3)]public abstract Task<Notify_CreateBattleCharacter> CreateBattleCharacter(Void request);
         [API(2)]public abstract Task<Notify_CharacterSetPosition> CharacterPosition(Void request);
-        [API(1)]public abstract Task<Notify_CharacterAlpha> CharacterAlpha(Void request);
 
     }
 

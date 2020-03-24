@@ -97,6 +97,7 @@ message Notify_CreateBattleCharacter
 	 repeated HeroMagicData Cds = 16;
 	 int32 Mp =17;
 	 int32 MpMax = 18;
+	 bool CallUnit = 19 ;//召唤单位
 }
 
 //创建一个飞行物
