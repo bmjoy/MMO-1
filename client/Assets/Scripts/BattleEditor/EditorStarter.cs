@@ -102,7 +102,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		
 		if (!stay && this.releaser)
-            this.releaser.SubHP(this.releaser.HP);
+            this.releaser.SubHP(this.releaser.HP,out _);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
 		var magics = per.CreateHeroMagic(data.ID);
@@ -118,7 +118,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		
 		if (!stay&&this.target)
-            this.target.SubHP(this.target.HP);
+            this.target.SubHP(this.target.HP,out _);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
 		var magics = per.CreateHeroMagic(data.ID);

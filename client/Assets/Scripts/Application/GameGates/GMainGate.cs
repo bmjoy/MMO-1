@@ -209,7 +209,7 @@ public class GMainGate:UGate
 
         if (r.Code == ErrorCode.Ok)
         {
-            UApplication.S.GotoBattleGate(r.BattleServer, r.MapID);
+            UApplication.S.GotoBattleGate(r.BattleServer, r.LevelID);
         }
         else
         {

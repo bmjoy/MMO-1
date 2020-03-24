@@ -7,6 +7,7 @@ using GameLogic.Game.Perceptions;
 using Layout.LayoutEffects;
 using Proto;
 using Layout.LayoutElements;
+using Layout.AITree;
 
 namespace GameLogic.Game.Elements
 {
@@ -40,7 +41,7 @@ namespace GameLogic.Game.Elements
         public float addValue;
     }
 
-    public class MagicReleaser : BattleElement<IMagicReleaser>
+    public class MagicReleaser : BattleElement<IMagicReleaser>,ICharacterWatcher
     {
         public float LastTickTime = -1;
         public float tickStartTime = -1;
@@ -204,7 +205,7 @@ namespace GameLogic.Game.Elements
                         {
                             if (i.Value.time <= 0)
                             {
-                                character.SubHP(character.MaxHP);
+                                character.SubHP(character.MaxHP,out _);
                             }
                         }
                     }
@@ -275,6 +276,8 @@ namespace GameLogic.Game.Elements
         public BattleCharacter Releaser { get { return ReleaserTarget.Releaser; } }
 
         public BattleCharacter Target { get { return ReleaserTarget.ReleaserTarget; } }
+
+        public int DisposeValue { get; internal set; } = 0;
 
         public void StopAllPlayer()
         {
@@ -370,6 +373,52 @@ namespace GameLogic.Game.Elements
                 actionReverts.Remove(rLock);
                 rLock.target.UnLockAction(rLock.type);
             }
+        }
+
+        protected override void OnJoinState()
+        {
+            base.OnJoinState();
+            Releaser.AddEventWatcher(this);
+        }
+
+        protected override void OnExitState()
+        {
+            base.OnExitState();
+            Releaser.RemoveEventWathcer(this);
+        }
+
+        void ICharacterWatcher.OnFireEvent(BattleEventType eventType, object args)
+        {
+            if (this.RType == ReleaserType.Buff)
+            {
+                switch (eventType)
+                {
+                    case BattleEventType.Skill:
+                        if ((DisposeValue & (int)DisposeType.SKILL )>0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                    case BattleEventType.Move:
+                        if ((DisposeValue & (int)DisposeType.MOVE) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                    case BattleEventType.Hurt:
+                        if ((DisposeValue & (int)DisposeType.HURT) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void ToCompleted()
+        {
+            if (State == ReleaserStates.Completing || State == ReleaserStates.Ended || State == ReleaserStates.ToComplete) return;
+            State = ReleaserStates.ToComplete;
         }
     }
 }

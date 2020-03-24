@@ -84,7 +84,7 @@ namespace GateServer
             if (req.Code == ErrorCode.Ok)
             {
                 response.BattleServer = req.BattleServer;
-                response.MapID = req.LevelId;
+                response.LevelID = req.LevelId;
             }
 
             return response;

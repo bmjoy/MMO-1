@@ -52,12 +52,13 @@ namespace GameLogic.Game.Elements
 
     public class BattleCharacter : BattleElement<IBattleCharacter>
     {
+
+        private readonly List<ICharacterWatcher> EventWatchers = new List<ICharacterWatcher>();
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
-        public event Action<BattleEventType, object> OnBattleEvent;
         public string AcccountUuid { private set; get; }
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
@@ -65,7 +66,6 @@ namespace GameLogic.Game.Elements
         public UVector3 BronPosition { private set; get; }
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
 
-      
         public int GroupIndex {set;get;}
         public int MaxHP
         {
@@ -214,6 +214,16 @@ namespace GameLogic.Game.Elements
             BronPosition = Position;
 		}
 
+        public void AddEventWatcher(ICharacterWatcher watcher)
+        {
+            this.EventWatchers.Add(watcher);
+        }
+
+        public void RemoveEventWathcer(ICharacterWatcher watcher)
+        {
+            EventWatchers.Remove(watcher);
+        }
+
         public bool AddMagic(CharacterMagicData data)
         {
             if (Magics.ContainsKey(data.ID)) return false;
@@ -231,12 +241,16 @@ namespace GameLogic.Game.Elements
             View.PlayMotion(motionName);
         }
 
-        public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis =0f)
+        public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis = 0f)
         {
             warpTarget = target;
             if (IsLock(ActionLockType.NoMove)) return false;
             var r = View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
-            if (r.HasValue) warpTarget = r.Value;
+            if (r.HasValue)
+            {
+                warpTarget = r.Value; 
+                FireEvent(BattleEventType.Move, this);
+            }
             return r.HasValue;
         }
 
@@ -266,6 +280,7 @@ namespace GameLogic.Game.Elements
         {
             if (IsLock(ActionLockType.NoMove)) return false;
             View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
+            if (forward.magnitude > 0.1f) FireEvent(BattleEventType.Move, this);
             return true;
         }
 
@@ -275,13 +290,14 @@ namespace GameLogic.Game.Elements
             View.StopMove(p.ToPV3());
         }
 
-        public bool SubHP(int hp)
+        public bool SubHP(int hp, out bool dead)
         {
+            dead = HP == 0;
             if (hp <= 0) return false;
-            if (HP == 0) return true;
+            if (HP == 0) return false;
             HP -= hp;
             if (HP <= 0) HP = 0;
-            var dead = HP == 0;//is dead
+            dead = HP == 0;//is dead
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
             return dead;
@@ -479,7 +495,10 @@ namespace GameLogic.Game.Elements
 
         public void FireEvent(BattleEventType ev, object args)
         {
-            OnBattleEvent?.Invoke(ev, args);
+            foreach (var i in EventWatchers)
+            {
+                i.OnFireEvent(ev, args);
+            }
         }
 
         public void AttachDamage(int sources, int damage, float time)

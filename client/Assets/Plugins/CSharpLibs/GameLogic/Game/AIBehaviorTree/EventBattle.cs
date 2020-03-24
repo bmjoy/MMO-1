@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using BehaviorTree;
+using GameLogic.Game.Elements;
 using Layout.AITree;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class EventBattle:Decorator
+    public class EventBattle:Decorator,ICharacterWatcher
     {
         public EventBattle(Composite child):base(child)
         {
@@ -35,24 +36,26 @@ namespace GameLogic.Game.AIBehaviorTree
         public override void Start(ITreeRoot context)
         {
             base.Start(context);
+
             if (context is AITreeRoot r)
             {
-                r.Character.OnBattleEvent += Character_OnBattleEvent;
+                r.Character.AddEventWatcher(this);
             }
         }
 
-        private void Character_OnBattleEvent(BattleEventType arg1, object arg2)
-        {
-            if (arg1 == eventType) IsReceived = true;
-        }
 
         public override void Stop(ITreeRoot context)
         {
             base.Stop(context);
             if (context is AITreeRoot r)
             {
-                r.Character.OnBattleEvent -= Character_OnBattleEvent;
+                r.Character.RemoveEventWathcer(this);
             }
+        }
+
+        void ICharacterWatcher.OnFireEvent(BattleEventType eventType, object args)
+        {
+            if (this.eventType == eventType) IsReceived = true;
         }
     }
 }

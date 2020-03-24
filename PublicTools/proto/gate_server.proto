@@ -57,7 +57,7 @@ message G2C_GetLastBattle
 {
 	 ErrorCode Code =1;
 	 GameServerInfo BattleServer=2;//当前战斗服务器
-	 int32 MapID=3;//地图
+	 int32 LevelID=3;//地图
 }
 
 message C2G_BuyPackageSize

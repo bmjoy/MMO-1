@@ -9,7 +9,7 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
-              <DiType>3</DiType>
+              <DiType>-1</DiType>
               <buffMagicKey>hiden_buff</buffMagicKey>
               <durationTime>15</durationTime>
             </EffectBase>
@@ -22,4 +22,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

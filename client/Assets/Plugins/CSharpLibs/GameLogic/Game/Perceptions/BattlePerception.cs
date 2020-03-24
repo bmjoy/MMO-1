@@ -112,7 +112,7 @@ namespace GameLogic.Game.Perceptions
                                                key,
                                                target.TargetPosition.ToPV3());
             var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
-            if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Killed, mReleaser);
+            if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Skill, mReleaser);
             this.JoinElement(mReleaser);
             return mReleaser;
         }
@@ -228,14 +228,13 @@ namespace GameLogic.Game.Perceptions
             NotifyHurt(effectTarget);
             if (result.IsMissed) return;
             effectTarget.AttachDamage(sources.Index, result.Damage, View.GetTimeSimulater().Now.Time);
-            CharacterSubHP(effectTarget, result.Damage);
-            
+            if (effectTarget.SubHP(result.Damage,out bool dead))
+            {
+                if (dead) sources.FireEvent(BattleEventType.Killed, effectTarget);
+            }
         }
 
-        public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)
-        {
-            effectTarget.SubHP(lostHP);
-        }
+
 
         public BattleItem CreateItem(UVector3 ps, PlayerItem item, int groupIndex, int teamIndex)
         {
