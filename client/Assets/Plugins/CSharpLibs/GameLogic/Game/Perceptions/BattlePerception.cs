@@ -426,7 +426,7 @@ namespace GameLogic.Game.Perceptions
 
         }
 
-        public List<BattleCharacter> FindTarget(
+        public List<BattleCharacter> DamageFindTarget(
             BattleCharacter target,
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,

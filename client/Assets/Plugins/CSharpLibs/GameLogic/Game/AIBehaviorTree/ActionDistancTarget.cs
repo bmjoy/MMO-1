@@ -31,6 +31,12 @@ namespace GameLogic.Game.AIBehaviorTree
 
 			}
 
+			if (target.IsLock(Proto.ActionLockType.NoInhiden))
+			{
+				yield return RunStatus.Failure;
+				yield break;
+			}
+
             if (!root.GetDistanceByValueType(Node.valueOf, Node.distance/100f, out float distance))
             {
                 yield return RunStatus.Failure;

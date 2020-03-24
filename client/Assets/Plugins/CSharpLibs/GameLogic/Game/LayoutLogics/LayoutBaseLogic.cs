@@ -100,7 +100,7 @@ namespace GameLogic.Game.LayoutLogics
 			}
 			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
 			var per = releaser.Controllor.Perception  as BattlePerception;
-			var targets = per.FindTarget (orginTarget,
+			var targets = per.DamageFindTarget(orginTarget,
 				layout.RangeType.fiterType, 
 				layout.RangeType.damageType, 
 				layout.RangeType.radius,
