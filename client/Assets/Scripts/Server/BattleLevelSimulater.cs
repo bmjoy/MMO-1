@@ -198,9 +198,9 @@ namespace Server
 
         public IMessage[] Tick()
         {
+            if (State == null) return new IMessage[0];
             OnTick();
             GState.Tick(State, TimeNow);
-            
             return PerView.GetAndClearNotify();
         }
 

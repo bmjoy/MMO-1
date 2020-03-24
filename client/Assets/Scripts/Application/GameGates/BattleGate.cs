@@ -18,15 +18,17 @@ using Windows;
 public class BattleGate : UGate, IServerMessageHandler
 {
 
-    public void SetServer(GameServerInfo serverInfo, int mapID)
+    public void SetServer(GameServerInfo serverInfo, int levelID)
     {
        
         ServerInfo = serverInfo;
-        MapID = mapID;
-        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(MapID);
+        Level = ExcelToJSONConfigManager.Current.GetConfigByID<BattleLevelData>(levelID);
+        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(Level.MapID);
         
     }
 
+
+    public BattleLevelData Level { private set; get; }
     public float TimeServerNow
     {
         get
@@ -46,7 +48,6 @@ public class BattleGate : UGate, IServerMessageHandler
     private  NotifyPlayer player;
 
     private GameServerInfo ServerInfo;
-    private int MapID;
     public RequestClient<TaskHandler> Client { set; get; }
 
     public UPerceptionView PreView { get; internal set; }
@@ -81,7 +82,7 @@ public class BattleGate : UGate, IServerMessageHandler
                 {
                     Session = UApplication.S.SesssionKey,
                     AccountUuid = UApplication.S.AccountUuid,
-                    MapID = MapID,
+                    MapID = Level.ID,
                     Version = 1
                 },
                 (r) =>
