@@ -9,7 +9,7 @@ namespace Server
     [LevelSimulater(MType = Proto.MapType.Pk)]
     internal class PKLevelSimulater : BattleLevelSimulater
     {
-        protected PKLevelSimulater(EConfig.BattleLevelData data) : base(data)
+        public PKLevelSimulater(EConfig.BattleLevelData data) : base(data)
         {
             
         }

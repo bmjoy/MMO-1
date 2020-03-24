@@ -72,7 +72,7 @@ namespace Server
 
         #endregion
 
-        protected BattleLevelSimulater(BattleLevelData data)
+        public BattleLevelSimulater(BattleLevelData data)
         {
             LevelData = data;
         }
@@ -236,7 +236,7 @@ namespace Server
 
             if (Types.TryGetValue(MType, out Type t))
             {
-                return System.Activator.CreateInstance(t, level) as BattleLevelSimulater;
+                return Activator.CreateInstance(t, level) as BattleLevelSimulater;
             }
 
             return null;

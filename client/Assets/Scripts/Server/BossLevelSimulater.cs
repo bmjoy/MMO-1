@@ -11,7 +11,7 @@ namespace Server
     {
         private BattleMosterCreator MonsterCreator { set; get; }
 
-        protected BossLevelSimulater(EConfig.BattleLevelData data) : base(data)
+        public BossLevelSimulater(EConfig.BattleLevelData data) : base(data)
         {
             MonsterCreator = new BattleMosterCreator(this);
         }
