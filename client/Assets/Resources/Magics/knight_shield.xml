@@ -9,7 +9,7 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
-              <DiType>-1</DiType>
+              <DiType>0</DiType>
               <buffMagicKey>knight_shield_buff</buffMagicKey>
               <durationTime>5</durationTime>
             </EffectBase>
@@ -21,4 +21,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>true</unique>
 </MagicData>
