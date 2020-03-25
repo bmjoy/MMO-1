@@ -23,7 +23,7 @@
       <valueFrom>CurrentConfig</valueFrom>
       <level>4</level>
       <AIPath>AI/archer_call_ai.xml</AIPath>
-      <time>20</time>
+      <time>-1</time>
       <maxNum>1</maxNum>
       <offset>
         <x>0</x>
