@@ -77,10 +77,23 @@ namespace Windows
             }
         }
 
+        public Texture2D Map = new Texture2D(75, 75, TextureFormat.RGBA32, false, true);
+        private Color32[] Colors;
         protected override void InitModel()
         {
             base.InitModel();
-            
+
+            var a = new Color(1, 1, 1, 0);
+            Colors = new Color32[Map.width*Map.height];
+            for (int x =0; x<Map.width;x++)
+            {
+                for (int y = 0; y < Map.height; y++)
+                {
+                    Colors[x + y*Map.width]= a;
+                }
+            }
+
+            this.MapTexture.texture = Map;
 
             bt_Exit.onClick.AddListener(() =>
                 {
@@ -182,7 +195,45 @@ namespace Windows
             {
                 i.Model.Update(view, gate.TimeServerNow);
             }
+
+
+            UpdateMap();
+
         }
+
+        private float lastTime = 0;
+
+        private void UpdateMap()
+        {
+            var gate = UApplication.G<BattleGate>();
+            if (gate == null) return;
+            var a = new Color(1, 1, 1, 0);
+            for (int x = 0; x < Map.width; x++)
+            {
+                for (int y = 0; y < Map.height; y++)
+                {
+                    Colors[x+ y*Map.width] =a;
+                }
+            }
+
+
+            var lookRotation = Quaternion.Euler(0, 0, ThridPersionCameraContollor.Current.transform.rotation.eulerAngles.y);
+            this.ViewForward.localRotation = lookRotation;
+
+            float r = Map.width / 2;// 16;
+            gate.PreView.Each<UCharacterView>(t =>
+            {
+                var offset = t.transform.position - gate.Owner.transform.position;
+                if (offset.magnitude > r) return false;
+                Colors[(int)(offset.x + r)+ (int)(offset.z + r)*Map.width] = t.TeamId == gate.Owner.TeamId ? Color.green : Color.red;
+                return false;
+            });
+
+            Map.SetPixels32(Colors);
+            Map.Apply();
+        }
+
+
 
         protected override void OnHide()
         {
@@ -254,5 +305,7 @@ namespace Windows
             return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
 
+
+       
     }
 }

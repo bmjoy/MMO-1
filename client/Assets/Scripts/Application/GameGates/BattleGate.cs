@@ -179,7 +179,9 @@ public class BattleGate : UGate, IServerMessageHandler
         }
     }
 
-    private UCharacterView Owner;
+    public UCharacterView Owner { private set; get; }
+
+
 
     internal void MoveDir(Vector3 dir)
     {

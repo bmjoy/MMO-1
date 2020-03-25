@@ -25,9 +25,9 @@
       <path>Effects/Nova/NovaFire.prefab</path>
       <fromTarget>Releaser</fromTarget>
       <toTarget>Releaser</toTarget>
-      <fromBoneName>Body</fromBoneName>
+      <fromBoneName>Bottom</fromBoneName>
       <toBoneName>Bottom</toBoneName>
-      <Bind>true</Bind>
+      <Bind>false</Bind>
       <destoryType>Time</destoryType>
       <destoryTime>3</destoryTime>
       <offet>
