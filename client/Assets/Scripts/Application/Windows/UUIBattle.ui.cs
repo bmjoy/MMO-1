@@ -36,7 +36,6 @@ namespace Windows
         protected Text Level_Number;
         protected Text Username;
         protected RoundGridLayout Grid;
-        protected Text Time;
         protected Button bt_Exit;
         protected Image Joystick_Left;
         protected Image swipe;
@@ -64,7 +63,6 @@ namespace Windows
             Level_Number = FindChild<Text>("Level_Number");
             Username = FindChild<Text>("Username");
             Grid = FindChild<RoundGridLayout>("Grid");
-            Time = FindChild<Text>("Time");
             bt_Exit = FindChild<Button>("bt_Exit");
             Joystick_Left = FindChild<Image>("Joystick_Left");
             swipe = FindChild<Image>("swipe");
