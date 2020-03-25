@@ -54,6 +54,8 @@ public class BattleGate : UGate, IServerMessageHandler
 
     #region implemented abstract members of UGate
 
+    private GameGMTools gm;
+
     protected override void JoinGate()
     {
         UUIManager.Singleton.HideAll();
@@ -61,6 +63,7 @@ public class BattleGate : UGate, IServerMessageHandler
         var ui = UUIManager.Singleton.CreateWindow<Windows.UUIBattle>();
         ui.ShowWindow();
         StartCoroutine(Init());
+        gm= this.gameObject.AddComponent<GameGMTools>();
     }
 
     private IEnumerator Init()
@@ -246,8 +249,9 @@ public class BattleGate : UGate, IServerMessageHandler
 
     protected override void ExitGate()
     {
+        if (gm) Destroy(gm);
         Client?.Disconnect();
-        UUIManager.Singleton.ShowMask(false);
+        UUIManager.S.ShowMask(false);
     }
 
     private void OnDisconnect()
