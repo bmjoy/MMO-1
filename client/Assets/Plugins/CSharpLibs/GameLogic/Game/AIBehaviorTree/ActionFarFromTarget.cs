@@ -27,7 +27,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			if (root.TryGetTarget(out BattleCharacter targetCharacter))
+			if (!root.TryGetTarget(out BattleCharacter targetCharacter))
 			{
 				if (root.IsDebug) Attach("failure", "notarget");
 				yield return RunStatus.Failure;
@@ -37,16 +37,19 @@ namespace GameLogic.Game.AIBehaviorTree
 			var noraml = (root.Character.Position - targetCharacter.Position).normalized;
 			var target = noraml * distance + root.Character.Position;
 
-			if (!root.Character.MoveTo(target,out _))
-			{
-				if (root.IsDebug) Attach("failure", "move failure");
-				yield return RunStatus.Failure;
-				yield break;
-            }
+
 
 			while ((root.Character.Position - target).magnitude > 0.2f)
 			{
-				yield return RunStatus.Running;
+				if (!root.Character.MoveTo(target, out target))
+				{
+					if (root.IsDebug) Attach("failure", "move failure");
+					yield return RunStatus.Failure;
+					yield break;
+				}
+				var start = root.Time;
+				while (start + 1f > root.Time)
+					yield return RunStatus.Running;
 			}
 
 			root.Character.StopMove();

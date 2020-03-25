@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>0.4</Time>
+  <Time>0.6</Time>
   <Points>
     <TimePoint>
       <GUID>44e1cfbc-5e89-45d2-b6dc-4764306a7e8d</GUID>
-      <Time>0.364532024</Time>
+      <Time>0.466581</Time>
     </TimePoint>
     <TimePoint>
       <GUID>b2508d85-ce7c-4fb1-a6e5-8f91e9a0014a</GUID>
@@ -12,7 +12,7 @@
     </TimePoint>
     <TimePoint>
       <GUID>373d34ac-545c-4e1e-9186-8cbb55443ad3</GUID>
-      <Time>0.110837437</Time>
+      <Time>0.306426734</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -28,7 +28,7 @@
       <offset>
         <x>0</x>
         <y>0</y>
-        <z>1</z>
+        <z>2</z>
       </offset>
     </LayoutBase>
     <LayoutBase xsi:type="PlaySoundLayout">
@@ -51,7 +51,7 @@
       <offet>
         <x>0</x>
         <y>0</y>
-        <z>0</z>
+        <z>2</z>
       </offet>
       <rotation>
         <x>0</x>

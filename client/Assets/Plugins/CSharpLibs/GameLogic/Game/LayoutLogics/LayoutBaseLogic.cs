@@ -134,37 +134,37 @@ namespace GameLogic.Game.LayoutLogics
 			}
 
 		}
-        #endregion
+		#endregion
 
-        #region CallUnitLayout
-        [HandleLayout(typeof(CallUnitLayout))]
-        public static void CallUnitActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
-        {
-            var unitLayout = layoutBase as CallUnitLayout;
-            var releaser = linePlayer.Releaser;
-            var charachter = releaser.ReleaserTarget.Releaser;
-            var per = releaser.Controllor.Perception as BattlePerception;
-            int level = unitLayout.level;
+		#region CallUnitLayout
+		[HandleLayout(typeof(CallUnitLayout))]
+		public static void CallUnitActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
+		{
+			var unitLayout = layoutBase as CallUnitLayout;
+			var releaser = linePlayer.Releaser;
+			var charachter = releaser.ReleaserTarget.Releaser;
+			var per = releaser.Controllor.Perception as BattlePerception;
+			int level = unitLayout.level;
 
-            switch (unitLayout.valueFrom)
-            {
-                case Proto.GetValueFrom.CurrentConfig:
-                    break;
-                case Proto.GetValueFrom.MagicLevelParam1:
-                    {
-                        var param1 = releaser[0];
-                        if (string.IsNullOrEmpty(param1)) return;
-                        level = Convert.ToInt32(param1);
-                    }
-                    break;
-            }
+			switch (unitLayout.valueFrom)
+			{
+				case Proto.GetValueFrom.CurrentConfig:
+					break;
+				case Proto.GetValueFrom.MagicLevelParam1:
+					{
+						var param1 = releaser[0];
+						if (string.IsNullOrEmpty(param1)) return;
+						level = Convert.ToInt32(param1);
+					}
+					break;
+			}
 
-            //判断是否达到上限
-            if (unitLayout.maxNum <= releaser.UnitCount) return;
+			//判断是否达到上限
+			if (unitLayout.maxNum <= releaser.UnitCount) return;
 			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
-            var data = ExcelToJSONConfigManager
-                .Current.GetConfigByID<CharacterData>(id);
-           
+			var data = ExcelToJSONConfigManager
+				.Current.GetConfigByID<CharacterData>(id);
+
 			var magics = per.CreateHeroMagic(data.ID);
 			var unit = per.CreateCharacter(
 				level,
@@ -174,18 +174,18 @@ namespace GameLogic.Game.LayoutLogics
 				charachter.TeamIndex,
 				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
-			    charachter.AcccountUuid, data.Name,true
+				charachter.AcccountUuid, data.Name, true
 			);
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
-            releaser.AttachElement(unit, false,unitLayout.time);
-            releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
-			var ai = unitLayout.AIPath ?? data.AIResourcePath;
-
-			per.ChangeCharacterAI(ai,unit);
+			releaser.AttachElement(unit, false, unitLayout.time);
+			releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
+			var ai = unitLayout.AIPath;
+			if (string.IsNullOrEmpty(ai)) ai = data.AIResourcePath;
+			per.ChangeCharacterAI(ai, unit);
 			unit.OnDead = (el) => { GObject.Destroy(el, 3); };
-        }
+		}
 		#endregion
 
 		#region LaunchSelfLayout

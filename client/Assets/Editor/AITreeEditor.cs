@@ -164,7 +164,7 @@ public class AITreeEditor : EditorWindow
         if (GUI.Button(new Rect(this.position.width - 50, 0, 45, 20), "Reset"))
         {
             scale = 1;
-            //offsetPos = Vector2.zero;
+            offsetPos = Vector2.zero;
         }
 
         if (!string.IsNullOrEmpty(currenPath))
@@ -266,6 +266,7 @@ public class AITreeEditor : EditorWindow
 
     }
 
+    private Vector2 _scrollviewDebug = Vector2.zero;
     private void DrawOp()
     {
         #region Operator
@@ -316,17 +317,24 @@ public class AITreeEditor : EditorWindow
         if (runstate != null)
         {
 
-            /*// disable show state
+            // disable show state
             var group = new Rect(position.width - 300, position.height - 100, 295, 90);
             GUI.BeginGroup(group);
             GUI.Box(new Rect(position.width - 300 - 3, position.height - 125, 300, 120), "RunState");
             _scrollviewDebug = GUILayout.BeginScrollView(_scrollviewDebug);
             GUILayout.BeginVertical(GUILayout.Width(260));
-            PropertyDrawer.DrawObject(runstate);
+            runstate.DebugVals((k, v) =>
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(k);
+                GUILayout.Label($"{v}");
+                GUILayout.EndHorizontal();
+
+            });
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
             GUI.EndGroup();
-            */
+            
         }
 
     }
@@ -662,7 +670,7 @@ public class AITreeEditor : EditorWindow
         return new Vector2(offex, Mathf.Max(height + offsety, t + offsety + currentHeight));
     }
 
-    private object runstate;
+    private Composite runstate;
 
     private StateOfEditor DrawNode(Rect rect, TreeNode node, StateOfEditor expanded, bool haveChild, bool isRuning, RunStatus? state)
     {
