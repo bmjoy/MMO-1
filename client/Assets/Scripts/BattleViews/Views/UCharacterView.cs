@@ -676,8 +676,14 @@ public class UCharacterView : UElementView, IBattleCharacter
             CallUnit = CallUnit
         };
         foreach (var i in MagicCds)
-            createNotity.Cds.Add(new HeroMagicData { MType = i.Value.MType, CDTime = i.Value.CDTime, MagicID = i.Value.MagicID });
-
+        {
+            createNotity.Cds.Add(new HeroMagicData
+            {
+                MType = i.Value.MType,
+                CDTime = i.Value.CDTime,
+                MagicID = i.Value.MagicID
+            });
+        }
         return createNotity;
     }
 
@@ -734,12 +740,13 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
-    void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
+    void IBattleCharacter.Push(Proto.Vector3 startPos, Proto.Vector3 length, Proto.Vector3 speed)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length });
 #endif
+        Agent.Warp(startPos.ToUV3());
         var pushSpeed = speed.ToUV3();
         var pushLeftTime = length.ToUV3().magnitude / pushSpeed.magnitude;
         ChangeState(new PushMove(this, pushSpeed, pushLeftTime))
@@ -752,7 +759,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.TrySetPosition(Vector3 pos)
     {
-        TryToSetPosition(pos);
+        Agent.Warp(pos);
     }
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
@@ -761,11 +768,8 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
 #endif
-        if (!TryToSetPosition(pos.ToUV3()))
-            GoToEmpty();
+        if (!TryToSetPosition(pos.ToUV3())) GoToEmpty();
     }
-
-    bool IBattleCharacter.IsForwardMoving { get { return State is ForwardMove; } }
 
     public bool IsCanForwardMoving { get { return !(State is PushMove);} }
 
@@ -776,8 +780,6 @@ public class UCharacterView : UElementView, IBattleCharacter
             return !(State is Empty);
         }
     }
-
-   
 
     Vector3? IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {

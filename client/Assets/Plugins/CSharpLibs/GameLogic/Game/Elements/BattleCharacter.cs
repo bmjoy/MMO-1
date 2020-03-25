@@ -308,7 +308,7 @@ namespace GameLogic.Game.Elements
             var dir = rotation * UVector3.forward;
             var dis = dir * distance;
             var ps = dir * speed;
-            View.Push(dis.ToPV3(), ps.ToPV3());
+            View.Push(this.Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
             return true;
         }
 

@@ -178,7 +178,7 @@ public class BattleGate : UGate, IServerMessageHandler
         }
         else
         {
-            UApplication.S.ShowNotify($"{item.config.Name} 不属于你，无法拾取!");
+            UApplication.S.ShowNotify($"{item.config.Name} Can't collect!");
         }
     }
 
@@ -193,7 +193,6 @@ public class BattleGate : UGate, IServerMessageHandler
         var pos = Owner.transform.position;
         if (dir.magnitude > 0.01f)
         {
-            // var dn = dir.normalized;
             var dn = new Vector3(dir.x, 0, dir.z);
             Vector3 willPos = Owner.MoveJoystick(dn);
             if (lastSyncTime + 0.2f < Time.time)

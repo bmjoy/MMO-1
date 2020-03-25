@@ -81,8 +81,7 @@ public class NotifyPlayer
     /// <param name="notify">Notify.</param>
     public void Process(IMessage notify)
     {
-
-        Debug.Log($"{notify.GetType().Name}->{notify}");
+        //Debug.Log($"{notify.GetType().Name}->{notify}");
         //优先处理 perception 创建元素
         if (PerceptionInvokes.TryGetValue(notify.GetType(), out NotifyMapping m))
         {
@@ -122,10 +121,9 @@ public class NotifyPlayer
             {
                 Debug.LogError($"No found index {index} by {notify.GetType()} -> {notify}");
             }
-            //Debug.Log($"{v.GetType()} -> {notify.GetType()}");
+
             if (ElementInvokes.TryGetValue(notify.GetType(), out NotifyMapping elI))
             {
-                //Debug.Log($"invoke {elI.Method.Name}");
                 var ps = new List<object>();
                 foreach (var f in elI.Attr.FieldNames)
                 {

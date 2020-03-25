@@ -30,17 +30,6 @@ namespace Proto.ActionService
     
 
     /// <summary>
-    /// 3
-    /// </summary>    
-    [API(3)]
-    public class MoveDir:APIBase<Action_MoveDir, Void> 
-    {
-        private MoveDir() : base() { }
-        public  static MoveDir CreateQuery(){ return new MoveDir();}
-    }
-    
-
-    /// <summary>
     /// 4
     /// </summary>    
     [API(4)]
@@ -102,7 +91,6 @@ namespace Proto.ActionService
         [API(6)]Void UseItem(Action_UseItem req);
         [API(5)]Void CollectItem(Action_CollectItem req);
         [API(4)]Void NormalAttack(Action_NormalAttack req);
-        [API(3)]Void MoveDir(Action_MoveDir req);
         [API(2)]Void AutoFindTarget(Action_AutoFindTarget req);
         [API(1)]Void ClickSkillIndex(Action_ClickSkillIndex req);
 
@@ -116,7 +104,6 @@ namespace Proto.ActionService
         [API(6)]public abstract Task<Void> UseItem(Action_UseItem request);
         [API(5)]public abstract Task<Void> CollectItem(Action_CollectItem request);
         [API(4)]public abstract Task<Void> NormalAttack(Action_NormalAttack request);
-        [API(3)]public abstract Task<Void> MoveDir(Action_MoveDir request);
         [API(2)]public abstract Task<Void> AutoFindTarget(Action_AutoFindTarget request);
         [API(1)]public abstract Task<Void> ClickSkillIndex(Action_ClickSkillIndex request);
 

@@ -14,11 +14,6 @@
              2
              </summary>    
             </member>
-        <member name="T:Proto.ActionService.MoveDir">
-             <summary>
-             3
-             </summary>    
-            </member>
         <member name="T:Proto.ActionService.NormalAttack">
              <summary>
              4
@@ -100,15 +95,6 @@
             </member>
         <member name="F:Proto.Action_AutoFindTarget.AutoFieldNumber">
              <summary>Field number for the "Auto" field.</summary>
-            </member>
-        <member name="F:Proto.Action_MoveDir.ForwardFieldNumber">
-             <summary>Field number for the "Forward" field.</summary>
-            </member>
-        <member name="F:Proto.Action_MoveDir.FastFieldNumber">
-             <summary>Field number for the "Fast" field.</summary>
-            </member>
-        <member name="F:Proto.Action_MoveDir.PositionFieldNumber">
-             <summary>Field number for the "Position" field.</summary>
             </member>
         <member name="F:Proto.Action_MoveJoystick.WillPosFieldNumber">
              <summary>Field number for the "WillPos" field.</summary>
@@ -506,6 +492,9 @@
             </member>
         <member name="F:Proto.Notify_CharacterPush.SpeedFieldNumber">
              <summary>Field number for the "Speed" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterPush.StartPosFieldNumber">
+             <summary>Field number for the "StartPos" field.</summary>
             </member>
         <member name="F:Proto.Notify_CharacterRelive.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>

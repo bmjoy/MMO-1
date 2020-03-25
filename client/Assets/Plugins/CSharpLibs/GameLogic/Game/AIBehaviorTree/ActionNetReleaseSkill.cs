@@ -65,6 +65,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield return RunStatus.Failure;
                 yield break;
             }
+
             //modify position
             root.Character.TryToSetPosition(message.Position.ToUV3());
             root.Character.LookAt(message.Rotation.ToUV3());
