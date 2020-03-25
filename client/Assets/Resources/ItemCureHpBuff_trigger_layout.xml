@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>0.5</Time>
+  <Time>0.2</Time>
   <Points>
     <TimePoint>
-      <GUID>0ef07487-9d69-4cca-b1e5-2482be81c66f</GUID>
+      <GUID>b11fe9b8-4ab6-4df9-a271-d8ec31c21c60</GUID>
       <Time>0</Time>
     </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
-      <GUID>0ef07487-9d69-4cca-b1e5-2482be81c66f</GUID>
+      <GUID>b11fe9b8-4ab6-4df9-a271-d8ec31c21c60</GUID>
       <target>Releaser</target>
       <RangeType>
         <damageType>Single</damageType>
