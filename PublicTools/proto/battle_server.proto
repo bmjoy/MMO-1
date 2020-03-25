@@ -53,6 +53,17 @@ message Action_MoveDir
 	Vector3 Position =3;
 }
 
+message Action_MoveJoystick
+{
+	Vector3 WillPos =1; // 400ms 后位置
+	Vector3 Position = 2;//当前位置
+}
+
+message Action_StopMove
+{
+	Vector3 StopPos = 1;//结束位置
+}
+
 message Action_NormalAttack
 {
 
@@ -346,6 +357,8 @@ service ActionService
 	rpc NormalAttack (Action_NormalAttack) returns (Void){};//4
 	rpc CollectItem (Action_CollectItem) returns (Void){};//5
 	rpc UseItem (Action_UseItem) returns (Void){};//6
+	rpc MoveJoystick (Action_MoveJoystick) returns (Void){};//7
+	rpc StopMove (Action_StopMove) returns (Void){};//8
 }
 
 service BattleServerService

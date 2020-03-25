@@ -16,30 +16,26 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             var root = context as AITreeRoot;
 
-            if (!root.TryGetAction(out Action_MoveDir message))
+
+            if (root.TryGetAction(out Action_StopMove stop))
             {
-                if (context.IsDebug) Attach("failure", $"null is not move action");
-                yield return RunStatus.Failure;
-                yield break;
+                if (root.Character.IsMoving)
+                {
+                    root.Character.StopMove();
+                    yield return RunStatus.Success;
+                    yield break;
+                }
             }
 
-            var target = message.Forward.ToUV3();
-            if (target.magnitude > 0.001f) target = target.normalized * (message.Fast ? 1 : 0.5f);
-            if (!root.Character.MoveForward(target, message.Position.ToUV3()))
+            if (root.TryGetAction(out Action_MoveJoystick move))
             {
-                if (root.IsDebug)
+                if (root.Character.MoveTo(move.WillPos.ToUV3(), out _))
                 {
-                    Attach("failure", "nomove");
+                    yield return RunStatus.Success;
+                    yield break;
                 }
-                yield return RunStatus.Failure;
-                yield break;
             }
-            if (context.IsDebug)
-            {
-                Attach("move_dir", target);
-            }
-            if (target.magnitude > 0.1f)  yield return RunStatus.Success;
-            else yield return RunStatus.Failure;
+            yield return RunStatus.Failure;
         }
 
         public override void Stop(ITreeRoot context)

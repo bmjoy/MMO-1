@@ -276,14 +276,6 @@ namespace GameLogic.Game.Elements
             launchHitCallback?.Invoke(character, tempObj);
         }
 
-        public bool MoveForward(UVector3 forward, UVector3 posNext)
-        {
-            if (IsLock(ActionLockType.NoMove)) return false;
-            View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
-            if (forward.magnitude > 0.1f) FireEvent(BattleEventType.Move, this);
-            return true;
-        }
-
         public void StopMove(UVector3? pos =null)
         {
             var p = pos ?? Position;

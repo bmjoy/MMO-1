@@ -204,6 +204,12 @@ public class UCharacterView : UElementView, IBattleCharacter
         
     }
 
+    public Vector3 MoveJoystick(Vector3 forward)
+    {
+        MoveByDir(forward);
+        return this.transform.position+ forward * Speed * .4f;
+    }
+
     private CharacterMoveState State;
 
     private T ChangeState<T>(T s) where T : CharacterMoveState
@@ -710,20 +716,15 @@ public class UCharacterView : UElementView, IBattleCharacter
         range.transform.localScale = Vector3.one * r;
     }
 
-    void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
+    private void MoveByDir(Vector3 forward)
     {
-        if (!this) return;
-        TryToSetPosition(pos.ToUV3());
-        if (State is ForwardMove m) m.ChangeDir(forward.ToUV3());
+        if (State is ForwardMove m) m.ChangeDir(forward);
         else
         {
-            if (forward.ToUV3().magnitude > 0.01f)
-                ChangeState(new ForwardMove(this, forward.ToUV3()));
+            if (forward.magnitude > 0.01f)
+                ChangeState(new ForwardMove(this, forward));
             else return;//no notity
         }
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
-#endif
     }
 
     void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
@@ -788,11 +789,13 @@ public class UCharacterView : UElementView, IBattleCharacter
         {
             return m.ChangeTarget(target.ToUV3(), stopDis);
         }
-        else
+        else if (State is Empty)
         {
             return ChangeState(new DestinationMove(this))
                 .ChangeTarget(target.ToUV3(), stopDis);//.Target;
         }
+        
+        return this.transform.position;
     }
 
     void IBattleCharacter.Relive()
