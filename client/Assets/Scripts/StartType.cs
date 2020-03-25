@@ -34,6 +34,6 @@ public class StartType : MonoBehaviour
         Destroy(this);
     }
 
-    [Header("Type:Server Application")]
+    [Header("Type:Server/Application")]
     public string scene;
 }

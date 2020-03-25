@@ -58,7 +58,9 @@ namespace Windows
                 if (view.TryGetMagicData(magicID, out HeroMagicData data))
                 {
                     var time = Mathf.Max(0, data.CDTime - now);
+
                     this.Template.CDTime.text = time > 0 ? string.Format("{0:0.0}", time) : string.Empty;
+
                     if (cdTime < time)
                         cdTime = time;
                     if (time > 0)
@@ -77,10 +79,25 @@ namespace Windows
             }
         }
 
+        public Texture2D Map;
+        private Color32[] Colors;
+        private int size=75;
         protected override void InitModel()
         {
             base.InitModel();
-            
+
+            Map = new Texture2D(size, size, TextureFormat.RGBA32, false, true);
+            var a = new Color(1, 1, 1, 0);
+            Colors = new Color32[size * size];
+            for (int x =0; x< size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    Colors[x + y* size] = a;
+                }
+            }
+
+            this.MapTexture.texture = Map;
 
             bt_Exit.onClick.AddListener(() =>
                 {
@@ -176,13 +193,51 @@ namespace Windows
             base.OnUpdate();
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
-            var timeSpan = TimeSpan.FromSeconds(gate.TimeServerNow);
-            this.Time.text = string.Format("{0:00}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
+            //var timeSpan = TimeSpan.FromSeconds(gate.TimeServerNow);
+           
             foreach (var i in GridTableManager)
             {
                 i.Model.Update(view, gate.TimeServerNow);
             }
+            UpdateMap();
+
         }
+
+    
+
+        private void UpdateMap()
+        {
+
+            int wi = Map.width;
+            var gate = UApplication.G<BattleGate>();
+            if (gate == null) return;
+            var a = new Color(1, 1, 1, 0);
+            for (int x = 0; x < size; x++)
+            {
+                for (int y = 0; y < size; y++)
+                {
+                    Colors[x+ y* size] =a;
+                }
+            }
+
+            //¼ÆËãÐý×ª  
+            var lookRotation =  Quaternion.Euler(0, 0, ThridPersionCameraContollor.Current.transform.rotation.eulerAngles.y);
+            this.ViewForward.localRotation = lookRotation;
+
+            float r = size / 2;// 16;
+            gate.PreView.Each<UCharacterView>(t =>
+            {
+                var offset = t.transform.position - gate.Owner.transform.position;
+                if (offset.magnitude > r) return false;
+                Colors[(int)(offset.x + r)+ (int)(offset.z + r)* size] = t.TeamId == gate.Owner.TeamId ? Color.green : Color.red;
+                return false;
+            });
+
+            Map.SetPixels32(Colors);
+            Map.Apply();
+        }
+
+
 
         protected override void OnHide()
         {
@@ -254,5 +309,7 @@ namespace Windows
             return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
 
+
+       
     }
 }

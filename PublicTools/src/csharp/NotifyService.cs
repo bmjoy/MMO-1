@@ -8,17 +8,6 @@ namespace Proto.NotifyService
 {
 
     /// <summary>
-    /// 1
-    /// </summary>    
-    [API(1)]
-    public class CharacterAlpha:APIBase<Void, Notify_CharacterAlpha> 
-    {
-        private CharacterAlpha() : base() { }
-        public  static CharacterAlpha CreateQuery(){ return new CharacterAlpha();}
-    }
-    
-
-    /// <summary>
     /// 2
     /// </summary>    
     [API(2)]
@@ -228,17 +217,6 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 26
-    /// </summary>    
-    [API(26)]
-    public class CharacterMoveForward:APIBase<Void, Notify_CharacterMoveForward> 
-    {
-        private CharacterMoveForward() : base() { }
-        public  static CharacterMoveForward CreateQuery(){ return new CharacterMoveForward();}
-    }
-    
-
-    /// <summary>
     /// 27
     /// </summary>    
     [API(27)]
@@ -372,7 +350,6 @@ namespace Proto.NotifyService
         [API(29)]Notify_CharacterPush CharcaterPush(Void req);
         [API(28)]Notify_CharacterLock CharacterLock(Void req);
         [API(27)]Notify_CharacterSpeed CharacterSpeed(Void req);
-        [API(26)]Notify_CharacterMoveForward CharacterMoveForward(Void req);
         [API(25)]Notify_CharacterAttachMagic CharacterAttachMagic(Void req);
         [API(24)]Notify_CharacterSetScale CharacterSetScale(Void req);
         [API(23)]Notify_CharacterPriorityMove CharacterPriorityMove(Void req);
@@ -392,7 +369,6 @@ namespace Proto.NotifyService
         [API(4)]Notify_CreateMissile CreateMissile(Void req);
         [API(3)]Notify_CreateBattleCharacter CreateBattleCharacter(Void req);
         [API(2)]Notify_CharacterSetPosition CharacterPosition(Void req);
-        [API(1)]Notify_CharacterAlpha CharacterAlpha(Void req);
 
     }
    
@@ -410,7 +386,6 @@ namespace Proto.NotifyService
         [API(29)]public abstract Task<Notify_CharacterPush> CharcaterPush(Void request);
         [API(28)]public abstract Task<Notify_CharacterLock> CharacterLock(Void request);
         [API(27)]public abstract Task<Notify_CharacterSpeed> CharacterSpeed(Void request);
-        [API(26)]public abstract Task<Notify_CharacterMoveForward> CharacterMoveForward(Void request);
         [API(25)]public abstract Task<Notify_CharacterAttachMagic> CharacterAttachMagic(Void request);
         [API(24)]public abstract Task<Notify_CharacterSetScale> CharacterSetScale(Void request);
         [API(23)]public abstract Task<Notify_CharacterPriorityMove> CharacterPriorityMove(Void request);
@@ -430,7 +405,6 @@ namespace Proto.NotifyService
         [API(4)]public abstract Task<Notify_CreateMissile> CreateMissile(Void request);
         [API(3)]public abstract Task<Notify_CreateBattleCharacter> CreateBattleCharacter(Void request);
         [API(2)]public abstract Task<Notify_CharacterSetPosition> CharacterPosition(Void request);
-        [API(1)]public abstract Task<Notify_CharacterAlpha> CharacterAlpha(Void request);
 
     }
 

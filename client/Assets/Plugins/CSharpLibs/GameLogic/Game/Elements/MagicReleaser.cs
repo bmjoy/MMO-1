@@ -7,6 +7,7 @@ using GameLogic.Game.Perceptions;
 using Layout.LayoutEffects;
 using Proto;
 using Layout.LayoutElements;
+using Layout.AITree;
 
 namespace GameLogic.Game.Elements
 {
@@ -40,27 +41,35 @@ namespace GameLogic.Game.Elements
         public float addValue;
     }
 
-    public class MagicReleaser : BattleElement<IMagicReleaser>
+    public class MagicReleaser : BattleElement<IMagicReleaser>,ICharacterWatcher
     {
         public float LastTickTime = -1;
         public float tickStartTime = -1;
         private readonly List<RevertActionLock> actionReverts = new List<RevertActionLock>();
         private readonly List<RevertData> reverts = new List<RevertData>();
-
+        
         public MagicReleaser(
+            string key,
             MagicData magic,
+            BattleCharacter owner,
             IReleaserTarget target,
             GControllor controllor,
             IMagicReleaser view,
             ReleaserType type,float durtime)
             : base(controllor, view)
         {
+            MagicKey = key;
+            Owner = owner;
             ReleaserTarget = target;
             Magic = magic;
             RType = type;
             OnExitedState = ReleaseAll;
             this.Durtime = type == ReleaserType.Buff? durtime:-1;
         }
+
+        public string MagicKey { private set; get; }
+
+        public BattleCharacter Owner { set; private get; }
 
         public float Durtime { set; get; }
         public void SetParam(params string[] parms)
@@ -196,7 +205,7 @@ namespace GameLogic.Game.Elements
                         {
                             if (i.Value.time <= 0)
                             {
-                                character.SubHP(character.MaxHP);
+                                character.SubHP(character.MaxHP,out _);
                             }
                         }
                     }
@@ -267,6 +276,8 @@ namespace GameLogic.Game.Elements
         public BattleCharacter Releaser { get { return ReleaserTarget.Releaser; } }
 
         public BattleCharacter Target { get { return ReleaserTarget.ReleaserTarget; } }
+
+        public int DisposeValue { get; internal set; } = 0;
 
         public void StopAllPlayer()
         {
@@ -362,6 +373,52 @@ namespace GameLogic.Game.Elements
                 actionReverts.Remove(rLock);
                 rLock.target.UnLockAction(rLock.type);
             }
+        }
+
+        protected override void OnJoinState()
+        {
+            base.OnJoinState();
+            Releaser.AddEventWatcher(this);
+        }
+
+        protected override void OnExitState()
+        {
+            base.OnExitState();
+            Releaser.RemoveEventWathcer(this);
+        }
+
+        void ICharacterWatcher.OnFireEvent(BattleEventType eventType, object args)
+        {
+            if (this.RType == ReleaserType.Buff)
+            {
+                switch (eventType)
+                {
+                    case BattleEventType.Skill:
+                        if ((DisposeValue & (int)DisposeType.SKILL )>0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                    case BattleEventType.Move:
+                        if ((DisposeValue & (int)DisposeType.MOVE) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                    case BattleEventType.Hurt:
+                        if ((DisposeValue & (int)DisposeType.HURT) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void ToCompleted()
+        {
+            if (State == ReleaserStates.Completing || State == ReleaserStates.Ended || State == ReleaserStates.ToComplete) return;
+            State = ReleaserStates.ToComplete;
         }
     }
 }

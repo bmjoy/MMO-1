@@ -37,47 +37,51 @@ namespace RPCResponsers
 
             if (!query.Any()) return new L2C_Login { Code = ErrorCode.LoginFailure };
 
-
+            //下线当前用户
             var user = query.First();
-            var s_filter = Builders<UserSessionInfoEntity>.Filter.Eq(t => t.AccountUuid, user.Uuid);
-            DataBase.S.Session.DeleteMany(s_filter);
             if (DataBase.S.GetSessionInfo(user.Uuid, out UserSessionInfoEntity info))
             {
+                //战斗服务器
                 if (info.BattleServerId > 0)
                 {
-                    var b_filter = Builders<PlayerBattleServerEntity>.Filter.Eq(t => t.ServerId, info.BattleServerId);
-                    var server = DataBase.S.BattleServer.Find(b_filter).SingleOrDefault();
-                    if (server != null)
+                    var bServer = DataBase.S.GetBattleServerByServerID(info.BattleServerId);
+                    if (bServer != null)
                     {
-                        var task = new Task_L2B_ExitUser
-                        {
-                            UserID = user.Uuid
-                        };
-                        Appliaction.Current.GetServerConnectByClientID(server.ClientId)?
-                            .CreateTask(task)
+                        Appliaction.Current.GetServerConnectByClientID(bServer.ClientId)?
+                            .CreateTask(new Task_L2B_ExitUser {UserID = user.Uuid})
                             .Send();
                     }
                 }
+                //网关服务器
+                var gServer = DataBase.S.GetGateServrByIndex(info.GateServerId);
+                if (gServer != null)
+                {
+                    Appliaction.Current
+                        .GetServerConnectByClientID(gServer.ClientId)?
+                        .CreateTask(new Task_L2G_ExitUser { AccountId = user.Uuid })
+                        .Send();
+                }
             }
+            
 
+            //清空之前的登陆信息
+            var s_filter = Builders<UserSessionInfoEntity>.Filter.Eq(t => t.AccountUuid, user.Uuid);
+            DataBase.S.Session.DeleteMany(s_filter);
+
+           
+            var gate = DataBase.S.GetGateServrByIndex(user.ServerID);
+            if (gate == null)  return new L2C_Login { Code = ErrorCode.NofoundServerId };
+
+            //创建session
+            var session = SaveSession(user.Uuid, user.ServerID);
             user.LoginCount += 1;
             var update = Builders<AccountEntity>.Update
-                .Set(u => u.LastLoginTime,  DateTime.Now)
-                .Set(t=>t.LoginCount, user.LoginCount);
+                .Set(u => u.LastLoginTime, DateTime.Now)
+                .Set(t => t.LoginCount, user.LoginCount);
 
             var upfilter = Builders<AccountEntity>.Filter.Eq(t => t.Uuid, user.Uuid);
             users.UpdateOne(upfilter, update);
 
-            var g_filter = Builders<GateServerInfoEntity>.Filter.Eq(t => t.ServerId, user.ServerID);
-            var gate = DataBase.S.GateServer.Find(g_filter).SingleOrDefault();
-            if (gate == null)  return new L2C_Login { Code = ErrorCode.NofoundServerId };
-
-            var gateServer = Appliaction.Current.GetServerConnectByClientID(gate.ServerId);
-            gateServer
-                .CreateTask(new Task_L2G_ExitUser { AccountId = user.Uuid })
-                .Send();
-
-            var session = SaveSession(user.Uuid, user.ServerID);
             return new L2C_Login
             {
                 Code = ErrorCode.Ok,

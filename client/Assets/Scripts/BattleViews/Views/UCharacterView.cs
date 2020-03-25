@@ -159,13 +159,29 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void Update()
     {
+        LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
+
+        if (State == null || State?.Tick(PerView.GetTime()) == true)
+        {
+            GoToEmpty();
+        }
+        
+        if (lockRotationTime < Time.time && State?.Velocity.magnitude > 0.1f)
+        {
+            targetLookQuaternion = Quaternion.LookRotation(State.Velocity, Vector3.up);
+        }
+
 #if !UNITY_SERVER
         if (Vector3.Distance(this.transform.position, ThridPersionCameraContollor.Current.LookPos) < 10)
         {
+
+
             //player
             if ((showHpBarTime >Time.time || ShowName || TeamId == PerView.OwerTeamIndex ) 
                 && !IsDeath 
-                && ThridPersionCameraContollor.Current)
+                && ThridPersionCameraContollor.Current
+                && ViewRoot.activeSelf
+                )
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
@@ -183,20 +199,15 @@ public class UCharacterView : UElementView, IBattleCharacter
                 range.SetActive(false);
             }
         }
-#endif
-        LookQuaternion = Quaternion.Lerp(LookQuaternion, targetLookQuaternion, Time.deltaTime * this.damping);
-
-        if (State ==null || State?.Tick(PerView.GetTime()) == true)
-        {
-            GoToEmpty();
-        }
-
         PlaySpeed(State?.Velocity.magnitude ?? 0);
-       
-        if (lockRotationTime < Time.time && State?.Velocity.magnitude > 0.1f)
-        {
-            targetLookQuaternion = Quaternion.LookRotation(State.Velocity, Vector3.up);
-        }
+#endif
+        
+    }
+
+    public Vector3 MoveJoystick(Vector3 forward)
+    {
+        MoveByDir(forward);
+        return this.transform.position + forward * Speed * .4f;
     }
 
     private CharacterMoveState State;
@@ -211,10 +222,16 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     private void GoToEmpty()
     {
+        if (State is Empty) return;
         ChangeState(new Empty(this));
     }
 
     public float vSpeed = 0;
+
+    public void DoStopMove()
+    {
+        GoToEmpty();
+    }
 
     private void PlaySpeed(float speed)
     {
@@ -252,7 +269,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             }
         }
     }
-
+    public bool CallUnit { get; internal set; }
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
@@ -452,13 +469,14 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
-    private Vector3 TryToSetPosition(Vector3 pos)
+    private bool TryToSetPosition(Vector3 pos)
     {
-        if (Vector3.Distance(pos, transform.position) > 3f)
+        if (Vector3.Distance(pos, transform.position) > .05f)
         {
-            this.Agent.Warp(pos);
+            this.MoveToPos(pos);
+            return true;
         }
-        return this.transform.position;
+        return false;
     }
 
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
@@ -500,13 +518,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         properties.Add(new CharacterProperty { PType = type, FinalValue = finalValue });
     }
 
-    void IBattleCharacter.SetAlpha(float alpha)
-    {
-        if (!this) return;
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterAlpha { Index = Index, Alpha = alpha });
-#endif
-    }
 
     void IBattleCharacter.PlayMotion(string motion)
     {
@@ -661,11 +672,18 @@ public class UCharacterView : UElementView, IBattleCharacter
             Hp = curHp,
             MaxHp = maxHp,
             Mp = MP,
-            MpMax = mpMax
+            MpMax = mpMax,
+            CallUnit = CallUnit
         };
         foreach (var i in MagicCds)
-            createNotity.Cds.Add(new HeroMagicData { MType = i.Value.MType, CDTime = i.Value.CDTime, MagicID = i.Value.MagicID });
-
+        {
+            createNotity.Cds.Add(new HeroMagicData
+            {
+                MType = i.Value.MType,
+                CDTime = i.Value.CDTime,
+                MagicID = i.Value.MagicID
+            });
+        }
         return createNotity;
     }
 
@@ -678,8 +696,21 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterLock { Index = Index, Lock = lockValue });
 #endif
+        if (Index == PerView.OwnerIndex)
+        {
+            if (!IsLock(ActionLockType.NoInhiden))
+            {
+                var g = this.ViewRoot.GetComponent<AlphaOperator>();
+                if (g) Destroy(g);
+            }
+            else
+                AlphaOperator.Operator(this.ViewRoot);
+        }
+        else
+        {
+            this.ViewRoot.SetActive(!IsLock(ActionLockType.NoInhiden));
+        }
     }
-
 
     public bool IsLock(ActionLockType type)
     {
@@ -698,28 +729,24 @@ public class UCharacterView : UElementView, IBattleCharacter
         range.transform.localScale = Vector3.one * r;
     }
 
-    void IBattleCharacter.SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward)
+    private void MoveByDir(Vector3 forward)
     {
-        if (!this) return;
-        TryToSetPosition(pos.ToUV3());
-        if (State is ForwardMove m) m.ChangeDir(forward.ToUV3());
+        if (State is ForwardMove m) m.ChangeDir(forward);
         else
         {
-            if (forward.ToUV3().magnitude > 0.01f)
-                ChangeState(new ForwardMove(this, forward.ToUV3()));
+            if (forward.magnitude > 0.01f)
+                ChangeState(new ForwardMove(this, forward));
             else return;//no notity
         }
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterMoveForward { Forward = forward, Index = Index, Position = pos });
-#endif
     }
 
-    void IBattleCharacter.Push(Proto.Vector3 length, Proto.Vector3 speed)
+    void IBattleCharacter.Push(Proto.Vector3 startPos, Proto.Vector3 length, Proto.Vector3 speed)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length });
 #endif
+        Agent.Warp(startPos.ToUV3());
         var pushSpeed = speed.ToUV3();
         var pushLeftTime = length.ToUV3().magnitude / pushSpeed.magnitude;
         ChangeState(new PushMove(this, pushSpeed, pushLeftTime))
@@ -732,20 +759,17 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     void IBattleCharacter.TrySetPosition(Vector3 pos)
     {
-        TryToSetPosition(pos);
+        Agent.Warp(pos);
     }
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (!this) return;
-        TryToSetPosition(pos.ToUV3());
-        GoToEmpty();
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
 #endif
+        if (!TryToSetPosition(pos.ToUV3())) GoToEmpty();
     }
-
-    bool IBattleCharacter.IsForwardMoving { get { return State is ForwardMove; } }
 
     public bool IsCanForwardMoving { get { return !(State is PushMove);} }
 
@@ -769,27 +793,33 @@ public class UCharacterView : UElementView, IBattleCharacter
             StopDis = stopDis
         });
 #endif
-        TryToSetPosition(position.ToUV3());
+        return MoveToPos(target.ToUV3(), stopDis);
+    }
+
+    private Vector3? MoveToPos(Vector3 target, float stopDis =0)
+    {
         if (State is DestinationMove m)
         {
-            return m.ChangeTarget(target.ToUV3(), stopDis);
+            return m.ChangeTarget(target, stopDis);
         }
-        else
+        else if (State is Empty)
         {
             return ChangeState(new DestinationMove(this))
-                .ChangeTarget(target.ToUV3(), stopDis);//.Target;
+                .ChangeTarget(target, stopDis);//.Target;
         }
+        return this.transform.position;
     }
 
     void IBattleCharacter.Relive()
     {
         if (!this) return;
         IsDeath = false;
+#if !UNITY_SERVER 
         if (this.CharacterAnimator)
         {
             this.CharacterAnimator.SetTrigger("Idle");
-            
         }
+#endif
     }
     void IBattleCharacter.SetLevel(int level)
     {

@@ -49,7 +49,7 @@ public class BattleServerService : Responser, IBattleServerService
 
             gateClient.Disconnect();
 
-            if (!gate.BindUser(request.AccountUuid, Client, pack.Package, pack.Hero, seResult.GateServer))
+            if (!gate.BindUser(request.AccountUuid, Client, pack.Package, pack.Hero,pack.Gold, seResult.GateServer))
             {
                 result = ErrorCode.NofoundUserOnBattleServer;
             }

@@ -65,6 +65,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield return RunStatus.Failure;
                 yield break;
             }
+
             //modify position
             root.Character.TryToSetPosition(message.Position.ToUV3());
             root.Character.LookAt(message.Rotation.ToUV3());
@@ -98,10 +99,12 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            releaser = root.Perception.CreateReleaser(magic.MagicKey,new ReleaseAtTarget(root.Character, target), ReleaserType.Magic,0);
-            root.Character.AttachMagicHistory(magic.ID, root.Time);
-            if (releaser != null)
+            releaser = root.Perception
+                .CreateReleaser(magic.MagicKey, root.Character,
+                new ReleaseAtTarget(root.Character, target), ReleaserType.Magic, 0);
+            if (releaser)
             {
+                root.Character.AttachMagicHistory(magic.ID, root.Time);
                 while (!releaser.IsLayoutStartFinish)
                     yield return RunStatus.Running;
                 yield return RunStatus.Success;
@@ -111,7 +114,6 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 yield return RunStatus.Failure;
                 yield break;
-
             }
         }
 

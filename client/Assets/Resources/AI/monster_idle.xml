@@ -6,12 +6,12 @@
       <name>判断目标距离</name>
       <guid>14ef1600-cc9b-40f3-b11a-dbfb954acde2</guid>
       <valueOf>ViewDistance</valueOf>
-      <compareType>Less</compareType>
       <distance>
-        <min>100</min>
+        <min>0</min>
         <max>100</max>
         <type>Fixed</type>
       </distance>
+      <compareType>Less</compareType>
     </TreeNode>
     <TreeNode xsi:type="TreeNodeParallelSelector">
       <childs>
@@ -26,12 +26,12 @@
                       <name>判断距离出生点</name>
                       <guid>df7c186a-2916-4618-80a5-246608e1b6b9</guid>
                       <valueOf>Value</valueOf>
-                      <compareType>Greater</compareType>
                       <distance>
                         <min>1500</min>
                         <max>100</max>
                         <type>Fixed</type>
                       </distance>
+                      <compareType>Greater</compareType>
                     </TreeNode>
                     <TreeNode xsi:type="TreeNodeMoveToBronPosition">
                       <childs />
@@ -112,7 +112,7 @@
               <filter>None</filter>
               <useMagicConfig>false</useMagicConfig>
               <teamType>Enemy</teamType>
-              <findNew>false</findNew>
+              <findNew>true</findNew>
             </TreeNode>
           </childs>
           <name>间隔时间执行直到返回Success</name>
@@ -144,7 +144,7 @@
               <filter>None</filter>
               <useMagicConfig>false</useMagicConfig>
               <teamType>Enemy</teamType>
-              <findNew>false</findNew>
+              <findNew>true</findNew>
             </TreeNode>
           </childs>
           <name>间隔时间执行直到返回Success</name>
@@ -163,9 +163,9 @@
                   <childs />
                   <name>查找目标</name>
                   <guid>62a02956-357b-4bf6-9831-f49282a3095f</guid>
-                  <valueOf>ViewDistance</valueOf>
+                  <valueOf>Value</valueOf>
                   <Distance>
-                    <min>0</min>
+                    <min>2000</min>
                     <max>0</max>
                     <type>Fixed</type>
                   </Distance>

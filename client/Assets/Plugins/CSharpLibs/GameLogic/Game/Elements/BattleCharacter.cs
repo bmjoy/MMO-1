@@ -52,12 +52,13 @@ namespace GameLogic.Game.Elements
 
     public class BattleCharacter : BattleElement<IBattleCharacter>
     {
+
+        private readonly List<ICharacterWatcher> EventWatchers = new List<ICharacterWatcher>();
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
-        public event Action<BattleEventType, object> OnBattleEvent;
         public string AcccountUuid { private set; get; }
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
@@ -65,7 +66,6 @@ namespace GameLogic.Game.Elements
         public UVector3 BronPosition { private set; get; }
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
 
-      
         public int GroupIndex {set;get;}
         public int MaxHP
         {
@@ -87,7 +87,7 @@ namespace GameLogic.Game.Elements
             get
             {
                 var time = this[P.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[P.Agility].FinalValue;
-                return BattleAlgorithm.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
+                return Mathf.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
             }
         }
         public string Name { set; get; }
@@ -165,6 +165,7 @@ namespace GameLogic.Game.Elements
             get { return Properties[type]; }
         }
 
+        public bool CallUnit { private set; get; }
         public CharacterData Config { private set; get; }
 
         public BattleCharacter (
@@ -173,8 +174,9 @@ namespace GameLogic.Game.Elements
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
-            string account_uuid):base(controllor,view)
+            string account_uuid,bool callUnit):base(controllor,view)
 		{
+            CallUnit = callUnit;
             this.Config = data;
             AcccountUuid = account_uuid;
 			HP = 0;
@@ -203,9 +205,6 @@ namespace GameLogic.Game.Elements
                     case ActionLockType.NoMove:
                         if (e.IsLocked)StopMove();
                         break;
-                    case ActionLockType.NoInhiden:
-                        view.SetAlpha(e.IsLocked ? 0.5f: 1);
-                        break;
                     case ActionLockType.NoAi:
                         this.AiRoot?.Stop();
                         break;
@@ -214,6 +213,16 @@ namespace GameLogic.Game.Elements
             };
             BronPosition = Position;
 		}
+
+        public void AddEventWatcher(ICharacterWatcher watcher)
+        {
+            this.EventWatchers.Add(watcher);
+        }
+
+        public void RemoveEventWathcer(ICharacterWatcher watcher)
+        {
+            EventWatchers.Remove(watcher);
+        }
 
         public bool AddMagic(CharacterMagicData data)
         {
@@ -232,12 +241,16 @@ namespace GameLogic.Game.Elements
             View.PlayMotion(motionName);
         }
 
-        public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis =0f)
+        public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis = 0f)
         {
             warpTarget = target;
             if (IsLock(ActionLockType.NoMove)) return false;
             var r = View.MoveTo(View.Transform.position.ToPV3(), target.ToPV3(), stopDis);
-            if (r.HasValue) warpTarget = r.Value;
+            if (r.HasValue)
+            {
+                warpTarget = r.Value; 
+                FireEvent(BattleEventType.Move, this);
+            }
             return r.HasValue;
         }
 
@@ -263,26 +276,20 @@ namespace GameLogic.Game.Elements
             launchHitCallback?.Invoke(character, tempObj);
         }
 
-        public bool MoveForward(UVector3 forward, UVector3 posNext)
-        {
-            if (IsLock(ActionLockType.NoMove)) return false;
-            View.SetMoveDir(posNext.ToPV3(), forward.ToPV3());
-            return true;
-        }
-
         public void StopMove(UVector3? pos =null)
         {
             var p = pos ?? Position;
             View.StopMove(p.ToPV3());
         }
 
-        public bool SubHP(int hp)
+        public bool SubHP(int hp, out bool dead)
         {
+            dead = HP == 0;
             if (hp <= 0) return false;
-            if (HP == 0) return true;
+            if (HP == 0) return false;
             HP -= hp;
             if (HP <= 0) HP = 0;
-            var dead = HP == 0;//is dead
+            dead = HP == 0;//is dead
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
             return dead;
@@ -301,7 +308,7 @@ namespace GameLogic.Game.Elements
             var dir = rotation * UVector3.forward;
             var dis = dir * distance;
             var ps = dir * speed;
-            View.Push(dis.ToPV3(), ps.ToPV3());
+            View.Push(this.Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
             return true;
         }
 
@@ -395,6 +402,7 @@ namespace GameLogic.Game.Elements
 
 		protected void OnDeath()
 		{
+            FireEvent(BattleEventType.Death, this);
 			View.Death();
             OnDead?.Invoke(this);
             var per = this.Controllor.Perception as BattlePerception;
@@ -422,7 +430,6 @@ namespace GameLogic.Game.Elements
             return datat.Config;
         }
 
-      
         public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
         {
             bool isOK = true;
@@ -444,13 +451,6 @@ namespace GameLogic.Game.Elements
             value.ModifyValueMinutes(miType, resultValue);
             View.PropertyChange(property, value.FinalValue);
         }
-
-        public void Reset()
-        {
-            Init();
-        }
-
-
 
         public void EachActiveMagicByType(MagicType ty, float time, EachWithBreak call)
         {
@@ -487,7 +487,10 @@ namespace GameLogic.Game.Elements
 
         public void FireEvent(BattleEventType ev, object args)
         {
-            OnBattleEvent?.Invoke(ev, args);
+            foreach (var i in EventWatchers)
+            {
+                i.OnFireEvent(ev, args);
+            }
         }
 
         public void AttachDamage(int sources, int damage, float time)
@@ -524,7 +527,6 @@ namespace GameLogic.Game.Elements
         {
             return $"[{Index}]{Name}";
         }
-
 
     }
 }

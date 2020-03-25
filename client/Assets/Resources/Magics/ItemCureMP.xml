@@ -9,8 +9,8 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="CureMPEffect">
-              <valueType>MPMaxPro</valueType>
-              <value>5000</value>
+              <valueType>FixedValue</valueType>
+              <value>150</value>
             </EffectBase>
           </effects>
           <key>001</key>
@@ -20,4 +20,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

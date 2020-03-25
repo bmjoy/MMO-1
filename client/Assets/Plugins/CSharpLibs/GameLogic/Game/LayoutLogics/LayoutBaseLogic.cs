@@ -64,7 +64,8 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(LookAtTarget))]
 		public static void LookAtTargetActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
-            linePlayer.Releaser.ReleaserTarget?.Releaser?.LookAt(linePlayer.Releaser.ReleaserTarget.ReleaserTarget);
+			var layout = layoutBase as LookAtTarget;
+            linePlayer.Releaser?.Releaser?.LookAt(linePlayer.Releaser.Target);
 		}
         #endregion
 
@@ -100,7 +101,7 @@ namespace GameLogic.Game.LayoutLogics
 			}
 			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
 			var per = releaser.Controllor.Perception  as BattlePerception;
-			var targets = per.FindTarget (orginTarget,
+			var targets = per.DamageFindTarget(orginTarget,
 				layout.RangeType.fiterType, 
 				layout.RangeType.damageType, 
 				layout.RangeType.radius,
@@ -134,56 +135,58 @@ namespace GameLogic.Game.LayoutLogics
 			}
 
 		}
-        #endregion
+		#endregion
 
-        #region CallUnitLayout
-        [HandleLayout(typeof(CallUnitLayout))]
-        public static void CallUnitActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
-        {
-            var unitLayout = layoutBase as CallUnitLayout;
-            var releaser = linePlayer.Releaser;
-            var charachter = releaser.ReleaserTarget.Releaser;
-            var per = releaser.Controllor.Perception as BattlePerception;
-            int level = unitLayout.level;
+		#region CallUnitLayout
+		[HandleLayout(typeof(CallUnitLayout))]
+		public static void CallUnitActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
+		{
+			var unitLayout = layoutBase as CallUnitLayout;
+			var releaser = linePlayer.Releaser;
+			var charachter = releaser.ReleaserTarget.Releaser;
+			var per = releaser.Controllor.Perception as BattlePerception;
+			int level = unitLayout.level;
 
-            switch (unitLayout.valueFrom)
-            {
-                case Proto.GetValueFrom.CurrentConfig:
-                    break;
-                case Proto.GetValueFrom.MagicLevelParam1:
-                    {
-                        var param1 = releaser[0];
-                        if (string.IsNullOrEmpty(param1)) return;
-                        level = Convert.ToInt32(param1);
-                    }
-                    break;
-            }
+			switch (unitLayout.valueFrom)
+			{
+				case Proto.GetValueFrom.CurrentConfig:
+					break;
+				case Proto.GetValueFrom.MagicLevelParam1:
+					{
+						var param1 = releaser[0];
+						if (string.IsNullOrEmpty(param1)) return;
+						level = Convert.ToInt32(param1);
+					}
+					break;
+			}
 
-            //判断是否达到上限
-            if (unitLayout.maxNum <= releaser.UnitCount) return;
+			//判断是否达到上限
+			if (unitLayout.maxNum <= releaser.UnitCount) return;
 			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
-            var data = ExcelToJSONConfigManager
-                .Current.GetConfigByID<CharacterData>(unitLayout.characterID);
-           
+			var data = ExcelToJSONConfigManager
+				.Current.GetConfigByID<CharacterData>(id);
+
 			var magics = per.CreateHeroMagic(data.ID);
 			var unit = per.CreateCharacter(
 				level,
 				data,
 				magics,
-                null,
+				null,
 				charachter.TeamIndex,
-				charachter.Position + charachter.Rototion * UVector3.forward * charachter.Radius,
+				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
-				string.Empty, data.Name
+				charachter.AcccountUuid, data.Name, true
 			);
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
-            releaser.AttachElement(unit, false,unitLayout.time);
-            releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
-            per.ChangeCharacterAI(data.AIResourcePath,unit);
+			releaser.AttachElement(unit, false, unitLayout.time);
+			releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
+			var ai = unitLayout.AIPath;
+			if (string.IsNullOrEmpty(ai)) ai = data.AIResourcePath;
+			per.ChangeCharacterAI(ai, unit);
 			unit.OnDead = (el) => { GObject.Destroy(el, 3); };
-        }
+		}
 		#endregion
 
 		#region LaunchSelfLayout

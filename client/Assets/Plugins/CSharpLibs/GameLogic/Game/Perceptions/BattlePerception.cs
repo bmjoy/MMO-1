@@ -74,9 +74,8 @@ namespace GameLogic.Game.Perceptions
         public EmptyControllor Empty { private set; get; }
         #endregion
 
-
         #region create Elements 
-        public MagicReleaser CreateReleaser(string key, IReleaserTarget target, ReleaserType ty, float durtime)
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, float durtime)
         {
             var magic = View.GetMagicByKey(key);
             if (magic == null)
@@ -84,17 +83,36 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(key, magic, target, ty, durtime);
+            var releaser = CreateReleaser(key, owner, magic, target, ty, durtime);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(string key, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
-        { 
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
+        {
+            if (magic.unique)
+            {
+                bool have = false;
+                State.Each<MagicReleaser>(t =>
+                {
+                    if (t.Releaser.Index == owner.Index)
+                    {
+                        if (t.MagicKey == key)
+                        {
+                            have = true;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                );
+                if (have) return null;
+            }
             var view = View.CreateReleaserView(target.Releaser.Index,
                                                target.ReleaserTarget.Index,
                                                key,
                                                target.TargetPosition.ToPV3());
-            var mReleaser = new MagicReleaser(magic, target, this.ReleaserControllor, view, ty, durtime);
+            var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
+            if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Skill, mReleaser);
             this.JoinElement(mReleaser);
             return mReleaser;
         }
@@ -110,9 +128,6 @@ namespace GameLogic.Game.Perceptions
         }
 
         #endregion
-
-
-
 
         #region Character
 
@@ -150,6 +165,8 @@ namespace GameLogic.Game.Perceptions
             return list;
         }
 
+        
+
         public BattleCharacter CreateCharacter(
             int level,
             CharacterData data,
@@ -159,17 +176,18 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name)
+            string name,bool callUnit = false)
         {
+            
             var now = this.View.GetTimeSimulater().Now.Time;
             var cds = magics.Select(t => new HeroMagicData { CDTime = now, MagicID = t.ConfigId, MType = t.Type })
                 .ToList();
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds);
+                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, callUnit );
 
-            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid);
+            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid,callUnit);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -210,14 +228,13 @@ namespace GameLogic.Game.Perceptions
             NotifyHurt(effectTarget);
             if (result.IsMissed) return;
             effectTarget.AttachDamage(sources.Index, result.Damage, View.GetTimeSimulater().Now.Time);
-            CharacterSubHP(effectTarget, result.Damage);
-            
+            if (effectTarget.SubHP(result.Damage,out bool dead))
+            {
+                if (dead) sources.FireEvent(BattleEventType.Killed, effectTarget);
+            }
         }
 
-        public void CharacterSubHP(BattleCharacter effectTarget, int lostHP)
-        {
-            effectTarget.SubHP(lostHP);
-        }
+
 
         public BattleItem CreateItem(UVector3 ps, PlayerItem item, int groupIndex, int teamIndex)
         {
@@ -227,13 +244,11 @@ namespace GameLogic.Game.Perceptions
             return ditem;
         }
 
-
         public AITreeRoot ChangeCharacterAI(string pathTree, BattleCharacter character)
         {
             TreeNode ai = View.GetAITree(pathTree);
             return ChangeCharacterAI(ai, character,pathTree);
         }
-
 
         public AITreeRoot ChangeCharacterAI(TreeNode ai, BattleCharacter character, string path = null)
         {
@@ -243,8 +258,6 @@ namespace GameLogic.Game.Perceptions
             character.SetControllor(AIControllor);
             return root;
         }
-
-      
 
         #endregion
 
@@ -412,7 +425,7 @@ namespace GameLogic.Game.Perceptions
 
         }
 
-        public List<BattleCharacter> FindTarget(
+        public List<BattleCharacter> DamageFindTarget(
             BattleCharacter target,
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,

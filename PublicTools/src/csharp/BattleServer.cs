@@ -34,136 +34,132 @@ namespace Proto {
             "dEl0ZW0SDQoFSW5kZXgYASABKAUibQoWQWN0aW9uX0NsaWNrU2tpbGxJbmRl",
             "eBIPCgdNYWdpY0lkGAEgASgFEiAKCFJvdGF0aW9uGAMgASgLMg4uUHJvdG8u",
             "VmVjdG9yMxIgCghQb3NpdGlvbhgEIAEoCzIOLlByb3RvLlZlY3RvcjMiJQoV",
-            "QWN0aW9uX0F1dG9GaW5kVGFyZ2V0EgwKBEF1dG8YASABKAgiYQoOQWN0aW9u",
-            "X01vdmVEaXISHwoHRm9yd2FyZBgBIAEoCzIOLlByb3RvLlZlY3RvcjMSDAoE",
-            "RmFzdBgCIAEoCBIgCghQb3NpdGlvbhgDIAEoCzIOLlByb3RvLlZlY3RvcjMi",
-            "FQoTQWN0aW9uX05vcm1hbEF0dGFjayIgCg5BY3Rpb25fVXNlSXRlbRIOCgZJ",
-            "dGVtSWQYASABKAUiKAoXTm90aWZ5X0VsZW1lbnRFeGl0U3RhdGUSDQoFSW5k",
-            "ZXgYASABKAUihgEKFU5vdGlmeV9DcmVhdGVSZWxlYXNlchINCgVJbmRleBgB",
-            "IAEoBRIVCg1SZWxlYXNlckluZGV4GAIgASgFEhMKC1RhcmdldEluZGV4GAMg",
-            "ASgFEhAKCE1hZ2ljS2V5GAQgASgJEiAKCFBvc2l0aW9uGAUgASgLMg4uUHJv",
-            "dG8uVmVjdG9yMyKvAgocTm90aWZ5X0NyZWF0ZUJhdHRsZUNoYXJhY3RlchIN",
-            "CgVJbmRleBgBIAEoBRITCgtBY2NvdW50VXVpZBgCIAEoCRIQCghDb25maWdJ",
-            "RBgDIAEoBRIRCglUZWFtSW5kZXgYBCABKAUSIAoIUG9zaXRpb24YBSABKAsy",
-            "Di5Qcm90by5WZWN0b3IzEh8KB0ZvcndhcmQYBiABKAsyDi5Qcm90by5WZWN0",
-            "b3IzEg0KBUxldmVsGAcgASgFEgoKAkhwGAggASgFEg0KBU1heEhwGAkgASgF",
-            "EgwKBE5hbWUYDiABKAkSDQoFU3BlZWQYDyABKAISIQoDQ2RzGBAgAygLMhQu",
-            "UHJvdG8uSGVyb01hZ2ljRGF0YRIKCgJNcBgRIAEoBRINCgVNcE1heBgSIAEo",
-            "BSKkAQoUTm90aWZ5X0NyZWF0ZU1pc3NpbGUSDQoFSW5kZXgYASABKAUSFQoN",
-            "UmVsZWFzZXJJbmRleBgCIAEoBRIVCg1SZXNvdXJjZXNQYXRoGAMgASgJEg0K",
-            "BVNwZWVkGAQgASgCEhAKCEZyb21Cb25lGAYgASgJEg4KBlRvQm9uZRgHIAEo",
-            "CRIeCgZPZmZzZXQYCCABKAsyDi5Qcm90by5WZWN0b3IzIk4KG05vdGlmeV9D",
-            "aGFyYWN0ZXJTZXRQb3NpdGlvbhINCgVJbmRleBgBIAEoBRIgCghQb3NpdGlv",
-            "bhgCIAEoCzIOLlByb3RvLlZlY3RvcjMiNQoVTm90aWZ5X0NoYXJhY3RlckFs",
-            "cGhhEg0KBUluZGV4GAEgASgFEg0KBUFscGhhGAIgASgCIkwKGk5vdGlmeV9D",
-            "aGFyYWN0ZXJTZXRGb3J3b3JkEg0KBUluZGV4GAEgASgFEh8KB0ZvcndhcmQY",
-            "AiABKAsyDi5Qcm90by5WZWN0b3IzIjUKFU5vdGlmeV9DaGFyYWN0ZXJTcGVl",
-            "ZBINCgVJbmRleBgBIAEoBRINCgVTcGVlZBgCIAEoAiI3ChZOb3RpZnlfTG9v",
-            "a0F0Q2hhcmFjdGVyEg0KBUluZGV4GAEgASgFEg4KBlRhcmdldBgCIAEoBSJ6",
-            "ChZOb3RpZnlfQ2hhcmFjdGVyTW92ZVRvEg0KBUluZGV4GAEgASgFEiAKCFBv",
-            "c2l0aW9uGAIgASgLMg4uUHJvdG8uVmVjdG9yMxIeCgZUYXJnZXQYAyABKAsy",
-            "Di5Qcm90by5WZWN0b3IzEg8KB1N0b3BEaXMYBCABKAIiSwoYTm90aWZ5X0No",
-            "YXJhY3RlclN0b3BNb3ZlEg0KBUluZGV4GAEgASgFEiAKCFBvc2l0aW9uGAIg",
-            "ASgLMg4uUHJvdG8uVmVjdG9yMyImChVOb3RpZnlfQ2hhcmFjdGVyRGVhdGgS",
-            "DQoFSW5kZXgYASABKAUiQwocTm90aWZ5X0NoYXJhY3RlclByaW9yaXR5TW92",
-            "ZRINCgVJbmRleBgBIAEoBRIUCgxQcmlvcml0eU1vdmUYAiABKAIiOAoYTm90",
-            "aWZ5X0NoYXJhY3RlclNldFNjYWxlEg0KBUluZGV4GAEgASgFEg0KBVNjYWxl",
-            "GAIgASgCInUKG05vdGlmeV9DaGFyYWN0ZXJBdHRhY2hNYWdpYxINCgVJbmRl",
-            "eBgBIAEoBRIPCgdNYWdpY0lkGAIgASgFEhUKDUNvbXBsZXRlZFRpbWUYAyAB",
-            "KAISHwoFbVR5cGUYBCABKA4yEC5Qcm90by5NYWdpY1R5cGUibwobTm90aWZ5",
-            "X0NoYXJhY3Rlck1vdmVGb3J3YXJkEg0KBUluZGV4GAEgASgFEiAKCFBvc2l0",
-            "aW9uGAIgASgLMg4uUHJvdG8uVmVjdG9yMxIfCgdGb3J3YXJkGAMgASgLMg4u",
-            "UHJvdG8uVmVjdG9yMyJiChROb3RpZnlfUHJvcGVydHlWYWx1ZRINCgVJbmRl",
-            "eBgBIAEoBRIlCgRUeXBlGAIgASgOMhcuUHJvdG8uSGVyb1Byb3BlcnR5VHlw",
-            "ZRIUCgxGaW5hbGx5VmFsdWUYAyABKAUiRgoPTm90aWZ5X0hQQ2hhbmdlEg0K",
-            "BUluZGV4GAEgASgFEgoKAkhwGAIgASgFEgsKA0N1chgDIAEoBRILCgNNYXgY",
-            "BCABKAUiRgoPTm90aWZ5X01QQ2hhbmdlEg0KBUluZGV4GAEgASgFEgoKAk1w",
-            "GAIgASgFEgsKA0N1chgDIAEoBRILCgNNYXgYBCABKAUibAoTTm90aWZ5X0Rh",
-            "bWFnZVJlc3VsdBINCgVJbmRleBgBIAEoBRITCgtUYXJnZXRJbmRleBgCIAEo",
-            "BRIQCghJc01pc3NlZBgDIAEoCBIOCgZEYW1hZ2UYBCABKAUSDwoHQ3J0TXVs",
-            "dBgFIAEoBSKBAQoLTm90aWZ5X0Ryb3ASDQoFSW5kZXgYASABKAUSHwoESXRl",
-            "bRgCIAEoCzIRLlByb3RvLlBsYXllckl0ZW0SEQoJVGVhbUluZGV4GAMgASgF",
-            "EhIKCkdyb3VwSW5kZXgYBCABKAUSGwoDUG9zGAUgASgLMg4uUHJvdG8uVmVj",
-            "dG9yMyKPAQoWTm90aWZ5X1BsYXllckpvaW5TdGF0ZRITCgtBY2NvdW50VXVp",
-            "ZBgBIAEoCRIPCgdUaW1lTm93GAIgASgCEgwKBEdvbGQYAyABKAUSJQoHUGFj",
-            "a2FnZRgEIAEoCzIULlByb3RvLlBsYXllclBhY2thZ2USGgoESGVybxgFIAEo",
-            "CzIMLlByb3RvLkRIZXJvIjMKFE5vdGlmeV9DaGFyYWN0ZXJMb2NrEg0KBUlu",
-            "ZGV4GAEgASgFEgwKBExvY2sYAiABKAUiZAoUTm90aWZ5X0NoYXJhY3RlclB1",
-            "c2gSDQoFSW5kZXgYASABKAUSHgoGTGVuZ3RoGAIgASgLMg4uUHJvdG8uVmVj",
-            "dG9yMxIdCgVTcGVlZBgDIAEoCzIOLlByb3RvLlZlY3RvcjMiJwoWTm90aWZ5",
-            "X0NoYXJhY3RlclJlbGl2ZRINCgVJbmRleBgBIAEoBSI1ChVOb3RpZnlfQ2hh",
-            "cmFjdGVyTGV2ZWwSDQoFSW5kZXgYASABKAUSDQoFTGV2ZWwYAiABKAUiRgoh",
-            "Tm90aWZ5X0JhdHRsZUl0ZW1DaGFuZ2VHcm91cEluZGV4Eg0KBUluZGV4GAEg",
-            "ASgFEhIKCkdyb3VwSW5kZXgYAiABKAUiMgoPTm90aWZ5X0Ryb3BHb2xkEhEK",
-            "CVRvdGFsR29sZBgBIAEoBRIMCgRHb2xkGAIgASgFIjIKE05vdGlmeV9QbGF5",
-            "VGltZUxpbmUSDQoFSW5kZXgYASABKAUSDAoEUGF0aBgCIAEoCSIqChVOb3Rp",
-            "ZnlfU3luY1NlcnZlclRpbWUSEQoJU2VydmVyTm93GAEgASgCIksKGE5vdGlm",
-            "eV9DaGFyYWN0ZXJSb3RhdGlvbhINCgVJbmRleBgBIAEoBRIgCghSb3RhdGlv",
-            "bhgCIAEoCzIOLlByb3RvLlZlY3RvcjMiUgoTTm90aWZ5X0NoYXJhY3RlckV4",
-            "cBILCgNFeHAYASABKAUSDgoGT2xkRXhwGAIgASgFEg0KBUxldmVsGAMgASgF",
-            "Eg8KB09sZExldmUYBCABKAUqLgoITW92ZVR5cGUSDgoKTm9ybWFsTW92ZRAA",
-            "EggKBEJhY2sQARIICgRKdW1wEAIyrhAKDU5vdGlmeVNlcnZpY2USPQoOQ2hh",
-            "cmFjdGVyQWxwaGESCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X0NoYXJh",
-            "Y3RlckFscGhhIgASRgoRQ2hhcmFjdGVyUG9zaXRpb24SCy5Qcm90by5Wb2lk",
-            "GiIuUHJvdG8uTm90aWZ5X0NoYXJhY3RlclNldFBvc2l0aW9uIgASSwoVQ3Jl",
-            "YXRlQmF0dGxlQ2hhcmFjdGVyEgsuUHJvdG8uVm9pZBojLlByb3RvLk5vdGlm",
-            "eV9DcmVhdGVCYXR0bGVDaGFyYWN0ZXIiABI7Cg1DcmVhdGVNaXNzaWxlEgsu",
-            "UHJvdG8uVm9pZBobLlByb3RvLk5vdGlmeV9DcmVhdGVNaXNzaWxlIgASPQoO",
-            "Q3JlYXRlUmVsZWFzZXISCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X0Ny",
-            "ZWF0ZVJlbGVhc2VyIgASNwoMRGFtYWdlUmVzdWx0EgsuUHJvdG8uVm9pZBoa",
-            "LlByb3RvLk5vdGlmeV9EYW1hZ2VSZXN1bHQSKQoERHJvcBILLlByb3RvLlZv",
-            "aWQaEi5Qcm90by5Ob3RpZnlfRHJvcCIAEkEKEEVsZW1lbnRFeGl0U3RhdGUS",
-            "Cy5Qcm90by5Wb2lkGh4uUHJvdG8uTm90aWZ5X0VsZW1lbnRFeGl0U3RhdGUi",
-            "ABIvCghIUENoYW5nZRILLlByb3RvLlZvaWQaFi5Qcm90by5Ob3RpZnlfSFBD",
-            "aGFuZ2USPQoPTG9va0F0Q2hhcmFjdGVyEgsuUHJvdG8uVm9pZBodLlByb3Rv",
-            "Lk5vdGlmeV9Mb29rQXRDaGFyYWN0ZXISLwoITVBDaGFuZ2USCy5Qcm90by5W",
-            "b2lkGhYuUHJvdG8uTm90aWZ5X01QQ2hhbmdlEj0KD1BsYXllckpvaW5TdGF0",
-            "ZRILLlByb3RvLlZvaWQaHS5Qcm90by5Ob3RpZnlfUGxheWVySm9pblN0YXRl",
-            "EjsKDVByb3BlcnR5VmFsdWUSCy5Qcm90by5Wb2lkGhsuUHJvdG8uTm90aWZ5",
-            "X1Byb3BlcnR5VmFsdWUiABJHChNDaGFyYWN0ZXJTZXRGb3J3b3JkEgsuUHJv",
-            "dG8uVm9pZBohLlByb3RvLk5vdGlmeV9DaGFyYWN0ZXJTZXRGb3J3b3JkIgAS",
-            "PwoPQ2hhcmFjdGVyTW92ZVRvEgsuUHJvdG8uVm9pZBodLlByb3RvLk5vdGlm",
-            "eV9DaGFyYWN0ZXJNb3ZlVG8iABJBChFDaGFyYWN0ZXJTdG9wTW92ZRILLlBy",
-            "b3RvLlZvaWQaHy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyU3RvcE1vdmUSOwoO",
-            "Q2hhcmFjdGVyRGVhdGgSCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X0No",
-            "YXJhY3RlckRlYXRoEkkKFUNoYXJhY3RlclByaW9yaXR5TW92ZRILLlByb3Rv",
-            "LlZvaWQaIy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyUHJpb3JpdHlNb3ZlEkMK",
-            "EUNoYXJhY3RlclNldFNjYWxlEgsuUHJvdG8uVm9pZBofLlByb3RvLk5vdGlm",
-            "eV9DaGFyYWN0ZXJTZXRTY2FsZSIAEkcKFENoYXJhY3RlckF0dGFjaE1hZ2lj",
-            "EgsuUHJvdG8uVm9pZBoiLlByb3RvLk5vdGlmeV9DaGFyYWN0ZXJBdHRhY2hN",
-            "YWdpYxJJChRDaGFyYWN0ZXJNb3ZlRm9yd2FyZBILLlByb3RvLlZvaWQaIi5Q",
-            "cm90by5Ob3RpZnlfQ2hhcmFjdGVyTW92ZUZvcndhcmQiABI9Cg5DaGFyYWN0",
-            "ZXJTcGVlZBILLlByb3RvLlZvaWQaHC5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVy",
-            "U3BlZWQiABI7Cg1DaGFyYWN0ZXJMb2NrEgsuUHJvdG8uVm9pZBobLlByb3Rv",
-            "Lk5vdGlmeV9DaGFyYWN0ZXJMb2NrIgASOwoNQ2hhcmNhdGVyUHVzaBILLlBy",
-            "b3RvLlZvaWQaGy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyUHVzaCIAEj8KD0No",
-            "YXJhY3RlclJlbGl2ZRILLlByb3RvLlZvaWQaHS5Qcm90by5Ob3RpZnlfQ2hh",
-            "cmFjdGVyUmVsaXZlIgASVQoaQmF0dGxlSXRlbUNoYW5nZUdyb3VwSW5kZXgS",
-            "Cy5Qcm90by5Wb2lkGiguUHJvdG8uTm90aWZ5X0JhdHRsZUl0ZW1DaGFuZ2VH",
-            "cm91cEluZGV4IgASMQoIRHJvcEdvbGQSCy5Qcm90by5Wb2lkGhYuUHJvdG8u",
-            "Tm90aWZ5X0Ryb3BHb2xkIgASPQoOU3luY1NlcnZlclRpbWUSCy5Qcm90by5W",
-            "b2lkGhwuUHJvdG8uTm90aWZ5X1N5bmNTZXJ2ZXJUaW1lIgASOQoMUGxheVRp",
-            "bWVMaW5lEgsuUHJvdG8uVm9pZBoaLlByb3RvLk5vdGlmeV9QbGF5VGltZUxp",
-            "bmUiABJDChFDaGFyYWN0ZXJSb3RhdGlvbhILLlByb3RvLlZvaWQaHy5Qcm90",
-            "by5Ob3RpZnlfQ2hhcmFjdGVyUm90YXRpb24iABJICgxDaGFyYWN0ZXJFeHAS",
-            "Gi5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyRXhwGhouUHJvdG8uTm90aWZ5X0No",
-            "YXJhY3RlckV4cCIAEk4KDkNoYXJhY3RlckxldmVsEhwuUHJvdG8uTm90aWZ5",
-            "X0NoYXJhY3RlckxldmVsGhwuUHJvdG8uTm90aWZ5X0NoYXJhY3RlckxldmVs",
-            "IgAy5QIKDUFjdGlvblNlcnZpY2USPwoPQ2xpY2tTa2lsbEluZGV4Eh0uUHJv",
-            "dG8uQWN0aW9uX0NsaWNrU2tpbGxJbmRleBoLLlByb3RvLlZvaWQiABI9Cg5B",
-            "dXRvRmluZFRhcmdldBIcLlByb3RvLkFjdGlvbl9BdXRvRmluZFRhcmdldBoL",
-            "LlByb3RvLlZvaWQiABIvCgdNb3ZlRGlyEhUuUHJvdG8uQWN0aW9uX01vdmVE",
-            "aXIaCy5Qcm90by5Wb2lkIgASOQoMTm9ybWFsQXR0YWNrEhouUHJvdG8uQWN0",
-            "aW9uX05vcm1hbEF0dGFjaxoLLlByb3RvLlZvaWQiABI3CgtDb2xsZWN0SXRl",
-            "bRIZLlByb3RvLkFjdGlvbl9Db2xsZWN0SXRlbRoLLlByb3RvLlZvaWQiABIv",
-            "CgdVc2VJdGVtEhUuUHJvdG8uQWN0aW9uX1VzZUl0ZW0aCy5Qcm90by5Wb2lk",
-            "IgAykQEKE0JhdHRsZVNlcnZlclNlcnZpY2USPAoKRXhpdEJhdHRsZRIVLlBy",
-            "b3RvLkMyQl9FeGl0QmF0dGxlGhUuUHJvdG8uQjJDX0V4aXRCYXR0bGUiABI8",
-            "CgpKb2luQmF0dGxlEhUuUHJvdG8uQzJCX0pvaW5CYXR0bGUaFS5Qcm90by5C",
-            "MkNfSm9pbkJhdHRsZSIAYgZwcm90bzM="));
+            "QWN0aW9uX0F1dG9GaW5kVGFyZ2V0EgwKBEF1dG8YASABKAgiWAoTQWN0aW9u",
+            "X01vdmVKb3lzdGljaxIfCgdXaWxsUG9zGAEgASgLMg4uUHJvdG8uVmVjdG9y",
+            "MxIgCghQb3NpdGlvbhgCIAEoCzIOLlByb3RvLlZlY3RvcjMiMgoPQWN0aW9u",
+            "X1N0b3BNb3ZlEh8KB1N0b3BQb3MYASABKAsyDi5Qcm90by5WZWN0b3IzIhUK",
+            "E0FjdGlvbl9Ob3JtYWxBdHRhY2siIAoOQWN0aW9uX1VzZUl0ZW0SDgoGSXRl",
+            "bUlkGAEgASgFIigKF05vdGlmeV9FbGVtZW50RXhpdFN0YXRlEg0KBUluZGV4",
+            "GAEgASgFIoYBChVOb3RpZnlfQ3JlYXRlUmVsZWFzZXISDQoFSW5kZXgYASAB",
+            "KAUSFQoNUmVsZWFzZXJJbmRleBgCIAEoBRITCgtUYXJnZXRJbmRleBgDIAEo",
+            "BRIQCghNYWdpY0tleRgEIAEoCRIgCghQb3NpdGlvbhgFIAEoCzIOLlByb3Rv",
+            "LlZlY3RvcjMiwQIKHE5vdGlmeV9DcmVhdGVCYXR0bGVDaGFyYWN0ZXISDQoF",
+            "SW5kZXgYASABKAUSEwoLQWNjb3VudFV1aWQYAiABKAkSEAoIQ29uZmlnSUQY",
+            "AyABKAUSEQoJVGVhbUluZGV4GAQgASgFEiAKCFBvc2l0aW9uGAUgASgLMg4u",
+            "UHJvdG8uVmVjdG9yMxIfCgdGb3J3YXJkGAYgASgLMg4uUHJvdG8uVmVjdG9y",
+            "MxINCgVMZXZlbBgHIAEoBRIKCgJIcBgIIAEoBRINCgVNYXhIcBgJIAEoBRIM",
+            "CgROYW1lGA4gASgJEg0KBVNwZWVkGA8gASgCEiEKA0NkcxgQIAMoCzIULlBy",
+            "b3RvLkhlcm9NYWdpY0RhdGESCgoCTXAYESABKAUSDQoFTXBNYXgYEiABKAUS",
+            "EAoIQ2FsbFVuaXQYEyABKAgipAEKFE5vdGlmeV9DcmVhdGVNaXNzaWxlEg0K",
+            "BUluZGV4GAEgASgFEhUKDVJlbGVhc2VySW5kZXgYAiABKAUSFQoNUmVzb3Vy",
+            "Y2VzUGF0aBgDIAEoCRINCgVTcGVlZBgEIAEoAhIQCghGcm9tQm9uZRgGIAEo",
+            "CRIOCgZUb0JvbmUYByABKAkSHgoGT2Zmc2V0GAggASgLMg4uUHJvdG8uVmVj",
+            "dG9yMyJOChtOb3RpZnlfQ2hhcmFjdGVyU2V0UG9zaXRpb24SDQoFSW5kZXgY",
+            "ASABKAUSIAoIUG9zaXRpb24YAiABKAsyDi5Qcm90by5WZWN0b3IzIkwKGk5v",
+            "dGlmeV9DaGFyYWN0ZXJTZXRGb3J3b3JkEg0KBUluZGV4GAEgASgFEh8KB0Zv",
+            "cndhcmQYAiABKAsyDi5Qcm90by5WZWN0b3IzIjUKFU5vdGlmeV9DaGFyYWN0",
+            "ZXJTcGVlZBINCgVJbmRleBgBIAEoBRINCgVTcGVlZBgCIAEoAiI3ChZOb3Rp",
+            "ZnlfTG9va0F0Q2hhcmFjdGVyEg0KBUluZGV4GAEgASgFEg4KBlRhcmdldBgC",
+            "IAEoBSJ6ChZOb3RpZnlfQ2hhcmFjdGVyTW92ZVRvEg0KBUluZGV4GAEgASgF",
+            "EiAKCFBvc2l0aW9uGAIgASgLMg4uUHJvdG8uVmVjdG9yMxIeCgZUYXJnZXQY",
+            "AyABKAsyDi5Qcm90by5WZWN0b3IzEg8KB1N0b3BEaXMYBCABKAIiSwoYTm90",
+            "aWZ5X0NoYXJhY3RlclN0b3BNb3ZlEg0KBUluZGV4GAEgASgFEiAKCFBvc2l0",
+            "aW9uGAIgASgLMg4uUHJvdG8uVmVjdG9yMyImChVOb3RpZnlfQ2hhcmFjdGVy",
+            "RGVhdGgSDQoFSW5kZXgYASABKAUiQwocTm90aWZ5X0NoYXJhY3RlclByaW9y",
+            "aXR5TW92ZRINCgVJbmRleBgBIAEoBRIUCgxQcmlvcml0eU1vdmUYAiABKAIi",
+            "OAoYTm90aWZ5X0NoYXJhY3RlclNldFNjYWxlEg0KBUluZGV4GAEgASgFEg0K",
+            "BVNjYWxlGAIgASgCInUKG05vdGlmeV9DaGFyYWN0ZXJBdHRhY2hNYWdpYxIN",
+            "CgVJbmRleBgBIAEoBRIPCgdNYWdpY0lkGAIgASgFEhUKDUNvbXBsZXRlZFRp",
+            "bWUYAyABKAISHwoFbVR5cGUYBCABKA4yEC5Qcm90by5NYWdpY1R5cGUiYgoU",
+            "Tm90aWZ5X1Byb3BlcnR5VmFsdWUSDQoFSW5kZXgYASABKAUSJQoEVHlwZRgC",
+            "IAEoDjIXLlByb3RvLkhlcm9Qcm9wZXJ0eVR5cGUSFAoMRmluYWxseVZhbHVl",
+            "GAMgASgFIkYKD05vdGlmeV9IUENoYW5nZRINCgVJbmRleBgBIAEoBRIKCgJI",
+            "cBgCIAEoBRILCgNDdXIYAyABKAUSCwoDTWF4GAQgASgFIkYKD05vdGlmeV9N",
+            "UENoYW5nZRINCgVJbmRleBgBIAEoBRIKCgJNcBgCIAEoBRILCgNDdXIYAyAB",
+            "KAUSCwoDTWF4GAQgASgFImwKE05vdGlmeV9EYW1hZ2VSZXN1bHQSDQoFSW5k",
+            "ZXgYASABKAUSEwoLVGFyZ2V0SW5kZXgYAiABKAUSEAoISXNNaXNzZWQYAyAB",
+            "KAgSDgoGRGFtYWdlGAQgASgFEg8KB0NydE11bHQYBSABKAUigQEKC05vdGlm",
+            "eV9Ecm9wEg0KBUluZGV4GAEgASgFEh8KBEl0ZW0YAiABKAsyES5Qcm90by5Q",
+            "bGF5ZXJJdGVtEhEKCVRlYW1JbmRleBgDIAEoBRISCgpHcm91cEluZGV4GAQg",
+            "ASgFEhsKA1BvcxgFIAEoCzIOLlByb3RvLlZlY3RvcjMijwEKFk5vdGlmeV9Q",
+            "bGF5ZXJKb2luU3RhdGUSEwoLQWNjb3VudFV1aWQYASABKAkSDwoHVGltZU5v",
+            "dxgCIAEoAhIMCgRHb2xkGAMgASgFEiUKB1BhY2thZ2UYBCABKAsyFC5Qcm90",
+            "by5QbGF5ZXJQYWNrYWdlEhoKBEhlcm8YBSABKAsyDC5Qcm90by5ESGVybyIz",
+            "ChROb3RpZnlfQ2hhcmFjdGVyTG9jaxINCgVJbmRleBgBIAEoBRIMCgRMb2Nr",
+            "GAIgASgFIoYBChROb3RpZnlfQ2hhcmFjdGVyUHVzaBINCgVJbmRleBgBIAEo",
+            "BRIeCgZMZW5ndGgYAiABKAsyDi5Qcm90by5WZWN0b3IzEh0KBVNwZWVkGAMg",
+            "ASgLMg4uUHJvdG8uVmVjdG9yMxIgCghTdGFydFBvcxgEIAEoCzIOLlByb3Rv",
+            "LlZlY3RvcjMiJwoWTm90aWZ5X0NoYXJhY3RlclJlbGl2ZRINCgVJbmRleBgB",
+            "IAEoBSI1ChVOb3RpZnlfQ2hhcmFjdGVyTGV2ZWwSDQoFSW5kZXgYASABKAUS",
+            "DQoFTGV2ZWwYAiABKAUiRgohTm90aWZ5X0JhdHRsZUl0ZW1DaGFuZ2VHcm91",
+            "cEluZGV4Eg0KBUluZGV4GAEgASgFEhIKCkdyb3VwSW5kZXgYAiABKAUiMgoP",
+            "Tm90aWZ5X0Ryb3BHb2xkEhEKCVRvdGFsR29sZBgBIAEoBRIMCgRHb2xkGAIg",
+            "ASgFIjIKE05vdGlmeV9QbGF5VGltZUxpbmUSDQoFSW5kZXgYASABKAUSDAoE",
+            "UGF0aBgCIAEoCSIqChVOb3RpZnlfU3luY1NlcnZlclRpbWUSEQoJU2VydmVy",
+            "Tm93GAEgASgCIksKGE5vdGlmeV9DaGFyYWN0ZXJSb3RhdGlvbhINCgVJbmRl",
+            "eBgBIAEoBRIgCghSb3RhdGlvbhgCIAEoCzIOLlByb3RvLlZlY3RvcjMiUgoT",
+            "Tm90aWZ5X0NoYXJhY3RlckV4cBILCgNFeHAYASABKAUSDgoGT2xkRXhwGAIg",
+            "ASgFEg0KBUxldmVsGAMgASgFEg8KB09sZExldmUYBCABKAUypA8KDU5vdGlm",
+            "eVNlcnZpY2USRgoRQ2hhcmFjdGVyUG9zaXRpb24SCy5Qcm90by5Wb2lkGiIu",
+            "UHJvdG8uTm90aWZ5X0NoYXJhY3RlclNldFBvc2l0aW9uIgASSwoVQ3JlYXRl",
+            "QmF0dGxlQ2hhcmFjdGVyEgsuUHJvdG8uVm9pZBojLlByb3RvLk5vdGlmeV9D",
+            "cmVhdGVCYXR0bGVDaGFyYWN0ZXIiABI7Cg1DcmVhdGVNaXNzaWxlEgsuUHJv",
+            "dG8uVm9pZBobLlByb3RvLk5vdGlmeV9DcmVhdGVNaXNzaWxlIgASPQoOQ3Jl",
+            "YXRlUmVsZWFzZXISCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X0NyZWF0",
+            "ZVJlbGVhc2VyIgASNwoMRGFtYWdlUmVzdWx0EgsuUHJvdG8uVm9pZBoaLlBy",
+            "b3RvLk5vdGlmeV9EYW1hZ2VSZXN1bHQSKQoERHJvcBILLlByb3RvLlZvaWQa",
+            "Ei5Qcm90by5Ob3RpZnlfRHJvcCIAEkEKEEVsZW1lbnRFeGl0U3RhdGUSCy5Q",
+            "cm90by5Wb2lkGh4uUHJvdG8uTm90aWZ5X0VsZW1lbnRFeGl0U3RhdGUiABIv",
+            "CghIUENoYW5nZRILLlByb3RvLlZvaWQaFi5Qcm90by5Ob3RpZnlfSFBDaGFu",
+            "Z2USPQoPTG9va0F0Q2hhcmFjdGVyEgsuUHJvdG8uVm9pZBodLlByb3RvLk5v",
+            "dGlmeV9Mb29rQXRDaGFyYWN0ZXISLwoITVBDaGFuZ2USCy5Qcm90by5Wb2lk",
+            "GhYuUHJvdG8uTm90aWZ5X01QQ2hhbmdlEj0KD1BsYXllckpvaW5TdGF0ZRIL",
+            "LlByb3RvLlZvaWQaHS5Qcm90by5Ob3RpZnlfUGxheWVySm9pblN0YXRlEjsK",
+            "DVByb3BlcnR5VmFsdWUSCy5Qcm90by5Wb2lkGhsuUHJvdG8uTm90aWZ5X1By",
+            "b3BlcnR5VmFsdWUiABJHChNDaGFyYWN0ZXJTZXRGb3J3b3JkEgsuUHJvdG8u",
+            "Vm9pZBohLlByb3RvLk5vdGlmeV9DaGFyYWN0ZXJTZXRGb3J3b3JkIgASPwoP",
+            "Q2hhcmFjdGVyTW92ZVRvEgsuUHJvdG8uVm9pZBodLlByb3RvLk5vdGlmeV9D",
+            "aGFyYWN0ZXJNb3ZlVG8iABJBChFDaGFyYWN0ZXJTdG9wTW92ZRILLlByb3Rv",
+            "LlZvaWQaHy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyU3RvcE1vdmUSOwoOQ2hh",
+            "cmFjdGVyRGVhdGgSCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X0NoYXJh",
+            "Y3RlckRlYXRoEkkKFUNoYXJhY3RlclByaW9yaXR5TW92ZRILLlByb3RvLlZv",
+            "aWQaIy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyUHJpb3JpdHlNb3ZlEkMKEUNo",
+            "YXJhY3RlclNldFNjYWxlEgsuUHJvdG8uVm9pZBofLlByb3RvLk5vdGlmeV9D",
+            "aGFyYWN0ZXJTZXRTY2FsZSIAEkcKFENoYXJhY3RlckF0dGFjaE1hZ2ljEgsu",
+            "UHJvdG8uVm9pZBoiLlByb3RvLk5vdGlmeV9DaGFyYWN0ZXJBdHRhY2hNYWdp",
+            "YxI9Cg5DaGFyYWN0ZXJTcGVlZBILLlByb3RvLlZvaWQaHC5Qcm90by5Ob3Rp",
+            "ZnlfQ2hhcmFjdGVyU3BlZWQiABI7Cg1DaGFyYWN0ZXJMb2NrEgsuUHJvdG8u",
+            "Vm9pZBobLlByb3RvLk5vdGlmeV9DaGFyYWN0ZXJMb2NrIgASOwoNQ2hhcmNh",
+            "dGVyUHVzaBILLlByb3RvLlZvaWQaGy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVy",
+            "UHVzaCIAEj8KD0NoYXJhY3RlclJlbGl2ZRILLlByb3RvLlZvaWQaHS5Qcm90",
+            "by5Ob3RpZnlfQ2hhcmFjdGVyUmVsaXZlIgASVQoaQmF0dGxlSXRlbUNoYW5n",
+            "ZUdyb3VwSW5kZXgSCy5Qcm90by5Wb2lkGiguUHJvdG8uTm90aWZ5X0JhdHRs",
+            "ZUl0ZW1DaGFuZ2VHcm91cEluZGV4IgASMQoIRHJvcEdvbGQSCy5Qcm90by5W",
+            "b2lkGhYuUHJvdG8uTm90aWZ5X0Ryb3BHb2xkIgASPQoOU3luY1NlcnZlclRp",
+            "bWUSCy5Qcm90by5Wb2lkGhwuUHJvdG8uTm90aWZ5X1N5bmNTZXJ2ZXJUaW1l",
+            "IgASOQoMUGxheVRpbWVMaW5lEgsuUHJvdG8uVm9pZBoaLlByb3RvLk5vdGlm",
+            "eV9QbGF5VGltZUxpbmUiABJDChFDaGFyYWN0ZXJSb3RhdGlvbhILLlByb3Rv",
+            "LlZvaWQaHy5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyUm90YXRpb24iABJICgxD",
+            "aGFyYWN0ZXJFeHASGi5Qcm90by5Ob3RpZnlfQ2hhcmFjdGVyRXhwGhouUHJv",
+            "dG8uTm90aWZ5X0NoYXJhY3RlckV4cCIAEk4KDkNoYXJhY3RlckxldmVsEhwu",
+            "UHJvdG8uTm90aWZ5X0NoYXJhY3RlckxldmVsGhwuUHJvdG8uTm90aWZ5X0No",
+            "YXJhY3RlckxldmVsIgAyogMKDUFjdGlvblNlcnZpY2USPwoPQ2xpY2tTa2ls",
+            "bEluZGV4Eh0uUHJvdG8uQWN0aW9uX0NsaWNrU2tpbGxJbmRleBoLLlByb3Rv",
+            "LlZvaWQiABI9Cg5BdXRvRmluZFRhcmdldBIcLlByb3RvLkFjdGlvbl9BdXRv",
+            "RmluZFRhcmdldBoLLlByb3RvLlZvaWQiABI5CgxOb3JtYWxBdHRhY2sSGi5Q",
+            "cm90by5BY3Rpb25fTm9ybWFsQXR0YWNrGgsuUHJvdG8uVm9pZCIAEjcKC0Nv",
+            "bGxlY3RJdGVtEhkuUHJvdG8uQWN0aW9uX0NvbGxlY3RJdGVtGgsuUHJvdG8u",
+            "Vm9pZCIAEi8KB1VzZUl0ZW0SFS5Qcm90by5BY3Rpb25fVXNlSXRlbRoLLlBy",
+            "b3RvLlZvaWQiABI5CgxNb3ZlSm95c3RpY2sSGi5Qcm90by5BY3Rpb25fTW92",
+            "ZUpveXN0aWNrGgsuUHJvdG8uVm9pZCIAEjEKCFN0b3BNb3ZlEhYuUHJvdG8u",
+            "QWN0aW9uX1N0b3BNb3ZlGgsuUHJvdG8uVm9pZCIAMpEBChNCYXR0bGVTZXJ2",
+            "ZXJTZXJ2aWNlEjwKCkV4aXRCYXR0bGUSFS5Qcm90by5DMkJfRXhpdEJhdHRs",
+            "ZRoVLlByb3RvLkIyQ19FeGl0QmF0dGxlIgASPAoKSm9pbkJhdHRsZRIVLlBy",
+            "b3RvLkMyQl9Kb2luQmF0dGxlGhUuUHJvdG8uQjJDX0pvaW5CYXR0bGUiAGIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.DataReflection.Descriptor, global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.MoveType), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2B_JoinBattle), global::Proto.C2B_JoinBattle.Parser, new[]{ "MapID", "Session", "AccountUuid", "Version" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2C_JoinBattle), global::Proto.B2C_JoinBattle.Parser, new[]{ "Code" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2B_ExitBattle), global::Proto.C2B_ExitBattle.Parser, new[]{ "AccountUuid" }, null, null, null),
@@ -171,15 +167,15 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_CollectItem), global::Proto.Action_CollectItem.Parser, new[]{ "Index" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_ClickSkillIndex), global::Proto.Action_ClickSkillIndex.Parser, new[]{ "MagicId", "Rotation", "Position" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_AutoFindTarget), global::Proto.Action_AutoFindTarget.Parser, new[]{ "Auto" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_MoveDir), global::Proto.Action_MoveDir.Parser, new[]{ "Forward", "Fast", "Position" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_MoveJoystick), global::Proto.Action_MoveJoystick.Parser, new[]{ "WillPos", "Position" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_StopMove), global::Proto.Action_StopMove.Parser, new[]{ "StopPos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_NormalAttack), global::Proto.Action_NormalAttack.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Action_UseItem), global::Proto.Action_UseItem.Parser, new[]{ "ItemId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_ElementExitState), global::Proto.Notify_ElementExitState.Parser, new[]{ "Index" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CreateReleaser), global::Proto.Notify_CreateReleaser.Parser, new[]{ "Index", "ReleaserIndex", "TargetIndex", "MagicKey", "Position" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CreateBattleCharacter), global::Proto.Notify_CreateBattleCharacter.Parser, new[]{ "Index", "AccountUuid", "ConfigID", "TeamIndex", "Position", "Forward", "Level", "Hp", "MaxHp", "Name", "Speed", "Cds", "Mp", "MpMax" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CreateBattleCharacter), global::Proto.Notify_CreateBattleCharacter.Parser, new[]{ "Index", "AccountUuid", "ConfigID", "TeamIndex", "Position", "Forward", "Level", "Hp", "MaxHp", "Name", "Speed", "Cds", "Mp", "MpMax", "CallUnit" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CreateMissile), global::Proto.Notify_CreateMissile.Parser, new[]{ "Index", "ReleaserIndex", "ResourcesPath", "Speed", "FromBone", "ToBone", "Offset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterSetPosition), global::Proto.Notify_CharacterSetPosition.Parser, new[]{ "Index", "Position" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterAlpha), global::Proto.Notify_CharacterAlpha.Parser, new[]{ "Index", "Alpha" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterSetForword), global::Proto.Notify_CharacterSetForword.Parser, new[]{ "Index", "Forward" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterSpeed), global::Proto.Notify_CharacterSpeed.Parser, new[]{ "Index", "Speed" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_LookAtCharacter), global::Proto.Notify_LookAtCharacter.Parser, new[]{ "Index", "Target" }, null, null, null),
@@ -189,7 +185,6 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterPriorityMove), global::Proto.Notify_CharacterPriorityMove.Parser, new[]{ "Index", "PriorityMove" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterSetScale), global::Proto.Notify_CharacterSetScale.Parser, new[]{ "Index", "Scale" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterAttachMagic), global::Proto.Notify_CharacterAttachMagic.Parser, new[]{ "Index", "MagicId", "CompletedTime", "MType" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterMoveForward), global::Proto.Notify_CharacterMoveForward.Parser, new[]{ "Index", "Position", "Forward" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_PropertyValue), global::Proto.Notify_PropertyValue.Parser, new[]{ "Index", "Type", "FinallyValue" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_HPChange), global::Proto.Notify_HPChange.Parser, new[]{ "Index", "Hp", "Cur", "Max" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_MPChange), global::Proto.Notify_MPChange.Parser, new[]{ "Index", "Mp", "Cur", "Max" }, null, null, null),
@@ -197,7 +192,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_Drop), global::Proto.Notify_Drop.Parser, new[]{ "Index", "Item", "TeamIndex", "GroupIndex", "Pos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_PlayerJoinState), global::Proto.Notify_PlayerJoinState.Parser, new[]{ "AccountUuid", "TimeNow", "Gold", "Package", "Hero" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterLock), global::Proto.Notify_CharacterLock.Parser, new[]{ "Index", "Lock" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterPush), global::Proto.Notify_CharacterPush.Parser, new[]{ "Index", "Length", "Speed" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterPush), global::Proto.Notify_CharacterPush.Parser, new[]{ "Index", "Length", "Speed", "StartPos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterRelive), global::Proto.Notify_CharacterRelive.Parser, new[]{ "Index" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_CharacterLevel), global::Proto.Notify_CharacterLevel.Parser, new[]{ "Index", "Level" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Notify_BattleItemChangeGroupIndex), global::Proto.Notify_BattleItemChangeGroupIndex.Parser, new[]{ "Index", "GroupIndex" }, null, null, null),
@@ -211,24 +206,6 @@ namespace Proto {
     #endregion
 
   }
-  #region Enums
-  public enum MoveType {
-    /// <summary>
-    ///普通移动
-    /// </summary>
-    [pbr::OriginalName("NormalMove")] NormalMove = 0,
-    /// <summary>
-    ///后退
-    /// </summary>
-    [pbr::OriginalName("Back")] Back = 1,
-    /// <summary>
-    ///跳跃
-    /// </summary>
-    [pbr::OriginalName("Jump")] Jump = 2,
-  }
-
-  #endregion
-
   #region Messages
   public sealed partial class C2B_JoinBattle : pb::IMessage<C2B_JoinBattle> {
     private static readonly pb::MessageParser<C2B_JoinBattle> _parser = new pb::MessageParser<C2B_JoinBattle>(() => new C2B_JoinBattle());
@@ -1294,11 +1271,11 @@ namespace Proto {
 
   }
 
-  public sealed partial class Action_MoveDir : pb::IMessage<Action_MoveDir> {
-    private static readonly pb::MessageParser<Action_MoveDir> _parser = new pb::MessageParser<Action_MoveDir>(() => new Action_MoveDir());
+  public sealed partial class Action_MoveJoystick : pb::IMessage<Action_MoveJoystick> {
+    private static readonly pb::MessageParser<Action_MoveJoystick> _parser = new pb::MessageParser<Action_MoveJoystick>(() => new Action_MoveJoystick());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Action_MoveDir> Parser { get { return _parser; } }
+    public static pb::MessageParser<Action_MoveJoystick> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1311,50 +1288,44 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Action_MoveDir() {
+    public Action_MoveJoystick() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Action_MoveDir(Action_MoveDir other) : this() {
-      forward_ = other.forward_ != null ? other.forward_.Clone() : null;
-      fast_ = other.fast_;
+    public Action_MoveJoystick(Action_MoveJoystick other) : this() {
+      willPos_ = other.willPos_ != null ? other.willPos_.Clone() : null;
       position_ = other.position_ != null ? other.position_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Action_MoveDir Clone() {
-      return new Action_MoveDir(this);
+    public Action_MoveJoystick Clone() {
+      return new Action_MoveJoystick(this);
     }
 
-    /// <summary>Field number for the "Forward" field.</summary>
-    public const int ForwardFieldNumber = 1;
-    private global::Proto.Vector3 forward_;
+    /// <summary>Field number for the "WillPos" field.</summary>
+    public const int WillPosFieldNumber = 1;
+    private global::Proto.Vector3 willPos_;
+    /// <summary>
+    /// 400ms 后位置
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto.Vector3 Forward {
-      get { return forward_; }
+    public global::Proto.Vector3 WillPos {
+      get { return willPos_; }
       set {
-        forward_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "Fast" field.</summary>
-    public const int FastFieldNumber = 2;
-    private bool fast_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Fast {
-      get { return fast_; }
-      set {
-        fast_ = value;
+        willPos_ = value;
       }
     }
 
     /// <summary>Field number for the "Position" field.</summary>
-    public const int PositionFieldNumber = 3;
+    public const int PositionFieldNumber = 2;
     private global::Proto.Vector3 position_;
+    /// <summary>
+    ///当前位置
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto.Vector3 Position {
       get { return position_; }
@@ -1365,19 +1336,18 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Action_MoveDir);
+      return Equals(other as Action_MoveJoystick);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Action_MoveDir other) {
+    public bool Equals(Action_MoveJoystick other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(Forward, other.Forward)) return false;
-      if (Fast != other.Fast) return false;
+      if (!object.Equals(WillPos, other.WillPos)) return false;
       if (!object.Equals(Position, other.Position)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1385,8 +1355,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (forward_ != null) hash ^= Forward.GetHashCode();
-      if (Fast != false) hash ^= Fast.GetHashCode();
+      if (willPos_ != null) hash ^= WillPos.GetHashCode();
       if (position_ != null) hash ^= Position.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1401,16 +1370,12 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (forward_ != null) {
+      if (willPos_ != null) {
         output.WriteRawTag(10);
-        output.WriteMessage(Forward);
-      }
-      if (Fast != false) {
-        output.WriteRawTag(16);
-        output.WriteBool(Fast);
+        output.WriteMessage(WillPos);
       }
       if (position_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteMessage(Position);
       }
       if (_unknownFields != null) {
@@ -1421,11 +1386,8 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (forward_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Forward);
-      }
-      if (Fast != false) {
-        size += 1 + 1;
+      if (willPos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(WillPos);
       }
       if (position_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
@@ -1437,18 +1399,15 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Action_MoveDir other) {
+    public void MergeFrom(Action_MoveJoystick other) {
       if (other == null) {
         return;
       }
-      if (other.forward_ != null) {
-        if (forward_ == null) {
-          Forward = new global::Proto.Vector3();
+      if (other.willPos_ != null) {
+        if (willPos_ == null) {
+          WillPos = new global::Proto.Vector3();
         }
-        Forward.MergeFrom(other.Forward);
-      }
-      if (other.Fast != false) {
-        Fast = other.Fast;
+        WillPos.MergeFrom(other.WillPos);
       }
       if (other.position_ != null) {
         if (position_ == null) {
@@ -1468,21 +1427,155 @@ namespace Proto {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (forward_ == null) {
-              Forward = new global::Proto.Vector3();
+            if (willPos_ == null) {
+              WillPos = new global::Proto.Vector3();
             }
-            input.ReadMessage(Forward);
+            input.ReadMessage(WillPos);
             break;
           }
-          case 16: {
-            Fast = input.ReadBool();
-            break;
-          }
-          case 26: {
+          case 18: {
             if (position_ == null) {
               Position = new global::Proto.Vector3();
             }
             input.ReadMessage(Position);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Action_StopMove : pb::IMessage<Action_StopMove> {
+    private static readonly pb::MessageParser<Action_StopMove> _parser = new pb::MessageParser<Action_StopMove>(() => new Action_StopMove());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Action_StopMove> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Action_StopMove() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Action_StopMove(Action_StopMove other) : this() {
+      stopPos_ = other.stopPos_ != null ? other.stopPos_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Action_StopMove Clone() {
+      return new Action_StopMove(this);
+    }
+
+    /// <summary>Field number for the "StopPos" field.</summary>
+    public const int StopPosFieldNumber = 1;
+    private global::Proto.Vector3 stopPos_;
+    /// <summary>
+    ///结束位置
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto.Vector3 StopPos {
+      get { return stopPos_; }
+      set {
+        stopPos_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Action_StopMove);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Action_StopMove other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(StopPos, other.StopPos)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (stopPos_ != null) hash ^= StopPos.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (stopPos_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(StopPos);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (stopPos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(StopPos);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Action_StopMove other) {
+      if (other == null) {
+        return;
+      }
+      if (other.stopPos_ != null) {
+        if (stopPos_ == null) {
+          StopPos = new global::Proto.Vector3();
+        }
+        StopPos.MergeFrom(other.StopPos);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (stopPos_ == null) {
+              StopPos = new global::Proto.Vector3();
+            }
+            input.ReadMessage(StopPos);
             break;
           }
         }
@@ -1499,7 +1592,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1600,7 +1693,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1732,7 +1825,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1864,7 +1957,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2114,7 +2207,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2145,6 +2238,7 @@ namespace Proto {
       cds_ = other.cds_.Clone();
       mp_ = other.mp_;
       mpMax_ = other.mpMax_;
+      callUnit_ = other.callUnit_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2330,6 +2424,20 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "CallUnit" field.</summary>
+    public const int CallUnitFieldNumber = 19;
+    private bool callUnit_;
+    /// <summary>
+    ///召唤单位
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool CallUnit {
+      get { return callUnit_; }
+      set {
+        callUnit_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Notify_CreateBattleCharacter);
@@ -2357,6 +2465,7 @@ namespace Proto {
       if(!cds_.Equals(other.cds_)) return false;
       if (Mp != other.Mp) return false;
       if (MpMax != other.MpMax) return false;
+      if (CallUnit != other.CallUnit) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2377,6 +2486,7 @@ namespace Proto {
       hash ^= cds_.GetHashCode();
       if (Mp != 0) hash ^= Mp.GetHashCode();
       if (MpMax != 0) hash ^= MpMax.GetHashCode();
+      if (CallUnit != false) hash ^= CallUnit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2443,6 +2553,10 @@ namespace Proto {
         output.WriteRawTag(144, 1);
         output.WriteInt32(MpMax);
       }
+      if (CallUnit != false) {
+        output.WriteRawTag(152, 1);
+        output.WriteBool(CallUnit);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2490,6 +2604,9 @@ namespace Proto {
       }
       if (MpMax != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(MpMax);
+      }
+      if (CallUnit != false) {
+        size += 2 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2547,6 +2664,9 @@ namespace Proto {
       }
       if (other.MpMax != 0) {
         MpMax = other.MpMax;
+      }
+      if (other.CallUnit != false) {
+        CallUnit = other.CallUnit;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2621,6 +2741,10 @@ namespace Proto {
             MpMax = input.ReadInt32();
             break;
           }
+          case 152: {
+            CallUnit = input.ReadBool();
+            break;
+          }
         }
       }
     }
@@ -2638,7 +2762,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2944,7 +3068,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3093,169 +3217,6 @@ namespace Proto {
               Position = new global::Proto.Vector3();
             }
             input.ReadMessage(Position);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class Notify_CharacterAlpha : pb::IMessage<Notify_CharacterAlpha> {
-    private static readonly pb::MessageParser<Notify_CharacterAlpha> _parser = new pb::MessageParser<Notify_CharacterAlpha>(() => new Notify_CharacterAlpha());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Notify_CharacterAlpha> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[15]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterAlpha() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterAlpha(Notify_CharacterAlpha other) : this() {
-      index_ = other.index_;
-      alpha_ = other.alpha_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterAlpha Clone() {
-      return new Notify_CharacterAlpha(this);
-    }
-
-    /// <summary>Field number for the "Index" field.</summary>
-    public const int IndexFieldNumber = 1;
-    private int index_;
-    /// <summary>
-    ///角色
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Index {
-      get { return index_; }
-      set {
-        index_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "Alpha" field.</summary>
-    public const int AlphaFieldNumber = 2;
-    private float alpha_;
-    /// <summary>
-    ///最终的Alpha
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Alpha {
-      get { return alpha_; }
-      set {
-        alpha_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Notify_CharacterAlpha);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Notify_CharacterAlpha other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Index != other.Index) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Alpha, other.Alpha)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Index != 0) hash ^= Index.GetHashCode();
-      if (Alpha != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Alpha);
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Index != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(Index);
-      }
-      if (Alpha != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(Alpha);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Index != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
-      }
-      if (Alpha != 0F) {
-        size += 1 + 4;
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Notify_CharacterAlpha other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Index != 0) {
-        Index = other.Index;
-      }
-      if (other.Alpha != 0F) {
-        Alpha = other.Alpha;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 8: {
-            Index = input.ReadInt32();
-            break;
-          }
-          case 21: {
-            Alpha = input.ReadFloat();
             break;
           }
         }
@@ -4791,203 +4752,6 @@ namespace Proto {
 
   }
 
-  public sealed partial class Notify_CharacterMoveForward : pb::IMessage<Notify_CharacterMoveForward> {
-    private static readonly pb::MessageParser<Notify_CharacterMoveForward> _parser = new pb::MessageParser<Notify_CharacterMoveForward>(() => new Notify_CharacterMoveForward());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Notify_CharacterMoveForward> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[25]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterMoveForward() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterMoveForward(Notify_CharacterMoveForward other) : this() {
-      index_ = other.index_;
-      position_ = other.position_ != null ? other.position_.Clone() : null;
-      forward_ = other.forward_ != null ? other.forward_.Clone() : null;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Notify_CharacterMoveForward Clone() {
-      return new Notify_CharacterMoveForward(this);
-    }
-
-    /// <summary>Field number for the "Index" field.</summary>
-    public const int IndexFieldNumber = 1;
-    private int index_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Index {
-      get { return index_; }
-      set {
-        index_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "Position" field.</summary>
-    public const int PositionFieldNumber = 2;
-    private global::Proto.Vector3 position_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto.Vector3 Position {
-      get { return position_; }
-      set {
-        position_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "Forward" field.</summary>
-    public const int ForwardFieldNumber = 3;
-    private global::Proto.Vector3 forward_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto.Vector3 Forward {
-      get { return forward_; }
-      set {
-        forward_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as Notify_CharacterMoveForward);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Notify_CharacterMoveForward other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Index != other.Index) return false;
-      if (!object.Equals(Position, other.Position)) return false;
-      if (!object.Equals(Forward, other.Forward)) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Index != 0) hash ^= Index.GetHashCode();
-      if (position_ != null) hash ^= Position.GetHashCode();
-      if (forward_ != null) hash ^= Forward.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Index != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(Index);
-      }
-      if (position_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Position);
-      }
-      if (forward_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Forward);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Index != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Index);
-      }
-      if (position_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
-      }
-      if (forward_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Forward);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Notify_CharacterMoveForward other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Index != 0) {
-        Index = other.Index;
-      }
-      if (other.position_ != null) {
-        if (position_ == null) {
-          Position = new global::Proto.Vector3();
-        }
-        Position.MergeFrom(other.Position);
-      }
-      if (other.forward_ != null) {
-        if (forward_ == null) {
-          Forward = new global::Proto.Vector3();
-        }
-        Forward.MergeFrom(other.Forward);
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 8: {
-            Index = input.ReadInt32();
-            break;
-          }
-          case 18: {
-            if (position_ == null) {
-              Position = new global::Proto.Vector3();
-            }
-            input.ReadMessage(Position);
-            break;
-          }
-          case 26: {
-            if (forward_ == null) {
-              Forward = new global::Proto.Vector3();
-            }
-            input.ReadMessage(Forward);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   /// <summary>
   ///属性修改
   /// </summary>
@@ -4999,7 +4763,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5187,7 +4951,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5406,7 +5170,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5625,7 +5389,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5869,7 +5633,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6122,7 +5886,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6378,7 +6142,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6535,7 +6299,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6555,6 +6319,7 @@ namespace Proto {
       index_ = other.index_;
       length_ = other.length_ != null ? other.length_.Clone() : null;
       speed_ = other.speed_ != null ? other.speed_.Clone() : null;
+      startPos_ = other.startPos_ != null ? other.startPos_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6596,6 +6361,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "StartPos" field.</summary>
+    public const int StartPosFieldNumber = 4;
+    private global::Proto.Vector3 startPos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto.Vector3 StartPos {
+      get { return startPos_; }
+      set {
+        startPos_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Notify_CharacterPush);
@@ -6612,6 +6388,7 @@ namespace Proto {
       if (Index != other.Index) return false;
       if (!object.Equals(Length, other.Length)) return false;
       if (!object.Equals(Speed, other.Speed)) return false;
+      if (!object.Equals(StartPos, other.StartPos)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6621,6 +6398,7 @@ namespace Proto {
       if (Index != 0) hash ^= Index.GetHashCode();
       if (length_ != null) hash ^= Length.GetHashCode();
       if (speed_ != null) hash ^= Speed.GetHashCode();
+      if (startPos_ != null) hash ^= StartPos.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6646,6 +6424,10 @@ namespace Proto {
         output.WriteRawTag(26);
         output.WriteMessage(Speed);
       }
+      if (startPos_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(StartPos);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6662,6 +6444,9 @@ namespace Proto {
       }
       if (speed_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Speed);
+      }
+      if (startPos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(StartPos);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6688,6 +6473,12 @@ namespace Proto {
           Speed = new global::Proto.Vector3();
         }
         Speed.MergeFrom(other.Speed);
+      }
+      if (other.startPos_ != null) {
+        if (startPos_ == null) {
+          StartPos = new global::Proto.Vector3();
+        }
+        StartPos.MergeFrom(other.StartPos);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6718,6 +6509,13 @@ namespace Proto {
             input.ReadMessage(Speed);
             break;
           }
+          case 34: {
+            if (startPos_ == null) {
+              StartPos = new global::Proto.Vector3();
+            }
+            input.ReadMessage(StartPos);
+            break;
+          }
         }
       }
     }
@@ -6732,7 +6530,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6861,7 +6659,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[35]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7018,7 +6816,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[36]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7175,7 +6973,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[37]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[36]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7332,7 +7130,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[38]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7489,7 +7287,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[39]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7618,7 +7416,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[40]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7781,7 +7579,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[41]; }
+      get { return global::Proto.BattleServerReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

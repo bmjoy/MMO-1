@@ -14,11 +14,6 @@
              2
              </summary>    
             </member>
-        <member name="T:Proto.ActionService.MoveDir">
-             <summary>
-             3
-             </summary>    
-            </member>
         <member name="T:Proto.ActionService.NormalAttack">
              <summary>
              4
@@ -34,26 +29,21 @@
              6
              </summary>    
             </member>
+        <member name="T:Proto.ActionService.MoveJoystick">
+             <summary>
+             7
+             </summary>    
+            </member>
+        <member name="T:Proto.ActionService.StopMove">
+             <summary>
+             8
+             </summary>    
+            </member>
         <member name="T:Proto.BattleServerReflection">
              <summary>Holder for reflection information generated from battle_server.proto</summary>
             </member>
         <member name="P:Proto.BattleServerReflection.Descriptor">
              <summary>File descriptor for battle_server.proto</summary>
-            </member>
-        <member name="F:Proto.MoveType.NormalMove">
-             <summary>
-            普通移动
-             </summary>
-            </member>
-        <member name="F:Proto.MoveType.Back">
-             <summary>
-            后退
-             </summary>
-            </member>
-        <member name="F:Proto.MoveType.Jump">
-             <summary>
-            跳跃
-             </summary>
             </member>
         <member name="F:Proto.C2B_JoinBattle.MapIDFieldNumber">
              <summary>Field number for the "MapID" field.</summary>
@@ -106,14 +96,29 @@
         <member name="F:Proto.Action_AutoFindTarget.AutoFieldNumber">
              <summary>Field number for the "Auto" field.</summary>
             </member>
-        <member name="F:Proto.Action_MoveDir.ForwardFieldNumber">
-             <summary>Field number for the "Forward" field.</summary>
+        <member name="F:Proto.Action_MoveJoystick.WillPosFieldNumber">
+             <summary>Field number for the "WillPos" field.</summary>
             </member>
-        <member name="F:Proto.Action_MoveDir.FastFieldNumber">
-             <summary>Field number for the "Fast" field.</summary>
+        <member name="P:Proto.Action_MoveJoystick.WillPos">
+             <summary>
+             400ms 后位置
+             </summary>
             </member>
-        <member name="F:Proto.Action_MoveDir.PositionFieldNumber">
+        <member name="F:Proto.Action_MoveJoystick.PositionFieldNumber">
              <summary>Field number for the "Position" field.</summary>
+            </member>
+        <member name="P:Proto.Action_MoveJoystick.Position">
+             <summary>
+            当前位置
+             </summary>
+            </member>
+        <member name="F:Proto.Action_StopMove.StopPosFieldNumber">
+             <summary>Field number for the "StopPos" field.</summary>
+            </member>
+        <member name="P:Proto.Action_StopMove.StopPos">
+             <summary>
+            结束位置
+             </summary>
             </member>
         <member name="F:Proto.Action_UseItem.ItemIdFieldNumber">
              <summary>Field number for the "ItemId" field.</summary>
@@ -233,6 +238,14 @@
         <member name="F:Proto.Notify_CreateBattleCharacter.MpMaxFieldNumber">
              <summary>Field number for the "MpMax" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CreateBattleCharacter.CallUnitFieldNumber">
+             <summary>Field number for the "CallUnit" field.</summary>
+            </member>
+        <member name="P:Proto.Notify_CreateBattleCharacter.CallUnit">
+             <summary>
+            召唤单位
+             </summary>
+            </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>
             创建一个飞行物
@@ -272,22 +285,6 @@
             </member>
         <member name="P:Proto.Notify_CharacterSetPosition.Position">
              <summary>
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterAlpha.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CharacterAlpha.Index">
-             <summary>
-            角色
-             </summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterAlpha.AlphaFieldNumber">
-             <summary>Field number for the "Alpha" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CharacterAlpha.Alpha">
-             <summary>
-            最终的Alpha
              </summary>
             </member>
         <member name="F:Proto.Notify_CharacterSetForword.IndexFieldNumber">
@@ -362,15 +359,6 @@
             </member>
         <member name="F:Proto.Notify_CharacterAttachMagic.MTypeFieldNumber">
              <summary>Field number for the "mType" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.PositionFieldNumber">
-             <summary>Field number for the "Position" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.ForwardFieldNumber">
-             <summary>Field number for the "Forward" field.</summary>
             </member>
         <member name="T:Proto.Notify_PropertyValue">
              <summary>
@@ -504,6 +492,9 @@
             </member>
         <member name="F:Proto.Notify_CharacterPush.SpeedFieldNumber">
              <summary>Field number for the "Speed" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterPush.StartPosFieldNumber">
+             <summary>Field number for the "StartPos" field.</summary>
             </member>
         <member name="F:Proto.Notify_CharacterRelive.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
@@ -2117,10 +2108,10 @@
             当前战斗服务器
              </summary>
             </member>
-        <member name="F:Proto.G2C_GetLastBattle.MapIDFieldNumber">
-             <summary>Field number for the "MapID" field.</summary>
+        <member name="F:Proto.G2C_GetLastBattle.LevelIDFieldNumber">
+             <summary>Field number for the "LevelID" field.</summary>
             </member>
-        <member name="P:Proto.G2C_GetLastBattle.MapID">
+        <member name="P:Proto.G2C_GetLastBattle.LevelID">
              <summary>
             地图
              </summary>
@@ -2353,6 +2344,14 @@
         <member name="P:Proto.G2B_GetPlayerInfo.Code">
              <summary>
             返回信息
+             </summary>
+            </member>
+        <member name="F:Proto.G2B_GetPlayerInfo.GoldFieldNumber">
+             <summary>Field number for the "Gold" field.</summary>
+            </member>
+        <member name="P:Proto.G2B_GetPlayerInfo.Gold">
+             <summary>
+            金币
              </summary>
             </member>
         <member name="F:Proto.G2B_GetPlayerInfo.HeroFieldNumber">
@@ -3123,11 +3122,6 @@
         <member name="F:Proto.MongoDB.PlayerBattleServerEntity.MaxPlayerCountFieldNumber">
              <summary>Field number for the "max_player_count" field.</summary>
             </member>
-        <member name="T:Proto.NotifyService.CharacterAlpha">
-             <summary>
-             1
-             </summary>    
-            </member>
         <member name="T:Proto.NotifyService.CharacterPosition">
              <summary>
              2
@@ -3221,11 +3215,6 @@
         <member name="T:Proto.NotifyService.CharacterAttachMagic">
              <summary>
              25
-             </summary>    
-            </member>
-        <member name="T:Proto.NotifyService.CharacterMoveForward">
-             <summary>
-             26
              </summary>    
             </member>
         <member name="T:Proto.NotifyService.CharacterSpeed">

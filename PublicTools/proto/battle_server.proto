@@ -46,11 +46,15 @@ message Action_AutoFindTarget
 	 bool Auto =1;
 }
 
-message Action_MoveDir
+message Action_MoveJoystick
 {
-	Vector3 Forward = 1;
-	bool Fast =2;
-	Vector3 Position =3;
+	Vector3 WillPos =1; // 400ms 后位置
+	Vector3 Position = 2;//当前位置
+}
+
+message Action_StopMove
+{
+	Vector3 StopPos = 1;//结束位置
 }
 
 message Action_NormalAttack
@@ -97,6 +101,7 @@ message Notify_CreateBattleCharacter
 	 repeated HeroMagicData Cds = 16;
 	 int32 Mp =17;
 	 int32 MpMax = 18;
+	 bool CallUnit = 19 ;//召唤单位
 }
 
 //创建一个飞行物
@@ -111,23 +116,11 @@ message Notify_CreateMissile
 	Vector3 Offset=8;
 }
 
-enum MoveType
-{
-	NormalMove = 0;//普通移动
-	Back =1;//后退
-	Jump =2;//跳跃
-}
 
 message Notify_CharacterSetPosition
 {
 	 int32 Index=1;
 	 Vector3 Position = 2;//
-}
-
-message Notify_CharacterAlpha
-{
-	 int32 Index=1; //角色
-	 float Alpha=2; //最终的Alpha
 }
 
 message Notify_CharacterSetForword
@@ -184,12 +177,6 @@ message Notify_CharacterAttachMagic
 	int32 MagicId =2;
 	float CompletedTime = 3;
 	MagicType mType = 4;
-}
-message Notify_CharacterMoveForward
-{
-	int32 Index =1;
-	Vector3 Position = 2;
-	Vector3 Forward = 3;
 }
 
 //属性修改
@@ -257,6 +244,7 @@ message Notify_CharacterPush
 	int32 Index =1;
 	Vector3 Length =2;
 	Vector3 Speed =3;
+	Vector3 StartPos= 4;
 }
 
 message Notify_CharacterRelive
@@ -308,8 +296,7 @@ message Notify_CharacterExp
 }
 
 service NotifyService
-{
-	rpc CharacterAlpha(Void) returns (Notify_CharacterAlpha){};//1
+{	
 	rpc CharacterPosition(Void) returns (Notify_CharacterSetPosition){};//2
 	rpc CreateBattleCharacter(Void) returns (Notify_CreateBattleCharacter){};//3
 	rpc CreateMissile(Void) returns (Notify_CreateMissile){};//4
@@ -329,7 +316,6 @@ service NotifyService
 	rpc CharacterPriorityMove(Void) returns (Notify_CharacterPriorityMove);//23
 	rpc CharacterSetScale(Void) returns (Notify_CharacterSetScale){};//24
 	rpc CharacterAttachMagic(Void) returns (Notify_CharacterAttachMagic);//25
-	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
 	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
 	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
 	rpc CharcaterPush(Void) returns (Notify_CharacterPush){};//29
@@ -347,10 +333,11 @@ service ActionService
 {
 	rpc ClickSkillIndex(Action_ClickSkillIndex)returns(Void){};//1
 	rpc AutoFindTarget(Action_AutoFindTarget)returns(Void){};//2
-	rpc MoveDir(Action_MoveDir)returns(Void){};//3
 	rpc NormalAttack (Action_NormalAttack) returns (Void){};//4
 	rpc CollectItem (Action_CollectItem) returns (Void){};//5
 	rpc UseItem (Action_UseItem) returns (Void){};//6
+	rpc MoveJoystick (Action_MoveJoystick) returns (Void){};//7
+	rpc StopMove (Action_StopMove) returns (Void){};//8
 }
 
 service BattleServerService

@@ -60,7 +60,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             root.Character.StopMove();
             releaser = root.Perception
-                .CreateReleaser(key, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic ,-1);
+                .CreateReleaser(key, root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic ,-1);
 
             while (!releaser.IsLayoutStartFinish)
             {

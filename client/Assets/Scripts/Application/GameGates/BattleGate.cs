@@ -18,15 +18,17 @@ using Windows;
 public class BattleGate : UGate, IServerMessageHandler
 {
 
-    public void SetServer(GameServerInfo serverInfo, int mapID)
+    public void SetServer(GameServerInfo serverInfo, int levelID)
     {
        
         ServerInfo = serverInfo;
-        MapID = mapID;
-        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(MapID);
+        Level = ExcelToJSONConfigManager.Current.GetConfigByID<BattleLevelData>(levelID);
+        MapConfig = ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(Level.MapID);
         
     }
 
+
+    public BattleLevelData Level { private set; get; }
     public float TimeServerNow
     {
         get
@@ -46,12 +48,13 @@ public class BattleGate : UGate, IServerMessageHandler
     private  NotifyPlayer player;
 
     private GameServerInfo ServerInfo;
-    private int MapID;
     public RequestClient<TaskHandler> Client { set; get; }
 
     public UPerceptionView PreView { get; internal set; }
 
     #region implemented abstract members of UGate
+
+    private GameGMTools gm;
 
     protected override void JoinGate()
     {
@@ -60,6 +63,7 @@ public class BattleGate : UGate, IServerMessageHandler
         var ui = UUIManager.Singleton.CreateWindow<Windows.UUIBattle>();
         ui.ShowWindow();
         StartCoroutine(Init());
+        gm= this.gameObject.AddComponent<GameGMTools>();
     }
 
     private IEnumerator Init()
@@ -81,7 +85,7 @@ public class BattleGate : UGate, IServerMessageHandler
                 {
                     Session = UApplication.S.SesssionKey,
                     AccountUuid = UApplication.S.AccountUuid,
-                    MapID = MapID,
+                    MapID = Level.ID,
                     Version = 1
                 },
                 (r) =>
@@ -105,18 +109,17 @@ public class BattleGate : UGate, IServerMessageHandler
         player.OnCreateUser = (view) =>
         {
             var character = view as UCharacterView;
+            if (character.CallUnit) return;
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;
                 Owner.ShowName = true;
-
                 PreView.OwerTeamIndex = character.TeamId;
                 PreView.OwnerIndex = character.Index;
-
                 FindObjectOfType<ThridPersionCameraContollor>()
-                .SetLookAt(character.GetBoneByName("Bottom"));
+                .SetLookAt(character.GetBoneByName(UCharacterView.BottomBone));
                 UUIManager.Singleton.ShowMask(false);
-                var ui = UUIManager.Singleton.GetUIWindow<Windows.UUIBattle>();
+                var ui = UUIManager.Singleton.GetUIWindow<UUIBattle>();
                 ui.InitCharacter(character);
                 UUIManager.S.ShowMask(false);
                 character.OnItemTrigger = TriggerItem;
@@ -175,32 +178,43 @@ public class BattleGate : UGate, IServerMessageHandler
         }
         else
         {
-            UApplication.S.ShowNotify($"{item.config.Name} 不属于你，无法拾取!");
+            UApplication.S.ShowNotify($"{item.config.Name} Can't collect!");
         }
     }
 
-    private UCharacterView Owner;
+    public UCharacterView Owner { private set; get; }
+
+    private float lastSyncTime = 0;
 
     internal void MoveDir(Vector3 dir)
     {
         if (!CanNetAction()) return;
-        var fast = dir.magnitude > 0.8f;
-        var pos = Owner.transform.position;
-        var dn = dir.normalized;
-
-        var ch = Owner as IBattleCharacter;
-        var move = new Action_MoveDir
-        {
-            Fast = fast,
-            Position = pos.ToPV3(),
-            Forward = new Proto.Vector3 { X = dn.x, Z = dn.z }
-        };
-        SendAction(move);
         if (Owner.IsLock(ActionLockType.NoMove)) return;
-        var f = dn * (fast ? 1f : 0.5f);
-        ch.SetMoveDir(pos.ToPV3(), new Proto.Vector3 { X = f.x, Z = f.z });
-    }
+        var pos = Owner.transform.position;
+        if (dir.magnitude > 0.01f)
+        {
+            var dn = new Vector3(dir.x, 0, dir.z);
+            Vector3 willPos = Owner.MoveJoystick(dn);
+            if (lastSyncTime + 0.2f < Time.time)
+            {
+                var joystickMove = new Action_MoveJoystick
+                {
+                    Position = pos.ToPV3(),
+                    WillPos = willPos.ToPV3()
+                };
+                SendAction(joystickMove);
+                lastSyncTime = Time.time;
+            }
+        }
+        else
+        {
+            var stopMove = new Action_StopMove { StopPos = pos.ToPV3() };
+            Owner.DoStopMove();
+            SendAction(stopMove);
+        }
 
+        
+    }
 
     public bool IsMpFull()
     {
@@ -213,6 +227,7 @@ public class BattleGate : UGate, IServerMessageHandler
         if (!this.Owner) return true;
         return Owner.IsFullHp;
     }
+
     internal bool SendUserItem(ItemType type)
     {
         if (!Owner) return false;
@@ -244,14 +259,15 @@ public class BattleGate : UGate, IServerMessageHandler
 
     protected override void ExitGate()
     {
+        if (gm) Destroy(gm);
         Client?.Disconnect();
-        UUIManager.Singleton.ShowMask(false);
+        UUIManager.S.ShowMask(false);
     }
 
     private void OnDisconnect()
     {
-       UUITipDrawer.S.ShowNotify("Can't login BattleServer!");
-        UApplication.S.GoBackToMainGate();  
+        UUITipDrawer.S.ShowNotify("Disconnect from BattleServer!");
+        UApplication.S.GoBackToMainGate();
     }
 
     protected override void Tick()
@@ -260,9 +276,9 @@ public class BattleGate : UGate, IServerMessageHandler
         {
             PreView.GetAndClearNotify();
             Client.Update();
-            UApplication.Singleton.ReceiveTotal = Client.ReceiveSize;
-            UApplication.Singleton.SendTotal = Client.SendSize;
-            UApplication.Singleton.PingDelay = (float)Client.Delay / (float)TimeSpan.TicksPerMillisecond;
+            UApplication.S.ReceiveTotal = Client.ReceiveSize;
+            UApplication.S.SendTotal = Client.SendSize;
+            UApplication.S.PingDelay = (float)Client.Delay / (float)TimeSpan.TicksPerMillisecond;
         }
     }
 
@@ -274,7 +290,6 @@ public class BattleGate : UGate, IServerMessageHandler
     public void Handle(Message message, SocketClient client)
     {
         var notify = message.AsNotify();
-        //Debug.Log($"{notify.GetType()}->{notify}");
         player.Process(notify);
     }
 
@@ -295,16 +310,19 @@ public class BattleGate : UGate, IServerMessageHandler
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
             if (config != null) Owner.ShowRange(config.RangeMax);
             if (config.MPCost <= Owner.MP)
+            {
                 SendAction(new Action_ClickSkillIndex
                 {
                     MagicId = magicData.ID,
                     Position = character.Transform.position.ToPV3(),
                     Rotation = character.Rotation.eulerAngles.ToPV3()
                 });
+            }
             else
+            {
                 UApplication.S.ShowNotify(LanguageManager.S.Format("BATTLE_NO_MP_TO_CAST", config.Name));
+            }
         }
-
        
     }
 

@@ -10,7 +10,12 @@
           <effects>
             <EffectBase xsi:type="CureEffect">
               <valueType>HPMaxPro</valueType>
-              <value>5000</value>
+              <value>500</value>
+            </EffectBase>
+            <EffectBase xsi:type="AddBufEffect">
+              <DiType>4</DiType>
+              <buffMagicKey>ItemCureHpBuff</buffMagicKey>
+              <durationTime>5</durationTime>
             </EffectBase>
           </effects>
           <key>001</key>
@@ -20,4 +25,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

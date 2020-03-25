@@ -57,7 +57,7 @@ message G2C_GetLastBattle
 {
 	 ErrorCode Code =1;
 	 GameServerInfo BattleServer=2;//当前战斗服务器
-	 int32 MapID=3;//地图
+	 int32 LevelID=3;//地图
 }
 
 message C2G_BuyPackageSize
@@ -211,6 +211,7 @@ message B2G_GetPlayerInfo
 message G2B_GetPlayerInfo
 {
 	 ErrorCode Code=1;//返回信息
+	 int32 Gold = 4;//金币
 	 DHero Hero=2;    //英雄数据
 	 PlayerPackage Package=3;//道具列表
 }

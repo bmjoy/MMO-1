@@ -6,10 +6,6 @@
       <GUID>0ef07487-9d69-4cca-b1e5-2482be81c66f</GUID>
       <Time>0</Time>
     </TimePoint>
-    <TimePoint>
-      <GUID>d22f6013-fd38-4c22-b240-bbc122bb6950</GUID>
-      <Time>0</Time>
-    </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
@@ -29,28 +25,6 @@
       </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
-    </LayoutBase>
-    <LayoutBase xsi:type="ParticleLayout">
-      <GUID>d22f6013-fd38-4c22-b240-bbc122bb6950</GUID>
-      <path>Effects/Glitter.prefab</path>
-      <fromTarget>Releaser</fromTarget>
-      <toTarget>Releaser</toTarget>
-      <fromBoneName>Body</fromBoneName>
-      <toBoneName>Body</toBoneName>
-      <Bind>false</Bind>
-      <destoryType>Normal</destoryType>
-      <destoryTime>0</destoryTime>
-      <offet>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offet>
-      <rotation>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </rotation>
-      <localsize>1</localsize>
     </LayoutBase>
   </Layouts>
 </TimeLine>

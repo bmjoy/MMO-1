@@ -92,7 +92,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 			return;
         }
 		var per = curState.Perception as BattlePerception;
-		this.currentReleaser =per.CreateReleaser(string.Empty,magic,
+		this.currentReleaser =per.CreateReleaser(string.Empty,this.releaser, magic,
             new ReleaseAtTarget(this.releaser, this.target),
 			ReleaserType.Magic,0);
 
@@ -102,7 +102,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		
 		if (!stay && this.releaser)
-            this.releaser.SubHP(this.releaser.HP);
+            this.releaser.SubHP(this.releaser.HP,out _);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
 		var magics = per.CreateHeroMagic(data.ID);
@@ -118,7 +118,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		
 		if (!stay&&this.target)
-            this.target.SubHP(this.target.HP);
+            this.target.SubHP(this.target.HP,out _);
 		var per = curState.Perception as BattlePerception;
 		var scene = PerView.UScene;
 		var magics = per.CreateHeroMagic(data.ID);

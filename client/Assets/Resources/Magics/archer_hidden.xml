@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <key>att_007</key>
-  <name>隐身</name>
+  <name>archer_hidden</name>
   <Containers>
     <EventContainer>
       <type>EVENT_START</type>
@@ -10,17 +9,18 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
+              <DiType>-1</DiType>
               <buffMagicKey>hiden_buff</buffMagicKey>
-              <timeVauleOf>MagicConfig</timeVauleOf>
-              <durationTime>0</durationTime>
+              <durationTime>15</durationTime>
             </EffectBase>
           </effects>
           <Des>添加buff</Des>
-          <key>action1</key>
+          <key>001</key>
         </EffectGroup>
       </effectGroup>
     </EventContainer>
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

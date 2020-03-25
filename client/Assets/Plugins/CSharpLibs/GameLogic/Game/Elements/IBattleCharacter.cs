@@ -13,7 +13,6 @@ namespace GameLogic.Game.Elements
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
         float Radius { get; }
-        bool IsForwardMoving { get; }
         void TrySetPosition(Vector3 vector3);
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
@@ -46,14 +45,10 @@ namespace GameLogic.Game.Elements
         void PropertyChange(HeroPropertyType type, int finalValue);//property changed
         [NeedNotify(typeof(Notify_CharacterAttachMagic), "MType", "MagicId", "CompletedTime")]
         void AttachMagic(MagicType mType, int magicID, float cdCompletedTime);//magic
-        [NeedNotify(typeof(Notify_CharacterAlpha), "Alpha")]
-        void SetAlpha(float alpha);//alpha
-        [NeedNotify(typeof(Notify_CharacterMoveForward), "Position", "Forward")]
-        void SetMoveDir(Proto.Vector3 pos, Proto.Vector3 forward);
         [NeedNotify(typeof(Notify_CharacterLock), "Lock")]
         void SetLock(int lockValue);
-        [NeedNotify(typeof(Notify_CharacterPush), "Length", "Speed")]
-        void Push(Proto.Vector3 length, Proto.Vector3 speed);
+        [NeedNotify(typeof(Notify_CharacterPush), "StartPos", "Length", "Speed")]
+        void Push(Proto.Vector3 startPos, Proto.Vector3 length, Proto.Vector3 speed);
         [NeedNotify(typeof(Notify_CharacterRotation),"Rotation")]
         void SetLookRotation(Proto.Vector3 eu);//use angle
         [NeedNotify(typeof(Notify_CharacterLevel),"Level")]

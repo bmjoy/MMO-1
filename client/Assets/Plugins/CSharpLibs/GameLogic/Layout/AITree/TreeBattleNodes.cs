@@ -29,10 +29,12 @@ namespace Layout.AITree
 
 	public enum BattleEventType
 	{
-        TeamBeAttack,
-		Hit,
-        Killed,
-        Death
+        TeamBeAttack,//队友被攻击
+		Hurt,  //被伤害
+        Killed, //杀死对手
+        Death, // 死亡
+		Skill, //释放技能 普工和技能
+		Move //移动
     }
 
 	[EditorAITreeNode("战斗事件", "Event", "战斗节点", AllowChildType.One)]
