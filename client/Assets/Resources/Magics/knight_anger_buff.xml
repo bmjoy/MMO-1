@@ -15,6 +15,14 @@
             <EffectBase xsi:type="BreakReleaserEffect">
               <breakType>InStartLayoutMagic</breakType>
             </EffectBase>
+            <EffectBase xsi:type="ModifyLockEffect">
+              <lockType>NoMove</lockType>
+              <revertType>ReleaserDeath</revertType>
+            </EffectBase>
+            <EffectBase xsi:type="NormalDamageEffect">
+              <valueOf>NormalAttack</valueOf>
+              <DamageValue>-5000</DamageValue>
+            </EffectBase>
           </effects>
           <key>001</key>
         </EffectGroup>
@@ -23,4 +31,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>
