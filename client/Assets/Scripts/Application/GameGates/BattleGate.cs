@@ -193,8 +193,9 @@ public class BattleGate : UGate, IServerMessageHandler
         var pos = Owner.transform.position;
         if (dir.magnitude > 0.01f)
         {
-            var dn = dir.normalized;
-            Vector3 willPos = Owner.MoveJoystick(new Vector3(dn.x, 0, dn.y));
+            // var dn = dir.normalized;
+            var dn = new Vector3(dir.x, 0, dir.z);
+            Vector3 willPos = Owner.MoveJoystick(dn);
             if (lastSyncTime + 0.2f < Time.time)
             {
                 var joystickMove = new Action_MoveJoystick
@@ -209,6 +210,7 @@ public class BattleGate : UGate, IServerMessageHandler
         else
         {
             var stopMove = new Action_StopMove { StopPos = pos.ToPV3() };
+            Owner.DoStopMove();
             SendAction(stopMove);
         }
 

@@ -207,7 +207,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     public Vector3 MoveJoystick(Vector3 forward)
     {
         MoveByDir(forward);
-        return this.transform.position+ forward * Speed * .4f;
+        return this.transform.position + forward * Speed * .4f;
     }
 
     private CharacterMoveState State;
@@ -222,10 +222,16 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     private void GoToEmpty()
     {
+        if (State is Empty) return;
         ChangeState(new Empty(this));
     }
 
     public float vSpeed = 0;
+
+    public void DoStopMove()
+    {
+        GoToEmpty();
+    }
 
     private void PlaySpeed(float speed)
     {
