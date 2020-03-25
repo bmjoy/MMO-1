@@ -463,13 +463,14 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
     }
 
-    private Vector3 TryToSetPosition(Vector3 pos)
+    private bool TryToSetPosition(Vector3 pos)
     {
-        if (Vector3.Distance(pos, transform.position) > 3f)
+        if (Vector3.Distance(pos, transform.position) > .05f)
         {
-            this.Agent.Warp(pos);
+            this.MoveToPos(pos);
+            return true;
         }
-        return this.transform.position;
+        return false;
     }
 
     void IBattleCharacter.SetPosition(Proto.Vector3 pos)
@@ -751,11 +752,11 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (!this) return;
-        TryToSetPosition(pos.ToUV3());
-        GoToEmpty();
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterStopMove { Position = pos, Index = Index });
 #endif
+        if (!TryToSetPosition(pos.ToUV3()))
+            GoToEmpty();
     }
 
     bool IBattleCharacter.IsForwardMoving { get { return State is ForwardMove; } }
@@ -784,17 +785,20 @@ public class UCharacterView : UElementView, IBattleCharacter
             StopDis = stopDis
         });
 #endif
-        TryToSetPosition(position.ToUV3());
+        return MoveToPos(target.ToUV3(), stopDis);
+    }
+
+    private Vector3? MoveToPos(Vector3 target, float stopDis =0)
+    {
         if (State is DestinationMove m)
         {
-            return m.ChangeTarget(target.ToUV3(), stopDis);
+            return m.ChangeTarget(target, stopDis);
         }
         else if (State is Empty)
         {
             return ChangeState(new DestinationMove(this))
-                .ChangeTarget(target.ToUV3(), stopDis);//.Target;
+                .ChangeTarget(target, stopDis);//.Target;
         }
-        
         return this.transform.position;
     }
 

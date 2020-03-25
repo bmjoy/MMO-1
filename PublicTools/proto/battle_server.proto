@@ -123,12 +123,6 @@ message Notify_CreateMissile
 	Vector3 Offset=8;
 }
 
-enum MoveType
-{
-	NormalMove = 0;//普通移动
-	Back =1;//后退
-	Jump =2;//跳跃
-}
 
 message Notify_CharacterSetPosition
 {
@@ -190,12 +184,6 @@ message Notify_CharacterAttachMagic
 	int32 MagicId =2;
 	float CompletedTime = 3;
 	MagicType mType = 4;
-}
-message Notify_CharacterMoveForward
-{
-	int32 Index =1;
-	Vector3 Position = 2;
-	Vector3 Forward = 3;
 }
 
 //属性修改
@@ -335,7 +323,7 @@ service NotifyService
 	rpc CharacterPriorityMove(Void) returns (Notify_CharacterPriorityMove);//23
 	rpc CharacterSetScale(Void) returns (Notify_CharacterSetScale){};//24
 	rpc CharacterAttachMagic(Void) returns (Notify_CharacterAttachMagic);//25
-	rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
+	//rpc CharacterMoveForward(Void) returns (Notify_CharacterMoveForward){};//26
 	rpc CharacterSpeed(Void) returns(Notify_CharacterSpeed){};//27
 	rpc CharacterLock(Void) returns (Notify_CharacterLock){};//28
 	rpc CharcaterPush(Void) returns (Notify_CharacterPush){};//29

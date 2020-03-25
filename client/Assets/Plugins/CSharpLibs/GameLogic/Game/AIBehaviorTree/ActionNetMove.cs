@@ -21,7 +21,7 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 if (root.Character.IsMoving)
                 {
-                    root.Character.StopMove();
+                    root.Character.StopMove(stop.StopPos.ToUV3());
                     yield return RunStatus.Success;
                     yield break;
                 }

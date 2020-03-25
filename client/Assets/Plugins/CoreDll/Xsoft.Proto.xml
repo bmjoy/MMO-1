@@ -50,21 +50,6 @@
         <member name="P:Proto.BattleServerReflection.Descriptor">
              <summary>File descriptor for battle_server.proto</summary>
             </member>
-        <member name="F:Proto.MoveType.NormalMove">
-             <summary>
-            普通移动
-             </summary>
-            </member>
-        <member name="F:Proto.MoveType.Back">
-             <summary>
-            后退
-             </summary>
-            </member>
-        <member name="F:Proto.MoveType.Jump">
-             <summary>
-            跳跃
-             </summary>
-            </member>
         <member name="F:Proto.C2B_JoinBattle.MapIDFieldNumber">
              <summary>Field number for the "MapID" field.</summary>
             </member>
@@ -388,15 +373,6 @@
             </member>
         <member name="F:Proto.Notify_CharacterAttachMagic.MTypeFieldNumber">
              <summary>Field number for the "mType" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.PositionFieldNumber">
-             <summary>Field number for the "Position" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterMoveForward.ForwardFieldNumber">
-             <summary>Field number for the "Forward" field.</summary>
             </member>
         <member name="T:Proto.Notify_PropertyValue">
              <summary>
@@ -3250,11 +3226,6 @@
         <member name="T:Proto.NotifyService.CharacterAttachMagic">
              <summary>
              25
-             </summary>    
-            </member>
-        <member name="T:Proto.NotifyService.CharacterMoveForward">
-             <summary>
-             26
              </summary>    
             </member>
         <member name="T:Proto.NotifyService.CharacterSpeed">
