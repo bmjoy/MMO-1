@@ -163,6 +163,8 @@ namespace Windows
             });
         }
 
+        private string keyHp = string.Empty;
+
         internal void InitHero(DHero hero)
         {
             this.Level_Number.text = $"{hero.Level}";
@@ -174,12 +176,27 @@ namespace Windows
             if (leveUp != null)
                 v = (float)hero.Exprices / leveUp.NeedExprices;
             ExpSilder.size = v;
+            var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
+            if (character != null)
+                normalAtt = character.NormalAttack;
+
+           
         }
+
+        private int normalAtt = -1;
 
         internal void InitData(PlayerPackage package, DHero hero)
         {
             SetPackage(package);
             InitHero(hero);
+            foreach (var i in package.Items)
+            {
+                var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
+                if ((ItemType)config.ItemType == ItemType.ItHpitem)
+                {
+                    keyHp = config.Params[0];
+                }
+            }
         }
 
         protected override void OnShow()
@@ -201,9 +218,35 @@ namespace Windows
             }
             UpdateMap();
 
+            if (view.TryGetMagicData(normalAtt, out HeroMagicData att))
+            {
+                var time = Mathf.Max(0, att.CDTime - gate.TimeServerNow);
+                float cdTime = 1;// view.AttackSpeed 
+                if (cdTime < time) cdTime = time;
+                if (cdTime > 0)
+                {
+                    this.AttCdMask.fillAmount = time / cdTime;
+                }
+                else
+                {
+                    this.AttCdMask.fillAmount = 0;
+                }
+            }
+            bt_hp.interactable = true;
+            gate.PreView.Each<UMagicReleaserView>(t =>
+            {
+                if (t.CharacterReleaser.Index == gate.Owner.Index)
+                {
+                    if (t.Key == keyHp)
+                    {
+                        bt_hp.interactable = false;
+                        return true;
+                    }
+                }
+                return false;
+            });
         }
 
-    
 
         private void UpdateMap()
         {

@@ -30,6 +30,8 @@ namespace Windows
         }
 
 
+        protected RawImage MapTexture;
+        protected RectTransform ViewForward;
         protected Scrollbar ExpSilder;
         protected Text lb_exp;
         protected Button user_info;
@@ -41,14 +43,13 @@ namespace Windows
         protected Image swipe;
         protected Button bt_normal_att;
         protected Image att_Icon;
+        protected Image AttCdMask;
         protected Button bt_hp;
         protected Image hp_item_Icon;
         protected Text hp_num;
         protected Button bt_mp;
         protected Image mp_item_Icon;
         protected Text mp_num;
-        protected RawImage MapTexture;
-        protected RectTransform ViewForward;
 
 
         protected UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>> GridTableManager = new UITableManager<AutoGenTableItem<GridTableTemplate, GridTableModel>>();
@@ -57,6 +58,8 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
+            MapTexture = FindChild<RawImage>("MapTexture");
+            ViewForward = FindChild<RectTransform>("ViewForward");
             ExpSilder = FindChild<Scrollbar>("ExpSilder");
             lb_exp = FindChild<Text>("lb_exp");
             user_info = FindChild<Button>("user_info");
@@ -68,14 +71,13 @@ namespace Windows
             swipe = FindChild<Image>("swipe");
             bt_normal_att = FindChild<Button>("bt_normal_att");
             att_Icon = FindChild<Image>("att_Icon");
+            AttCdMask = FindChild<Image>("AttCdMask");
             bt_hp = FindChild<Button>("bt_hp");
             hp_item_Icon = FindChild<Image>("hp_item_Icon");
             hp_num = FindChild<Text>("hp_num");
             bt_mp = FindChild<Button>("bt_mp");
             mp_item_Icon = FindChild<Image>("mp_item_Icon");
             mp_num = FindChild<Text>("mp_num");
-            MapTexture = FindChild<RawImage>("MapTexture");
-            ViewForward = FindChild<RectTransform>("ViewForward");
 
             GridTableManager.InitFromLayout(Grid);
 
