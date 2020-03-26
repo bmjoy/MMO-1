@@ -211,6 +211,7 @@ namespace Windows
             int wi = Map.width;
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
+            if (!gate.Owner) return;
             var a = new Color(1, 1, 1, 0);
             for (int x = 0; x < size; x++)
             {

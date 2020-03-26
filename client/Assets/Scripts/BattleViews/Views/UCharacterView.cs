@@ -228,9 +228,13 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public float vSpeed = 0;
 
-    public void DoStopMove()
+    public bool DoStopMove()
     {
-        GoToEmpty();
+        if (State is ForwardMove)
+        {
+            GoToEmpty(); return true;
+        }
+        return false;
     }
 
     private void PlaySpeed(float speed)
@@ -744,7 +748,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length });
+        CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length, StartPos = startPos });
 #endif
         Agent.Warp(startPos.ToUV3());
         var pushSpeed = speed.ToUV3();

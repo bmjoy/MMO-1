@@ -210,7 +210,7 @@ public class BattleGate : UGate, IServerMessageHandler
         else
         {
             var stopMove = new Action_StopMove { StopPos = pos.ToPV3() };
-            Owner.DoStopMove();
+            if(Owner.DoStopMove())
             SendAction(stopMove);
         }
 
