@@ -301,7 +301,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 {
                     if (i.Value.HeroCharacter.IsDeath) continue;
                     var config = CM.Current.GetConfigByID<ItemData>(useItem.ItemId);
-                    if (config != null) continue;
+                    if (config == null) continue;
                     if (i.Value.GetItemCount(useItem.ItemId) == 0) continue;
                     switch ((ItemType)config.ItemType)
                     {
