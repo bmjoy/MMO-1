@@ -194,6 +194,7 @@ public class BattleGate : UGate, IServerMessageHandler
         if (dir.magnitude > 0.01f)
         {
             var dn = new Vector3(dir.x, 0, dir.z);
+            dn = dn.normalized;
             Vector3 willPos = Owner.MoveJoystick(dn);
             if (lastSyncTime + 0.2f < Time.time)
             {

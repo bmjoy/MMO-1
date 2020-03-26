@@ -1,17 +1,12 @@
 ﻿using System;
 using Proto;
-using UGameTools;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using ExcelConfig;
 using GameLogic.Game.Perceptions;
 using GameLogic.Game.Elements;
 using Google.Protobuf;
-using EConfig;
 using System.Reflection;
 using GameLogic.Utility;
-using Windows;
 
 /// <summary>
 /// 游戏中的通知播放者
@@ -27,9 +22,7 @@ public class NotifyPlayer
     private readonly Dictionary<Type, NotifyMapping> ElementInvokes = new Dictionary<Type, NotifyMapping>();
 
     public IBattlePerception PerView { set; get; }
-    
-
-
+ 
     #region Events
     public Action<Notify_CharacterExp> OnAddExp;
     public Action<IBattleCharacter> OnCreateUser;
