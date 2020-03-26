@@ -66,10 +66,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            //modify position
-            root.Character.TryToSetPosition(message.Position.ToUV3());
-            root.Character.LookAt(message.Rotation.ToUV3());
-
             bool hadMove = false;
             while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
             {

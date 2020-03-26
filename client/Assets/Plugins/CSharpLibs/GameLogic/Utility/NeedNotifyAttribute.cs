@@ -30,10 +30,4 @@ namespace GameLogic.Utility
         }
 
     }
-
-
-    public class NB<T> where T : IMessage, new()
-    {
-        public static T F = new T();
-    }
 }

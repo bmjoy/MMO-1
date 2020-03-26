@@ -757,11 +757,6 @@ public class UCharacterView : UElementView, IBattleCharacter
             };
     }
 
-    void IBattleCharacter.TrySetPosition(Vector3 pos)
-    {
-        Agent.Warp(pos);
-    }
-
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
     {
         if (!this) return;

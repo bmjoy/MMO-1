@@ -295,10 +295,6 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        internal void TryToSetPosition(UVector3 vector3)
-        {
-            this.View.TrySetPosition(vector3);
-        }
 
         public Action PushEnd;
 
@@ -308,7 +304,7 @@ namespace GameLogic.Game.Elements
             var dir = rotation * UVector3.forward;
             var dis = dir * distance;
             var ps = dir * speed;
-            View.Push(this.Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
+            View.Push(Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
             return true;
         }
 

@@ -93,7 +93,9 @@ namespace XNet.Libs.Net
             Socket client = server.EndAccept(ar);
             if (client == null) return; //client is empty
             client.NoDelay = true;
-            //limit client 
+
+            client.SendTimeout = client.ReceiveTimeout = 3000;
+
             if (CurrentConnectionManager.Count >= MaxClient)
             {
                 Debuger.LogWaring($"Client count  limit {CurrentConnectionManager.Count }/{MaxClient}");
@@ -126,9 +128,7 @@ namespace XNet.Libs.Net
                 int count = nClient.Socket.EndReceive(ar, out SocketError errorCode);
                 if (errorCode != SocketError.Success) throw new Exception("Error Code:" + errorCode);
                 if (count <= 0) throw new Exception("Clent receive No data!");
-
                 nClient.Stream.Write(nClient.Buffer, 0, count);
-
                 while (nClient.Stream.Read(out Message message))
                 {
                     ReceivedMessag(nClient, message);
@@ -146,12 +146,6 @@ namespace XNet.Libs.Net
 
         private void HandleException(Client client, Exception ex)
         {
-            try
-            {
-                Debuger.DebugLog($"{ client.Socket.RemoteEndPoint} { ex.Message}");
-            }
-            catch { }
-
             RemoveClient(client);
         }
 

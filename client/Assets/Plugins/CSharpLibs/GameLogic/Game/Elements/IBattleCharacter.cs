@@ -13,11 +13,9 @@ namespace GameLogic.Game.Elements
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
         float Radius { get; }
-        void TrySetPosition(Vector3 vector3);
-
+ 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();
-
         [NeedNotify(typeof(Notify_CharacterSetPosition), "Position")]
         void SetPosition(Proto.Vector3 pos);//set position of the character
         [NeedNotify(typeof(Notify_CharacterSetForword), "Forward")]
