@@ -219,6 +219,14 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
+		#region RepeatTimeLine
+		[HandleLayout(typeof(RepeatTimeLine))]
+		public static void RepeatTimeLineActive(TimeLinePlayer player, LayoutBase layoutBase)
+		{
+			if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount);
+		}
+		#endregion
+
 	}
 }
 

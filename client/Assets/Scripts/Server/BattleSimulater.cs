@@ -300,32 +300,30 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 else if (action is Action_UseItem useItem)
                 {
                     if (i.Value.HeroCharacter.IsDeath) continue;
-                    if (i.Value.ConsumeItem(useItem.ItemId, 1))
+                    var config = CM.Current.GetConfigByID<ItemData>(useItem.ItemId);
+                    if (config != null) continue;
+                    if (i.Value.GetItemCount(useItem.ItemId) == 0) continue;
+                    switch ((ItemType)config.ItemType)
                     {
-                        Debug.Log($"Consume:{i.Value}->{useItem}x{1}");
-                        var config = CM.Current.GetConfigByID<ItemData>(useItem.ItemId);
-                        switch ((ItemType)config.ItemType)
-                        {
-                            case ItemType.ItHpitem:
-                            case ItemType.ItMpitem:
+                        case ItemType.ItHpitem:
+                        case ItemType.ItMpitem:
+                            {
+                                var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
+                                if (Simulater.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic, -1))
                                 {
-                                    var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                    Simulater.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic,-1);
+                                    i.Value.ConsumeItem(useItem.ItemId);
                                     needNotifyPackage = true;
                                 }
                                 break;
-
-                        }
+                            }
                     }
                 }
                 else
                 {
-
                     if (action is Action_ClickSkillIndex)
                     {
                         i.Value.HeroCharacter?.AiRoot.BreakTree();
                     }
-
                     i.Value.HeroCharacter?.AiRoot?.PushAction(action);
                 }
             }

@@ -12,7 +12,8 @@ namespace Layout.LayoutElements
 		XmlInclude(typeof(LookAtTarget)),
         XmlInclude(typeof(CallUnitLayout)),
 		XmlInclude(typeof(PlaySoundLayout)),
-        XmlInclude(typeof(LaunchSelfLayout))
+        XmlInclude(typeof(LaunchSelfLayout)),
+        XmlInclude(typeof(RepeatTimeLine))
 	]
 	public class LayoutBase
 	{
@@ -41,10 +42,20 @@ namespace Layout.LayoutElements
 			{
 				if (att == null || att.Length == 0)
                     throw new Exception($"no found EditorLayoutAttribute in type {layout.GetType()}");
-				return att[0].ViewOnly;
+				return (att[0].PType & PlayType.View)>0;
             }
 			return false;
+		}
 
+		public static bool IsLogicLayout(LayoutBase layout)
+		{
+			if (layout.GetType().GetCustomAttributes(typeof(EditorLayoutAttribute), false) is EditorLayoutAttribute[] att)
+			{
+				if (att == null || att.Length == 0)
+					throw new Exception($"no found EditorLayoutAttribute in type {layout.GetType()}");
+				return (att[0].PType & PlayType.Logic) > 0;
+			}
+			return false;
 		}
 	}
 }

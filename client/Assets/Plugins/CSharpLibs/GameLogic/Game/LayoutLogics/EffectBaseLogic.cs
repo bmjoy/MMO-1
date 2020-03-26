@@ -162,7 +162,6 @@ namespace GameLogic.Game.LayoutLogics
                 releaser.RevertLock(effectTarget, effect.lockType);
             }
         }
-
     }
 }
 

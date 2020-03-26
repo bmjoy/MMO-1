@@ -2,6 +2,13 @@
 
 namespace Layout.EditorAttributes
 {
+	public enum PlayType
+	{
+        Logic = 1,
+        View = 2,
+        BOTH = 3
+    }
+
 	[AttributeUsage(AttributeTargets.Class)]
 	public class EditorLayoutAttribute:Attribute
 	{
@@ -9,8 +16,10 @@ namespace Layout.EditorAttributes
 		{
 			Name = name;
 		}
+
 		public string Name{set;get;}
-        public bool ViewOnly { set; get; }
+
+		public PlayType PType { set; get; } = PlayType.Logic;
 	}
 }
 
