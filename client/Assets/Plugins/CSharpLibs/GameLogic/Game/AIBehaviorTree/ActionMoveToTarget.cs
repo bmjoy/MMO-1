@@ -33,42 +33,26 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield break;
 			}
 
-			if (!root.Character.MoveTo(target.Position,out _))
-			{
-				if (context.IsDebug)
-					Attach("failure", $"can move");
-				yield return RunStatus.Failure;
-				yield break;
-            }
-			float last = root.Time-.3f;
 
-			while (BattlePerception.Distance(target, root.Character) > stopDistance)
+			while (true)
 			{
-				if (!target)
+				if (!root.Character.MoveTo(target.Position, out _, stopDistance))
 				{
-					root.Character.StopMove();
 					yield return RunStatus.Failure;
 					yield break;
 				}
-
-
-				if (last + .2f > root.Time)
+				var time = root.Time;
+				while (time + .3f > root.Time && root.Character.IsMoving)
 				{
 					yield return RunStatus.Running;
-					continue;
 				}
 
-				if (!root.Character.MoveTo(target.Position,out _))
+				if (!root.Character.IsMoving)
 				{
-					if (context.IsDebug)
-						Attach("failure", $"can move");
-					yield return RunStatus.Failure;
-					yield break;
+					break;
 				}
-				yield return RunStatus.Running;
 			}
-
-			root.Character.StopMove();
+			
 
 			yield return RunStatus.Success;
 
@@ -77,9 +61,7 @@ namespace GameLogic.Game.AIBehaviorTree
 		public override void Stop(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
-
 			if (LastStatus == RunStatus.Running) if (root.Character) root.Character?.StopMove();
-
 			base.Stop(context);
 		}
 	}

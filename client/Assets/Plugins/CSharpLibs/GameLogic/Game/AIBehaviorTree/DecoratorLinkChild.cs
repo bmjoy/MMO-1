@@ -16,7 +16,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
-            DecoratedChild.Start(context);
+            DecoratedChild. Start(context);
             while (DecoratedChild.Tick(context) == RunStatus.Running)
             {
                 yield return RunStatus.Running;

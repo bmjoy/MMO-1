@@ -1,17 +1,14 @@
 ﻿using BehaviorTree;
 using Layout;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GameLogic.Game.AIBehaviorTree
 {
-    public class DecoratorTickUntilSuccess : BehaviorTree.Decorator
+    public class DecoratorTickUntilSuccess : Decorator
     {
         public DecoratorTickUntilSuccess(BehaviorTree.Composite child) : base(child) { }
 
-        public override IEnumerable<BehaviorTree.RunStatus> Execute(ITreeRoot context)
+        public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
 			float lastTime = context.Time;
 
