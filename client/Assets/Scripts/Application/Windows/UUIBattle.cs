@@ -211,13 +211,14 @@ namespace Windows
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
             //var timeSpan = TimeSpan.FromSeconds(gate.TimeServerNow);
-           
+            if (!view) return;
+
             foreach (var i in GridTableManager)
             {
                 i.Model.Update(view, gate.TimeServerNow);
             }
             UpdateMap();
-
+           
             if (view.TryGetMagicData(normalAtt, out HeroMagicData att))
             {
                 var time = Mathf.Max(0, att.CDTime - gate.TimeServerNow);
@@ -281,13 +282,10 @@ namespace Windows
             Map.Apply();
         }
 
-
-
         protected override void OnHide()
         {
             base.OnHide();
         }
-
         public void InitCharacter(UCharacterView view)
         {
             if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
@@ -310,8 +308,6 @@ namespace Windows
             }
             this.view = view;
         }
-
-
         public void SetPackage(PlayerPackage package)
         {
             int hp = 0;
@@ -338,7 +334,6 @@ namespace Windows
             mp_num.text = $"{mp}";
         }
         
-
         private void OnRelease(GridTableModel item)
         {
             UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);
