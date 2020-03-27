@@ -234,7 +234,7 @@ namespace Windows
                     this.AttCdMask.fillAmount = 0;
                 }
             }
-            bt_hp.interactable = gate.PreView.HaveOwnerKey(keyHp);
+            bt_hp.interactable = !gate.PreView.HaveOwnerKey(keyHp);
 
         }
 
