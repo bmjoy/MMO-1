@@ -10,7 +10,7 @@ public enum MoveCategory
     Push
 }
 
-
+[Serializable]
 public abstract class CharacterMoveState
 {
 

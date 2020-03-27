@@ -44,6 +44,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
 
     private void Start()
     {
+        Application.targetFrameRate = 30;
         StartCoroutine(Begin());
     }
 

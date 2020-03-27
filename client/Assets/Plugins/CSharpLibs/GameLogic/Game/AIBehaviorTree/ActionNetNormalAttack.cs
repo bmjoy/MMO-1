@@ -92,11 +92,10 @@ namespace GameLogic.Game.AIBehaviorTree
                     releaser.StopAllPlayer();
                     releaser.SetState(ReleaserStates.ToComplete);
                 }
-            }
-
-            if (context is AITreeRoot root)
-            {
-                if (root?.Character?.IsMoving == true) root.Character.StopMove();
+                if (context is AITreeRoot root)
+                {
+                    if (root?.Character?.IsMoving == true) root.Character.StopMove();
+                }
             }
             base.Stop(context);
         }

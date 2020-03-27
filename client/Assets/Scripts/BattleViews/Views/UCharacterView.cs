@@ -117,19 +117,20 @@ public class UCharacterView : UElementView, IBattleCharacter
             NavMeshPath path = new NavMeshPath();
             if (!View.Agent.CalculatePath(target, path)) return false;
             Vector3? wrapTar = path.corners.LastOrDefault();
+            Target = wrapTar;
             if (Vector3.Distance(wrapTar.Value, View.transform.position) < stopDis)
             {
-                return  false;
+                return false;
             }
             View.Agent.stoppingDistance = stopDis;
             View.Agent.SetDestination(wrapTar.Value);
-            Target = wrapTar;
             return true;
         }
 
         public Vector3? ChangeTarget(Vector3 target, float dis)
         {
-            stopDis = dis; MoveTo(target);
+            stopDis = dis;
+            MoveTo(target);
             return Target;
         }
 
@@ -210,13 +211,14 @@ public class UCharacterView : UElementView, IBattleCharacter
         return this.transform.position + forward * Speed * .4f;
     }
 
-    private CharacterMoveState State;
+    public CharacterMoveState State;
 
     private T ChangeState<T>(T s) where T : CharacterMoveState
     {
         State?.Exit();
         State = s;
         State?.Enter();
+        //Debug.LogAssertion($"{this}->{s.GetType()}");
         return s;
     }
 
@@ -808,8 +810,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
         else if (State is Empty)
         {
-            return ChangeState(new DestinationMove(this))
-                .ChangeTarget(target, stopDis);//.Target;
+            return ChangeState(new DestinationMove(this)).ChangeTarget(target, stopDis);//.Target;
         }
         return this.transform.position;
     }
