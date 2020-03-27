@@ -29,9 +29,7 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 case MagicValueOf.BlackBoard:
                     {
-
                         if (!root.TryGetMagic(out CharacterMagicData magicData))
-
                         {
                             yield return RunStatus.Failure;
                             yield break;
@@ -41,26 +39,24 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                     break;
                 case MagicValueOf.MagicKey:
-					{
-						key = Node.magicKey;
-					}
-					break;
-			}
+                    {
+                        key = Node.magicKey;
+                    }
+                    break;
+            }
 
-			if (!root.Perception.View.ExistMagicKey(key))
-			{
+            if (!root.Perception.View.ExistMagicKey(key))
+            {
                 if (context.IsDebug)
                 {
                     Attach("failure", $"nofound key {key}");
                 }
-				yield return RunStatus.Failure;
-				yield break;
-			}
+                yield return RunStatus.Failure;
+                yield break;
+            }
 
-
-            root.Character.StopMove();
             releaser = root.Perception
-                .CreateReleaser(key, root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic ,-1);
+                .CreateReleaser(key, root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic, -1);
 
             while (!releaser.IsLayoutStartFinish)
             {
@@ -69,7 +65,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             yield return RunStatus.Success;
             yield break;
-           
+
         }
 
         private MagicReleaser releaser;

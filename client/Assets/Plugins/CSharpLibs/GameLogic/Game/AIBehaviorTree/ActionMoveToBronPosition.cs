@@ -25,8 +25,8 @@ namespace GameLogic.Game.AIBehaviorTree
 				yield return RunStatus.Failure;
 				yield break;
             }
-			while (root.Character.IsMoving)
-				yield return RunStatus.Running;
+
+			while (root.Character.IsMoving) yield return RunStatus.Running;
 
 			yield return RunStatus.Success;
 
@@ -35,9 +35,7 @@ namespace GameLogic.Game.AIBehaviorTree
 		public override void Stop(ITreeRoot context)
 		{
 			var root = context as AITreeRoot;
-
 			if (LastStatus == RunStatus.Running) if (root.Character) root.Character?.StopMove();
-
 			base.Stop(context);
 		}
 	}

@@ -78,7 +78,6 @@ namespace BehaviorTree
             }
             base.Stop(context);
         }
-
 		public override Composite FindGuid(string id)
 		{
 			if (this.Guid == id) return this;

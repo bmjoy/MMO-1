@@ -60,34 +60,30 @@ namespace GameLogic.Game.AIBehaviorTree
 
             var target = root.Perception.FindTarget(root.Character, type, dis, 360, true, TargetSelectType.Nearest);
 
-            if (!target)
-            {
-                yield return RunStatus.Failure;
-                yield break;
-            }
-
-            bool hadMove = false;
-            while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
+            while (true)
             {
                 if (!target)
                 {
-                    yield break;
+                    if (context.IsDebug) Attach("failure", $"cant move No target");
+                    yield return RunStatus.Failure; yield break;
                 }
+
                 if (!root.Character.MoveTo(target.Position, out _, magic.RangeMax))
                 {
                     if (context.IsDebug) Attach("failure", $"can't move");
                     yield return RunStatus.Failure;
                     yield break;
                 }
+
                 float lastTime = root.Time;
-                hadMove = true;
-                while (lastTime + .5 > root.Time)
+                while (lastTime + .5 > root.Time && root.Character.IsMoving)
                 {
                     yield return RunStatus.Running;
                 }
+
+                if (!root.Character.IsMoving) break;
             }
 
-            if (hadMove) root.Character.StopMove();
 
             if (!root.Character.SubMP(magic.MPCost))
             {

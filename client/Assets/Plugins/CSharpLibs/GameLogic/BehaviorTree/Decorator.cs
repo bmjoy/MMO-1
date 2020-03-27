@@ -8,12 +8,10 @@ namespace BehaviorTree
   
 	public abstract class Decorator : GroupComposite
     {
-       
         public Decorator(Composite child)
             : base(child)
         {
         }
-
         public Composite DecoratedChild { get { return Children[0]; } }
     }
 }

@@ -13,14 +13,10 @@ namespace BehaviorTree
         }
 
         public List<Composite> Children { get; set; }
-
-        //public Composite Selection { get; protected set; }
-
         public override void Start(ITreeRoot context)
 		{
             base.Start(context);
         }
-
         public override void Stop(ITreeRoot context)
         {
             foreach (var i in Children)
@@ -29,16 +25,13 @@ namespace BehaviorTree
             }
             base.Stop(context);
         }
-
 		public override Composite FindGuid(string id)
 		{
-
 			if (this.Guid == id) return this;
 			foreach (var i in Children)
 			{
 				var t = i.FindGuid(id);
-				if (t != null)
-					return t;
+				if (t != null) return t;
 			}
 			return null;
 		}
