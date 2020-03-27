@@ -238,13 +238,8 @@
         <member name="F:Proto.Notify_CreateBattleCharacter.MpMaxFieldNumber">
              <summary>Field number for the "MpMax" field.</summary>
             </member>
-        <member name="F:Proto.Notify_CreateBattleCharacter.CallUnitFieldNumber">
-             <summary>Field number for the "CallUnit" field.</summary>
-            </member>
-        <member name="P:Proto.Notify_CreateBattleCharacter.CallUnit">
-             <summary>
-            召唤单位
-             </summary>
+        <member name="F:Proto.Notify_CreateBattleCharacter.OwnerIndexFieldNumber">
+             <summary>Field number for the "OwnerIndex" field.</summary>
             </member>
         <member name="T:Proto.Notify_CreateMissile">
              <summary>

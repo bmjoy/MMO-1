@@ -164,8 +164,8 @@ namespace GameLogic.Game.Elements
         {
             get { return Properties[type]; }
         }
-
-        public bool CallUnit { private set; get; }
+        //call unit owner
+        public int OwnerIndex { private set; get; } 
         public CharacterData Config { private set; get; }
 
         public BattleCharacter (
@@ -174,9 +174,9 @@ namespace GameLogic.Game.Elements
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
-            string account_uuid,bool callUnit):base(controllor,view)
+            string account_uuid,int ownerIndex = -1):base(controllor,view)
 		{
-            CallUnit = callUnit;
+            this.OwnerIndex = ownerIndex;
             this.Config = data;
             AcccountUuid = account_uuid;
 			HP = 0;

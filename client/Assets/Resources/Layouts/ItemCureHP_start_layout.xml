@@ -3,10 +3,6 @@
   <Time>1</Time>
   <Points>
     <TimePoint>
-      <GUID>95ba48d7-3197-40c7-bf26-138a727f3370</GUID>
-      <Time>0.0550458729</Time>
-    </TimePoint>
-    <TimePoint>
       <GUID>d82270c3-1e4b-440d-873c-c3bea3dfc1f8</GUID>
       <Time>0.0527522936</Time>
     </TimePoint>
@@ -20,13 +16,6 @@
     </TimePoint>
   </Points>
   <Layouts>
-    <LayoutBase xsi:type="PlaySoundLayout">
-      <GUID>95ba48d7-3197-40c7-bf26-138a727f3370</GUID>
-      <resourcesPath>Sound/MagicSounds/Element Scholls/Holy/Holy Spell 08.wav</resourcesPath>
-      <target>Releaser</target>
-      <fromBone>Body</fromBone>
-      <value>0.4</value>
-    </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>d82270c3-1e4b-440d-873c-c3bea3dfc1f8</GUID>
       <target>Releaser</target>
@@ -58,7 +47,7 @@
       <toBoneName>Top</toBoneName>
       <Bind>true</Bind>
       <destoryType>Time</destoryType>
-      <destoryTime>3</destoryTime>
+      <destoryTime>1</destoryTime>
       <offet>
         <x>0</x>
         <y>0</y>

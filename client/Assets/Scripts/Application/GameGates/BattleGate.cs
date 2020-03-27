@@ -109,7 +109,7 @@ public class BattleGate : UGate, IServerMessageHandler
         player.OnCreateUser = (view) =>
         {
             var character = view as UCharacterView;
-            if (character.CallUnit) return;
+            if (character.OwnerIndex>0) return;
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;

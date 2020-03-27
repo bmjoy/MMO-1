@@ -273,7 +273,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             }
         }
     }
-    public bool CallUnit { get; internal set; }
+
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
@@ -364,6 +364,10 @@ public class UCharacterView : UElementView, IBattleCharacter
 
         if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
     }
+
+
+
+    public int OwnerIndex { get; internal set; }
 
 
     private float lockRotationTime = -1f;
@@ -677,8 +681,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             MaxHp = maxHp,
             Mp = MP,
             MpMax = mpMax,
-            CallUnit = CallUnit
+            OwnerIndex = OwnerIndex
         };
+
         foreach (var i in MagicCds)
         {
             createNotity.Cds.Add(new HeroMagicData

@@ -125,16 +125,42 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     private readonly Dictionary<int, UElementView> AttachElements = new Dictionary<int, UElementView>();
 
+    private readonly Dictionary<int, UMagicReleaserView> OwnerReleasers = new Dictionary<int, UMagicReleaserView>();
+
     public void DeAttachView(UElementView battleElement)
     {
         AttachElements.Remove(battleElement.Index);
+        if (battleElement is UMagicReleaserView r)
+        {
+            if (r.CharacterReleaser.Index == OwnerIndex)
+            {
+                OwnerReleasers.Remove(r.Index);//, r);
+            }
+        }
     }
 
     public void AttachView(UElementView battleElement)
     {
         AttachElements.Add(battleElement.Index, battleElement);
-        //AddNotify(battleElement.ToInitNotify());
+        if (battleElement is UMagicReleaserView r)
+        {
+            if (r.CharacterReleaser.Index == OwnerIndex)
+            {
+                OwnerReleasers.Add(r.Index, r);
+            }
+        }
     }
+
+    public bool HaveOwnerKey(string key)
+    {
+        foreach (var i in OwnerReleasers)
+        {
+            if (i.Value.Key == key) return true;
+        }
+        return false;
+    }
+
+    
 
     public IMessage[] GetAndClearNotify()
     {
@@ -266,7 +292,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
         int config, int teamId, Proto.Vector3 pos, Proto.Vector3 forward,
-        int level, string name, float speed,int hp, int hpMax,int mp,int mpMax ,IList<HeroMagicData> cds,bool callUnit)
+        int level, string name, float speed,int hp, int hpMax,int mp,int mpMax ,IList<HeroMagicData> cds,int owner)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
         var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
@@ -294,7 +320,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.AccoundUuid = account_id;
         view.Name = name;
         view.SetHpMp(hp, hpMax,mp, mpMax);
-        view.CallUnit = callUnit;
+        view.OwnerIndex  = owner;
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
         view.SetCharacter(body, ins);
         return view;
