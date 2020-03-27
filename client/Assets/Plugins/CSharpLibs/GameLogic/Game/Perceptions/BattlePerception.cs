@@ -176,7 +176,7 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name,int ownerIndex =1 )
+            string name,int ownerIndex = -1 )
         {
             
             var now = this.View.GetTimeSimulater().Now.Time;
