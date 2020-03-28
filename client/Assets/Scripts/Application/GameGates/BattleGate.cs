@@ -249,7 +249,9 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private void ReleaseLock()
     {
-        releaseLockTime = Time.time+.3f;
+        releaseLockTime = Time.time + .3f;
+        if (Owner)
+            Owner.DoStopMove();
     }
 
     internal void DoNormalAttack()
