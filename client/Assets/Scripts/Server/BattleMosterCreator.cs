@@ -142,16 +142,19 @@ namespace Server
                     CountKillCount++;
                     AliveCount--;
 
-                    if (el["__Drop"] is DropGroupData d && el["__Monster"] is MonsterData mdata)
+                    if (el["__Drop"] is DropGroupData d
+                    && el["__Monster"] is MonsterData mdata)
                     {
-                        var o = el.Watch.Values.OrderBy(t => t.FristTime).FirstOrDefault();
-                        if (o == null) return;
-                       
-                        var owner = per.FindTarget(o.Index);
-                        //召唤物掉落归属问题
-                        if (owner.OwnerIndex > 0)  owner = per.FindTarget(owner.OwnerIndex);
-
-                        DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
+                        var os = el.Watch.Values.OrderBy(t => t.FristTime).ToList();
+                        foreach (var i in os)
+                        {
+                            var owner = per.FindTarget(i.Index);
+                            if (!owner) continue;
+                            //召唤物掉落归属问题
+                            if (owner.OwnerIndex > 0) owner = per.FindTarget(owner.OwnerIndex);
+                            DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
+                            break;
+                        }
                     }
                 };
             }

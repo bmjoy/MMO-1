@@ -67,10 +67,16 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	{
 		return Resources.Load<T> (path);
 	}
-		
-	public T LoadResourcesWithExName<T>(string path) where T:Object
+
+	public T LoadResourcesWithExName<T>(string path) where T : Object
 	{
-		 path = path.Substring(0,path.LastIndexOf('.'));
+		int len = path.LastIndexOf('.');
+		if (len < 0)
+		{
+			Debug.LogError($"{path}");
+			return null;
+		}
+		path = path.Substring(0, path.LastIndexOf('.'));
 		return LoadResources<T>(path);
 	}
 
