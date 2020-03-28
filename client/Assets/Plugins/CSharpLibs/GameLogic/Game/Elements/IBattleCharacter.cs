@@ -13,18 +13,14 @@ namespace GameLogic.Game.Elements
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
         float Radius { get; }
-        void TrySetPosition(Vector3 vector3);
+        void PlayMotion(string motion);//play motion
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();
-
         [NeedNotify(typeof(Notify_CharacterSetPosition), "Position")]
         void SetPosition(Proto.Vector3 pos);//set position of the character
-        [NeedNotify(typeof(Notify_CharacterSetForword), "Forward")]
-        void SetForward(Proto.Vector3 forward);//forward use lookup
         [NeedNotify(typeof(Notify_LookAtCharacter), "Target")]
         void LookAtTarget(int target); //target for look
-        void PlayMotion(string motion);//play motion
         [NeedNotify(typeof(Notify_CharacterMoveTo), "Position", "Target", "StopDis")]
         Vector3? MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis);//move to target
         [NeedNotify(typeof(Notify_CharacterStopMove), "Position")]

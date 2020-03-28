@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EngineCore.Simulater
 {
-	public class GObject
+	public abstract class GObject
 	{
 
 		public int Index { private set; get; }

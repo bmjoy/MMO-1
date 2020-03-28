@@ -45,6 +45,7 @@ namespace XNet.Libs.Net
 		/// </summary>
 		/// <value>The last message time.</value>
 		public DateTime LastMessageTime { set; get; }
+
         /// <summary>
         /// user state
         /// always use save sessionkey
@@ -139,7 +140,7 @@ namespace XNet.Libs.Net
 		private void HandleException( Exception ex)
 		{
 			Server.RemoveClient(this);
-			Debuger.DebugLog(ex.ToString());
+			//Debuger.DebugLog(ex.ToString());
 		}
 		/// <summary>
 		/// get last action message 

@@ -129,15 +129,20 @@ public class BattlePlayer
         return true;
     }
 
-    public bool ConsumeItem(int item, int num)
+    internal int GetItemCount(int itemId,bool ignoreLocked = true)
     {
         int have = 0;
         foreach (var i in Package.Items)
         {
-            if (i.Value.Locked) continue;
-            if (i.Value.ItemID == item) have += i.Value.Num;
-
+            if (i.Value.Locked && ignoreLocked) continue;
+            if (i.Value.ItemID == itemId) have += i.Value.Num;
         }
+        return have;
+    }
+
+    public bool ConsumeItem(int item, int num=1)
+    {
+        int have = GetItemCount(item);
         if (have < num) return false;
         HashSet<string> needRemoves = new HashSet<string>();
         foreach (var i in Package.Items)
@@ -209,5 +214,7 @@ public class BattlePlayer
         Dirty = true;
         return Hero.Exprices;
     }
+
+   
 }
 

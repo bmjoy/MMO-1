@@ -1,5 +1,5 @@
 {
-	"Level": 1,
+	"Level": 2,
     "MaxPlayer": "1000",
 	"ListenPort": 2100,
 	"ListenHost": "192.168.1.102",

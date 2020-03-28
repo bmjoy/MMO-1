@@ -2,7 +2,7 @@
 
 namespace EngineCore.Simulater
 {
-	public class GPerception
+	public abstract class GPerception
 	{
 		public GPerception (GState state)
 		{

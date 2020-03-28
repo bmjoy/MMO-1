@@ -17,7 +17,7 @@
               <guid>9bf0649a-c7a4-499d-96fb-b00baac93e61</guid>
               <valueOf>Value</valueOf>
               <distance>
-                <min>400</min>
+                <min>300</min>
                 <max>100</max>
                 <type>Fixed</type>
               </distance>
@@ -29,18 +29,45 @@
               <guid>e46baa0c-b73a-4e8e-8994-1c5a9a6a24dc</guid>
               <valueOf>Value</valueOf>
               <distance>
-                <min>900</min>
+                <min>500</min>
                 <max>100</max>
                 <type>Fixed</type>
               </distance>
               <compareType>Less</compareType>
             </TreeNode>
-            <TreeNode xsi:type="TreeNodeReleaseMagic">
-              <childs />
-              <name>释放技能</name>
-              <guid>5113874c-1988-46ba-a4e6-21a39d46e3e6</guid>
-              <magicKey>level_01_pushmagic</magicKey>
-              <valueOf>MagicKey</valueOf>
+            <TreeNode xsi:type="TreeNodeProbabilitySelector">
+              <childs>
+                <TreeNode xsi:type="TreeNodeProbabilityNode">
+                  <childs>
+                    <TreeNode xsi:type="TreeNodeReleaseMagic">
+                      <childs />
+                      <name>释放技能</name>
+                      <guid>5113874c-1988-46ba-a4e6-21a39d46e3e6</guid>
+                      <magicKey>level_01_pushmagic</magicKey>
+                      <valueOf>MagicKey</valueOf>
+                    </TreeNode>
+                  </childs>
+                  <name>分段概率子节点</name>
+                  <guid>9f97c003-20be-4c56-9fa6-6f64b7fbf007</guid>
+                  <probability>1</probability>
+                </TreeNode>
+                <TreeNode xsi:type="TreeNodeProbabilityNode">
+                  <childs>
+                    <TreeNode xsi:type="TreeNodeReleaseMagic">
+                      <childs />
+                      <name>释放技能</name>
+                      <guid>8e3c5426-fbc5-4183-9f71-ee9f8811c2e4</guid>
+                      <magicKey>level1_king_area_damage</magicKey>
+                      <valueOf>MagicKey</valueOf>
+                    </TreeNode>
+                  </childs>
+                  <name>分段概率子节点</name>
+                  <guid>f1cd014e-1328-4284-9676-f8713f26f596</guid>
+                  <probability>1</probability>
+                </TreeNode>
+              </childs>
+              <name>分段概率选择节点</name>
+              <guid>be3dcb9d-7442-41e6-af7b-2cf7e27e8ae2</guid>
             </TreeNode>
             <TreeNode xsi:type="TreeNodeWaitForSeconds">
               <childs />

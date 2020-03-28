@@ -7,16 +7,15 @@ namespace BehaviorTree
 {
     public abstract class Composite
     {
-		public string Guid { set; get; }
+        public string Guid { set; get; }
 
         private IEnumerator<RunStatus> Current { set; get; }
-           
+
         public virtual void Start(ITreeRoot context)
         {
             _attachVariables.Clear();
             LastStatus = null;
             Current = Execute(context).GetEnumerator();
-
         }
 
         public virtual void Stop(ITreeRoot context)
@@ -26,10 +25,9 @@ namespace BehaviorTree
                 Current.Dispose();
                 Current = null;
             }
-
             if (LastStatus.HasValue && LastStatus.Value == RunStatus.Running)
             {
-                Attach("failure","block by other");
+                Attach("failure", "block by other");
                 LastStatus = RunStatus.Failure;
             }
         }
@@ -40,23 +38,17 @@ namespace BehaviorTree
             {
                 return LastStatus.Value;
             }
+
             if (Current == null)
             {
-                throw new Exception("You Must start it!");
-            }
-            if (Current.MoveNext())
-            {
-                LastStatus = Current.Current;
-            }
-            else
-            {
-                throw new Exception("Nothing to run? Somethings gone terribly, terribly wrong!");
+                throw new Exception($" {this.GetType()} of {Guid} You Must start it!");
             }
 
-            if (LastStatus != RunStatus.Running)
-            {
-                Stop(context);
-            }
+            if (Current.MoveNext()) LastStatus = Current.Current;
+            else throw new Exception($"{this.GetType()} of {Guid} Nothing to run? Somethings gone terribly, terribly wrong!");
+
+            if (LastStatus != RunStatus.Running) Stop(context);
+
             return this.LastStatus.Value;
         }
 
@@ -66,28 +58,24 @@ namespace BehaviorTree
 
         private readonly Dictionary<string, object> _attachVariables = new Dictionary<string, object>();
 
-        public string Name { set; get; }
-
-		public abstract Composite FindGuid(string id);
-
-		public static Composite FindCompositByGuid(Composite c, string guid) 
-		{
-			return c.FindGuid(guid);
-		}
+        public virtual Composite FindGuid(string id)
+        {
+            if (Guid == id) return this;
+            return null;
+        }
 
         protected void Attach(string key, object val)
         {
             if (_attachVariables.ContainsKey(key)) _attachVariables.Remove(key);
-            _attachVariables.Add(key,val);
+            _attachVariables.Add(key, val);
         }
 
-        public void DebugVals(Action<string, object> callback) 
+        public void DebugVals(Action<string, object> callback)
         {
             foreach (var i in _attachVariables)
             {
                 callback(i.Key, i.Value);
             }
         }
-
     }
 }

@@ -57,9 +57,13 @@ namespace GameLogic.Game.Elements
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
+
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
         public string AcccountUuid { private set; get; }
+
+      
+
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
@@ -164,8 +168,8 @@ namespace GameLogic.Game.Elements
         {
             get { return Properties[type]; }
         }
-
-        public bool CallUnit { private set; get; }
+        //call unit owner
+        public int OwnerIndex { private set; get; } 
         public CharacterData Config { private set; get; }
 
         public BattleCharacter (
@@ -174,9 +178,9 @@ namespace GameLogic.Game.Elements
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
-            string account_uuid,bool callUnit):base(controllor,view)
+            string account_uuid,int ownerIndex = -1):base(controllor,view)
 		{
-            CallUnit = callUnit;
+            this.OwnerIndex = ownerIndex;
             this.Config = data;
             AcccountUuid = account_uuid;
 			HP = 0;
@@ -282,6 +286,13 @@ namespace GameLogic.Game.Elements
             View.StopMove(p.ToPV3());
         }
 
+        internal void TryToSetPosition(UVector3 pos, UVector3 rotation)
+        {
+            View.SetPosition(pos.ToPV3());
+            View.SetLookRotation(rotation.ToPV3());
+        }
+
+
         public bool SubHP(int hp, out bool dead)
         {
             dead = HP == 0;
@@ -295,10 +306,6 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        internal void TryToSetPosition(UVector3 vector3)
-        {
-            this.View.TrySetPosition(vector3);
-        }
 
         public Action PushEnd;
 
@@ -308,7 +315,7 @@ namespace GameLogic.Game.Elements
             var dir = rotation * UVector3.forward;
             var dis = dir * distance;
             var ps = dir * speed;
-            View.Push(this.Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
+            View.Push(Position.ToPV3(), dis.ToPV3(), ps.ToPV3());
             return true;
         }
 
@@ -387,11 +394,6 @@ namespace GameLogic.Game.Elements
         internal void LookAt(BattleCharacter releaserTarget)
         {
             View.LookAtTarget(releaserTarget.Index);
-        }
-
-        internal void LookAt(Vector3 rotation)
-        {
-            View.SetLookRotation(rotation.ToPV3());
         }
 
         internal void Init()

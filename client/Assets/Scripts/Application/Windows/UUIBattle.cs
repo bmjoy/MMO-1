@@ -11,6 +11,7 @@ using GameLogic.Game.Perceptions;
 using EConfig;
 using Proto.BattleServerService;
 using Vector3 = UnityEngine.Vector3;
+using Layout;
 
 namespace Windows
 {
@@ -34,15 +35,14 @@ namespace Windows
 
             public Action<GridTableModel> OnClick;
 
-            public void SetMagic(int id, float cdTime)
+            public void SetMagic(int id )
             {
                 if (magicID != id)
                 {
                     magicID = id;
                     MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
                     var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
-                    var magic = per.GetMagicByKey(MagicData.MagicKey);
-                    if (magic != null) Template.Button.SetText(magic.name);
+                    LMagicData = per.GetMagicByKey(MagicData.MagicKey);
                     Template.Icon.sprite = ResourcesManager.S.LoadIcon(MagicData);
                 }
             }
@@ -50,17 +50,19 @@ namespace Windows
             private int magicID = -1;
             public CharacterMagicData MagicData;
             private float cdTime = 0.01f;
-
             private float lastTime = 0;
+            private MagicData LMagicData;
 
-            public void Update(UCharacterView view, float now)
+            public void Update(UCharacterView view, float now,bool haveKey)
             {
+                
+                if (LMagicData.unique)  Template.Button.interactable = !haveKey;
+                else  Template.Button.interactable = true;
+
                 if (view.TryGetMagicData(magicID, out HeroMagicData data))
                 {
                     var time = Mathf.Max(0, data.CDTime - now);
-
                     this.Template.CDTime.text = time > 0 ? string.Format("{0:0.0}", time) : string.Empty;
-
                     if (cdTime < time)
                         cdTime = time;
                     if (time > 0)
@@ -163,6 +165,8 @@ namespace Windows
             });
         }
 
+        private string keyHp = string.Empty;
+
         internal void InitHero(DHero hero)
         {
             this.Level_Number.text = $"{hero.Level}";
@@ -174,12 +178,27 @@ namespace Windows
             if (leveUp != null)
                 v = (float)hero.Exprices / leveUp.NeedExprices;
             ExpSilder.size = v;
+            var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
+            if (character != null)
+                normalAtt = character.NormalAttack;
+
+           
         }
+
+        private int normalAtt = -1;
 
         internal void InitData(PlayerPackage package, DHero hero)
         {
             SetPackage(package);
             InitHero(hero);
+            foreach (var i in package.Items)
+            {
+                var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
+                if ((ItemType)config.ItemType == ItemType.ItHpitem)
+                {
+                    keyHp = config.Params[0];
+                }
+            }
         }
 
         protected override void OnShow()
@@ -193,17 +212,32 @@ namespace Windows
             base.OnUpdate();
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
-            //var timeSpan = TimeSpan.FromSeconds(gate.TimeServerNow);
-           
+            if (!view) return;
             foreach (var i in GridTableManager)
             {
-                i.Model.Update(view, gate.TimeServerNow);
+                i.Model.Update(view, gate.TimeServerNow, gate.PreView.HaveOwnerKey(i.Model.MagicData.MagicKey));
             }
+            
             UpdateMap();
+           
+            if (view.TryGetMagicData(normalAtt, out HeroMagicData att))
+            {
+                var time = Mathf.Max(0, att.CDTime - gate.TimeServerNow);
+                float cdTime = 1;// view.AttackSpeed 
+                if (cdTime < time) cdTime = time;
+                if (cdTime > 0)
+                {
+                    this.AttCdMask.fillAmount = time / cdTime;
+                }
+                else
+                {
+                    this.AttCdMask.fillAmount = 0;
+                }
+            }
+            bt_hp.interactable = !gate.PreView.HaveOwnerKey(keyHp);
 
         }
 
-    
 
         private void UpdateMap()
         {
@@ -211,6 +245,7 @@ namespace Windows
             int wi = Map.width;
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
+            if (!gate.Owner) return;
             var a = new Color(1, 1, 1, 0);
             for (int x = 0; x < size; x++)
             {
@@ -237,23 +272,23 @@ namespace Windows
             Map.Apply();
         }
 
-
-
         protected override void OnHide()
         {
             base.OnHide();
         }
-
         public void InitCharacter(UCharacterView view)
         {
             if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
             {
-                //var magic = view.TryGetMagicByType.Where(t => IsMaigic(t.MagicID)).ToList();
+                var gata = UApplication.G<BattleGate>();
+                var pre = gata.PreView as IBattlePerception;
+                
                 this.GridTableManager.Count = list.Count;
                 int index = 0;
                 foreach (var i in GridTableManager)
                 {
-                    i.Model.SetMagic(list[index].MagicID, list[index].CDTime);
+                    
+                    i.Model.SetMagic(list[index].MagicID);
                     i.Model.OnClick = OnRelease;
                     index++;
                 }
@@ -266,8 +301,6 @@ namespace Windows
             }
             this.view = view;
         }
-
-
         public void SetPackage(PlayerPackage package)
         {
             int hp = 0;
@@ -294,7 +327,6 @@ namespace Windows
             mp_num.text = $"{mp}";
         }
         
-
         private void OnRelease(GridTableModel item)
         {
             UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);

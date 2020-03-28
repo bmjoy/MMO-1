@@ -117,19 +117,20 @@ public class UCharacterView : UElementView, IBattleCharacter
             NavMeshPath path = new NavMeshPath();
             if (!View.Agent.CalculatePath(target, path)) return false;
             Vector3? wrapTar = path.corners.LastOrDefault();
+            Target = wrapTar;
             if (Vector3.Distance(wrapTar.Value, View.transform.position) < stopDis)
             {
-                return  false;
+                return false;
             }
             View.Agent.stoppingDistance = stopDis;
             View.Agent.SetDestination(wrapTar.Value);
-            Target = wrapTar;
             return true;
         }
 
         public Vector3? ChangeTarget(Vector3 target, float dis)
         {
-            stopDis = dis; MoveTo(target);
+            stopDis = dis;
+            MoveTo(target);
             return Target;
         }
 
@@ -210,7 +211,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         return this.transform.position + forward * Speed * .4f;
     }
 
-    private CharacterMoveState State;
+    public CharacterMoveState State;
 
     private T ChangeState<T>(T s) where T : CharacterMoveState
     {
@@ -228,9 +229,13 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public float vSpeed = 0;
 
-    public void DoStopMove()
+    public bool DoStopMove()
     {
-        GoToEmpty();
+        if (State is ForwardMove)
+        {
+            GoToEmpty(); return true;
+        }
+        return false;
     }
 
     private void PlaySpeed(float speed)
@@ -269,7 +274,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             }
         }
     }
-    public bool CallUnit { get; internal set; }
+
     public int ConfigID { internal set; get; }
     public int TeamId { get; internal set; }
     public int Level { get; internal set; }
@@ -320,7 +325,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     private GameObject range;
     private float hideTime = 0f;
 
-
     public void SetCharacter(GameObject root, GameObject character)
     {
         ViewRoot = root;
@@ -361,6 +365,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
     }
 
+    public int OwnerIndex { get; internal set; }
 
     private float lockRotationTime = -1f;
 
@@ -379,8 +384,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         curHp = hp; maxHp = hpMax;
         MP = mp;  this.mpMax = mpMax;
     }
-
-   
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
@@ -437,19 +440,6 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
-    void IBattleCharacter.SetForward(Proto.Vector3 forward)
-    {
-        if (!this) return;
-        var f = forward.ToUV3();
-        this.LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(f);
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterSetForword
-        {
-            Forward = forward,
-            Index = Index
-        });
-#endif
-    }
 
     Transform IBattleCharacter.Transform
     {
@@ -673,8 +663,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             MaxHp = maxHp,
             Mp = MP,
             MpMax = mpMax,
-            CallUnit = CallUnit
+            OwnerIndex = OwnerIndex
         };
+
         foreach (var i in MagicCds)
         {
             createNotity.Cds.Add(new HeroMagicData
@@ -744,7 +735,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length });
+        CreateNotify(new Notify_CharacterPush { Index = Index, Speed = speed, Length = length, StartPos = startPos });
 #endif
         Agent.Warp(startPos.ToUV3());
         var pushSpeed = speed.ToUV3();
@@ -755,11 +746,6 @@ public class UCharacterView : UElementView, IBattleCharacter
                 if (GElement == null) return;
                 if (GElement is BattleCharacter c) c.EndPush();
             };
-    }
-
-    void IBattleCharacter.TrySetPosition(Vector3 pos)
-    {
-        Agent.Warp(pos);
     }
 
     void IBattleCharacter.StopMove(Proto.Vector3 pos)
@@ -804,8 +790,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         }
         else if (State is Empty)
         {
-            return ChangeState(new DestinationMove(this))
-                .ChangeTarget(target, stopDis);//.Target;
+            return ChangeState(new DestinationMove(this)).ChangeTarget(target, stopDis);//.Target;
         }
         return this.transform.position;
     }

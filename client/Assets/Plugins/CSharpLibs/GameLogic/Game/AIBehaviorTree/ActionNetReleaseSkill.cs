@@ -46,67 +46,64 @@ namespace GameLogic.Game.AIBehaviorTree
 
             if (!root.Character.IsCoolDown(magic.ID, root.Time, false))
             {
-                if (context.IsDebug)
-                {
-                    Attach("failure", $"{message.MagicId} cd not completed");
-                }
+                if (context.IsDebug)  Attach("failure", $"{message.MagicId} cd not completed");
+                
                 yield return RunStatus.Failure;
                 yield break;
             }
 
             var type = magic.GetTeamType();
             var dis = magic.RangeMax;
+
             root.GetDistanceByValueType(DistanceValueOf.ViewDistance, dis, out dis);
 
             var target = root.Perception.FindTarget(root.Character, type, dis, 360, true, TargetSelectType.Nearest);
-
             if (!target)
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
 
-            //modify position
-            root.Character.TryToSetPosition(message.Position.ToUV3());
-            root.Character.LookAt(message.Rotation.ToUV3());
-
-            bool hadMove = false;
-            while (BattlePerception.Distance(root.Character, target) > magic.RangeMax)
+            if (BattlePerception.Distance(target, root.Character) > magic.RangeMax)
             {
-                if (!target)
+                while (true)
                 {
-                    yield break;
-                }
-                if (!root.Character.MoveTo(target.Position, out _, magic.RangeMax))
-                {
-                    if (context.IsDebug) Attach("failure", $"can't move");
-                    yield return RunStatus.Failure;
-                    yield break;
-                }
-                float lastTime = root.Time;
-                hadMove = true;
-                while (lastTime + .5 > root.Time)
-                {
-                    yield return RunStatus.Running;
+                    if (!target)
+                    {
+                        yield return RunStatus.Failure;
+                        yield break;
+                    }
+                    var last = root.Time;
+                    if (!root.Character.MoveTo(target.Position, out _, magic.RangeMax))
+                    {
+                        if (context.IsDebug) Attach("failure", $"can move");
+                        yield return RunStatus.Failure;
+                        yield break;
+                    }
+                    while (last + 0.4f > root.Time && root.Character.IsMoving)
+                    {
+                        yield return RunStatus.Running;
+                    }
+                    if (!root.Character.IsMoving) break;
                 }
             }
+            else
+            {
+                root.Character.TryToSetPosition(message.Position.ToUV3(), message.Rotation.ToUV3());
+            }
 
-            if (hadMove) root.Character.StopMove();
 
             if (!root.Character.SubMP(magic.MPCost))
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
-
-            releaser = root.Perception
-                .CreateReleaser(magic.MagicKey, root.Character,
-                new ReleaseAtTarget(root.Character, target), ReleaserType.Magic, 0);
+            var rt = new ReleaseAtTarget(root.Character, target);
+            releaser = root.Perception.CreateReleaser(magic.MagicKey, root.Character,rt, ReleaserType.Magic, 0);
             if (releaser)
             {
                 root.Character.AttachMagicHistory(magic.ID, root.Time);
-                while (!releaser.IsLayoutStartFinish)
-                    yield return RunStatus.Running;
+                while (!releaser.IsLayoutStartFinish)  yield return RunStatus.Running;
                 yield return RunStatus.Success;
                 yield break;
             }

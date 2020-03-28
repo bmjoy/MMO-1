@@ -175,7 +175,7 @@ namespace GameLogic.Game.LayoutLogics
 				charachter.TeamIndex,
 				charachter.Position + charachter.Rototion * unitLayout.offset.ToUV3(),
 				charachter.Rototion.eulerAngles,
-				charachter.AcccountUuid, data.Name, true
+				charachter.AcccountUuid, data.Name, releaser.Releaser.Index
 			);
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
@@ -216,6 +216,14 @@ namespace GameLogic.Game.LayoutLogics
 					}
 				},
 				releaser);
+		}
+		#endregion
+
+		#region RepeatTimeLine
+		[HandleLayout(typeof(RepeatTimeLine))]
+		public static void RepeatTimeLineActive(TimeLinePlayer player, LayoutBase layoutBase)
+		{
+			if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount);
 		}
 		#endregion
 

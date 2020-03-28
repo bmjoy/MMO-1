@@ -206,12 +206,13 @@ namespace Server
 
         protected virtual void OnTick() { }
 
-        internal void CreateReleaser(string key, BattleCharacter heroCharacter, ReleaseAtTarget rTarget, ReleaserType Rt, int dur)
+        internal MagicReleaser CreateReleaser(string key, BattleCharacter heroCharacter, ReleaseAtTarget rTarget, ReleaserType Rt, int dur)
         {
             if (State.Perception is BattlePerception per)
             {
-                per.CreateReleaser(key, heroCharacter, rTarget, Rt, dur);
+               return  per.CreateReleaser(key, heroCharacter, rTarget, Rt, dur);
             }
+            return null;
         }
 
         private static readonly Dictionary<MapType, Type> Types = new Dictionary<MapType, Type>();

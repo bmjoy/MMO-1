@@ -65,7 +65,8 @@ public class GMainGate:UGate
             character.ID,0,
             Data.pos[3].position.ToPVer3(),
             Vector3.zero.ToPVer3(),1,heroname,
-            character.MoveSpeed, character.HPMax, character.HPMax, character.MPMax, character.MPMax, null, false) as UCharacterView;
+            character.MoveSpeed,
+            character.HPMax, character.HPMax, character.MPMax, character.MPMax, null, -1) as UCharacterView;
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName(UCharacterView.BottomBone));
         characterView.ShowName = false;
@@ -74,7 +75,7 @@ public class GMainGate:UGate
 
     internal void RotationHero(float x)
     {
-        characterView.targetLookQuaternion = characterView.targetLookQuaternion * Quaternion.Euler(0,x, 0);
+        characterView.targetLookQuaternion *= Quaternion.Euler(0,x, 0);
         timeTO = Time.time + 2;
     }
 

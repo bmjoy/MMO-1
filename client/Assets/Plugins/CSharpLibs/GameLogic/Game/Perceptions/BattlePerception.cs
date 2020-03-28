@@ -176,7 +176,7 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name,bool callUnit = false)
+            string name,int ownerIndex = -1 )
         {
             
             var now = this.View.GetTimeSimulater().Now.Time;
@@ -185,9 +185,10 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
-                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, callUnit );
+                data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, ownerIndex );
 
-            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor, view, accountUuid,callUnit);
+            var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor,
+                view, accountUuid,ownerIndex);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);

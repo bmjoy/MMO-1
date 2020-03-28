@@ -36,6 +36,14 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
 
     #endregion
 
+    #region RepeatTimeLine
+    [HandleLayout(typeof(RepeatTimeLine))]
+    public static void RepeatTimeLineActive(TimeLineViewPlayer player, LayoutBase layoutBase)
+    {
+        if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount);
+    }
+    #endregion
+
     #region ParticleLayout
     [HandleLayout(typeof(ParticleLayout))]
     public static void ParticleActive(TimeLineViewPlayer player, LayoutBase layoutBase)
@@ -59,6 +67,15 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     }
 
 
+    #endregion
+    #region LookAtTarget
+    //LookAtTarget
+    [HandleLayout(typeof(LookAtTarget))]
+    public static void LookAtTargetActive(TimeLineViewPlayer linePlayer, LayoutBase layoutBase)
+    {
+        if (layoutBase is LookAtTarget)
+            linePlayer.RView.CharacterReleaser.LookAtTarget(linePlayer.RView.CharacterTarget.Index);
+    }
     #endregion
 
     #region MotionLayout
@@ -98,8 +115,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
 
     protected override void EnableLayout(LayoutBase layout)
     {
-        if (LayoutBase.IsViewLayout(layout))
-            ActiveLayout(layout, this);
+        if (LayoutBase.IsViewLayout(layout)) ActiveLayout(layout, this);
     }
 
     private readonly List<IParticlePlayer> _players = new List<IParticlePlayer>();

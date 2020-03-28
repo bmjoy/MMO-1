@@ -13,28 +13,27 @@ namespace GameLogic.Game.LayoutLogics
 		public TimeLinePlayerBase(TimeLine timeLine)
 		{
 			Line = timeLine;
-			var orpoint = Line.Points.OrderBy(t => t.Time).ToList();
-			foreach (var i in orpoint)
-			{
-				NoActivedPoints.Enqueue(i);
-			}
 		}
-
 		private float startTime = -1;
-
 		private readonly Queue<TimePoint> NoActivedPoints = new Queue<TimePoint>();
-
 		public TimeLine Line { private set; get; }
 		public bool Tick(GTime time)
 		{
 			if (startTime < 0)
 			{
 				startTime = time.Time;
+				var orpoint = Line.Points.OrderBy(t => t.Time).ToList();
+				NoActivedPoints.Clear();
+				foreach (var i in orpoint)
+				{
+					NoActivedPoints.Enqueue(i);
+				}
 				return false;
 			}
 			PlayTime = time.Time - startTime;
 
-			while (NoActivedPoints.Count > 0 && NoActivedPoints.Peek().Time < PlayTime)
+			while (NoActivedPoints.Count > 0
+				&& NoActivedPoints.Peek().Time < PlayTime)
 			{
 				var point = NoActivedPoints.Dequeue();
 				var layout = Line.FindLayoutByGuid(point.GUID);
@@ -48,14 +47,20 @@ namespace GameLogic.Game.LayoutLogics
 
 		public bool IsFinshed { get; private set; } = false;
 
-		protected virtual void OnDestory()
-		{
-
-		}
+		protected virtual void OnDestory() { }
 
 		public void Destory() { this.OnDestory(); }
 
 		public float PlayTime { get; private set; } = 0f;
+
+		private int currentRepeatTime = 0;
+
+		public void Repeat(int maxTimes)
+		{
+			if (currentRepeatTime >= maxTimes) return;
+			startTime = -1;
+			currentRepeatTime++;
+		}
 	}
 
 	public class TimeLinePlayer : TimeLinePlayerBase
@@ -70,8 +75,8 @@ namespace GameLogic.Game.LayoutLogics
 
 		protected override void EnableLayout(LayoutBase layout)
 		{
-			if (LayoutBase.IsViewLayout(layout)) return;
-			LayoutBaseLogic.EnableLayout(layout, this);
+			if (LayoutBase.IsLogicLayout(layout))
+				LayoutBaseLogic.EnableLayout(layout, this);
 		}
 	}
 

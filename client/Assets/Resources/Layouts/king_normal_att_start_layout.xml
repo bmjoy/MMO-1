@@ -35,7 +35,7 @@
         <damageType>Rangle</damageType>
         <fiterType>EmenyTeam</fiterType>
         <radius>2</radius>
-        <angle>120</angle>
+        <angle>20</angle>
         <offsetAngle>0</offsetAngle>
         <offsetPosition>
           <x>0</x>

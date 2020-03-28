@@ -27,18 +27,13 @@ namespace GameLogic.Game.AIBehaviorTree
 				Attach("Forward", forwad);
 				Attach("dis", dis);
 			}
-
 			var diff =  Quaternion.Euler(0, forwad, 0)* root.Character.Forward;
 			var target = root.Character.Position + (diff * dis);
-
-            
-
-			if (!root.Character.MoveTo(target,out UVector3 warpTarget))
+			if (!root.Character.MoveTo(target,out _))
 			{
 				yield return RunStatus.Failure;
 				yield break;
             }
-
 			while (root.Character.IsMoving)
 			{
 				yield return RunStatus.Running;

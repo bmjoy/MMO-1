@@ -14,11 +14,6 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public T Node {  private set; get; }
 
-		public override Composite FindGuid(string id)
-		{
-			if (this.Guid == id) return this;
-			return null;
-		}
 	}
 }
 

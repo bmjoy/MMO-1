@@ -15,8 +15,6 @@ namespace GameLogic.Game.AIBehaviorTree
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             var root = context as AITreeRoot;
-
-
             if (root.TryGetAction(out Action_StopMove stop))
             {
                 if (root.Character.IsMoving)
@@ -31,21 +29,17 @@ namespace GameLogic.Game.AIBehaviorTree
             {
                 if (root.Character.MoveTo(move.WillPos.ToUV3(), out _))
                 {
+                    if (root.IsDebug)
+                    {
+                        Attach("target", move.WillPos);
+                        Attach("position", root.Character.Position);
+                    }
                     yield return RunStatus.Success;
                     yield break;
                 }
+               
             }
             yield return RunStatus.Failure;
-        }
-
-        public override void Stop(ITreeRoot context)
-        {
-            base.Stop(context);
-            if (LastStatus == RunStatus.Running)
-            {
-                var root = context as AITreeRoot;
-                root.Character.StopMove();
-            }
         }
     }
 }
