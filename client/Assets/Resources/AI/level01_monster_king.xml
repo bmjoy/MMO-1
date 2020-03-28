@@ -17,7 +17,7 @@
               <guid>9bf0649a-c7a4-499d-96fb-b00baac93e61</guid>
               <valueOf>Value</valueOf>
               <distance>
-                <min>400</min>
+                <min>300</min>
                 <max>100</max>
                 <type>Fixed</type>
               </distance>
@@ -29,7 +29,7 @@
               <guid>e46baa0c-b73a-4e8e-8994-1c5a9a6a24dc</guid>
               <valueOf>Value</valueOf>
               <distance>
-                <min>900</min>
+                <min>500</min>
                 <max>100</max>
                 <type>Fixed</type>
               </distance>
