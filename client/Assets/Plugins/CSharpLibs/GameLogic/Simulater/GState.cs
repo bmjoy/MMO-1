@@ -65,19 +65,18 @@ namespace EngineCore.Simulater
         {
             if (!IsEnable) return;
             var current = _elementList.First;
-           
             while (current != null)
             {
                 var next = current.Next;
                 if (current.Value.Enable)
                 {
-                    current.Value.Controllor.GetAction(time, current.Value)
-                        .Execute(time, current.Value);
+                    current.Value.Controllor?.GetAction(time, current.Value)?.Execute(time, current.Value);
                 }
+
                 if (!current.Value.Enable && current.Value.CanDestory)
                 {
-                    _elements.Remove(current.Value.Index);
                     GObject.ExitState(current.Value);
+                    _elements.Remove(current.Value.Index);
                     _elementList.Remove(current);
                 }
                 current = next;
@@ -92,9 +91,7 @@ namespace EngineCore.Simulater
             {
                 state.Tick(now);
             }
-            else {
-                throw new Exception("You can't tick a state before you start it.");
-            }
+            else throw new Exception("You can't tick a state before you start it.");
         }
 
         internal bool AddElement(GObject el)

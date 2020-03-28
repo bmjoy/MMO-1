@@ -185,10 +185,11 @@ public class BattleGate : UGate, IServerMessageHandler
     public UCharacterView Owner { private set; get; }
 
     private float lastSyncTime = 0;
-
+    private float releaseLockTime = -1;
     internal void MoveDir(Vector3 dir)
     {
         if (!CanNetAction()) return;
+        if (releaseLockTime > Time.time) return;
         if (Owner.IsLock(ActionLockType.NoMove)) return;
         var pos = Owner.transform.position;
         if (dir.magnitude > 0.01f)
@@ -246,9 +247,15 @@ public class BattleGate : UGate, IServerMessageHandler
         return false;
     }
 
+    private void ReleaseLock()
+    {
+        releaseLockTime = Time.time+.3f;
+    }
+
     internal void DoNormalAttack()
     {
         if (!CanNetAction()) return;
+        ReleaseLock();
         if (Owner.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
         {
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
@@ -312,6 +319,7 @@ public class BattleGate : UGate, IServerMessageHandler
             if (config != null) Owner.ShowRange(config.RangeMax);
             if (config.MPCost <= Owner.MP)
             {
+                ReleaseLock();
                 SendAction(new Action_ClickSkillIndex
                 {
                     MagicId = magicData.ID,

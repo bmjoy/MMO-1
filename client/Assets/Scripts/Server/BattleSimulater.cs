@@ -126,7 +126,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
         Debug.Log("Exit");
         Server?.Stop();
         CenterServerClient?.Disconnect();
-        Simulater.Stop();
+        Simulater?.Stop();
         Simulater = null;
         Server = null;
         CenterServerClient = null;

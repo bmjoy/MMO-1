@@ -57,9 +57,13 @@ namespace GameLogic.Game.Elements
         private readonly Dictionary<P, ComplexValue> Properties = new Dictionary<P, ComplexValue>();
         private Dictionary<int, BattleCharacterMagic> Magics { set; get; }
         private object tempObj;
+
         public TreeNode DefaultTree { get; set; }
         public string DefaultTreePath { set; get; }
         public string AcccountUuid { private set; get; }
+
+      
+
         public HeroCategory Category { set; get; }
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
@@ -282,6 +286,13 @@ namespace GameLogic.Game.Elements
             View.StopMove(p.ToPV3());
         }
 
+        internal void TryToSetPosition(UVector3 pos, UVector3 rotation)
+        {
+            View.SetPosition(pos.ToPV3());
+            View.SetLookRotation(rotation.ToPV3());
+        }
+
+
         public bool SubHP(int hp, out bool dead)
         {
             dead = HP == 0;
@@ -383,11 +394,6 @@ namespace GameLogic.Game.Elements
         internal void LookAt(BattleCharacter releaserTarget)
         {
             View.LookAtTarget(releaserTarget.Index);
-        }
-
-        internal void LookAt(Vector3 rotation)
-        {
-            View.SetLookRotation(rotation.ToPV3());
         }
 
         internal void Init()

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TreeNode xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TreeNodeSelector">
   <childs>
-    <TreeNode xsi:type="TreeNodeNetActionSkill">
-      <childs />
-      <name>处理释放技能输入</name>
-      <guid>57f331ab-7775-4725-8859-4a53b50d28f4</guid>
-    </TreeNode>
     <TreeNode xsi:type="TreeNodeParallelSelector">
       <childs>
+        <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
+          <childs>
+            <TreeNode xsi:type="TreeNodeNetActionSkill">
+              <childs />
+              <name>处理释放技能输入</name>
+              <guid>57f331ab-7775-4725-8859-4a53b50d28f4</guid>
+            </TreeNode>
+          </childs>
+          <name>运行直到返回Success</name>
+          <guid>4711e7c7-3083-4119-a0ff-a7a4d8677216</guid>
+        </TreeNode>
         <TreeNode xsi:type="TreeNodeRunUnitlSuccess">
           <childs>
             <TreeNode xsi:type="TreeNodeNetActionMove">

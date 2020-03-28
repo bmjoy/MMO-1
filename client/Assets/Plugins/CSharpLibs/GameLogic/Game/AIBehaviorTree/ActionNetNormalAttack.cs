@@ -87,14 +87,17 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             if (LastStatus == RunStatus.Running)
             {
-                if (!releaser.IsLayoutStartFinish)
+                if (releaser)
                 {
-                    releaser.StopAllPlayer();
-                    releaser.SetState(ReleaserStates.ToComplete);
-                }
-                if (context is AITreeRoot root)
-                {
-                    if (root?.Character?.IsMoving == true) root.Character.StopMove();
+                    if (!releaser.IsLayoutStartFinish)
+                    {
+                        releaser.StopAllPlayer();
+                        releaser.SetState(ReleaserStates.ToComplete);
+                    }
+                    if (context is AITreeRoot root)
+                    {
+                        if (root?.Character?.IsMoving == true) root.Character.StopMove();
+                    }
                 }
             }
             base.Stop(context);

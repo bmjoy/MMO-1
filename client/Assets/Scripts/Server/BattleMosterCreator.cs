@@ -149,8 +149,7 @@ namespace Server
                        
                         var owner = per.FindTarget(o.Index);
                         //召唤物掉落归属问题
-                        if (owner.OwnerIndex > 0)
-                            owner = per.FindTarget(owner.OwnerIndex);
+                        if (owner.OwnerIndex > 0)  owner = per.FindTarget(owner.OwnerIndex);
 
                         DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
                     }
@@ -160,7 +159,6 @@ namespace Server
 
         internal void TryCreateMonster(float time)
         {
-
             if (AliveCount == 0)
             {
                 CreateMonster();
@@ -171,7 +169,6 @@ namespace Server
                 if (AliveCount <= LevelData.MaxMonster) CreateMonster();
                 LastTime = time;
             }
-
         }
 
         private void DoDrop(Vector3 pos, MonsterData monster, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)

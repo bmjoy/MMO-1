@@ -218,7 +218,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         State?.Exit();
         State = s;
         State?.Enter();
-        //Debug.LogAssertion($"{this}->{s.GetType()}");
         return s;
     }
 
@@ -326,7 +325,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     private GameObject range;
     private float hideTime = 0f;
 
-
     public void SetCharacter(GameObject root, GameObject character)
     {
         ViewRoot = root;
@@ -367,10 +365,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
     }
 
-
-
     public int OwnerIndex { get; internal set; }
-
 
     private float lockRotationTime = -1f;
 
@@ -389,8 +384,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         curHp = hp; maxHp = hpMax;
         MP = mp;  this.mpMax = mpMax;
     }
-
-   
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
@@ -447,19 +440,6 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
-    void IBattleCharacter.SetForward(Proto.Vector3 forward)
-    {
-        if (!this) return;
-        var f = forward.ToUV3();
-        this.LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(f);
-#if UNITY_SERVER || UNITY_EDITOR
-        CreateNotify(new Notify_CharacterSetForword
-        {
-            Forward = forward,
-            Index = Index
-        });
-#endif
-    }
 
     Transform IBattleCharacter.Transform
     {

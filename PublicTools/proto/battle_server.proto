@@ -123,12 +123,6 @@ message Notify_CharacterSetPosition
 	 Vector3 Position = 2;//
 }
 
-message Notify_CharacterSetForword
-{
-	int32 Index =1;
-	Vector3  Forward =2;
-}
-
 message Notify_CharacterSpeed
 {
 	int32 Index =1 ;
@@ -309,7 +303,6 @@ service NotifyService
 	rpc MPChange(Void) returns (Notify_MPChange);//15
 	rpc PlayerJoinState(Void) returns (Notify_PlayerJoinState);//16
 	rpc PropertyValue(Void) returns (Notify_PropertyValue){ };//17
-	rpc CharacterSetForword(Void) returns (Notify_CharacterSetForword){};//19
 	rpc CharacterMoveTo(Void) returns (Notify_CharacterMoveTo){};//20
 	rpc CharacterStopMove(Void) returns (Notify_CharacterStopMove);//21
 	rpc CharacterDeath(Void) returns (Notify_CharacterDeath);//22
