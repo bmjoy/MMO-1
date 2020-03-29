@@ -5,7 +5,17 @@
     <EventContainer>
       <type>EVENT_START</type>
       <layoutPath>Layouts/level1_king_area_damage_start_layout.xml</layoutPath>
-      <effectGroup />
+      <effectGroup>
+        <EffectGroup>
+          <effects>
+            <EffectBase xsi:type="NormalDamageEffect">
+              <valueOf>NormalAttack</valueOf>
+              <DamageValue>0</DamageValue>
+            </EffectBase>
+          </effects>
+          <key>001</key>
+        </EffectGroup>
+      </effectGroup>
     </EventContainer>
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>

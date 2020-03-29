@@ -146,9 +146,9 @@ namespace Server
                     && el["__Monster"] is MonsterData mdata)
                     {
                         var os = el.Watch.Values.OrderBy(t => t.FristTime).ToList();
-                        foreach (var i in os)
+                        foreach (var e in os)
                         {
-                            var owner = per.FindTarget(i.Index);
+                            var owner = per.FindTarget(e.Index);
                             if (!owner) continue;
                             //召唤物掉落归属问题
                             if (owner.OwnerIndex > 0) owner = per.FindTarget(owner.OwnerIndex);
