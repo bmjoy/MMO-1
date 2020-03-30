@@ -23,7 +23,7 @@ namespace Layout.AITree
 	public class TreeNodeLinkNode : TreeNode
 	{
 		[Label("子树")]
-        [EditorResourcePath]
+        [EditorStreamingPath]
 		public string Path ;
     }
 }

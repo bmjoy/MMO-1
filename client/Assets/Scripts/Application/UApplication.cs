@@ -34,7 +34,7 @@ public class UApplication : XSingleton<UApplication>
 
     public void GetServer()
     {
-        var config = ResourcesManager.S.ReadStreamingFile("client.json");
+        var config = ResourcesManager.S.LoadText("client.json");
         var clientConfig = ClientConfig.Parser.ParseJson(config);
 
         ServerHost = clientConfig.LoginServerHost;

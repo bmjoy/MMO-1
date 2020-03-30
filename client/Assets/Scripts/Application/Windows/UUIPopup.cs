@@ -29,14 +29,15 @@ namespace Windows
         private Action Ok;
         private Action Cancel;
 
-        public static UUIPopup ShowConfirm(string title, string content, Action ok, Action cancel =null)
+        public static void ShowConfirm(string title, string content, Action ok, Action cancel = null)
         {
-            var ui = UUIManager.S.CreateWindow<UUIPopup>();
-            ui.Ok = ok;
-            ui.Cancel = cancel;
-            ui.lb_conent.text = content;
-            ui.lb_title.text = title;
-            return ui;
+            UUIManager.S.CreateWindowAsync<UUIPopup>(ui =>
+            {
+                ui.Ok = ok;
+                ui.Cancel = cancel;
+                ui.lb_conent.text = content;
+                ui.lb_title.text = title;
+            });
         }
     }
 }

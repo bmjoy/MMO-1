@@ -4,6 +4,7 @@ using UGameTools;
 using UnityEngine.UI;
 using UnityEngine;
 using Proto.PServices;
+using System.Collections;
 
 public abstract class UUIElement
 {
@@ -36,17 +37,18 @@ public abstract class UUIElement
     }
 }
 
+
+
 public class UUIManager:XSingleton<UUIManager>,IEventMasker
 {
 	public void Awake()
 	{
 		DontDestroyOnLoad (this.gameObject);
-		//DontDestroyOnLoad (top);
         eventMask .SetActive(false);
 	}
 
-	private Dictionary<string,UUIWindow> _window=new Dictionary<string, UUIWindow> ();
-    private Dictionary<int,UUITip> _tips= new Dictionary<int, UUITip> ();
+	private readonly Dictionary<string,UUIWindow> _window=new Dictionary<string, UUIWindow> ();
+    private readonly Dictionary<int,UUITip> _tips= new Dictionary<int, UUITip> ();
 
 	void Update()
 	{
@@ -85,7 +87,7 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
         if (ui != null)
             UUIWindow.UpdateUIData(ui);
     }
-    private Queue<UUITip> _tipDelTemp = new Queue<UUITip>();
+    private readonly Queue<UUITip> _tipDelTemp = new Queue<UUITip>();
 
     void LateUpdate()
     {
@@ -105,7 +107,7 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
         {
             var tip = _tipDelTemp.Dequeue();
             _tips.Remove(tip.InstanceID);
-            UUITip.Destory(tip);
+            UUIElement.Destory(tip);
         }
 
         if (maskTime > 0 && maskTime < Time.time)
@@ -117,35 +119,33 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
 
 	public T GetUIWindow<T>()where T:UUIWindow, new()
 	{
-		UUIWindow obj;
-		if (_window.TryGetValue (typeof(T).Name, out obj)) {
-			return obj as T;
-		}
-		return default(T);
+        if (_window.TryGetValue(typeof(T).Name, out UUIWindow obj))
+        {
+            return obj as T;
+        }
+        return default;
 	}
 
-	private Queue<UUIWindow> _addTemp = new Queue<UUIWindow> ();
-	private Queue<UUIWindow> _delTemp = new Queue<UUIWindow> ();
+	private readonly Queue<UUIWindow> _addTemp = new Queue<UUIWindow> ();
+	private readonly Queue<UUIWindow> _delTemp = new Queue<UUIWindow> ();
 
-    public T CreateWindow<T>() where T : UUIWindow, new()
+  
+    public Coroutine CreateWindowAsync<T>(Action<T> callBack) where T : UUIWindow, new()
+    {
+        return StartCoroutine(CreateWindow(callBack));
+    }
+
+    private IEnumerator CreateWindow<T>(Action<T> callback) where T : UUIWindow, new()
     {
         var ui = GetUIWindow<T>();
         if (ui == null)
         {
-            ui = UUIWindow.Create<T>(this.BaseCanvas.transform);
+            var async = UUIWindow.CreateAsync<T>(this.BaseCanvas.transform);
+            yield return async;
+            ui = async.Window;
             _addTemp.Enqueue(ui);
         }
-        return ui;
-    }
-
-    public T CreateTip<T>(bool world = false) where T:UUITip, new()
-    {
-
-        var root = world ? worldTop.transform : this.top.transform;
-
-        var tip=  UUITip.Create<T>(root, world);
-        this._tips.Add(tip.InstanceID, tip);
-        return tip;
+        callback?.Invoke(ui);
     }
 
     public bool TryToGetTip<T>(int id,out T tip)  where T:UUITip
@@ -157,6 +157,15 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
         }
         tip = null;
         return false;
+    }
+
+    private IEnumerator CreateTipAsync<T>(bool world) where T : UUITip, new()
+    {
+        var root = world ? worldTop.transform : this.top.transform;
+        var async = UUITip.CreateAsync<T>(root, world);
+        yield return async;
+        var tip = async.Tip;
+        this._tips.Add(tip.InstanceID, tip);
     }
 
 	public void ShowMask(bool show)
@@ -191,9 +200,7 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
     public Vector2 OffsetInUI(Vector3 position)
     {
         var pos = Camera.main.WorldToScreenPoint(position) ;
-        //return new Vector2(pos.x/rectTop.localScale.x, pos.y/rectTop.localScale.y);
         return new Vector2(pos.x, pos.y);
-        //return Vector2.zero;
     }
 
     public void HideAll()

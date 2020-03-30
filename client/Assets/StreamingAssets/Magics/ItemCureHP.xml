@@ -10,7 +10,7 @@
           <effects>
             <EffectBase xsi:type="CureEffect">
               <valueType>HPMaxPro</valueType>
-              <value>400</value>
+              <value>800</value>
             </EffectBase>
           </effects>
           <key>001</key>

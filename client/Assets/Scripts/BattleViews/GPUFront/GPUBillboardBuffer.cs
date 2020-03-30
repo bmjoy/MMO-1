@@ -96,11 +96,15 @@ public class GPUBillboardBuffer
 	 	mFilter=null;
 	 	mRenderer=null;
 	}
-	
+
 	public void Init()
 	{
 		GPUBillboardBufferInit();
-		SetTexture(ResourcesManager.S.LoadResources<Texture>("Number"));
+		ResourcesManager.S.LoadResourcesWithExName<Texture>("Number.png",
+			(t) =>
+			{
+				SetTexture(t);
+			});
 	}
 
 	private void GPUBillboardBufferInit()

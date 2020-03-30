@@ -1,7 +1,9 @@
 {
     "name": "BattleViews",
     "references": [
-        "GameLogic"
+        "GameLogic",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

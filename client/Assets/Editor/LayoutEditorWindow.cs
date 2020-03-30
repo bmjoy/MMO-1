@@ -33,17 +33,15 @@ public class LayoutEditorWindow:EditorWindow
 		//window.Show ();
 	}
 
-    private const string SAVE_PATH = "/Resources/Layouts/";
+    private static readonly string SAVE_PATH = $"{PropertyDrawer.ASSET_ROOT}Layouts/";
 
 
     public static void OpenLayout(string layout)
 	{
 		Init ();
-
 		LayoutEditorWindow window = GetWindow<LayoutEditorWindow> ();
-		window.path = Application.dataPath + "/Resources/" + layout;
-		window.line = XmlParser.DeSerialize<TimeLine> (File.ReadAllText( window.path,XmlParser.UTF8));
-
+		window.path = $"{Application.dataPath}{PropertyDrawer.ASSET_ROOT}{layout}";
+		window.line = XmlParser.DeSerialize<TimeLine>(File.ReadAllText( window.path,XmlParser.UTF8));
 		window.shortPath = layout;
 	}
 
@@ -386,9 +384,8 @@ public class LayoutEditorWindow:EditorWindow
 
 	private void SaveAs()
 	{
-		if (line == null)
-			return;
-		path = EditorUtility.SaveFilePanel ("保存", Application.dataPath + SAVE_PATH ,"layout", "xml");
+		if (line == null)  return;
+		path = EditorUtility.SaveFilePanel ("保存", $"{Application.dataPath}{SAVE_PATH}" ,"layout", "xml");
 		if (!string.IsNullOrEmpty (path)) {
 			shortPath = path.Replace (Application.dataPath + "/Resources/", "");
 			var xml = XmlParser.Serialize (line);
@@ -422,9 +419,7 @@ public class LayoutEditorWindow:EditorWindow
                 return;
         }
 
-        path = EditorUtility.OpenFilePanel("Open Layout",
-            Application.dataPath +  SAVE_PATH, "xml");
-        
+        path = EditorUtility.OpenFilePanel("Open Layout",$"{Application.dataPath}{SAVE_PATH}", "xml");
         Open(path);
     }
 
@@ -433,7 +428,7 @@ public class LayoutEditorWindow:EditorWindow
         if (!string.IsNullOrEmpty(path))
         {
             line = XmlParser.DeSerialize<TimeLine>(File.ReadAllText(path, XmlParser.UTF8));
-            shortPath = path.Replace(Application.dataPath + "/Resources/", "");
+            shortPath = path.Replace(PropertyDrawer.ASSET_ROOT, "");
             currentObj = null;
         } 
     }

@@ -7,10 +7,6 @@
       <Time>0.0771208256</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>47a5d781-dd12-4c77-8621-5e2e4fb5751c</GUID>
-      <Time>0.0282776356</Time>
-    </TimePoint>
-    <TimePoint>
       <GUID>1b2f1f0e-c57b-44ec-8c12-cd8f32cb7d1d</GUID>
       <Time>0.0880462751</Time>
     </TimePoint>
@@ -26,28 +22,6 @@
       <target>Target</target>
       <fromBone>Body</fromBone>
       <value>1</value>
-    </LayoutBase>
-    <LayoutBase xsi:type="ParticleLayout">
-      <GUID>47a5d781-dd12-4c77-8621-5e2e4fb5751c</GUID>
-      <path />
-      <fromTarget>Target</fromTarget>
-      <toTarget>Target</toTarget>
-      <fromBoneName>Body</fromBoneName>
-      <toBoneName>Body</toBoneName>
-      <Bind>false</Bind>
-      <destoryType>Normal</destoryType>
-      <destoryTime>0</destoryTime>
-      <offet>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </offet>
-      <rotation>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </rotation>
-      <localsize>1</localsize>
     </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>1b2f1f0e-c57b-44ec-8c12-cd8f32cb7d1d</GUID>

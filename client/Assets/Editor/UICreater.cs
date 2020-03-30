@@ -21,7 +21,6 @@ public class UICreater : EditorWindow
         winds.minSize = new Vector2(300, 400);
     }
 
-    private static UICreater _ui;
     public void OnGUI()
     { 
         if (Selection.activeGameObject != currentSelect)
@@ -85,11 +84,11 @@ public class UICreater : EditorWindow
 
     }
 
-    private  static string tableTemplateField =
+    private  static readonly string tableTemplateField =
 @"            public [Type] [Name];";
-    private static string tableTemlateFindField =
+    private static readonly string tableTemlateFindField =
 @"                [Name] = FindChild<[Type]>("+"\"[Name]\""+");";
-    private static string tableTemplateClass =
+    private static readonly string tableTemplateClass =
 @"        public class [TableName]TableTemplate : TableItemTemplate
         {
             public [TableName]TableTemplate(){}
@@ -135,7 +134,7 @@ namespace Windows
         }
     }
 }";
-    private static string tableModelClass =
+    private static readonly string tableModelClass =
 @"        public class [TableName]TableModel : TableItemModel<[TableName]TableTemplate>
         {
             public [TableName]TableModel(){}
@@ -144,7 +143,7 @@ namespace Windows
                 //todo
             }
         }";
-    private static string modelFile =
+    private static readonly string modelFile =
 @"using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -267,7 +266,7 @@ namespace Windows
     public void Init(Transform root)
     {
         #region CollectItem
-        if (root.gameObject.tag == EXPORT_TAG)
+        if (root.CompareTag(EXPORT_TAG))
         {
             
             var ui = GetComponet(root);
@@ -308,7 +307,7 @@ namespace Windows
 
     private void GetChildExportItems(Transform root, Dictionary<string, string> dic)
     {
-        if(root.tag == EXPORT_TAG)
+        if(root.CompareTag(EXPORT_TAG))
         {
             var ui = this.GetComponet(root);
             if(ui!=null)

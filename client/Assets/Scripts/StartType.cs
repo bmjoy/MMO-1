@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using org.vxwo.csharp.json;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using XNet.Libs.Utility;
 
 
 public class StartType : MonoBehaviour
 {
-    
-
-    // Start is called before the first frame update
-    IEnumerator Start()
+   
+    private IEnumerator Start()
     {
+       yield return  Addressables.InitializeAsync();
         Debuger.Loger = new UnityLoger();
-        //Application.targetFrameRate = 60;
 
         yield return SceneManager.LoadSceneAsync("Welcome", LoadSceneMode.Additive);
 

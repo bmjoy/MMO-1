@@ -274,7 +274,7 @@ public class MagicEditorWindow : EditorWindow
 			if (!EditorUtility.DisplayDialog ("Cancel", "Open file will lost current edit，Do you want to over it", "Yes", "Cancel"))
 				return;
 		}
-		var path = EditorUtility.OpenFilePanel ("Open", Application.dataPath+ SAVE_PATH, "xml");
+		var path = EditorUtility.OpenFilePanel ("Open",$"{Application.dataPath}{SAVE_PATH}", "xml");
 		OpenPath(path);
 		currentPath = path;
 	}
@@ -303,7 +303,7 @@ public class MagicEditorWindow : EditorWindow
 
 	}
 
-	public const string SAVE_PATH = "/Resources/Magics/";
+	public static readonly string SAVE_PATH = $"{PropertyDrawer.ASSET_ROOT}Magics/";
 
 	private string currentPath;
 
@@ -311,7 +311,7 @@ public class MagicEditorWindow : EditorWindow
 	{
         if (!(userstate is MagicData data)) return;
         var xml = XmlParser.Serialize (data);
-		var path =EditorUtility.SaveFilePanel ("Open", Application.dataPath+ SAVE_PATH, "magic", "xml");
+		var path =EditorUtility.SaveFilePanel ("Open",$"{Application.dataPath}{SAVE_PATH}", "magic", "xml");
 		if (string.IsNullOrEmpty (path))
 			return;
 		File.WriteAllText (path, xml, XmlParser.UTF8);

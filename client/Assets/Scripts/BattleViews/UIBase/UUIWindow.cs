@@ -24,7 +24,52 @@ public enum WindowState
 
 public abstract class UUIWindow:UUIElement
 {
-	private MonoBehaviour runner;
+    public class OpenUIAsync<T> : CustomYieldInstruction where T : UUIWindow, new()
+    {
+        private const string UI_PATH = "Windows/{0}.prefab";
+
+        public OpenUIAsync(Transform uiRoot)
+        {
+            var attrs = typeof(T).GetCustomAttributes(typeof(UIResourcesAttribute), false) as UIResourcesAttribute[];
+            if (attrs.Length > 0)
+            {
+                var name = attrs[0].Name;
+                ResourcesManager.S.LoadResourcesWithExName<GameObject>(string.Format(UI_PATH, name), (res) =>
+                {
+                    var root = GameObject.Instantiate<GameObject>(res);
+                    var window = new T
+                    {
+                        uiRoot = root
+                    };
+                    window.Rect.SetParent(uiRoot, false);
+                    window.uiRoot.name = string.Format("UI_{0}", typeof(T).Name);
+                    window.runner = root.AddComponent<UIWindowRunner>();
+                    window.OnCreate();
+                    this.Window = window;
+                    IsDone = true;
+                });
+            }
+            else
+            {
+                throw new Exception("No found UIResourcesAttribute!");
+            }
+
+        }
+
+        public T Window { private set; get; }
+
+        public bool IsDone { private set; get; } = false;
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return ! IsDone;
+            }
+        }
+    }
+
+    private MonoBehaviour runner;
 
 	protected UUIWindow ()
 	{
@@ -35,7 +80,6 @@ public abstract class UUIWindow:UUIElement
 	{
 		runner.StartCoroutine(el);
     }
-
 
 	protected  override void OnDestory()
 	{
@@ -122,25 +166,9 @@ public abstract class UUIWindow:UUIElement
 
 	private WindowState state =  WindowState.NONE;
 
-	private const string UI_PATH ="Windows/{0}";
-
-	public static T Create<T>(Transform uiRoot) where T:UUIWindow, new() 
+	
+	public static OpenUIAsync<T> CreateAsync<T>(Transform uiRoot) where T:UUIWindow, new() 
 	{
-		var attrs = typeof(T).GetCustomAttributes (typeof(UIResourcesAttribute), false) as UIResourcesAttribute[];
-		var window = new T ();
-		if (attrs.Length > 0) {
-			var name = attrs [0].Name;
-			var res = ResourcesManager.Singleton.LoadResources<GameObject> (String.Format (UI_PATH, name));
-			var root = GameObject.Instantiate<GameObject> (res);
-			window.uiRoot = root;
-			window.Rect.SetParent(uiRoot, false);
-			window.uiRoot.name = string.Format ("UI_{0}", typeof(T).Name);
-			window.runner = root.AddComponent<UIWindowRunner>();
-			window.OnCreate ();
-		} else {
-			throw new Exception ("No found UIResourcesAttribute!");
-		}
-
-		return window;
+        return new OpenUIAsync<T>(uiRoot);
 	}
 }

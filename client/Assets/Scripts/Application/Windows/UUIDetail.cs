@@ -41,9 +41,9 @@ namespace Windows
             bt_sale.onClick.AddListener(() =>
                 {
                     this.HideWindow();
-                    var ui = UUIManager.S.CreateWindow<UUISaleItem>();
-                    ui.Show(this.item);
-                    //show sale ui
+                   UUIManager.S.CreateWindowAsync<UUISaleItem>((ui)=> {
+                       ui.Show(this.item);
+                   });
                 });
             bt_equip.onClick.AddListener(() =>
             {
@@ -87,7 +87,7 @@ namespace Windows
             t_descript.text = config.Description;
             t_name.text = config.Name;
             t_prices.text = $"售价:{ config.SalePrice}";
-            icon.sprite = ResourcesManager.S.LoadIcon(config);
+            ResourcesManager.S.LoadIcon(config,s=> icon.sprite = s);
 
             ItemLevel.ActiveSelfObject(item.Level > 0);
             lb_level.text = $"{item.Level}";

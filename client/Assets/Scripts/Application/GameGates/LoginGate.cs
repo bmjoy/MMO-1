@@ -5,6 +5,7 @@ using Proto;
 using Proto.LoginServerService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Windows;
 using XNet.Libs.Net;
 
 public class LoginGate:UGate
@@ -15,9 +16,9 @@ public class LoginGate:UGate
     {
         SceneManager.LoadScene("null");
         UUIManager.Singleton.HideAll();
-        var ui = UUIManager.Singleton.CreateWindow<Windows.UUILogin>();
-        ui.ShowWindow();
-
+        UUIManager.S.CreateWindowAsync<UUILogin>((ui)=> {
+            ui.ShowWindow();
+        });
     }
 
     private RequestClient<TaskHandler> Client;

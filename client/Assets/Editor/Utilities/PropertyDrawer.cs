@@ -23,6 +23,10 @@ public class DrawerHandlerAttribute:Attribute
 public static class PropertyDrawer
 {
 
+	public static string ASSET_ROOT = $"/StreamingAssets/";
+	public static string ASSET = $"Assets{ASSET_ROOT}";
+	public static string RES_ROOT = $"Assets/AssetRes/";
+
 	private static void Init()
 	{
 		_handlers = new Dictionary<Type, MethodInfo> ();
@@ -45,7 +49,6 @@ public static class PropertyDrawer
 		//bones = tbones.ToArray();
 		names = tnames.ToArray ();
 	}
-
 
 	//private static string[] bones;
 	private static string[] names;
@@ -290,22 +293,35 @@ public static class PropertyDrawer
 	[DrawerHandler(typeof(EditorResourcePathAttribute))]
 	public static void ResourcesSelect(object obj, MemberInfo field, string label, object attr)
 	{ 
-		var resources = "Assets/Resources/";
+		var resources = RES_ROOT;
 		var path = (string)field.GetMemberValue (obj);
-		var res = AssetDatabase.LoadAssetAtPath<Object> (resources + path);
+		var res = AssetDatabase.LoadAssetAtPath<Object> ($"{resources}{path}");
 		GUILayout.Label (label);
 		res= EditorGUILayout.ObjectField (res,typeof(Object), false);
 		path = AssetDatabase.GetAssetPath (res);
 		path = path.Replace (resources, "");
 		field.SetMemberValue (obj, path);
-
 	}
+	[DrawerHandler(typeof(EditorStreamingPathAttribute))]
+	public static void StreamingSelect(object obj, MemberInfo field, string label, object attr)
+	{
+		var resources = ASSET;
+		var path = (string)field.GetMemberValue(obj);
+		var res = AssetDatabase.LoadAssetAtPath<Object>($"{resources}{path}");
+		GUILayout.Label(label);
+		res = EditorGUILayout.ObjectField(res, typeof(Object), false);
+		path = AssetDatabase.GetAssetPath(res);
+		path = path.Replace(resources, "");
+		field.SetMemberValue(obj, path);
+	}
+
+
 	[DrawerHandler(typeof(LayoutPathAttribute))]
 	public static void LayoutPathSelect(object obj, MemberInfo field,string label, object attr)
 	{
-		var resources = "Assets/Resources/";
+		var resources = ASSET;
 		var path = (string)field.GetMemberValue (obj);
-		var res = AssetDatabase.LoadAssetAtPath<UnityEngine.TextAsset> (resources + path);
+		var res = AssetDatabase.LoadAssetAtPath<TextAsset> ($"{resources}{path}");
 		GUILayout.Label (label);
 		GUILayout.BeginHorizontal ();
 		res= EditorGUILayout.ObjectField (res,typeof(TextAsset), false,GUILayout.Width(100)) as TextAsset;
@@ -313,10 +329,11 @@ public static class PropertyDrawer
 		path = path.Replace (resources, "");
 		field.SetMemberValue (obj, path);
 
-		if (GUILayout.Button ("New")) {
-			var fPath = EditorUtility.SaveFilePanel ("Create Layout",Application.dataPath+"/Resources/", "layout", "xml");
+		if (GUILayout.Button ("New"))
+        {
+			var fPath = EditorUtility.SaveFilePanel ("Create Layout", $"{Application.dataPath}{ASSET_ROOT}Layouts/", "layout", "xml");
 			if (!string.IsNullOrEmpty (fPath)) {
-				path = fPath.Replace (Application.dataPath+"/Resources/", "");
+				path = fPath.Replace($"{Application.dataPath}{ASSET_ROOT}", "");
 				var layout = new TimeLine ();
 				var xml = XmlParser.Serialize (layout);
 				File.WriteAllText (fPath, xml, XmlParser.UTF8);

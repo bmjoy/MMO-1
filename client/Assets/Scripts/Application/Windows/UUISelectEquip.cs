@@ -39,7 +39,7 @@ namespace Windows
                 this.Template.lb_level.text = playerItem.Level > 0 ? $"+{ playerItem.Level}" : string.Empty;
                 this.Template.lb_Name.text = $"{item.Name}";
                 this.Template.ItemLevel.ActiveSelfObject(playerItem.Level > 0);
-                this.Template.icon.sprite = ResourcesManager.S.LoadIcon(item);
+                ResourcesManager.S.LoadIcon(item,(s)=> this.Template.icon.sprite =s);
             }
         }
 

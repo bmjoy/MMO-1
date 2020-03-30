@@ -60,8 +60,10 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         UUIManager.Singleton.HideAll();
         UUIManager.Singleton.ShowMask(true);
-        var ui = UUIManager.Singleton.CreateWindow<Windows.UUIBattle>();
-        ui.ShowWindow();
+        UUIManager.Singleton.CreateWindowAsync<UUIBattle>((ui)=> {
+            ui.ShowWindow();
+        });
+       
         StartCoroutine(Init());
         gm= this.gameObject.AddComponent<GameGMTools>();
     }
@@ -147,7 +149,10 @@ public class BattleGate : UGate, IServerMessageHandler
 
             if (exp.Level != exp.OldLeve)
             {
-                UUIManager.S.CreateWindow<UUILevelUp>().ShowWindow(exp.Level);
+                UUIManager.S.CreateWindowAsync<UUILevelUp>((ui) =>
+                {
+                    ui.ShowWindow(exp.Level);
+                });
             }
 
             UUIManager.S.GetUIWindow<UUIBattle>()?.InitHero( Hero);

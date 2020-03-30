@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ExcelConfig;
 using org.vxwo.csharp.json;
 using EConfig;
+using UnityEngine.AddressableAssets;
+using System.Collections;
+
 
 public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 {
+	private IEnumerator Start()
+	{
+		yield return null;
+		//yield return Addressables.InitializeAsync();
+	}
 
 	List<T> IConfigLoader.Deserialize<T>()
 	{
@@ -17,108 +24,61 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		return JsonTool.Deserialize<List<T>>(json);
 	}
 
-	public class LoadProcesser
-	{
-		public CallBackDele CallBack;
-		public ResourceRequest Request;
-	}
-
-	public delegate void CallBackDele(Object res);
-
-
-	// Update is called once per frame
-	void Update ()
-    {
-		if (loaders.Count > 0) 
-        {
-			foreach (var i in loaders)
-            {
-				if (i.Request.isDone) {
-					_dones.Enqueue (i);	
-				}
-			}
-
-			while (_dones.Count > 0) 
-			{
-				var d = _dones.Dequeue ();
-				d.CallBack (d.Request.asset);
-				loaders.Remove (d);
-			}
-		}
-	}
-
-    private readonly Queue<LoadProcesser> _dones = new Queue<LoadProcesser>();
-			
-	private readonly HashSet<LoadProcesser> loaders = new HashSet<LoadProcesser> ();
+	public delegate void CallBackDele<T>(T res);
 
 	public string LoadText(string path)
 	{
-		var res = string.Empty;
-		var text = LoadResourcesWithExName<TextAsset> (path);
-		if (text != null) {
-			res = text.text;
-		}
-		Resources.UnloadAsset (text);
-		//Debug.Log (res);
-		return res;
+		return ReadStreamingFile(path);
 	}
 
-	public T LoadResources<T>(string path) where T:Object
+	public Coroutine LoadResourcesWithExName<T>(string path, CallBackDele<T> call) where T : Object
 	{
-		return Resources.Load<T> (path);
+		var res = $"Assets/AssetRes/{path}";
+		return StartCoroutine(LoadPath(res, call));
 	}
 
-	public T LoadResourcesWithExName<T>(string path) where T : Object
+	private IEnumerator LoadPath<T>(string path, CallBackDele<T> callback) where T : Object
 	{
-		int len = path.LastIndexOf('.');
-		if (len < 0)
-		{
-			Debug.LogError($"{path}");
-			return null;
-		}
-		path = path.Substring(0, path.LastIndexOf('.'));
-		return LoadResources<T>(path);
+		var asset = Addressables.LoadAssetAsync<T>(path);
+		yield return asset;
+		Debug.Log($"{path}->{asset.Result}");
+		callback?.Invoke(asset.Result);
 	}
 
-	public T[] LoadAll<T>(string path) where T:Object
-	{
-		return Resources.LoadAll<T> (path);
-	}
-
-	public ResourceRequest LoadAsync<T>(string path) where T:Object
-	{
-		return Resources.LoadAsync<T> (path);
-	}
-
-	public void LoadAsyncCallBack<T>(string path, CallBackDele callBack) where T:Object
-	{
-		var request = LoadAsync<T> (path);
-		var processer = new LoadProcesser{ CallBack = callBack, Request = request };
-		loaders.Add (processer);
-	}
-
-	public string ReadStreamingFile(string namae)
+	private string ReadStreamingFile(string namae)
 	{
 		var path = Path.Combine(Application.streamingAssetsPath, namae);
 		Debug.Log(path);
 		return File.ReadAllText(path);
+	}
+
+	public void LoadIcon(CharacterMagicData item, CallBackDele<Sprite> callBack)
+	{
+		LoadSpriteAsset($"Icon/{item.IconKey}.png", callBack);
+	}
+	public void LoadIcon(ItemData item, CallBackDele<Sprite> callBack)
+	{
+		LoadSpriteAsset($"Icon/{item.Icon}.png",callBack);
+	}
+	public void LoadIcon(BattleLevelData item, CallBackDele<Sprite> callBack)
+	{
+		LoadSpriteAsset($"Icon/{item.Icon}.png", callBack);
+       
+	}
+
+	private void LoadSpriteAsset(string path, CallBackDele<Sprite> callBack)
+	{
+        void tCall(Texture2D tex)
+        {
+            var s = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
+            callBack?.Invoke(s);
+        }
+        LoadResourcesWithExName($"{path}", (CallBackDele<Texture2D>)tCall);
     }
 
-	public Sprite LoadIcon(CharacterMagicData item)
+	public void LoadModel(ItemData item, CallBackDele<GameObject> call)
 	{
-		return LoadResources<Sprite>("Icon/" + item.IconKey);
-	}
-	public Sprite LoadIcon(ItemData item)
-	{
-		return LoadResources<Sprite>("Icon/" + item.Icon);
-	}
-	public Sprite LoadIcon(BattleLevelData item)
-	{
-		return LoadResources<Sprite>("Icon/" + item.Icon);
+		LoadResourcesWithExName($"ItemModel/{item.ResModel}.prefab", call);
 	}
 
-	public GameObject LoadModel(ItemData item)
-	{
-		return LoadResources<GameObject>($"ItemModel/{item.ResModel}");
-	}
 }

@@ -7,4 +7,7 @@
     <assembly fullname="JSON" preserve="all"></assembly>
     <assembly fullname="XNet.Libs" preserve="all"/>
     <assembly fullname="Xsoft.Proto" preserve="all"/>
+    <assembly fullname="Vuforia.UnityExtensions">
+        <namespace fullname="Vuforia" preserve="all"/>
+    </assembly>
 </linker>
