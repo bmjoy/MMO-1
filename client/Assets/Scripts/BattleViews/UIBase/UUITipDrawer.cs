@@ -58,7 +58,6 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip);
         if (tip != null)
         {
-            //tip = UUIManager.Singleton.CreateTip<UUINotify>();
             tip.SetNotify(notify);
             UUITip.Update(tip);
             return tip.InstanceID;
@@ -68,7 +67,6 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         
     private readonly List<NotifyMessage> notifys= new List<NotifyMessage>();
     private readonly Queue<NotifyMessage> _dels = new Queue<NotifyMessage>();
-
 
     public void ShowNotify(AppNotify notify)
     {

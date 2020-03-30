@@ -144,8 +144,8 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
             yield return async;
             ui = async.Window;
             _addTemp.Enqueue(ui);
+            callback?.Invoke(ui);
         }
-        callback?.Invoke(ui);
     }
 
     public bool TryToGetTip<T>(int id,out T tip)  where T:UUITip
@@ -170,7 +170,6 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
 
 	public void ShowMask(bool show)
     {
-        //var image= BackImage.GetComponent<ImageColor>();
         if (show)
         {
             BackImage.ActiveSelfObject(true);
