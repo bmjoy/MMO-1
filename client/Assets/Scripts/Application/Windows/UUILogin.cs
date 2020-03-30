@@ -52,7 +52,7 @@ namespace Windows
             });
             TextSignup.onClick.AddListener(() =>
             {
-                UUIManager.S.CreateWindow<UUISignup>().ShowWindow();
+                UUIManager.S.CreateWindowAsync<UUISignup>(ui=>ui.ShowWindow());
             });
             ButtonClose.onClick.AddListener(() =>
             {

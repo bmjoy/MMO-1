@@ -26,43 +26,44 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
 
     public int DrawUUITipNameBar(int instanceId, string name,
-        int level, int hp,int hpMax , int mp,int mpMax, bool owner, Vector3 offset, Camera c)
+        int level, int hp, int hpMax, int mp, int mpMax, bool owner, Vector3 offset, Camera c)
     {
-        // UUITipHpBar tip;
-        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUITipNameBar tip))
+        UUIManager.S.TryToGetTip(instanceId, out UUITipNameBar tip);
+        if (tip != null)
         {
-            tip = UUIManager.S.CreateTip<UUITipNameBar>(true);
+            tip.SetInfo(name, level, hp, hpMax, mp, mpMax, owner);
+            tip.LookAt(c);
+            UUITip.Update(tip, offset);
+            return tip.InstanceID;
         }
-        tip.SetInfo(name,level, hp, hpMax, mp, mpMax, owner);
-        tip.LookAt(c);
-        UUITip.Update(tip, offset);
-       
-        return tip.InstanceID;
+        return instanceId;
     }
 
     public int DrawItemName(int instanceId, string name, bool owner, Vector3 offset, Camera c)
-    { 
-      // UUITipHpBar tip;
-        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUIName tip))
+    {
+        UUIManager.S.TryToGetTip(instanceId, out UUIName tip);
+        if (tip != null)
         {
-            tip = UUIManager.S.CreateTip<UUIName>(true);
+            tip.ShowName(name, owner);
+            tip.LookAt(c);
+            UUITip.Update(tip, offset);
+            return tip.InstanceID;
         }
-        tip.ShowName(name,owner);
-        tip.LookAt(c);
-        UUITip.Update(tip, offset);
-        return tip.InstanceID;
+        return instanceId;
     }
 
     #region Notify
-    private  int DrawUUINotify(int instanceId, string notify)
+    private int DrawUUINotify(int instanceId, string notify)
     {
-        if (!UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip))
+        UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip);
+        if (tip != null)
         {
-            tip = UUIManager.Singleton.CreateTip<UUINotify>();
+            //tip = UUIManager.Singleton.CreateTip<UUINotify>();
             tip.SetNotify(notify);
+            UUITip.Update(tip);
+            return tip.InstanceID;
         }
-        UUITip.Update(tip);
-        return tip.InstanceID;
+        return instanceId;
     }
         
     private readonly List<NotifyMessage> notifys= new List<NotifyMessage>();

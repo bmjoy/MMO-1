@@ -38,29 +38,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         UScene = FindObjectOfType<UGameScene>();
         _magicData = new Dictionary<string, MagicData>();
         _timeLines = new Dictionary<string, TimeLine>();
-        var magics = ResourcesManager.S.LoadAll<TextAsset>("Magics");
-        foreach (var i in magics)
-        {
-            try
-            {
-                var m = XmlParser.DeSerialize<MagicData>(i.text);
-                _magicData.Add(i.name, m);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"File : {i.name}");
-                Debug.LogException(ex);
-            }
-        }
-        magicCount = _magicData.Count;
-        var timeLines = ResourcesManager.Singleton.LoadAll<TextAsset>("Layouts");
-        foreach (var i in timeLines)
-        {
-            var line = XmlParser.DeSerialize<TimeLine>(i.text);
-            _timeLines.Add("Layouts/" + i.name + ".xml", line);
-        }
-        timeLineCount = _timeLines.Count;
-
 #if !UNITY_SERVER
         GPUBillboardBuffer.Instance.Init();
         GPUBillboardBuffer.Instance.SetupBillboard(1000);
@@ -208,9 +185,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     private TimeLine TryToLoad(string path)
     {
-        var lineAsset = ResourcesManager.Singleton.LoadText(path);
-        if (string.IsNullOrEmpty(lineAsset))
-            return null;
+        var lineAsset = ResourcesManager.S.LoadText(path);
+        if (string.IsNullOrEmpty(lineAsset)) return null;
 
         var line = XmlParser.DeSerialize<TimeLine> (lineAsset);
         if (UseCache) 
@@ -219,6 +195,16 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         } 
         return line;
     }
+
+    private MagicData TryLoadMagic(string key)
+    {
+        var asset = ResourcesManager.S.LoadText($"Magics/{key}.xml");
+        if (string.IsNullOrEmpty(asset)) return null;
+        var magic = XmlParser.DeSerialize<MagicData>(asset);
+        if (UseCache) _magicData.Add(key, magic);
+        return magic;
+    }
+
 
     public void Each<T>(Func<T, bool> invoke) where T : UElementView
     {
@@ -261,33 +247,37 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 #endif
         return true;
     }
-        
-    TimeLine IBattlePerception.GetTimeLineByPath (string path)
-	{
-		if (UseCache)
-		{
-            if (_timeLines.TryGetValue(path, out TimeLine line))
-            {
-                return line;
-            }
-            Debug.LogError ("No found timeline by path:" + path);
-		} 
-		return TryToLoad (path);
-	}
-        
-    MagicData IBattlePerception.GetMagicByKey (string key)
-	{
-        if (_magicData.TryGetValue(key, out MagicData magic))
+
+    TimeLine IBattlePerception.GetTimeLineByPath(string path)
+    {
+        if (UseCache && _timeLines.TryGetValue(path, out TimeLine line)) return line;
+        line = TryToLoad(path);
+        if (line == null)
         {
-            return magic;
+            Debug.LogError($"Nofound:{path}");
         }
-        Debug.LogError ("No found magic by key:"+key);
-		return null;
-	}
+        return line;
+    }
+
+    MagicData IBattlePerception.GetMagicByKey(string key)
+    {
+        MagicData magic;
+        if (UseCache)
+        {
+            if (_magicData.TryGetValue(key, out magic))
+            {
+                return magic;
+            }
+        }
+        magic = TryLoadMagic(key);
+        if (magic == null) Debug.LogError("No found magic by key:" + key);
+        return magic;
+    }
 
     bool IBattlePerception.ExistMagicKey (string key)
 	{
-		return _magicData.ContainsKey (key);
+        TryLoadMagic(key);
+        return _magicData.ContainsKey (key);
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
@@ -295,9 +285,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         int level, string name, float speed,int hp, int hpMax,int mp,int mpMax ,IList<HeroMagicData> cds,int owner)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
-        var character = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(data.ResourcesPath);
+        
         var qu = Quaternion.Euler(forward.X, forward.Y, forward.Z);
-        var ins = Instantiate(character) as GameObject;
+       
         var root = new GameObject(data.ResourcesPath);
         root.transform.SetParent(this.transform, false);
         root.transform.position = pos.ToUV3();
@@ -305,10 +295,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var body = new GameObject("__VIEW__");
         body.transform.SetParent(root.transform, false);
         body.transform.RestRTS();
-        ins.transform.SetParent(body.transform);
-        ins.transform.RestRTS();
-
-        ins.name = "VIEW";
 
         var view = root.AddComponent<UCharacterView>();
         view.SetPrecpetion(this);
@@ -322,7 +308,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.SetHpMp(hp, hpMax,mp, mpMax);
         view.OwnerIndex  = owner;
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
-        view.SetCharacter(body, ins);
+        view.SetCharacter(body, data.ResourcesPath);
         return view;
     }
 
@@ -345,27 +331,17 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         
     IBattleMissile IBattlePerception.CreateMissile(int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
-        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (res);
-        GameObject ins;
-        if (obj == null)
-        {
-            ins = new GameObject("Missile");
-        }
-        else
-        {
-            ins = Instantiate(obj);
-        }
-        ins.transform.SetParent(this.transform, false);
-		var missile = ins.AddComponent<UBattleMissileView> (); //NO
+       
+
+        var root = new GameObject(res);
+        var missile = root.AddComponent<UBattleMissileView> (); //NO
         missile.fromBone = fromBone;
         missile.toBone = toBone;
         missile.speed = speed;
         missile.offset = offset.ToUV3();
         missile.res = res;
         missile.SetPrecpetion(this);
-
         missile.releaserIndex = releaseIndex;
-
         return missile;
 	}
 
@@ -373,15 +349,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     {
         var viewRoot = new GameObject(layout.path);
         var view = viewRoot.AddComponent<UParticlePlayer>();
-        var obj = ResourcesManager.Singleton.LoadResourcesWithExName<GameObject> (layout.path);
-        if (obj == null)
-        {
-            return null;
-        }
-        else
-        {
-            Instantiate(obj, viewRoot.transform);
-        }
+        view.Path = layout.path;
         var viewRelease = releaser as UMagicReleaserView;
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
@@ -432,13 +400,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         root.transform.SetParent(this.transform);
         root.transform.RestRTS();
         root.transform.position = pos.ToUV3();
-
-#if !UNITY_SERVER
-       
-        var res = ResourcesManager.S.LoadModel(config);
-        var go =Instantiate(res,root.transform);
-        go.transform.RestRTS();
-#endif
         var bi = root.AddComponent<UBattleItem>();
         bi.SetInfo(item, teamIndex, groupId);
         bi.SetPrecpetion(this);

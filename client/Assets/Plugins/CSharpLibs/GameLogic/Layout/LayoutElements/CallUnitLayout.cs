@@ -33,7 +33,7 @@ namespace Layout.LayoutElements
 
 
         [Label("AIPath(默认角色表AI)")]
-        [EditorResourcePath]
+        [EditorStreamingPath]
         public string AIPath;
 
         [Label("持续时间(秒)")]

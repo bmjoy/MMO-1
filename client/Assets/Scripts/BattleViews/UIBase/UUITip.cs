@@ -14,6 +14,35 @@ public class UITipResourcesAttribute:Attribute
 
 public abstract class UUITip:UUIElement
 {
+    public class CreateUIAsync<T> : UnityEngine.CustomYieldInstruction where T:UUITip,new()
+    {
+        public CreateUIAsync(Transform parent, bool world)
+        {
+            var attrs = typeof(T).GetCustomAttributes(typeof(UITipResourcesAttribute), false) as UITipResourcesAttribute[];
+            if (attrs.Length == 0) throw new Exception($"no found UITipResourcesAttribute");
+            var resources = attrs[0].Name;
+            ResourcesManager.S.LoadResourcesWithExName<GameObject>($"Tips/{resources}.prefab", (res) =>
+             {
+                 var root = UnityEngine.Object.Instantiate(res);
+                 var tip = new T
+                 {
+                     IsWorld = world
+                 };
+                 root.name = string.Format("_TIP_{0}_{1}", tip.InstanceID, typeof(T).Name);
+                 tip.uiRoot = root;
+                 tip.Rect.SetParent(parent, false);
+                 tip.OnCreate();
+                 this.Tip = tip;
+                 IsDone = true;
+             });
+        }
+
+        public T Tip { private set; get; }
+
+        public bool IsDone { private set; get; }
+        public override bool keepWaiting => !IsDone;
+    }
+
 	public UUITip ()
 	{
         InstanceID = _index++;
@@ -46,20 +75,9 @@ public abstract class UUITip:UUIElement
         uiRoot.transform.LookAt(c.transform);
     }
 
-    public static T Create<T>(Transform parent, bool world) where T: UUITip,new()
+    public static CreateUIAsync<T> CreateAsync<T>(Transform parent, bool world) where T: UUITip,new()
     {
-        var attrs = typeof(T).GetCustomAttributes(typeof(UITipResourcesAttribute), false) as UITipResourcesAttribute[];
-        if(attrs.Length ==0) return default(T);
-        var resources = attrs[0].Name;
-        var res = ResourcesManager.Singleton.LoadResources<GameObject>("Tips/" + resources);
-        var root = GameObject.Instantiate(res) as GameObject;
-        var tip = new T();
-        tip.IsWorld = world;
-        root.name = string.Format("_TIP_{0}_{1}", tip.InstanceID , typeof(T).Name);
-        tip.uiRoot = root;
-        tip.Rect.SetParent(parent, false);
-        tip.OnCreate();
-        return tip;
+        return new CreateUIAsync<T>(parent, world);
     }
 
 	public static void Update(UUITip tip,Vector2 pos)

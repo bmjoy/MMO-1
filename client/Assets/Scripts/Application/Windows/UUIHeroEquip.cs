@@ -132,7 +132,7 @@ namespace Windows
                 }
             }
             Right.ActiveSelfObject(false);
-            UUIManager.S.CreateWindow<UUISelectEquip>().SetPartType(key).ShowWindow();
+            UUIManager.S.CreateWindowAsync<UUISelectEquip>(ui=>ui.SetPartType(key).ShowWindow());
         }
 
 
@@ -147,7 +147,7 @@ namespace Windows
 
             var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(eq.ItemID);
             var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
-            icon_right.sprite = ResourcesManager.S.LoadIcon(item);
+            ResourcesManager.S.LoadIcon(item,s=> icon_right.sprite = s);
             equip_lvl.text = $"+{it.Level}";
             right_name.text = equip.Name;
             des_Text.text = item.Description;
@@ -293,7 +293,7 @@ namespace Windows
                     if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
                     {
                         partIcon.icon.ActiveSelfObject(true);
-                        partIcon.icon.sprite = ResourcesManager.S.LoadIcon(item);
+                        ResourcesManager.S.LoadIcon(item,s => partIcon.icon.sprite = s);
                         if (pItem.Level > 0) partIcon.level.text = $"+{pItem.Level}";
                         partIcon.rootLvl.ActiveSelfObject(pItem.Level > 0);
                     }

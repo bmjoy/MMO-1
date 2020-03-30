@@ -23,17 +23,17 @@ namespace Windows
             Button_Play.onClick.AddListener(() =>
             {
                 UUIManager.Singleton
-                .CreateWindow<UUILevelList>().ShowWindow();
+                .CreateWindowAsync<UUILevelList>((ui) => ui.ShowWindow() );
             });
 
             MenuItems.onClick.AddListener(() =>
                 {
-                    UUIManager.S.CreateWindow<UUIPackage>().ShowWindow();
+                    UUIManager.S.CreateWindowAsync<UUIPackage>((ui)=>ui.ShowWindow());
                 });
 
             MenuSetting.onClick.AddListener(() =>
             {
-                UUIManager.S.CreateWindow<UUISettings>().ShowWindow();
+                UUIManager.S.CreateWindowAsync<UUISettings>((ui) => ui.ShowWindow());
             });
 
             MenuWeapon.onClick.AddListener(() =>
@@ -43,8 +43,8 @@ namespace Windows
 
             MenuShop.onClick.AddListener(() =>
             {
-                var ui = UUIManager.S.CreateWindow<UUIItemShop>();
-                ui.ShowWindow();
+
+                UUIManager.S.CreateWindowAsync<UUIItemShop>((ui) => ui.ShowWindow());
 
             });
 
@@ -65,8 +65,9 @@ namespace Windows
 
         private void OpenEquip()
         {
-            UUIManager.S.CreateWindow<UUIHeroEquip>().ShowWindow();
+            UUIManager.S.CreateWindowAsync<UUIHeroEquip>((ui) => ui.ShowWindow());
         }
+
 
         protected override void OnShow()
         {

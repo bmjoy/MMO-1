@@ -58,7 +58,7 @@ namespace Windows
                 this.ShopItem = shopItem;
                 this.Shop = shop;
                 Config = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<EConfig.ItemData>(ShopItem.ItemId);
-                Template.icon.sprite = ResourcesManager.S.LoadIcon(Config);
+                ResourcesManager.S.LoadIcon(Config,s=> Template.icon.sprite = s);
                 Template.Name.text = Config.Name;
                 Template.ItemCount.ActiveSelfObject(shopItem.PackageNum > 1);
                 Template.t_num.text = $"{ShopItem.PackageNum}";

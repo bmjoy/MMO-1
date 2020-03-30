@@ -11,7 +11,8 @@ using System.Linq;
 using UnityEngine.AI;
 using System;
 using EngineCore.Simulater;
-
+using UnityEngine.AddressableAssets;
+using System.Collections;
 
 [Serializable]
 public class CharacterProperty
@@ -325,44 +326,54 @@ public class UCharacterView : UElementView, IBattleCharacter
     private GameObject range;
     private float hideTime = 0f;
 
-    public void SetCharacter(GameObject root, GameObject character)
+    private IEnumerator Init(string path)
     {
-        ViewRoot = root;
-        //this.Character = character;
+        yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(path,(obj)=>
+        {
+            var character = Instantiate(obj) as GameObject;
+            character.transform.SetParent(ViewRoot.transform);
+            character.transform.RestRTS();
+            character.name = "VIEW";
+            var collider = character.GetComponent<CapsuleCollider>();
 
-        var collider = character.GetComponent<CapsuleCollider>();
+            var gameTop = new GameObject("__Top");
+            gameTop.transform.SetParent(this.transform);
+            gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
+            bones.Add(TopBone, gameTop.transform);
 
-        var gameTop = new GameObject("__Top");
-        gameTop.transform.SetParent(this.transform);
-        gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
-        bones.Add(TopBone, gameTop.transform);
+            var bottom = new GameObject("__Bottom");
+            bottom.transform.SetParent(this.transform, false);
+            bottom.transform.localPosition = new Vector3(0, 0, 0);
+            bones.Add(BottomBone, bottom.transform);
 
-        var bottom = new GameObject("__Bottom");
-        bottom.transform.SetParent(this.transform, false);
-        bottom.transform.localPosition = new Vector3(0, 0, 0);
-        bones.Add(BottomBone, bottom.transform);
-
-        var body = new GameObject("__Body");
-        body.transform.SetParent(this.transform, false);
-        body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
-        bones.Add(BodyBone, body.transform);
-        Agent.radius = collider.radius;
-        Agent.height = collider.height;
-        var c = this.gameObject.AddComponent<CapsuleCollider>();
-        c.radius = collider.radius;
-        c.height = collider.height;
-        c.center = collider.center;
-        c.direction = collider.direction;
-        c.isTrigger = true;
+            var body = new GameObject("__Body");
+            body.transform.SetParent(this.transform, false);
+            body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
+            bones.Add(BodyBone, body.transform);
+            Agent.radius = collider.radius;
+            Agent.height = collider.height;
+            var c = this.gameObject.AddComponent<CapsuleCollider>();
+            c.radius = collider.radius;
+            c.height = collider.height;
+            c.center = collider.center;
+            c.direction = collider.direction;
+            c.isTrigger = true;
 
 #if UNITY_SERVER
-        Destroy(character);
+            Destroy(character);
 #else
-        CharacterAnimator = character.GetComponent<Animator>();
+            CharacterAnimator = character.GetComponent<Animator>();
 #endif
 
 
+        });
+    }
+
+    public void SetCharacter(GameObject root, string path)
+    {
+        ViewRoot = root;
         if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
+        StartCoroutine(Init(path));
     }
 
     public int OwnerIndex { get; internal set; }
@@ -708,12 +719,19 @@ public class UCharacterView : UElementView, IBattleCharacter
         return (LockValue &(1 << (int)type )) > 0;
     }
 
+    //public AssetReferenceGameObject obj;
+
     public void ShowRange(float r)
     {
         if (range == null)
         {
-            range = Instantiate(Resources.Load<GameObject>("Range"), this.GetBoneByName(BottomBone));
-            range.transform.RestRTS();
+            range = new GameObject();
+            ResourcesManager.S.LoadResourcesWithExName<GameObject>("Range.prefab", (prefab) =>
+             {
+                 if (range)  Destroy(range);
+                 range = Instantiate(prefab, this.GetBoneByName(BottomBone));
+                 range.transform.RestRTS();
+             });
         }
         range.SetActive(true);
         hideTime = Time.time + .2f;

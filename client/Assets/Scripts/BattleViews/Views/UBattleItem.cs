@@ -19,6 +19,16 @@ public class UBattleItem : UElementView, IBattleItem
 
     public ItemData config;
 
+    private void Start()
+    {
+#if !UNITY_SERVER
+        ResourcesManager.S.LoadModel(config,(res)=> {
+            var go = Instantiate(res, transform);
+            go.transform.RestRTS();
+        });
+#endif
+    }
+
     private void Awake()
     {
         var box = this.gameObject.AddComponent<BoxCollider>();

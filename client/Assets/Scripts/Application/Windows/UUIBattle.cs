@@ -43,7 +43,10 @@ namespace Windows
                     MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
                     var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
                     LMagicData = per.GetMagicByKey(MagicData.MagicKey);
-                    Template.Icon.sprite = ResourcesManager.S.LoadIcon(MagicData);
+                    ResourcesManager.S.LoadIcon(MagicData, (s) =>
+                     {
+                         Template.Icon.sprite = s;
+                     });
                 }
             }
 
@@ -297,7 +300,7 @@ namespace Windows
             if (view.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
             {
                 var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
-                att_Icon.sprite = ResourcesManager.S.LoadIcon(config);
+                ResourcesManager.S.LoadIcon(config, (s) => att_Icon.sprite = s);
             }
             this.view = view;
         }
@@ -312,11 +315,11 @@ namespace Windows
                 if ((ItemType)config.ItemType == ItemType.ItHpitem)
                 {
                     hp += i.Value.Num;
-                    hp_item_Icon.sprite = ResourcesManager.S.LoadIcon(config);
+                    ResourcesManager.S.LoadIcon(config, s => hp_item_Icon.sprite = s);
                 }
                 if ((ItemType)config.ItemType == ItemType.ItMpitem)
                 {
-                    mp_item_Icon.sprite = ResourcesManager.S.LoadIcon(config);
+                    ResourcesManager.S.LoadIcon(config, s => mp_item_Icon.sprite = s);
                     mp += i.Value.Num;
                 }
             }

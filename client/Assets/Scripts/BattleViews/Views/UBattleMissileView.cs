@@ -6,6 +6,8 @@ using GameLogic;
 using Proto;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
+using System;
+using System.Collections;
 
 public class UBattleMissileView : UElementView ,IBattleMissile
 {
@@ -19,7 +21,7 @@ public class UBattleMissileView : UElementView ,IBattleMissile
 	}
 
 
-    private void Start()
+    private IEnumerator Start()
     {
         UElementView releaser = PerView.GetViewByIndex(releaserIndex);
         var viewRelease = releaser as UMagicReleaserView;
@@ -28,8 +30,16 @@ public class UBattleMissileView : UElementView ,IBattleMissile
         var rotation = (characterView as IBattleCharacter).Rotation;
         transform.position = characterView.GetBoneByName(fromBone).position +  rotation* offset;
         transform.rotation = Quaternion.identity;
-        var path = GetComponent<MissileFollowPath>();
-        if (path) path.SetTarget(viewTarget.GetBoneByName(toBone), speed);
+       
+        yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(res, (obj) =>
+        {
+            if (obj == null) return;
+            var ins = Instantiate(obj);
+            ins.transform.SetParent(this.transform, false);
+            ins.transform.RestRTS();
+            var path = ins.GetComponent<MissileFollowPath>();
+            if (path) path.SetTarget(viewTarget.GetBoneByName(toBone), speed);
+        });
     }
 
     public string res;

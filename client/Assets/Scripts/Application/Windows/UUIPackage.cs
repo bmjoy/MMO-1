@@ -37,7 +37,7 @@ namespace Windows
                 pItem = item;
                 Template.ItemCount.ActiveSelfObject(item.Num > 1);
                 Template.lb_count.text = item.Num>1? item.Num.ToString():string.Empty;
-                Template.icon.sprite = ResourcesManager.S.LoadIcon(itemconfig);
+                ResourcesManager.S.LoadIcon(itemconfig,s=> Template.icon.sprite =s);
                 Template.lb_level.text = item.Level > 0 ? $"+{item.Level}" : string.Empty;
                 Template.ItemLevel.ActiveSelfObject(item.Level > 0);
                 Template.lb_Name.text = itemconfig.Name;
@@ -93,9 +93,8 @@ namespace Windows
 
         private void ClickItem(ContentTableModel item)
         {
-            var ui = UUIManager.S.CreateWindow<UUIDetail>();
-            ui.Show(item.pItem);
-            //Show Item UI
+            UUIManager.S.CreateWindowAsync<UUIDetail>(ui => ui.Show(item.pItem));
+            
         }
     }
 }

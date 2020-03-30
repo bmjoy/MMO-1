@@ -155,13 +155,17 @@ public class GMainGate:UGate
         }
         else
         {
-            UUIManager.S.CreateWindow<UUIHeroCreate>().ShowWindow();
+            UUIManager.S.CreateWindowAsync<UUIHeroCreate>((ui) => {
+                ui.ShowWindow();
+            });
         }
     }
 
     public void ShowMain()
     {
-        UUIManager.Singleton.CreateWindow<UUIMain>().ShowWindow() ;
+        UUIManager.S.CreateWindowAsync<UUIMain>((ui)=> {
+            ui.ShowWindow();
+        });
     }
 
     protected override void ExitGate()

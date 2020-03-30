@@ -9,8 +9,9 @@ public class LanguageManager : XSingleton<LanguageManager>
 
     void Awake()
     {
-        var xml = ResourcesManager.S.LoadResources<TextAsset>("Language");
-        var ls = XmlParser.DeSerialize<LanguageSetting>(xml.text);
+        var xml = ResourcesManager.S.LoadText("Language.xml");
+
+        var ls = XmlParser.DeSerialize<LanguageSetting>(xml);
         foreach (var i in ls.Keys)
         {
             if (Keys.ContainsKey(i.Value))
@@ -20,6 +21,7 @@ public class LanguageManager : XSingleton<LanguageManager>
             }
             Keys.Add(i.Key, i.Value);
         }
+
     }
 
     public string this[string key]

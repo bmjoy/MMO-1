@@ -6,8 +6,18 @@ using GameLogic.Game.LayoutLogics;
 
 public class UParticlePlayer:MonoBehaviour, IParticlePlayer
 {
+    public string Path;
 
     private bool IsDestory = false;
+
+    private IEnumerator Start()
+    {
+        yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(Path, (obj) =>
+        {
+             if (obj == null) return;
+             Instantiate(obj, this.transform);
+        });
+    }
 
     #region IParticlePlayer implementation
     public void DestoryParticle()
@@ -30,6 +40,8 @@ public class UParticlePlayer:MonoBehaviour, IParticlePlayer
             return !IsDestory;
         }
     }
+
+    
     #endregion
-   
+
 }

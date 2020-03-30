@@ -133,7 +133,7 @@ public class AITreeEditor : EditorWindow
         }
     }
 
-    private const string AI_ROOT = "/Resources/AI";
+    private static readonly string AI_ROOT = $"{PropertyDrawer.ASSET_ROOT}/AI";
     private const int height = 40;
     private const int width = 200;
     private const int editHeight = 200;
@@ -428,9 +428,7 @@ public class AITreeEditor : EditorWindow
     private void ImportNode(object userState)
     {
         var m = userState as MenuState;
-        string path = EditorUtility.OpenFilePanel(
-            "Import Ai Tree",
-            Application.dataPath + AI_ROOT, "xml");
+        string path = EditorUtility.OpenFilePanel("Import Ai Tree", $"{Application.dataPath}{AI_ROOT}", "xml");
         if (!string.IsNullOrEmpty(path))
         {
             var node = XmlParser.DeSerialize<TreeNode>(File.ReadAllText(path));
@@ -449,8 +447,7 @@ public class AITreeEditor : EditorWindow
     private void ExportNode(object userState)
     {
         var m = userState as MenuState;
-        var path = EditorUtility.SaveFilePanel("Export Ai Tree",
-            Application.dataPath + AI_ROOT, "AITree", "xml");
+        var path = EditorUtility.SaveFilePanel("Export Ai Tree",$"{Application.dataPath}{AI_ROOT}", "AITree", "xml");
         if (string.IsNullOrEmpty(path))
             return;
 
@@ -502,8 +499,7 @@ public class AITreeEditor : EditorWindow
 
     private void OpenTree()
     {
-        var path = EditorUtility.OpenFilePanel("Open AI Tree",
-            Application.dataPath + AI_ROOT, "xml");
+        var path = EditorUtility.OpenFilePanel("Open AI Tree", $"{Application.dataPath}{AI_ROOT}", "xml");
         OpenTree(path);
     }
 
@@ -538,8 +534,7 @@ public class AITreeEditor : EditorWindow
 
     private void SaveAs()
     {
-        currenPath = EditorUtility.SaveFilePanel("Save Tree", Application.dataPath +
-            AI_ROOT, "AITree_" + root.guid, "xml");
+        currenPath = EditorUtility.SaveFilePanel("Save Tree", $"{Application.dataPath}{AI_ROOT}", "AITree_" + root.guid, "xml");
         if (string.IsNullOrEmpty(currenPath))
             return;
 

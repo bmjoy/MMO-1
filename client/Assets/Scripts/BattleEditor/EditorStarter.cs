@@ -54,7 +54,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 		curState.Init();
 		curState.Start(Now);
 		PerView.UseCache = false;
-		UUIManager.S.CreateWindow<Windows.UUIBattleEditor>().ShowWindow();
+		UUIManager.S.CreateWindowAsync<Windows.UUIBattleEditor>(ui=>ui.ShowWindow());
 		
 	}
 
