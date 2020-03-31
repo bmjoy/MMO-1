@@ -215,11 +215,12 @@ namespace GameLogic.Game.Perceptions
                     p.SetBaseValue(p.BaseValue + i.Value);
                 }
             }
+
             battleCharacter.Init();
            
             this.JoinElement(battleCharacter);
-            view.SetPriorityMove(data.PriorityMove);
 
+            view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }
 

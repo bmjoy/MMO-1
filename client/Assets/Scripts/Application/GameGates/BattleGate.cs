@@ -73,7 +73,8 @@ public class BattleGate : UGate, IServerMessageHandler
     private IEnumerator Init()
     {
  
-        yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity", LoadSceneMode.Single);
+        yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity");
+        yield return new WaitForEndOfFrame();
         PreView = UPerceptionView.Create();
         player = new NotifyPlayer(PreView);
 
@@ -301,6 +302,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private void SendAction(IMessage action)
     {
+        Debug.Log($"{action.GetType()}{action}");
         Client.SendMessage(action.ToAction());
     }
 

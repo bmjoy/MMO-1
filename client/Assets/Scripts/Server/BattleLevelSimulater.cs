@@ -96,9 +96,9 @@ namespace Server
         {
             AIRunner.Current = this;
             MapConfig = CM.Current.GetConfigByID<MapData>(LevelData.MapID);
-            yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity", LoadSceneMode.Single);
-    
+            yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity");
             yield return new WaitForEndOfFrame();
+
             PerView = UPerceptionView.Create();
             timeSimulater = PerView as ITimeSimulater;
             MonsterGroup = GameObject.FindObjectsOfType<MonsterGroupPosition>();
