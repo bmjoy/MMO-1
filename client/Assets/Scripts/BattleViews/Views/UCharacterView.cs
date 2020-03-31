@@ -186,7 +186,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, MP,mpMax,
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, 
                         TeamId == PerView.OwerTeamIndex,
                         GetBoneByName(TopBone).position + Vector3.up * .05f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }

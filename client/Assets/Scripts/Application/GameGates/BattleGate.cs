@@ -67,7 +67,7 @@ public class BattleGate : UGate, IServerMessageHandler
        
         StartCoroutine(Init());
         gm= this.gameObject.AddComponent<GameGMTools>();
-        gm.ShowGM = true;
+        //gm.ShowGM = true;
     }
 
     private IEnumerator Init()

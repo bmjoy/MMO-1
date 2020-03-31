@@ -26,12 +26,12 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
 
     public int DrawUUITipNameBar(int instanceId, string name,
-        int level, int hp, int hpMax, int mp, int mpMax, bool owner, Vector3 offset, Camera c)
+        int level, int hp, int hpMax,  bool owner, Vector3 offset, Camera c)
     {
         instanceId = UUIManager.S.TryToGetTip(instanceId,true, out UUITipNameBar tip);
         if (tip != null)
         {
-            tip.SetInfo(name, level, hp, hpMax, mp, mpMax, owner);
+            tip.SetInfo(name, level, hp, hpMax,  owner);
             tip.LookAt(c);
             UUITip.Update(tip, offset);
             return tip.InstanceID;

@@ -32,7 +32,7 @@ namespace Windows
 
         protected RawImage MapTexture;
         protected RectTransform ViewForward;
-        protected Scrollbar HPSilder;
+        protected Slider HPSilder;
         protected Text lb_hp;
         protected Slider MpSilder;
         protected Text lb_mp;
@@ -63,7 +63,7 @@ namespace Windows
             base.InitTemplate();
             MapTexture = FindChild<RawImage>("MapTexture");
             ViewForward = FindChild<RectTransform>("ViewForward");
-            HPSilder = FindChild<Scrollbar>("HPSilder");
+            HPSilder = FindChild<Slider>("HPSilder");
             lb_hp = FindChild<Text>("lb_hp");
             MpSilder = FindChild<Slider>("MpSilder");
             lb_mp = FindChild<Text>("lb_mp");
