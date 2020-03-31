@@ -189,6 +189,27 @@
       <name>选择节点</name>
       <guid>2afbdcbc-4e13-4e56-b1f7-da3686aafcef</guid>
     </TreeNode>
+    <TreeNode xsi:type="TreeNodeFindTarget">
+      <childs />
+      <name>查找目标</name>
+      <guid>f460643c-c73a-459a-ab4e-b07b907ea9cd</guid>
+      <valueOf>Value</valueOf>
+      <Distance>
+        <min>500</min>
+        <max>0</max>
+        <type>Fixed</type>
+      </Distance>
+      <View>
+        <min>360</min>
+        <max>360</max>
+        <type>Fixed</type>
+      </View>
+      <selectType>Nearest</selectType>
+      <filter>None</filter>
+      <useMagicConfig>false</useMagicConfig>
+      <teamType>Enemy</teamType>
+      <findNew>true</findNew>
+    </TreeNode>
   </childs>
   <name>顺序节点</name>
   <guid>95378cd5-4de1-410f-9bd2-17b575808431</guid>

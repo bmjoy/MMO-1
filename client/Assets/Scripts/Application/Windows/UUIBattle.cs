@@ -176,6 +176,15 @@ namespace Windows
             this.Username.text = $"{hero.Name}";
             var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
             if (character != null) normalAtt = character.NormalAttack;
+            this.Level_Number.text = $"{hero.Level}";
+            this.Username.text = $"{hero.Name}";
+            var leveUp = ExcelToJSONConfigManager.Current
+                .FirstConfig<CharacterLevelUpData>(t => t.Level == hero.Level + 1);
+            //lb_exp.text = $"{hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
+            float v = 0;
+            if (leveUp != null)
+                v = (float)hero.Exprices / leveUp.NeedExprices;
+            user_exp.fillAmount = v;
         }
 
         private int normalAtt = -1;

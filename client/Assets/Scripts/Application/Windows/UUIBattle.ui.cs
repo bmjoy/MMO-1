@@ -37,6 +37,7 @@ namespace Windows
         protected Slider MpSilder;
         protected Text lb_mp;
         protected Button user_info;
+        protected Image user_exp;
         protected Text Level_Number;
         protected Text Username;
         protected RoundGridLayout Grid;
@@ -67,6 +68,7 @@ namespace Windows
             MpSilder = FindChild<Slider>("MpSilder");
             lb_mp = FindChild<Text>("lb_mp");
             user_info = FindChild<Button>("user_info");
+            user_exp = FindChild<Image>("user_exp");
             Level_Number = FindChild<Text>("Level_Number");
             Username = FindChild<Text>("Username");
             Grid = FindChild<RoundGridLayout>("Grid");
