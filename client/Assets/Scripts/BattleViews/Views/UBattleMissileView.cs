@@ -23,8 +23,7 @@ public class UBattleMissileView : UElementView ,IBattleMissile
 
     private IEnumerator Start()
     {
-        UElementView releaser = PerView.GetViewByIndex(releaserIndex);
-        var viewRelease = releaser as UMagicReleaserView;
+        var viewRelease = PerView.GetViewByIndex<UMagicReleaserView>(releaserIndex);
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
         var rotation = (characterView as IBattleCharacter).Rotation;

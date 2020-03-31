@@ -24,8 +24,13 @@ public class XSingleton<T> : MonoBehaviour  where T :MonoBehaviour , new()
     /// <value>The s.</value>
     public static T S{ get { return Singleton; } }
 
-    private void Awake()
+    protected virtual void Awake()
     {
+        if (_instance)
+        {
+            Debug.LogError($"Had create {_instance}");
+        }
+        
         _instance = this as T;
 		DontDestroyOnLoad(this.gameObject);
     }

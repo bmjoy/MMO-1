@@ -33,23 +33,18 @@ public class DisplayNumerInputParam
 }
 
 
-public class GPUBillboardBuffer
+public class GPUBillboardBuffer:XSingleton<GPUBillboardBuffer>
 {
+
+	protected override void Awake()
+	{
+		
+	}
+
 	const int BC_VERTEX_EACH_BOARD = 4;
 	const int BC_INDICES_EACH_BOARD = 6;
 	const int BC_TEXTURE_ROW_COLUMN = 4;
 	const float BC_FONT_WIDTH = 0.6f;
-	
-	private static GPUBillboardBuffer instance = null;
-	
-    public static GPUBillboardBuffer Instance
-    {
-        get
-        {
-            return instance ?? ( instance = new GPUBillboardBuffer());
-        }
-    }    
-
 
 	
 	GameObject			mGameObject;

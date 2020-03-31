@@ -109,7 +109,7 @@ public class NotifyPlayer
         {
             var index = (int)property.GetValue(notify);
             var per = PerView as UPerceptionView;
-            var v = per.GetViewByIndex(index);
+            var v = per.GetViewByIndex<UElementView>(index);
             if (v == null)
             {
                 Debug.LogError($"No found index {index} by {notify.GetType()} -> {notify}");

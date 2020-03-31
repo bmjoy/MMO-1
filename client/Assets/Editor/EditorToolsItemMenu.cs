@@ -24,12 +24,6 @@ public sealed class EditorToolsItemMenu
     }
        
 
-    [MenuItem("GAME/UI/GEN_CONST_VALUES")]
-    public static void GenConstValues()
-    {
-
-    }
-
     [MenuItem("GAME/Go_To_EditScene &e")]
     public static void GoToEditorScene()
     {

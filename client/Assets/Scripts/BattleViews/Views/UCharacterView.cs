@@ -189,7 +189,7 @@ public class UCharacterView : UElementView, IBattleCharacter
                 {
                     nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, MP,mpMax,
                         TeamId == PerView.OwerTeamIndex,
-                        GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
+                        GetBoneByName(TopBone).position + Vector3.up * .05f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
             }
         }
@@ -495,7 +495,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
-        var v = PerView.GetViewByIndex(target);
+        var v = PerView.GetViewByIndex<UElementView>(target);
         if (!v) return;
         LookAt(v.transform);
     }

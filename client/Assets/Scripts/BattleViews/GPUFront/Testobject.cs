@@ -7,10 +7,10 @@ public class Testobject : MonoBehaviour
 {
 	// Use this for initialization
 	void Start () {
-		GPUBillboardBuffer.Instance.Init();
-		GPUBillboardBuffer.Instance.SetupBillboard( 1000 );
-		GPUBillboardBuffer.Instance.SetDisappear(1);
-        GPUBillboardBuffer.Instance.SetScaleParams(0f, 0.5f, 0.5f, 2f, 1f);
+		GPUBillboardBuffer.S.Init();
+		GPUBillboardBuffer.S.SetupBillboard( 1000 );
+		GPUBillboardBuffer.S.SetDisappear(1);
+        GPUBillboardBuffer.S.SetScaleParams(0f, 0.5f, 0.5f, 2f, 1f);
 	}
 	// Update is called once per frame
 	float timeSpan = 0.0f;
@@ -44,7 +44,7 @@ public class Testobject : MonoBehaviour
             param.FadeTime = 1;
             param.NormalTime = 1;
 
-            GPUBillboardBuffer.Instance.DisplayNumberRandom(
+            GPUBillboardBuffer.S.DisplayNumberRandom(
              Random.Range(1, 200).ToString(),
              new Vector2(1.0f, 1.0f),
              new Vector3(Random.Range(-10, 10), -2, 0),
