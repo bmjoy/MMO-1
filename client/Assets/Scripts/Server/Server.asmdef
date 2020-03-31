@@ -2,7 +2,9 @@
     "name": "Server",
     "references": [
         "GameLogic",
-        "BattleViews"
+        "BattleViews",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -14,6 +14,7 @@ using GameLogic;
 using GameLogic.Game.Elements;
 using Vector3 = UnityEngine.Vector3;
 using Windows;
+using UnityEngine.AddressableAssets;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -71,8 +72,8 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private IEnumerator Init()
     {
-        yield return SceneManager.LoadSceneAsync(MapConfig.LevelName);
-
+ 
+        yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity", LoadSceneMode.Single);
         PreView = UPerceptionView.Create();
         player = new NotifyPlayer(PreView);
 
