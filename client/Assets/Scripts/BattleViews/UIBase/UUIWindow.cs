@@ -44,7 +44,7 @@ public abstract class UUIWindow:UUIElement
                     window.runner = root.AddComponent<UIWindowRunner>();
                     window.OnCreate();
                     this.Window = window;
-                    window.uiRoot.SetActive(false);
+                   // window.uiRoot.SetActive(false);
                     IsDone = true;
                     callBack?.Invoke(this.Window);
                 });
