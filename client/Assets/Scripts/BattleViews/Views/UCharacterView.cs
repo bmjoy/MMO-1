@@ -11,7 +11,6 @@ using System.Linq;
 using UnityEngine.AI;
 using System;
 using EngineCore.Simulater;
-using UnityEngine.AddressableAssets;
 using System.Collections;
 
 [Serializable]
@@ -309,7 +308,6 @@ public class UCharacterView : UElementView, IBattleCharacter
             return Quaternion.identity;
         }
     }
-    public int hp = -1;
 
     public Transform GetBoneByName(string name)
     {
@@ -390,14 +388,14 @@ public class UCharacterView : UElementView, IBattleCharacter
         LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
     }
 
-    internal void SetHpMp(int hp, int hpMax,int mp ,int mpMax)
-    {
-        curHp = hp; maxHp = hpMax;
-        MP = mp;  this.mpMax = mpMax;
-    }
+
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
+    public int MpMax { get { return mpMax; } }
+
+    public int HP { get { return curHp; } }
+    public int HpMax { get { return maxHp; } }
 
     public bool IsFullMp { get { return MP == mpMax; } }
     public bool IsFullHp { get { return curHp == maxHp; } }
@@ -775,7 +773,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (!TryToSetPosition(pos.ToUV3())) GoToEmpty();
     }
 
-    public bool IsCanForwardMoving { get { return !(State is PushMove);} }
+    void IBattleCharacter.SetHpMp(int hp, int hpMax, int mp, int mpMax)
+    {
+        curHp = hp; maxHp = hpMax;
+        MP = mp; this.mpMax = mpMax;
+    }
 
     bool IBattleCharacter.IsMoving
     {

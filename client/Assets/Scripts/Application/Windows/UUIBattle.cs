@@ -174,18 +174,8 @@ namespace Windows
         {
             this.Level_Number.text = $"{hero.Level}";
             this.Username.text = $"{hero.Name}";
-            var leveUp = ExcelToJSONConfigManager.Current
-                .FirstConfig<CharacterLevelUpData>(t => t.Level == hero.Level + 1);
-            lb_exp.text = $"{hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
-            float v = 0;
-            if (leveUp != null)
-                v = (float)hero.Exprices / leveUp.NeedExprices;
-            ExpSilder.size = v;
             var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
-            if (character != null)
-                normalAtt = character.NormalAttack;
-
-           
+            if (character != null) normalAtt = character.NormalAttack;
         }
 
         private int normalAtt = -1;
@@ -216,6 +206,12 @@ namespace Windows
             var gate = UApplication.G<BattleGate>();
             if (gate == null) return;
             if (!view) return;
+
+            HPSilder.value = view.HP / (float)view.HpMax;
+            lb_hp.text = $"{view.HP}/{view.HpMax}";
+            MpSilder.value = view.MP / (float)view.MpMax;
+            lb_mp.text = $"{view.MP}/{view.MpMax}";
+
             foreach (var i in GridTableManager)
             {
                 i.Model.Update(view, gate.TimeServerNow, gate.PreView.HaveOwnerKey(i.Model.MagicData.MagicKey));

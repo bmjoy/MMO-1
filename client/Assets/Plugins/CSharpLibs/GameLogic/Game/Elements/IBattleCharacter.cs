@@ -14,6 +14,7 @@ namespace GameLogic.Game.Elements
         Transform RootTransform { get; }
         float Radius { get; }
         void PlayMotion(string motion);//play motion
+        void SetHpMp(int hp, int hpMax, int mp, int mpMax);
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
         void Relive();
@@ -29,8 +30,10 @@ namespace GameLogic.Game.Elements
         void Death();//death
         [NeedNotify(typeof(Notify_CharacterSpeed), "Speed")]
         void SetSpeed(float speed);//move speed
+
         [NeedNotify(typeof(Notify_CharacterPriorityMove), "PriorityMove")]
         void SetPriorityMove(float priorityMove);//move priority
+
         [NeedNotify(typeof(Notify_CharacterSetScale), "Scale")]
         void SetScale(float scale);//scale
         [NeedNotify(typeof(Notify_HPChange), "Hp", "Cur", "Max")]
@@ -49,6 +52,8 @@ namespace GameLogic.Game.Elements
         void SetLookRotation(Proto.Vector3 eu);//use angle
         [NeedNotify(typeof(Notify_CharacterLevel),"Level")]
         void SetLevel(int level);
+
+
     }
 }
 

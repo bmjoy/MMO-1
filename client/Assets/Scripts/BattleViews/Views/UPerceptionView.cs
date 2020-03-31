@@ -307,10 +307,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
-        view.SetHpMp(hp, hpMax,mp, mpMax);
         view.OwnerIndex  = owner;
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
         view.SetCharacter(body, data.ResourcesPath);
+        if(view is IBattleCharacter ch) ch.SetHpMp(hp, hpMax, mp, mpMax);
         return view;
     }
 
