@@ -28,7 +28,7 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
     public int DrawUUITipNameBar(int instanceId, string name,
         int level, int hp, int hpMax, int mp, int mpMax, bool owner, Vector3 offset, Camera c)
     {
-        UUIManager.S.TryToGetTip(instanceId, out UUITipNameBar tip);
+        instanceId = UUIManager.S.TryToGetTip(instanceId,true, out UUITipNameBar tip);
         if (tip != null)
         {
             tip.SetInfo(name, level, hp, hpMax, mp, mpMax, owner);
@@ -41,7 +41,7 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
     public int DrawItemName(int instanceId, string name, bool owner, Vector3 offset, Camera c)
     {
-        UUIManager.S.TryToGetTip(instanceId, out UUIName tip);
+        instanceId = UUIManager.S.TryToGetTip(instanceId, true, out UUIName tip);
         if (tip != null)
         {
             tip.ShowName(name, owner);
@@ -55,7 +55,7 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
     #region Notify
     private int DrawUUINotify(int instanceId, string notify)
     {
-        UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip);
+        instanceId= UUIManager.Singleton.TryToGetTip(instanceId, false, out UUINotify tip);
         if (tip != null)
         {
             tip.SetNotify(notify);

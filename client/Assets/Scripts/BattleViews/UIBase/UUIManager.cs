@@ -93,6 +93,7 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
     {
         foreach (var i in _tips)
         {
+            if (i.Value == null) continue;
             if (i.Value.CanDestory)
             {
                 _tipDelTemp.Enqueue(i.Value);
@@ -140,32 +141,45 @@ public class UUIManager:XSingleton<UUIManager>,IEventMasker
         var ui = GetUIWindow<T>();
         if (ui == null)
         {
-            var async = UUIWindow.CreateAsync<T>(this.BaseCanvas.transform);
-            yield return async;
-            ui = async.Window;
+            var async = UUIWindow.CreateAsync<T>(this.BaseCanvas.transform, callback);
+            yield return async; ui = async.Window;
             _addTemp.Enqueue(ui);
-            callback?.Invoke(ui);
         }
     }
 
-    public bool TryToGetTip<T>(int id,out T tip)  where T:UUITip
+    public int TryToGetTip<T>(int id, bool world, out T tip) where T : UUITip, new()
     {
         if (_tips.TryGetValue(id, out UUITip t))
         {
             tip = t as T;
-            return true;
+            return id;
         }
+
+        var tIndex = index++;
+        if (index == int.MaxValue) index = 0;
+        _tips.Add(tIndex, null);
+        StartCoroutine(CreateTipAsync<T>(world, tIndex));
         tip = null;
-        return false;
+        return tIndex;
     }
 
-    private IEnumerator CreateTipAsync<T>(bool world) where T : UUITip, new()
+    private int index = 0;
+
+    private IEnumerator CreateTipAsync<T>(bool world,int index) where T : UUITip, new()
     {
         var root = world ? worldTop.transform : this.top.transform;
-        var async = UUITip.CreateAsync<T>(root, world);
+        var async = UUITip.CreateAsync<T>(index,root, world);
         yield return async;
         var tip = async.Tip;
-        this._tips.Add(tip.InstanceID, tip);
+        if (_tips.ContainsKey(index))
+        {
+            this._tips[index] = tip;
+            UUITip.Update(tip);
+        }
+        else
+        { 
+           UUIElement.Destory(tip);
+        }
     }
 
 	public void ShowMask(bool show)

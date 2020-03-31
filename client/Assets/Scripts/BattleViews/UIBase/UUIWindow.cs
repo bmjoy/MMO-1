@@ -28,7 +28,7 @@ public abstract class UUIWindow:UUIElement
     {
         private const string UI_PATH = "Windows/{0}.prefab";
 
-        public OpenUIAsync(Transform uiRoot)
+        public OpenUIAsync(Transform uiRoot,Action<T> callBack)
         {
             var attrs = typeof(T).GetCustomAttributes(typeof(UIResourcesAttribute), false) as UIResourcesAttribute[];
             if (attrs.Length > 0)
@@ -37,23 +37,22 @@ public abstract class UUIWindow:UUIElement
                 ResourcesManager.S.LoadResourcesWithExName<GameObject>(string.Format(UI_PATH, name), (res) =>
                 {
                     var root = GameObject.Instantiate<GameObject>(res);
-                    var window = new T
-                    {
-                        uiRoot = root
-                    };
+                    var window = new T();
+                    window.uiRoot = root;
                     window.Rect.SetParent(uiRoot, false);
                     window.uiRoot.name = string.Format("UI_{0}", typeof(T).Name);
                     window.runner = root.AddComponent<UIWindowRunner>();
                     window.OnCreate();
                     this.Window = window;
+                    window.uiRoot.SetActive(false);
                     IsDone = true;
+                    callBack?.Invoke(this.Window);
                 });
             }
             else
             {
                 throw new Exception("No found UIResourcesAttribute!");
             }
-
         }
 
         public T Window { private set; get; }
@@ -64,7 +63,7 @@ public abstract class UUIWindow:UUIElement
         {
             get
             {
-                return ! IsDone;
+                return !IsDone;
             }
         }
     }
@@ -167,8 +166,8 @@ public abstract class UUIWindow:UUIElement
 	private WindowState state =  WindowState.NONE;
 
 	
-	public static OpenUIAsync<T> CreateAsync<T>(Transform uiRoot) where T:UUIWindow, new() 
+	public static OpenUIAsync<T> CreateAsync<T>(Transform uiRoot, Action<T> callBack) where T:UUIWindow, new() 
 	{
-        return new OpenUIAsync<T>(uiRoot);
+        return new OpenUIAsync<T>(uiRoot, callBack);
 	}
 }
