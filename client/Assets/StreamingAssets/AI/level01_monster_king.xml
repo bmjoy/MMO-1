@@ -29,7 +29,7 @@
               <guid>e46baa0c-b73a-4e8e-8994-1c5a9a6a24dc</guid>
               <valueOf>Value</valueOf>
               <distance>
-                <min>500</min>
+                <min>600</min>
                 <max>100</max>
                 <type>Fixed</type>
               </distance>
@@ -85,6 +85,41 @@
         </TreeNode>
         <TreeNode xsi:type="TreeNodeSequence">
           <childs>
+            <TreeNode xsi:type="TreeNodeDistancTarget">
+              <childs />
+              <name>判断目标距离</name>
+              <guid>0f59d8b5-84f9-45d4-b461-e0a53bfbc447</guid>
+              <valueOf>Value</valueOf>
+              <distance>
+                <min>600</min>
+                <max>100</max>
+                <type>Fixed</type>
+              </distance>
+              <compareType>Greater</compareType>
+            </TreeNode>
+            <TreeNode xsi:type="TreeNodeReleaseMagic">
+              <childs />
+              <name>释放技能</name>
+              <guid>6014ea24-ea1b-4ad6-8237-a4406c21700a</guid>
+              <magicKey>level_01_pushmagic</magicKey>
+              <valueOf>MagicKey</valueOf>
+            </TreeNode>
+            <TreeNode xsi:type="TreeNodeWaitForSeconds">
+              <childs />
+              <name>等待时间</name>
+              <guid>54e6e39a-9451-4244-b0cc-b47e8b07fd37</guid>
+              <seconds>
+                <min>500</min>
+                <max>2000</max>
+                <type>Fixed</type>
+              </seconds>
+            </TreeNode>
+          </childs>
+          <name>顺序节点</name>
+          <guid>fd870566-db87-4b92-987e-df3308db323f</guid>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeSequence">
+          <childs>
             <TreeNode xsi:type="TreeNodeProbabilitySelector">
               <childs>
                 <TreeNode xsi:type="TreeNodeProbabilityNode">
@@ -97,9 +132,9 @@
                           <guid>89b0cfdc-2006-4d2f-8aa0-07bd623cc865</guid>
                           <valueOf>Value</valueOf>
                           <distance>
-                            <min>100</min>
+                            <min>300</min>
                             <max>300</max>
-                            <type>Range</type>
+                            <type>Fixed</type>
                           </distance>
                         </TreeNode>
                         <TreeNode xsi:type="TreeNodeReleaseMagic">
