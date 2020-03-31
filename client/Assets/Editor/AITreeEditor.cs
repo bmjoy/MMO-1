@@ -133,7 +133,7 @@ public class AITreeEditor : EditorWindow
         }
     }
 
-    private static readonly string AI_ROOT = $"{PropertyDrawer.ASSET_ROOT}/AI";
+    private static readonly string AI_ROOT = $"{PropertyDrawer.ASSET_ROOT}AI";
     private const int height = 40;
     private const int width = 200;
     private const int editHeight = 200;
