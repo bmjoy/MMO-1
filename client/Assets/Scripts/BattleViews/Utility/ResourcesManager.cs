@@ -6,7 +6,8 @@ using org.vxwo.csharp.json;
 using EConfig;
 using UnityEngine.AddressableAssets;
 using System.Collections;
-
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 {
@@ -81,4 +82,8 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		LoadResourcesWithExName($"ItemModel/{item.ResModel}.prefab", call);
 	}
 
+	public AsyncOperationHandle<SceneInstance> LoadLevelAsync(MapData map)
+	{
+		return Addressables.LoadSceneAsync($"Assets/Levels/{map.LevelName}.unity");
+    }
 }

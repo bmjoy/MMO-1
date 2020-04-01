@@ -41,7 +41,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     [HandleLayout(typeof(RepeatTimeLine))]
     public static void RepeatTimeLineActive(TimeLineViewPlayer player, LayoutBase layoutBase)
     {
-        if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount);
+        if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount,r.ToTime);
     }
     #endregion
 
@@ -69,6 +69,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
 
 
     #endregion
+
     #region LookAtTarget
     //LookAtTarget
     [HandleLayout(typeof(LookAtTarget))]

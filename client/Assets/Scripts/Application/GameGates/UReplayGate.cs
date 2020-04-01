@@ -7,6 +7,7 @@ using UGameTools;
 using Google.Protobuf;
 using EConfig;
 using EngineCore.Simulater;
+using UnityEngine.AddressableAssets;
 
 public class UReplayGate : UGate
 {
@@ -16,10 +17,11 @@ public class UReplayGate : UGate
         replayer.LoadFormBytes(replayerData);
         Replayer = replayer;
         var data = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigByID<MapData>(mapID);
-        level = data.LevelName;
+        Map = data;
     }
 
-    private string level;
+    private MapData Map;
+
     private NotifyMessagePool Replayer;
     private float startTime = -1f;
     private NotifyMessagePool.Frame frame;
@@ -35,17 +37,18 @@ public class UReplayGate : UGate
 
     private System.Collections.IEnumerator Load()
     {
-        UUIManager.Singleton.ShowMask(true);
-        UUIManager.Singleton.HideAll();
-        UUIManager.Singleton.ShowLoading(0);
-        var operation = SceneManager.LoadSceneAsync(level, LoadSceneMode.Single);
+        UUIManager.S.ShowMask(true);
+        UUIManager.S.HideAll();
+        UUIManager.S.ShowLoading(0);
+        var operation = ResourcesManager.S.LoadLevelAsync(Map);
         PerView = UPerceptionView.Create();
-        while (!operation.isDone)
+        var time = Time.time;
+        while (!operation.IsDone)
         {
-            UUIManager.Singleton.ShowLoading(operation.progress);
+            UUIManager.S.ShowLoading( Mathf.Clamp01((Time.time - time) /3));
             yield return null;
         }
-        UUIManager.Singleton.ShowMask(false);
+        UUIManager.S.ShowMask(false);
         startTime = GetTime().Time;
         player = new NotifyPlayer(PerView);
     }

@@ -9,5 +9,7 @@ namespace Layout.LayoutElements
       
         [Label("重复次数","只有一个有效果")]
         public int RepeatCount = 1;
+        [Label("重置时间")]
+        public float ToTime = -1;
     }
 }

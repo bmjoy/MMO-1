@@ -94,9 +94,8 @@ namespace Windows
                 .FirstConfig<CharacterLevelUpData>(t => t.Level == gate.hero.Level+1);
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
             float v = 0;
-            if (leveUp != null)
-                v = (float)gate.hero.Exprices / leveUp.NeedExprices;
-            ExpSilder.size = v;
+            if (leveUp != null)  v = (float)gate.hero.Exprices / leveUp.NeedExprices;
+            ExpSilder.value = v;
         }
     }
 }
