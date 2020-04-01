@@ -7,9 +7,10 @@ public class LanguageManager : XSingleton<LanguageManager>
 
     public readonly Dictionary<string, string> Keys = new Dictionary<string, string>();
 
-    void Awake()
+    protected override void Awake()
     {
-        var xml = ResourcesManager.S.LoadText("Language.xml");
+        base.Awake();
+        var xml = ResourcesManager.S.ReadStreamingFile("Language.xml");
 
         var ls = XmlParser.DeSerialize<LanguageSetting>(xml);
         foreach (var i in ls.Keys)

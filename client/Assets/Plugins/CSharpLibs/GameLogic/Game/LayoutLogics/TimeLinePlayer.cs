@@ -26,6 +26,7 @@ namespace GameLogic.Game.LayoutLogics
 				NoActivedPoints.Clear();
 				foreach (var i in orpoint)
 				{
+					if (i.Time < ToTime) continue;
 					NoActivedPoints.Enqueue(i);
 				}
 				return false;
@@ -52,14 +53,17 @@ namespace GameLogic.Game.LayoutLogics
 		public void Destory() { this.OnDestory(); }
 
 		public float PlayTime { get; private set; } = 0f;
+		private float ToTime = -1;
 
 		private int currentRepeatTime = 0;
 
-		public void Repeat(int maxTimes)
+
+		public void Repeat(int maxTimes,float toTime)
 		{
 			if (currentRepeatTime >= maxTimes) return;
 			startTime = -1;
 			currentRepeatTime++;
+			ToTime = toTime;
 		}
 	}
 

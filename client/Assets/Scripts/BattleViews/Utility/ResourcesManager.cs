@@ -6,7 +6,8 @@ using org.vxwo.csharp.json;
 using EConfig;
 using UnityEngine.AddressableAssets;
 using System.Collections;
-
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 {
@@ -28,7 +29,11 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 
 	public string LoadText(string path)
 	{
-		return ReadStreamingFile(path);
+		var exPath = path.Substring(0, path.LastIndexOf('.'));
+		var asst = Resources.Load<TextAsset>(exPath);
+		if (asst)  return asst.text;
+		Debug.LogError($"{exPath} no found");
+		return string.Empty;
 	}
 
 	public Coroutine LoadResourcesWithExName<T>(string path, CallBackDele<T> call) where T : Object
@@ -45,7 +50,7 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		callback?.Invoke(asset.Result);
 	}
 
-	private string ReadStreamingFile(string namae)
+	public string ReadStreamingFile(string namae)
 	{
 		var path = Path.Combine(Application.streamingAssetsPath, namae);
 		Debug.Log(path);
@@ -81,4 +86,8 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		LoadResourcesWithExName($"ItemModel/{item.ResModel}.prefab", call);
 	}
 
+	public AsyncOperationHandle<SceneInstance> LoadLevelAsync(MapData map)
+	{
+		return Addressables.LoadSceneAsync($"Assets/Levels/{map.LevelName}.unity");
+    }
 }

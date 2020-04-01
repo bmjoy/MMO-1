@@ -23,7 +23,7 @@ public class DrawerHandlerAttribute:Attribute
 public static class PropertyDrawer
 {
 
-	public static string ASSET_ROOT = $"/StreamingAssets/";
+	public static string ASSET_ROOT = $"/Resources/";
 	public static string ASSET = $"Assets{ASSET_ROOT}";
 	public static string RES_ROOT = $"Assets/AssetRes/";
 
@@ -321,7 +321,8 @@ public static class PropertyDrawer
 	{
 		var resources = ASSET;
 		var path = (string)field.GetMemberValue (obj);
-		var res = AssetDatabase.LoadAssetAtPath<TextAsset> ($"{resources}{path}");
+		var aPath = $"{resources}{path}";
+		var res = AssetDatabase.LoadAssetAtPath<TextAsset> (aPath);
 		GUILayout.Label (label);
 		GUILayout.BeginHorizontal ();
 		res= EditorGUILayout.ObjectField (res,typeof(TextAsset), false,GUILayout.Width(100)) as TextAsset;

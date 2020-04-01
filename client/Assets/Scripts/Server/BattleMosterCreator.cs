@@ -21,7 +21,6 @@ namespace Server
         public Vector3 Forward;
     }
 
-
     public class BattleMosterCreator
     {
         public BattleLevelSimulater Simulater { get; private set; }

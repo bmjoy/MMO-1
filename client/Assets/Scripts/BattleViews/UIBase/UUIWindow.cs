@@ -44,7 +44,7 @@ public abstract class UUIWindow:UUIElement
                     window.runner = root.AddComponent<UIWindowRunner>();
                     window.OnCreate();
                     this.Window = window;
-                   // window.uiRoot.SetActive(false);
+                    window.uiRoot.SetActive(false);
                     IsDone = true;
                     callBack?.Invoke(this.Window);
                 });
@@ -124,7 +124,6 @@ public abstract class UUIWindow:UUIElement
         switch (state)
         {
             case WindowState.NONE:
-			//state = WindowState.ONSHOWING;
                 break;
             case WindowState.ONSHOWING:
                 this.uiRoot.SetActive(true);

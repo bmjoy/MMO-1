@@ -185,7 +185,11 @@ namespace GameLogic.Game.LayoutLogics
 			var ai = unitLayout.AIPath;
 			if (string.IsNullOrEmpty(ai)) ai = data.AIResourcePath;
 			per.ChangeCharacterAI(ai, unit);
-			unit.OnDead = (el) => { GObject.Destroy(el, 3); };
+			unit.OnDead = (el) => 
+			{
+				releaser.OnEvent(Layout.EventType.EVENT_UNIT_DEAD);
+                GObject.Destroy(el, 3);
+			};
 		}
 		#endregion
 
@@ -223,7 +227,7 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(RepeatTimeLine))]
 		public static void RepeatTimeLineActive(TimeLinePlayer player, LayoutBase layoutBase)
 		{
-			if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount);
+			if (layoutBase is RepeatTimeLine r) player.Repeat(r.RepeatCount,r.ToTime);
 		}
 		#endregion
 

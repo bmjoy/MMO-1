@@ -55,7 +55,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
 
         string CommandLine = Environment.CommandLine;
         string[] CommandLineArgs = Environment.GetCommandLineArgs();
-        var config = ResourcesManager.S.LoadText("server.json");
+        var config = ResourcesManager.S.ReadStreamingFile("server.json");
 
         if (CommandLineArgs.Length >1)
         {

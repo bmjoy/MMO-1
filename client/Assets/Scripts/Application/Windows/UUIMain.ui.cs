@@ -25,7 +25,7 @@ namespace Windows
         protected Button MenuItems;
         protected Button Button_AddFriend;
         protected Button Button_Facebook;
-        protected Scrollbar ExpSilder;
+        protected Slider ExpSilder;
         protected Text lb_exp;
         protected Button user_info;
         protected Text Level_Number;
@@ -55,7 +55,7 @@ namespace Windows
             MenuItems = FindChild<Button>("MenuItems");
             Button_AddFriend = FindChild<Button>("Button_AddFriend");
             Button_Facebook = FindChild<Button>("Button_Facebook");
-            ExpSilder = FindChild<Scrollbar>("ExpSilder");
+            ExpSilder = FindChild<Slider>("ExpSilder");
             lb_exp = FindChild<Text>("lb_exp");
             user_info = FindChild<Button>("user_info");
             Level_Number = FindChild<Text>("Level_Number");
