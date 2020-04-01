@@ -14,11 +14,17 @@ using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(IBattleCharacter releaser, IBattleCharacter target)
+    public void SetCharacter(int releaser, int target)
     {
-        CharacterTarget = target;
-        CharacterReleaser = releaser;
+        CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
+        CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
+        RIndex = releaser;
+        TIndex = target;
     }
+
+
+    private int RIndex;
+    private int TIndex;
 
     public IBattleCharacter CharacterTarget { private set; get; }
     public IBattleCharacter CharacterReleaser { private set; get; }
@@ -66,18 +72,6 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         }
     }
 
-    public void PlaySound(Layout.TargetType target, string resourcesPath, string fromBone, float value)
-    {
-        var tar = target;
-        if ((tar == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget) is UCharacterView orgin)
-        {
-            var pos = orgin.GetBoneByName(fromBone).position;
-            ResourcesManager.S.LoadResourcesWithExName<AudioClip>(resourcesPath,(clip)=>
-            {
-                AudioSource.PlayClipAtPoint(clip, pos, value);
-            });
-        }
-    }
 
     private readonly List<IParticlePlayer> pPlayers  = new List<IParticlePlayer>();
 
@@ -91,8 +85,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         var createNotify = new Notify_CreateReleaser
         {
             Index = Index,
-            ReleaserIndex = CharacterReleaser.Index,
-            TargetIndex = CharacterTarget.Index,
+            ReleaserIndex = RIndex,
+            TargetIndex = TIndex,
             MagicKey = Key
         };
         return createNotify;

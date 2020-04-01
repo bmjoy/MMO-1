@@ -39,10 +39,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         _magicData = new Dictionary<string, MagicData>();
         _timeLines = new Dictionary<string, TimeLine>();
 #if !UNITY_SERVER
-        GPUBillboardBuffer.Instance.Init();
-        GPUBillboardBuffer.Instance.SetupBillboard(1000);
-        GPUBillboardBuffer.Instance.SetDisappear(1);
-        GPUBillboardBuffer.Instance.SetScaleParams(0f, 0.5f, 0.5f, 1f, 1f);
+        GPUBillboardBuffer.S.Init();
+        GPUBillboardBuffer.S.SetupBillboard(1000);
+        GPUBillboardBuffer.S.SetDisappear(1);
+        GPUBillboardBuffer.S.SetScaleParams(0f, 0.5f, 0.5f, 1f, 1f);
 
         param = new DisplayNumerInputParam()
         {
@@ -69,21 +69,21 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     public void ShowHPCure(UnityEngine.Vector3 pos, int hp)
     {
 #if !UNITY_SERVER
-        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{hp}", new Vector2(.2f, .2f), pos, Color.green, true, param);
+        GPUBillboardBuffer.S.DisplayNumberRandom($"{hp}", new Vector2(.2f, .2f), pos, Color.green, true, param);
 #endif
     }
 
     internal void ShowMPCure(UnityEngine.Vector3 pos, int mp)
     {
 #if !UNITY_SERVER
-        GPUBillboardBuffer.Instance.DisplayNumberRandom($"{mp}", new Vector2(.2f, .2f), pos, Color.blue, true, param);
+        GPUBillboardBuffer.S.DisplayNumberRandom($"{mp}", new Vector2(.2f, .2f), pos, Color.blue, true, param);
 #endif
     }
 
-
-    public UElementView GetViewByIndex(int releaseIndex)
+    public T GetViewByIndex<T>(int releaseIndex) where T: UElementView
     {
-        if (AttachElements.TryGetValue(releaseIndex, out UElementView vi)) return vi;
+        if (AttachElements.TryGetValue(releaseIndex, out UElementView vi))
+            return vi as T;
         return null;
     }
 
@@ -198,11 +198,15 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     private MagicData TryLoadMagic(string key)
     {
-        var asset = ResourcesManager.S.LoadText($"Magics/{key}.xml");
-        if (string.IsNullOrEmpty(asset)) return null;
-        var magic = XmlParser.DeSerialize<MagicData>(asset);
-        if (UseCache) _magicData.Add(key, magic);
-        return magic;
+        if (!_magicData.TryGetValue(key, out _))
+        {
+            var asset = ResourcesManager.S.LoadText($"Magics/{key}.xml");
+            if (string.IsNullOrEmpty(asset)) return null;
+            MagicData magic = XmlParser.DeSerialize<MagicData>(asset);
+            if (UseCache) _magicData.Add(key, magic);
+            return magic;
+        }
+        return null;
     }
 
 
@@ -217,7 +221,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     }
     #region IBattlePerception implementation
 
-    bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed,int crtmult)
+    bool IBattlePerception.ProcessDamage(int owner, int target, int damage, bool isMissed, int crtmult)
     {
 #if UNITY_SERVER|| UNITY_EDITOR
         AddNotify(new Notify_DamageResult
@@ -231,17 +235,15 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 #endif
 
 #if !UNITY_SERVER
-        if (GetViewByIndex(target) is UCharacterView ch)
+        UCharacterView chDisplay = GetViewByIndex<UCharacterView>(isMissed ? owner : target);
+        if (chDisplay)
         {
-            if (ch != null)
+            var bone = chDisplay.GetBoneByName(UCharacterView.TopBone);
+            if (bone)
             {
-                var bone = ch.GetBoneByName(UCharacterView.TopBone);
-                if (bone)
-                {
-                    var pos = bone.transform.position;
-                    GPUBillboardBuffer.Instance.
-                        DisplayNumberRandom((isMissed ? "MISS" : $"{damage}"),new Vector2(.2f, .2f) * crtmult, pos, Color.red,true, param);
-                }
+                var pos = bone.transform.position;
+                GPUBillboardBuffer.S.
+                    DisplayNumberRandom((isMissed ? "MISS" : $"{damage}"), new Vector2(.2f, .2f) * crtmult, pos, Color.red, true, param);
             }
         }
 #endif
@@ -305,9 +307,9 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         view.ConfigID = config;
         view.AccoundUuid = account_id;
         view.Name = name;
-        view.SetHpMp(hp, hpMax,mp, mpMax);
         view.OwnerIndex  = owner;
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
+        if (view is IBattleCharacter ch) ch.SetHpMp(hp, hpMax, mp, mpMax);
         view.SetCharacter(body, data.ResourcesPath);
         return view;
     }
@@ -317,15 +319,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var obj = new GameObject($"Rleaser:{magicKey}");
         obj.transform.SetParent(this.transform, false);
         var view = obj.AddComponent<UMagicReleaserView>();
-        if (AttachElements.TryGetValue(releaser, out UElementView r))
-        {
-            if (AttachElements.TryGetValue(target, out UElementView t))
-            {
-                view.SetCharacter(r as IBattleCharacter, t as IBattleCharacter);
-            }
-        }
+
         view.Key = magicKey;
         view.SetPrecpetion(this);
+        view.SetCharacter(releaser, target);
         return view;
     }
         

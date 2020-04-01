@@ -80,6 +80,7 @@ public class GMainGate:UGate
     }
 
     private float timeTO = -1f;
+    private GameGMTools gm;
 
     #region implemented abstract members of UGate
 
@@ -89,6 +90,8 @@ public class GMainGate:UGate
         UUIManager.Singleton.ShowMask(true);
 
         StartCoroutine(StartInit());
+        gm = this.gameObject.AddComponent<GameGMTools>();
+        gm.ShowGM = true;
     }
 
     private IEnumerator StartInit()
@@ -173,7 +176,7 @@ public class GMainGate:UGate
         Client?.Disconnect();
         UUIManager.Singleton.ShowMask(false);
         UUIManager.Singleton.HideAll();
-       
+        Destroy(gm);
     }
 
     protected override void Tick()
@@ -201,8 +204,7 @@ public class GMainGate:UGate
         UApplication.S.GotoLoginGate();
     }
 
-    
-
+   
     public async Task TryToJoinLastBattle()
     {
         var r = await GetLastBattle.CreateQuery()

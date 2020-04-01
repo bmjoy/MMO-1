@@ -23,8 +23,8 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     {
         OnJoined();
         this.Index = index;
-#if UNITY_SERVER||UNITY_EDITOR
-        CreateNotify(ToInitNotify());
+#if UNITY_SERVER || UNITY_EDITOR
+         CreateNotify(ToInitNotify());
 #endif
         PerView.AttachView(this);
     }
@@ -33,9 +33,9 @@ public abstract class UElementView : MonoBehaviour, IBattleElement, ISerializera
     {
         PerView.DeAttachView(this);
 #if UNITY_SERVER||UNITY_EDITOR
-        CreateNotify(new Notify_ElementExitState { Index = Index });
+         CreateNotify(new Notify_ElementExitState { Index = Index });
 #endif
-        DestorySelf();  
+        DestorySelf();
     }
 
     void IBattleElement.AttachElement(GObject el)

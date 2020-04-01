@@ -11,7 +11,6 @@ using System.Linq;
 using UnityEngine.AI;
 using System;
 using EngineCore.Simulater;
-using UnityEngine.AddressableAssets;
 using System.Collections;
 
 [Serializable]
@@ -187,9 +186,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             {
                 if (ThridPersionCameraContollor.Current.InView(this.transform.position))
                 {
-                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, MP,mpMax,
+                    nameBar = UUITipDrawer.S.DrawUUITipNameBar(nameBar, Name, Level, curHp, maxHp, 
                         TeamId == PerView.OwerTeamIndex,
-                        GetBoneByName(TopBone).position + Vector3.up * .2f,ThridPersionCameraContollor.Current.CurrenCamera);
+                        GetBoneByName(TopBone).position + Vector3.up * .05f,ThridPersionCameraContollor.Current.CurrenCamera);
                 }
             }
         }
@@ -309,7 +308,6 @@ public class UCharacterView : UElementView, IBattleCharacter
             return Quaternion.identity;
         }
     }
-    public int hp = -1;
 
     public Transform GetBoneByName(string name)
     {
@@ -390,14 +388,14 @@ public class UCharacterView : UElementView, IBattleCharacter
         LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
     }
 
-    internal void SetHpMp(int hp, int hpMax,int mp ,int mpMax)
-    {
-        curHp = hp; maxHp = hpMax;
-        MP = mp;  this.mpMax = mpMax;
-    }
+
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
+    public int MpMax { get { return mpMax; } }
+
+    public int HP { get { return curHp; } }
+    public int HpMax { get { return maxHp; } }
 
     public bool IsFullMp { get { return MP == mpMax; } }
     public bool IsFullHp { get { return curHp == maxHp; } }
@@ -495,7 +493,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
-        var v = PerView.GetViewByIndex(target);
+        var v = PerView.GetViewByIndex<UElementView>(target);
         if (!v) return;
         LookAt(v.transform);
     }
@@ -775,7 +773,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         if (!TryToSetPosition(pos.ToUV3())) GoToEmpty();
     }
 
-    public bool IsCanForwardMoving { get { return !(State is PushMove);} }
+    void IBattleCharacter.SetHpMp(int hp, int hpMax, int mp, int mpMax)
+    {
+        curHp = hp; maxHp = hpMax;
+        MP = mp; this.mpMax = mpMax;
+    }
 
     bool IBattleCharacter.IsMoving
     {

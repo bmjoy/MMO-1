@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using GameLogic.Game.LayoutLogics;
 using Layout.LayoutElements;
+using UnityEngine;
 
 public class TimeLineViewPlayer : TimeLinePlayerBase
 {
@@ -99,7 +100,19 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     public static void PlaySoundLayout(TimeLineViewPlayer player, LayoutBase layoutBase)
     {
         var sound = layoutBase as PlaySoundLayout;
-        player.RView.PlaySound(sound.target, sound.resourcesPath, sound.fromBone, sound.value);
+        var tar = sound.target;
+        if ((tar == Layout.TargetType.Releaser ? player.RView.CharacterReleaser : player.RView.CharacterTarget)
+            is UCharacterView orgin)
+        {
+            if (orgin)
+            {
+                var pos = orgin.GetBoneByName(sound.fromBone).position;
+                ResourcesManager.S.LoadResourcesWithExName<AudioClip>(sound.resourcesPath, (clip) =>
+                {
+                    AudioSource.PlayClipAtPoint(clip, pos, sound.value);
+                });
+            }
+        }
     }
     #endregion
  

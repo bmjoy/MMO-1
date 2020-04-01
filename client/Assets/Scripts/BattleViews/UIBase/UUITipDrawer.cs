@@ -26,12 +26,12 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
 
     public int DrawUUITipNameBar(int instanceId, string name,
-        int level, int hp, int hpMax, int mp, int mpMax, bool owner, Vector3 offset, Camera c)
+        int level, int hp, int hpMax,  bool owner, Vector3 offset, Camera c)
     {
-        UUIManager.S.TryToGetTip(instanceId, out UUITipNameBar tip);
+        instanceId = UUIManager.S.TryToGetTip(instanceId,true, out UUITipNameBar tip);
         if (tip != null)
         {
-            tip.SetInfo(name, level, hp, hpMax, mp, mpMax, owner);
+            tip.SetInfo(name, level, hp, hpMax,  owner);
             tip.LookAt(c);
             UUITip.Update(tip, offset);
             return tip.InstanceID;
@@ -41,7 +41,7 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
 
     public int DrawItemName(int instanceId, string name, bool owner, Vector3 offset, Camera c)
     {
-        UUIManager.S.TryToGetTip(instanceId, out UUIName tip);
+        instanceId = UUIManager.S.TryToGetTip(instanceId, true, out UUIName tip);
         if (tip != null)
         {
             tip.ShowName(name, owner);
@@ -55,10 +55,9 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
     #region Notify
     private int DrawUUINotify(int instanceId, string notify)
     {
-        UUIManager.Singleton.TryToGetTip(instanceId, out UUINotify tip);
+        instanceId= UUIManager.Singleton.TryToGetTip(instanceId, false, out UUINotify tip);
         if (tip != null)
         {
-            //tip = UUIManager.Singleton.CreateTip<UUINotify>();
             tip.SetNotify(notify);
             UUITip.Update(tip);
             return tip.InstanceID;
@@ -68,7 +67,6 @@ public class UUITipDrawer:XSingleton<UUITipDrawer>
         
     private readonly List<NotifyMessage> notifys= new List<NotifyMessage>();
     private readonly Queue<NotifyMessage> _dels = new Queue<NotifyMessage>();
-
 
     public void ShowNotify(AppNotify notify)
     {

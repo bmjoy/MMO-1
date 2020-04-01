@@ -400,6 +400,7 @@ namespace GameLogic.Game.Elements
 		{
             HP = MaxHP;
             MP = MaxMP;
+            View.SetHpMp(HP, MaxHP, MP, MaxMP);
 		}
 
 		protected void OnDeath()

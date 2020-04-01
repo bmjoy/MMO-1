@@ -16,7 +16,7 @@ public abstract class UUITip:UUIElement
 {
     public class CreateUIAsync<T> : UnityEngine.CustomYieldInstruction where T:UUITip,new()
     {
-        public CreateUIAsync(Transform parent, bool world)
+        public CreateUIAsync(int index,Transform parent, bool world)
         {
             var attrs = typeof(T).GetCustomAttributes(typeof(UITipResourcesAttribute), false) as UITipResourcesAttribute[];
             if (attrs.Length == 0) throw new Exception($"no found UITipResourcesAttribute");
@@ -26,9 +26,10 @@ public abstract class UUITip:UUIElement
                  var root = UnityEngine.Object.Instantiate(res);
                  var tip = new T
                  {
-                     IsWorld = world
+                     IsWorld = world,
+                     InstanceID = index
                  };
-                 root.name = string.Format("_TIP_{0}_{1}", tip.InstanceID, typeof(T).Name);
+                 root.name = string.Format("_TIP_{0}_{1}", index, typeof(T).Name);
                  tip.uiRoot = root;
                  tip.Rect.SetParent(parent, false);
                  tip.OnCreate();
@@ -43,18 +44,10 @@ public abstract class UUITip:UUIElement
         public override bool keepWaiting => !IsDone;
     }
 
-	public UUITip ()
-	{
-        InstanceID = _index++;
-        if (_index == int.MaxValue)
-            _index = 0;
-	}
-
-    private static int _index = 0;
 
 	private bool LastUpdate = false;
 
-    public int InstanceID { get; } = 0;
+    public int InstanceID { get; protected set; } = 0;
 
     protected override void OnDestory ()
 	{
@@ -75,9 +68,9 @@ public abstract class UUITip:UUIElement
         uiRoot.transform.LookAt(c.transform);
     }
 
-    public static CreateUIAsync<T> CreateAsync<T>(Transform parent, bool world) where T: UUITip,new()
+    public static CreateUIAsync<T> CreateAsync<T>(int index,Transform parent, bool world) where T: UUITip,new()
     {
-        return new CreateUIAsync<T>(parent, world);
+        return new CreateUIAsync<T>(index,parent, world);
     }
 
 	public static void Update(UUITip tip,Vector2 pos)

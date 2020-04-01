@@ -17,7 +17,6 @@ namespace Tips
 
         private Slider GreenSlider;
         private Slider RedSlider;
-        private Slider MpSlider;
         protected override void OnCreate()
         {
 
@@ -27,17 +26,12 @@ namespace Tips
             GreenSlider = FindChild<Slider>("GreenSlider");
             SkillGuageRed = FindChild<Transform>("SkillGuageRed");
             RedSlider = FindChild<Slider>("RedSlider");
-            MpSlider = FindChild<Slider>("MpSlider");
         }
 
         private Text Name;
-
-
-
-        internal void SetInfo(string name, int level, int hp, int hpMax, int mp,int mpmax, bool OwnerTeam)
+        internal void SetInfo(string name, int level, int hp, int hpMax,  bool OwnerTeam)
         {
             float v = hp /(float) hpMax;
-
             Name.text = name;
             Level.text = $"{level}";
             SkillGuageGreen.ActiveSelfObject(OwnerTeam);
@@ -45,12 +39,6 @@ namespace Tips
             Name.color = OwnerTeam ? Color.white : Color.red;
             RedSlider.value  = v;
             GreenSlider.value =v;
-            MpSlider.ActiveSelfObject(mpmax > 0);
-            
-            if (mpmax > 0)
-            {
-                MpSlider.value = (float)mp / mpmax;
-            }
         }
     }
 

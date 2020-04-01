@@ -3,7 +3,9 @@
     "references": [
         "GameLogic",
         "BattleViews",
-        "Joystick"
+        "Joystick",
+        "Unity.ResourceManager",
+        "Unity.Addressables"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

@@ -217,8 +217,9 @@ namespace GameLogic.Game.Perceptions
             }
 
             battleCharacter.Init();
-
+           
             this.JoinElement(battleCharacter);
+
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }

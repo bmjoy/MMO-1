@@ -37,6 +37,7 @@ namespace Windows
                 ui.Cancel = cancel;
                 ui.lb_conent.text = content;
                 ui.lb_title.text = title;
+                ui.ShowWindow();
             });
         }
     }
