@@ -150,6 +150,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     public const string TopBone = "Top";
     public const string BodyBone = "Body";
     public const string BottomBone = "Bottom";
+    public const string RootBone = "ROOT";
     public const string Die_Motion = "Die";
     private Animator CharacterAnimator;
     private int nameBar=-1;
@@ -333,7 +334,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             character.transform.RestRTS();
             character.name = "VIEW";
             var collider = character.GetComponent<CapsuleCollider>();
-
+            character.transform.SetLayer(this.ViewRoot.layer);
             var gameTop = new GameObject("__Top");
             gameTop.transform.SetParent(this.transform);
             gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
@@ -357,6 +358,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             c.direction = collider.direction;
             c.isTrigger = true;
 
+           
 #if UNITY_SERVER
             Destroy(character);
 #else
@@ -370,6 +372,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     public void SetCharacter(GameObject root, string path)
     {
         ViewRoot = root;
+        bones.Add(RootBone, ViewRoot.transform);
         if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
         StartCoroutine(Init(path));
     }

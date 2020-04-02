@@ -34,6 +34,12 @@ namespace UGameTools
             trans.localRotation = Quaternion.identity;
         }
 
+        public static void SetLayer(this Transform trans ,int layer)
+        {
+            trans.gameObject.layer = layer;
+            foreach (var i in trans.GetComponentsInChildren<Transform>()) i.gameObject.layer = layer;
+        }
+
 
         public static T FindChild<T> (this Transform trans, string name) where T :Component
 		{

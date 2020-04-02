@@ -36,6 +36,7 @@ namespace Windows
         protected Text lb_hp;
         protected Slider MpSilder;
         protected Text lb_mp;
+        protected RawImage Player;
         protected Button user_info;
         protected Image user_exp;
         protected Text Level_Number;
@@ -67,6 +68,7 @@ namespace Windows
             lb_hp = FindChild<Text>("lb_hp");
             MpSilder = FindChild<Slider>("MpSilder");
             lb_mp = FindChild<Text>("lb_mp");
+            Player = FindChild<RawImage>("Player");
             user_info = FindChild<Button>("user_info");
             user_exp = FindChild<Image>("user_exp");
             Level_Number = FindChild<Text>("Level_Number");

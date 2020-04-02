@@ -78,12 +78,11 @@ public class UApplication : XSingleton<UApplication>
 
     #region mono behavior
 
-    public void Awake()
+    protected override void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        base.Awake();
         _ = new ExcelToJSONConfigManager(ResourcesManager.S);
         GetServer();
-
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartCoroutine(RunReader());
     }

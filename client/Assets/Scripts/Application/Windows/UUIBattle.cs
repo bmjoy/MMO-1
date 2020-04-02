@@ -286,11 +286,10 @@ namespace Windows
         }
         public void InitCharacter(UCharacterView view)
         {
+            var gata = UApplication.G<BattleGate>();
             if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
             {
-                var gata = UApplication.G<BattleGate>();
                 var pre = gata.PreView as IBattlePerception;
-                
                 this.GridTableManager.Count = list.Count;
                 int index = 0;
                 foreach (var i in GridTableManager)
@@ -308,6 +307,8 @@ namespace Windows
                 ResourcesManager.S.LoadIcon(config, (s) => att_Icon.sprite = s);
             }
             this.view = view;
+
+            this.Player.texture = gata.LookAtView;
         }
         public void SetPackage(PlayerPackage package)
         {

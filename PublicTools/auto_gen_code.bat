@@ -21,7 +21,7 @@ IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 
 Copy src\output\  ..\client\Assets\Plugins\CoreDll\ /Y
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
-Copy src\json\  ..\client\Assets\StreamingAssets\Json\  /Y
+Copy src\json\  ..\client\Assets\Resources\Json\  /Y
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 Copy src\json\  ..\Server\Configs\ /Y
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
