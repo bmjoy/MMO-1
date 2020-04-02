@@ -13,9 +13,9 @@
           <childs />
           <name>靠近目标</name>
           <guid>a19f165e-ee58-46bf-9d8e-884c309c762f</guid>
-          <valueOf>ViewDistance</valueOf>
+          <valueOf>Value</valueOf>
           <distance>
-            <min>0</min>
+            <min>300</min>
             <max>100</max>
             <type>Fixed</type>
           </distance>
@@ -36,6 +36,27 @@
             <max>3000</max>
             <type>Range</type>
           </seconds>
+        </TreeNode>
+        <TreeNode xsi:type="TreeNodeFindTarget">
+          <childs />
+          <name>查找目标</name>
+          <guid>2aa34f34-eb18-4175-8344-53ce1021258d</guid>
+          <valueOf>ViewDistance</valueOf>
+          <Distance>
+            <min>0</min>
+            <max>0</max>
+            <type>Fixed</type>
+          </Distance>
+          <View>
+            <min>360</min>
+            <max>360</max>
+            <type>Fixed</type>
+          </View>
+          <selectType>Nearest</selectType>
+          <filter>None</filter>
+          <useMagicConfig>false</useMagicConfig>
+          <teamType>Enemy</teamType>
+          <findNew>true</findNew>
         </TreeNode>
       </childs>
       <name>处理攻击</name>

@@ -325,6 +325,25 @@ public class UCharacterView : UElementView, IBattleCharacter
     private GameObject range;
     private float hideTime = 0f;
 
+    public void SetCharacter(GameObject root, string path)
+    {
+        ViewRoot = root;
+        bones.Add(RootBone, ViewRoot.transform);
+        var gameTop = new GameObject("__Top");
+        gameTop.transform.SetParent(this.transform);
+        bones.Add(TopBone, gameTop.transform);
+
+        var bottom = new GameObject("__Bottom");
+        bottom.transform.SetParent(this.transform, false);
+        bones.Add(BottomBone, bottom.transform);
+        var body = new GameObject("__Body");
+        body.transform.SetParent(this.transform, false);
+        bones.Add(BodyBone, body.transform);
+
+        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
+        StartCoroutine(Init(path));
+    }
+
     private IEnumerator Init(string path)
     {
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(path,(obj)=>
@@ -335,20 +354,10 @@ public class UCharacterView : UElementView, IBattleCharacter
             character.name = "VIEW";
             var collider = character.GetComponent<CapsuleCollider>();
             character.transform.SetLayer(this.ViewRoot.layer);
-            var gameTop = new GameObject("__Top");
-            gameTop.transform.SetParent(this.transform);
-            gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
-            bones.Add(TopBone, gameTop.transform);
-
-            var bottom = new GameObject("__Bottom");
-            bottom.transform.SetParent(this.transform, false);
-            bottom.transform.localPosition = new Vector3(0, 0, 0);
-            bones.Add(BottomBone, bottom.transform);
-
-            var body = new GameObject("__Body");
-            body.transform.SetParent(this.transform, false);
-            body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
-            bones.Add(BodyBone, body.transform);
+           
+            GetBoneByName(TopBone).localPosition = new Vector3(0, collider.height, 0);
+            GetBoneByName(BottomBone).localPosition = new Vector3(0, 0, 0);
+            GetBoneByName(BodyBone). localPosition = new Vector3(0, collider.height / 2, 0);
             Agent.radius = collider.radius;
             Agent.height = collider.height;
             var c = this.gameObject.AddComponent<CapsuleCollider>();
@@ -369,13 +378,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         });
     }
 
-    public void SetCharacter(GameObject root, string path)
-    {
-        ViewRoot = root;
-        bones.Add(RootBone, ViewRoot.transform);
-        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
-        StartCoroutine(Init(path));
-    }
 
     public int OwnerIndex { get; internal set; }
 

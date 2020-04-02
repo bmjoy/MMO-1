@@ -131,14 +131,16 @@ public class BattleGate : UGate, IServerMessageHandler
                 UUIManager.S.ShowMask(false);
                 character.OnItemTrigger = TriggerItem;
 
+               
                 var go = new GameObject("Look", typeof(Camera));
                 go.transform.SetParent(character.GetBoneByName(UCharacterView.RootBone),false);
                 go.transform.RestRTS();
                 var c = go.GetComponent<Camera>();
                 c.targetTexture = LookAtView;
                 c.cullingMask = LayerMask.GetMask("Player");
-                go.transform.localPosition = (Vector3.forward + Vector3.up) * 1f;
-                go.transform.LookAt(character.GetBoneByName(UCharacterView.RootBone));
+                go.transform.localPosition = new Vector3(0,1.1f,1.5f);
+                c.farClipPlane = 5;
+                go.TryAdd<LookAtTarget>().target = character.GetBoneByName(UCharacterView.BodyBone);
             }
         };
         

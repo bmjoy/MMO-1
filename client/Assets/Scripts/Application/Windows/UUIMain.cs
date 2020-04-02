@@ -47,6 +47,12 @@ namespace Windows
                 UUIManager.S.CreateWindowAsync<UUIItemShop>((ui) => ui.ShowWindow());
 
             });
+            MenuSkill.onClick.AddListener(() => {
+                UUIManager.S.CreateWindowAsync<UUIMagic>(ui =>
+                {
+                    ui.ShowWindow();
+                });
+            });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });
 
