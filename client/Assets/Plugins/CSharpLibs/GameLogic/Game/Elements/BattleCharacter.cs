@@ -23,15 +23,19 @@ namespace GameLogic.Game.Elements
 
         public int ConfigId { get { return Config.ID; } }
 
-        public BattleCharacterMagic(MagicType type, CharacterMagicData config)
+        public BattleCharacterMagic(MagicType type, CharacterMagicData config, MagicLevelUpData lv = null)
         {
             Type = type;
             Config = config;
+            this.LevelData = lv;
         }
+
+        private MagicLevelUpData LevelData { set; get; }
 
         public float CdTime { get { return Config.TickTime; } }
 
         public float CdCompletedTime { set; get; }
+        public string[] Params { get { return LevelData?.Param.ToArray(); } }
 
         public bool IsCoolDown(float time)
         {
@@ -427,12 +431,6 @@ namespace GameLogic.Game.Elements
             return Lock.IsLock(type);
         }
 
-        public CharacterMagicData GetMagicById(int id)
-        {
-            if (!Magics.TryGetValue(id, out BattleCharacterMagic datat)) return null;
-            return datat.Config;
-        }
-
         public bool IsCoolDown(int magicID, float now, bool autoAttach = false)
         {
             bool isOK = true;
@@ -463,6 +461,16 @@ namespace GameLogic.Game.Elements
                 if (!i.Value.IsCoolDown(time)) continue;
                 if (call?.Invoke(i.Value) == true) break;
             }
+        }
+
+
+        public bool TryGetActiveMagicById(int magicId, float time, out BattleCharacterMagic data)
+        {
+            if (Magics.TryGetValue(magicId, out data))
+            {
+                return data.IsCoolDown(time);
+            }
+            return false;
         }
 
         internal bool HaveMagicByType(MagicType ty)

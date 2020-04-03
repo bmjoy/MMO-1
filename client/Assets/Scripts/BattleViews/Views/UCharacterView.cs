@@ -397,12 +397,12 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
-    public int MpMax { get { return mpMax; } }
+    public int MpMax { get; private set; }
 
     public int HP { get { return curHp; } }
     public int HpMax { get { return maxHp; } }
 
-    public bool IsFullMp { get { return MP == mpMax; } }
+    public bool IsFullMp { get { return MP == MpMax; } }
     public bool IsFullHp { get { return curHp == maxHp; } }
 
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
@@ -618,12 +618,10 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
-    private int mpMax;
-
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
         if (!this) return;
-        mpMax = maxMP;
+        MpMax = maxMP;
         MP = cur;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = maxMP, Mp = mp });
@@ -676,7 +674,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             Hp = curHp,
             MaxHp = maxHp,
             Mp = MP,
-            MpMax = mpMax,
+            MpMax = MpMax,
             OwnerIndex = OwnerIndex
         };
 
@@ -781,7 +779,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetHpMp(int hp, int hpMax, int mp, int mpMax)
     {
         curHp = hp; maxHp = hpMax;
-        MP = mp; this.mpMax = mpMax;
+        MP = mp; this.MpMax = mpMax;
     }
 
     bool IBattleCharacter.IsMoving

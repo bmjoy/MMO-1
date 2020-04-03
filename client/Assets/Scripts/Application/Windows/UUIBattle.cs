@@ -58,7 +58,7 @@ namespace Windows
 
             public void Update(UCharacterView view, float now,bool haveKey)
             {
-                
+                if (LMagicData == null) return;
                 if (LMagicData.unique)  Template.Button.interactable = !haveKey;
                 else  Template.Button.interactable = true;
 

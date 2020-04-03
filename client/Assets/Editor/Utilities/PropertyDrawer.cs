@@ -9,6 +9,8 @@ using Layout.LayoutElements;
 using System.IO;
 using Layout;
 using Layout.LayoutEffects;
+using Proto;
+using DamageType = Layout.LayoutElements.DamageType;
 
 public class DrawerHandlerAttribute:Attribute
 {
@@ -87,12 +89,7 @@ public static class PropertyDrawer
 		{
 			
 
-			if (i is FieldInfo)
-			{
-				DrawProperty(i, obj);
-				continue;
-			}
-			if (i is PropertyInfo)
+			if (i is FieldInfo || i is PropertyInfo)
 			{
 				DrawProperty(i, obj);
 				continue;
@@ -166,7 +163,7 @@ public static class PropertyDrawer
 		if (fType == typeof(int))
 		{
 			GUILayout.Label(name);
-			var value = EditorGUILayout.IntField((int)GetMemberValue(field,obj));
+			var value = EditorGUILayout.IntField((int)GetMemberValue(field, obj));
 			field.SetMemberValue(obj, value);
 		}
 		else if (fType == typeof(bool))
@@ -233,33 +230,36 @@ public static class PropertyDrawer
 		else if (fType == typeof(DamageRange))
 		{
 			GUILayout.Label(name);
-			if (!(field.GetMemberValue(obj) is DamageRange value))
-			{
-				value = new DamageRange();
-			}
-
+			if (!(field.GetMemberValue(obj) is DamageRange value)) value = new DamageRange();
 			GUILayout.BeginVertical();
 			GUILayout.BeginHorizontal();
 			GUILayout.Label(GetLable(typeof(DamageRange).GetField("fiterType")));
-			value.fiterType =  (FilterType)EditorGUILayout.EnumPopup((Enum)value.fiterType);
+			value.fiterType = (FilterType)EditorGUILayout.EnumPopup((Enum)value.fiterType);
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
 			GUILayout.Label(GetLable(typeof(DamageRange).GetField("damageType")));
-			value.damageType =(DamageType) EditorGUILayout.EnumPopup((Enum)value.damageType);
+			value.damageType = (DamageType)EditorGUILayout.EnumPopup((Enum)value.damageType);
 			GUILayout.EndHorizontal();
-            
-
 			if (value.damageType == DamageType.Rangle)
 			{
-				var fieldNames = new string[] { "radius","angle", "offsetAngle" , "offsetPosition"};
+				var fieldNames = new string[] { "radius", "angle", "offsetAngle", "offsetPosition" };
 				foreach (var i in fieldNames)
 				{
 					DrawProperty(typeof(DamageRange).GetField(i), value);
-                }
-            }
+				}
+			}
 			GUILayout.EndVertical();
+			field.SetMemberValue(obj, value);
 
-			
+		}
+		else if (fType == typeof(ValueSourceOf))
+		{
+			GUILayout.Label(name);
+			if (!(field.GetMemberValue(obj) is ValueSourceOf value))value = new ValueSourceOf();
+			GUILayout.Label(GetLable(typeof(ValueSourceOf).GetField("ValueForm")));
+			value.ValueForm = (GetValueFrom)EditorGUILayout.EnumPopup((Enum)value.ValueForm);
+			if (value.ValueForm == GetValueFrom.CurrentConfig)DrawProperty(typeof(ValueSourceOf).GetField("Value"), value);
+			field.SetMemberValue(obj, value);
 		}
 		else if (fType.IsEnum)
 		{
@@ -289,6 +289,7 @@ public static class PropertyDrawer
 		var masker = EditorGUILayout.EnumFlagsField((Enum)field.GetMemberValue(obj));
 		field.SetMemberValue(obj, masker);
 	}
+
 
 	[DrawerHandler(typeof(EditorResourcePathAttribute))]
 	public static void ResourcesSelect(object obj, MemberInfo field, string label, object attr)

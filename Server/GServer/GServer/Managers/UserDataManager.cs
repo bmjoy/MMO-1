@@ -81,14 +81,14 @@ namespace GServer.Managers
 
         }
 
-        internal async Task<int> BuyPackageSize(string accountUuid, int size)
+        internal async Task<G2C_BuyPackageSize> BuyPackageSize(Client client,string accountUuid, int size)
         {
             var player = await FindPlayerByAccountId(accountUuid);
             var package = await FindPackageByPlayerID(player.Uuid);
-            if (package.PackageSize > size) return -1;
-            if (player.Coin < Application.Constant.PACKAGE_BUY_COST) return -2;
+            if (package.PackageSize != size) return  new G2C_BuyPackageSize { Code = ErrorCode.Error };
+            if (player.Coin < Application.Constant.PACKAGE_BUY_COST) return  new G2C_BuyPackageSize { Code = ErrorCode.NoEnoughtCoin };
             if (package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE >
-                Application.Constant.PACKAGE_SIZE_LIMIT) return -3;
+                Application.Constant.PACKAGE_SIZE_LIMIT) return  new G2C_BuyPackageSize { Code = ErrorCode.PackageSizeLimit };
             {
                 var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
                 var update = Builders<GamePlayerEntity>.Update
@@ -102,7 +102,14 @@ namespace GServer.Managers
                 await DataBase.S.Packages.UpdateOneAsync(filter, update);
             }
 
-            return package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE;
+            await SyncToClient(client, player.Uuid, true);
+
+            return new G2C_BuyPackageSize
+            {
+                Code = ErrorCode.Ok,
+                OldCount = size,
+                PackageCount = package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE
+            };
         }
 
         public async Task<GamePlayerEntity> FindPlayerById(string player_uuid)

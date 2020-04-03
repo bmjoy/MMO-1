@@ -27,6 +27,7 @@ namespace Windows
         protected Button Button_Facebook;
         protected Slider ExpSilder;
         protected Text lb_exp;
+        protected RawImage user_defalut;
         protected Button user_info;
         protected Text Level_Number;
         protected Text Username;
@@ -57,6 +58,7 @@ namespace Windows
             Button_Facebook = FindChild<Button>("Button_Facebook");
             ExpSilder = FindChild<Slider>("ExpSilder");
             lb_exp = FindChild<Text>("lb_exp");
+            user_defalut = FindChild<RawImage>("user_defalut");
             user_info = FindChild<Button>("user_info");
             Level_Number = FindChild<Text>("Level_Number");
             Username = FindChild<Text>("Username");

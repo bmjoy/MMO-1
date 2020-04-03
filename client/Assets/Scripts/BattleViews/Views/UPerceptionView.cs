@@ -329,7 +329,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     IBattleMissile IBattlePerception.CreateMissile(int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
        
-
         var root = new GameObject(res);
         var missile = root.AddComponent<UBattleMissileView> (); //NO
         missile.fromBone = fromBone;
@@ -362,7 +361,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             viewRoot.transform.SetParent(transform, false);
             viewRoot.transform.RestRTS();
             if (bone) viewRoot.transform.position = bone.position;
-
         }
 
         viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(layout.rotation.ToUV3());

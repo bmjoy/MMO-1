@@ -8,6 +8,7 @@ using Proto;
 using ExcelConfig;
 using UnityEngine;
 using EConfig;
+using Proto.GateServerService;
 
 namespace Windows
 {
@@ -54,6 +55,24 @@ namespace Windows
                 {
                     HideWindow();
                 });
+
+            Bt_Buy.onClick.AddListener(() =>
+            {
+                var gate = UApplication.G<GMainGate>();
+                BuyPackageSize.CreateQuery()
+                .SendRequest(gate.Client,
+                new C2G_BuyPackageSize { SizeCurrent = gate.package.MaxSize }, (res) =>
+                {
+                    if (res.Code.IsOk())
+                    {
+                        gate.package.MaxSize = res.PackageCount;
+                        OnUpdateUIData();
+                    }
+                    else
+                        UApplication.S.ShowError(res.Code);
+                },UUIManager.S);
+
+            });
         }
         protected override void OnShow()
         {
@@ -71,6 +90,8 @@ namespace Windows
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
 
+            lb_TextCountCur.text = $"{ gate.package.Items.Count} ";
+            lb_TextCountSize.text = $"/ {gate.package.MaxSize}";
             ContentTableManager.Count = gate.package.Items.Count;
             var hero = gate.hero;
             int index = 0;
