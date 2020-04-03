@@ -143,6 +143,11 @@ namespace GameLogic.Game.Elements
            
         }
 
+        internal void SetParam(object @params)
+        {
+            throw new NotImplementedException();
+        }
+
         private TimeLinePlayer startLayout;
 
         public class AttachedElement

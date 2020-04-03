@@ -53,6 +53,9 @@ namespace Windows
                     ui.ShowWindow();
                 });
             });
+            MenuMessages.onClick.AddListener(() => {
+                UUIManager.S.CreateWindowAsync<UUIMessages>(ui => ui.ShowWindow());
+            });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });
 
@@ -90,7 +93,7 @@ namespace Windows
         {
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
-
+            user_defalut.texture = gate.LookAtView;
             lb_gold.text = gate.Gold.ToString("N0");
             lb_gem.text = gate.Coin.ToString("N0");
             if (gate.hero == null) return;
