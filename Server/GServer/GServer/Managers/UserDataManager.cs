@@ -81,7 +81,7 @@ namespace GServer.Managers
 
         }
 
-        internal async Task<int> BuyPackageSize(string accountUuid, int size)
+        internal async Task<int> BuyPackageSize(Client client,string accountUuid, int size)
         {
             var player = await FindPlayerByAccountId(accountUuid);
             var package = await FindPackageByPlayerID(player.Uuid);
@@ -102,6 +102,7 @@ namespace GServer.Managers
                 await DataBase.S.Packages.UpdateOneAsync(filter, update);
             }
 
+            await SyncToClient(client, player.Uuid, true);
             return package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE;
         }
 

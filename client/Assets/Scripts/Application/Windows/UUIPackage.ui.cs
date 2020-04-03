@@ -41,6 +41,10 @@ namespace Windows
 
 
         protected Button ButtonClose;
+        protected Text lb_TextCountCur;
+        protected Text lb_TextCountSize;
+        protected Button Bt_Buy;
+        protected Text TextCountCur;
         protected GridLayoutGroup Content;
 
 
@@ -51,9 +55,13 @@ namespace Windows
         {
             base.InitTemplate();
             ButtonClose = FindChild<Button>("ButtonClose");
+            lb_TextCountCur = FindChild<Text>("lb_TextCountCur");
+            lb_TextCountSize = FindChild<Text>("lb_TextCountSize");
+            Bt_Buy = FindChild<Button>("Bt_Buy");
+            TextCountCur = FindChild<Text>("TextCountCur");
             Content = FindChild<GridLayoutGroup>("Content");
 
-            ContentTableManager.InitFromGrid(Content);
+            ContentTableManager.InitFromLayout(Content);
 
         }
     }
