@@ -14,9 +14,17 @@ namespace Windows
         public class ContentTableTemplate : TableItemTemplate
         {
             public ContentTableTemplate(){}
+            public Image ButtonBrown;
+            public Image ButtonGreen;
+            public Text TextName;
+            public Text TextMessage;
 
             public override void InitTemplate()
             {
+                ButtonBrown = FindChild<Image>("ButtonBrown");
+                ButtonGreen = FindChild<Image>("ButtonGreen");
+                TextName = FindChild<Text>("TextName");
+                TextMessage = FindChild<Text>("TextMessage");
 
             }
         }

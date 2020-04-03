@@ -6,7 +6,6 @@ package Proto;
 //错误码 考虑平台问题 不要尝试串码
 enum ErrorCode
 {	
-    //VersionError=9999;//协议版本异常
     Error = 0;//通用错误
 	OK = 1; //处理成功
 	LoginFailure = 2;//登陆失败

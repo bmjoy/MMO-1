@@ -46,14 +46,14 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 	{
 		var asset = Addressables.LoadAssetAsync<T>(path);
 		yield return asset;
-		Debug.Log($"{path}->{asset.Result}");
+		//Debug.Log($"{path}->{asset.Result}");
 		callback?.Invoke(asset.Result);
 	}
 
 	public string ReadStreamingFile(string namae)
 	{
 		var path = Path.Combine(Application.streamingAssetsPath, namae);
-		Debug.Log(path);
+		//Debug.Log(path);
 		return File.ReadAllText(path);
 	}
 
