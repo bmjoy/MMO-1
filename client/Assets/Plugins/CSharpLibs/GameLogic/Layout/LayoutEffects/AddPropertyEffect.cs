@@ -20,21 +20,14 @@ namespace Layout.LayoutEffects
     [EffectId(6)]
     public class AddPropertyEffect : EffectBase
     {
-        public AddPropertyEffect()
-        {
-            addType = AddType.Append;
-            addValue = 0;
-            revertType = RevertType.ReleaserDeath;
-        }
-
         [Label("修改类型")]
-        public AddType addType;
+        public AddType addType =AddType.Append;
 
         [Label("修改值")]
-        public int addValue;
+        public ValueSourceOf addValue =0 ;
 
         [Label("恢复方式")]
-        public RevertType revertType;
+        public RevertType revertType= RevertType.ReleaserDeath;
 
         [Label("属性类型")]
         public Proto.HeroPropertyType property;

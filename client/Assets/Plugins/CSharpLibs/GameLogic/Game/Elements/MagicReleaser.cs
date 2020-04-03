@@ -72,6 +72,7 @@ namespace GameLogic.Game.Elements
         public BattleCharacter Owner { set; private get; }
 
         public float Durtime { set; get; }
+
         public void SetParam(params string[] parms)
         {
             Params = parms;
@@ -366,15 +367,6 @@ namespace GameLogic.Game.Elements
             return rLock;
         }
 
-        private void CancelLock(RevertActionLock rLock)
-        {
-            if (actionReverts.Contains(rLock))
-            {
-                actionReverts.Remove(rLock);
-                rLock.target.UnLockAction(rLock.type);
-            }
-        }
-
         protected override void OnJoinState()
         {
             base.OnJoinState();
@@ -419,6 +411,15 @@ namespace GameLogic.Game.Elements
         {
             if (State == ReleaserStates.Completing || State == ReleaserStates.Ended || State == ReleaserStates.ToComplete) return;
             State = ReleaserStates.ToComplete;
+        }
+
+        internal int TryGetParams(GetValueFrom vF)
+        {
+            int index =(int) vF - 1;
+            if (this.Params.Length <= index) return 0;
+            if (index < 0) return 0;
+            if (int.TryParse(this.Params[index], out int v)) return v;
+            return 0;
         }
     }
 }

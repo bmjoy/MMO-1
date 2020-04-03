@@ -43,7 +43,6 @@ namespace GameLogic.Game.AIBehaviorTree
                         });
                     yield return RunStatus.Running;
                 }
-                var att = mc.Config;
                 TargetTeamType type = mc.Config.GetTeamType();
                 root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
                 var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.Nearest);
@@ -55,7 +54,7 @@ namespace GameLogic.Game.AIBehaviorTree
                         yield break;
                     }
                     var last = root.Time;
-                    if (!root.Character.MoveTo(target.Position, out _, att.RangeMax))
+                    if (!root.Character.MoveTo(target.Position, out _, mc.Config.RangeMax))
                     {
                         if (context.IsDebug) Attach("failure", $"can move");
                         yield return RunStatus.Failure;
@@ -68,18 +67,21 @@ namespace GameLogic.Game.AIBehaviorTree
                     if (!root.Character.IsMoving) break;
                 }
                 var rTarget = new ReleaseAtTarget(root.Character, target);
-                releaser = root.Perception.CreateReleaser(att.MagicKey, root.Character, rTarget, ReleaserType.Magic, -1);
+                releaser = root.Perception.CreateReleaser(mc.Config.MagicKey, root.Character, rTarget, ReleaserType.Magic, -1);
                 if (!releaser)
                 {
                     yield return RunStatus.Failure;
                     yield break;
                 }
-                root.Character.AttachMagicHistory(att.ID, root.Time, root.Character.AttackSpeed);
+
+                releaser.SetParam(mc.Params);
+                root.Character.AttachMagicHistory(mc.Config.ID, root.Time, root.Character.AttackSpeed);
                 while (!releaser.IsLayoutStartFinish)
                 {
                     yield return RunStatus.Running;
                 }
                 yield return RunStatus.Running;
+
             }
         }
 

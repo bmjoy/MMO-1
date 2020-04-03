@@ -18,6 +18,6 @@ namespace Layout.LayoutEffects
         public ValueOf valueType = ValueOf.NormalAttack;
 
         [Label("值")]
-        public int value = 0;
+        public ValueSourceOf value = 0;
     }
 }

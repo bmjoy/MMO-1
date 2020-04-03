@@ -361,7 +361,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             viewRoot.transform.SetParent(transform, false);
             viewRoot.transform.RestRTS();
             if (bone) viewRoot.transform.position = bone.position;
-
         }
 
         viewRoot.transform.rotation =( form as IBattleCharacter).Rotation*  Quaternion.Euler(layout.rotation.ToUV3());

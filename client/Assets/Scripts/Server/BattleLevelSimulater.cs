@@ -142,7 +142,7 @@ namespace Server
             var per = State.Perception as BattlePerception;
             var data = CM.Current.GetConfigByID<CharacterData>(user.GetHero().HeroID);
 
-            var magic = per.CreateHeroMagic(data.ID);
+            var magic = per.CreateHeroMagic(data.ID,user.GetHero());
 
             var appendProperties = new Dictionary<P, int>();
             foreach (var i in user.GetHero().Equips)
