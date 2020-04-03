@@ -329,7 +329,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     IBattleMissile IBattlePerception.CreateMissile(int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
        
-
         var root = new GameObject(res);
         var missile = root.AddComponent<UBattleMissileView> (); //NO
         missile.fromBone = fromBone;
