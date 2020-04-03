@@ -30,6 +30,7 @@ enum ErrorCode
     NoItemsShop = 20;//没有道具商店
     NoFoundItemInShop = 21;//商店中没有该道具
     NoEnoughtCoin = 22 ;//钻石不足
+    PackageSizeLimit = 23;//背包上限
 }
 
 //empty text

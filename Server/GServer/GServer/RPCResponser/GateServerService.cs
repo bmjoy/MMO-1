@@ -50,9 +50,8 @@ namespace GateServer
         {
             var task = UserDataManager.S.BuyPackageSize(Client, AccountUuid, req.SizeCurrent);
             task.Wait();
-            if (task.Result < 0) return new G2C_BuyPackageSize { Code = ErrorCode.Error };
-            
-            return new G2C_BuyPackageSize { Code = ErrorCode.Ok, OldCount = req.SizeCurrent, PackageCount = task.Result };
+            return task.Result;
+           
         }
 
         public G2C_CreateHero CreateHero(C2G_CreateHero request)

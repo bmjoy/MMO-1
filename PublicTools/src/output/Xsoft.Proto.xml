@@ -669,6 +669,11 @@
             钻石不足
              </summary>
         </member>
+        <member name="F:Proto.ErrorCode.PackageSizeLimit">
+             <summary>
+            背包上限
+             </summary>
+        </member>
         <member name="T:Proto.Void">
              <summary>
             empty text

@@ -22,7 +22,7 @@ namespace Proto {
     static ConstReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCrsAwoJRXJyb3JDb2RlEgkK",
+            "Cgtjb25zdC5wcm90bxIFUHJvdG8iBgoEVm9pZCqCBAoJRXJyb3JDb2RlEgkK",
             "BUVycm9yEAASBgoCT0sQARIQCgxMb2dpbkZhaWx1cmUQAhIUChBSZWdFeGlz",
             "dFVzZXJOYW1lEAMSFwoTUmVnSW5wdXRFbXB0eU9yTnVsbBAEEhQKEE5vR2Ft",
             "ZVBsYXllckRhdGEQBRIOCgpOb0hlcm9JbmZvEAYSEwoPTk9Gb3VuZFNlcnZl",
@@ -33,7 +33,8 @@ namespace Proto {
             "DElzV2Vhck9uSGVybxAPEhEKDU5vRW5vdWdodEdvbGQQEBIUChBOb0ZyZWVH",
             "YXRlU2VydmVyEBESGwoXTmFtZU9yUHdkTGVnaHRJbmNvcnJlY3QQEhIRCg1O",
             "ZWVkSGVyb0xldmVsEBMSDwoLTm9JdGVtc1Nob3AQFBIVChFOb0ZvdW5kSXRl",
-            "bUluU2hvcBAVEhEKDU5vRW5vdWdodENvaW4QFmIGcHJvdG8z"));
+            "bUluU2hvcBAVEhEKDU5vRW5vdWdodENvaW4QFhIUChBQYWNrYWdlU2l6ZUxp",
+            "bWl0EBdiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.ErrorCode), }, new pbr::GeneratedClrTypeInfo[] {
@@ -140,6 +141,10 @@ namespace Proto {
     ///钻石不足
     /// </summary>
     [pbr::OriginalName("NoEnoughtCoin")] NoEnoughtCoin = 22,
+    /// <summary>
+    ///背包上限
+    /// </summary>
+    [pbr::OriginalName("PackageSizeLimit")] PackageSizeLimit = 23,
   }
 
   #endregion
