@@ -199,7 +199,8 @@ namespace GateServer
 
         public G2C_MagicLevelUp MagicLevelUp(C2G_MagicLevelUp req)
         {
-            throw new System.NotImplementedException();
+           return UserDataManager.S.MagicLevelUp(Client, req.MagicId, req.Level, AccountUuid)
+                .GetAwaiter().GetResult();
         }
 
         public G2C_OperatorEquip OperatorEquip(C2G_OperatorEquip request)

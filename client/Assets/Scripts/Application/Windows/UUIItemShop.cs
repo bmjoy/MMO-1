@@ -46,7 +46,11 @@ namespace Windows
                 Template.ButtonGold.onClick.AddListener(() => {
                     OnBuy?.Invoke(this);
                 });
+
+                Template.ItemBg.onClick.AddListener(() => { OnDetail?.Invoke(this); });
             }
+
+            public Action<ContentTableModel> OnDetail;
 
             public Action<ContentTableModel> OnBuy;
 
@@ -81,12 +85,10 @@ namespace Windows
         {
             base.OnShow();
 
-            //UUIManager.S.MaskEvent();
             var gate = UApplication.G<GMainGate>();
             QueryShop.CreateQuery()
                 .SendRequest(gate.Client, new C2G_Shop { }, (res) =>
             {
-                //UUIManager.S.UnMaskEvent();
                 if (res.Code.IsOk())
                 {
                     this.Shops = res.Shops;
@@ -125,8 +127,15 @@ namespace Windows
             {
                 i.Model.SetItem(obj.Shop.Items[index], obj.Shop);
                 i.Model.OnBuy = Buy;
+                i.Model.OnDetail = ShowDetail;
                 index++;
             }
+        }
+
+        private void ShowDetail(ContentTableModel obj)
+        {
+            var item = new PlayerItem { ItemID = obj.Config.ID, Level = 0, Num = obj.ShopItem.PackageNum };
+            UUIManager.S.CreateWindowAsync<UUIDetail>(ui => ui.Show(item, true));
         }
 
         private void Buy(ContentTableModel obj)
@@ -142,7 +151,7 @@ namespace Windows
                 //UUIManager.S.UnMaskEvent();
                 if (r.Code.IsOk())
                 {
-                    UApplication.S.ShowNotify($"购买 {obj.Config.Name}*{obj.ShopItem.PackageNum}");
+                    UApplication.S.ShowNotify(LanguageManager.S.Format("UUIItemShop_BUY", $"{obj.Config.Name}",$"{obj.ShopItem.PackageNum}"));
                 }
                 else {
                     UApplication.S.ShowError(r.Code);

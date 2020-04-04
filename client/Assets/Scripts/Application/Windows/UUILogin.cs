@@ -68,6 +68,10 @@ namespace Windows
             TextInputBoxUserName.text = PlayerPrefs.GetString(UserNameKey);
             TextInputBoxPassWord.text = PlayerPrefs.GetString(PasswordKey);
             CheckBox.isOn = !string.IsNullOrEmpty(TextInputBoxUserName.text);
+            lb_title.SetKey("UUILogin_TITLE");
+            lb_remember.SetKey("UUILogin_Remember");
+            ButtonBlue.SetKey("UUILogin_Bt_Login");
+            TextSignup.SetKey("UUILogin_Signup");
         }
 
         protected override void OnHide()

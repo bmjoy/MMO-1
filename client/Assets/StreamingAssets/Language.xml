@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="utf-16"?>
 <Setting xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Add K="BATTLE_NO_MP_TO_CAST">Not Enough MP to cast {0}</Add>
+  
+  <!--UI package -->
+  <Add K="UI_PACKAGE_BUY_SIZE_TITLE">购买容量</Add>
+  <Add K="UI_PACKAGE_BUY_SIZE">花费钻石 {0} 购买容量 {1} </Add>
+  <Add K="UI_PACKAGE_UI_TITLE">背包</Add>
+  <Add K="UI_PACKAGE_UI_BUY_BT">扩容</Add>
+  <Add K="UI_PACKAGE_UI_SIZE_TITLE">背包容量</Add>
+
+  <!--UI main-->
+  <Add K="UI_MAIN_SETTING">设置</Add>
+  <Add K="UI_MAIN_WEAPON">装备</Add>
+  <Add K="UI_MAIN_SKILL">技能</Add>
+  <Add K="UI_MAIN_MESSAGE">消息</Add>
+  <Add K="UI_MAIN_SHOP">商店</Add>
+  <Add K="UI_MAIN_ITEM">背包</Add>
+  <Add K="UI_MAIN_PLAY">进入世界</Add>
+
+  <!--UUISaleItem-->
+  <Add K="UUISaleItem_Sale_Success">出售成功</Add>
+  <Add K="UI_SALE_ITEM_BT_OK">确认</Add>
+  <Add K="UI_SALE_ITEM_TITLE">出售</Add>
+
+  <!--UUIDetail-->
+  <Add K="UUIDetail_SELL">出售</Add>
+  <Add K="UUIDetail_WEAR">穿戴</Add>
+  <Add K="UUIDetail_PRICES">价格:{0}</Add>
+  <Add K="UUIDETAIL_WEAR_SUCESS">穿戴成功{0}</Add>
+
+  <!--枚举对应-->
+  <Add K="UUIDetail_Agility">敏捷:{0}</Add>
+  <Add K="UUIDetail_Crt">暴击:{0}</Add>
+  <Add K="UUIDetail_DamageMax">攻击上限:{0}</Add>
+  <Add K="UUIDetail_DamageMin">攻击下限:{0}</Add>
+  <Add K="UUIDetail_Defance">防御:{0}</Add>
+  <Add K="UUIDetail_Force">力量:{0}</Add>
+  <Add K="UUIDetail_Hit">命中:{0}</Add>,
+  <Add K="UUIDetail_Jouk">闪避:{0}</Add>
+  <Add K="UUIDetail_Knowledge">智力:{0}</Add>
+  <Add K="UUIDetail_MagicWaitTime">攻击速度:{0}</Add>
+  <Add K="UUIDetail_MaxHp">HP:{0}</Add>
+  <Add K="UUIDetail_MaxMp">MP:{0}</Add>
+  <Add K="UUIDetail_Resistibility">魔法闪避:{0}</Add>
+  <Add K="UUIDetail_SuckingRate">吸血等级:{0}</Add>  
+
+  <!--UUIItemShop-->
+  <Add K="UUIItemShop_BUY">获得{0}x{1}</Add>
+
+  <!--UUILogin-->
+  <Add K="UUILogin_TITLE">登陆</Add>
+  <Add K="UUILogin_Bt_Login">登陆</Add>
+  <Add K="UUILogin_Signup">注册</Add>
+  <Add K="UUILogin_Remember">记住账号</Add>
 </Setting>

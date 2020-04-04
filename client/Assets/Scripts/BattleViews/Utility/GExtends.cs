@@ -74,7 +74,19 @@ namespace UGameTools
             if (t == null) return;
             t.text = text;
         }
-            
+
+        public static void SetKey(this Button bt, string key, params object[] pars)
+        {
+            var t = bt.transform.FindChild<Text>("Text");
+            if (t == null) return;
+            t.SetKey(key, pars);
+        }
+
+        public static void SetKey(this Text t, string key, params object[] pars)
+        {
+            t.text = LanguageManager.S.Format(key, pars);
+        }
+
         public static Vector3 ToGVer3(this Proto.Vector3 v3)
         {
             return new Vector3(v3.X, v3.Y, v3.Z);
