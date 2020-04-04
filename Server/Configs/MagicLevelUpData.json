@@ -1,2231 +1,2231 @@
 [
-	{"ID":3001,"MagicID":3,"NeedLevel":1,"NeedGold":1000,"Level":1,"Param":[
+	{"ID":3001,"MagicID":3,"NeedLevel":1,"NeedGold":1000,"Level":1,"Description":"","Param":[
 "1000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3002,"MagicID":3,"NeedLevel":8,"NeedGold":1500,"Level":2,"Param":[
+	{"ID":3002,"MagicID":3,"NeedLevel":8,"NeedGold":1500,"Level":2,"Description":"","Param":[
 "1500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3003,"MagicID":3,"NeedLevel":15,"NeedGold":2000,"Level":3,"Param":[
+	{"ID":3003,"MagicID":3,"NeedLevel":15,"NeedGold":2000,"Level":3,"Description":"","Param":[
 "2000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3004,"MagicID":3,"NeedLevel":22,"NeedGold":2500,"Level":4,"Param":[
+	{"ID":3004,"MagicID":3,"NeedLevel":22,"NeedGold":2500,"Level":4,"Description":"","Param":[
 "2500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3005,"MagicID":3,"NeedLevel":29,"NeedGold":3000,"Level":5,"Param":[
+	{"ID":3005,"MagicID":3,"NeedLevel":29,"NeedGold":3000,"Level":5,"Description":"","Param":[
 "3000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3006,"MagicID":3,"NeedLevel":36,"NeedGold":3500,"Level":6,"Param":[
+	{"ID":3006,"MagicID":3,"NeedLevel":36,"NeedGold":3500,"Level":6,"Description":"","Param":[
 "3500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3007,"MagicID":3,"NeedLevel":43,"NeedGold":4000,"Level":7,"Param":[
+	{"ID":3007,"MagicID":3,"NeedLevel":43,"NeedGold":4000,"Level":7,"Description":"","Param":[
 "4000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3008,"MagicID":3,"NeedLevel":50,"NeedGold":4500,"Level":8,"Param":[
+	{"ID":3008,"MagicID":3,"NeedLevel":50,"NeedGold":4500,"Level":8,"Description":"","Param":[
 "4500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3009,"MagicID":3,"NeedLevel":57,"NeedGold":5000,"Level":9,"Param":[
+	{"ID":3009,"MagicID":3,"NeedLevel":57,"NeedGold":5000,"Level":9,"Description":"","Param":[
 "5000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3010,"MagicID":3,"NeedLevel":64,"NeedGold":5500,"Level":10,"Param":[
+	{"ID":3010,"MagicID":3,"NeedLevel":64,"NeedGold":5500,"Level":10,"Description":"","Param":[
 "5500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3011,"MagicID":3,"NeedLevel":71,"NeedGold":6000,"Level":11,"Param":[
+	{"ID":3011,"MagicID":3,"NeedLevel":71,"NeedGold":6000,"Level":11,"Description":"","Param":[
 "6000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3012,"MagicID":3,"NeedLevel":78,"NeedGold":6500,"Level":12,"Param":[
+	{"ID":3012,"MagicID":3,"NeedLevel":78,"NeedGold":6500,"Level":12,"Description":"","Param":[
 "6500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3013,"MagicID":3,"NeedLevel":85,"NeedGold":7000,"Level":13,"Param":[
+	{"ID":3013,"MagicID":3,"NeedLevel":85,"NeedGold":7000,"Level":13,"Description":"","Param":[
 "7000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3014,"MagicID":3,"NeedLevel":92,"NeedGold":7500,"Level":14,"Param":[
+	{"ID":3014,"MagicID":3,"NeedLevel":92,"NeedGold":7500,"Level":14,"Description":"","Param":[
 "7500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":3015,"MagicID":3,"NeedLevel":99,"NeedGold":8000,"Level":15,"Param":[
+	{"ID":3015,"MagicID":3,"NeedLevel":99,"NeedGold":8000,"Level":15,"Description":"","Param":[
 "8000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4001,"MagicID":4,"NeedLevel":5,"NeedGold":2000,"Level":1,"Param":[
+	{"ID":4001,"MagicID":4,"NeedLevel":5,"NeedGold":2000,"Level":1,"Description":"\u6301\u7EED\u65F6\u95F41s","Param":[
 "1000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4002,"MagicID":4,"NeedLevel":12,"NeedGold":2800,"Level":2,"Param":[
+	{"ID":4002,"MagicID":4,"NeedLevel":12,"NeedGold":2800,"Level":2,"Description":"\u6301\u7EED\u65F6\u95F41.2s","Param":[
 "1200",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4003,"MagicID":4,"NeedLevel":19,"NeedGold":3600,"Level":3,"Param":[
+	{"ID":4003,"MagicID":4,"NeedLevel":19,"NeedGold":3600,"Level":3,"Description":"\u6301\u7EED\u65F6\u95F41.4s","Param":[
 "1400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4004,"MagicID":4,"NeedLevel":26,"NeedGold":4400,"Level":4,"Param":[
+	{"ID":4004,"MagicID":4,"NeedLevel":26,"NeedGold":4400,"Level":4,"Description":"","Param":[
 "1600",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4005,"MagicID":4,"NeedLevel":33,"NeedGold":5200,"Level":5,"Param":[
+	{"ID":4005,"MagicID":4,"NeedLevel":33,"NeedGold":5200,"Level":5,"Description":"","Param":[
 "1800",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4006,"MagicID":4,"NeedLevel":40,"NeedGold":6000,"Level":6,"Param":[
+	{"ID":4006,"MagicID":4,"NeedLevel":40,"NeedGold":6000,"Level":6,"Description":"","Param":[
 "2000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4007,"MagicID":4,"NeedLevel":47,"NeedGold":6800,"Level":7,"Param":[
+	{"ID":4007,"MagicID":4,"NeedLevel":47,"NeedGold":6800,"Level":7,"Description":"","Param":[
 "2200",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4008,"MagicID":4,"NeedLevel":54,"NeedGold":7600,"Level":8,"Param":[
+	{"ID":4008,"MagicID":4,"NeedLevel":54,"NeedGold":7600,"Level":8,"Description":"","Param":[
 "2400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4009,"MagicID":4,"NeedLevel":61,"NeedGold":8400,"Level":9,"Param":[
+	{"ID":4009,"MagicID":4,"NeedLevel":61,"NeedGold":8400,"Level":9,"Description":"","Param":[
 "2600",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4010,"MagicID":4,"NeedLevel":68,"NeedGold":9200,"Level":10,"Param":[
+	{"ID":4010,"MagicID":4,"NeedLevel":68,"NeedGold":9200,"Level":10,"Description":"","Param":[
 "2800",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4011,"MagicID":4,"NeedLevel":75,"NeedGold":10000,"Level":11,"Param":[
+	{"ID":4011,"MagicID":4,"NeedLevel":75,"NeedGold":10000,"Level":11,"Description":"","Param":[
 "3000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4012,"MagicID":4,"NeedLevel":82,"NeedGold":10800,"Level":12,"Param":[
+	{"ID":4012,"MagicID":4,"NeedLevel":82,"NeedGold":10800,"Level":12,"Description":"","Param":[
 "3200",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4013,"MagicID":4,"NeedLevel":89,"NeedGold":11600,"Level":13,"Param":[
+	{"ID":4013,"MagicID":4,"NeedLevel":89,"NeedGold":11600,"Level":13,"Description":"","Param":[
 "3400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4014,"MagicID":4,"NeedLevel":96,"NeedGold":12400,"Level":14,"Param":[
+	{"ID":4014,"MagicID":4,"NeedLevel":96,"NeedGold":12400,"Level":14,"Description":"","Param":[
 "3600",
 "",
 "",
 "",
 ""]
 },
-	{"ID":4015,"MagicID":4,"NeedLevel":100,"NeedGold":13200,"Level":15,"Param":[
+	{"ID":4015,"MagicID":4,"NeedLevel":100,"NeedGold":13200,"Level":15,"Description":"","Param":[
 "3800",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5001,"MagicID":5,"NeedLevel":8,"NeedGold":800,"Level":1,"Param":[
+	{"ID":5001,"MagicID":5,"NeedLevel":8,"NeedGold":800,"Level":1,"Description":"","Param":[
 "1",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5002,"MagicID":5,"NeedLevel":13,"NeedGold":1500,"Level":2,"Param":[
+	{"ID":5002,"MagicID":5,"NeedLevel":13,"NeedGold":1500,"Level":2,"Description":"","Param":[
 "5",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5003,"MagicID":5,"NeedLevel":18,"NeedGold":2200,"Level":3,"Param":[
+	{"ID":5003,"MagicID":5,"NeedLevel":18,"NeedGold":2200,"Level":3,"Description":"","Param":[
 "9",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5004,"MagicID":5,"NeedLevel":23,"NeedGold":2900,"Level":4,"Param":[
+	{"ID":5004,"MagicID":5,"NeedLevel":23,"NeedGold":2900,"Level":4,"Description":"","Param":[
 "13",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5005,"MagicID":5,"NeedLevel":28,"NeedGold":3600,"Level":5,"Param":[
+	{"ID":5005,"MagicID":5,"NeedLevel":28,"NeedGold":3600,"Level":5,"Description":"","Param":[
 "17",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5006,"MagicID":5,"NeedLevel":33,"NeedGold":4300,"Level":6,"Param":[
+	{"ID":5006,"MagicID":5,"NeedLevel":33,"NeedGold":4300,"Level":6,"Description":"","Param":[
 "21",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5007,"MagicID":5,"NeedLevel":38,"NeedGold":5000,"Level":7,"Param":[
+	{"ID":5007,"MagicID":5,"NeedLevel":38,"NeedGold":5000,"Level":7,"Description":"","Param":[
 "25",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5008,"MagicID":5,"NeedLevel":43,"NeedGold":5700,"Level":8,"Param":[
+	{"ID":5008,"MagicID":5,"NeedLevel":43,"NeedGold":5700,"Level":8,"Description":"","Param":[
 "29",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5009,"MagicID":5,"NeedLevel":48,"NeedGold":6400,"Level":9,"Param":[
+	{"ID":5009,"MagicID":5,"NeedLevel":48,"NeedGold":6400,"Level":9,"Description":"","Param":[
 "33",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5010,"MagicID":5,"NeedLevel":53,"NeedGold":7100,"Level":10,"Param":[
+	{"ID":5010,"MagicID":5,"NeedLevel":53,"NeedGold":7100,"Level":10,"Description":"","Param":[
 "37",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5011,"MagicID":5,"NeedLevel":58,"NeedGold":7800,"Level":11,"Param":[
+	{"ID":5011,"MagicID":5,"NeedLevel":58,"NeedGold":7800,"Level":11,"Description":"","Param":[
 "41",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5012,"MagicID":5,"NeedLevel":63,"NeedGold":8500,"Level":12,"Param":[
+	{"ID":5012,"MagicID":5,"NeedLevel":63,"NeedGold":8500,"Level":12,"Description":"","Param":[
 "45",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5013,"MagicID":5,"NeedLevel":68,"NeedGold":9200,"Level":13,"Param":[
+	{"ID":5013,"MagicID":5,"NeedLevel":68,"NeedGold":9200,"Level":13,"Description":"","Param":[
 "49",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5014,"MagicID":5,"NeedLevel":73,"NeedGold":9900,"Level":14,"Param":[
+	{"ID":5014,"MagicID":5,"NeedLevel":73,"NeedGold":9900,"Level":14,"Description":"","Param":[
 "53",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5015,"MagicID":5,"NeedLevel":78,"NeedGold":10600,"Level":15,"Param":[
+	{"ID":5015,"MagicID":5,"NeedLevel":78,"NeedGold":10600,"Level":15,"Description":"","Param":[
 "57",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5016,"MagicID":5,"NeedLevel":83,"NeedGold":11300,"Level":16,"Param":[
+	{"ID":5016,"MagicID":5,"NeedLevel":83,"NeedGold":11300,"Level":16,"Description":"","Param":[
 "61",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5017,"MagicID":5,"NeedLevel":88,"NeedGold":12000,"Level":17,"Param":[
+	{"ID":5017,"MagicID":5,"NeedLevel":88,"NeedGold":12000,"Level":17,"Description":"","Param":[
 "65",
 "",
 "",
 "",
 ""]
 },
-	{"ID":5018,"MagicID":5,"NeedLevel":93,"NeedGold":12700,"Level":18,"Param":[
+	{"ID":5018,"MagicID":5,"NeedLevel":93,"NeedGold":12700,"Level":18,"Description":"","Param":[
 "70",
 "",
 "",
 "",
 ""]
 },
-	{"ID":8001,"MagicID":8,"NeedLevel":1,"NeedGold":800,"Level":1,"Param":[
+	{"ID":8001,"MagicID":8,"NeedLevel":1,"NeedGold":800,"Level":1,"Description":"","Param":[
 "1",
 "10000",
 "",
 "",
 ""]
 },
-	{"ID":8002,"MagicID":8,"NeedLevel":5,"NeedGold":1350,"Level":2,"Param":[
+	{"ID":8002,"MagicID":8,"NeedLevel":5,"NeedGold":1350,"Level":2,"Description":"","Param":[
 "5",
 "12000",
 "",
 "",
 ""]
 },
-	{"ID":8003,"MagicID":8,"NeedLevel":9,"NeedGold":1900,"Level":3,"Param":[
+	{"ID":8003,"MagicID":8,"NeedLevel":9,"NeedGold":1900,"Level":3,"Description":"","Param":[
 "9",
 "14000",
 "",
 "",
 ""]
 },
-	{"ID":8004,"MagicID":8,"NeedLevel":13,"NeedGold":2450,"Level":4,"Param":[
+	{"ID":8004,"MagicID":8,"NeedLevel":13,"NeedGold":2450,"Level":4,"Description":"","Param":[
 "13",
 "16000",
 "",
 "",
 ""]
 },
-	{"ID":8005,"MagicID":8,"NeedLevel":17,"NeedGold":3000,"Level":5,"Param":[
+	{"ID":8005,"MagicID":8,"NeedLevel":17,"NeedGold":3000,"Level":5,"Description":"","Param":[
 "17",
 "18000",
 "",
 "",
 ""]
 },
-	{"ID":8006,"MagicID":8,"NeedLevel":21,"NeedGold":3550,"Level":6,"Param":[
+	{"ID":8006,"MagicID":8,"NeedLevel":21,"NeedGold":3550,"Level":6,"Description":"","Param":[
 "21",
 "20000",
 "",
 "",
 ""]
 },
-	{"ID":8007,"MagicID":8,"NeedLevel":25,"NeedGold":4100,"Level":7,"Param":[
+	{"ID":8007,"MagicID":8,"NeedLevel":25,"NeedGold":4100,"Level":7,"Description":"","Param":[
 "25",
 "22000",
 "",
 "",
 ""]
 },
-	{"ID":8008,"MagicID":8,"NeedLevel":29,"NeedGold":4650,"Level":8,"Param":[
+	{"ID":8008,"MagicID":8,"NeedLevel":29,"NeedGold":4650,"Level":8,"Description":"","Param":[
 "29",
 "24000",
 "",
 "",
 ""]
 },
-	{"ID":8009,"MagicID":8,"NeedLevel":33,"NeedGold":5200,"Level":9,"Param":[
+	{"ID":8009,"MagicID":8,"NeedLevel":33,"NeedGold":5200,"Level":9,"Description":"","Param":[
 "33",
 "26000",
 "",
 "",
 ""]
 },
-	{"ID":8010,"MagicID":8,"NeedLevel":37,"NeedGold":5750,"Level":10,"Param":[
+	{"ID":8010,"MagicID":8,"NeedLevel":37,"NeedGold":5750,"Level":10,"Description":"","Param":[
 "37",
 "28000",
 "",
 "",
 ""]
 },
-	{"ID":8011,"MagicID":8,"NeedLevel":41,"NeedGold":6300,"Level":11,"Param":[
+	{"ID":8011,"MagicID":8,"NeedLevel":41,"NeedGold":6300,"Level":11,"Description":"","Param":[
 "41",
 "30000",
 "",
 "",
 ""]
 },
-	{"ID":8012,"MagicID":8,"NeedLevel":45,"NeedGold":6850,"Level":12,"Param":[
+	{"ID":8012,"MagicID":8,"NeedLevel":45,"NeedGold":6850,"Level":12,"Description":"","Param":[
 "45",
 "32000",
 "",
 "",
 ""]
 },
-	{"ID":8013,"MagicID":8,"NeedLevel":49,"NeedGold":7400,"Level":13,"Param":[
+	{"ID":8013,"MagicID":8,"NeedLevel":49,"NeedGold":7400,"Level":13,"Description":"","Param":[
 "49",
 "34000",
 "",
 "",
 ""]
 },
-	{"ID":8014,"MagicID":8,"NeedLevel":53,"NeedGold":7950,"Level":14,"Param":[
+	{"ID":8014,"MagicID":8,"NeedLevel":53,"NeedGold":7950,"Level":14,"Description":"","Param":[
 "53",
 "36000",
 "",
 "",
 ""]
 },
-	{"ID":8015,"MagicID":8,"NeedLevel":57,"NeedGold":8500,"Level":15,"Param":[
+	{"ID":8015,"MagicID":8,"NeedLevel":57,"NeedGold":8500,"Level":15,"Description":"","Param":[
 "57",
 "38000",
 "",
 "",
 ""]
 },
-	{"ID":8016,"MagicID":8,"NeedLevel":61,"NeedGold":9050,"Level":16,"Param":[
+	{"ID":8016,"MagicID":8,"NeedLevel":61,"NeedGold":9050,"Level":16,"Description":"","Param":[
 "61",
 "40000",
 "",
 "",
 ""]
 },
-	{"ID":8017,"MagicID":8,"NeedLevel":65,"NeedGold":9600,"Level":17,"Param":[
+	{"ID":8017,"MagicID":8,"NeedLevel":65,"NeedGold":9600,"Level":17,"Description":"","Param":[
 "65",
 "42000",
 "",
 "",
 ""]
 },
-	{"ID":8018,"MagicID":8,"NeedLevel":69,"NeedGold":10150,"Level":18,"Param":[
+	{"ID":8018,"MagicID":8,"NeedLevel":69,"NeedGold":10150,"Level":18,"Description":"","Param":[
 "69",
 "44000",
 "",
 "",
 ""]
 },
-	{"ID":8019,"MagicID":8,"NeedLevel":73,"NeedGold":10700,"Level":19,"Param":[
+	{"ID":8019,"MagicID":8,"NeedLevel":73,"NeedGold":10700,"Level":19,"Description":"","Param":[
 "73",
 "46000",
 "",
 "",
 ""]
 },
-	{"ID":8020,"MagicID":8,"NeedLevel":77,"NeedGold":11250,"Level":20,"Param":[
+	{"ID":8020,"MagicID":8,"NeedLevel":77,"NeedGold":11250,"Level":20,"Description":"","Param":[
 "77",
 "48000",
 "",
 "",
 ""]
 },
-	{"ID":8021,"MagicID":8,"NeedLevel":81,"NeedGold":11800,"Level":21,"Param":[
+	{"ID":8021,"MagicID":8,"NeedLevel":81,"NeedGold":11800,"Level":21,"Description":"","Param":[
 "81",
 "50000",
 "",
 "",
 ""]
 },
-	{"ID":8022,"MagicID":8,"NeedLevel":85,"NeedGold":12350,"Level":22,"Param":[
+	{"ID":8022,"MagicID":8,"NeedLevel":85,"NeedGold":12350,"Level":22,"Description":"","Param":[
 "85",
 "52000",
 "",
 "",
 ""]
 },
-	{"ID":8023,"MagicID":8,"NeedLevel":89,"NeedGold":12900,"Level":23,"Param":[
+	{"ID":8023,"MagicID":8,"NeedLevel":89,"NeedGold":12900,"Level":23,"Description":"","Param":[
 "89",
 "54000",
 "",
 "",
 ""]
 },
-	{"ID":8024,"MagicID":8,"NeedLevel":93,"NeedGold":13450,"Level":24,"Param":[
+	{"ID":8024,"MagicID":8,"NeedLevel":93,"NeedGold":13450,"Level":24,"Description":"","Param":[
 "93",
 "56000",
 "",
 "",
 ""]
 },
-	{"ID":9001,"MagicID":9,"NeedLevel":3,"NeedGold":1000,"Level":1,"Param":[
+	{"ID":9001,"MagicID":9,"NeedLevel":3,"NeedGold":1000,"Level":1,"Description":"","Param":[
 "3000",
 "90",
 "",
 "",
 ""]
 },
-	{"ID":9002,"MagicID":9,"NeedLevel":6,"NeedGold":1350,"Level":2,"Param":[
+	{"ID":9002,"MagicID":9,"NeedLevel":6,"NeedGold":1350,"Level":2,"Description":"","Param":[
 "3100",
 "180",
 "",
 "",
 ""]
 },
-	{"ID":9003,"MagicID":9,"NeedLevel":9,"NeedGold":1700,"Level":3,"Param":[
+	{"ID":9003,"MagicID":9,"NeedLevel":9,"NeedGold":1700,"Level":3,"Description":"","Param":[
 "3200",
 "270",
 "",
 "",
 ""]
 },
-	{"ID":9004,"MagicID":9,"NeedLevel":12,"NeedGold":2050,"Level":4,"Param":[
+	{"ID":9004,"MagicID":9,"NeedLevel":12,"NeedGold":2050,"Level":4,"Description":"","Param":[
 "3300",
 "360",
 "",
 "",
 ""]
 },
-	{"ID":9005,"MagicID":9,"NeedLevel":15,"NeedGold":2400,"Level":5,"Param":[
+	{"ID":9005,"MagicID":9,"NeedLevel":15,"NeedGold":2400,"Level":5,"Description":"","Param":[
 "3400",
 "450",
 "",
 "",
 ""]
 },
-	{"ID":9006,"MagicID":9,"NeedLevel":18,"NeedGold":2750,"Level":6,"Param":[
+	{"ID":9006,"MagicID":9,"NeedLevel":18,"NeedGold":2750,"Level":6,"Description":"","Param":[
 "3500",
 "540",
 "",
 "",
 ""]
 },
-	{"ID":9007,"MagicID":9,"NeedLevel":21,"NeedGold":3100,"Level":7,"Param":[
+	{"ID":9007,"MagicID":9,"NeedLevel":21,"NeedGold":3100,"Level":7,"Description":"","Param":[
 "3600",
 "630",
 "",
 "",
 ""]
 },
-	{"ID":9008,"MagicID":9,"NeedLevel":24,"NeedGold":3450,"Level":8,"Param":[
+	{"ID":9008,"MagicID":9,"NeedLevel":24,"NeedGold":3450,"Level":8,"Description":"","Param":[
 "3700",
 "720",
 "",
 "",
 ""]
 },
-	{"ID":9009,"MagicID":9,"NeedLevel":27,"NeedGold":3800,"Level":9,"Param":[
+	{"ID":9009,"MagicID":9,"NeedLevel":27,"NeedGold":3800,"Level":9,"Description":"","Param":[
 "3800",
 "810",
 "",
 "",
 ""]
 },
-	{"ID":9010,"MagicID":9,"NeedLevel":30,"NeedGold":4150,"Level":10,"Param":[
+	{"ID":9010,"MagicID":9,"NeedLevel":30,"NeedGold":4150,"Level":10,"Description":"","Param":[
 "3900",
 "900",
 "",
 "",
 ""]
 },
-	{"ID":9011,"MagicID":9,"NeedLevel":33,"NeedGold":4500,"Level":11,"Param":[
+	{"ID":9011,"MagicID":9,"NeedLevel":33,"NeedGold":4500,"Level":11,"Description":"","Param":[
 "4000",
 "990",
 "",
 "",
 ""]
 },
-	{"ID":9012,"MagicID":9,"NeedLevel":36,"NeedGold":4850,"Level":12,"Param":[
+	{"ID":9012,"MagicID":9,"NeedLevel":36,"NeedGold":4850,"Level":12,"Description":"","Param":[
 "4100",
 "1080",
 "",
 "",
 ""]
 },
-	{"ID":9013,"MagicID":9,"NeedLevel":39,"NeedGold":5200,"Level":13,"Param":[
+	{"ID":9013,"MagicID":9,"NeedLevel":39,"NeedGold":5200,"Level":13,"Description":"","Param":[
 "4200",
 "1170",
 "",
 "",
 ""]
 },
-	{"ID":9014,"MagicID":9,"NeedLevel":42,"NeedGold":5550,"Level":14,"Param":[
+	{"ID":9014,"MagicID":9,"NeedLevel":42,"NeedGold":5550,"Level":14,"Description":"","Param":[
 "4300",
 "1260",
 "",
 "",
 ""]
 },
-	{"ID":9015,"MagicID":9,"NeedLevel":45,"NeedGold":5900,"Level":15,"Param":[
+	{"ID":9015,"MagicID":9,"NeedLevel":45,"NeedGold":5900,"Level":15,"Description":"","Param":[
 "4400",
 "1350",
 "",
 "",
 ""]
 },
-	{"ID":9016,"MagicID":9,"NeedLevel":48,"NeedGold":6250,"Level":16,"Param":[
+	{"ID":9016,"MagicID":9,"NeedLevel":48,"NeedGold":6250,"Level":16,"Description":"","Param":[
 "4500",
 "1440",
 "",
 "",
 ""]
 },
-	{"ID":9017,"MagicID":9,"NeedLevel":51,"NeedGold":6600,"Level":17,"Param":[
+	{"ID":9017,"MagicID":9,"NeedLevel":51,"NeedGold":6600,"Level":17,"Description":"","Param":[
 "4600",
 "1530",
 "",
 "",
 ""]
 },
-	{"ID":9018,"MagicID":9,"NeedLevel":54,"NeedGold":6950,"Level":18,"Param":[
+	{"ID":9018,"MagicID":9,"NeedLevel":54,"NeedGold":6950,"Level":18,"Description":"","Param":[
 "4700",
 "1620",
 "",
 "",
 ""]
 },
-	{"ID":9019,"MagicID":9,"NeedLevel":57,"NeedGold":7300,"Level":19,"Param":[
+	{"ID":9019,"MagicID":9,"NeedLevel":57,"NeedGold":7300,"Level":19,"Description":"","Param":[
 "4800",
 "1710",
 "",
 "",
 ""]
 },
-	{"ID":9020,"MagicID":9,"NeedLevel":60,"NeedGold":7650,"Level":20,"Param":[
+	{"ID":9020,"MagicID":9,"NeedLevel":60,"NeedGold":7650,"Level":20,"Description":"","Param":[
 "4900",
 "1800",
 "",
 "",
 ""]
 },
-	{"ID":9021,"MagicID":9,"NeedLevel":63,"NeedGold":8000,"Level":21,"Param":[
+	{"ID":9021,"MagicID":9,"NeedLevel":63,"NeedGold":8000,"Level":21,"Description":"","Param":[
 "5000",
 "1890",
 "",
 "",
 ""]
 },
-	{"ID":9022,"MagicID":9,"NeedLevel":66,"NeedGold":8350,"Level":22,"Param":[
+	{"ID":9022,"MagicID":9,"NeedLevel":66,"NeedGold":8350,"Level":22,"Description":"","Param":[
 "5100",
 "1980",
 "",
 "",
 ""]
 },
-	{"ID":9023,"MagicID":9,"NeedLevel":69,"NeedGold":8700,"Level":23,"Param":[
+	{"ID":9023,"MagicID":9,"NeedLevel":69,"NeedGold":8700,"Level":23,"Description":"","Param":[
 "5200",
 "2070",
 "",
 "",
 ""]
 },
-	{"ID":9024,"MagicID":9,"NeedLevel":72,"NeedGold":9050,"Level":24,"Param":[
+	{"ID":9024,"MagicID":9,"NeedLevel":72,"NeedGold":9050,"Level":24,"Description":"","Param":[
 "5300",
 "2160",
 "",
 "",
 ""]
 },
-	{"ID":9025,"MagicID":9,"NeedLevel":75,"NeedGold":9400,"Level":25,"Param":[
+	{"ID":9025,"MagicID":9,"NeedLevel":75,"NeedGold":9400,"Level":25,"Description":"","Param":[
 "5400",
 "2250",
 "",
 "",
 ""]
 },
-	{"ID":9026,"MagicID":9,"NeedLevel":78,"NeedGold":9750,"Level":26,"Param":[
+	{"ID":9026,"MagicID":9,"NeedLevel":78,"NeedGold":9750,"Level":26,"Description":"","Param":[
 "5500",
 "2340",
 "",
 "",
 ""]
 },
-	{"ID":9027,"MagicID":9,"NeedLevel":81,"NeedGold":10100,"Level":27,"Param":[
+	{"ID":9027,"MagicID":9,"NeedLevel":81,"NeedGold":10100,"Level":27,"Description":"","Param":[
 "5600",
 "2430",
 "",
 "",
 ""]
 },
-	{"ID":9028,"MagicID":9,"NeedLevel":84,"NeedGold":10450,"Level":28,"Param":[
+	{"ID":9028,"MagicID":9,"NeedLevel":84,"NeedGold":10450,"Level":28,"Description":"","Param":[
 "5700",
 "2520",
 "",
 "",
 ""]
 },
-	{"ID":9029,"MagicID":9,"NeedLevel":87,"NeedGold":10800,"Level":29,"Param":[
+	{"ID":9029,"MagicID":9,"NeedLevel":87,"NeedGold":10800,"Level":29,"Description":"","Param":[
 "5800",
 "2610",
 "",
 "",
 ""]
 },
-	{"ID":9030,"MagicID":9,"NeedLevel":90,"NeedGold":11150,"Level":30,"Param":[
+	{"ID":9030,"MagicID":9,"NeedLevel":90,"NeedGold":11150,"Level":30,"Description":"","Param":[
 "5900",
 "2700",
 "",
 "",
 ""]
 },
-	{"ID":9031,"MagicID":9,"NeedLevel":93,"NeedGold":11500,"Level":31,"Param":[
+	{"ID":9031,"MagicID":9,"NeedLevel":93,"NeedGold":11500,"Level":31,"Description":"","Param":[
 "6000",
 "2790",
 "",
 "",
 ""]
 },
-	{"ID":9032,"MagicID":9,"NeedLevel":96,"NeedGold":11850,"Level":32,"Param":[
+	{"ID":9032,"MagicID":9,"NeedLevel":96,"NeedGold":11850,"Level":32,"Description":"","Param":[
 "6100",
 "2880",
 "",
 "",
 ""]
 },
-	{"ID":9033,"MagicID":9,"NeedLevel":99,"NeedGold":12200,"Level":33,"Param":[
+	{"ID":9033,"MagicID":9,"NeedLevel":99,"NeedGold":12200,"Level":33,"Description":"","Param":[
 "6200",
 "2970",
 "",
 "",
 ""]
 },
-	{"ID":10001,"MagicID":10,"NeedLevel":8,"NeedGold":1200,"Level":1,"Param":[
+	{"ID":10001,"MagicID":10,"NeedLevel":8,"NeedGold":1200,"Level":1,"Description":"","Param":[
 "160",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10002,"MagicID":10,"NeedLevel":14,"NeedGold":1500,"Level":2,"Param":[
+	{"ID":10002,"MagicID":10,"NeedLevel":14,"NeedGold":1500,"Level":2,"Description":"","Param":[
 "280",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10003,"MagicID":10,"NeedLevel":20,"NeedGold":1800,"Level":3,"Param":[
+	{"ID":10003,"MagicID":10,"NeedLevel":20,"NeedGold":1800,"Level":3,"Description":"","Param":[
 "400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10004,"MagicID":10,"NeedLevel":26,"NeedGold":2100,"Level":4,"Param":[
+	{"ID":10004,"MagicID":10,"NeedLevel":26,"NeedGold":2100,"Level":4,"Description":"","Param":[
 "520",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10005,"MagicID":10,"NeedLevel":32,"NeedGold":2400,"Level":5,"Param":[
+	{"ID":10005,"MagicID":10,"NeedLevel":32,"NeedGold":2400,"Level":5,"Description":"","Param":[
 "640",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10006,"MagicID":10,"NeedLevel":38,"NeedGold":2700,"Level":6,"Param":[
+	{"ID":10006,"MagicID":10,"NeedLevel":38,"NeedGold":2700,"Level":6,"Description":"","Param":[
 "760",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10007,"MagicID":10,"NeedLevel":44,"NeedGold":3000,"Level":7,"Param":[
+	{"ID":10007,"MagicID":10,"NeedLevel":44,"NeedGold":3000,"Level":7,"Description":"","Param":[
 "880",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10008,"MagicID":10,"NeedLevel":50,"NeedGold":3300,"Level":8,"Param":[
+	{"ID":10008,"MagicID":10,"NeedLevel":50,"NeedGold":3300,"Level":8,"Description":"","Param":[
 "1000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10009,"MagicID":10,"NeedLevel":56,"NeedGold":3600,"Level":9,"Param":[
+	{"ID":10009,"MagicID":10,"NeedLevel":56,"NeedGold":3600,"Level":9,"Description":"","Param":[
 "1120",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10010,"MagicID":10,"NeedLevel":62,"NeedGold":3900,"Level":10,"Param":[
+	{"ID":10010,"MagicID":10,"NeedLevel":62,"NeedGold":3900,"Level":10,"Description":"","Param":[
 "1240",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10011,"MagicID":10,"NeedLevel":68,"NeedGold":4200,"Level":11,"Param":[
+	{"ID":10011,"MagicID":10,"NeedLevel":68,"NeedGold":4200,"Level":11,"Description":"","Param":[
 "1360",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10012,"MagicID":10,"NeedLevel":74,"NeedGold":4500,"Level":12,"Param":[
+	{"ID":10012,"MagicID":10,"NeedLevel":74,"NeedGold":4500,"Level":12,"Description":"","Param":[
 "1480",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10013,"MagicID":10,"NeedLevel":80,"NeedGold":4800,"Level":13,"Param":[
+	{"ID":10013,"MagicID":10,"NeedLevel":80,"NeedGold":4800,"Level":13,"Description":"","Param":[
 "1600",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10014,"MagicID":10,"NeedLevel":86,"NeedGold":5100,"Level":14,"Param":[
+	{"ID":10014,"MagicID":10,"NeedLevel":86,"NeedGold":5100,"Level":14,"Description":"","Param":[
 "1720",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10015,"MagicID":10,"NeedLevel":92,"NeedGold":5400,"Level":15,"Param":[
+	{"ID":10015,"MagicID":10,"NeedLevel":92,"NeedGold":5400,"Level":15,"Description":"","Param":[
 "1840",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10016,"MagicID":10,"NeedLevel":98,"NeedGold":5700,"Level":16,"Param":[
+	{"ID":10016,"MagicID":10,"NeedLevel":98,"NeedGold":5700,"Level":16,"Description":"","Param":[
 "1960",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13001,"MagicID":13,"NeedLevel":1,"NeedGold":800,"Level":1,"Param":[
+	{"ID":13001,"MagicID":13,"NeedLevel":1,"NeedGold":800,"Level":1,"Description":"","Param":[
 "3",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13002,"MagicID":13,"NeedLevel":4,"NeedGold":1200,"Level":2,"Param":[
+	{"ID":13002,"MagicID":13,"NeedLevel":4,"NeedGold":1200,"Level":2,"Description":"","Param":[
 "12",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13003,"MagicID":13,"NeedLevel":7,"NeedGold":1600,"Level":3,"Param":[
+	{"ID":13003,"MagicID":13,"NeedLevel":7,"NeedGold":1600,"Level":3,"Description":"","Param":[
 "21",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13004,"MagicID":13,"NeedLevel":10,"NeedGold":2000,"Level":4,"Param":[
+	{"ID":13004,"MagicID":13,"NeedLevel":10,"NeedGold":2000,"Level":4,"Description":"","Param":[
 "30",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13005,"MagicID":13,"NeedLevel":13,"NeedGold":2400,"Level":5,"Param":[
+	{"ID":13005,"MagicID":13,"NeedLevel":13,"NeedGold":2400,"Level":5,"Description":"","Param":[
 "39",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13006,"MagicID":13,"NeedLevel":16,"NeedGold":2800,"Level":6,"Param":[
+	{"ID":13006,"MagicID":13,"NeedLevel":16,"NeedGold":2800,"Level":6,"Description":"","Param":[
 "48",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13007,"MagicID":13,"NeedLevel":19,"NeedGold":3200,"Level":7,"Param":[
+	{"ID":13007,"MagicID":13,"NeedLevel":19,"NeedGold":3200,"Level":7,"Description":"","Param":[
 "57",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13008,"MagicID":13,"NeedLevel":22,"NeedGold":3600,"Level":8,"Param":[
+	{"ID":13008,"MagicID":13,"NeedLevel":22,"NeedGold":3600,"Level":8,"Description":"","Param":[
 "66",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13009,"MagicID":13,"NeedLevel":25,"NeedGold":4000,"Level":9,"Param":[
+	{"ID":13009,"MagicID":13,"NeedLevel":25,"NeedGold":4000,"Level":9,"Description":"","Param":[
 "75",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13010,"MagicID":13,"NeedLevel":28,"NeedGold":4400,"Level":10,"Param":[
+	{"ID":13010,"MagicID":13,"NeedLevel":28,"NeedGold":4400,"Level":10,"Description":"","Param":[
 "84",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13011,"MagicID":13,"NeedLevel":31,"NeedGold":4800,"Level":11,"Param":[
+	{"ID":13011,"MagicID":13,"NeedLevel":31,"NeedGold":4800,"Level":11,"Description":"","Param":[
 "93",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13012,"MagicID":13,"NeedLevel":34,"NeedGold":5200,"Level":12,"Param":[
+	{"ID":13012,"MagicID":13,"NeedLevel":34,"NeedGold":5200,"Level":12,"Description":"","Param":[
 "102",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13013,"MagicID":13,"NeedLevel":37,"NeedGold":5600,"Level":13,"Param":[
+	{"ID":13013,"MagicID":13,"NeedLevel":37,"NeedGold":5600,"Level":13,"Description":"","Param":[
 "111",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13014,"MagicID":13,"NeedLevel":40,"NeedGold":6000,"Level":14,"Param":[
+	{"ID":13014,"MagicID":13,"NeedLevel":40,"NeedGold":6000,"Level":14,"Description":"","Param":[
 "120",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13015,"MagicID":13,"NeedLevel":43,"NeedGold":6400,"Level":15,"Param":[
+	{"ID":13015,"MagicID":13,"NeedLevel":43,"NeedGold":6400,"Level":15,"Description":"","Param":[
 "129",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13016,"MagicID":13,"NeedLevel":46,"NeedGold":6800,"Level":16,"Param":[
+	{"ID":13016,"MagicID":13,"NeedLevel":46,"NeedGold":6800,"Level":16,"Description":"","Param":[
 "138",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13017,"MagicID":13,"NeedLevel":49,"NeedGold":7200,"Level":17,"Param":[
+	{"ID":13017,"MagicID":13,"NeedLevel":49,"NeedGold":7200,"Level":17,"Description":"","Param":[
 "147",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13018,"MagicID":13,"NeedLevel":52,"NeedGold":7600,"Level":18,"Param":[
+	{"ID":13018,"MagicID":13,"NeedLevel":52,"NeedGold":7600,"Level":18,"Description":"","Param":[
 "156",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13019,"MagicID":13,"NeedLevel":55,"NeedGold":8000,"Level":19,"Param":[
+	{"ID":13019,"MagicID":13,"NeedLevel":55,"NeedGold":8000,"Level":19,"Description":"","Param":[
 "165",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13020,"MagicID":13,"NeedLevel":58,"NeedGold":8400,"Level":20,"Param":[
+	{"ID":13020,"MagicID":13,"NeedLevel":58,"NeedGold":8400,"Level":20,"Description":"","Param":[
 "174",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13021,"MagicID":13,"NeedLevel":61,"NeedGold":8800,"Level":21,"Param":[
+	{"ID":13021,"MagicID":13,"NeedLevel":61,"NeedGold":8800,"Level":21,"Description":"","Param":[
 "183",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13022,"MagicID":13,"NeedLevel":64,"NeedGold":9200,"Level":22,"Param":[
+	{"ID":13022,"MagicID":13,"NeedLevel":64,"NeedGold":9200,"Level":22,"Description":"","Param":[
 "192",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13023,"MagicID":13,"NeedLevel":67,"NeedGold":9600,"Level":23,"Param":[
+	{"ID":13023,"MagicID":13,"NeedLevel":67,"NeedGold":9600,"Level":23,"Description":"","Param":[
 "201",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13024,"MagicID":13,"NeedLevel":70,"NeedGold":10000,"Level":24,"Param":[
+	{"ID":13024,"MagicID":13,"NeedLevel":70,"NeedGold":10000,"Level":24,"Description":"","Param":[
 "210",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13025,"MagicID":13,"NeedLevel":73,"NeedGold":10400,"Level":25,"Param":[
+	{"ID":13025,"MagicID":13,"NeedLevel":73,"NeedGold":10400,"Level":25,"Description":"","Param":[
 "219",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13026,"MagicID":13,"NeedLevel":76,"NeedGold":10800,"Level":26,"Param":[
+	{"ID":13026,"MagicID":13,"NeedLevel":76,"NeedGold":10800,"Level":26,"Description":"","Param":[
 "228",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13027,"MagicID":13,"NeedLevel":79,"NeedGold":11200,"Level":27,"Param":[
+	{"ID":13027,"MagicID":13,"NeedLevel":79,"NeedGold":11200,"Level":27,"Description":"","Param":[
 "237",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13028,"MagicID":13,"NeedLevel":82,"NeedGold":11600,"Level":28,"Param":[
+	{"ID":13028,"MagicID":13,"NeedLevel":82,"NeedGold":11600,"Level":28,"Description":"","Param":[
 "246",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13029,"MagicID":13,"NeedLevel":85,"NeedGold":12000,"Level":29,"Param":[
+	{"ID":13029,"MagicID":13,"NeedLevel":85,"NeedGold":12000,"Level":29,"Description":"","Param":[
 "255",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13030,"MagicID":13,"NeedLevel":88,"NeedGold":12400,"Level":30,"Param":[
+	{"ID":13030,"MagicID":13,"NeedLevel":88,"NeedGold":12400,"Level":30,"Description":"","Param":[
 "264",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13031,"MagicID":13,"NeedLevel":91,"NeedGold":12800,"Level":31,"Param":[
+	{"ID":13031,"MagicID":13,"NeedLevel":91,"NeedGold":12800,"Level":31,"Description":"","Param":[
 "273",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13032,"MagicID":13,"NeedLevel":94,"NeedGold":13200,"Level":32,"Param":[
+	{"ID":13032,"MagicID":13,"NeedLevel":94,"NeedGold":13200,"Level":32,"Description":"","Param":[
 "282",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13033,"MagicID":13,"NeedLevel":97,"NeedGold":13600,"Level":33,"Param":[
+	{"ID":13033,"MagicID":13,"NeedLevel":97,"NeedGold":13600,"Level":33,"Description":"","Param":[
 "291",
 "",
 "",
 "",
 ""]
 },
-	{"ID":13034,"MagicID":13,"NeedLevel":100,"NeedGold":14000,"Level":34,"Param":[
+	{"ID":13034,"MagicID":13,"NeedLevel":100,"NeedGold":14000,"Level":34,"Description":"","Param":[
 "300",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14001,"MagicID":14,"NeedLevel":3,"NeedGold":1200,"Level":1,"Param":[
+	{"ID":14001,"MagicID":14,"NeedLevel":3,"NeedGold":1200,"Level":1,"Description":"","Param":[
 "11000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14002,"MagicID":14,"NeedLevel":8,"NeedGold":2560,"Level":2,"Param":[
+	{"ID":14002,"MagicID":14,"NeedLevel":8,"NeedGold":2560,"Level":2,"Description":"","Param":[
 "13000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14003,"MagicID":14,"NeedLevel":13,"NeedGold":3920,"Level":3,"Param":[
+	{"ID":14003,"MagicID":14,"NeedLevel":13,"NeedGold":3920,"Level":3,"Description":"","Param":[
 "15000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14004,"MagicID":14,"NeedLevel":18,"NeedGold":5280,"Level":4,"Param":[
+	{"ID":14004,"MagicID":14,"NeedLevel":18,"NeedGold":5280,"Level":4,"Description":"","Param":[
 "17000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14005,"MagicID":14,"NeedLevel":23,"NeedGold":6640,"Level":5,"Param":[
+	{"ID":14005,"MagicID":14,"NeedLevel":23,"NeedGold":6640,"Level":5,"Description":"","Param":[
 "19000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14006,"MagicID":14,"NeedLevel":28,"NeedGold":8000,"Level":6,"Param":[
+	{"ID":14006,"MagicID":14,"NeedLevel":28,"NeedGold":8000,"Level":6,"Description":"","Param":[
 "21000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14007,"MagicID":14,"NeedLevel":33,"NeedGold":9360,"Level":7,"Param":[
+	{"ID":14007,"MagicID":14,"NeedLevel":33,"NeedGold":9360,"Level":7,"Description":"","Param":[
 "23000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14008,"MagicID":14,"NeedLevel":38,"NeedGold":10720,"Level":8,"Param":[
+	{"ID":14008,"MagicID":14,"NeedLevel":38,"NeedGold":10720,"Level":8,"Description":"","Param":[
 "25000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14009,"MagicID":14,"NeedLevel":43,"NeedGold":12080,"Level":9,"Param":[
+	{"ID":14009,"MagicID":14,"NeedLevel":43,"NeedGold":12080,"Level":9,"Description":"","Param":[
 "27000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14010,"MagicID":14,"NeedLevel":48,"NeedGold":13440,"Level":10,"Param":[
+	{"ID":14010,"MagicID":14,"NeedLevel":48,"NeedGold":13440,"Level":10,"Description":"","Param":[
 "29000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14011,"MagicID":14,"NeedLevel":53,"NeedGold":14800,"Level":11,"Param":[
+	{"ID":14011,"MagicID":14,"NeedLevel":53,"NeedGold":14800,"Level":11,"Description":"","Param":[
 "31000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14012,"MagicID":14,"NeedLevel":58,"NeedGold":16160,"Level":12,"Param":[
+	{"ID":14012,"MagicID":14,"NeedLevel":58,"NeedGold":16160,"Level":12,"Description":"","Param":[
 "33000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14013,"MagicID":14,"NeedLevel":63,"NeedGold":17520,"Level":13,"Param":[
+	{"ID":14013,"MagicID":14,"NeedLevel":63,"NeedGold":17520,"Level":13,"Description":"","Param":[
 "35000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14014,"MagicID":14,"NeedLevel":68,"NeedGold":18880,"Level":14,"Param":[
+	{"ID":14014,"MagicID":14,"NeedLevel":68,"NeedGold":18880,"Level":14,"Description":"","Param":[
 "37000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14015,"MagicID":14,"NeedLevel":73,"NeedGold":20240,"Level":15,"Param":[
+	{"ID":14015,"MagicID":14,"NeedLevel":73,"NeedGold":20240,"Level":15,"Description":"","Param":[
 "39000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14016,"MagicID":14,"NeedLevel":78,"NeedGold":21600,"Level":16,"Param":[
+	{"ID":14016,"MagicID":14,"NeedLevel":78,"NeedGold":21600,"Level":16,"Description":"","Param":[
 "41000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14017,"MagicID":14,"NeedLevel":83,"NeedGold":22960,"Level":17,"Param":[
+	{"ID":14017,"MagicID":14,"NeedLevel":83,"NeedGold":22960,"Level":17,"Description":"","Param":[
 "43000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14018,"MagicID":14,"NeedLevel":88,"NeedGold":24320,"Level":18,"Param":[
+	{"ID":14018,"MagicID":14,"NeedLevel":88,"NeedGold":24320,"Level":18,"Description":"","Param":[
 "45000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14019,"MagicID":14,"NeedLevel":93,"NeedGold":25680,"Level":19,"Param":[
+	{"ID":14019,"MagicID":14,"NeedLevel":93,"NeedGold":25680,"Level":19,"Description":"","Param":[
 "47000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":14020,"MagicID":14,"NeedLevel":98,"NeedGold":27040,"Level":20,"Param":[
+	{"ID":14020,"MagicID":14,"NeedLevel":98,"NeedGold":27040,"Level":20,"Description":"","Param":[
 "49000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15001,"MagicID":15,"NeedLevel":8,"NeedGold":3000,"Level":1,"Param":[
+	{"ID":15001,"MagicID":15,"NeedLevel":8,"NeedGold":3000,"Level":1,"Description":"","Param":[
 "14000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15002,"MagicID":15,"NeedLevel":14,"NeedGold":3800,"Level":2,"Param":[
+	{"ID":15002,"MagicID":15,"NeedLevel":14,"NeedGold":3800,"Level":2,"Description":"","Param":[
 "16000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15003,"MagicID":15,"NeedLevel":20,"NeedGold":4600,"Level":3,"Param":[
+	{"ID":15003,"MagicID":15,"NeedLevel":20,"NeedGold":4600,"Level":3,"Description":"","Param":[
 "18000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15004,"MagicID":15,"NeedLevel":26,"NeedGold":5400,"Level":4,"Param":[
+	{"ID":15004,"MagicID":15,"NeedLevel":26,"NeedGold":5400,"Level":4,"Description":"","Param":[
 "20000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15005,"MagicID":15,"NeedLevel":32,"NeedGold":6200,"Level":5,"Param":[
+	{"ID":15005,"MagicID":15,"NeedLevel":32,"NeedGold":6200,"Level":5,"Description":"","Param":[
 "22000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15006,"MagicID":15,"NeedLevel":38,"NeedGold":7000,"Level":6,"Param":[
+	{"ID":15006,"MagicID":15,"NeedLevel":38,"NeedGold":7000,"Level":6,"Description":"","Param":[
 "24000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15007,"MagicID":15,"NeedLevel":44,"NeedGold":7800,"Level":7,"Param":[
+	{"ID":15007,"MagicID":15,"NeedLevel":44,"NeedGold":7800,"Level":7,"Description":"","Param":[
 "26000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15008,"MagicID":15,"NeedLevel":50,"NeedGold":8600,"Level":8,"Param":[
+	{"ID":15008,"MagicID":15,"NeedLevel":50,"NeedGold":8600,"Level":8,"Description":"","Param":[
 "28000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15009,"MagicID":15,"NeedLevel":56,"NeedGold":9400,"Level":9,"Param":[
+	{"ID":15009,"MagicID":15,"NeedLevel":56,"NeedGold":9400,"Level":9,"Description":"","Param":[
 "30000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15010,"MagicID":15,"NeedLevel":62,"NeedGold":10200,"Level":10,"Param":[
+	{"ID":15010,"MagicID":15,"NeedLevel":62,"NeedGold":10200,"Level":10,"Description":"","Param":[
 "32000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15011,"MagicID":15,"NeedLevel":68,"NeedGold":11000,"Level":11,"Param":[
+	{"ID":15011,"MagicID":15,"NeedLevel":68,"NeedGold":11000,"Level":11,"Description":"","Param":[
 "34000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15012,"MagicID":15,"NeedLevel":74,"NeedGold":11800,"Level":12,"Param":[
+	{"ID":15012,"MagicID":15,"NeedLevel":74,"NeedGold":11800,"Level":12,"Description":"","Param":[
 "36000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15013,"MagicID":15,"NeedLevel":80,"NeedGold":12600,"Level":13,"Param":[
+	{"ID":15013,"MagicID":15,"NeedLevel":80,"NeedGold":12600,"Level":13,"Description":"","Param":[
 "38000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15014,"MagicID":15,"NeedLevel":86,"NeedGold":13400,"Level":14,"Param":[
+	{"ID":15014,"MagicID":15,"NeedLevel":86,"NeedGold":13400,"Level":14,"Description":"","Param":[
 "40000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15015,"MagicID":15,"NeedLevel":92,"NeedGold":14200,"Level":15,"Param":[
+	{"ID":15015,"MagicID":15,"NeedLevel":92,"NeedGold":14200,"Level":15,"Description":"","Param":[
 "42000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15016,"MagicID":15,"NeedLevel":98,"NeedGold":15000,"Level":16,"Param":[
+	{"ID":15016,"MagicID":15,"NeedLevel":98,"NeedGold":15000,"Level":16,"Description":"","Param":[
 "44000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":15017,"MagicID":15,"NeedLevel":100,"NeedGold":15800,"Level":17,"Param":[
+	{"ID":15017,"MagicID":15,"NeedLevel":100,"NeedGold":15800,"Level":17,"Description":"","Param":[
 "46000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18001,"MagicID":18,"NeedLevel":1,"NeedGold":800,"Level":1,"Param":[
+	{"ID":18001,"MagicID":18,"NeedLevel":1,"NeedGold":800,"Level":1,"Description":"","Param":[
 "10",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18002,"MagicID":18,"NeedLevel":4,"NeedGold":1200,"Level":2,"Param":[
+	{"ID":18002,"MagicID":18,"NeedLevel":4,"NeedGold":1200,"Level":2,"Description":"","Param":[
 "15",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18003,"MagicID":18,"NeedLevel":7,"NeedGold":1600,"Level":3,"Param":[
+	{"ID":18003,"MagicID":18,"NeedLevel":7,"NeedGold":1600,"Level":3,"Description":"","Param":[
 "20",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18004,"MagicID":18,"NeedLevel":10,"NeedGold":2000,"Level":4,"Param":[
+	{"ID":18004,"MagicID":18,"NeedLevel":10,"NeedGold":2000,"Level":4,"Description":"","Param":[
 "25",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18005,"MagicID":18,"NeedLevel":13,"NeedGold":2400,"Level":5,"Param":[
+	{"ID":18005,"MagicID":18,"NeedLevel":13,"NeedGold":2400,"Level":5,"Description":"","Param":[
 "30",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18006,"MagicID":18,"NeedLevel":16,"NeedGold":2800,"Level":6,"Param":[
+	{"ID":18006,"MagicID":18,"NeedLevel":16,"NeedGold":2800,"Level":6,"Description":"","Param":[
 "35",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18007,"MagicID":18,"NeedLevel":19,"NeedGold":3200,"Level":7,"Param":[
+	{"ID":18007,"MagicID":18,"NeedLevel":19,"NeedGold":3200,"Level":7,"Description":"","Param":[
 "40",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18008,"MagicID":18,"NeedLevel":22,"NeedGold":3600,"Level":8,"Param":[
+	{"ID":18008,"MagicID":18,"NeedLevel":22,"NeedGold":3600,"Level":8,"Description":"","Param":[
 "45",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18009,"MagicID":18,"NeedLevel":25,"NeedGold":4000,"Level":9,"Param":[
+	{"ID":18009,"MagicID":18,"NeedLevel":25,"NeedGold":4000,"Level":9,"Description":"","Param":[
 "50",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18010,"MagicID":18,"NeedLevel":28,"NeedGold":4400,"Level":10,"Param":[
+	{"ID":18010,"MagicID":18,"NeedLevel":28,"NeedGold":4400,"Level":10,"Description":"","Param":[
 "55",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18011,"MagicID":18,"NeedLevel":31,"NeedGold":4800,"Level":11,"Param":[
+	{"ID":18011,"MagicID":18,"NeedLevel":31,"NeedGold":4800,"Level":11,"Description":"","Param":[
 "60",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18012,"MagicID":18,"NeedLevel":34,"NeedGold":5200,"Level":12,"Param":[
+	{"ID":18012,"MagicID":18,"NeedLevel":34,"NeedGold":5200,"Level":12,"Description":"","Param":[
 "65",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18013,"MagicID":18,"NeedLevel":37,"NeedGold":5600,"Level":13,"Param":[
+	{"ID":18013,"MagicID":18,"NeedLevel":37,"NeedGold":5600,"Level":13,"Description":"","Param":[
 "70",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18014,"MagicID":18,"NeedLevel":40,"NeedGold":6000,"Level":14,"Param":[
+	{"ID":18014,"MagicID":18,"NeedLevel":40,"NeedGold":6000,"Level":14,"Description":"","Param":[
 "75",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18015,"MagicID":18,"NeedLevel":43,"NeedGold":6400,"Level":15,"Param":[
+	{"ID":18015,"MagicID":18,"NeedLevel":43,"NeedGold":6400,"Level":15,"Description":"","Param":[
 "80",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18016,"MagicID":18,"NeedLevel":46,"NeedGold":6800,"Level":16,"Param":[
+	{"ID":18016,"MagicID":18,"NeedLevel":46,"NeedGold":6800,"Level":16,"Description":"","Param":[
 "85",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18017,"MagicID":18,"NeedLevel":49,"NeedGold":7200,"Level":17,"Param":[
+	{"ID":18017,"MagicID":18,"NeedLevel":49,"NeedGold":7200,"Level":17,"Description":"","Param":[
 "90",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18018,"MagicID":18,"NeedLevel":52,"NeedGold":7600,"Level":18,"Param":[
+	{"ID":18018,"MagicID":18,"NeedLevel":52,"NeedGold":7600,"Level":18,"Description":"","Param":[
 "95",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18019,"MagicID":18,"NeedLevel":55,"NeedGold":8000,"Level":19,"Param":[
+	{"ID":18019,"MagicID":18,"NeedLevel":55,"NeedGold":8000,"Level":19,"Description":"","Param":[
 "100",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18020,"MagicID":18,"NeedLevel":58,"NeedGold":8400,"Level":20,"Param":[
+	{"ID":18020,"MagicID":18,"NeedLevel":58,"NeedGold":8400,"Level":20,"Description":"","Param":[
 "105",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18021,"MagicID":18,"NeedLevel":61,"NeedGold":8800,"Level":21,"Param":[
+	{"ID":18021,"MagicID":18,"NeedLevel":61,"NeedGold":8800,"Level":21,"Description":"","Param":[
 "110",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18022,"MagicID":18,"NeedLevel":64,"NeedGold":9200,"Level":22,"Param":[
+	{"ID":18022,"MagicID":18,"NeedLevel":64,"NeedGold":9200,"Level":22,"Description":"","Param":[
 "115",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18023,"MagicID":18,"NeedLevel":67,"NeedGold":9600,"Level":23,"Param":[
+	{"ID":18023,"MagicID":18,"NeedLevel":67,"NeedGold":9600,"Level":23,"Description":"","Param":[
 "120",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18024,"MagicID":18,"NeedLevel":70,"NeedGold":10000,"Level":24,"Param":[
+	{"ID":18024,"MagicID":18,"NeedLevel":70,"NeedGold":10000,"Level":24,"Description":"","Param":[
 "125",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18025,"MagicID":18,"NeedLevel":73,"NeedGold":10400,"Level":25,"Param":[
+	{"ID":18025,"MagicID":18,"NeedLevel":73,"NeedGold":10400,"Level":25,"Description":"","Param":[
 "130",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18026,"MagicID":18,"NeedLevel":76,"NeedGold":10800,"Level":26,"Param":[
+	{"ID":18026,"MagicID":18,"NeedLevel":76,"NeedGold":10800,"Level":26,"Description":"","Param":[
 "135",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18027,"MagicID":18,"NeedLevel":79,"NeedGold":11200,"Level":27,"Param":[
+	{"ID":18027,"MagicID":18,"NeedLevel":79,"NeedGold":11200,"Level":27,"Description":"","Param":[
 "140",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18028,"MagicID":18,"NeedLevel":82,"NeedGold":11600,"Level":28,"Param":[
+	{"ID":18028,"MagicID":18,"NeedLevel":82,"NeedGold":11600,"Level":28,"Description":"","Param":[
 "145",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18029,"MagicID":18,"NeedLevel":85,"NeedGold":12000,"Level":29,"Param":[
+	{"ID":18029,"MagicID":18,"NeedLevel":85,"NeedGold":12000,"Level":29,"Description":"","Param":[
 "150",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18030,"MagicID":18,"NeedLevel":88,"NeedGold":12400,"Level":30,"Param":[
+	{"ID":18030,"MagicID":18,"NeedLevel":88,"NeedGold":12400,"Level":30,"Description":"","Param":[
 "155",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18031,"MagicID":18,"NeedLevel":91,"NeedGold":12800,"Level":31,"Param":[
+	{"ID":18031,"MagicID":18,"NeedLevel":91,"NeedGold":12800,"Level":31,"Description":"","Param":[
 "160",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18032,"MagicID":18,"NeedLevel":94,"NeedGold":13200,"Level":32,"Param":[
+	{"ID":18032,"MagicID":18,"NeedLevel":94,"NeedGold":13200,"Level":32,"Description":"","Param":[
 "165",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18033,"MagicID":18,"NeedLevel":97,"NeedGold":13600,"Level":33,"Param":[
+	{"ID":18033,"MagicID":18,"NeedLevel":97,"NeedGold":13600,"Level":33,"Description":"","Param":[
 "170",
 "",
 "",
 "",
 ""]
 },
-	{"ID":18034,"MagicID":18,"NeedLevel":100,"NeedGold":14000,"Level":34,"Param":[
+	{"ID":18034,"MagicID":18,"NeedLevel":100,"NeedGold":14000,"Level":34,"Description":"","Param":[
 "175",
 "",
 "",
 "",
 ""]
 },
-	{"ID":19001,"MagicID":19,"NeedLevel":3,"NeedGold":1000,"Level":1,"Param":[
+	{"ID":19001,"MagicID":19,"NeedLevel":3,"NeedGold":1000,"Level":1,"Description":"","Param":[
 "11000",
 "1000",
 "",
 "",
 ""]
 },
-	{"ID":19002,"MagicID":19,"NeedLevel":7,"NeedGold":1350,"Level":2,"Param":[
+	{"ID":19002,"MagicID":19,"NeedLevel":7,"NeedGold":1350,"Level":2,"Description":"","Param":[
 "11500",
 "1100",
 "",
 "",
 ""]
 },
-	{"ID":19003,"MagicID":19,"NeedLevel":11,"NeedGold":1700,"Level":3,"Param":[
+	{"ID":19003,"MagicID":19,"NeedLevel":11,"NeedGold":1700,"Level":3,"Description":"","Param":[
 "12000",
 "1200",
 "",
 "",
 ""]
 },
-	{"ID":19004,"MagicID":19,"NeedLevel":15,"NeedGold":2050,"Level":4,"Param":[
+	{"ID":19004,"MagicID":19,"NeedLevel":15,"NeedGold":2050,"Level":4,"Description":"","Param":[
 "12500",
 "1300",
 "",
 "",
 ""]
 },
-	{"ID":19005,"MagicID":19,"NeedLevel":19,"NeedGold":2400,"Level":5,"Param":[
+	{"ID":19005,"MagicID":19,"NeedLevel":19,"NeedGold":2400,"Level":5,"Description":"","Param":[
 "13000",
 "1400",
 "",
 "",
 ""]
 },
-	{"ID":19006,"MagicID":19,"NeedLevel":23,"NeedGold":2750,"Level":6,"Param":[
+	{"ID":19006,"MagicID":19,"NeedLevel":23,"NeedGold":2750,"Level":6,"Description":"","Param":[
 "13500",
 "1500",
 "",
 "",
 ""]
 },
-	{"ID":19007,"MagicID":19,"NeedLevel":27,"NeedGold":3100,"Level":7,"Param":[
+	{"ID":19007,"MagicID":19,"NeedLevel":27,"NeedGold":3100,"Level":7,"Description":"","Param":[
 "14000",
 "1600",
 "",
 "",
 ""]
 },
-	{"ID":19008,"MagicID":19,"NeedLevel":31,"NeedGold":3450,"Level":8,"Param":[
+	{"ID":19008,"MagicID":19,"NeedLevel":31,"NeedGold":3450,"Level":8,"Description":"","Param":[
 "14500",
 "1700",
 "",
 "",
 ""]
 },
-	{"ID":19009,"MagicID":19,"NeedLevel":35,"NeedGold":3800,"Level":9,"Param":[
+	{"ID":19009,"MagicID":19,"NeedLevel":35,"NeedGold":3800,"Level":9,"Description":"","Param":[
 "15000",
 "1800",
 "",
 "",
 ""]
 },
-	{"ID":19010,"MagicID":19,"NeedLevel":39,"NeedGold":4150,"Level":10,"Param":[
+	{"ID":19010,"MagicID":19,"NeedLevel":39,"NeedGold":4150,"Level":10,"Description":"","Param":[
 "15500",
 "1900",
 "",
 "",
 ""]
 },
-	{"ID":19011,"MagicID":19,"NeedLevel":43,"NeedGold":4500,"Level":11,"Param":[
+	{"ID":19011,"MagicID":19,"NeedLevel":43,"NeedGold":4500,"Level":11,"Description":"","Param":[
 "16000",
 "2000",
 "",
 "",
 ""]
 },
-	{"ID":19012,"MagicID":19,"NeedLevel":47,"NeedGold":4850,"Level":12,"Param":[
+	{"ID":19012,"MagicID":19,"NeedLevel":47,"NeedGold":4850,"Level":12,"Description":"","Param":[
 "16500",
 "2100",
 "",
 "",
 ""]
 },
-	{"ID":19013,"MagicID":19,"NeedLevel":51,"NeedGold":5200,"Level":13,"Param":[
+	{"ID":19013,"MagicID":19,"NeedLevel":51,"NeedGold":5200,"Level":13,"Description":"","Param":[
 "17000",
 "2200",
 "",
 "",
 ""]
 },
-	{"ID":19014,"MagicID":19,"NeedLevel":55,"NeedGold":5550,"Level":14,"Param":[
+	{"ID":19014,"MagicID":19,"NeedLevel":55,"NeedGold":5550,"Level":14,"Description":"","Param":[
 "17500",
 "2300",
 "",
 "",
 ""]
 },
-	{"ID":19015,"MagicID":19,"NeedLevel":59,"NeedGold":5900,"Level":15,"Param":[
+	{"ID":19015,"MagicID":19,"NeedLevel":59,"NeedGold":5900,"Level":15,"Description":"","Param":[
 "18000",
 "2400",
 "",
 "",
 ""]
 },
-	{"ID":19016,"MagicID":19,"NeedLevel":63,"NeedGold":6250,"Level":16,"Param":[
+	{"ID":19016,"MagicID":19,"NeedLevel":63,"NeedGold":6250,"Level":16,"Description":"","Param":[
 "18500",
 "2500",
 "",
 "",
 ""]
 },
-	{"ID":19017,"MagicID":19,"NeedLevel":67,"NeedGold":6600,"Level":17,"Param":[
+	{"ID":19017,"MagicID":19,"NeedLevel":67,"NeedGold":6600,"Level":17,"Description":"","Param":[
 "19000",
 "2600",
 "",
 "",
 ""]
 },
-	{"ID":19018,"MagicID":19,"NeedLevel":71,"NeedGold":6950,"Level":18,"Param":[
+	{"ID":19018,"MagicID":19,"NeedLevel":71,"NeedGold":6950,"Level":18,"Description":"","Param":[
 "19500",
 "2700",
 "",
 "",
 ""]
 },
-	{"ID":19019,"MagicID":19,"NeedLevel":75,"NeedGold":7300,"Level":19,"Param":[
+	{"ID":19019,"MagicID":19,"NeedLevel":75,"NeedGold":7300,"Level":19,"Description":"","Param":[
 "20000",
 "2800",
 "",
 "",
 ""]
 },
-	{"ID":19020,"MagicID":19,"NeedLevel":79,"NeedGold":7650,"Level":20,"Param":[
+	{"ID":19020,"MagicID":19,"NeedLevel":79,"NeedGold":7650,"Level":20,"Description":"","Param":[
 "20500",
 "2900",
 "",
 "",
 ""]
 },
-	{"ID":19021,"MagicID":19,"NeedLevel":83,"NeedGold":8000,"Level":21,"Param":[
+	{"ID":19021,"MagicID":19,"NeedLevel":83,"NeedGold":8000,"Level":21,"Description":"","Param":[
 "21000",
 "3000",
 "",
 "",
 ""]
 },
-	{"ID":19022,"MagicID":19,"NeedLevel":87,"NeedGold":8350,"Level":22,"Param":[
+	{"ID":19022,"MagicID":19,"NeedLevel":87,"NeedGold":8350,"Level":22,"Description":"","Param":[
 "21500",
 "3100",
 "",
 "",
 ""]
 },
-	{"ID":19023,"MagicID":19,"NeedLevel":91,"NeedGold":8700,"Level":23,"Param":[
+	{"ID":19023,"MagicID":19,"NeedLevel":91,"NeedGold":8700,"Level":23,"Description":"","Param":[
 "22000",
 "3200",
 "",
 "",
 ""]
 },
-	{"ID":19024,"MagicID":19,"NeedLevel":95,"NeedGold":9050,"Level":24,"Param":[
+	{"ID":19024,"MagicID":19,"NeedLevel":95,"NeedGold":9050,"Level":24,"Description":"","Param":[
 "22500",
 "3300",
 "",
 "",
 ""]
 },
-	{"ID":19025,"MagicID":19,"NeedLevel":99,"NeedGold":9400,"Level":25,"Param":[
+	{"ID":19025,"MagicID":19,"NeedLevel":99,"NeedGold":9400,"Level":25,"Description":"","Param":[
 "23000",
 "3400",
 "",
 "",
 ""]
 },
-	{"ID":19026,"MagicID":19,"NeedLevel":103,"NeedGold":9750,"Level":26,"Param":[
+	{"ID":19026,"MagicID":19,"NeedLevel":103,"NeedGold":9750,"Level":26,"Description":"","Param":[
 "23500",
 "3500",
 "",
 "",
 ""]
 },
-	{"ID":19027,"MagicID":19,"NeedLevel":107,"NeedGold":10100,"Level":27,"Param":[
+	{"ID":19027,"MagicID":19,"NeedLevel":107,"NeedGold":10100,"Level":27,"Description":"","Param":[
 "24000",
 "3600",
 "",
 "",
 ""]
 },
-	{"ID":20001,"MagicID":20,"NeedLevel":8,"NeedGold":2000,"Level":1,"Param":[
+	{"ID":20001,"MagicID":20,"NeedLevel":8,"NeedGold":2000,"Level":1,"Description":"","Param":[
 "12000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20002,"MagicID":20,"NeedLevel":14,"NeedGold":2600,"Level":2,"Param":[
+	{"ID":20002,"MagicID":20,"NeedLevel":14,"NeedGold":2600,"Level":2,"Description":"","Param":[
 "13000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20003,"MagicID":20,"NeedLevel":20,"NeedGold":3200,"Level":3,"Param":[
+	{"ID":20003,"MagicID":20,"NeedLevel":20,"NeedGold":3200,"Level":3,"Description":"","Param":[
 "14000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20004,"MagicID":20,"NeedLevel":26,"NeedGold":3800,"Level":4,"Param":[
+	{"ID":20004,"MagicID":20,"NeedLevel":26,"NeedGold":3800,"Level":4,"Description":"","Param":[
 "15000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20005,"MagicID":20,"NeedLevel":32,"NeedGold":4400,"Level":5,"Param":[
+	{"ID":20005,"MagicID":20,"NeedLevel":32,"NeedGold":4400,"Level":5,"Description":"","Param":[
 "16000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20006,"MagicID":20,"NeedLevel":38,"NeedGold":5000,"Level":6,"Param":[
+	{"ID":20006,"MagicID":20,"NeedLevel":38,"NeedGold":5000,"Level":6,"Description":"","Param":[
 "17000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20007,"MagicID":20,"NeedLevel":44,"NeedGold":5600,"Level":7,"Param":[
+	{"ID":20007,"MagicID":20,"NeedLevel":44,"NeedGold":5600,"Level":7,"Description":"","Param":[
 "18000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20008,"MagicID":20,"NeedLevel":50,"NeedGold":6200,"Level":8,"Param":[
+	{"ID":20008,"MagicID":20,"NeedLevel":50,"NeedGold":6200,"Level":8,"Description":"","Param":[
 "19000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20009,"MagicID":20,"NeedLevel":56,"NeedGold":6800,"Level":9,"Param":[
+	{"ID":20009,"MagicID":20,"NeedLevel":56,"NeedGold":6800,"Level":9,"Description":"","Param":[
 "20000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20010,"MagicID":20,"NeedLevel":62,"NeedGold":7400,"Level":10,"Param":[
+	{"ID":20010,"MagicID":20,"NeedLevel":62,"NeedGold":7400,"Level":10,"Description":"","Param":[
 "21000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20011,"MagicID":20,"NeedLevel":68,"NeedGold":8000,"Level":11,"Param":[
+	{"ID":20011,"MagicID":20,"NeedLevel":68,"NeedGold":8000,"Level":11,"Description":"","Param":[
 "22000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20012,"MagicID":20,"NeedLevel":74,"NeedGold":8600,"Level":12,"Param":[
+	{"ID":20012,"MagicID":20,"NeedLevel":74,"NeedGold":8600,"Level":12,"Description":"","Param":[
 "23000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20013,"MagicID":20,"NeedLevel":80,"NeedGold":9200,"Level":13,"Param":[
+	{"ID":20013,"MagicID":20,"NeedLevel":80,"NeedGold":9200,"Level":13,"Description":"","Param":[
 "24000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20014,"MagicID":20,"NeedLevel":86,"NeedGold":9800,"Level":14,"Param":[
+	{"ID":20014,"MagicID":20,"NeedLevel":86,"NeedGold":9800,"Level":14,"Description":"","Param":[
 "25000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20015,"MagicID":20,"NeedLevel":92,"NeedGold":10400,"Level":15,"Param":[
+	{"ID":20015,"MagicID":20,"NeedLevel":92,"NeedGold":10400,"Level":15,"Description":"","Param":[
 "26000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":20016,"MagicID":20,"NeedLevel":98,"NeedGold":11000,"Level":16,"Param":[
+	{"ID":20016,"MagicID":20,"NeedLevel":98,"NeedGold":11000,"Level":16,"Description":"","Param":[
 "27000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22001,"MagicID":22,"NeedLevel":1,"NeedGold":2800,"Level":1,"Param":[
+	{"ID":22001,"MagicID":22,"NeedLevel":1,"NeedGold":2800,"Level":1,"Description":"","Param":[
 "13000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22002,"MagicID":22,"NeedLevel":5,"NeedGold":3700,"Level":2,"Param":[
+	{"ID":22002,"MagicID":22,"NeedLevel":5,"NeedGold":3700,"Level":2,"Description":"","Param":[
 "14050",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22003,"MagicID":22,"NeedLevel":9,"NeedGold":4600,"Level":3,"Param":[
+	{"ID":22003,"MagicID":22,"NeedLevel":9,"NeedGold":4600,"Level":3,"Description":"","Param":[
 "15100",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22004,"MagicID":22,"NeedLevel":13,"NeedGold":5500,"Level":4,"Param":[
+	{"ID":22004,"MagicID":22,"NeedLevel":13,"NeedGold":5500,"Level":4,"Description":"","Param":[
 "16150",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22005,"MagicID":22,"NeedLevel":17,"NeedGold":6400,"Level":5,"Param":[
+	{"ID":22005,"MagicID":22,"NeedLevel":17,"NeedGold":6400,"Level":5,"Description":"","Param":[
 "17200",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22006,"MagicID":22,"NeedLevel":21,"NeedGold":7300,"Level":6,"Param":[
+	{"ID":22006,"MagicID":22,"NeedLevel":21,"NeedGold":7300,"Level":6,"Description":"","Param":[
 "18250",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22007,"MagicID":22,"NeedLevel":25,"NeedGold":8200,"Level":7,"Param":[
+	{"ID":22007,"MagicID":22,"NeedLevel":25,"NeedGold":8200,"Level":7,"Description":"","Param":[
 "19300",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22008,"MagicID":22,"NeedLevel":29,"NeedGold":9100,"Level":8,"Param":[
+	{"ID":22008,"MagicID":22,"NeedLevel":29,"NeedGold":9100,"Level":8,"Description":"","Param":[
 "20350",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22009,"MagicID":22,"NeedLevel":33,"NeedGold":10000,"Level":9,"Param":[
+	{"ID":22009,"MagicID":22,"NeedLevel":33,"NeedGold":10000,"Level":9,"Description":"","Param":[
 "21400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22010,"MagicID":22,"NeedLevel":37,"NeedGold":10900,"Level":10,"Param":[
+	{"ID":22010,"MagicID":22,"NeedLevel":37,"NeedGold":10900,"Level":10,"Description":"","Param":[
 "22450",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22011,"MagicID":22,"NeedLevel":41,"NeedGold":11800,"Level":11,"Param":[
+	{"ID":22011,"MagicID":22,"NeedLevel":41,"NeedGold":11800,"Level":11,"Description":"","Param":[
 "23500",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22012,"MagicID":22,"NeedLevel":45,"NeedGold":12700,"Level":12,"Param":[
+	{"ID":22012,"MagicID":22,"NeedLevel":45,"NeedGold":12700,"Level":12,"Description":"","Param":[
 "24550",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22013,"MagicID":22,"NeedLevel":49,"NeedGold":13600,"Level":13,"Param":[
+	{"ID":22013,"MagicID":22,"NeedLevel":49,"NeedGold":13600,"Level":13,"Description":"","Param":[
 "25600",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22014,"MagicID":22,"NeedLevel":53,"NeedGold":14500,"Level":14,"Param":[
+	{"ID":22014,"MagicID":22,"NeedLevel":53,"NeedGold":14500,"Level":14,"Description":"","Param":[
 "26650",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22015,"MagicID":22,"NeedLevel":57,"NeedGold":15400,"Level":15,"Param":[
+	{"ID":22015,"MagicID":22,"NeedLevel":57,"NeedGold":15400,"Level":15,"Description":"","Param":[
 "27700",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22016,"MagicID":22,"NeedLevel":61,"NeedGold":16300,"Level":16,"Param":[
+	{"ID":22016,"MagicID":22,"NeedLevel":61,"NeedGold":16300,"Level":16,"Description":"","Param":[
 "28750",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22017,"MagicID":22,"NeedLevel":65,"NeedGold":17200,"Level":17,"Param":[
+	{"ID":22017,"MagicID":22,"NeedLevel":65,"NeedGold":17200,"Level":17,"Description":"","Param":[
 "29800",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22018,"MagicID":22,"NeedLevel":69,"NeedGold":18100,"Level":18,"Param":[
+	{"ID":22018,"MagicID":22,"NeedLevel":69,"NeedGold":18100,"Level":18,"Description":"","Param":[
 "30850",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22019,"MagicID":22,"NeedLevel":73,"NeedGold":19000,"Level":19,"Param":[
+	{"ID":22019,"MagicID":22,"NeedLevel":73,"NeedGold":19000,"Level":19,"Description":"","Param":[
 "31900",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22020,"MagicID":22,"NeedLevel":77,"NeedGold":19900,"Level":20,"Param":[
+	{"ID":22020,"MagicID":22,"NeedLevel":77,"NeedGold":19900,"Level":20,"Description":"","Param":[
 "32950",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22021,"MagicID":22,"NeedLevel":81,"NeedGold":20800,"Level":21,"Param":[
+	{"ID":22021,"MagicID":22,"NeedLevel":81,"NeedGold":20800,"Level":21,"Description":"","Param":[
 "34000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22022,"MagicID":22,"NeedLevel":85,"NeedGold":21700,"Level":22,"Param":[
+	{"ID":22022,"MagicID":22,"NeedLevel":85,"NeedGold":21700,"Level":22,"Description":"","Param":[
 "35050",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22023,"MagicID":22,"NeedLevel":89,"NeedGold":22600,"Level":23,"Param":[
+	{"ID":22023,"MagicID":22,"NeedLevel":89,"NeedGold":22600,"Level":23,"Description":"","Param":[
 "36100",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22024,"MagicID":22,"NeedLevel":93,"NeedGold":23500,"Level":24,"Param":[
+	{"ID":22024,"MagicID":22,"NeedLevel":93,"NeedGold":23500,"Level":24,"Description":"","Param":[
 "37150",
 "",
 "",
 "",
 ""]
 },
-	{"ID":22025,"MagicID":22,"NeedLevel":97,"NeedGold":24400,"Level":25,"Param":[
+	{"ID":22025,"MagicID":22,"NeedLevel":97,"NeedGold":24400,"Level":25,"Description":"","Param":[
 "38200",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23001,"MagicID":23,"NeedLevel":5,"NeedGold":2580,"Level":1,"Param":[
+	{"ID":23001,"MagicID":23,"NeedLevel":5,"NeedGold":2580,"Level":1,"Description":"","Param":[
 "12000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23002,"MagicID":23,"NeedLevel":9,"NeedGold":3680,"Level":2,"Param":[
+	{"ID":23002,"MagicID":23,"NeedLevel":9,"NeedGold":3680,"Level":2,"Description":"","Param":[
 "13000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23003,"MagicID":23,"NeedLevel":13,"NeedGold":4780,"Level":3,"Param":[
+	{"ID":23003,"MagicID":23,"NeedLevel":13,"NeedGold":4780,"Level":3,"Description":"","Param":[
 "14000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23004,"MagicID":23,"NeedLevel":17,"NeedGold":5880,"Level":4,"Param":[
+	{"ID":23004,"MagicID":23,"NeedLevel":17,"NeedGold":5880,"Level":4,"Description":"","Param":[
 "15000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23005,"MagicID":23,"NeedLevel":21,"NeedGold":6980,"Level":5,"Param":[
+	{"ID":23005,"MagicID":23,"NeedLevel":21,"NeedGold":6980,"Level":5,"Description":"","Param":[
 "16000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23006,"MagicID":23,"NeedLevel":25,"NeedGold":8080,"Level":6,"Param":[
+	{"ID":23006,"MagicID":23,"NeedLevel":25,"NeedGold":8080,"Level":6,"Description":"","Param":[
 "17000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23007,"MagicID":23,"NeedLevel":29,"NeedGold":9180,"Level":7,"Param":[
+	{"ID":23007,"MagicID":23,"NeedLevel":29,"NeedGold":9180,"Level":7,"Description":"","Param":[
 "18000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23008,"MagicID":23,"NeedLevel":33,"NeedGold":10280,"Level":8,"Param":[
+	{"ID":23008,"MagicID":23,"NeedLevel":33,"NeedGold":10280,"Level":8,"Description":"","Param":[
 "19000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23009,"MagicID":23,"NeedLevel":37,"NeedGold":11380,"Level":9,"Param":[
+	{"ID":23009,"MagicID":23,"NeedLevel":37,"NeedGold":11380,"Level":9,"Description":"","Param":[
 "20000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23010,"MagicID":23,"NeedLevel":41,"NeedGold":12480,"Level":10,"Param":[
+	{"ID":23010,"MagicID":23,"NeedLevel":41,"NeedGold":12480,"Level":10,"Description":"","Param":[
 "21000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23011,"MagicID":23,"NeedLevel":45,"NeedGold":13580,"Level":11,"Param":[
+	{"ID":23011,"MagicID":23,"NeedLevel":45,"NeedGold":13580,"Level":11,"Description":"","Param":[
 "22000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23012,"MagicID":23,"NeedLevel":49,"NeedGold":14680,"Level":12,"Param":[
+	{"ID":23012,"MagicID":23,"NeedLevel":49,"NeedGold":14680,"Level":12,"Description":"","Param":[
 "23000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23013,"MagicID":23,"NeedLevel":53,"NeedGold":15780,"Level":13,"Param":[
+	{"ID":23013,"MagicID":23,"NeedLevel":53,"NeedGold":15780,"Level":13,"Description":"","Param":[
 "24000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23014,"MagicID":23,"NeedLevel":57,"NeedGold":16880,"Level":14,"Param":[
+	{"ID":23014,"MagicID":23,"NeedLevel":57,"NeedGold":16880,"Level":14,"Description":"","Param":[
 "25000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23015,"MagicID":23,"NeedLevel":61,"NeedGold":17980,"Level":15,"Param":[
+	{"ID":23015,"MagicID":23,"NeedLevel":61,"NeedGold":17980,"Level":15,"Description":"","Param":[
 "26000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23016,"MagicID":23,"NeedLevel":65,"NeedGold":19080,"Level":16,"Param":[
+	{"ID":23016,"MagicID":23,"NeedLevel":65,"NeedGold":19080,"Level":16,"Description":"","Param":[
 "27000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23017,"MagicID":23,"NeedLevel":69,"NeedGold":20180,"Level":17,"Param":[
+	{"ID":23017,"MagicID":23,"NeedLevel":69,"NeedGold":20180,"Level":17,"Description":"","Param":[
 "28000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23018,"MagicID":23,"NeedLevel":73,"NeedGold":21280,"Level":18,"Param":[
+	{"ID":23018,"MagicID":23,"NeedLevel":73,"NeedGold":21280,"Level":18,"Description":"","Param":[
 "29000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23019,"MagicID":23,"NeedLevel":77,"NeedGold":22380,"Level":19,"Param":[
+	{"ID":23019,"MagicID":23,"NeedLevel":77,"NeedGold":22380,"Level":19,"Description":"","Param":[
 "30000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23020,"MagicID":23,"NeedLevel":81,"NeedGold":23480,"Level":20,"Param":[
+	{"ID":23020,"MagicID":23,"NeedLevel":81,"NeedGold":23480,"Level":20,"Description":"","Param":[
 "31000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23021,"MagicID":23,"NeedLevel":85,"NeedGold":24580,"Level":21,"Param":[
+	{"ID":23021,"MagicID":23,"NeedLevel":85,"NeedGold":24580,"Level":21,"Description":"","Param":[
 "32000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23022,"MagicID":23,"NeedLevel":89,"NeedGold":25680,"Level":22,"Param":[
+	{"ID":23022,"MagicID":23,"NeedLevel":89,"NeedGold":25680,"Level":22,"Description":"","Param":[
 "33000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23023,"MagicID":23,"NeedLevel":93,"NeedGold":26780,"Level":23,"Param":[
+	{"ID":23023,"MagicID":23,"NeedLevel":93,"NeedGold":26780,"Level":23,"Description":"","Param":[
 "34000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23024,"MagicID":23,"NeedLevel":97,"NeedGold":27880,"Level":24,"Param":[
+	{"ID":23024,"MagicID":23,"NeedLevel":97,"NeedGold":27880,"Level":24,"Description":"","Param":[
 "35000",
 "",
 "",
 "",
 ""]
 },
-	{"ID":23025,"MagicID":23,"NeedLevel":100,"NeedGold":28980,"Level":25,"Param":[
+	{"ID":23025,"MagicID":23,"NeedLevel":100,"NeedGold":28980,"Level":25,"Description":"","Param":[
 "36000",
 "",
 "",

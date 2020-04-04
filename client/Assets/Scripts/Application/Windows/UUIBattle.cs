@@ -157,13 +157,21 @@ namespace Windows
             {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                if (g.IsHpFull()) { UApplication.S.ShowNotify($"Hp 已经满"); }
+                if (g.IsHpFull())
+                {
+                    UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_HP_Full"]);
+                    return;
+                }
                 g.SendUserItem(ItemType.ItHpitem);
             });
             bt_mp.onClick.AddListener(() => {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                if (g.IsMpFull()) { UApplication.S.ShowNotify($"Mp 已经满"); }
+                if (g.IsMpFull())
+                {
+                    UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_MP_Full"]);
+                    return;
+                }
                 g.SendUserItem(ItemType.ItMpitem);
             });
         }

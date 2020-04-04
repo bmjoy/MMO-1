@@ -105,8 +105,9 @@ namespace GameLogic.Game.Elements
             State = state;
         }
 
-        public void OnEvent(EventType eventType)
+        public void OnEvent(EventType eventType, BattleCharacter target = null)
         {
+            target = target??ReleaserTarget.ReleaserTarget;
             var per = this.Controllor.Perception as BattlePerception;
             LastEvent = eventType;
 
@@ -117,7 +118,7 @@ namespace GameLogic.Game.Elements
                 {
                     var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
-                    var player = new TimeLinePlayer(timeLine, this, i);
+                    var player = new TimeLinePlayer(timeLine, this, i, target);
                     _players.AddLast(player);
 
                     if (i.line == null)
@@ -132,20 +133,9 @@ namespace GameLogic.Game.Elements
                             throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
-
-                        //var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
-                        //this.ReleaserTarget.Releaser.LockAction(actionLock);
-                        //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
                     }
                 }
-            }
-
-           
-        }
-
-        internal void SetParam(object @params)
-        {
-            throw new NotImplementedException();
+            } 
         }
 
         private TimeLinePlayer startLayout;

@@ -53,4 +53,38 @@
   <Add K="UUILogin_Bt_Login">登陆</Add>
   <Add K="UUILogin_Signup">注册</Add>
   <Add K="UUILogin_Remember">记住账号</Add>
+
+  <!--UUIHeroEquip-->
+  <Add K="UUIHeroEquip_Take_off">脱下</Add>
+  <Add K="UUIHeroEquip_bt_level_up">升星</Add>
+  <Add K="UUIHeroEquip_pro">成功概率:{0}%</Add>
+  <Add K="UUIHeroEquip_level"> 等级:{0} </Add>
+
+  <Add K="UUIHeroEquip_damage">伤害</Add>
+  <Add K="UUIHeroEquip_Force">力量</Add>
+  <Add K="UUIHeroEquip_Agility">敏捷</Add>
+  <Add K="UUIHeroEquip_Knowledge">智力</Add>
+  <Add K="UUIHeroEquip_MaxHp">生命值</Add>
+  <Add K="UUIHeroEquip_MaxMp">魔法值</Add>
+  <Add K="UUIHeroEquip_Defance">防御力</Add>
+  <Add K="UUIHeroEquip_SuckingRate">物理吸血比例</Add>
+  <Add K="UUIHeroEquip_AttackSpeed">攻击间隔</Add>
+  <Add K="UUIHeroEquip_AttackSpeed_F">{0}秒</Add>
+  <Add K="UUIHeroEquip_MoveSpeed">移动速度</Add>
+  <Add K="UUIHeroEquip_MoveSpeed_F">{0}米/秒</Add>
+  <Add K="UUIHeroEquip_Crt">暴击概率</Add>
+  <Add K="UUIHeroEquip_Exp">经验值</Add>
+  <Add K="UUIHeroEquip_Main"> 主属性</Add>
+
+  <Add K="UUIHeroEquip_TakeOff_Result">成功脱下了{0}</Add>
+  <Add K="UUIHeroEquip_Level_Success">升级成功 {0}</Add>
+  <Add K="UUIHeroEquip_Level_Failure">装备没有变化</Add>
+
+  <!--UUIBattle-->
+  <Add K="UUIBattle_HP_Full">HP已经满了</Add>
+  <Add K="UUIBattle_MP_Full">MP已经满了</Add>
+
+  <!--UUIMagic-->
+  <Add K="UUIMagic_LevelUp">升级</Add>
+  <Add K="UUIMagic_SEL_Level">等级:{0}</Add>
 </Setting>
