@@ -26,7 +26,7 @@
   <!--UUIDetail-->
   <Add K="UUIDetail_SELL">出售</Add>
   <Add K="UUIDetail_WEAR">穿戴</Add>
-  <Add K="UUIDetail_PRICES">价格:{0}</Add>
+  <Add K="UUIDetail_PRICES">回收价格: {0}</Add>
   <Add K="UUIDETAIL_WEAR_SUCESS">穿戴成功{0}</Add>
 
   <!--枚举对应-->
@@ -40,13 +40,15 @@
   <Add K="UUIDetail_Jouk">闪避:{0}</Add>
   <Add K="UUIDetail_Knowledge">智力:{0}</Add>
   <Add K="UUIDetail_MagicWaitTime">攻击速度:{0}</Add>
-  <Add K="UUIDetail_MaxHp">HP:{0}</Add>
-  <Add K="UUIDetail_MaxMp">MP:{0}</Add>
+  <Add K="UUIDetail_MaxHp">生命:{0}</Add>
+  <Add K="UUIDetail_MaxMp">魔法:{0}</Add>
   <Add K="UUIDetail_Resistibility">魔法闪避:{0}</Add>
   <Add K="UUIDetail_SuckingRate">吸血等级:{0}</Add>  
 
   <!--UUIItemShop-->
   <Add K="UUIItemShop_BUY">获得{0}x{1}</Add>
+  <Add K="UUIItemShop_Confirm_Title">确认</Add>
+  <Add K="UUIItemShop_Confirm_Content">确认购买{0}?</Add>
 
   <!--UUILogin-->
   <Add K="UUILogin_TITLE">登陆</Add>

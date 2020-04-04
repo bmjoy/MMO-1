@@ -140,23 +140,30 @@ namespace Windows
 
         private void Buy(ContentTableModel obj)
         {
-            //UUIManager.S.MaskEvent();
-            var gate = UApplication.G<GMainGate>();
-            BuyItem.CreateQuery().SendRequest(gate.Client, new C2G_BuyItem
-            {
-                ItemId = obj.ShopItem.ItemId,
-                ShopId = obj.Shop.ShopId
-            }, (r) =>
-            {
-                //UUIManager.S.UnMaskEvent();
-                if (r.Code.IsOk())
-                {
-                    UApplication.S.ShowNotify(LanguageManager.S.Format("UUIItemShop_BUY", $"{obj.Config.Name}",$"{obj.ShopItem.PackageNum}"));
+
+            UUIPopup.ShowConfirm(LanguageManager.S["UUIItemShop_Confirm_Title"],
+                LanguageManager.S.Format("UUIItemShop_Confirm_Content", obj.Config.Name),
+                () => {
+                    var request = new C2G_BuyItem
+                    {
+                        ItemId = obj.ShopItem.ItemId,
+                        ShopId = obj.Shop.ShopId
+                    };
+                    var gate = UApplication.G<GMainGate>();
+                    BuyItem.CreateQuery().SendRequest(gate.Client,request, (r) =>
+                    {
+                        //UUIManager.S.UnMaskEvent();
+                        if (r.Code.IsOk())
+                        {
+                            UApplication.S.ShowNotify(LanguageManager.S.Format("UUIItemShop_BUY", $"{obj.Config.Name}", $"{obj.ShopItem.PackageNum}"));
+                        }
+                        else
+                        {
+                            UApplication.S.ShowError(r.Code);
+                        }
+                    }, UUIManager.S);
                 }
-                else {
-                    UApplication.S.ShowError(r.Code);
-                }
-            },UUIManager.S);
+                );
         }
 
         protected override void OnHide()
