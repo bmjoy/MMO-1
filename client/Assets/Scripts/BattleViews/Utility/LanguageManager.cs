@@ -29,6 +29,7 @@ public class LanguageManager : XSingleton<LanguageManager>
     {
         get
         {
+            if (string.IsNullOrEmpty(key)) return string.Empty;
             if (Keys.TryGetValue(key, out string v)) return v;
             return key;
         }
@@ -36,8 +37,7 @@ public class LanguageManager : XSingleton<LanguageManager>
 
     public string Format(string key, params object[] pars)
     {
-        if (pars.Length > 0)
-            return string.Format(this[key], pars);
+        if (pars.Length > 0) return string.Format(this[key], pars);
         return this[key];
     }
 }

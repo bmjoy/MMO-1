@@ -7,9 +7,9 @@ namespace UGameTools
 {
     public static class GExtends
 	{
-        public static void SetLayer(this UnityEngine.GameObject u, string layer)
+        public static void SetLayer(this GameObject u, string layer)
         {
-            u.layer = UnityEngine.LayerMask.NameToLayer(layer);
+            u.transform.SetLayer(LayerMask.NameToLayer(layer));
         }
 
         public static UIMouseClick OnMouseClick(this Component mo,Action<object> callBack, object state = null)
