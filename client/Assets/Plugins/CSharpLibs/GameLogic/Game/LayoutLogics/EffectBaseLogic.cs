@@ -151,6 +151,22 @@ namespace GameLogic.Game.LayoutLogics
             effectTarget.LockAction(effect.lockType);
             if (effect.revertType == RevertType.ReleaserDeath) releaser.RevertLock(effectTarget, effect.lockType);
         }
+
+        [EffectHandle(typeof(ModifyTeamIndexEffect))]
+        public static void ModifyTeamIndexEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
+        {
+            var effect = e as ModifyTeamIndexEffect;
+            if (effectTarget.Level > effect.Level.ProcessValue(releaser)) return;
+
+            if (effect.valueFromType == ValueFromType.Releaser)
+            {
+                effectTarget.SetTeamIndex(releaser.Releaser.TeamIndex);
+            }
+            else
+            {
+                effectTarget.SetTeamIndex(effect.TeamIndex);
+            }
+        }
     }
 }
 

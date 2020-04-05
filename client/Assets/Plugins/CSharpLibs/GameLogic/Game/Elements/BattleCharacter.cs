@@ -99,7 +99,7 @@ namespace GameLogic.Game.Elements
             }
         }
         public string Name { set; get; }
-        public int TeamIndex { set; get; }
+        public int TeamIndex { private set; get; }
         public int Level { set; get; }
         public HanlderEvent<BattleCharacter> OnDead;
         public int ConfigID { private set; get; }
@@ -182,8 +182,9 @@ namespace GameLogic.Game.Elements
             float speed,
             GControllor controllor, 
             IBattleCharacter view, 
-            string account_uuid,int ownerIndex = -1):base(controllor,view)
+            string account_uuid,int teamIndex, int ownerIndex = -1):base(controllor,view)
 		{
+            this.TeamIndex = teamIndex;
             this.OwnerIndex = ownerIndex;
             this.Config = data;
             AcccountUuid = account_uuid;
@@ -308,6 +309,12 @@ namespace GameLogic.Game.Elements
             View.ShowHPChange(-hp, HP, this.MaxHP);
             if (dead) OnDeath();
             return dead;
+        }
+
+        public void SetTeamIndex(int tIndex)
+        {
+            this.TeamIndex = tIndex;
+            this.View.SetTeamIndex(tIndex);
         }
 
 

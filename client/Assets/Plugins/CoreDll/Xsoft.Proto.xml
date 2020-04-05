@@ -533,6 +533,12 @@
         <member name="F:Proto.Notify_CharacterExp.OldLeveFieldNumber">
              <summary>Field number for the "OldLeve" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CharacterTeamIndex.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterTeamIndex.TeamIndexFieldNumber">
+             <summary>Field number for the "TeamIndex" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
              1
@@ -3264,6 +3270,11 @@
         <member name="T:Proto.NotifyService.CharacterLevel">
              <summary>
              38
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.MethodName">
+             <summary>
+             39
              </summary>    
             </member>
     </members>

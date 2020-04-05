@@ -195,7 +195,7 @@ namespace GameLogic.Game.Perceptions
                 data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, ownerIndex );
 
             var battleCharacter = new BattleCharacter(data,magics,data.MoveSpeed, this.AIControllor,
-                view, accountUuid,ownerIndex);
+                view, accountUuid,teamIndex, ownerIndex);
 
             battleCharacter[HeroPropertyType.MaxHp].SetBaseValue(data.HPMax);
             battleCharacter[HeroPropertyType.MaxMp].SetBaseValue(data.MPMax);
@@ -212,7 +212,6 @@ namespace GameLogic.Game.Perceptions
             battleCharacter.TDefance = (DefanceType)data.DefanceType;
             battleCharacter.Category = (HeroCategory)data.Category;
             battleCharacter.Name = data.Name;
-            battleCharacter.TeamIndex = teamIndex;
 
             if (appendProperties != null)
             {
