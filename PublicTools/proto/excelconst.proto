@@ -105,10 +105,10 @@ enum GetValueFrom
 {
     CurrentConfig = 0;//获取当前配置值
 	MagicLevelParam1 = 1;//取魔法等级表数据参数1
-	MagicLevelParam2 = 2;
-	MagicLevelParam3 = 3;
-	MagicLevelParam4 = 4;
-	MagicLevelParam5 = 5;
+	MagicLevelParam2 = 2;//参数2
+	MagicLevelParam3 = 3;//参数3
+	MagicLevelParam4 = 4;//参数4
+	MagicLevelParam5 = 5;//参数5
 }
 
 enum TargetTeamType
@@ -123,8 +123,8 @@ enum TargetTeamType
 enum StandType
 {
 	ST_NONE =0;
-	ST_Random = 1;
-	ST_Around = 2;
+	ST_Random = 1;//随机
+	ST_Around = 2;//围绕
 }
 
 enum MapType 
