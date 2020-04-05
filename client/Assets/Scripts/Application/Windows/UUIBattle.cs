@@ -106,7 +106,10 @@ namespace Windows
 
             bt_Exit.onClick.AddListener(() =>
                 {
-                    UUIPopup.ShowConfirm("Quit", "Do you want quit?", () =>
+                    UUIPopup.ShowConfirm(
+                        LanguageManager.S["UUIBattle_Quit_Title"],
+                        LanguageManager.S["UUIBattle_Quit_Content"],
+                        () =>
                     {
                         var gate = UApplication.G<BattleGate>();
                         ExitBattle.CreateQuery()

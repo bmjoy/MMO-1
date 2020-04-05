@@ -20,6 +20,8 @@ namespace Windows
         protected override void OnShow()
         {
             base.OnShow();
+            ButtonBlue.SetKey("UUIPopup_OK");
+            ButtonBrown.SetKey("UUIPopup_Cancel");
         }
         protected override void OnHide()
         {
