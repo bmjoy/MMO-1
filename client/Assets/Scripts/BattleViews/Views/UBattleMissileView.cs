@@ -51,7 +51,6 @@ public class UBattleMissileView : UElementView ,IBattleMissile
 
     public override IMessage ToInitNotify()
     {
-        //var missile = this.Element as BattleMissile;
         var createNotify = new Notify_CreateMissile
         {
             Index = Index,

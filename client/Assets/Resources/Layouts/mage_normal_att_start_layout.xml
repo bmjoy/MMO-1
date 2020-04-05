@@ -26,17 +26,17 @@
     </LayoutBase>
     <LayoutBase xsi:type="MissileLayout">
       <GUID>4f10c964-1e3f-42ff-a497-e405446bb6b5</GUID>
-      <resourcesPath>Missiles/SmokeMissle.prefab</resourcesPath>
+      <resourcesPath>Missiles/FireMissile.prefab</resourcesPath>
       <movementType>Line</movementType>
       <maxLifeTime>-1</maxLifeTime>
       <maxDistance>-1</maxDistance>
-      <speed>5</speed>
+      <speed>10</speed>
       <fromBone>Body</fromBone>
       <toBone>Body</toBone>
       <offset>
         <x>0</x>
         <y>0</y>
-        <z>2</z>
+        <z>1</z>
       </offset>
     </LayoutBase>
   </Layouts>

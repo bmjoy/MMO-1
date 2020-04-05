@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>0.3</Time>
+  <Time>0.5</Time>
   <Points>
     <TimePoint>
-      <GUID>247d17bf-4ebc-49fd-a2a5-b4b3d2f914ff</GUID>
-      <Time>0.06042781</Time>
+      <GUID>e70e9f0e-a82e-4e30-9f65-049a65e7ac9f</GUID>
+      <Time>0.032352943</Time>
     </TimePoint>
     <TimePoint>
-      <GUID>8f4f64b4-453d-49e7-b05e-9b48c5d62dd7</GUID>
-      <Time>0.06417113</Time>
+      <GUID>d2863b24-fb3b-42ba-8f5f-726c8423242e</GUID>
+      <Time>0.422058821</Time>
     </TimePoint>
   </Points>
   <Layouts>
+    <LayoutBase xsi:type="MotionLayout">
+      <GUID>e70e9f0e-a82e-4e30-9f65-049a65e7ac9f</GUID>
+      <motionName>Cast Spell 03</motionName>
+      <targetType>Releaser</targetType>
+    </LayoutBase>
     <LayoutBase xsi:type="DamageLayout">
-      <GUID>247d17bf-4ebc-49fd-a2a5-b4b3d2f914ff</GUID>
-      <target>EventTarget</target>
+      <GUID>d2863b24-fb3b-42ba-8f5f-726c8423242e</GUID>
+      <target>Releaser</target>
       <RangeType>
         <damageType>Single</damageType>
-        <fiterType>EmenyTeam</fiterType>
+        <fiterType>OwnerTeam</fiterType>
         <radius>1</radius>
         <angle>360</angle>
         <offsetAngle>0</offsetAngle>
@@ -29,11 +34,6 @@
       </RangeType>
       <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
-    </LayoutBase>
-    <LayoutBase xsi:type="MotionLayout">
-      <GUID>8f4f64b4-453d-49e7-b05e-9b48c5d62dd7</GUID>
-      <motionName>Hit</motionName>
-      <targetType>Target</targetType>
     </LayoutBase>
   </Layouts>
 </TimeLine>

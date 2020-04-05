@@ -87,18 +87,27 @@ namespace GameLogic.Game.LayoutLogics
 			var releaser = linePlayer.Releaser;
 			var layout = layoutBase as DamageLayout;
 
-			BattleCharacter orginTarget = null;
-			if (layout.target == Layout.TargetType.Releaser) {
-				orginTarget = releaser.ReleaserTarget.Releaser;
-			} else if (layout.target == Layout.TargetType.Target) 
+            BattleCharacter orginTarget;
+            switch (layout.target)
 			{
-				//release At Position?
-				if(releaser.ReleaserTarget.ReleaserTarget ==null) return ;
-				orginTarget = releaser.ReleaserTarget.ReleaserTarget;
-			}
-			if (orginTarget == null) {
+				case Layout.TargetType.Releaser:
+					orginTarget = releaser.ReleaserTarget.Releaser;
+					break;
+				case Layout.TargetType.Target:
+					if (releaser.ReleaserTarget.ReleaserTarget == null) return;
+					orginTarget = releaser.ReleaserTarget.ReleaserTarget;
+					break;
+				default:
+					orginTarget = linePlayer.EventTarget;
+					break;
+            }
+
+			
+			if (orginTarget == null)
+            {
 				throw new Exception ("Do not have target of orgin. type:" + layout.target.ToString ());
 			}
+
 			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
 			var per = releaser.Controllor.Perception  as BattlePerception;
 			var targets = per.DamageFindTarget(orginTarget,
