@@ -10,7 +10,10 @@
           <effects>
             <EffectBase xsi:type="CureMPEffect">
               <valueType>FixedValue</valueType>
-              <value>150</value>
+              <value>
+                <ValueForm>CurrentConfig</ValueForm>
+                <Value>30</Value>
+              </value>
             </EffectBase>
           </effects>
           <key>001</key>

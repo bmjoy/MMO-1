@@ -159,7 +159,7 @@
 "4002",
 ""]
 },
-	{"ID":4003,"Name":"\u4E0A\u53E4\u62AB\u98CE","SalePrice":1000,"ItemType":3,"Quality":4,"ResModel":"Chests/Chest01A-Brown","Icon":"armors/Chest_71","Unique":0,"MaxStackNum":1,"Description":"\u4E0A\u53E4\u4EBA\u65CF\u7559\u4E0B\u7684\u88C5\u5907\uFF0C\u9760\u8FD1\u5C31\u53EF\u4EE5\u611F\u53D7\u5230\u4E0A\u53E4\u6218\u573A\u9057\u7559\u7684\u6C14\u606F\u3002","Params":[
+	{"ID":4003,"Name":"\u4E0A\u53E4\u62AB\u98CE","SalePrice":1000,"ItemType":3,"Quality":4,"ResModel":"Chests/Chest01A-Brown","Icon":"armors/Chest_67","Unique":0,"MaxStackNum":1,"Description":"\u4E0A\u53E4\u4EBA\u65CF\u7559\u4E0B\u7684\u88C5\u5907\uFF0C\u9760\u8FD1\u5C31\u53EF\u4EE5\u611F\u53D7\u5230\u4E0A\u53E4\u6218\u573A\u9057\u7559\u7684\u6C14\u606F\u3002","Params":[
 "4003",
 ""]
 },

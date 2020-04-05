@@ -1968,6 +1968,26 @@
             取魔法等级表数据参数1
              </summary>
             </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam2">
+             <summary>
+            参数2
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam3">
+             <summary>
+            参数3
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam4">
+             <summary>
+            参数4
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam5">
+             <summary>
+            参数5
+             </summary>
+            </member>
         <member name="F:Proto.TargetTeamType.All">
              <summary>
             所有
@@ -1991,6 +2011,16 @@
         <member name="F:Proto.TargetTeamType.Own">
              <summary>
             只有自己
+             </summary>
+            </member>
+        <member name="F:Proto.StandType.StRandom">
+             <summary>
+            随机
+             </summary>
+            </member>
+        <member name="F:Proto.StandType.StAround">
+             <summary>
+            围绕
              </summary>
             </member>
         <member name="F:Proto.MapType.Boss">

@@ -315,9 +315,21 @@ namespace Proto {
     ///取魔法等级表数据参数1
     /// </summary>
     [pbr::OriginalName("MagicLevelParam1")] MagicLevelParam1 = 1,
+    /// <summary>
+    ///参数2
+    /// </summary>
     [pbr::OriginalName("MagicLevelParam2")] MagicLevelParam2 = 2,
+    /// <summary>
+    ///参数3
+    /// </summary>
     [pbr::OriginalName("MagicLevelParam3")] MagicLevelParam3 = 3,
+    /// <summary>
+    ///参数4
+    /// </summary>
     [pbr::OriginalName("MagicLevelParam4")] MagicLevelParam4 = 4,
+    /// <summary>
+    ///参数5
+    /// </summary>
     [pbr::OriginalName("MagicLevelParam5")] MagicLevelParam5 = 5,
   }
 
@@ -346,7 +358,13 @@ namespace Proto {
 
   public enum StandType {
     [pbr::OriginalName("ST_NONE")] StNone = 0,
+    /// <summary>
+    ///随机
+    /// </summary>
     [pbr::OriginalName("ST_Random")] StRandom = 1,
+    /// <summary>
+    ///围绕
+    /// </summary>
     [pbr::OriginalName("ST_Around")] StAround = 2,
   }
 

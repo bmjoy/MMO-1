@@ -1,8 +1,8 @@
 ﻿syntax = "proto3";
-
-import "data.proto";
 import "const.proto";
 import "excelconst.proto";
+import "data.proto";
+
 package Proto;
 
 

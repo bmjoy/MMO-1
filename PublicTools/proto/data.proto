@@ -1,6 +1,8 @@
 ﻿syntax = "proto3";
+
 import "const.proto";
 import "excelconst.proto";
+
 package Proto;
 
 message Vector3
