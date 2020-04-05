@@ -2,8 +2,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="183" Column="13" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="203" Column="28" />
-      <File FileName="GServer/Managers/UserDataManager.cs" Line="263" Column="1" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="240" Column="32" />
+      <File FileName="GServer/Managers/UserDataManager.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

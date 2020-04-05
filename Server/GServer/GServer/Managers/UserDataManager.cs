@@ -334,7 +334,7 @@ namespace GServer.Managers
             if (item.CType == CoinType.Gold)
             {
                 if (item.Prices > player.Gold) return ErrorCode.NoEnoughtGold;
-                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Gold);
+                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
                 query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
                 var update_player = Builders<GamePlayerEntity>.Update
                    .Set(t => t.Gold, player.Gold - item.Prices);
@@ -342,6 +342,7 @@ namespace GServer.Managers
                 update = res.ModifiedCount > 0;
             }
 
+            if (!update) return ErrorCode.Error;
             //使用同步
             if (await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum }))
             {
