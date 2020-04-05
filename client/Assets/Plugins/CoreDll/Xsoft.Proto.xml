@@ -1582,11 +1582,6 @@
              普通攻击技能
              </summary>
             </member>
-        <member name="P:EConfig.CharacterPlayerData.NormalAttackAppend">
-             <summary>
-             连击技能
-             </summary>
-            </member>
         <member name="P:EConfig.CharacterPlayerData.Motion">
              <summary>
              创建角色动作
@@ -3272,7 +3267,7 @@
              38
              </summary>    
             </member>
-        <member name="T:Proto.NotifyService.MethodName">
+        <member name="T:Proto.NotifyService.CharacterTeamIndex">
              <summary>
              39
              </summary>    

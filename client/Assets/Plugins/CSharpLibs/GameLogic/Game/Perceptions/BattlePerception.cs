@@ -150,11 +150,6 @@ namespace GameLogic.Game.Perceptions
                     list.Add(new BattleCharacterMagic(MagicType.MtNormal, config, GetMagicLevel(hero, cData.NormalAttack)));
                 }
 
-                if (cData.NormalAttackAppend > 0)
-                {
-                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttackAppend);
-                    list.Add(new BattleCharacterMagic(MagicType.MtNormalAppend, config, GetMagicLevel(hero, cData.NormalAttackAppend)));
-                }
             }
             return list;
         }

@@ -330,16 +330,16 @@ namespace Proto.NotifyService
     /// 39
     /// </summary>    
     [API(39)]
-    public class MethodName:APIBase<Void, Notify_CharacterTeamIndex> 
+    public class CharacterTeamIndex:APIBase<Void, Notify_CharacterTeamIndex> 
     {
-        private MethodName() : base() { }
-        public  static MethodName CreateQuery(){ return new MethodName();}
+        private CharacterTeamIndex() : base() { }
+        public  static CharacterTeamIndex CreateQuery(){ return new CharacterTeamIndex();}
     }
     
 
     public interface INotifyService
     {
-        [API(39)]Notify_CharacterTeamIndex MethodName(Void req);
+        [API(39)]Notify_CharacterTeamIndex CharacterTeamIndex(Void req);
         [API(38)]Notify_CharacterLevel CharacterLevel(Void req);
         [API(37)]Notify_CharacterExp CharacterExp(Void req);
         [API(36)]Notify_CharacterRotation CharacterRotation(Void req);
@@ -375,7 +375,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
-        [API(39)]public abstract Task<Notify_CharacterTeamIndex> MethodName(Void request);
+        [API(39)]public abstract Task<Notify_CharacterTeamIndex> CharacterTeamIndex(Void request);
         [API(38)]public abstract Task<Notify_CharacterLevel> CharacterLevel(Void request);
         [API(37)]public abstract Task<Notify_CharacterExp> CharacterExp(Void request);
         [API(36)]public abstract Task<Notify_CharacterRotation> CharacterRotation(Void request);

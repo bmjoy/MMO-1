@@ -764,21 +764,15 @@ namespace EConfig
         public int NormalAttack { set; get; }
         
         /// <summary>
-        /// 连击技能
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int NormalAttackAppend { set; get; }
-        
-        /// <summary>
         /// 创建角色动作
         /// </summary>
-        [ExcelConfigColIndex(4)]
+        [ExcelConfigColIndex(3)]
         public String Motion { set; get; }
         
         /// <summary>
         /// 角色说明
         /// </summary>
-        [ExcelConfigColIndex(5)]
+        [ExcelConfigColIndex(4)]
         public String Description { set; get; }
 
     }

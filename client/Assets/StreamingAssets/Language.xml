@@ -82,6 +82,9 @@
   <Add K="UUIHeroEquip_Level_Success">升级成功 {0}</Add>
   <Add K="UUIHeroEquip_Level_Failure">装备没有变化</Add>
 
+  <!--UUISelectEquip-->
+  <Add K="UUISelectEquip_Wear">穿戴</Add>
+
   <!--UUIBattle-->
   <Add K="UUIBattle_HP_Full">HP已经满了</Add>
   <Add K="UUIBattle_MP_Full">MP已经满了</Add>
@@ -95,4 +98,8 @@
   <!--UUIPopup-->
   <Add K="UUIPopup_OK">确认</Add>
   <Add K="UUIPopup_Cancel">取消</Add>
+
+  <!--UUILevelList-->
+  <Add K="UUILevelList_Title">世界</Add>
+  <Add K="UUILevelList_Enter">进入</Add>
 </Setting>
