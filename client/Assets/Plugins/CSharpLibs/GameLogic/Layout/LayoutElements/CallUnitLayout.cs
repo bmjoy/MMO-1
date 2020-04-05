@@ -13,11 +13,6 @@ namespace Layout.LayoutElements
     [EditorLayout("召唤单位")]
     public class CallUnitLayout:LayoutBase
     {
-        public CallUnitLayout()
-        {
-            valueFrom = GetValueFrom.CurrentConfig;
-            level = 1;
-        }
 
         [Label("召唤ID来源")]
         public CharacterType CType = CharacterType.ConfigID;
@@ -25,12 +20,8 @@ namespace Layout.LayoutElements
         [Label("召唤角色ID")]
         public int characterID;
 
-        [Label("等级取之来源")]
-        public GetValueFrom valueFrom;
-
         [Label("等级")]
-        public int level;
-
+        public ValueSourceOf level=1;
 
         [Label("AIPath(默认角色表AI)")]
         [EditorStreamingPath]

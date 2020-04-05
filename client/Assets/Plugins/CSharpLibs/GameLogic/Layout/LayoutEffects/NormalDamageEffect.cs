@@ -1,5 +1,6 @@
 ﻿using System;
 using Layout.EditorAttributes;
+using Layout.LayoutElements;
 
 namespace Layout.LayoutEffects
 {
@@ -21,7 +22,7 @@ namespace Layout.LayoutEffects
 		public ValueOf valueOf = ValueOf.NormalAttack;
 
 		[Label("固定伤害值")]
-		public int DamageValue = 0;
+		public ValueSourceOf DamageValue = 0;
 
 		public override string ToString()
 		{

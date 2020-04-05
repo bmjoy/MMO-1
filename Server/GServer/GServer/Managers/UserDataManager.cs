@@ -81,14 +81,14 @@ namespace GServer.Managers
 
         }
 
-        internal async Task<int> BuyPackageSize(string accountUuid, int size)
+        internal async Task<G2C_BuyPackageSize> BuyPackageSize(Client client,string accountUuid, int size)
         {
             var player = await FindPlayerByAccountId(accountUuid);
             var package = await FindPackageByPlayerID(player.Uuid);
-            if (package.PackageSize > size) return -1;
-            if (player.Coin < Application.Constant.PACKAGE_BUY_COST) return -2;
+            if (package.PackageSize != size) return  new G2C_BuyPackageSize { Code = ErrorCode.Error };
+            if (player.Coin < Application.Constant.PACKAGE_BUY_COST) return  new G2C_BuyPackageSize { Code = ErrorCode.NoEnoughtCoin };
             if (package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE >
-                Application.Constant.PACKAGE_SIZE_LIMIT) return -3;
+                Application.Constant.PACKAGE_SIZE_LIMIT) return  new G2C_BuyPackageSize { Code = ErrorCode.PackageSizeLimit };
             {
                 var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
                 var update = Builders<GamePlayerEntity>.Update
@@ -102,7 +102,14 @@ namespace GServer.Managers
                 await DataBase.S.Packages.UpdateOneAsync(filter, update);
             }
 
-            return package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE;
+            await SyncToClient(client, player.Uuid, true);
+
+            return new G2C_BuyPackageSize
+            {
+                Code = ErrorCode.Ok,
+                OldCount = size,
+                PackageCount = package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE
+            };
         }
 
         public async Task<GamePlayerEntity> FindPlayerById(string player_uuid)
@@ -254,18 +261,47 @@ namespace GServer.Managers
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
 
-        internal async Task<G2C_MagicLevelUp> MagicLevelUp(int magicId, int level, string accountUuid)
+        internal async Task<G2C_MagicLevelUp> MagicLevelUp(Client client, int magicId, int level, string accountUuid)
         {
             var player = await FindPlayerByAccountId(accountUuid);
             var hero = await FindHeroByPlayerId(player.Uuid);
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(magicId);
             if (config.CharacterID != hero.HeroId) return new G2C_MagicLevelUp { Code = ErrorCode.Error };
 
-            var levelConfig = ExcelToJSONConfigManager.Current.FirstConfig<MagicLevelUpData>(t => t.Level == level && t.MagicID == magicId);
+            var levelConfig = ExcelToJSONConfigManager
+                .Current.FirstConfig<MagicLevelUpData>(t => t.Level == level && t.MagicID == magicId);
 
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
+            if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
+            if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
+            {
+                if (level == 1)
+                {
+                    hero.Magics.Add(magicId, new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 1 });
+                }
+                else
+                    return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+            }
 
-            // levelConfig.NeedGold
+            
+
+            {
+                var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+                player.Coin -= levelConfig.NeedGold;
+                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Coin, player.Coin);
+                await DataBase.S.Playes.UpdateOneAsync(filter, update);
+            }
+
+            magic.Level += 1;
+
+            {
+                var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
+                var update = Builders<GameHeroEntity>.Update.Set(t => t.Magics, hero.Magics);
+                await DataBase.S.Heros.UpdateOneAsync(filter, update);
+            }
+
+
+            await SyncToClient(client, player.Uuid);
 
             return new G2C_MagicLevelUp
             {

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UGameTools;
 using Proto.GateServerService;
 using EConfig;
+using ExcelConfig;
 
 namespace Windows
 {
@@ -47,6 +48,15 @@ namespace Windows
                 UUIManager.S.CreateWindowAsync<UUIItemShop>((ui) => ui.ShowWindow());
 
             });
+            MenuSkill.onClick.AddListener(() => {
+                UUIManager.S.CreateWindowAsync<UUIMagic>(ui =>
+                {
+                    ui.ShowWindow();
+                });
+            });
+            MenuMessages.onClick.AddListener(() => {
+                UUIManager.S.CreateWindowAsync<UUIMessages>(ui => ui.ShowWindow());
+            });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });
 
@@ -73,6 +83,13 @@ namespace Windows
         {
             base.OnShow();
             this.Username.text = string.Empty;
+            MenuSetting.SetKey("UI_MAIN_SETTING");
+            MenuItems.SetKey("UI_MAIN_ITEM");
+            MenuWeapon.SetKey("UI_MAIN_WEAPON");
+            MenuSkill.SetKey("UI_MAIN_SKILL");
+            MenuShop.SetKey("UI_MAIN_SHOP");
+            MenuMessages.SetKey("UI_MAIN_MESSAGE");
+            Button_Play.SetKey("UI_MAIN_PLAY");
             OnUpdateUIData();
         }
         protected override void OnHide()
@@ -84,13 +101,14 @@ namespace Windows
         {
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
-
+            if (gate.hero == null) return;
+            user_defalut.texture = gate.LookAtView;
             lb_gold.text = gate.Gold.ToString("N0");
             lb_gem.text = gate.Coin.ToString("N0");
             if (gate.hero == null) return;
             this.Level_Number.text = $"{gate.hero.Level}";
             this.Username.text = $"{gate.hero.Name}";
-            var leveUp = ExcelConfig.ExcelToJSONConfigManager.Current
+            var leveUp = ExcelToJSONConfigManager.Current
                 .FirstConfig<CharacterLevelUpData>(t => t.Level == gate.hero.Level+1);
             lb_exp.text = $"{gate.hero.Exprices}/{leveUp?.NeedExprices ?? '-'}";
             float v = 0;

@@ -140,17 +140,6 @@ namespace Proto.NotifyService
     
 
     /// <summary>
-    /// 19
-    /// </summary>    
-    [API(19)]
-    public class CharacterSetForword:APIBase<Void, Notify_CharacterSetForword> 
-    {
-        private CharacterSetForword() : base() { }
-        public  static CharacterSetForword CreateQuery(){ return new CharacterSetForword();}
-    }
-    
-
-    /// <summary>
     /// 20
     /// </summary>    
     [API(20)]
@@ -356,7 +345,6 @@ namespace Proto.NotifyService
         [API(22)]Notify_CharacterDeath CharacterDeath(Void req);
         [API(21)]Notify_CharacterStopMove CharacterStopMove(Void req);
         [API(20)]Notify_CharacterMoveTo CharacterMoveTo(Void req);
-        [API(19)]Notify_CharacterSetForword CharacterSetForword(Void req);
         [API(17)]Notify_PropertyValue PropertyValue(Void req);
         [API(16)]Notify_PlayerJoinState PlayerJoinState(Void req);
         [API(15)]Notify_MPChange MPChange(Void req);
@@ -392,7 +380,6 @@ namespace Proto.NotifyService
         [API(22)]public abstract Task<Notify_CharacterDeath> CharacterDeath(Void request);
         [API(21)]public abstract Task<Notify_CharacterStopMove> CharacterStopMove(Void request);
         [API(20)]public abstract Task<Notify_CharacterMoveTo> CharacterMoveTo(Void request);
-        [API(19)]public abstract Task<Notify_CharacterSetForword> CharacterSetForword(Void request);
         [API(17)]public abstract Task<Notify_PropertyValue> PropertyValue(Void request);
         [API(16)]public abstract Task<Notify_PlayerJoinState> PlayerJoinState(Void request);
         [API(15)]public abstract Task<Notify_MPChange> MPChange(Void request);

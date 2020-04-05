@@ -55,6 +55,7 @@ public class MissileFollowPath : MonoBehaviour
 
 					if (Vector3.Distance(Target.position, this.Moveing.position) <= Speed / 20)
 					{
+						Moveing.position = Target.position;
 						state = MissileMoveState.Death;
 					}
 				}

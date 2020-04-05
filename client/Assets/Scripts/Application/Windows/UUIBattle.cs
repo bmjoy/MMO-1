@@ -58,7 +58,7 @@ namespace Windows
 
             public void Update(UCharacterView view, float now,bool haveKey)
             {
-                
+                if (LMagicData == null) return;
                 if (LMagicData.unique)  Template.Button.interactable = !haveKey;
                 else  Template.Button.interactable = true;
 
@@ -157,13 +157,21 @@ namespace Windows
             {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                if (g.IsHpFull()) { UApplication.S.ShowNotify($"Hp 已经满"); }
+                if (g.IsHpFull())
+                {
+                    UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_HP_Full"]);
+                    return;
+                }
                 g.SendUserItem(ItemType.ItHpitem);
             });
             bt_mp.onClick.AddListener(() => {
                 var g = UApplication.G<BattleGate>();
                 if (g == null) return;
-                if (g.IsMpFull()) { UApplication.S.ShowNotify($"Mp 已经满"); }
+                if (g.IsMpFull())
+                {
+                    UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_MP_Full"]);
+                    return;
+                }
                 g.SendUserItem(ItemType.ItMpitem);
             });
         }
@@ -286,11 +294,10 @@ namespace Windows
         }
         public void InitCharacter(UCharacterView view)
         {
+            var gata = UApplication.G<BattleGate>();
             if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
             {
-                var gata = UApplication.G<BattleGate>();
                 var pre = gata.PreView as IBattlePerception;
-                
                 this.GridTableManager.Count = list.Count;
                 int index = 0;
                 foreach (var i in GridTableManager)
@@ -308,6 +315,8 @@ namespace Windows
                 ResourcesManager.S.LoadIcon(config, (s) => att_Icon.sprite = s);
             }
             this.view = view;
+
+            this.Player.texture = gata.LookAtView;
         }
         public void SetPackage(PlayerPackage package)
         {

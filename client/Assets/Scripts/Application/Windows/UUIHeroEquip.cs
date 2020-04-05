@@ -79,12 +79,15 @@ namespace Windows
                 var req = new C2G_EquipmentLevelUp{ Guid = selected.GUID, Level = item.Level };
                 EquipmentLevelUp.CreateQuery()
                 .SendRequest(g.Client,req , (r) => {
-                    if (r.Code.IsOk())
+                if (r.Code.IsOk())
+                {
+                    if (r.Level > item.Level)
                     {
-                        if (r.Level > item.Level)
-                            UApplication.S.ShowNotify($"成功升级 +{r.Level}");
-                        else
-                            UApplication.S.ShowNotify($"装备没有变化");
+                        UApplication.S.ShowNotify(LanguageManager.S.Format("UUIHeroEquip_Level_Success", $" +{r.Level}"));
+                    }
+
+                    else
+                        UApplication.S.ShowNotify(LanguageManager.S["UUIHeroEquip_Level_Failure"]);
                     }
                     else {
                         UApplication.S.ShowError(r.Code);
@@ -109,7 +112,8 @@ namespace Windows
                 }, (r) => {
                     if (r.Code.IsOk())
                     {
-                        UApplication.S.ShowNotify($"成功脱下了{config.Name}");
+                        UApplication.S
+                        .ShowNotify(LanguageManager.S.Format("UUIHeroEquip_TakeOff_Result", $"{config.Name}"));
                         Right.ActiveSelfObject(false);
                         selected = null;
                     }
@@ -160,7 +164,7 @@ namespace Windows
 
             if (next != null)
             {
-                lb_pro.text = $"成功概率:{next.Pro / 100}%";
+                lb_pro.text = LanguageManager.S.Format("UUIHeroEquip_pro",$"{next.Pro / 100}");
                 gold_icon.ActiveSelfObject(next.CostGold > 0);
                 coin_icon.ActiveSelfObject(next.CostCoin > 0);
                 lb_gold.text = $"{next.CostGold}";
@@ -169,24 +173,7 @@ namespace Windows
             var pro = equip.Properties.SplitToInt();
             var val = equip.PropertyValues.SplitToInt();
 
-            var names = new Dictionary<P, string>() {
-                { P.Agility, "敏捷:{0}" },
-                { P.Crt,"暴击:{0}"},
-                { P.DamageMax,"攻击上限:{0}"},
-                { P.DamageMin,"攻击下限:{0}"},
-                { P.Defance,"防御:{0}"},
-                { P.Force,"力量:{0}"},
-                //{ P.Hit,"命中:{0}"},
-                {P.Jouk,"闪避:{0}" },
-                {P.Knowledge,"智力:{0}" },
-                { P.MagicWaitTime,"攻击速度:{0}"},
-                { P.MaxHp,"HP:{0}"},
-                { P.MaxMp,"MP:{0}"},
-                {P.Resistibility,"魔法闪避:{0}" },
-                {P.SuckingRate,"吸血等级:{0}"}
-            };
-
-            //var level = 
+  
             var properties = new Dictionary<P, ComplexValue>();
             for (var ip = 0; ip < pro.Count; ip++)
             {
@@ -206,11 +193,9 @@ namespace Windows
             int index = 0;
             foreach (var i in properties)
             {
-                if (names.TryGetValue(i.Key, out string format))
-                {
-                    EquipmentPropertyTableManager[index]
-                        .Model.SetLabel(string.Format(format, i.Value.FinalValue));
-                }
+                EquipmentPropertyTableManager[index]
+                    .Model.SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}", i.Value.FinalValue));
+
                 index++;
             }
 
@@ -220,14 +205,21 @@ namespace Windows
         {
             base.OnShow();
             Right.ActiveSelfObject(false);
+            
             var g = UApplication.G<GMainGate>();
             ShowHero(g.hero, g.package);
+
+            take_off.SetKey("UUIHeroEquip_Take_off");
+            bt_level_up.SetKey("UUIHeroEquip_bt_level_up");
+
         }
 
         protected override void OnHide()
         {
             base.OnHide();
         }
+
+
 
         protected override void OnUpdateUIData()
         {
@@ -241,7 +233,7 @@ namespace Windows
 
         private void ShowHero(DHero dHero,PlayerPackage package)
         {
-            this.Level.text = $"等级:{dHero.Level}";
+            this.Level.text = LanguageManager.S.Format("UUIHeroEquip_level", $"{dHero.Level}");
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(dHero.HeroID);
             var properties = new Dictionary<P, ComplexValue>
             {
@@ -305,12 +297,9 @@ namespace Windows
             var appDefance = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_DEFANCE;
             var speedAdd = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED;
             var attackSpeed = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_SUBWAITTIME;
-
             properties[P.MaxHp].SetAppendValue((int)(properties[P.MaxHp].AppendValue + appMaxHp));
             properties[P.MaxMp].SetAppendValue((int)(properties[P.MaxMp].AppendValue + appMaxMp));
             properties[P.Defance].SetAppendValue((int)(properties[P.Defance].AppendValue + appDefance));
-            //int damageMin = properties[P.DamageMin].FinalValue;
-            //int damageMax = properties[P.DamageMax].FinalValue;
             var damage = 0;
             var category = (HeroCategory)data.Category;
             switch (category)
@@ -325,21 +314,21 @@ namespace Windows
                     damage = properties[P.Knowledge].FinalValue;
                     break;
             }
-            var str = "主属性";
+            var str = LanguageManager.S["UUIHeroEquip_Main"];// "主属性";
             var list = new Dictionary<string, string>
             {
-                { "伤害", $"{properties[P.DamageMin].FinalValue+damage}-{properties[P.DamageMax].FinalValue+damage}" },
-                { "力量", $"{properties[P.Force].FinalValue}"+ (category== HeroCategory.HcForce?str:"")},
-                { "敏捷", $"{properties[P.Agility].FinalValue}" + (category== HeroCategory.HcAgility?str:"")},
-                { "智力", $"{properties[P.Knowledge].FinalValue}"+ (category== HeroCategory.HcKnowledge?str:"")},
-                { "血量", $"{properties[P.MaxHp].FinalValue}"},
-                { "魔法", $"{properties[P.MaxMp].FinalValue}"},
-                { "防御", $"{properties[P.Defance].FinalValue}"},
-                { "吸血比例", $"{(properties[P.SuckingRate].FinalValue/100)}%"},
-                { "攻击间隔", $"{Math.Max(BattleAlgorithm.ATTACK_MIN_WAIT/1000f, data.AttackSpeed - attackSpeed/1000f)}秒"},
-                { "移动速度", $"{Math.Min(data.MoveSpeed +speedAdd,BattleAlgorithm.MAX_SPEED)}米/秒"},
-                { "暴击", $"{properties[P.Crt].FinalValue/100}%"},
-                { "经验", $"{dHero.Exprices}/{nextLevel?.NeedExprices??'-'}"}
+                { LanguageManager.S["UUIHeroEquip_damage"], $"{properties[P.DamageMin].FinalValue+damage}-{properties[P.DamageMax].FinalValue+damage}" },
+                { LanguageManager.S["UUIHeroEquip_Force"], $"{properties[P.Force].FinalValue}"+ (category== HeroCategory.HcForce?str:"")},
+                { LanguageManager.S["UUIHeroEquip_Agility"], $"{properties[P.Agility].FinalValue}" + (category== HeroCategory.HcAgility?str:"")},
+                { LanguageManager.S["UUIHeroEquip_Knowledge"], $"{properties[P.Knowledge].FinalValue}"+ (category== HeroCategory.HcKnowledge?str:"")},
+                { LanguageManager.S["UUIHeroEquip_MaxHp"], $"{properties[P.MaxHp].FinalValue}"},
+                { LanguageManager.S["UUIHeroEquip_MaxMp"], $"{properties[P.MaxMp].FinalValue}"},
+                { LanguageManager.S["UUIHeroEquip_Defance"], $"{properties[P.Defance].FinalValue}"},
+                { LanguageManager.S["UUIHeroEquip_SuckingRate"], $"{(properties[P.SuckingRate].FinalValue/100)}%"},
+                { LanguageManager.S["UUIHeroEquip_AttackSpeed"], LanguageManager.S.Format("UUIHeroEquip_AttackSpeed_F", $"{Math.Max(BattleAlgorithm.ATTACK_MIN_WAIT/1000f, data.AttackSpeed - attackSpeed/1000f)}")},
+                { LanguageManager.S["UUIHeroEquip_MoveSpeed"], LanguageManager.S.Format("UUIHeroEquip_MoveSpeed_F", $"{Math.Min(data.MoveSpeed +speedAdd,BattleAlgorithm.MAX_SPEED)}")},
+                { LanguageManager.S["UUIHeroEquip_Crt"], $"{properties[P.Crt].FinalValue/100}%"},
+                { LanguageManager.S["UUIHeroEquip_Exp"], $"{dHero.Exprices}/{nextLevel?.NeedExprices??'-'}"}
             };
 
             PropertyListTableManager.Count = list.Count;
@@ -350,7 +339,6 @@ namespace Windows
                 index++;
             }
 
-            //foreach9var 
         }
     }
 }

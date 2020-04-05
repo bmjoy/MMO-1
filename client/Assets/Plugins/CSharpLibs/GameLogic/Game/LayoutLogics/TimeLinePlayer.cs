@@ -69,13 +69,18 @@ namespace GameLogic.Game.LayoutLogics
 
 	public class TimeLinePlayer : TimeLinePlayerBase
 	{
-		public TimeLinePlayer(TimeLine timeLine, MagicReleaser releaser, EventContainer eventType) : base(timeLine)
+		public TimeLinePlayer(TimeLine timeLine,
+            MagicReleaser releaser,
+            EventContainer eventType,
+            BattleCharacter eventTarget) : base(timeLine)
 		{
 			this.Releaser = releaser;
 			this.TypeEvent = eventType;
+			this.EventTarget = eventTarget;
 		}
 		public EventContainer TypeEvent { private set; get; }
 		public MagicReleaser Releaser { private set; get; }
+        public BattleCharacter EventTarget { set; get; }
 
 		protected override void EnableLayout(LayoutBase layout)
 		{

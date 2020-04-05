@@ -48,10 +48,10 @@ namespace GateServer
 
         public G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req)
         {
-            var task = UserDataManager.S.BuyPackageSize(AccountUuid, req.SizeCurrent);
+            var task = UserDataManager.S.BuyPackageSize(Client, AccountUuid, req.SizeCurrent);
             task.Wait();
-            if (task.Result < 0) return new G2C_BuyPackageSize { Code = ErrorCode.Error };
-            return new G2C_BuyPackageSize { Code = ErrorCode.Ok, OldCount = req.SizeCurrent, PackageCount = task.Result };
+            return task.Result;
+           
         }
 
         public G2C_CreateHero CreateHero(C2G_CreateHero request)
@@ -199,7 +199,8 @@ namespace GateServer
 
         public G2C_MagicLevelUp MagicLevelUp(C2G_MagicLevelUp req)
         {
-            throw new System.NotImplementedException();
+           return UserDataManager.S.MagicLevelUp(Client, req.MagicId, req.Level, AccountUuid)
+                .GetAwaiter().GetResult();
         }
 
         public G2C_OperatorEquip OperatorEquip(C2G_OperatorEquip request)

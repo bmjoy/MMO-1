@@ -29,7 +29,7 @@ namespace Layout.LayoutEffects
 		[Label("配置KEY")]
 		public string buffMagicKey;
 		[Label("持续时间")]
-		public float durationTime;
+		public ValueSourceOf durationTime =1000;
 
 		public override string ToString()
 		{

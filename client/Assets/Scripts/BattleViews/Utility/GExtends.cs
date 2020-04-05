@@ -7,9 +7,9 @@ namespace UGameTools
 {
     public static class GExtends
 	{
-        public static void SetLayer(this UnityEngine.GameObject u, string layer)
+        public static void SetLayer(this GameObject u, string layer)
         {
-            u.layer = UnityEngine.LayerMask.NameToLayer(layer);
+            u.transform.SetLayer(LayerMask.NameToLayer(layer));
         }
 
         public static UIMouseClick OnMouseClick(this Component mo,Action<object> callBack, object state = null)
@@ -32,6 +32,12 @@ namespace UGameTools
             trans.localPosition = Vector3.zero;
             trans.localScale = Vector3.one;
             trans.localRotation = Quaternion.identity;
+        }
+
+        public static void SetLayer(this Transform trans ,int layer)
+        {
+            trans.gameObject.layer = layer;
+            foreach (var i in trans.GetComponentsInChildren<Transform>()) i.gameObject.layer = layer;
         }
 
 
@@ -68,7 +74,19 @@ namespace UGameTools
             if (t == null) return;
             t.text = text;
         }
-            
+
+        public static void SetKey(this Button bt, string key, params object[] pars)
+        {
+            var t = bt.transform.FindChild<Text>("Text");
+            if (t == null) return;
+            t.SetKey(key, pars);
+        }
+
+        public static void SetKey(this Text t, string key, params object[] pars)
+        {
+            t.text = LanguageManager.S.Format(key, pars);
+        }
+
         public static Vector3 ToGVer3(this Proto.Vector3 v3)
         {
             return new Vector3(v3.X, v3.Y, v3.Z);

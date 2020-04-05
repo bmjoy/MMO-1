@@ -3,6 +3,7 @@ using ExcelConfig;
 using static Proto.C2G_SaleItem.Types;
 using EConfig;
 using Proto.GateServerService;
+using UGameTools;
 
 namespace Windows
 {
@@ -34,14 +35,14 @@ namespace Windows
                     .SendRequest(gate.Client, re,
                     r =>
                     {
-                        //UApplication.S.ShowError(r.Code);
                         if (r.Code.IsOk())
                         {
                             HideWindow();
-                            UApplication.S.ShowNotify("出售成功");
+                            UApplication.S.ShowNotify(LanguageManager.S["UUISaleItem_Sale_Success"]);
                         }
                         else
                             UApplication.S.ShowError(r.Code);
+
                     },UUIManager.S);
                 });
             //Write Code here
@@ -55,6 +56,8 @@ namespace Windows
             s_salenum.minValue = 0;
             s_salenum.maxValue = Item.Num;
             s_salenum.value = saleNum = Item.Num;
+            bt_OK.SetKey("UI_SALE_ITEM_BT_OK");
+            t_title.SetKey("UI_SALE_ITEM_TITLE");
             ShowSale();
         }
 

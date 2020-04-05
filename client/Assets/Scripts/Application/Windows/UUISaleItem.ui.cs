@@ -13,12 +13,13 @@ namespace Windows
     {
 
 
-        protected Button bt_close;
-        protected Text t_name;
+        protected Text t_title;
         protected Text t_pricetotal;
         protected Text t_num;
+        protected Text t_name;
         protected Slider s_salenum;
         protected Button bt_OK;
+        protected Button bt_close;
 
 
 
@@ -26,12 +27,13 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
-            bt_close = FindChild<Button>("bt_close");
-            t_name = FindChild<Text>("t_name");
+            t_title = FindChild<Text>("t_title");
             t_pricetotal = FindChild<Text>("t_pricetotal");
             t_num = FindChild<Text>("t_num");
+            t_name = FindChild<Text>("t_name");
             s_salenum = FindChild<Slider>("s_salenum");
             bt_OK = FindChild<Button>("bt_OK");
+            bt_close = FindChild<Button>("bt_close");
 
 
         }

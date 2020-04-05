@@ -5,6 +5,7 @@ using ExcelConfig;
 using Proto;
 using XNet.Libs.Utility;
 using System.Collections;
+using EConfig;
 
 /// <summary>
 /// 处理 App
@@ -78,15 +79,18 @@ public class UApplication : XSingleton<UApplication>
 
     #region mono behavior
 
-    public void Awake()
+    protected override void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        base.Awake();
         _ = new ExcelToJSONConfigManager(ResourcesManager.S);
         GetServer();
-
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartCoroutine(RunReader());
+
+        Constant = ExcelToJSONConfigManager.Current.GetConfigByID<ConstantValue>(1);
     }
+
+    public ConstantValue Constant { get;private set; }
 
     void Start() => GotoLoginGate();
   

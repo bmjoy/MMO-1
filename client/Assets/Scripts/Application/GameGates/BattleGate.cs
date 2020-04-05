@@ -15,6 +15,7 @@ using GameLogic.Game.Elements;
 using Vector3 = UnityEngine.Vector3;
 using Windows;
 using UnityEngine.AddressableAssets;
+using UGameTools;
 
 public class BattleGate : UGate, IServerMessageHandler
 {
@@ -72,7 +73,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
     private IEnumerator Init()
     {
- 
+        LookAtView = new RenderTexture(128, 128, 32);
         yield return Addressables.LoadSceneAsync($"Assets/Levels/{MapConfig.LevelName}.unity");
         yield return new WaitForEndOfFrame();
         PreView = UPerceptionView.Create();
@@ -118,6 +119,7 @@ public class BattleGate : UGate, IServerMessageHandler
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;
+                Owner.transform.SetLayer( LayerMask.NameToLayer("Player"));
                 Owner.ShowName = true;
                 PreView.OwerTeamIndex = character.TeamId;
                 PreView.OwnerIndex = character.Index;
@@ -129,6 +131,16 @@ public class BattleGate : UGate, IServerMessageHandler
                 UUIManager.S.ShowMask(false);
                 character.OnItemTrigger = TriggerItem;
 
+               
+                var go = new GameObject("Look", typeof(Camera));
+                go.transform.SetParent(character.GetBoneByName(UCharacterView.RootBone),false);
+                go.transform.RestRTS();
+                var c = go.GetComponent<Camera>();
+                c.targetTexture = LookAtView;
+                c.cullingMask = LayerMask.GetMask("Player");
+                go.transform.localPosition = new Vector3(0,1.1f,1.5f);
+                c.farClipPlane = 5;
+                go.TryAdd<LookAtTarget>().target = character.GetBoneByName(UCharacterView.BodyBone);
             }
         };
         
@@ -176,6 +188,8 @@ public class BattleGate : UGate, IServerMessageHandler
         
     }
 
+
+    public RenderTexture LookAtView {private set; get; }
 
 
     private void TriggerItem(UBattleItem item)

@@ -19,6 +19,7 @@ public class GMainGate:UGate
 {
     public void Init(GameServerInfo gateServer)
     {
+        LookAtView = new RenderTexture(128, 128, 32);
         ServerInfo = gateServer;
     }
 
@@ -70,8 +71,22 @@ public class GMainGate:UGate
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName(UCharacterView.BottomBone));
         characterView.ShowName = false;
+
+        characterView.transform.SetLayer(LayerMask.NameToLayer("Player"));
+
+        var go = new GameObject("Look", typeof(Camera));
+        go.transform.SetParent(characterView.GetBoneByName(UCharacterView.RootBone), false);
+        go.transform.RestRTS();
+        var c = go.GetComponent<Camera>();
+        c.targetTexture = LookAtView;
+        c.cullingMask = LayerMask.GetMask("Player");
+        go.transform.localPosition = new Vector3(0, 1.1f, 1.5f);
+        c.farClipPlane = 5;
+        go.TryAdd<LookAtTarget>().target = characterView.GetBoneByName(UCharacterView.BodyBone);
         return characterView;
     }
+    public RenderTexture LookAtView { private set; get; }
+
 
     internal void RotationHero(float x)
     {

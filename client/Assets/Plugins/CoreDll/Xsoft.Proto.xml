@@ -282,12 +282,6 @@
              <summary>
              </summary>
             </member>
-        <member name="F:Proto.Notify_CharacterSetForword.IndexFieldNumber">
-             <summary>Field number for the "Index" field.</summary>
-            </member>
-        <member name="F:Proto.Notify_CharacterSetForword.ForwardFieldNumber">
-             <summary>Field number for the "Forward" field.</summary>
-            </member>
         <member name="F:Proto.Notify_CharacterSpeed.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
@@ -562,7 +556,7 @@
             </member>
         <member name="F:Proto.ErrorCode.Error">
              <summary>
-            VersionError=9999;//协议版本异常
+            通用错误
              </summary>
             </member>
         <member name="F:Proto.ErrorCode.Ok">
@@ -673,6 +667,11 @@
         <member name="F:Proto.ErrorCode.NoEnoughtCoin">
              <summary>
             钻石不足
+             </summary>
+            </member>
+        <member name="F:Proto.ErrorCode.PackageSizeLimit">
+             <summary>
+            背包上限
              </summary>
             </member>
         <member name="T:Proto.Void">
@@ -1615,6 +1614,11 @@
         <member name="P:EConfig.MagicLevelUpData.Level">
              <summary>
              等级
+             </summary>
+            </member>
+        <member name="P:EConfig.MagicLevelUpData.Description">
+             <summary>
+             描述
              </summary>
             </member>
         <member name="P:EConfig.MagicLevelUpData.Param">
@@ -3175,11 +3179,6 @@
         <member name="T:Proto.NotifyService.PropertyValue">
              <summary>
              17
-             </summary>    
-            </member>
-        <member name="T:Proto.NotifyService.CharacterSetForword">
-             <summary>
-             19
              </summary>    
             </member>
         <member name="T:Proto.NotifyService.CharacterMoveTo">

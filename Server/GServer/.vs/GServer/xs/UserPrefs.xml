@@ -1,23 +1,25 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="LoginServer/RPCResponsers/LoginGateServerService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="183" Column="13" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="203" Column="28" />
+      <File FileName="GServer/Managers/UserDataManager.cs" Line="263" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="GServer" expanded="True">
-            <Node name="LoginServer" expanded="True">
-              <Node name="RPCResponsers" expanded="True">
-                <Node name="LoginGateServerService.cs" selected="True" />
+            <Node name="GateServer" expanded="True">
+              <Node name="Managers" expanded="True" />
+              <Node name="RPCResponser" expanded="True">
+                <Node name="GateServerService.cs" selected="True" />
               </Node>
+              <Node name="RPCTaskHandlers" expanded="True" />
+            </Node>
+            <Node name="LoginServer" expanded="True">
+              <Node name="RPCResponsers" expanded="True" />
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="GServer" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>

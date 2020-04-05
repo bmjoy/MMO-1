@@ -145,21 +145,7 @@ namespace GameLogic.Game.LayoutLogics
 			var releaser = linePlayer.Releaser;
 			var charachter = releaser.ReleaserTarget.Releaser;
 			var per = releaser.Controllor.Perception as BattlePerception;
-			int level = unitLayout.level;
-
-			switch (unitLayout.valueFrom)
-			{
-				case Proto.GetValueFrom.CurrentConfig:
-					break;
-				case Proto.GetValueFrom.MagicLevelParam1:
-					{
-						var param1 = releaser[0];
-						if (string.IsNullOrEmpty(param1)) return;
-						level = Convert.ToInt32(param1);
-					}
-					break;
-			}
-
+			int level = unitLayout.level.ProcessValue(linePlayer.Releaser);
 			//判断是否达到上限
 			if (unitLayout.maxNum <= releaser.UnitCount) return;
 			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;

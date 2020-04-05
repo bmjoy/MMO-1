@@ -72,6 +72,7 @@ namespace GameLogic.Game.Elements
         public BattleCharacter Owner { set; private get; }
 
         public float Durtime { set; get; }
+
         public void SetParam(params string[] parms)
         {
             Params = parms;
@@ -104,8 +105,9 @@ namespace GameLogic.Game.Elements
             State = state;
         }
 
-        public void OnEvent(EventType eventType)
+        public void OnEvent(EventType eventType, BattleCharacter target = null)
         {
+            target = target??ReleaserTarget.ReleaserTarget;
             var per = this.Controllor.Perception as BattlePerception;
             LastEvent = eventType;
 
@@ -116,7 +118,7 @@ namespace GameLogic.Game.Elements
                 {
                     var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
-                    var player = new TimeLinePlayer(timeLine, this, i);
+                    var player = new TimeLinePlayer(timeLine, this, i, target);
                     _players.AddLast(player);
 
                     if (i.line == null)
@@ -131,15 +133,9 @@ namespace GameLogic.Game.Elements
                             throw new Exception("Start layout must only one!");
                         }
                         startLayout = player;
-
-                        //var actionLock = ActionLockType.NoMove | ActionLockType.NoSkill| ActionLockType.NoAttack;
-                        //this.ReleaserTarget.Releaser.LockAction(actionLock);
-                        //startLock = RevertLock(this.ReleaserTarget.Releaser, actionLock);
                     }
                 }
-            }
-
-           
+            } 
         }
 
         private TimeLinePlayer startLayout;
@@ -366,15 +362,6 @@ namespace GameLogic.Game.Elements
             return rLock;
         }
 
-        private void CancelLock(RevertActionLock rLock)
-        {
-            if (actionReverts.Contains(rLock))
-            {
-                actionReverts.Remove(rLock);
-                rLock.target.UnLockAction(rLock.type);
-            }
-        }
-
         protected override void OnJoinState()
         {
             base.OnJoinState();
@@ -419,6 +406,15 @@ namespace GameLogic.Game.Elements
         {
             if (State == ReleaserStates.Completing || State == ReleaserStates.Ended || State == ReleaserStates.ToComplete) return;
             State = ReleaserStates.ToComplete;
+        }
+
+        internal int TryGetParams(GetValueFrom vF)
+        {
+            int index =(int) vF - 1;
+            if (this.Params.Length <= index) return 0;
+            if (index < 0) return 0;
+            if (int.TryParse(this.Params[index], out int v)) return v;
+            return 0;
         }
     }
 }

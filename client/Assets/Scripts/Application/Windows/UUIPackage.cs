@@ -8,6 +8,7 @@ using Proto;
 using ExcelConfig;
 using UnityEngine;
 using EConfig;
+using Proto.GateServerService;
 
 namespace Windows
 {
@@ -54,10 +55,35 @@ namespace Windows
                 {
                     HideWindow();
                 });
+
+            Bt_Buy.onClick.AddListener(() =>
+            {
+                UUIPopup.ShowConfirm(LanguageManager.S["UI_PACKAGE_BUY_SIZE_TITLE"],
+                    LanguageManager.S.Format("UI_PACKAGE_BUY_SIZE",UApplication.S.Constant.PACKAGE_BUY_COST,UApplication.S.Constant.PACKAGE_BUY_SIZE),
+                    () =>
+                    {
+                        var gate = UApplication.G<GMainGate>();
+                        BuyPackageSize.CreateQuery()
+                        .SendRequest(gate.Client,
+                        new C2G_BuyPackageSize { SizeCurrent = gate.package.MaxSize }, (res) =>
+                        {
+                            if (res.Code.IsOk())
+                            {
+                                gate.package.MaxSize = res.PackageCount;
+                                OnUpdateUIData();
+                            }
+                            else
+                                UApplication.S.ShowError(res.Code);
+                        }, UUIManager.S);
+                    });
+            });
         }
         protected override void OnShow()
         {
             base.OnShow();
+            lb_title.text = LanguageManager.S["UI_PACKAGE_UI_TITLE"];
+            Bt_Buy.SetText(LanguageManager.S["UI_PACKAGE_UI_BUY_BT"]);
+            TextSizeTitle.text = LanguageManager.S["UI_PACKAGE_UI_SIZE_TITLE"];
             OnUpdateUIData();
 
         }
@@ -71,6 +97,8 @@ namespace Windows
             base.OnUpdateUIData();
             var gate = UApplication.G<GMainGate>();
 
+            lb_TextCountCur.text = $"{ gate.package.Items.Count}";
+            lb_TextCountSize.text = $"/{gate.package.MaxSize}";
             ContentTableManager.Count = gate.package.Items.Count;
             var hero = gate.hero;
             int index = 0;
@@ -81,7 +109,6 @@ namespace Windows
                 i.Model.OnClickItem = ClickItem;
                 index++;
             }
-            //t_size.text = string.Format("{0}/{1}", gate.package.Items.Count, gate.package.MaxSize);
         }
 
         private bool IsWear(string guuid, DHero hero)

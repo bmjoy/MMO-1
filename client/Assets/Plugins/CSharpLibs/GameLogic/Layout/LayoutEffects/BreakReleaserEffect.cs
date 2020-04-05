@@ -14,12 +14,8 @@ namespace Layout.LayoutEffects
     [EffectId(5)]
     public class BreakReleaserEffect :EffectBase
     {
-        public BreakReleaserEffect()
-        {
-            breakType = BreakReleaserType.InStartLayoutMagic;
-        }
         [Label("打断类型")]
-        public BreakReleaserType breakType;
+        public BreakReleaserType breakType = BreakReleaserType.InStartLayoutMagic;
     }
 }
 

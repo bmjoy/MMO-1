@@ -61,7 +61,7 @@ namespace Windows
                 {
                     if (r.Code.IsOk())
                     {
-                        UApplication.S.ShowNotify($"成功装备{equip.Name}");
+                        UApplication.S.ShowNotify(LanguageManager.S.Format("UUIDETAIL_WEAR_SUCESS", $"{equip.Name}"));
                         HideWindow();
                     }
                     else {
@@ -82,11 +82,14 @@ namespace Windows
         {
             base.OnShow();
 
+            bt_equip.SetKey("UUIDetail_WEAR");
+            bt_sale.SetKey("UUIDetail_SELL");
+
             config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.ItemID);
             t_num.text = $"{ item.Num}";
             t_descript.text = config.Description;
             t_name.text = config.Name;
-            t_prices.text = $"售价:{ config.SalePrice}";
+            t_prices.SetKey("UUIDetail_PRICES", $"{ config.SalePrice}") ;
             ResourcesManager.S.LoadIcon(config,s=> icon.sprite = s);
 
             ItemLevel.ActiveSelfObject(item.Level > 0);
@@ -94,18 +97,28 @@ namespace Windows
             ItemCount.ActiveSelfObject(item.Num > 1);
             Locked.ActiveSelfObject(item.Locked);
             
-            var g = UApplication.G<GMainGate>();
-            var wear = false;
-            foreach (var i in g.hero.Equips)
-                if (i.GUID == item.GUID) {
-                    wear = true;
-                    break;
-                }
-            WearOn.ActiveSelfObject(wear);
+           
 
-            bt_equip.ActiveSelfObject(!wear && (ItemType)config.ItemType == ItemType.ItEquip);
-            bt_sale.ActiveSelfObject(!wear);
-
+            if (nobt)
+            {
+                bt_equip.ActiveSelfObject(false);
+                bt_sale.ActiveSelfObject(false);
+                WearOn.ActiveSelfObject(false);
+            }
+            else
+            {
+                var g = UApplication.G<GMainGate>();
+                var wear = false;
+                foreach (var i in g.hero.Equips)
+                    if (i.GUID == item.GUID)
+                    {
+                        wear = true;
+                        break;
+                    }
+                WearOn.ActiveSelfObject(wear);
+                bt_equip.ActiveSelfObject(!wear && (ItemType)config.ItemType == ItemType.ItEquip);
+                bt_sale.ActiveSelfObject(!wear);
+            }
 
             if ((ItemType)config.ItemType == ItemType.ItEquip)
             {
@@ -124,25 +137,7 @@ namespace Windows
                         .FirstConfig<EquipmentLevelUpData>(t => t.Level == lvl && t.Quality == config.Quality);
             var pro = equip.Properties.SplitToInt();
             var val = equip.PropertyValues.SplitToInt();
-
-            var names = new Dictionary<P, string>() {
-                { P.Agility, "敏捷:{0}" },
-                { P.Crt,"暴击:{0}"},
-                { P.DamageMax,"攻击上限:{0}"},
-                { P.DamageMin,"攻击下限:{0}"},
-                { P.Defance,"防御:{0}"},
-                { P.Force,"力量:{0}"},
-                //{ P.Hit,"命中:{0}"},
-                {P.Jouk,"闪避:{0}" },
-                {P.Knowledge,"智力:{0}" },
-                { P.MagicWaitTime,"攻击速度:{0}"},
-                { P.MaxHp,"HP:{0}"},
-                { P.MaxMp,"MP:{0}"},
-                {P.Resistibility,"魔法闪避:{0}" },
-                {P.SuckingRate,"吸血等级:{0}"}
-            };
-
-            //var level = 
+           
             var properties = new Dictionary<P, ComplexValue>();
             for (var ip = 0; ip < pro.Count; ip++)
             {
@@ -162,16 +157,15 @@ namespace Windows
             int index = 0;
             foreach (var i in properties)
             {
-                if (names.TryGetValue(i.Key, out string format))
-                {
-                    EquipmentPropertyTableManager[index]
-                        .Model.SetLabel(string.Format(format, i.Value.FinalValue));
-                }
+                EquipmentPropertyTableManager[index]
+                    .Model
+                    .SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}", i.Value.FinalValue));
                 index++;
             }
         }
 
         private ItemData config;
+        private bool nobt = false;
 
         protected override void OnHide()
         {
@@ -180,8 +174,9 @@ namespace Windows
 
         private PlayerItem item;
 
-        public void Show(PlayerItem item)
+        public void Show(PlayerItem item,bool nobt =false)
         {
+            this.nobt = nobt;
             this.item = item;
             this.ShowWindow();
         }

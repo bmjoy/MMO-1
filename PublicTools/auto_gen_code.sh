@@ -32,7 +32,7 @@ fi
 
 
 cp -af ../src/output/  ../../client/Assets/Plugins/CoreDll/
-cp -af ../src/json/  ../../client/Assets/StreamingAssets/Json/
+cp -af ../src/json/  ../../client/Assets/Resources/Json/
 cp -af ../src/json/  ../../Server/Configs/
 
 if [ "$?" -ne "0" ]; then

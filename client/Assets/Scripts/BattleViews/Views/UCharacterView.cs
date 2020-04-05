@@ -150,6 +150,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     public const string TopBone = "Top";
     public const string BodyBone = "Body";
     public const string BottomBone = "Bottom";
+    public const string RootBone = "ROOT";
     public const string Die_Motion = "Die";
     private Animator CharacterAnimator;
     private int nameBar=-1;
@@ -324,6 +325,25 @@ public class UCharacterView : UElementView, IBattleCharacter
     private GameObject range;
     private float hideTime = 0f;
 
+    public void SetCharacter(GameObject root, string path)
+    {
+        ViewRoot = root;
+        bones.Add(RootBone, ViewRoot.transform);
+        var gameTop = new GameObject("__Top");
+        gameTop.transform.SetParent(this.transform);
+        bones.Add(TopBone, gameTop.transform);
+
+        var bottom = new GameObject("__Bottom");
+        bottom.transform.SetParent(this.transform, false);
+        bones.Add(BottomBone, bottom.transform);
+        var body = new GameObject("__Body");
+        body.transform.SetParent(this.transform, false);
+        bones.Add(BodyBone, body.transform);
+
+        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
+        StartCoroutine(Init(path));
+    }
+
     private IEnumerator Init(string path)
     {
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(path,(obj)=>
@@ -333,21 +353,11 @@ public class UCharacterView : UElementView, IBattleCharacter
             character.transform.RestRTS();
             character.name = "VIEW";
             var collider = character.GetComponent<CapsuleCollider>();
-
-            var gameTop = new GameObject("__Top");
-            gameTop.transform.SetParent(this.transform);
-            gameTop.transform.localPosition = new Vector3(0, collider.height, 0);
-            bones.Add(TopBone, gameTop.transform);
-
-            var bottom = new GameObject("__Bottom");
-            bottom.transform.SetParent(this.transform, false);
-            bottom.transform.localPosition = new Vector3(0, 0, 0);
-            bones.Add(BottomBone, bottom.transform);
-
-            var body = new GameObject("__Body");
-            body.transform.SetParent(this.transform, false);
-            body.transform.localPosition = new Vector3(0, collider.height / 2, 0);
-            bones.Add(BodyBone, body.transform);
+            character.transform.SetLayer(this.ViewRoot.layer);
+           
+            GetBoneByName(TopBone).localPosition = new Vector3(0, collider.height, 0);
+            GetBoneByName(BottomBone).localPosition = new Vector3(0, 0, 0);
+            GetBoneByName(BodyBone). localPosition = new Vector3(0, collider.height / 2, 0);
             Agent.radius = collider.radius;
             Agent.height = collider.height;
             var c = this.gameObject.AddComponent<CapsuleCollider>();
@@ -357,6 +367,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             c.direction = collider.direction;
             c.isTrigger = true;
 
+           
 #if UNITY_SERVER
             Destroy(character);
 #else
@@ -367,12 +378,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         });
     }
 
-    public void SetCharacter(GameObject root, string path)
-    {
-        ViewRoot = root;
-        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
-        StartCoroutine(Init(path));
-    }
 
     public int OwnerIndex { get; internal set; }
 
@@ -392,12 +397,12 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
-    public int MpMax { get { return mpMax; } }
+    public int MpMax { get; private set; }
 
     public int HP { get { return curHp; } }
     public int HpMax { get { return maxHp; } }
 
-    public bool IsFullMp { get { return MP == mpMax; } }
+    public bool IsFullMp { get { return MP == MpMax; } }
     public bool IsFullHp { get { return curHp == maxHp; } }
 
     public bool TryGetMagicData(int magicID, out HeroMagicData data)
@@ -613,12 +618,10 @@ public class UCharacterView : UElementView, IBattleCharacter
 #endif
     }
 
-    private int mpMax;
-
     void IBattleCharacter.ShowMPChange(int mp, int cur, int maxMP)
     {
         if (!this) return;
-        mpMax = maxMP;
+        MpMax = maxMP;
         MP = cur;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_MPChange { Cur = cur, Index = Index, Max = maxMP, Mp = mp });
@@ -671,7 +674,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             Hp = curHp,
             MaxHp = maxHp,
             Mp = MP,
-            MpMax = mpMax,
+            MpMax = MpMax,
             OwnerIndex = OwnerIndex
         };
 
@@ -776,7 +779,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetHpMp(int hp, int hpMax, int mp, int mpMax)
     {
         curHp = hp; maxHp = hpMax;
-        MP = mp; this.mpMax = mpMax;
+        MP = mp; this.MpMax = mpMax;
     }
 
     bool IBattleCharacter.IsMoving

@@ -41,11 +41,11 @@ public abstract class UUIElement
 
 public class UUIManager:XSingleton<UUIManager>,IEventMasker
 {
-	public void Awake()
-	{
-		DontDestroyOnLoad (this.gameObject);
-        eventMask .SetActive(false);
-	}
+    protected override void Awake()
+    {
+        base.Awake();
+        eventMask.SetActive(false);
+    }
 
 	private readonly Dictionary<string,UUIWindow> _window=new Dictionary<string, UUIWindow> ();
     private readonly Dictionary<int,UUITip> _tips= new Dictionary<int, UUITip> ();

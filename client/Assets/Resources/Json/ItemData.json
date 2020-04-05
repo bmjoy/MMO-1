@@ -51,12 +51,12 @@
 "1011",
 ""]
 },
-	{"ID":2001,"Name":"\u5B66\u8005\u4E4B\u51A0","SalePrice":200,"ItemType":3,"Quality":2,"ResModel":"Chests/Chest01A-Black","Icon":"armors/Helm_03","Unique":0,"MaxStackNum":1,"Description":"\u9B54\u6CD5\u5E08\u7684\u5E3D\u5B50\u3002","Params":[
-"2001",
-""]
-},
 	{"ID":1012,"Name":"\u5F71\u5B50\u62AB\u98CE","SalePrice":100,"ItemType":3,"Quality":1,"ResModel":"Chests/Chest01A-Black","Icon":"armors/Chest_09","Unique":0,"MaxStackNum":1,"Description":"\u603B\u4EE5\u4E3A\u662F\u4E00\u4E2A\u5F71\u5B50\u3002","Params":[
 "1012",
+""]
+},
+	{"ID":2001,"Name":"\u5B66\u8005\u4E4B\u51A0","SalePrice":200,"ItemType":3,"Quality":2,"ResModel":"Chests/Chest01A-Black","Icon":"armors/Helm_03","Unique":0,"MaxStackNum":1,"Description":"\u9B54\u6CD5\u5E08\u7684\u5E3D\u5B50\u3002","Params":[
+"2001",
 ""]
 },
 	{"ID":2002,"Name":"\u5BD2\u94C1\u5934\u76D4","SalePrice":200,"ItemType":3,"Quality":2,"ResModel":"Chests/Chest01A-Blue","Icon":"armors/Helm_05","Unique":0,"MaxStackNum":1,"Description":"\u6563\u53D1\u5BD2\u610F\u5934\u76D4\u3002","Params":[

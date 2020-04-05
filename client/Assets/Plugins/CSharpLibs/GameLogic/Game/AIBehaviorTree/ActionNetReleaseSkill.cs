@@ -32,28 +32,19 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            var magic = root.Character.GetMagicById(message.MagicId);
-
-            if (magic == null)
+            if (!root.Character.TryGetActiveMagicById(message.MagicId, root.Time, out BattleCharacterMagic magic))
             {
                 if (context.IsDebug)
                 {
-                    Attach("failure", $"nofound magic {message.MagicId}");
+                    Attach("failure", $"get skill faiure is cd");
                 }
                 yield return RunStatus.Failure;
                 yield break;
             }
 
-            if (!root.Character.IsCoolDown(magic.ID, root.Time, false))
-            {
-                if (context.IsDebug)  Attach("failure", $"{message.MagicId} cd not completed");
-                
-                yield return RunStatus.Failure;
-                yield break;
-            }
 
-            var type = magic.GetTeamType();
-            var dis = magic.RangeMax;
+            var type = magic.Config.GetTeamType();
+            var dis = magic.Config.RangeMax;
 
             root.GetDistanceByValueType(DistanceValueOf.ViewDistance, dis, out dis);
 
@@ -64,7 +55,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-            if (BattlePerception.Distance(target, root.Character) > magic.RangeMax)
+            if (BattlePerception.Distance(target, root.Character) > magic.Config.RangeMax)
             {
                 while (true)
                 {
@@ -74,7 +65,7 @@ namespace GameLogic.Game.AIBehaviorTree
                         yield break;
                     }
                     var last = root.Time;
-                    if (!root.Character.MoveTo(target.Position, out _, magic.RangeMax))
+                    if (!root.Character.MoveTo(target.Position, out _, magic.Config.RangeMax))
                     {
                         if (context.IsDebug) Attach("failure", $"can move");
                         yield return RunStatus.Failure;
@@ -93,16 +84,18 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
 
-            if (!root.Character.SubMP(magic.MPCost))
+            if (!root.Character.SubMP(magic.Config.MPCost))
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
             var rt = new ReleaseAtTarget(root.Character, target);
-            releaser = root.Perception.CreateReleaser(magic.MagicKey, root.Character,rt, ReleaserType.Magic, 0);
+            releaser = root.Perception.CreateReleaser(magic.Config.MagicKey, root.Character,rt, ReleaserType.Magic, 0);
+          
             if (releaser)
             {
-                root.Character.AttachMagicHistory(magic.ID, root.Time);
+                releaser.SetParam(magic.Params);
+                root.Character.AttachMagicHistory(magic.ConfigId, root.Time);
                 while (!releaser.IsLayoutStartFinish)  yield return RunStatus.Running;
                 yield return RunStatus.Success;
                 yield break;

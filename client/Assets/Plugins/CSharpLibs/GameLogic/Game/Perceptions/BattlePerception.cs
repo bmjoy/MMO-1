@@ -74,6 +74,7 @@ namespace GameLogic.Game.Perceptions
         public EmptyControllor Empty { private set; get; }
         #endregion
 
+
         #region create Elements 
         public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, float durtime)
         {
@@ -103,14 +104,11 @@ namespace GameLogic.Game.Perceptions
                         }
                     }
                     return false;
-                }
-                );
+                });
                 if (have) return null;
             }
-            var view = View.CreateReleaserView(target.Releaser.Index,
-                                               target.ReleaserTarget.Index,
-                                               key,
-                                               target.TargetPosition.ToPV3());
+
+            var view = View.CreateReleaserView(target.Releaser.Index,target.ReleaserTarget.Index, key,target.TargetPosition.ToPV3());
             var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
             if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Skill, mReleaser);
             this.JoinElement(mReleaser);
@@ -131,38 +129,47 @@ namespace GameLogic.Game.Perceptions
 
         #region Character
 
-        public IList<BattleCharacterMagic> CreateHeroMagic(int characterID)
+        public IList<BattleCharacterMagic> CreateHeroMagic(int characterID, DHero hero =null)
         {
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(characterID);
             var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
-            
             var magics = ExcelToJSONConfigManager.Current.GetConfigs<CharacterMagicData>(t =>
             {
                 return t.CharacterID == data.ID && (MagicReleaseType)t.ReleaseType == MagicReleaseType.MrtMagic;
             });
-
             var list = new List<BattleCharacterMagic>();
             foreach (var i in magics)
             {
-                list.Add(new BattleCharacterMagic( MagicType.MtMagic, i)); 
+                list.Add(new BattleCharacterMagic( MagicType.MtMagic, i, GetMagicLevel(hero,i.ID))); 
             }
-
             if (cData != null)
             {
                 if (cData.NormalAttack > 0)
                 {
                     var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttack);
-                    list.Add(new BattleCharacterMagic(MagicType.MtNormal, config));
+                    list.Add(new BattleCharacterMagic(MagicType.MtNormal, config, GetMagicLevel(hero, cData.NormalAttack)));
                 }
 
                 if (cData.NormalAttackAppend > 0)
                 {
                     var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttackAppend);
-                    list.Add(new BattleCharacterMagic(MagicType.MtNormalAppend, config));
+                    list.Add(new BattleCharacterMagic(MagicType.MtNormalAppend, config, GetMagicLevel(hero, cData.NormalAttackAppend)));
                 }
             }
-
             return list;
+        }
+
+        private MagicLevelUpData GetMagicLevel(DHero hero, int magicID)
+        {
+            if (hero == null) return null;
+            foreach (var i in hero.Magics)
+            {
+                if (i.MagicKey == magicID)
+                {
+                    return ExcelToJSONConfigManager.Current.FirstConfig<MagicLevelUpData>(t => t.MagicID == magicID && t.Level == i.Level);
+                }
+            }
+            return null;
         }
 
         

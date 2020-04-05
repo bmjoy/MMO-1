@@ -815,6 +815,12 @@ namespace EConfig
         public int Level { set; get; }
         
         /// <summary>
+        /// 描述
+        /// </summary>
+        [ExcelConfigColIndex(10)]
+        public String Description { set; get; }
+        
+        /// <summary>
         /// 参数1
         /// </summary>
         [ExcelConfigColIndex(0)]
