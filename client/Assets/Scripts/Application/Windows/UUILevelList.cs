@@ -33,6 +33,7 @@ namespace Windows
                 this.Template.Name.text = $"{level.Name} Lvl:{level.LimitLevel}";
                 this.Template.Desc.text = $"{level.Description}";
                  ResourcesManager.S.LoadIcon(level,s=> this.Template.missionImage.sprite =s);
+                this.Template.ButtonGreen.SetKey("UUILevelList_Enter");
             }
         }
 
@@ -47,6 +48,8 @@ namespace Windows
         protected override void OnShow()
         {
             base.OnShow();
+            lb_title.SetKey("UUILevelList_Title");
+
             var levels = ExcelConfig.ExcelToJSONConfigManager.Current.GetConfigs<BattleLevelData>();
             ContentTableManager.Count = levels.Length;
             int index = 0;

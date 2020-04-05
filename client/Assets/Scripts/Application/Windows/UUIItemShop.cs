@@ -113,11 +113,9 @@ namespace Windows
                 i.Model.OnSelected = Selected;
                 index++;
             }
-            //todo 
+            
             if (Shops.Count > 0) ShopTabTableManager[0].Template.ToggleSelected.isOn = true;
         }
-
-        //private int last = -1;
 
         private void Selected(ShopTabTableModel obj)
         {

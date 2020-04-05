@@ -831,7 +831,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     }
     void IBattleCharacter.SetLevel(int level)
     {
-        if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterLevel
         {
@@ -842,5 +841,15 @@ public class UCharacterView : UElementView, IBattleCharacter
         this.Level = level;
     }
 
-
+    void IBattleCharacter.SetTeamIndex(int tIndex)
+    {
+        TeamId = tIndex;
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CharacterTeamIndex
+        {
+            Index = Index,
+            TeamIndex = tIndex
+        });
+#endif
+    }
 }

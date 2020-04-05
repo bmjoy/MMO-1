@@ -13,7 +13,12 @@ namespace Windows
 {
     partial class UUISelectEquip
     {
+        public class PlayerEquipItem
+        {
+            public PlayerItem Item;
+            public EquipmentData data;
 
+        }
 
         public class ContentTableModel : TableItemModel<ContentTableTemplate>
         {
@@ -33,6 +38,7 @@ namespace Windows
 
             internal void SetItem(PlayerItem playerItem)
             {
+                Template.bt_equip.SetKey("UUISelectEquip_Wear");
                 this.IItem = playerItem;
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(playerItem.ItemID);
                 Equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
@@ -67,7 +73,7 @@ namespace Windows
 
         private void ShowEquipList()
         {
-            var equip = new List<PlayerItem>();
+            var equip = new List<PlayerEquipItem>();
             var g = UApplication.G<GMainGate>();
             foreach (var i in g.package.Items)
             {
@@ -85,15 +91,17 @@ namespace Windows
                 var ec = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                 if ((EquipmentType)ec.PartType != part) continue;
 
-                equip.Add(i.Value);
+                equip.Add( new PlayerEquipItem { data = ec, Item = i.Value });
 
             }
+
+            equip = equip.OrderByDescending(t => t.data.Quality).ToList();
 
             this.ContentTableManager.Count = equip.Count;
             int index = 0;
             foreach (var i in ContentTableManager)
             {
-                i.Model.SetItem(equip[index]);
+                i.Model.SetItem(equip[index].Item);
                 i.Model.OnWearClick = WearClick;
                 index++;
             }

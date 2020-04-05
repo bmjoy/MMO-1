@@ -411,6 +411,7 @@ namespace GameLogic.Game.Elements
         internal int TryGetParams(GetValueFrom vF)
         {
             int index =(int) vF - 1;
+            if (Params == null) return 0;
             if (this.Params.Length <= index) return 0;
             if (index < 0) return 0;
             if (int.TryParse(this.Params[index], out int v)) return v;

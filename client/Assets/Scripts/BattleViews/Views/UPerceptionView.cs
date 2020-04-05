@@ -203,7 +203,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             var asset = ResourcesManager.S.LoadText($"Magics/{key}.xml");
             if (string.IsNullOrEmpty(asset)) return null;
             MagicData magic = XmlParser.DeSerialize<MagicData>(asset);
-            if (UseCache) _magicData.Add(key, magic);
+            if(UseCache) _magicData.Add(key, magic);
             return magic;
         }
         return null;
@@ -278,8 +278,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     bool IBattlePerception.ExistMagicKey (string key)
 	{
-        TryLoadMagic(key);
-        return _magicData.ContainsKey (key);
+        return TryLoadMagic(key) !=null;
 	}
 
     IBattleCharacter IBattlePerception.CreateBattleCharacterView(string account_id,
@@ -328,7 +327,6 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         
     IBattleMissile IBattlePerception.CreateMissile(int releaseIndex, string res, Proto.Vector3 offset , string fromBone, string toBone, float speed)
 	{
-       
         var root = new GameObject(res);
         var missile = root.AddComponent<UBattleMissileView> (); //NO
         missile.fromBone = fromBone;

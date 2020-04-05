@@ -14,7 +14,7 @@
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>247d17bf-4ebc-49fd-a2a5-b4b3d2f914ff</GUID>
-      <target>Target</target>
+      <target>EventTarget</target>
       <RangeType>
         <damageType>Single</damageType>
         <fiterType>EmenyTeam</fiterType>

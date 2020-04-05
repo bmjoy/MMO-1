@@ -20,6 +20,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             if (!root.TryGetTarget(out BattleCharacter target))
             {
+                if (root.IsDebug) { Attach("failure", "nofound target"); }
                 yield return RunStatus.Failure;
                 yield break;
             }

@@ -32,6 +32,7 @@ namespace Windows
         }
 
 
+        protected Text lb_title;
         protected Button Bt_Return;
         protected VerticalLayoutGroup Content;
 
@@ -42,6 +43,7 @@ namespace Windows
         protected override void InitTemplate()
         {
             base.InitTemplate();
+            lb_title = FindChild<Text>("lb_title");
             Bt_Return = FindChild<Button>("Bt_Return");
             Content = FindChild<VerticalLayoutGroup>("Content");
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <MagicData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <name>火球</name>
+  <name>wizard_fire</name>
   <Containers>
     <EventContainer>
       <type>EVENT_START</type>
@@ -15,7 +15,10 @@
           <effects>
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
-              <DamageValue>0</DamageValue>
+              <DamageValue>
+                <ValueForm>CurrentConfig</ValueForm>
+                <Value>0</Value>
+              </DamageValue>
             </EffectBase>
           </effects>
           <Des>001</Des>
@@ -26,4 +29,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

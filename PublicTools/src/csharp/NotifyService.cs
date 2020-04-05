@@ -308,7 +308,7 @@ namespace Proto.NotifyService
     /// 37
     /// </summary>    
     [API(37)]
-    public class CharacterExp:APIBase<Notify_CharacterExp, Notify_CharacterExp> 
+    public class CharacterExp:APIBase<Void, Notify_CharacterExp> 
     {
         private CharacterExp() : base() { }
         public  static CharacterExp CreateQuery(){ return new CharacterExp();}
@@ -319,17 +319,29 @@ namespace Proto.NotifyService
     /// 38
     /// </summary>    
     [API(38)]
-    public class CharacterLevel:APIBase<Notify_CharacterLevel, Notify_CharacterLevel> 
+    public class CharacterLevel:APIBase<Void, Notify_CharacterLevel> 
     {
         private CharacterLevel() : base() { }
         public  static CharacterLevel CreateQuery(){ return new CharacterLevel();}
     }
     
 
+    /// <summary>
+    /// 39
+    /// </summary>    
+    [API(39)]
+    public class CharacterTeamIndex:APIBase<Void, Notify_CharacterTeamIndex> 
+    {
+        private CharacterTeamIndex() : base() { }
+        public  static CharacterTeamIndex CreateQuery(){ return new CharacterTeamIndex();}
+    }
+    
+
     public interface INotifyService
     {
-        [API(38)]Notify_CharacterLevel CharacterLevel(Notify_CharacterLevel req);
-        [API(37)]Notify_CharacterExp CharacterExp(Notify_CharacterExp req);
+        [API(39)]Notify_CharacterTeamIndex CharacterTeamIndex(Void req);
+        [API(38)]Notify_CharacterLevel CharacterLevel(Void req);
+        [API(37)]Notify_CharacterExp CharacterExp(Void req);
         [API(36)]Notify_CharacterRotation CharacterRotation(Void req);
         [API(35)]Notify_PlayTimeLine PlayTimeLine(Void req);
         [API(33)]Notify_SyncServerTime SyncServerTime(Void req);
@@ -363,8 +375,9 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
-        [API(38)]public abstract Task<Notify_CharacterLevel> CharacterLevel(Notify_CharacterLevel request);
-        [API(37)]public abstract Task<Notify_CharacterExp> CharacterExp(Notify_CharacterExp request);
+        [API(39)]public abstract Task<Notify_CharacterTeamIndex> CharacterTeamIndex(Void request);
+        [API(38)]public abstract Task<Notify_CharacterLevel> CharacterLevel(Void request);
+        [API(37)]public abstract Task<Notify_CharacterExp> CharacterExp(Void request);
         [API(36)]public abstract Task<Notify_CharacterRotation> CharacterRotation(Void request);
         [API(35)]public abstract Task<Notify_PlayTimeLine> PlayTimeLine(Void request);
         [API(33)]public abstract Task<Notify_SyncServerTime> SyncServerTime(Void request);

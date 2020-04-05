@@ -289,6 +289,13 @@ message Notify_CharacterExp
 	int32 OldLeve = 4;
 }
 
+message Notify_CharacterTeamIndex
+{
+	int32 Index = 1;
+	int32 TeamIndex = 2;
+}
+
+
 service NotifyService
 {	
 	rpc CharacterPosition(Void) returns (Notify_CharacterSetPosition){};//2
@@ -318,8 +325,9 @@ service NotifyService
 	rpc SyncServerTime (Void) returns (Notify_SyncServerTime){};//33
 	rpc PlayTimeLine (Void) returns (Notify_PlayTimeLine){};//35
 	rpc CharacterRotation(Void) returns(Notify_CharacterRotation){};//36
-	rpc CharacterExp(Notify_CharacterExp) returns (Notify_CharacterExp){};//37
-	rpc CharacterLevel (Notify_CharacterLevel) returns (Notify_CharacterLevel){};//38
+	rpc CharacterExp(Void) returns (Notify_CharacterExp){};//37
+	rpc CharacterLevel (Void) returns (Notify_CharacterLevel){};//38
+	rpc CharacterTeamIndex (Void) returns (Notify_CharacterTeamIndex){};//39
 }
 
 service ActionService
