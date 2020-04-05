@@ -116,7 +116,7 @@ namespace GameLogic.Game.LayoutLogics
 				layout.RangeType.radius,
 				layout.RangeType.angle, 
 				layout.RangeType.offsetAngle,
-                offsetPos,releaser.ReleaserTarget.Releaser.TeamIndex);
+                offsetPos,releaser.Releaser.TeamIndex);
 
 			releaser.ShowDamageRange(layout);
 
