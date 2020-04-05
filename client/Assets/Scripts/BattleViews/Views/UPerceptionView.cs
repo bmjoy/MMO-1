@@ -198,15 +198,15 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     private MagicData TryLoadMagic(string key)
     {
-        if (!_magicData.TryGetValue(key, out _))
+        if (!_magicData.TryGetValue(key, out MagicData magic))
         {
             var asset = ResourcesManager.S.LoadText($"Magics/{key}.xml");
             if (string.IsNullOrEmpty(asset)) return null;
-            MagicData magic = XmlParser.DeSerialize<MagicData>(asset);
+            magic = XmlParser.DeSerialize<MagicData>(asset);
             if(UseCache) _magicData.Add(key, magic);
             return magic;
         }
-        return null;
+        return magic;
     }
 
 
