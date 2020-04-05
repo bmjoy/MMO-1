@@ -23,5 +23,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
-  <unique>false</unique>
+  <unique>true</unique>
 </MagicData>

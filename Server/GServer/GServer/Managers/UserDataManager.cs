@@ -273,6 +273,7 @@ namespace GServer.Managers
 
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
+
             if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
             {
                 if (level == 1)
@@ -287,13 +288,12 @@ namespace GServer.Managers
 
             {
                 var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-                player.Coin -= levelConfig.NeedGold;
-                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Coin, player.Coin);
+                player.Gold -= levelConfig.NeedGold;
+                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold);
                 await DataBase.S.Playes.UpdateOneAsync(filter, update);
             }
 
             magic.Level += 1;
-
             {
                 var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
                 var update = Builders<GameHeroEntity>.Update.Set(t => t.Magics, hero.Magics);
@@ -313,44 +313,34 @@ namespace GServer.Managers
         {
             var player =  await FindPlayerByAccountId(acount_id);
 
-
-           
             var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid , player.Uuid);
-            FilterDefinition<GamePlayerEntity> query_player = id;
-
             bool update = false;
             if (item.CType == CoinType.Coin)
             {
                 if (item.Prices > player.Coin) return ErrorCode.NoEnoughtCoin;
-
                 var coin = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Coin);
-                query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
-                var update_player = Builders<GamePlayerEntity>.Update
-                    .Set(t => t.Coin ,player.Coin -  item.Prices);
-               var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
+                var query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
+                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Coin ,player.Coin -  item.Prices);
+                var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
                 update = res.ModifiedCount > 0;
             }
-
-            if (item.CType == CoinType.Gold)
+            else if (item.CType == CoinType.Gold)
             {
                 if (item.Prices > player.Gold) return ErrorCode.NoEnoughtGold;
                 var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
-                query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
-                var update_player = Builders<GamePlayerEntity>.Update
-                   .Set(t => t.Gold, player.Gold - item.Prices);
+                var query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
+                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold - item.Prices);
                 var res = await DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
                 update = res.ModifiedCount > 0;
             }
 
             if (!update) return ErrorCode.Error;
-            //使用同步
+
             if (await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum }))
             {
                 await SyncToClient(c, player.Uuid, true);
                 return ErrorCode.Ok;
-
             }
-
             return ErrorCode.Error;
         }
 

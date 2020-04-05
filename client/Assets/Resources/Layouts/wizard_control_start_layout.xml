@@ -18,6 +18,10 @@
       <GUID>c5749da2-0ab4-4de6-baf2-62e9aefea0fa</GUID>
       <Time>0.394117653</Time>
     </TimePoint>
+    <TimePoint>
+      <GUID>c243fd67-5a88-4b25-8866-6acd004b209f</GUID>
+      <Time>0</Time>
+    </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="MotionLayout">
@@ -71,6 +75,9 @@
       <target>Target</target>
       <fromBone>Body</fromBone>
       <value>1</value>
+    </LayoutBase>
+    <LayoutBase xsi:type="LookAtTarget">
+      <GUID>c243fd67-5a88-4b25-8866-6acd004b209f</GUID>
     </LayoutBase>
   </Layouts>
 </TimeLine>
