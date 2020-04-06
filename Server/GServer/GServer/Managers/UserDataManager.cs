@@ -231,9 +231,11 @@ namespace GServer.Managers
             var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player_uuid);
 
 
-            if (levelconfig.CostGold > player.Gold || levelconfig.CostCoin > player.Coin)
+            if (levelconfig.CostGold > 0 && levelconfig.CostGold > player.Gold )
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.NoEnoughtGold };
 
+            if (levelconfig.CostCoin > 0 && levelconfig.CostCoin > player.Coin)
+                return new G2C_EquipmentLevelUp { Code = ErrorCode.NoEnoughtCoin };
 
             if (levelconfig.CostGold > 0)
             {
@@ -390,24 +392,21 @@ namespace GServer.Managers
 
             var h = (await DataBase.S.Heros.FindAsync(fiterHero)).Single();
             var p = (await DataBase.S.Packages.FindAsync(fiterPackage)).Single();
-            //var pl = (await DataBase.S.Playes.FindAsync(fiter)).Single();
+           
 
             foreach (var i in items)
             {
                 foreach (var e in h.Equips)
                 {
-                    if (i.Guid == e.Value)
-                        return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
+                    if (i.Guid == e.Value)  return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
                 }
 
                 if (!p.Items.TryGetValue(i.Guid, out ItemNum item))
                     return new G2C_SaleItem { Code = ErrorCode.NofoundItem };
                 if (item.Num < i.Num)
                     return new G2C_SaleItem { Code = ErrorCode.NoenoughItem };
-
                 if (item.IsLock)
                     return new G2C_SaleItem { Code = ErrorCode.Error };
-
             }
 
             var total = 0;
@@ -432,8 +431,8 @@ namespace GServer.Managers
             var u_filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, pl.Uuid);
             await DataBase.S.Playes.UpdateOneAsync(u_filter, u_player);
             await DataBase.S.Packages.UpdateOneAsync(fiterPackage, u_package);
+            await SyncToClient(client, pl.Uuid);
 
-            SyncToClient(client, pl.Uuid).Wait();
             return new G2C_SaleItem { Code = ErrorCode.Ok, Coin = pl.Coin, Gold = pl.Gold };
 
         }
