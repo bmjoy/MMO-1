@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-16"?>
 <Setting xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Add K="BATTLE_NO_MP_TO_CAST">Not Enough MP to cast {0}</Add>
+  
+  <Add K="BATTLE_NO_MP_TO_CAST">魔法不足无法使用{0}</Add>
   
   <!--UI package -->
   <Add K="UI_PACKAGE_BUY_SIZE_TITLE">购买容量</Add>
