@@ -278,16 +278,10 @@ namespace GServer.Managers
 
             if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
             {
-                if (level == 1)
-                {
-                    hero.Magics.Add(magicId, new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 1 });
-                }
-                else
-                    return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+                hero.Magics.Add(magicId, new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 0 });
             }
 
-            
-
+            if(levelConfig.NeedGold > 0)
             {
                 var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
                 player.Gold -= levelConfig.NeedGold;
