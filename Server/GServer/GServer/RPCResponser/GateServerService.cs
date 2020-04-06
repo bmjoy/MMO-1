@@ -265,16 +265,20 @@ namespace GateServer
 
         public G2C_SaleItem SaleItem(C2G_SaleItem req)
         {
-            var task = UserDataManager.S
-                .SaleItem(this.Client, AccountUuid, req.Items);
-            task.Wait();
-            
-            return task.Result;
+            return UserDataManager
+               .S
+               .SaleItem(this.Client, AccountUuid, req.Items)
+               .GetAwaiter()
+               .GetResult();
         }
 
         public G2C_BuyGold BuyGold(C2G_BuyGold req)
         {
-            return UserDataManager.S.BuyGold(Client, AccountUuid, req.ShopId).GetAwaiter().GetResult();
+            return UserDataManager
+                .S
+                .BuyGold(Client, AccountUuid, req.ShopId)
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }
