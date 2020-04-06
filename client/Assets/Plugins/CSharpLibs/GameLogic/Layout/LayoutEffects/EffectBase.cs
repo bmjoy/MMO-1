@@ -12,7 +12,6 @@ namespace Layout.LayoutEffects
         XmlInclude(typeof(BreakReleaserEffect)),
         XmlInclude(typeof(ModifyLockEffect)),
 		XmlInclude(typeof(CureMPEffect)),
-        XmlInclude(typeof(ModifyTeamIndexEffect)),
         XmlInclude(typeof(CharmEffect))
 	]
 	public class EffectBase
