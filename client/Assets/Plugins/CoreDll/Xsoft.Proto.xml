@@ -1420,6 +1420,11 @@
              AI路径
              </summary>
             </member>
+        <member name="P:EConfig.CharacterData.ViewSize">
+             <summary>
+             大小
+             </summary>
+            </member>
         <member name="P:EConfig.CharacterData.ViewDistance">
              <summary>
              视野(m)

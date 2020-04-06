@@ -286,9 +286,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         int level, string name, float speed,int hp, int hpMax,int mp,int mpMax ,IList<HeroMagicData> cds,int owner)
     {
         var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(config);
-        
         var qu = Quaternion.Euler(forward.X, forward.Y, forward.Z);
-       
         var root = new GameObject(data.ResourcesPath);
         root.transform.SetParent(this.transform, false);
         root.transform.position = pos.ToUV3();
@@ -310,6 +308,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         if (cds != null) { foreach (var i in cds) view.AddMagicCd(i.MagicID, i.CDTime, i.MType); }
         if (view is IBattleCharacter ch) ch.SetHpMp(hp, hpMax, mp, mpMax);
         view.SetCharacter(body, data.ResourcesPath);
+        view.SetScale(data.ViewSize);
         return view;
     }
 

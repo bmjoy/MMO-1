@@ -23,9 +23,7 @@ public class CharacterProperty
 [
     BoneName("Top", "__Top"),
     BoneName("Bottom", "__Bottom"),
-    BoneName("Body", "__Body"),
-//BoneName("HandLeft","bn_handleft"),
-//BoneName("HandRight","bn_handright")
+    BoneName("Body", "__Body")
 ]
 public class UCharacterView : UElementView, IBattleCharacter
 {
@@ -344,6 +342,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         StartCoroutine(Init(path));
     }
 
+    internal void SetScale(float viewSize)
+    {
+        this.gameObject.transform.localScale = Vector3.one * viewSize;
+    }
+
     private IEnumerator Init(string path)
     {
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(path,(obj)=>
@@ -597,7 +600,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetScale(float scale)
     {
         if (!this) return;
-        this.gameObject.transform.localScale = Vector3.one * scale;
+        this.SetScale(scale);
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
 #endif

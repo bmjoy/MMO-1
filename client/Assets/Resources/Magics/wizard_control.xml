@@ -9,11 +9,10 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="CharmEffect">
-              <Pro>
-                <min>5000</min>
-                <max>2000</max>
-                <type>Fixed</type>
-              </Pro>
+              <ProValue>
+                <ValueForm>MagicLevelParam3</ValueForm>
+                <Value>10000</Value>
+              </ProValue>
               <Level>
                 <ValueForm>MagicLevelParam1</ValueForm>
                 <Value>1</Value>

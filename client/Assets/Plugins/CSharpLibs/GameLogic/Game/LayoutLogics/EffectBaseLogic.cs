@@ -160,7 +160,7 @@ namespace GameLogic.Game.LayoutLogics
         {
             var effect = e as CharmEffect;
             if (effectTarget.Level > effect.Level.ProcessValue(releaser)) return;
-            if (GRandomer.Probability10000(effect.Pro))
+            if (GRandomer.Probability10000(effect.ProValue.ProcessValue(releaser)))
             {
                 effectTarget.Clear();
                 var re = releaser.Releaser;
