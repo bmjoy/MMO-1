@@ -82,7 +82,9 @@ namespace Windows
             var gata = UApplication.G<GMainGate>();
             int index = 0;
             var configs = ExcelToJSONConfigManager
-                .Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == gata.hero.HeroID);
+                .Current.GetConfigs<CharacterMagicData>(t => t.CharacterID == gata.hero.HeroID
+                && ExcelToJSONConfigManager.Current.GetConfigs<MagicLevelUpData>(l=>l.MagicID == t.ID)?.Count()>0);
+
 
             ContentTableManager.Count = configs.Length;
             foreach (var i in ContentTableManager)
