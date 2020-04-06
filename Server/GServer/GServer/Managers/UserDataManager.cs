@@ -278,7 +278,8 @@ namespace GServer.Managers
 
             if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
             {
-                hero.Magics.Add(magicId, new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 0 });
+               magic=  new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 0 };
+                hero.Magics.Add(magicId, magic);
             }
 
             if(levelConfig.NeedGold > 0)
