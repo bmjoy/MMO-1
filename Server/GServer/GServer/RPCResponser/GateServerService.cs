@@ -271,5 +271,10 @@ namespace GateServer
             
             return task.Result;
         }
+
+        public G2C_BuyGold BuyGold(C2G_BuyGold req)
+        {
+            return UserDataManager.S.BuyGold(Client, AccountUuid, req.ShopId).GetAwaiter().GetResult();
+        }
     }
 }

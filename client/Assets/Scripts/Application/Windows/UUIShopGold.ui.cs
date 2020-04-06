@@ -17,12 +17,14 @@ namespace Windows
             public Button ButtonBlue;
             public Image icon;
             public Text lb_gold;
+            public Text lb_name;
 
             public override void InitTemplate()
             {
                 ButtonBlue = FindChild<Button>("ButtonBlue");
                 icon = FindChild<Image>("icon");
                 lb_gold = FindChild<Text>("lb_gold");
+                lb_name = FindChild<Text>("lb_name");
 
             }
         }

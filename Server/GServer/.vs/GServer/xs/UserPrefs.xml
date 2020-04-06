@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Managers/UserDataManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="183" Column="13" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="72" Column="47" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="18" Column="53" />
       <File FileName="GServer/Managers/UserDataManager.cs" Line="285" Column="36" />
     </Files>
     <Pads>
@@ -10,10 +10,10 @@
         <State name="__root__">
           <Node name="GServer" expanded="True">
             <Node name="GateServer" expanded="True">
-              <Node name="Managers" expanded="True">
-                <Node name="UserDataManager.cs" selected="True" />
+              <Node name="Managers" expanded="True" />
+              <Node name="RPCResponser" expanded="True">
+                <Node name="GateServerService.cs" selected="True" />
               </Node>
-              <Node name="RPCResponser" expanded="True" />
               <Node name="RPCTaskHandlers" expanded="True" />
             </Node>
             <Node name="LoginServer" expanded="True">

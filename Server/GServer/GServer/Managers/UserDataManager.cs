@@ -263,6 +263,29 @@ namespace GServer.Managers
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
 
+        internal async Task<G2C_BuyGold> BuyGold(Client client, string accountUuid, int shopId)
+        {
+            var item = ExcelToJSONConfigManager.Current.GetConfigByID<GoldShopData>(shopId);
+            if (item == null) return new G2C_BuyGold { Code = ErrorCode.NofoundItem };
+            var player = await FindPlayerByAccountId(accountUuid);
+            if (player.Coin < item.Prices) return new G2C_BuyGold { Code = ErrorCode.NoEnoughtCoin };
+            var update = Builders<GamePlayerEntity>.Update
+                .Set(t => t.Coin, player.Coin - item.Prices)
+                .Set(t => t.Gold, player.Gold + item.ReceiveGold);
+            var idFilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            await DataBase.S.Playes.UpdateOneAsync(idFilter, update);
+
+            await SyncToClient(client, player.Uuid, true);
+
+            return new G2C_BuyGold
+            {
+                Code = ErrorCode.Ok,
+                Coin = player.Coin - item.Prices,
+                Gold = player.Gold + item.ReceiveGold,
+                ReceivedGold = item.ReceiveGold
+            };
+        }
+
         internal async Task<G2C_MagicLevelUp> MagicLevelUp(Client client, int magicId, int level, string accountUuid)
         {
             var player = await FindPlayerByAccountId(accountUuid);

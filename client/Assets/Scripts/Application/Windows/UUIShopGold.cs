@@ -30,6 +30,7 @@ namespace Windows
                 ResourcesManager.S.LoadIcon(item, s => Template.icon.sprite = s);
                 Template.lb_gold.text = $"{item.ReceiveGold}";
                 Template.ButtonBlue.SetText($"{item.Prices}");
+                Template.lb_name.SetKey(item.Name);
             }
         }
 
