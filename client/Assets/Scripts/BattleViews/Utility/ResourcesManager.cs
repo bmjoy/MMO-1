@@ -57,6 +57,12 @@ public class ResourcesManager : XSingleton<ResourcesManager>, IConfigLoader
 		return File.ReadAllText(path);
 	}
 
+
+	public void LoadIcon(GoldShopData item, CallBackDele<Sprite> callBack)
+	{
+		LoadSpriteAsset($"Icon/{item.Icon}.png", callBack);
+	}
+
 	public void LoadIcon(CharacterMagicData item, CallBackDele<Sprite> callBack)
 	{
 		LoadSpriteAsset($"Icon/{item.IconKey}.png", callBack);

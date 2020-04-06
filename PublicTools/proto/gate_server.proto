@@ -239,6 +239,20 @@ message Task_G2C_JoinBattle
 	 GameServerInfo Server =1;
 }
 
+
+message C2G_BuyGold
+{
+	int32 ShopId = 1;
+}
+
+message G2C_BuyGold
+{
+	ErrorCode Code = 1;
+	int32 Gold =2;
+	int32 Coin = 3; 
+	int32 ReceivedGold =4;
+}
+
 service GateServerService
 {
 	rpc Login (C2G_Login) returns(G2C_Login){};//1
@@ -253,6 +267,7 @@ service GateServerService
 	rpc MagicLevelUp(C2G_MagicLevelUp) returns(G2C_MagicLevelUp){};//10
 	rpc QueryShop(C2G_Shop) returns (G2C_Shop){};//11
 	rpc BuyItem(C2G_BuyItem) returns (G2C_BuyItem){};//12
+	rpc BuyGold(C2G_BuyGold) returns (G2C_BuyGold){};//13
 }
 
 service GateServerTask

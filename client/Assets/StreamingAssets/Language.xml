@@ -105,4 +105,9 @@
   <!--UUILevelList-->
   <Add K="UUILevelList_Title">世界</Add>
   <Add K="UUILevelList_Enter">进入</Add>
+
+  <!--UUIShopGold-->
+  <Add K="UUIShopGold_Title">确认</Add>
+  <Add K="UUIShopGold_Content">确认购买{0}</Add>
+  <Add K="UUIShopGold_Receive_gold">获得金币{0:NO}</Add>
 </Setting>

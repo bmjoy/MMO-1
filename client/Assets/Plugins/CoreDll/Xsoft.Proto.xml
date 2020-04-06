@@ -1400,6 +1400,71 @@
              货币类型
              </summary>
             </member>
+        <member name="T:EConfig.GoldShopData">
+             <summary>
+             金币商店
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Name">
+             <summary>
+             名称
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Icon">
+             <summary>
+             图片
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Prices">
+             <summary>
+             价格
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.ReceiveGold">
+             <summary>
+             
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.CoinOfGold">
+             <summary>
+             每个钻石多少金币
+             </summary>
+            </member>
+        <member name="T:EConfig.GemShopData">
+             <summary>
+             钻石商店
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Name">
+             <summary>
+             名称
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Icon">
+             <summary>
+             图片
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.BundleId">
+             <summary>
+             商店Key
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Prices">
+             <summary>
+             价格
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.ReceiveCoin">
+             <summary>
+             获得钻石
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.OneOfValue">
+             <summary>
+             价值兑换
+             </summary>
+            </member>
         <member name="T:EConfig.CharacterData">
              <summary>
              角色数据表
@@ -2472,6 +2537,21 @@
         <member name="F:Proto.Task_G2C_JoinBattle.ServerFieldNumber">
              <summary>Field number for the "Server" field.</summary>
             </member>
+        <member name="F:Proto.C2G_BuyGold.ShopIdFieldNumber">
+             <summary>Field number for the "ShopId" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.GoldFieldNumber">
+             <summary>Field number for the "Gold" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.CoinFieldNumber">
+             <summary>Field number for the "Coin" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.ReceivedGoldFieldNumber">
+             <summary>Field number for the "ReceivedGold" field.</summary>
+            </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
              1
@@ -2530,6 +2610,11 @@
         <member name="T:Proto.GateServerService.BuyItem">
              <summary>
              12
+             </summary>    
+            </member>
+        <member name="T:Proto.GateServerService.BuyGold">
+             <summary>
+             13
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">

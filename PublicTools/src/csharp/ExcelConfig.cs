@@ -535,6 +535,90 @@ namespace EConfig
     }
 
     /// <summary>
+    /// 金币商店
+    /// </summary>
+    [ConfigFile("GoldShopData.json","GoldShopData")]
+    [global::System.Serializable]
+    public class GoldShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 图片
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Icon { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Prices { set; get; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int ReceiveGold { set; get; }
+        
+        /// <summary>
+        /// 每个钻石多少金币
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public float CoinOfGold { set; get; }
+
+    }
+
+    /// <summary>
+    /// 钻石商店
+    /// </summary>
+    [ConfigFile("GemShopData.json","GemShopData")]
+    [global::System.Serializable]
+    public class GemShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 图片
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Icon { set; get; }
+        
+        /// <summary>
+        /// 商店Key
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String BundleId { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int Prices { set; get; }
+        
+        /// <summary>
+        /// 获得钻石
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int ReceiveCoin { set; get; }
+        
+        /// <summary>
+        /// 价值兑换
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public float OneOfValue { set; get; }
+
+    }
+
+    /// <summary>
     /// 角色数据表
     /// </summary>
     [ConfigFile("CharacterData.json","CharacterData")]

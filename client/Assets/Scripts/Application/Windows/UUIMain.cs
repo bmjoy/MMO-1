@@ -70,6 +70,11 @@ namespace Windows
                 //.RotationY(v.x);
             });
 
+            btn_goldadd.onClick.AddListener(() =>
+            {
+                UUIManager.S.CreateWindowAsync<UUIShopGold>(ui => ui.ShowWindow());
+            });
+
             //Write Code here
         }
 
