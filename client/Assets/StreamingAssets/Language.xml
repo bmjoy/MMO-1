@@ -94,6 +94,9 @@
   <!--UUIMagic-->
   <Add K="UUIMagic_LevelUp">升级</Add>
   <Add K="UUIMagic_SEL_Level">等级:{0}</Add>
+  <Add K="UUIMagic_CurrentLevel">当前等级:{0}</Add>
+  <Add K="UUIMagic_NextLevel">下一等级:{0}</Add>
+  <Add K="UUIMagic_NeedLevel">需要英雄等级:{0}</Add>
 
   <!--UUIPopup-->
   <Add K="UUIPopup_OK">确认</Add>

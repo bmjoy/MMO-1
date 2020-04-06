@@ -9,8 +9,13 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
+              <DiType>0</DiType>
               <buffMagicKey>knight_anger_buff</buffMagicKey>
-              <durationTime>3</durationTime>
+              <durationTime>
+                <ValueForm>MagicLevelParam2</ValueForm>
+                <Value>0</Value>
+              </durationTime>
+              <CopyParams>true</CopyParams>
             </EffectBase>
           </effects>
           <key>001</key>
@@ -20,4 +25,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

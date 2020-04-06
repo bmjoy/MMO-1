@@ -11,11 +11,20 @@
             <EffectBase xsi:type="AddPropertyEffect">
               <addType>Append</addType>
               <addValue>
-                <ValueForm>CurrentConfig</ValueForm>
+                <ValueForm>MagicLevelParam1</ValueForm>
                 <Value>40</Value>
               </addValue>
               <revertType>ReleaserDeath</revertType>
               <property>Defance</property>
+            </EffectBase>
+            <EffectBase xsi:type="AddPropertyEffect">
+              <addType>Append</addType>
+              <addValue>
+                <ValueForm>MagicLevelParam2</ValueForm>
+                <Value>0</Value>
+              </addValue>
+              <revertType>ReleaserDeath</revertType>
+              <property>Resistibility</property>
             </EffectBase>
           </effects>
           <key>001</key>

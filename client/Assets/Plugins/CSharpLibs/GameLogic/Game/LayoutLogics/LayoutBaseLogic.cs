@@ -157,7 +157,7 @@ namespace GameLogic.Game.LayoutLogics
 			int level = unitLayout.level.ProcessValue(linePlayer.Releaser);
 			//判断是否达到上限
 			if (unitLayout.maxNum <= releaser.UnitCount) return;
-			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
+			int id = unitLayout.characterID.ProcessValue(releaser);
 			var data = ExcelToJSONConfigManager
 				.Current.GetConfigByID<CharacterData>(id);
 
@@ -175,7 +175,7 @@ namespace GameLogic.Game.LayoutLogics
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
-			releaser.AttachElement(unit, false, unitLayout.time);
+			releaser.AttachElement(unit, false, unitLayout.time.ProcessValue(releaser)/1000f);
 			releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
 			var ai = unitLayout.AIPath;
 			if (string.IsNullOrEmpty(ai)) ai = data.AIResourcePath;

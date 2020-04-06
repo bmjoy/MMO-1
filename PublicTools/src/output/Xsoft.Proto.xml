@@ -539,6 +539,9 @@
         <member name="F:Proto.Notify_CharacterTeamIndex.TeamIndexFieldNumber">
              <summary>Field number for the "TeamIndex" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CharacterTeamIndex.OwnerIndexFieldNumber">
+             <summary>Field number for the "OwnerIndex" field.</summary>
+            </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
              1

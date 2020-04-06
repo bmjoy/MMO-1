@@ -12,9 +12,10 @@
               <DiType>0</DiType>
               <buffMagicKey>mage_shield_buff</buffMagicKey>
               <durationTime>
-                <ValueForm>MagicLevelParam1</ValueForm>
+                <ValueForm>MagicLevelParam3</ValueForm>
                 <Value>1000</Value>
               </durationTime>
+              <CopyParams>true</CopyParams>
             </EffectBase>
           </effects>
           <key>001</key>

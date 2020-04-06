@@ -293,6 +293,7 @@ message Notify_CharacterTeamIndex
 {
 	int32 Index = 1;
 	int32 TeamIndex = 2;
+	int32 OwnerIndex =3;
 }
 
 

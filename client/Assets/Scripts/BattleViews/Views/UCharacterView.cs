@@ -841,14 +841,16 @@ public class UCharacterView : UElementView, IBattleCharacter
         this.Level = level;
     }
 
-    void IBattleCharacter.SetTeamIndex(int tIndex)
+    void IBattleCharacter.SetTeamIndex(int tIndex,int ownerIndex)
     {
         TeamId = tIndex;
+        OwnerIndex = ownerIndex;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterTeamIndex
         {
             Index = Index,
-            TeamIndex = tIndex
+            TeamIndex = tIndex,
+            OwnerIndex = ownerIndex
         });
 #endif
     }

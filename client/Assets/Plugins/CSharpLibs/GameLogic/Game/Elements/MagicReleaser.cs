@@ -78,7 +78,7 @@ namespace GameLogic.Game.Elements
             Params = parms;
         }
 
-        private string[] Params;
+        public string[] Params { private set; get; }
 
         public string this[int paramIndex]
         {

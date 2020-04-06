@@ -12,9 +12,10 @@
               <DiType>0</DiType>
               <buffMagicKey>mage_light_dot_buff</buffMagicKey>
               <durationTime>
-                <ValueForm>MagicLevelParam1</ValueForm>
+                <ValueForm>MagicLevelParam2</ValueForm>
                 <Value>10000</Value>
               </durationTime>
+              <CopyParams>true</CopyParams>
             </EffectBase>
           </effects>
           <key>001</key>

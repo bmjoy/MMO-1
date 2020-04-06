@@ -4,21 +4,13 @@ using Proto;
 
 namespace Layout.LayoutElements
 {
-    public enum CharacterType
-    { 
-        ConfigID, //配表
-        OwnerID //复制自己
-    }
 
     [EditorLayout("召唤单位")]
     public class CallUnitLayout:LayoutBase
     {
 
-        [Label("召唤ID来源")]
-        public CharacterType CType = CharacterType.ConfigID;
-
         [Label("召唤角色ID")]
-        public int characterID;
+        public ValueSourceOf characterID;
 
         [Label("等级")]
         public ValueSourceOf level=1;
@@ -27,8 +19,8 @@ namespace Layout.LayoutElements
         [EditorStreamingPath]
         public string AIPath;
 
-        [Label("持续时间(秒)")]
-        public float time;
+        [Label("持续时间(ms)")]
+        public ValueSourceOf time=1000;
 
         [Label("召唤物最大数量")]
         public int maxNum;

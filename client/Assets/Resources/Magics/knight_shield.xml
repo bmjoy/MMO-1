@@ -9,9 +9,13 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
-              <DiType>0</DiType>
+              <DiType>1</DiType>
               <buffMagicKey>knight_shield_buff</buffMagicKey>
-              <durationTime>5</durationTime>
+              <durationTime>
+                <ValueForm>MagicLevelParam1</ValueForm>
+                <Value>0</Value>
+              </durationTime>
+              <CopyParams>true</CopyParams>
             </EffectBase>
           </effects>
           <key>001</key>

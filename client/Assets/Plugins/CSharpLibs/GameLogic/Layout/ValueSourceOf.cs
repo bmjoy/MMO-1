@@ -24,6 +24,10 @@ namespace Layout
         {
             return new ValueSourceOf() {  ValueForm = GetValueFrom.CurrentConfig, Value = value};
         }
+        public static implicit operator ValueSourceOf(float value)
+        {
+            return new ValueSourceOf() { ValueForm = GetValueFrom.CurrentConfig, Value = (int)value };
+        }
 
 
         public int ProcessValue(MagicReleaser releaser)

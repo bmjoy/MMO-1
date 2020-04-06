@@ -10,7 +10,10 @@
           <effects>
             <EffectBase xsi:type="AddPropertyEffect">
               <addType>Append</addType>
-              <addValue>1000</addValue>
+              <addValue>
+                <ValueForm>MagicLevelParam2</ValueForm>
+                <Value>0</Value>
+              </addValue>
               <revertType>ReleaserDeath</revertType>
               <property>Defance</property>
             </EffectBase>
@@ -22,4 +25,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>
