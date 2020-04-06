@@ -59,7 +59,7 @@ namespace GServer.Managers
 
         internal async Task SyncToClient(Client userClient, string playerUuid, bool packageOnly = false)
         {
-            // var playerUuid = (string)userClient.UserState;
+            
             var player = await FindPlayerById(playerUuid);
             var p = await FindPackageByPlayerID(playerUuid);
 
