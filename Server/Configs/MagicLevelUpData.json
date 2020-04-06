@@ -211,126 +211,126 @@
 },
 	{"ID":5001,"MagicID":5,"NeedLevel":8,"NeedGold":800,"Level":1,"Description":"\u53EC\u5524\u72691\u7EA7","Param":[
 "1",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5002,"MagicID":5,"NeedLevel":13,"NeedGold":1500,"Level":2,"Description":"\u53EC\u5524\u72695\u7EA7","Param":[
 "5",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5003,"MagicID":5,"NeedLevel":18,"NeedGold":2200,"Level":3,"Description":"\u53EC\u5524\u72699\u7EA7","Param":[
 "9",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5004,"MagicID":5,"NeedLevel":23,"NeedGold":2900,"Level":4,"Description":"\u53EC\u5524\u726913\u7EA7","Param":[
 "13",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5005,"MagicID":5,"NeedLevel":28,"NeedGold":3600,"Level":5,"Description":"\u53EC\u5524\u726917\u7EA7","Param":[
 "17",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5006,"MagicID":5,"NeedLevel":33,"NeedGold":4300,"Level":6,"Description":"\u53EC\u5524\u726921\u7EA7","Param":[
 "21",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5007,"MagicID":5,"NeedLevel":38,"NeedGold":5000,"Level":7,"Description":"\u53EC\u5524\u726925\u7EA7","Param":[
 "25",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5008,"MagicID":5,"NeedLevel":43,"NeedGold":5700,"Level":8,"Description":"\u53EC\u5524\u726929\u7EA7","Param":[
 "29",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5009,"MagicID":5,"NeedLevel":48,"NeedGold":6400,"Level":9,"Description":"\u53EC\u5524\u726933\u7EA7","Param":[
 "33",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5010,"MagicID":5,"NeedLevel":53,"NeedGold":7100,"Level":10,"Description":"\u53EC\u5524\u726937\u7EA7","Param":[
 "37",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5011,"MagicID":5,"NeedLevel":58,"NeedGold":7800,"Level":11,"Description":"\u53EC\u5524\u726941\u7EA7","Param":[
 "41",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5012,"MagicID":5,"NeedLevel":63,"NeedGold":8500,"Level":12,"Description":"\u53EC\u5524\u726945\u7EA7","Param":[
 "45",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5013,"MagicID":5,"NeedLevel":68,"NeedGold":9200,"Level":13,"Description":"\u53EC\u5524\u726949\u7EA7","Param":[
 "49",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5014,"MagicID":5,"NeedLevel":73,"NeedGold":9900,"Level":14,"Description":"\u53EC\u5524\u726953\u7EA7","Param":[
 "53",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5015,"MagicID":5,"NeedLevel":78,"NeedGold":10600,"Level":15,"Description":"\u53EC\u5524\u726957\u7EA7","Param":[
 "57",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5016,"MagicID":5,"NeedLevel":83,"NeedGold":11300,"Level":16,"Description":"\u53EC\u5524\u726961\u7EA7","Param":[
 "61",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5017,"MagicID":5,"NeedLevel":88,"NeedGold":12000,"Level":17,"Description":"\u53EC\u5524\u726965\u7EA7","Param":[
 "65",
-"2",
+"1",
 "",
 "",
 ""]
 },
 	{"ID":5018,"MagicID":5,"NeedLevel":93,"NeedGold":12700,"Level":18,"Description":"\u53EC\u5524\u726970\u7EA7","Param":[
 "70",
-"2",
+"1",
 "",
 "",
 ""]
@@ -734,353 +734,353 @@
 "",
 ""]
 },
-	{"ID":10001,"MagicID":10,"NeedLevel":8,"NeedGold":1200,"Level":1,"Description":"\u6062\u590D\u751F\u547D160","Param":[
+	{"ID":10001,"MagicID":10,"NeedLevel":8,"NeedGold":1200,"Level":1,"Description":"\u6062\u590D\u751F\u547D40","Param":[
+"40",
+"",
+"",
+"",
+""]
+},
+	{"ID":10002,"MagicID":10,"NeedLevel":14,"NeedGold":1500,"Level":2,"Description":"\u6062\u590D\u751F\u547D70","Param":[
+"70",
+"",
+"",
+"",
+""]
+},
+	{"ID":10003,"MagicID":10,"NeedLevel":20,"NeedGold":1800,"Level":3,"Description":"\u6062\u590D\u751F\u547D100","Param":[
+"100",
+"",
+"",
+"",
+""]
+},
+	{"ID":10004,"MagicID":10,"NeedLevel":26,"NeedGold":2100,"Level":4,"Description":"\u6062\u590D\u751F\u547D130","Param":[
+"130",
+"",
+"",
+"",
+""]
+},
+	{"ID":10005,"MagicID":10,"NeedLevel":32,"NeedGold":2400,"Level":5,"Description":"\u6062\u590D\u751F\u547D160","Param":[
 "160",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10002,"MagicID":10,"NeedLevel":14,"NeedGold":1500,"Level":2,"Description":"\u6062\u590D\u751F\u547D280","Param":[
+	{"ID":10006,"MagicID":10,"NeedLevel":38,"NeedGold":2700,"Level":6,"Description":"\u6062\u590D\u751F\u547D190","Param":[
+"190",
+"",
+"",
+"",
+""]
+},
+	{"ID":10007,"MagicID":10,"NeedLevel":44,"NeedGold":3000,"Level":7,"Description":"\u6062\u590D\u751F\u547D220","Param":[
+"220",
+"",
+"",
+"",
+""]
+},
+	{"ID":10008,"MagicID":10,"NeedLevel":50,"NeedGold":3300,"Level":8,"Description":"\u6062\u590D\u751F\u547D250","Param":[
+"250",
+"",
+"",
+"",
+""]
+},
+	{"ID":10009,"MagicID":10,"NeedLevel":56,"NeedGold":3600,"Level":9,"Description":"\u6062\u590D\u751F\u547D280","Param":[
 "280",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10003,"MagicID":10,"NeedLevel":20,"NeedGold":1800,"Level":3,"Description":"\u6062\u590D\u751F\u547D400","Param":[
+	{"ID":10010,"MagicID":10,"NeedLevel":62,"NeedGold":3900,"Level":10,"Description":"\u6062\u590D\u751F\u547D310","Param":[
+"310",
+"",
+"",
+"",
+""]
+},
+	{"ID":10011,"MagicID":10,"NeedLevel":68,"NeedGold":4200,"Level":11,"Description":"\u6062\u590D\u751F\u547D340","Param":[
+"340",
+"",
+"",
+"",
+""]
+},
+	{"ID":10012,"MagicID":10,"NeedLevel":74,"NeedGold":4500,"Level":12,"Description":"\u6062\u590D\u751F\u547D370","Param":[
+"370",
+"",
+"",
+"",
+""]
+},
+	{"ID":10013,"MagicID":10,"NeedLevel":80,"NeedGold":4800,"Level":13,"Description":"\u6062\u590D\u751F\u547D400","Param":[
 "400",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10004,"MagicID":10,"NeedLevel":26,"NeedGold":2100,"Level":4,"Description":"\u6062\u590D\u751F\u547D520","Param":[
-"520",
+	{"ID":10014,"MagicID":10,"NeedLevel":86,"NeedGold":5100,"Level":14,"Description":"\u6062\u590D\u751F\u547D430","Param":[
+"430",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10005,"MagicID":10,"NeedLevel":32,"NeedGold":2400,"Level":5,"Description":"\u6062\u590D\u751F\u547D640","Param":[
-"640",
+	{"ID":10015,"MagicID":10,"NeedLevel":92,"NeedGold":5400,"Level":15,"Description":"\u6062\u590D\u751F\u547D460","Param":[
+"460",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10006,"MagicID":10,"NeedLevel":38,"NeedGold":2700,"Level":6,"Description":"\u6062\u590D\u751F\u547D760","Param":[
-"760",
+	{"ID":10016,"MagicID":10,"NeedLevel":98,"NeedGold":5700,"Level":16,"Description":"\u6062\u590D\u751F\u547D490","Param":[
+"490",
 "",
 "",
 "",
 ""]
 },
-	{"ID":10007,"MagicID":10,"NeedLevel":44,"NeedGold":3000,"Level":7,"Description":"\u6062\u590D\u751F\u547D880","Param":[
-"880",
-"",
-"",
-"",
-""]
-},
-	{"ID":10008,"MagicID":10,"NeedLevel":50,"NeedGold":3300,"Level":8,"Description":"\u6062\u590D\u751F\u547D1000","Param":[
-"1000",
-"",
-"",
-"",
-""]
-},
-	{"ID":10009,"MagicID":10,"NeedLevel":56,"NeedGold":3600,"Level":9,"Description":"\u6062\u590D\u751F\u547D1120","Param":[
-"1120",
-"",
-"",
-"",
-""]
-},
-	{"ID":10010,"MagicID":10,"NeedLevel":62,"NeedGold":3900,"Level":10,"Description":"\u6062\u590D\u751F\u547D1240","Param":[
-"1240",
-"",
-"",
-"",
-""]
-},
-	{"ID":10011,"MagicID":10,"NeedLevel":68,"NeedGold":4200,"Level":11,"Description":"\u6062\u590D\u751F\u547D1360","Param":[
-"1360",
-"",
-"",
-"",
-""]
-},
-	{"ID":10012,"MagicID":10,"NeedLevel":74,"NeedGold":4500,"Level":12,"Description":"\u6062\u590D\u751F\u547D1480","Param":[
-"1480",
-"",
-"",
-"",
-""]
-},
-	{"ID":10013,"MagicID":10,"NeedLevel":80,"NeedGold":4800,"Level":13,"Description":"\u6062\u590D\u751F\u547D1600","Param":[
-"1600",
-"",
-"",
-"",
-""]
-},
-	{"ID":10014,"MagicID":10,"NeedLevel":86,"NeedGold":5100,"Level":14,"Description":"\u6062\u590D\u751F\u547D1720","Param":[
-"1720",
-"",
-"",
-"",
-""]
-},
-	{"ID":10015,"MagicID":10,"NeedLevel":92,"NeedGold":5400,"Level":15,"Description":"\u6062\u590D\u751F\u547D1840","Param":[
-"1840",
-"",
-"",
-"",
-""]
-},
-	{"ID":10016,"MagicID":10,"NeedLevel":98,"NeedGold":5700,"Level":16,"Description":"\u6062\u590D\u751F\u547D1960","Param":[
-"1960",
-"",
-"",
-"",
-""]
-},
-	{"ID":13001,"MagicID":13,"NeedLevel":1,"NeedGold":800,"Level":1,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B3\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F5%\u6301\u7EED\u65F6\u95F41s","Param":[
+	{"ID":13001,"MagicID":13,"NeedLevel":1,"NeedGold":800,"Level":1,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B3\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F5%\u6301\u7EED\u65F6\u95F45s","Param":[
 "3",
 "500",
-"1000",
-"",
-""]
-},
-	{"ID":13002,"MagicID":13,"NeedLevel":4,"NeedGold":1200,"Level":2,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B12\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F5.8%\u6301\u7EED\u65F6\u95F41.2s","Param":[
-"12",
-"580",
-"1200",
-"",
-""]
-},
-	{"ID":13003,"MagicID":13,"NeedLevel":7,"NeedGold":1600,"Level":3,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B21\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F6.6%\u6301\u7EED\u65F6\u95F41.4s","Param":[
-"21",
-"660",
-"1400",
-"",
-""]
-},
-	{"ID":13004,"MagicID":13,"NeedLevel":10,"NeedGold":2000,"Level":4,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B30\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F7.4%\u6301\u7EED\u65F6\u95F41.6s","Param":[
-"30",
-"740",
-"1600",
-"",
-""]
-},
-	{"ID":13005,"MagicID":13,"NeedLevel":13,"NeedGold":2400,"Level":5,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B39\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F8.2%\u6301\u7EED\u65F6\u95F41.8s","Param":[
-"39",
-"820",
-"1800",
-"",
-""]
-},
-	{"ID":13006,"MagicID":13,"NeedLevel":16,"NeedGold":2800,"Level":6,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B48\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F9%\u6301\u7EED\u65F6\u95F42s","Param":[
-"48",
-"900",
-"2000",
-"",
-""]
-},
-	{"ID":13007,"MagicID":13,"NeedLevel":19,"NeedGold":3200,"Level":7,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B57\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F9.8%\u6301\u7EED\u65F6\u95F42.2s","Param":[
-"57",
-"980",
-"2200",
-"",
-""]
-},
-	{"ID":13008,"MagicID":13,"NeedLevel":22,"NeedGold":3600,"Level":8,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B66\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F10.6%\u6301\u7EED\u65F6\u95F42.4s","Param":[
-"66",
-"1060",
-"2400",
-"",
-""]
-},
-	{"ID":13009,"MagicID":13,"NeedLevel":25,"NeedGold":4000,"Level":9,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B75\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F11.4%\u6301\u7EED\u65F6\u95F42.6s","Param":[
-"75",
-"1140",
-"2600",
-"",
-""]
-},
-	{"ID":13010,"MagicID":13,"NeedLevel":28,"NeedGold":4400,"Level":10,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B84\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F12.2%\u6301\u7EED\u65F6\u95F42.8s","Param":[
-"84",
-"1220",
-"2800",
-"",
-""]
-},
-	{"ID":13011,"MagicID":13,"NeedLevel":31,"NeedGold":4800,"Level":11,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B93\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F13%\u6301\u7EED\u65F6\u95F43s","Param":[
-"93",
-"1300",
-"3000",
-"",
-""]
-},
-	{"ID":13012,"MagicID":13,"NeedLevel":34,"NeedGold":5200,"Level":12,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B102\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F13.8%\u6301\u7EED\u65F6\u95F43.2s","Param":[
-"102",
-"1380",
-"3200",
-"",
-""]
-},
-	{"ID":13013,"MagicID":13,"NeedLevel":37,"NeedGold":5600,"Level":13,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B111\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F14.6%\u6301\u7EED\u65F6\u95F43.4s","Param":[
-"111",
-"1460",
-"3400",
-"",
-""]
-},
-	{"ID":13014,"MagicID":13,"NeedLevel":40,"NeedGold":6000,"Level":14,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B120\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F15.4%\u6301\u7EED\u65F6\u95F43.6s","Param":[
-"120",
-"1540",
-"3600",
-"",
-""]
-},
-	{"ID":13015,"MagicID":13,"NeedLevel":43,"NeedGold":6400,"Level":15,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B129\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F16.2%\u6301\u7EED\u65F6\u95F43.8s","Param":[
-"129",
-"1620",
-"3800",
-"",
-""]
-},
-	{"ID":13016,"MagicID":13,"NeedLevel":46,"NeedGold":6800,"Level":16,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B138\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F17%\u6301\u7EED\u65F6\u95F44s","Param":[
-"138",
-"1700",
-"4000",
-"",
-""]
-},
-	{"ID":13017,"MagicID":13,"NeedLevel":49,"NeedGold":7200,"Level":17,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B147\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F17.8%\u6301\u7EED\u65F6\u95F44.2s","Param":[
-"147",
-"1780",
-"4200",
-"",
-""]
-},
-	{"ID":13018,"MagicID":13,"NeedLevel":52,"NeedGold":7600,"Level":18,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B156\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F18.6%\u6301\u7EED\u65F6\u95F44.4s","Param":[
-"156",
-"1860",
-"4400",
-"",
-""]
-},
-	{"ID":13019,"MagicID":13,"NeedLevel":55,"NeedGold":8000,"Level":19,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B165\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F19.4%\u6301\u7EED\u65F6\u95F44.6s","Param":[
-"165",
-"1940",
-"4600",
-"",
-""]
-},
-	{"ID":13020,"MagicID":13,"NeedLevel":58,"NeedGold":8400,"Level":20,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B174\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F20.2%\u6301\u7EED\u65F6\u95F44.8s","Param":[
-"174",
-"2020",
-"4800",
-"",
-""]
-},
-	{"ID":13021,"MagicID":13,"NeedLevel":61,"NeedGold":8800,"Level":21,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B183\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F21%\u6301\u7EED\u65F6\u95F45s","Param":[
-"183",
-"2100",
 "5000",
 "",
 ""]
 },
-	{"ID":13022,"MagicID":13,"NeedLevel":64,"NeedGold":9200,"Level":22,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B192\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F21.8%\u6301\u7EED\u65F6\u95F45.2s","Param":[
-"192",
-"2180",
-"5200",
+	{"ID":13002,"MagicID":13,"NeedLevel":4,"NeedGold":1200,"Level":2,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B12\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F5.8%\u6301\u7EED\u65F6\u95F45.5s","Param":[
+"12",
+"580",
+"5500",
 "",
 ""]
 },
-	{"ID":13023,"MagicID":13,"NeedLevel":67,"NeedGold":9600,"Level":23,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B201\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F22.6%\u6301\u7EED\u65F6\u95F45.4s","Param":[
-"201",
-"2260",
-"5400",
-"",
-""]
-},
-	{"ID":13024,"MagicID":13,"NeedLevel":70,"NeedGold":10000,"Level":24,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B210\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F23.4%\u6301\u7EED\u65F6\u95F45.6s","Param":[
-"210",
-"2340",
-"5600",
-"",
-""]
-},
-	{"ID":13025,"MagicID":13,"NeedLevel":73,"NeedGold":10400,"Level":25,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B219\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F24.2%\u6301\u7EED\u65F6\u95F45.8s","Param":[
-"219",
-"2420",
-"5800",
-"",
-""]
-},
-	{"ID":13026,"MagicID":13,"NeedLevel":76,"NeedGold":10800,"Level":26,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B228\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F25%\u6301\u7EED\u65F6\u95F46s","Param":[
-"228",
-"2500",
+	{"ID":13003,"MagicID":13,"NeedLevel":7,"NeedGold":1600,"Level":3,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B21\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F6.6%\u6301\u7EED\u65F6\u95F46s","Param":[
+"21",
+"660",
 "6000",
 "",
 ""]
 },
-	{"ID":13027,"MagicID":13,"NeedLevel":79,"NeedGold":11200,"Level":27,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B237\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F25.8%\u6301\u7EED\u65F6\u95F46.2s","Param":[
-"237",
-"2580",
-"6200",
+	{"ID":13004,"MagicID":13,"NeedLevel":10,"NeedGold":2000,"Level":4,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B30\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F7.4%\u6301\u7EED\u65F6\u95F46.5s","Param":[
+"30",
+"740",
+"6500",
 "",
 ""]
 },
-	{"ID":13028,"MagicID":13,"NeedLevel":82,"NeedGold":11600,"Level":28,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B246\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F26.6%\u6301\u7EED\u65F6\u95F46.4s","Param":[
-"246",
-"2660",
-"6400",
-"",
-""]
-},
-	{"ID":13029,"MagicID":13,"NeedLevel":85,"NeedGold":12000,"Level":29,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B255\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F27.4%\u6301\u7EED\u65F6\u95F46.6s","Param":[
-"255",
-"2740",
-"6600",
-"",
-""]
-},
-	{"ID":13030,"MagicID":13,"NeedLevel":88,"NeedGold":12400,"Level":30,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B264\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F28.2%\u6301\u7EED\u65F6\u95F46.8s","Param":[
-"264",
-"2820",
-"6800",
-"",
-""]
-},
-	{"ID":13031,"MagicID":13,"NeedLevel":91,"NeedGold":12800,"Level":31,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B273\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F29%\u6301\u7EED\u65F6\u95F47s","Param":[
-"273",
-"2900",
+	{"ID":13005,"MagicID":13,"NeedLevel":13,"NeedGold":2400,"Level":5,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B39\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F8.2%\u6301\u7EED\u65F6\u95F47s","Param":[
+"39",
+"820",
 "7000",
 "",
 ""]
 },
-	{"ID":13032,"MagicID":13,"NeedLevel":94,"NeedGold":13200,"Level":32,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B282\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F29.8%\u6301\u7EED\u65F6\u95F47.2s","Param":[
+	{"ID":13006,"MagicID":13,"NeedLevel":16,"NeedGold":2800,"Level":6,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B48\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F9%\u6301\u7EED\u65F6\u95F47.5s","Param":[
+"48",
+"900",
+"7500",
+"",
+""]
+},
+	{"ID":13007,"MagicID":13,"NeedLevel":19,"NeedGold":3200,"Level":7,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B57\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F9.8%\u6301\u7EED\u65F6\u95F48s","Param":[
+"57",
+"980",
+"8000",
+"",
+""]
+},
+	{"ID":13008,"MagicID":13,"NeedLevel":22,"NeedGold":3600,"Level":8,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B66\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F10.6%\u6301\u7EED\u65F6\u95F48.5s","Param":[
+"66",
+"1060",
+"8500",
+"",
+""]
+},
+	{"ID":13009,"MagicID":13,"NeedLevel":25,"NeedGold":4000,"Level":9,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B75\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F11.4%\u6301\u7EED\u65F6\u95F49s","Param":[
+"75",
+"1140",
+"9000",
+"",
+""]
+},
+	{"ID":13010,"MagicID":13,"NeedLevel":28,"NeedGold":4400,"Level":10,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B84\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F12.2%\u6301\u7EED\u65F6\u95F49.5s","Param":[
+"84",
+"1220",
+"9500",
+"",
+""]
+},
+	{"ID":13011,"MagicID":13,"NeedLevel":31,"NeedGold":4800,"Level":11,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B93\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F13%\u6301\u7EED\u65F6\u95F410s","Param":[
+"93",
+"1300",
+"10000",
+"",
+""]
+},
+	{"ID":13012,"MagicID":13,"NeedLevel":34,"NeedGold":5200,"Level":12,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B102\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F13.8%\u6301\u7EED\u65F6\u95F410.5s","Param":[
+"102",
+"1380",
+"10500",
+"",
+""]
+},
+	{"ID":13013,"MagicID":13,"NeedLevel":37,"NeedGold":5600,"Level":13,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B111\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F14.6%\u6301\u7EED\u65F6\u95F411s","Param":[
+"111",
+"1460",
+"11000",
+"",
+""]
+},
+	{"ID":13014,"MagicID":13,"NeedLevel":40,"NeedGold":6000,"Level":14,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B120\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F15.4%\u6301\u7EED\u65F6\u95F411.5s","Param":[
+"120",
+"1540",
+"11500",
+"",
+""]
+},
+	{"ID":13015,"MagicID":13,"NeedLevel":43,"NeedGold":6400,"Level":15,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B129\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F16.2%\u6301\u7EED\u65F6\u95F412s","Param":[
+"129",
+"1620",
+"12000",
+"",
+""]
+},
+	{"ID":13016,"MagicID":13,"NeedLevel":46,"NeedGold":6800,"Level":16,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B138\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F17%\u6301\u7EED\u65F6\u95F412.5s","Param":[
+"138",
+"1700",
+"12500",
+"",
+""]
+},
+	{"ID":13017,"MagicID":13,"NeedLevel":49,"NeedGold":7200,"Level":17,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B147\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F17.8%\u6301\u7EED\u65F6\u95F413s","Param":[
+"147",
+"1780",
+"13000",
+"",
+""]
+},
+	{"ID":13018,"MagicID":13,"NeedLevel":52,"NeedGold":7600,"Level":18,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B156\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F18.6%\u6301\u7EED\u65F6\u95F413.5s","Param":[
+"156",
+"1860",
+"13500",
+"",
+""]
+},
+	{"ID":13019,"MagicID":13,"NeedLevel":55,"NeedGold":8000,"Level":19,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B165\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F19.4%\u6301\u7EED\u65F6\u95F414s","Param":[
+"165",
+"1940",
+"14000",
+"",
+""]
+},
+	{"ID":13020,"MagicID":13,"NeedLevel":58,"NeedGold":8400,"Level":20,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B174\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F20.2%\u6301\u7EED\u65F6\u95F414.5s","Param":[
+"174",
+"2020",
+"14500",
+"",
+""]
+},
+	{"ID":13021,"MagicID":13,"NeedLevel":61,"NeedGold":8800,"Level":21,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B183\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F21%\u6301\u7EED\u65F6\u95F415s","Param":[
+"183",
+"2100",
+"15000",
+"",
+""]
+},
+	{"ID":13022,"MagicID":13,"NeedLevel":64,"NeedGold":9200,"Level":22,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B192\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F21.8%\u6301\u7EED\u65F6\u95F415.5s","Param":[
+"192",
+"2180",
+"15500",
+"",
+""]
+},
+	{"ID":13023,"MagicID":13,"NeedLevel":67,"NeedGold":9600,"Level":23,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B201\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F22.6%\u6301\u7EED\u65F6\u95F416s","Param":[
+"201",
+"2260",
+"16000",
+"",
+""]
+},
+	{"ID":13024,"MagicID":13,"NeedLevel":70,"NeedGold":10000,"Level":24,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B210\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F23.4%\u6301\u7EED\u65F6\u95F416.5s","Param":[
+"210",
+"2340",
+"16500",
+"",
+""]
+},
+	{"ID":13025,"MagicID":13,"NeedLevel":73,"NeedGold":10400,"Level":25,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B219\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F24.2%\u6301\u7EED\u65F6\u95F417s","Param":[
+"219",
+"2420",
+"17000",
+"",
+""]
+},
+	{"ID":13026,"MagicID":13,"NeedLevel":76,"NeedGold":10800,"Level":26,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B228\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F25%\u6301\u7EED\u65F6\u95F417.5s","Param":[
+"228",
+"2500",
+"17500",
+"",
+""]
+},
+	{"ID":13027,"MagicID":13,"NeedLevel":79,"NeedGold":11200,"Level":27,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B237\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F25.8%\u6301\u7EED\u65F6\u95F418s","Param":[
+"237",
+"2580",
+"18000",
+"",
+""]
+},
+	{"ID":13028,"MagicID":13,"NeedLevel":82,"NeedGold":11600,"Level":28,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B246\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F26.6%\u6301\u7EED\u65F6\u95F418.5s","Param":[
+"246",
+"2660",
+"18500",
+"",
+""]
+},
+	{"ID":13029,"MagicID":13,"NeedLevel":85,"NeedGold":12000,"Level":29,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B255\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F27.4%\u6301\u7EED\u65F6\u95F419s","Param":[
+"255",
+"2740",
+"19000",
+"",
+""]
+},
+	{"ID":13030,"MagicID":13,"NeedLevel":88,"NeedGold":12400,"Level":30,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B264\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F28.2%\u6301\u7EED\u65F6\u95F419.5s","Param":[
+"264",
+"2820",
+"19500",
+"",
+""]
+},
+	{"ID":13031,"MagicID":13,"NeedLevel":91,"NeedGold":12800,"Level":31,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B273\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F29%\u6301\u7EED\u65F6\u95F420s","Param":[
+"273",
+"2900",
+"20000",
+"",
+""]
+},
+	{"ID":13032,"MagicID":13,"NeedLevel":94,"NeedGold":13200,"Level":32,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B282\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F29.8%\u6301\u7EED\u65F6\u95F420.5s","Param":[
 "282",
 "2980",
-"7200",
+"20500",
 "",
 ""]
 },
-	{"ID":13033,"MagicID":13,"NeedLevel":97,"NeedGold":13600,"Level":33,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B291\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F30.6%\u6301\u7EED\u65F6\u95F47.4s","Param":[
+	{"ID":13033,"MagicID":13,"NeedLevel":97,"NeedGold":13600,"Level":33,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B291\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F30.6%\u6301\u7EED\u65F6\u95F421s","Param":[
 "291",
 "3060",
-"7400",
+"21000",
 "",
 ""]
 },
-	{"ID":13034,"MagicID":13,"NeedLevel":100,"NeedGold":14000,"Level":34,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B300\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F31.4%\u6301\u7EED\u65F6\u95F47.6s","Param":[
+	{"ID":13034,"MagicID":13,"NeedLevel":100,"NeedGold":14000,"Level":34,"Description":"\u63D0\u9AD8\u9632\u5FA1\u529B300\u589E\u52A0\u9B54\u6CD5\u8EB2\u907F31.4%\u6301\u7EED\u65F6\u95F421.5s","Param":[
 "300",
 "3140",
-"7600",
+"21500",
 "",
 ""]
 },

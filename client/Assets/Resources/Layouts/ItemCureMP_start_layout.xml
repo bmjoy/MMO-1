@@ -4,7 +4,7 @@
   <Points>
     <TimePoint>
       <GUID>f77113a4-577b-4c8c-8e8e-ed1045f89a9e</GUID>
-      <Time>0</Time>
+      <Time>0.0102040814</Time>
     </TimePoint>
     <TimePoint>
       <GUID>f143c33c-9278-4653-9239-fb2ce173be64</GUID>
@@ -36,7 +36,7 @@
       <fromBoneName>Body</fromBoneName>
       <toBoneName>Body</toBoneName>
       <Bind>false</Bind>
-      <destoryType>Normal</destoryType>
+      <destoryType>LayoutTimeOut</destoryType>
       <destoryTime>1</destoryTime>
       <offet>
         <x>0</x>

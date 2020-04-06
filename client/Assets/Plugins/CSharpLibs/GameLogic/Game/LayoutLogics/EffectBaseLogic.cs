@@ -164,7 +164,7 @@ namespace GameLogic.Game.LayoutLogics
             {
                 effectTarget.Clear();
                 var re = releaser.Releaser;
-                effectTarget.SetTeamIndex(re.OwnerIndex, re.Index);
+                effectTarget.SetTeamIndex(re.TeamIndex, re.Index);
                 releaser.AttachElement(effectTarget, false, effect.Time.ProcessValue(releaser) / 1000f);
             }
         }
