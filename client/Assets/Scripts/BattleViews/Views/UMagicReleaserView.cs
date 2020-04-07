@@ -20,6 +20,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
         RIndex = releaser;
         TIndex = target;
+        TargetPos = pos;
     }
 
     public UVector3 TargetPos;
