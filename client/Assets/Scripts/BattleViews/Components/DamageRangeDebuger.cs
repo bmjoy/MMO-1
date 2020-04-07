@@ -18,7 +18,6 @@ public class DamageRangeDebuger : MonoBehaviour
         _Rangges.Add(new DebugOfRange
         {
             Angle = layout.RangeType.angle,
-            EType = layout.effectType,
             forward = rotation,
             Pos = pos,
             Radius = layout.RangeType.radius,
@@ -29,7 +28,6 @@ public class DamageRangeDebuger : MonoBehaviour
 
     private class DebugOfRange
     {
-        public EffectType EType;
         public Vector3 Pos;
         public Quaternion forward;
         public float Radius;

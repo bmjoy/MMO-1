@@ -9,8 +9,8 @@ namespace GameLogic.Game.Elements
     {
         void ShowDamageRanger(DamageLayout layout);
 
-        [NeedNotify(typeof(Notify_PlayTimeLine),"Path")]
-        void PlayTimeLine(string layoutPath);
+        [NeedNotify(typeof(Notify_PlayTimeLine), "Path", "TargetIndex", "Type")]
+        void PlayTimeLine(string layoutPath, int target, int type);
 
         void PlayTest(TimeLine line);
     }

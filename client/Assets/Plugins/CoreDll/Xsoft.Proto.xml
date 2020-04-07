@@ -512,6 +512,17 @@
         <member name="F:Proto.Notify_PlayTimeLine.PathFieldNumber">
             <summary>Field number for the "Path" field.</summary>
         </member>
+        <member name="F:Proto.Notify_PlayTimeLine.TargetIndexFieldNumber">
+            <summary>Field number for the "TargetIndex" field.</summary>
+        </member>
+        <member name="F:Proto.Notify_PlayTimeLine.TypeFieldNumber">
+            <summary>Field number for the "Type" field.</summary>
+        </member>
+        <member name="P:Proto.Notify_PlayTimeLine.Type">
+             <summary>
+            事件类型
+             </summary>
+        </member>
         <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
             <summary>Field number for the "ServerNow" field.</summary>
         </member>

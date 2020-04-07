@@ -122,7 +122,7 @@ namespace GameLogic.Game.Elements
                     _players.AddLast(player);
 
                     if (i.line == null)
-                        View.PlayTimeLine(i.layoutPath);//for runtime
+                        View.PlayTimeLine(i.layoutPath,target.Index,(int)eventType);//for runtime
                     else
                         View.PlayTest(i.line);//for editor
 

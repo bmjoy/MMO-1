@@ -14,7 +14,7 @@ using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(int releaser, int target)
+    public void SetCharacter(int releaser, int target, UVector3 pos)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
@@ -22,7 +22,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         TIndex = target;
     }
 
-
+    public UVector3 TargetPos;
     private int RIndex;
     private int TIndex;
 
@@ -33,29 +33,35 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
 
-    void IMagicReleaser.PlayTimeLine(string layoutPath)
+    void IMagicReleaser.PlayTimeLine(string layoutPath,int targetIndex, int type)
     {
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PlayTimeLine
         {
             Path = layoutPath,
-            Index = Index
+            Index = Index,
+            TargetIndex = targetIndex,
+            Type =type
         });
 #endif
 #if !UNITY_SERVER
-        PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath));
+
+        var eType = (Layout.EventType)type;
+
+        var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
+        PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
 #endif
     }
 
-    private void PlayLine(TimeLine timeLine)
+    private void PlayLine(TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
     {
         if (timeLine == null) return;
-        _players.AddLast(new TimeLineViewPlayer(timeLine, this));
+        _players.AddLast(new TimeLineViewPlayer(timeLine, this, eventTarget, type));
     }
 
     void IMagicReleaser.PlayTest(TimeLine line)
     {
-        PlayLine(line);
+        PlayLine(line, this.CharacterTarget, Layout.EventType.EVENT_START);
     }
 
     private void TickTimeLine(GTime time)
@@ -87,7 +93,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Index = Index,
             ReleaserIndex = RIndex,
             TargetIndex = TIndex,
-            MagicKey = Key
+            MagicKey = Key,
+            Position = TargetPos.ToPV3()
         };
         return createNotify;
     }

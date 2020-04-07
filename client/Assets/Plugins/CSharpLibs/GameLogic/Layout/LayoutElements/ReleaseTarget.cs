@@ -6,7 +6,8 @@ namespace Layout
 	{
 		Releaser,//释放者
 		Target,//目标
-        EventTarget
+        EventTarget,
+		TargetPoistion //目标位置
 	}
 }
 

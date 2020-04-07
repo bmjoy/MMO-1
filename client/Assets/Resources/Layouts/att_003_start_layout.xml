@@ -34,7 +34,7 @@
   <Layouts>
     <LayoutBase xsi:type="DamageLayout">
       <GUID>b2e2f13f-92e0-4551-892f-09471d9430f8</GUID>
-      <target>Target</target>
+      <target>TargetPoistion</target>
       <RangeType>
         <damageType>Rangle</damageType>
         <fiterType>EmenyTeam</fiterType>
@@ -47,7 +47,6 @@
           <z>0</z>
         </offsetPosition>
       </RangeType>
-      <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
     <LayoutBase xsi:type="LookAtTarget">
@@ -61,8 +60,8 @@
     <LayoutBase xsi:type="ParticleLayout">
       <GUID>a4fa31fe-f794-464c-8cae-847da9238d6a</GUID>
       <path>Effects/Rain/RainWater.prefab</path>
-      <fromTarget>Target</fromTarget>
-      <toTarget>Releaser</toTarget>
+      <fromTarget>TargetPoistion</fromTarget>
+      <toTarget>TargetPoistion</toTarget>
       <fromBoneName>Bottom</fromBoneName>
       <toBoneName>Bottom</toBoneName>
       <Bind>false</Bind>

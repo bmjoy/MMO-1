@@ -17,21 +17,12 @@ namespace Layout.LayoutElements
 		EmenyTeam, //敌人队伍
 		Alliance   //联盟队伍 
 	}
-
-	public enum EffectType
-	{
-		EffectGroupAll=0,
-		EffectGroup, //event group
-		EffectConfig //config
-	}
-
 	public class DamageRange
 	{
 		[Label("伤害筛选类型")]
 		public DamageType damageType= DamageType.Rangle;
-		[Label("过滤方式")]
+		[Label("过滤方式(释放者为过滤源)")]
 		public FilterType fiterType = FilterType.EmenyTeam;
-
 		[Label("半径")]
 		public float radius = 1;
 		[Label("范围角度方向")]
@@ -40,7 +31,6 @@ namespace Layout.LayoutElements
 		public float offsetAngle =0;
 		[Label("偏移向量")]
 		public Vector3 offsetPosition = Vector3.zero;
-
         public override string ToString()
         {
 			if (damageType == DamageType.Single)
@@ -52,20 +42,12 @@ namespace Layout.LayoutElements
 	[EditorLayout("目标判定")]
 	public class DamageLayout:LayoutBase
 	{
-		public DamageLayout()
-		{
-			target = TargetType.Releaser;
-			effectType = EffectType.EffectGroup;
-		}
-
 		[Label("目标")]
-		public TargetType target;
+		public TargetType target = TargetType.Target;
 
         [Label("范围")]
 		public DamageRange RangeType = new DamageRange();
 
-		[Label("效果取值来源")]
-		public EffectType effectType;
 		[Label("执行的效果组Key")]
 		public string effectKey;
 

@@ -14,8 +14,8 @@ using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using UnityEngine;
 using System.Linq;
-using static EngineCore.Simulater.GState;
 using ExcelConfig;
+
 
 namespace GameLogic.Game.Perceptions
 {
@@ -428,23 +428,22 @@ namespace GameLogic.Game.Perceptions
 
         }
 
-        public List<BattleCharacter> DamageFindTarget(
-            BattleCharacter target,
+        public List<BattleCharacter> DamageFindTarget(BattleCharacter deTarget,
+            UVector3 target,
+            Quaternion rototion,
             FilterType fitler,
             Layout.LayoutElements.DamageType damageType,
             float radius, float angle, float offsetAngle,
             UVector3 offset, int teamIndex, bool igDeath = true)
         {
-          
             switch (damageType)
             {
-                case Layout.LayoutElements.DamageType.Single://单体直接对目标
-                    return new List<BattleCharacter> { target };
+
                 case Layout.LayoutElements.DamageType.Rangle:
                     {
-                        var orgin = target.Position + target.Rototion * offset;
+                        var orgin = target + rototion * offset;
                         var q = Quaternion.Euler(0, offsetAngle, 0);
-                        var forward = q * target.Rototion * UVector3.forward;
+                        var forward = q * rototion * UVector3.forward;
                         var list = new List<BattleCharacter>();
                         State.Each<BattleCharacter>((t) =>
                         {
@@ -462,20 +461,23 @@ namespace GameLogic.Game.Perceptions
 
                             }
                             if (Distance(t, orgin) > radius) return false;
-                            var len =  t.Position- orgin;
+                            var len = t.Position - orgin;
                             if (angle < 360)
                             {
                                 var an = UVector3.Angle(len, forward);
-                                if (an> angle / 2) return false;
+                                if (an > angle / 2) return false;
                             }
                             list.Add(t);
                             return false;
                         });
                         return list;
                     }
-            }
 
-            return new List<BattleCharacter>();
+                case Layout.LayoutElements.DamageType.Single:
+                default:
+                    return new List<BattleCharacter> { deTarget };
+
+            }
         }
 
         public void StopAllReleaserByCharacter(BattleCharacter character)
