@@ -18,7 +18,7 @@
       </View>
       <selectType>Nearest</selectType>
       <filter>None</filter>
-      <useMagicConfig>true</useMagicConfig>
+      <useMagicConfig>false</useMagicConfig>
       <teamType>Enemy</teamType>
       <findNew>true</findNew>
     </TreeNode>
@@ -28,8 +28,8 @@
       <guid>960d6629-a6a4-42ee-b771-45791bad3939</guid>
       <valueOf>Value</valueOf>
       <distance>
-        <min>200</min>
-        <max>250</max>
+        <min>100</min>
+        <max>120</max>
         <type>Range</type>
       </distance>
     </TreeNode>

@@ -26,12 +26,19 @@
   <Layouts>
     <LayoutBase xsi:type="CallUnitLayout">
       <GUID>f7c95c4f-9317-4671-8a9d-ae4ab7279005</GUID>
-      <CType>ConfigID</CType>
-      <characterID>10002</characterID>
-      <valueFrom>CurrentConfig</valueFrom>
-      <level>5</level>
+      <characterID>
+        <ValueForm>CurrentConfig</ValueForm>
+        <Value>10002</Value>
+      </characterID>
+      <level>
+        <ValueForm>CurrentConfig</ValueForm>
+        <Value>1</Value>
+      </level>
       <AIPath />
-      <time>60</time>
+      <time>
+        <ValueForm>CurrentConfig</ValueForm>
+        <Value>-1</Value>
+      </time>
       <maxNum>10</maxNum>
       <offset>
         <x>0</x>

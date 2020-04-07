@@ -52,6 +52,13 @@ namespace GameLogic.Game.AIBehaviorTree
 					break;
 				}
 			}
+
+			if (BattlePerception.Distance(root.Character, target) > stopDistance)
+			{
+				if (root.IsDebug) { Attach("failure", "move failure"); }
+				yield return RunStatus.Failure;
+				yield break;
+			}
 			
 
 			yield return RunStatus.Success;
