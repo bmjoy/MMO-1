@@ -43,7 +43,6 @@
           <z>0</z>
         </offsetPosition>
       </RangeType>
-      <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
     <LayoutBase xsi:type="PlaySoundLayout">

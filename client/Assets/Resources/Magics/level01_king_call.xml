@@ -10,4 +10,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

@@ -5,9 +5,9 @@
       <childs />
       <name>查找目标</name>
       <guid>d1dcc863-ae17-475a-8c07-e6a77f030171</guid>
-      <valueOf>ViewDistance</valueOf>
+      <valueOf>Value</valueOf>
       <Distance>
-        <min>0</min>
+        <min>1500</min>
         <max>0</max>
         <type>Fixed</type>
       </Distance>
@@ -45,9 +45,9 @@
       <name>等待时间</name>
       <guid>6c25c68f-2af8-4c4b-8fd4-60f748757e68</guid>
       <seconds>
-        <min>2000</min>
+        <min>1000</min>
         <max>3000</max>
-        <type>Range</type>
+        <type>Fixed</type>
       </seconds>
     </TreeNode>
   </childs>

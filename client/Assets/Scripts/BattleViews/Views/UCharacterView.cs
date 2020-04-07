@@ -356,18 +356,31 @@ public class UCharacterView : UElementView, IBattleCharacter
             character.transform.RestRTS();
             character.name = "VIEW";
             var collider = character.GetComponent<CapsuleCollider>();
+
+            var height = 1f;
+            var radius = .5f;
+            int direction =1;
+            Vector3 center = new Vector3(0, 0.5f, 0);
+            if (collider)
+            {
+                height = collider.height;
+                radius = collider.radius;
+                center = collider.center;
+                direction = collider.direction;
+            }
+
             character.transform.SetLayer(this.ViewRoot.layer);
            
-            GetBoneByName(TopBone).localPosition = new Vector3(0, collider.height, 0);
+            GetBoneByName(TopBone).localPosition = new Vector3(0, height, 0);
             GetBoneByName(BottomBone).localPosition = new Vector3(0, 0, 0);
-            GetBoneByName(BodyBone). localPosition = new Vector3(0, collider.height / 2, 0);
-            Agent.radius = collider.radius;
-            Agent.height = collider.height;
+            GetBoneByName(BodyBone). localPosition = new Vector3(0, height / 2, 0);
+            Agent.radius = radius;
+            Agent.height = height;
             var c = this.gameObject.AddComponent<CapsuleCollider>();
-            c.radius = collider.radius;
-            c.height = collider.height;
-            c.center = collider.center;
-            c.direction = collider.direction;
+            c.radius = radius;
+            c.height = height;
+            c.center = center;
+            c.direction = direction;
             c.isTrigger = true;
 
            
@@ -376,7 +389,6 @@ public class UCharacterView : UElementView, IBattleCharacter
 #else
             CharacterAnimator = character.GetComponent<Animator>();
 #endif
-
 
         });
     }

@@ -7,7 +7,7 @@
       <guid>81cb6b94-9a90-4fe7-ae13-bef19a406cb7</guid>
       <valueOf>Value</valueOf>
       <Distance>
-        <min>100</min>
+        <min>500</min>
         <max>0</max>
         <type>Fixed</type>
       </Distance>
@@ -19,8 +19,8 @@
       <selectType>Nearest</selectType>
       <filter>None</filter>
       <useMagicConfig>false</useMagicConfig>
-      <teamType>Own</teamType>
-      <findNew>false</findNew>
+      <teamType>OwnTeamWithOutSelf</teamType>
+      <findNew>true</findNew>
     </TreeNode>
     <TreeNode xsi:type="TreeNodeReleaseMagic">
       <childs />
