@@ -4,7 +4,7 @@
   <Points>
     <TimePoint>
       <GUID>f77113a4-577b-4c8c-8e8e-ed1045f89a9e</GUID>
-      <Time>0.0102040814</Time>
+      <Time>0</Time>
     </TimePoint>
     <TimePoint>
       <GUID>f143c33c-9278-4653-9239-fb2ce173be64</GUID>
@@ -12,11 +12,11 @@
     </TimePoint>
     <TimePoint>
       <GUID>f143c33c-9278-4653-9239-fb2ce173be64</GUID>
-      <Time>0.551401854</Time>
+      <Time>0</Time>
     </TimePoint>
     <TimePoint>
       <GUID>3393a9d0-3f83-4b7e-ad89-35efcec2f1eb</GUID>
-      <Time>0.976190448</Time>
+      <Time>0.996143937</Time>
     </TimePoint>
   </Points>
   <Layouts>
@@ -47,7 +47,7 @@
       <target>Releaser</target>
       <RangeType>
         <damageType>Single</damageType>
-        <fiterType>OwnerTeam</fiterType>
+        <fiterType>ALL</fiterType>
         <radius>1</radius>
         <angle>360</angle>
         <offsetAngle>0</offsetAngle>
