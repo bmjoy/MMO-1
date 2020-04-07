@@ -285,7 +285,6 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 IMessage action = msg.AsAction();
                 if (action is Action_CollectItem collect)
                 {
-
                     if (Simulater.TryGetElementByIndex(collect.Index, out BattleItem item))
                     {
                         if (item.IsAliveAble == true && item.CanBecollect(i.Value.HeroCharacter))
@@ -323,11 +322,14 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 {
                     if (action is Action_ClickSkillIndex)
                     {
+                        i.Value.HeroCharacter?.AiRoot.ClearActions();
                         i.Value.HeroCharacter?.AiRoot.BreakTree();
                     }
+                    i.Value.Client.ClearAction();
                     i.Value.HeroCharacter?.AiRoot?.PushAction(action);
                 }
             }
+
             if (needNotifyPackage)
             {
                 var init = i.Value.GetNotifyPackage();

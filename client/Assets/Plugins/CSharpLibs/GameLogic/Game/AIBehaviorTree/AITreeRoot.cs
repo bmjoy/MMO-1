@@ -221,6 +221,12 @@ namespace GameLogic.Game.AIBehaviorTree
             return true;
         }
 
+
+        public void ClearActions()
+        {
+            NetActions.Clear();
+        }
+
         internal bool TryGetMagic(out CharacterMagicData magicData)
         {
             magicData = null;
@@ -242,6 +248,7 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             return $"{TreePath}";
         }
+
     }
 }
 
