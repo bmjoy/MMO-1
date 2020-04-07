@@ -102,9 +102,10 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     private void OnDestroy()
     {
-        foreach (var i in pPlayers)
-            i.DestoryParticle();
+        foreach (var i in pPlayers) i.DestoryParticle();
         pPlayers.Clear();
+        foreach (var i in _players) i.Destory();
+        _players.Clear();
     }
 
     private void Update()
