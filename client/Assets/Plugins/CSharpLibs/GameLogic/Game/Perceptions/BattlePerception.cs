@@ -115,7 +115,6 @@ namespace GameLogic.Game.Perceptions
             return mReleaser;
         }
 
-
         public BattleMissile CreateMissile(MissileLayout layout, MagicReleaser releaser)
         {
             var view = this.View.CreateMissile(releaser.Index,

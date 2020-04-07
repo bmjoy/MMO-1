@@ -397,7 +397,6 @@ public class UCharacterView : UElementView, IBattleCharacter
     }
 
 
-
     public bool ShowName { set; get; } = false;
     public int MP { get; private set; }
     public int MpMax { get; private set; }

@@ -47,16 +47,17 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 #if !UNITY_SERVER
 
         var eType = (Layout.EventType)type;
-
         var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
         PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
 #endif
     }
 
-    private void PlayLine(TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
+    private TimeLineViewPlayer PlayLine(TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
     {
-        if (timeLine == null) return;
-        _players.AddLast(new TimeLineViewPlayer(timeLine, this, eventTarget, type));
+        if (timeLine == null) return null;
+        var player = new TimeLineViewPlayer(timeLine, this, eventTarget, type);
+        _players.AddLast(player);
+        return player;
     }
 
     void IMagicReleaser.PlayTest(TimeLine line)
