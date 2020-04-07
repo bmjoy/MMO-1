@@ -82,11 +82,13 @@ public class GMainGate:UGate
         c.cullingMask = LayerMask.GetMask("Player");
         go.transform.localPosition = new Vector3(0, 1.1f, 1.5f);
         c.farClipPlane = 5;
+        c.clearFlags = CameraClearFlags.SolidColor;
+        c.backgroundColor = new Color(1, 1, 1, 0);
         go.TryAdd<LookAtTarget>().target = characterView.GetBoneByName(UCharacterView.BodyBone);
         return characterView;
     }
-    public RenderTexture LookAtView { private set; get; }
 
+    public RenderTexture LookAtView { private set; get; }
 
     internal void RotationHero(float x)
     {
@@ -113,7 +115,6 @@ public class GMainGate:UGate
     {
 
         yield return SceneManager.LoadSceneAsync("Main");
-
         Data = FindObjectOfType<MainData>();
         view = UPerceptionView.Create();
         Client = new RequestClient<GateServerTaskHandler>(ServerInfo.Host, ServerInfo.Port, false)
