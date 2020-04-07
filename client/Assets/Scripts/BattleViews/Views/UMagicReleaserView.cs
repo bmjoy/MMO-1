@@ -14,13 +14,13 @@ using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(int releaser, int target, UVector3 pos)
+    public void SetCharacter(int releaser, int target, UVector3 targetpos)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
         RIndex = releaser;
         TIndex = target;
-        TargetPos = pos;
+        TargetPos = targetpos;
     }
 
     public UVector3 TargetPos;
