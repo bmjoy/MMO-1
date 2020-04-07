@@ -10,8 +10,10 @@ namespace GameLogic.Game.LayoutLogics
 {
 	public abstract class TimeLinePlayerBase
 	{
-		public TimeLinePlayerBase(TimeLine timeLine)
+		public int Index { set; get; }
+		public TimeLinePlayerBase(TimeLine timeLine, int index)
 		{
+			this.Index = index;
 			Line = timeLine;
 		}
 		private float startTime = -1;
@@ -69,11 +71,14 @@ namespace GameLogic.Game.LayoutLogics
 
 	public class TimeLinePlayer : TimeLinePlayerBase
 	{
-		public TimeLinePlayer(TimeLine timeLine,
+        
+
+		public TimeLinePlayer(int pIndex, TimeLine timeLine,
             MagicReleaser releaser,
             EventContainer eventType,
-            BattleCharacter eventTarget) : base(timeLine)
+            BattleCharacter eventTarget) : base( timeLine, pIndex)
 		{
+			this.Index = pIndex;
 			this.Releaser = releaser;
 			this.TypeEvent = eventType;
 			this.EventTarget = eventTarget;

@@ -512,6 +512,26 @@
         <member name="F:Proto.Notify_PlayTimeLine.PathFieldNumber">
              <summary>Field number for the "Path" field.</summary>
             </member>
+        <member name="F:Proto.Notify_PlayTimeLine.TargetIndexFieldNumber">
+             <summary>Field number for the "TargetIndex" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_PlayTimeLine.TypeFieldNumber">
+             <summary>Field number for the "Type" field.</summary>
+            </member>
+        <member name="P:Proto.Notify_PlayTimeLine.Type">
+             <summary>
+            事件类型
+             </summary>
+            </member>
+        <member name="F:Proto.Notify_PlayTimeLine.PlayIndexFieldNumber">
+             <summary>Field number for the "PlayIndex" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CancelTimeLine.IndexFieldNumber">
+             <summary>Field number for the "Index" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CancelTimeLine.PlayIndexFieldNumber">
+             <summary>Field number for the "PlayIndex" field.</summary>
+            </member>
         <member name="F:Proto.Notify_SyncServerTime.ServerNowFieldNumber">
              <summary>Field number for the "ServerNow" field.</summary>
             </member>
@@ -538,6 +558,9 @@
             </member>
         <member name="F:Proto.Notify_CharacterTeamIndex.TeamIndexFieldNumber">
              <summary>Field number for the "TeamIndex" field.</summary>
+            </member>
+        <member name="F:Proto.Notify_CharacterTeamIndex.OwnerIndexFieldNumber">
+             <summary>Field number for the "OwnerIndex" field.</summary>
             </member>
         <member name="T:Proto.BattleServerService.ExitBattle">
              <summary>
@@ -1397,6 +1420,71 @@
              货币类型
              </summary>
             </member>
+        <member name="T:EConfig.GoldShopData">
+             <summary>
+             金币商店
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Name">
+             <summary>
+             名称
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Icon">
+             <summary>
+             图片
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.Prices">
+             <summary>
+             价格
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.ReceiveGold">
+             <summary>
+             
+             </summary>
+            </member>
+        <member name="P:EConfig.GoldShopData.CoinOfGold">
+             <summary>
+             每个钻石多少金币
+             </summary>
+            </member>
+        <member name="T:EConfig.GemShopData">
+             <summary>
+             钻石商店
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Name">
+             <summary>
+             名称
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Icon">
+             <summary>
+             图片
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.BundleId">
+             <summary>
+             商店Key
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.Prices">
+             <summary>
+             价格
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.ReceiveCoin">
+             <summary>
+             获得钻石
+             </summary>
+            </member>
+        <member name="P:EConfig.GemShopData.OneOfValue">
+             <summary>
+             价值兑换
+             </summary>
+            </member>
         <member name="T:EConfig.CharacterData">
              <summary>
              角色数据表
@@ -1415,6 +1503,11 @@
         <member name="P:EConfig.CharacterData.AIResourcePath">
              <summary>
              AI路径
+             </summary>
+            </member>
+        <member name="P:EConfig.CharacterData.ViewSize">
+             <summary>
+             大小
              </summary>
             </member>
         <member name="P:EConfig.CharacterData.ViewDistance">
@@ -1968,6 +2061,26 @@
             取魔法等级表数据参数1
              </summary>
             </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam2">
+             <summary>
+            参数2
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam3">
+             <summary>
+            参数3
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam4">
+             <summary>
+            参数4
+             </summary>
+            </member>
+        <member name="F:Proto.GetValueFrom.MagicLevelParam5">
+             <summary>
+            参数5
+             </summary>
+            </member>
         <member name="F:Proto.TargetTeamType.All">
              <summary>
             所有
@@ -1991,6 +2104,16 @@
         <member name="F:Proto.TargetTeamType.Own">
              <summary>
             只有自己
+             </summary>
+            </member>
+        <member name="F:Proto.StandType.StRandom">
+             <summary>
+            随机
+             </summary>
+            </member>
+        <member name="F:Proto.StandType.StAround">
+             <summary>
+            围绕
              </summary>
             </member>
         <member name="F:Proto.MapType.Boss">
@@ -2434,6 +2557,21 @@
         <member name="F:Proto.Task_G2C_JoinBattle.ServerFieldNumber">
              <summary>Field number for the "Server" field.</summary>
             </member>
+        <member name="F:Proto.C2G_BuyGold.ShopIdFieldNumber">
+             <summary>Field number for the "ShopId" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.GoldFieldNumber">
+             <summary>Field number for the "Gold" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.CoinFieldNumber">
+             <summary>Field number for the "Coin" field.</summary>
+            </member>
+        <member name="F:Proto.G2C_BuyGold.ReceivedGoldFieldNumber">
+             <summary>Field number for the "ReceivedGold" field.</summary>
+            </member>
         <member name="T:Proto.GateServerService.Login">
              <summary>
              1
@@ -2492,6 +2630,11 @@
         <member name="T:Proto.GateServerService.BuyItem">
              <summary>
              12
+             </summary>    
+            </member>
+        <member name="T:Proto.GateServerService.BuyGold">
+             <summary>
+             13
              </summary>    
             </member>
         <member name="T:Proto.GateServerTask.SyncPackage">
@@ -3270,6 +3413,11 @@
         <member name="T:Proto.NotifyService.CharacterTeamIndex">
              <summary>
              39
+             </summary>    
+            </member>
+        <member name="T:Proto.NotifyService.CancelTimeLine">
+             <summary>
+             40
              </summary>    
             </member>
     </members>

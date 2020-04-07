@@ -11,7 +11,7 @@ namespace Layout.LayoutEffects
         Value
     }
 
-    [EditorEffect("切换团队")]
+    //[EditorEffect("切换团队")]
     //[EffectId(2)]
     public class ModifyTeamIndexEffect:EffectBase
     {

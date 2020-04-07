@@ -23,9 +23,7 @@ public class CharacterProperty
 [
     BoneName("Top", "__Top"),
     BoneName("Bottom", "__Bottom"),
-    BoneName("Body", "__Body"),
-//BoneName("HandLeft","bn_handleft"),
-//BoneName("HandRight","bn_handright")
+    BoneName("Body", "__Body")
 ]
 public class UCharacterView : UElementView, IBattleCharacter
 {
@@ -120,7 +118,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             Target = wrapTar;
             if (Vector3.Distance(wrapTar.Value, View.transform.position) < stopDis)
             {
-                return false;
+                return true;
             }
             View.Agent.stoppingDistance = stopDis;
             View.Agent.SetDestination(wrapTar.Value);
@@ -130,8 +128,8 @@ public class UCharacterView : UElementView, IBattleCharacter
         public Vector3? ChangeTarget(Vector3 target, float dis)
         {
             stopDis = dis;
-            MoveTo(target);
-            return Target;
+            if (MoveTo(target)) return Target;
+            else return null;
         }
 
         public override void Exit()
@@ -344,6 +342,11 @@ public class UCharacterView : UElementView, IBattleCharacter
         StartCoroutine(Init(path));
     }
 
+    internal void SetScale(float viewSize)
+    {
+        this.gameObject.transform.localScale = Vector3.one * viewSize;
+    }
+
     private IEnumerator Init(string path)
     {
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(path,(obj)=>
@@ -392,7 +395,6 @@ public class UCharacterView : UElementView, IBattleCharacter
         lockRotationTime = Time.time + 0.3f;
         LookQuaternion = targetLookQuaternion = Quaternion.LookRotation(look, Vector3.up); ;
     }
-
 
 
     public bool ShowName { set; get; } = false;
@@ -597,7 +599,7 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetScale(float scale)
     {
         if (!this) return;
-        this.gameObject.transform.localScale = Vector3.one * scale;
+        this.SetScale(scale);
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterSetScale { Index = Index, Scale = scale });
 #endif
@@ -802,6 +804,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             StopDis = stopDis
         });
 #endif
+     
         return MoveToPos(target.ToUV3(), stopDis);
     }
 
@@ -841,14 +844,16 @@ public class UCharacterView : UElementView, IBattleCharacter
         this.Level = level;
     }
 
-    void IBattleCharacter.SetTeamIndex(int tIndex)
+    void IBattleCharacter.SetTeamIndex(int tIndex,int ownerIndex)
     {
         TeamId = tIndex;
+        OwnerIndex = ownerIndex;
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_CharacterTeamIndex
         {
             Index = Index,
-            TeamIndex = tIndex
+            TeamIndex = tIndex,
+            OwnerIndex = ownerIndex
         });
 #endif
     }

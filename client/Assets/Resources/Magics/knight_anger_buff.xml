@@ -21,7 +21,10 @@
             </EffectBase>
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
-              <DamageValue>-5000</DamageValue>
+              <DamageValue>
+                <ValueForm>MagicLevelParam1</ValueForm>
+                <Value>0</Value>
+              </DamageValue>
             </EffectBase>
           </effects>
           <key>001</key>

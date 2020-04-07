@@ -86,7 +86,7 @@ namespace Windows
 
         public Texture2D Map;
         private Color32[] Colors;
-        private int size=75;
+        private readonly int size=75;
         protected override void InitModel()
         {
             base.InitModel();
@@ -181,6 +181,8 @@ namespace Windows
 
         private string keyHp = string.Empty;
 
+        private string keyMp = string.Empty;
+
         internal void InitHero(DHero hero)
         {
             this.Level_Number.text = $"{hero.Level}";
@@ -210,6 +212,10 @@ namespace Windows
                 if ((ItemType)config.ItemType == ItemType.ItHpitem)
                 {
                     keyHp = config.Params[0];
+                }
+                if ((ItemType)config.ItemType == ItemType.ItMpitem)
+                {
+                    keyMp = config.Params[0];
                 }
             }
         }
@@ -254,7 +260,7 @@ namespace Windows
                 }
             }
             bt_hp.interactable = !gate.PreView.HaveOwnerKey(keyHp);
-
+            bt_mp.interactable = !gate.PreView.HaveOwnerKey(keyMp);
         }
 
 

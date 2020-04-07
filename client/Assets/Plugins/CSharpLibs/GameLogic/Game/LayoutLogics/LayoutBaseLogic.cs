@@ -80,66 +80,73 @@ namespace GameLogic.Game.LayoutLogics
 		}
 		#endregion
 
-        #region DamageLayout
+		#region DamageLayout
 		[HandleLayout(typeof(DamageLayout))]
 		public static void DamageActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
 			var releaser = linePlayer.Releaser;
 			var layout = layoutBase as DamageLayout;
 
-            BattleCharacter orginTarget;
-            switch (layout.target)
+			UVector3? targetPos;
+			UnityEngine.Quaternion rototion = UnityEngine.Quaternion.identity;
+			BattleCharacter deTarget = releaser.Target;
+			switch (layout.target)
 			{
 				case Layout.TargetType.Releaser:
-					orginTarget = releaser.ReleaserTarget.Releaser;
+					targetPos = releaser.Releaser.Position;
+					rototion = releaser.Releaser.Rototion;
+					deTarget = releaser.Releaser;
 					break;
 				case Layout.TargetType.Target:
 					if (releaser.ReleaserTarget.ReleaserTarget == null) return;
-					orginTarget = releaser.ReleaserTarget.ReleaserTarget;
+					targetPos = releaser.Target.Position;
+					rototion = releaser.Target.Rototion;
+					deTarget = releaser.Target;
+					break;
+				case Layout.TargetType.EventTarget:
+					targetPos = linePlayer.EventTarget.Position;
+					rototion = linePlayer.EventTarget.Rototion;
+					deTarget = linePlayer.EventTarget;
 					break;
 				default:
-					orginTarget = linePlayer.EventTarget;
+					targetPos = releaser.ReleaserTarget.TargetPosition;
 					break;
-            }
+			}
 
-			
-			if (orginTarget == null)
-            {
-				throw new Exception ("Do not have target of orgin. type:" + layout.target.ToString ());
+			if (targetPos == null)
+			{
+				throw new Exception("Do not have target of orgin. type:" + layout.target.ToString());
 			}
 
 			var offsetPos = layout.RangeType.offsetPosition.ToUV3();
-			var per = releaser.Controllor.Perception  as BattlePerception;
-			var targets = per.DamageFindTarget(orginTarget,
-				layout.RangeType.fiterType, 
-				layout.RangeType.damageType, 
+			var per = releaser.Controllor.Perception as BattlePerception;
+			var targets = per.DamageFindTarget(
+				deTarget,
+				targetPos.Value,
+				rototion,
+				layout.RangeType.fiterType,
+				layout.RangeType.damageType,
 				layout.RangeType.radius,
-				layout.RangeType.angle, 
+				layout.RangeType.angle,
 				layout.RangeType.offsetAngle,
-                offsetPos,releaser.Releaser.TeamIndex);
+				offsetPos,
+				releaser.Releaser.TeamIndex);
 
-			releaser.ShowDamageRange(layout);
+			releaser.ShowDamageRange(layout,targetPos.Value,rototion);
 
-			if (string.IsNullOrEmpty (layout.effectKey))
+			if (string.IsNullOrEmpty(layout.effectKey))
 			{
 				return;
 			}
 
-			//完成一次目标判定
-			if (targets.Count > 0) 
+			var group = linePlayer.TypeEvent.FindGroupByKey(layout.effectKey);
+			if (group == null) return;
+			foreach (var t in targets)
 			{
-				if (layout.effectType == EffectType.EffectGroup) 
+				if (!t) continue;
+				foreach (var i in group.effects)
 				{
-					var group = linePlayer.TypeEvent.FindGroupByKey(layout.effectKey);
-					if (group == null) return;
-					foreach (var t in targets)
-					{
-						if (!t) continue;
-						foreach (var i in group.effects)
-						{
-							EffectBaseLogic.EffectActive(t, i, releaser);
-						}
-					}
+					EffectBaseLogic.EffectActive(t, i, releaser);
 				}
 			}
 
@@ -157,7 +164,7 @@ namespace GameLogic.Game.LayoutLogics
 			int level = unitLayout.level.ProcessValue(linePlayer.Releaser);
 			//判断是否达到上限
 			if (unitLayout.maxNum <= releaser.UnitCount) return;
-			int id = unitLayout.CType == CharacterType.ConfigID ? unitLayout.characterID : charachter.ConfigID;
+			int id = unitLayout.characterID.ProcessValue(releaser);
 			var data = ExcelToJSONConfigManager
 				.Current.GetConfigByID<CharacterData>(id);
 
@@ -175,14 +182,14 @@ namespace GameLogic.Game.LayoutLogics
 
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
-			releaser.AttachElement(unit, false, unitLayout.time);
-			releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE);
+			releaser.AttachElement(unit, false, unitLayout.time.ProcessValue(releaser)/1000f);
+			releaser.OnEvent(Layout.EventType.EVENT_UNIT_CREATE,unit);
 			var ai = unitLayout.AIPath;
 			if (string.IsNullOrEmpty(ai)) ai = data.AIResourcePath;
 			per.ChangeCharacterAI(ai, unit);
 			unit.OnDead = (el) => 
 			{
-				releaser.OnEvent(Layout.EventType.EVENT_UNIT_DEAD);
+				releaser.OnEvent(Layout.EventType.EVENT_UNIT_DEAD,unit);
                 GObject.Destroy(el, 3);
 			};
 		}
@@ -211,7 +218,7 @@ namespace GameLogic.Game.LayoutLogics
 					if (obj is MagicReleaser r)
 					{
 						if (hit.TeamIndex == r.ReleaserTarget.Releaser.TeamIndex) return;
-						if (r.TryHit(hit)) r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT);
+						if (r.TryHit(hit)) r.OnEvent(Layout.EventType.EVENT_MISSILE_HIT,hit);
 					}
 				},
 				releaser);

@@ -9,12 +9,13 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="AddBufEffect">
-              <DiType>-1</DiType>
+              <DiType>5</DiType>
               <buffMagicKey>hiden_buff</buffMagicKey>
               <durationTime>
                 <ValueForm>MagicLevelParam1</ValueForm>
                 <Value>0</Value>
               </durationTime>
+              <CopyParams>true</CopyParams>
             </EffectBase>
           </effects>
           <Des>添加buff</Des>

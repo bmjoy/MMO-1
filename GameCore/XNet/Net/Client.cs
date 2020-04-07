@@ -161,10 +161,15 @@ namespace XNet.Libs.Net
 		/// <param name="action"></param>
 		public void SetActionMessage(Message action)
 		{
-			if (_actionMessage.Count >= MAX_ACTION_BUFFER)
-				_actionMessage.TryDequeue(out Message _);
+			if (_actionMessage.Count >= MAX_ACTION_BUFFER) _actionMessage.TryDequeue(out Message _);
 			_actionMessage.Enqueue(action);
 		}
+
+		public void ClearAction()
+		{
+			while (_actionMessage.Count > 0)
+				_actionMessage.TryDequeue(out _);
+        }
 
 		public override string ToString()
 		{

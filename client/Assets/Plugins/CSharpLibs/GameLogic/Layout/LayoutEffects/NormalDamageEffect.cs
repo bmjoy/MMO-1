@@ -21,12 +21,12 @@ namespace Layout.LayoutEffects
 		[Label("取值来源")]
 		public ValueOf valueOf = ValueOf.NormalAttack;
 
-		[Label("固定伤害值")]
+		[Label("伤害附加倍数")]
 		public ValueSourceOf DamageValue = 0;
 
 		public override string ToString()
 		{
-			return $"取值方式:{valueOf} -参数 {DamageValue}";
+			return $"取值方式:{valueOf} -附加倍数 {DamageValue}";
 		}
 	}
 }

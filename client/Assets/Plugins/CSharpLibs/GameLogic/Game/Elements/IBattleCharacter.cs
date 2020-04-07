@@ -52,8 +52,8 @@ namespace GameLogic.Game.Elements
         void SetLookRotation(Proto.Vector3 eu);//use angle
         [NeedNotify(typeof(Notify_CharacterLevel),"Level")]
         void SetLevel(int level);
-        [NeedNotify(typeof(Notify_CharacterTeamIndex),"TeamIndex")]
-        void SetTeamIndex(int tIndex);
+        [NeedNotify(typeof(Notify_CharacterTeamIndex),"TeamIndex","OwnerIndex")]
+        void SetTeamIndex(int tIndex,int ownerIndex);
     }
 }
 

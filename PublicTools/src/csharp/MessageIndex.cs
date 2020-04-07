@@ -68,6 +68,8 @@ namespace Proto
     [Index(1003022,typeof(G2C_Shop))]
     [Index(1003023,typeof(C2G_BuyItem))]
     [Index(1003024,typeof(G2C_BuyItem))]
+    [Index(1003025,typeof(C2G_BuyGold))]
+    [Index(1003026,typeof(G2C_BuyGold))]
     [Index(1004001,typeof(Task_G2C_SyncPackage))]
     [Index(1004003,typeof(Task_G2C_SyncHero))]
     [Index(1004005,typeof(Task_G2C_JoinBattle))]
@@ -121,6 +123,7 @@ namespace Proto
     [Index(1009056,typeof(Notify_CharacterExp))]
     [Index(1009058,typeof(Notify_CharacterLevel))]
     [Index(1009060,typeof(Notify_CharacterTeamIndex))]
+    [Index(1009062,typeof(Notify_CancelTimeLine))]
 
     [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs

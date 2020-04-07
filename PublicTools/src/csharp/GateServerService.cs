@@ -139,8 +139,20 @@ namespace Proto.GateServerService
     }
     
 
+    /// <summary>
+    /// 13
+    /// </summary>    
+    [API(13)]
+    public class BuyGold:APIBase<C2G_BuyGold, G2C_BuyGold> 
+    {
+        private BuyGold() : base() { }
+        public  static BuyGold CreateQuery(){ return new BuyGold();}
+    }
+    
+
     public interface IGateServerService
     {
+        [API(13)]G2C_BuyGold BuyGold(C2G_BuyGold req);
         [API(12)]G2C_BuyItem BuyItem(C2G_BuyItem req);
         [API(11)]G2C_Shop QueryShop(C2G_Shop req);
         [API(10)]G2C_MagicLevelUp MagicLevelUp(C2G_MagicLevelUp req);
@@ -159,6 +171,7 @@ namespace Proto.GateServerService
 
     public abstract class GateServerService
     {
+        [API(13)]public abstract Task<G2C_BuyGold> BuyGold(C2G_BuyGold request);
         [API(12)]public abstract Task<G2C_BuyItem> BuyItem(C2G_BuyItem request);
         [API(11)]public abstract Task<G2C_Shop> QueryShop(C2G_Shop request);
         [API(10)]public abstract Task<G2C_MagicLevelUp> MagicLevelUp(C2G_MagicLevelUp request);

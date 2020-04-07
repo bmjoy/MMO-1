@@ -125,6 +125,7 @@ namespace GameLogic.Game.LayoutLogics
 
             var rT = new ReleaseAtTarget(releaser.Releaser, effectTarget);
             var r= per.CreateReleaser(effect.buffMagicKey, releaser.Releaser, rT, ReleaserType.Buff, effect.durationTime.ProcessValue(releaser)/1000f);
+            if (effect.CopyParams) r.SetParam(releaser.Params);
             r.DisposeValue = effect.DiType;
         }
 
@@ -152,19 +153,19 @@ namespace GameLogic.Game.LayoutLogics
             if (effect.revertType == RevertType.ReleaserDeath) releaser.RevertLock(effectTarget, effect.lockType);
         }
 
-        [EffectHandle(typeof(ModifyTeamIndexEffect))]
-        public static void ModifyTeamIndexEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
+    
+        //CharmEffect
+        [EffectHandle(typeof(CharmEffect))]
+        public static void CharmEffect(BattleCharacter effectTarget, EffectBase e, MagicReleaser releaser)
         {
-            var effect = e as ModifyTeamIndexEffect;
+            var effect = e as CharmEffect;
             if (effectTarget.Level > effect.Level.ProcessValue(releaser)) return;
-
-            if (effect.valueFromType == ValueFromType.Releaser)
+            if (GRandomer.Probability10000(effect.ProValue.ProcessValue(releaser)))
             {
-                effectTarget.SetTeamIndex(releaser.Releaser.TeamIndex);
-            }
-            else
-            {
-                effectTarget.SetTeamIndex(effect.TeamIndex);
+                effectTarget.Clear();
+                var re = releaser.Releaser;
+                effectTarget.SetTeamIndex(re.TeamIndex, re.Index);
+                releaser.AttachElement(effectTarget, false, effect.Time.ProcessValue(releaser) / 1000f);
             }
         }
     }

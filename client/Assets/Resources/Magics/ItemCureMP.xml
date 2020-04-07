@@ -10,7 +10,10 @@
           <effects>
             <EffectBase xsi:type="CureMPEffect">
               <valueType>FixedValue</valueType>
-              <value>150</value>
+              <value>
+                <ValueForm>CurrentConfig</ValueForm>
+                <Value>30</Value>
+              </value>
             </EffectBase>
           </effects>
           <key>001</key>
@@ -20,5 +23,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
-  <unique>false</unique>
+  <unique>true</unique>
 </MagicData>

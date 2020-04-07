@@ -14,15 +14,16 @@ using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(int releaser, int target)
+    public void SetCharacter(int releaser, int target, UVector3 targetpos)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
         RIndex = releaser;
         TIndex = target;
+        TargetPos = targetpos;
     }
 
-
+    public UVector3 TargetPos;
     private int RIndex;
     private int TIndex;
 
@@ -33,29 +34,59 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
 
-    void IMagicReleaser.PlayTimeLine(string layoutPath)
+    void IMagicReleaser.PlayTimeLine(int pIndex ,string layoutPath,int targetIndex, int type)
     {
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PlayTimeLine
         {
             Path = layoutPath,
-            Index = Index
+            Index = Index,
+            TargetIndex = targetIndex,
+            Type =type,
+            PlayIndex = pIndex
         });
 #endif
 #if !UNITY_SERVER
-        PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath));
+
+        var eType = (Layout.EventType)type;
+        var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
+        PlayLine(pIndex, (PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
 #endif
     }
 
-    private void PlayLine(TimeLine timeLine)
+    void IMagicReleaser.CancelTimeLine(int pIndex)
     {
-        if (timeLine == null) return;
-        _players.AddLast(new TimeLineViewPlayer(timeLine, this));
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CancelTimeLine
+        {
+            Index = Index,
+            PlayIndex = pIndex
+        }); ;
+#endif
+#if !UNITY_SERVER
+        foreach (var i in _players)
+        {
+            if (i.Index == pIndex)
+            {
+                _players.Remove(i);
+                i.Destory();
+                break;
+            }
+        }     
+#endif
     }
 
-    void IMagicReleaser.PlayTest(TimeLine line)
+    private TimeLineViewPlayer PlayLine(int pIndex,TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
     {
-        PlayLine(line);
+        if (timeLine == null) return null;
+        var player = new TimeLineViewPlayer(pIndex,timeLine, this, eventTarget, type);
+        _players.AddLast(player);
+        return player;
+    }
+
+    void IMagicReleaser.PlayTest(int pIndex,TimeLine line)
+    {
+        PlayLine(pIndex, line, this.CharacterTarget, Layout.EventType.EVENT_START);
     }
 
     private void TickTimeLine(GTime time)
@@ -87,16 +118,18 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Index = Index,
             ReleaserIndex = RIndex,
             TargetIndex = TIndex,
-            MagicKey = Key
+            MagicKey = Key,
+            Position = TargetPos.ToPV3()
         };
         return createNotify;
     }
 
     private void OnDestroy()
     {
-        foreach (var i in pPlayers)
-            i.DestoryParticle();
+        foreach (var i in pPlayers) i.DestoryParticle();
         pPlayers.Clear();
+        foreach (var i in _players) i.Destory();
+        _players.Clear();
     }
 
     private void Update()
@@ -105,18 +138,16 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
     }
 
 
-    void IMagicReleaser.ShowDamageRanger(DamageLayout layout)
+    void IMagicReleaser.ShowDamageRanger(DamageLayout layout, UVector3 tar, Quaternion rototion)
     {
 #if UNITY_EDITOR
         if (layout.RangeType.damageType == Layout.LayoutElements.DamageType.Rangle)
         {
-            var target = layout.target == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget;
-            var pos = target.Transform.position + target.Rotation * layout.RangeType.offsetPosition.ToUV3();
-            DamageRangeDebuger.TryGet(this.gameObject)
-                .AddDebug(layout, pos, target.Transform.rotation);
+            var pos = tar + rototion * layout.RangeType.offsetPosition.ToUV3();
+            DamageRangeDebuger.TryGet(this.gameObject).AddDebug(layout, pos,rototion);
         }
 #endif
     }
 
-
+  
 }

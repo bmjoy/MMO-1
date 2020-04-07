@@ -46,30 +46,40 @@ namespace GameLogic.Game.AIBehaviorTree
                 TargetTeamType type = mc.Config.GetTeamType();
                 root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
                 var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.Nearest);
-                while (true)
+                if (!target)
                 {
-                    if (!target)
-                    {
-                        yield return RunStatus.Failure;
-                        yield break;
-                    }
-                    var last = root.Time;
-                    if (!root.Character.MoveTo(target.Position, out _, mc.Config.RangeMax))
-                    {
-                        if (context.IsDebug) Attach("failure", $"can move");
-                        yield return RunStatus.Failure;
-                        yield break;
-                    }
-                    while (last + 0.4f > root.Time && root.Character.IsMoving)
-                    {
-                        yield return RunStatus.Running;
-                    }
-                    if (!root.Character.IsMoving) break;
+                    if (root.IsDebug) { Attach("failure", "no found target in view"); }
+                    yield return RunStatus.Failure;
+                    yield break;
                 }
+
+                if (BattlePerception.Distance(root.Character, target) > mc.Config.RangeMax)
+                {
+                    while (true)
+                    {
+                       
+                        var last = root.Time;
+                        if (!root.Character.MoveTo(target.Position, out _, mc.Config.RangeMax))
+                        {
+                            if (context.IsDebug) Attach("failure", $"can move");
+                            yield return RunStatus.Failure;
+                            yield break;
+                        }
+                        while (last + 0.4f > root.Time && root.Character.IsMoving)
+                        {
+                            yield return RunStatus.Running;
+                        }
+                        if (!root.Character.IsMoving) break;
+                    }
+                }
+
                 var rTarget = new ReleaseAtTarget(root.Character, target);
                 releaser = root.Perception.CreateReleaser(mc.Config.MagicKey, root.Character, rTarget, ReleaserType.Magic, -1);
                 if (!releaser)
                 {
+                    if (root.IsDebug) {
+                        Attach("failure", "Releaser is empty!!!");
+                    }
                     yield return RunStatus.Failure;
                     yield break;
                 }

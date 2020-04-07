@@ -31,6 +31,9 @@ namespace Layout.LayoutEffects
 		[Label("持续时间")]
 		public ValueSourceOf durationTime =1000;
 
+        [Label("复制魔法参数")]
+		public bool CopyParams = false;
+
 		public override string ToString()
 		{
 			return $"效果 {buffMagicKey} 持续 {durationTime}s 消失方式{DType}";

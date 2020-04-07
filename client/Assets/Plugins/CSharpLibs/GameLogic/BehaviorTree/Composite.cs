@@ -25,7 +25,7 @@ namespace BehaviorTree
                 Current.Dispose();
                 Current = null;
             }
-            if (LastStatus.HasValue && LastStatus.Value == RunStatus.Running)
+            if (LastStatus == RunStatus.Running)
             {
                 Attach("failure", "block by other");
                 LastStatus = RunStatus.Failure;
@@ -46,9 +46,8 @@ namespace BehaviorTree
 
             if (Current.MoveNext()) LastStatus = Current.Current;
             else throw new Exception($"{this.GetType()} of {Guid} Nothing to run? Somethings gone terribly, terribly wrong!");
-
-            if (LastStatus != RunStatus.Running) Stop(context);
-
+            if (LastStatus != RunStatus.Running)
+                Stop(context);
             return this.LastStatus.Value;
         }
 

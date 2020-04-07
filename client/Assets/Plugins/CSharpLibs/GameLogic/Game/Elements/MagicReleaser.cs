@@ -78,7 +78,7 @@ namespace GameLogic.Game.Elements
             Params = parms;
         }
 
-        private string[] Params;
+        public string[] Params { private set; get; }
 
         public string this[int paramIndex]
         {
@@ -105,6 +105,8 @@ namespace GameLogic.Game.Elements
             State = state;
         }
 
+        private int playerIndex = 0;
+
         public void OnEvent(EventType eventType, BattleCharacter target = null)
         {
             target = target??ReleaserTarget.ReleaserTarget;
@@ -116,15 +118,16 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
+                    
                     var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
-                    var player = new TimeLinePlayer(timeLine, this, i, target);
+                    playerIndex++;
+
+                    var player = new TimeLinePlayer(playerIndex, timeLine, this, i, target);
                     _players.AddLast(player);
 
-                    if (i.line == null)
-                        View.PlayTimeLine(i.layoutPath);//for runtime
-                    else
-                        View.PlayTest(i.line);//for editor
+                    if (i.line == null) View.PlayTimeLine(playerIndex,i.layoutPath,target.Index,(int)eventType);//for runtime
+                    else View.PlayTest(playerIndex, i.line);//for editor
 
                     if (i.type == EventType.EVENT_START)
                     {
@@ -173,7 +176,7 @@ namespace GameLogic.Game.Elements
         }
 
         private readonly LinkedList<TimeLinePlayer> _players = new LinkedList<TimeLinePlayer>();
-        private readonly Queue<long> _removeTemp = new Queue<long>();
+        private readonly Queue<int> _removeTemp = new Queue<int>();
 
         public void Tick(GTime time)
         {
@@ -188,6 +191,8 @@ namespace GameLogic.Game.Elements
                 }
                 current = current.Next;
             }
+
+            if (_objs.Count == 0) return;
 
             foreach (var i in _objs)
             {
@@ -210,15 +215,19 @@ namespace GameLogic.Game.Elements
                 else
                 {
                     _removeTemp.Enqueue(i.Key);
-                    OnEvent(EventType.EVENT_UNIT_DEAD);
                 }
+            }
+
+            while (_removeTemp.Count > 0)
+            {
+                _objs.Remove(_removeTemp.Dequeue());
             }
 
         }
 
-        internal void ShowDamageRange(DamageLayout layout)
+        internal void ShowDamageRange(DamageLayout layout, UnityEngine. Vector3 tar,  UnityEngine.Quaternion rototion)
         {
-            this.View.ShowDamageRanger(layout);
+            this.View.ShowDamageRanger(layout,tar, rototion);
         }
 
         public bool IsCompleted
@@ -263,8 +272,7 @@ namespace GameLogic.Game.Elements
             get
             {
                 if (State == ReleaserStates.NOStart) return false;
-                if (State == ReleaserStates.Starting && startLayout != null)
-                    return startLayout.IsFinshed;
+                if (State == ReleaserStates.Starting && startLayout!=null) return startLayout.IsFinshed;
                 return true;
             }
         }
@@ -277,10 +285,7 @@ namespace GameLogic.Game.Elements
 
         public void StopAllPlayer()
         {
-            foreach (var i in _players)
-            {
-                i.Destory();
-            }
+            foreach (var i in _players) { i.Destory(); View.CancelTimeLine(i.Index); }
             _players.Clear();
         }
 

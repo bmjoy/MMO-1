@@ -10,6 +10,12 @@ using XNet.Libs.Utility;
 
 public class StartType : MonoBehaviour
 {
+
+    public enum SceneType
+    {
+        Server,
+        Application
+    }
    
     private IEnumerator Start()
     {
@@ -21,18 +27,17 @@ public class StartType : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
 #if UNITY_SERVER
-        scene = "Server";
+        scene =  SceneType.Server;
         Application.targetFrameRate = 30;
 #else
 #if !UNITY_EDITOR
-        scene = "Application";
+       scene =  SceneType.Application;
 #endif
 #endif
-
-        yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        yield return SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Single);
         Destroy(this);
     }
 
     [Header("Type:Server/Application")]
-    public string scene;
+    public SceneType scene = SceneType.Application;
 }

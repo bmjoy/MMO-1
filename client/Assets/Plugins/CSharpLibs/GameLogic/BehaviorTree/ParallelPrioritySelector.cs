@@ -16,36 +16,40 @@ namespace BehaviorTree
         {
         }
 
+        public override void Start(ITreeRoot context)
+        {
+            base.Start(context);
+           
+        }
+
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
             foreach (var i in Children)
             {
                 i.Start(context);
             }
-
-            var status = RunStatus.Running;
+            RunStatus status = RunStatus.Running;
             while (status == RunStatus.Running)
             {
-                //默认执行完成
                 status = RunStatus.Failure;
                 foreach (var i in Children)
                 {
                     //如果已经执行完跳过
                     if (i.LastStatus.HasValue && i.LastStatus.Value != RunStatus.Running) continue;
-                    if (i.Tick(context) == RunStatus.Success)
+                    i.Tick(context);
+                }
+                foreach(var i in Children)
+                { 
+                    if (i.LastStatus == RunStatus.Success)
                     {
                         status = RunStatus.Success;
                         break;
                     }
-                    status = RunStatus.Running;
+                    if (i.LastStatus == RunStatus.Running) status = RunStatus.Running;
                 }
-                yield return status;
-                if (status != RunStatus.Running) yield break;
+                if (status == RunStatus.Running) yield return RunStatus.Running;
             }
-
-            yield return  RunStatus.Failure;
+            yield return status;
         }
-
-
 	}
 }

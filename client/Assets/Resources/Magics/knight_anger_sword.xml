@@ -10,10 +10,10 @@
           <effects>
             <EffectBase xsi:type="NormalDamageEffect">
               <valueOf>NormalAttack</valueOf>
-              <DamageValue>3000</DamageValue>
-            </EffectBase>
-            <EffectBase xsi:type="BreakReleaserEffect">
-              <breakType>InStartLayoutMagic</breakType>
+              <DamageValue>
+                <ValueForm>MagicLevelParam1</ValueForm>
+                <Value>0</Value>
+              </DamageValue>
             </EffectBase>
           </effects>
           <key>001</key>
@@ -23,4 +23,5 @@
   </Containers>
   <triggerTicksTime>-1</triggerTicksTime>
   <triggerDurationTime>-1</triggerDurationTime>
+  <unique>false</unique>
 </MagicData>

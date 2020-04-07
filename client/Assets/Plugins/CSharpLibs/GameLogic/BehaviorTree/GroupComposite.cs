@@ -12,22 +12,26 @@ namespace BehaviorTree
 			Children = new List<Composite>(children);
         }
 
-        public List<Composite> Children { get; set; }
+        public List<Composite> Children { get; private set; }
+
         public override void Start(ITreeRoot context)
 		{
             base.Start(context);
         }
+
         public override void Stop(ITreeRoot context)
         {
             foreach (var i in Children)
             {
-                if (LastStatus == RunStatus.Running) i.Stop(context);
+                if (i.LastStatus == RunStatus.Running)
+                    i.Stop(context);
             }
             base.Stop(context);
         }
+
 		public override Composite FindGuid(string id)
 		{
-			if (this.Guid == id) return this;
+			if (Guid == id) return this;
 			foreach (var i in Children)
 			{
 				var t = i.FindGuid(id);

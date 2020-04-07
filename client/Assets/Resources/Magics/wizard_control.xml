@@ -8,13 +8,19 @@
       <effectGroup>
         <EffectGroup>
           <effects>
-            <EffectBase xsi:type="ModifyTeamIndexEffect">
-              <valueFromType>Releaser</valueFromType>
-              <TeamIndex>0</TeamIndex>
+            <EffectBase xsi:type="CharmEffect">
+              <ProValue>
+                <ValueForm>MagicLevelParam3</ValueForm>
+                <Value>10000</Value>
+              </ProValue>
               <Level>
-                <ValueForm>CurrentConfig</ValueForm>
+                <ValueForm>MagicLevelParam1</ValueForm>
                 <Value>1</Value>
               </Level>
+              <Time>
+                <ValueForm>MagicLevelParam2</ValueForm>
+                <Value>1000</Value>
+              </Time>
             </EffectBase>
           </effects>
           <key>001</key>

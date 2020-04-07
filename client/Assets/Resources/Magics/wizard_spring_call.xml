@@ -9,9 +9,9 @@
         <EffectGroup>
           <effects>
             <EffectBase xsi:type="CureEffect">
-              <valueType>FixedValue</valueType>
+              <valueType>NormalAttack</valueType>
               <value>
-                <ValueForm>CurrentConfig</ValueForm>
+                <ValueForm>MagicLevelParam1</ValueForm>
                 <Value>40</Value>
               </value>
             </EffectBase>

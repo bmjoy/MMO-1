@@ -59,7 +59,7 @@ namespace GServer.Managers
 
         internal async Task SyncToClient(Client userClient, string playerUuid, bool packageOnly = false)
         {
-            // var playerUuid = (string)userClient.UserState;
+            
             var player = await FindPlayerById(playerUuid);
             var p = await FindPackageByPlayerID(playerUuid);
 
@@ -231,9 +231,11 @@ namespace GServer.Managers
             var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player_uuid);
 
 
-            if (levelconfig.CostGold > player.Gold || levelconfig.CostCoin > player.Coin)
+            if (levelconfig.CostGold > 0 && levelconfig.CostGold > player.Gold )
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.NoEnoughtGold };
 
+            if (levelconfig.CostCoin > 0 && levelconfig.CostCoin > player.Coin)
+                return new G2C_EquipmentLevelUp { Code = ErrorCode.NoEnoughtCoin };
 
             if (levelconfig.CostGold > 0)
             {
@@ -261,6 +263,29 @@ namespace GServer.Managers
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
 
+        internal async Task<G2C_BuyGold> BuyGold(Client client, string accountUuid, int shopId)
+        {
+            var item = ExcelToJSONConfigManager.Current.GetConfigByID<GoldShopData>(shopId);
+            if (item == null) return new G2C_BuyGold { Code = ErrorCode.NofoundItem };
+            var player = await FindPlayerByAccountId(accountUuid);
+            if (player.Coin < item.Prices) return new G2C_BuyGold { Code = ErrorCode.NoEnoughtCoin };
+            var update = Builders<GamePlayerEntity>.Update
+                .Set(t => t.Coin, player.Coin - item.Prices)
+                .Set(t => t.Gold, player.Gold + item.ReceiveGold);
+            var idFilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            await DataBase.S.Playes.UpdateOneAsync(idFilter, update);
+
+            await SyncToClient(client, player.Uuid, true);
+
+            return new G2C_BuyGold
+            {
+                Code = ErrorCode.Ok,
+                Coin = player.Coin - item.Prices,
+                Gold = player.Gold + item.ReceiveGold,
+                ReceivedGold = item.ReceiveGold
+            };
+        }
+
         internal async Task<G2C_MagicLevelUp> MagicLevelUp(Client client, int magicId, int level, string accountUuid)
         {
             var player = await FindPlayerByAccountId(accountUuid);
@@ -273,27 +298,22 @@ namespace GServer.Managers
 
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
+
             if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
             {
-                if (level == 1)
-                {
-                    hero.Magics.Add(magicId, new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 1 });
-                }
-                else
-                    return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+                magic = new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 0 };
+                hero.Magics.Add(magicId, magic);
             }
 
-            
-
+            if(levelConfig.NeedGold > 0)
             {
                 var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-                player.Coin -= levelConfig.NeedGold;
-                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Coin, player.Coin);
+                player.Gold -= levelConfig.NeedGold;
+                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold);
                 await DataBase.S.Playes.UpdateOneAsync(filter, update);
             }
 
             magic.Level += 1;
-
             {
                 var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
                 var update = Builders<GameHeroEntity>.Update.Set(t => t.Magics, hero.Magics);
@@ -313,43 +333,34 @@ namespace GServer.Managers
         {
             var player =  await FindPlayerByAccountId(acount_id);
 
-
-           
             var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid , player.Uuid);
-            FilterDefinition<GamePlayerEntity> query_player = id;
-
             bool update = false;
             if (item.CType == CoinType.Coin)
             {
                 if (item.Prices > player.Coin) return ErrorCode.NoEnoughtCoin;
-
                 var coin = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Coin);
-                query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
-                var update_player = Builders<GamePlayerEntity>.Update
-                    .Set(t => t.Coin ,player.Coin -  item.Prices);
-               var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
+                var query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
+                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Coin ,player.Coin -  item.Prices);
+                var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
                 update = res.ModifiedCount > 0;
             }
-
-            if (item.CType == CoinType.Gold)
+            else if (item.CType == CoinType.Gold)
             {
                 if (item.Prices > player.Gold) return ErrorCode.NoEnoughtGold;
-                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Gold);
-                query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
-                var update_player = Builders<GamePlayerEntity>.Update
-                   .Set(t => t.Gold, player.Gold - item.Prices);
+                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
+                var query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
+                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold - item.Prices);
                 var res = await DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
                 update = res.ModifiedCount > 0;
             }
 
-            //使用同步
+            if (!update) return ErrorCode.Error;
+
             if (await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum }))
             {
                 await SyncToClient(c, player.Uuid, true);
                 return ErrorCode.Ok;
-
             }
-
             return ErrorCode.Error;
         }
 
@@ -399,24 +410,21 @@ namespace GServer.Managers
 
             var h = (await DataBase.S.Heros.FindAsync(fiterHero)).Single();
             var p = (await DataBase.S.Packages.FindAsync(fiterPackage)).Single();
-            //var pl = (await DataBase.S.Playes.FindAsync(fiter)).Single();
+           
 
             foreach (var i in items)
             {
                 foreach (var e in h.Equips)
                 {
-                    if (i.Guid == e.Value)
-                        return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
+                    if (i.Guid == e.Value)  return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
                 }
 
                 if (!p.Items.TryGetValue(i.Guid, out ItemNum item))
                     return new G2C_SaleItem { Code = ErrorCode.NofoundItem };
                 if (item.Num < i.Num)
                     return new G2C_SaleItem { Code = ErrorCode.NoenoughItem };
-
                 if (item.IsLock)
                     return new G2C_SaleItem { Code = ErrorCode.Error };
-
             }
 
             var total = 0;
@@ -441,8 +449,8 @@ namespace GServer.Managers
             var u_filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, pl.Uuid);
             await DataBase.S.Playes.UpdateOneAsync(u_filter, u_player);
             await DataBase.S.Packages.UpdateOneAsync(fiterPackage, u_package);
+            await SyncToClient(client, pl.Uuid);
 
-            SyncToClient(client, pl.Uuid).Wait();
             return new G2C_SaleItem { Code = ErrorCode.Ok, Coin = pl.Coin, Gold = pl.Gold };
 
         }

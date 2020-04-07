@@ -18,14 +18,19 @@
   <Layouts>
     <LayoutBase xsi:type="CallUnitLayout">
       <GUID>44e1cfbc-5e89-45d2-b6dc-4764306a7e8d</GUID>
-      <CType>OwnerID</CType>
-      <characterID>0</characterID>
+      <characterID>
+        <ValueForm>MagicLevelParam2</ValueForm>
+        <Value>0</Value>
+      </characterID>
       <level>
         <ValueForm>MagicLevelParam1</ValueForm>
         <Value>0</Value>
       </level>
-      <AIPath>AI/archer_call_ai.xml</AIPath>
-      <time>-1</time>
+      <AIPath />
+      <time>
+        <ValueForm>CurrentConfig</ValueForm>
+        <Value>-1</Value>
+      </time>
       <maxNum>1</maxNum>
       <offset>
         <x>0</x>

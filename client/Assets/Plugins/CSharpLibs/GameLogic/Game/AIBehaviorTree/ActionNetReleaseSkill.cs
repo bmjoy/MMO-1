@@ -42,7 +42,6 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield break;
             }
 
-
             var type = magic.Config.GetTeamType();
             var dis = magic.Config.RangeMax;
 
@@ -83,15 +82,14 @@ namespace GameLogic.Game.AIBehaviorTree
                 root.Character.TryToSetPosition(message.Position.ToUV3(), message.Rotation.ToUV3());
             }
 
-
             if (!root.Character.SubMP(magic.Config.MPCost))
             {
                 yield return RunStatus.Failure;
                 yield break;
             }
+
             var rt = new ReleaseAtTarget(root.Character, target);
             releaser = root.Perception.CreateReleaser(magic.Config.MagicKey, root.Character,rt, ReleaserType.Magic, 0);
-          
             if (releaser)
             {
                 releaser.SetParam(magic.Params);
@@ -111,7 +109,9 @@ namespace GameLogic.Game.AIBehaviorTree
         {
             if (LastStatus == RunStatus.Running)
             {
-                releaser?.Cancel();
+                if(releaser!=null)
+                releaser.Cancel();
+                releaser = null;
             }
             base.Stop(context);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using GameLogic.Game.Elements;
 using GameLogic.Game.LayoutLogics;
 using Layout.LayoutElements;
 using UnityEngine;
@@ -50,7 +51,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     public static void ParticleActive(TimeLineViewPlayer player, LayoutBase layoutBase)
     {
         var layout = layoutBase as ParticleLayout;
-        var particle = player.RView.PerView.CreateParticlePlayer(player.RView, layout);
+        var particle = player.RView.PerView.CreateParticlePlayer(player.RView, layout,player.EventTarget);
         if (particle == null) return;
         switch (layout.destoryType)
         {
@@ -93,6 +94,10 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
         {
             player.RView.CharacterTarget?.PlayMotion(layout.motionName);
         }
+        else if (layout.targetType == Layout.TargetType.EventTarget)
+        {
+            player.EventTarget?.PlayMotion(layout.motionName);
+        }
     }
     #endregion
 
@@ -102,30 +107,62 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     {
         var sound = layoutBase as PlaySoundLayout;
         var tar = sound.target;
-        if ((tar == Layout.TargetType.Releaser ? player.RView.CharacterReleaser : player.RView.CharacterTarget)
-            is UCharacterView orgin)
+        UnityEngine.Vector3? pos = null;
+        switch (tar)
         {
-            if (orgin)
-            {
-                var pos = orgin.GetBoneByName(sound.fromBone).position;
-                ResourcesManager.S.LoadResourcesWithExName<AudioClip>(sound.resourcesPath, (clip) =>
+            case Layout.TargetType.EventTarget:
                 {
-                    AudioSource.PlayClipAtPoint(clip, pos, sound.value);
-                });
-            }
+                    if (player.EventTarget is UCharacterView p)
+                    {
+                        if (p) pos = p.GetBoneByName(sound.fromBone).position;
+                    }
+                }
+                break;
+            case Layout.TargetType.Releaser:
+                {
+                    if (player.RView.CharacterReleaser is UCharacterView p)
+                    {
+                        if (p) pos = p.GetBoneByName(sound.fromBone).position;
+                    }
+                }
+                break;
+            case Layout.TargetType.Target:
+                {
+                    if (player.RView.CharacterTarget is UCharacterView p)
+                    {
+                        if (p) pos = p.GetBoneByName(sound.fromBone).position;
+                    }
+                }
+                break;
+            default:
+                pos = player.RView.TargetPos;
+                break;
+
         }
+
+        if (!pos.HasValue) return;
+
+        ResourcesManager.S.LoadResourcesWithExName<AudioClip>(sound.resourcesPath, (clip) =>
+        {
+            AudioSource.PlayClipAtPoint(clip, pos.Value, sound.value);
+        });
+
     }
     #endregion
  
 
 
-    public TimeLineViewPlayer(TimeLine line, UMagicReleaserView view)
-        : base(line)
+    public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, IBattleCharacter eventTarget, Layout.EventType ty)
+        : base(line, pIndex)
     {
         this.RView = view;
+        this.EventTarget = eventTarget;
+        this.EventType = ty;
     }
 
     public UMagicReleaserView RView { get; }
+    public IBattleCharacter EventTarget { get; private set; }
+    public Layout.EventType EventType { get; }
 
     protected override void EnableLayout(LayoutBase layout)
     {

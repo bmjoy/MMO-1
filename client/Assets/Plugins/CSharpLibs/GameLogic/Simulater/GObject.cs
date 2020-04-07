@@ -36,6 +36,11 @@ namespace EngineCore.Simulater
             }
         }
 
+		public void Clear()
+        {
+			values.Clear();
+        }
+
 		public void SetControllor(GControllor controllor)
 		{
 			OnChangedControllor(this.Controllor, controllor);

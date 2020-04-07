@@ -10,6 +10,10 @@
       <GUID>36fe5c48-b3f5-4c4b-914a-3c889ce5e95c</GUID>
       <Time>0.002173913</Time>
     </TimePoint>
+    <TimePoint>
+      <GUID>5245eb28-bee1-444e-b6c5-e1eaba207de9</GUID>
+      <Time>0</Time>
+    </TimePoint>
   </Points>
   <Layouts>
     <LayoutBase xsi:type="MissileLayout">
@@ -31,6 +35,9 @@
       <GUID>36fe5c48-b3f5-4c4b-914a-3c889ce5e95c</GUID>
       <motionName>Melee Attack</motionName>
       <targetType>Releaser</targetType>
+    </LayoutBase>
+    <LayoutBase xsi:type="LookAtTarget">
+      <GUID>5245eb28-bee1-444e-b6c5-e1eaba207de9</GUID>
     </LayoutBase>
   </Layouts>
 </TimeLine>

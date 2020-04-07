@@ -311,10 +311,11 @@ namespace GameLogic.Game.Elements
             return dead;
         }
 
-        public void SetTeamIndex(int tIndex)
+        public void SetTeamIndex(int tIndex,int ownerIndex)
         {
             this.TeamIndex = tIndex;
-            this.View.SetTeamIndex(tIndex);
+            this.OwnerIndex = ownerIndex;
+            this.View.SetTeamIndex(tIndex, ownerIndex);
         }
 
 

@@ -337,8 +337,20 @@ namespace Proto.NotifyService
     }
     
 
+    /// <summary>
+    /// 40
+    /// </summary>    
+    [API(40)]
+    public class CancelTimeLine:APIBase<Void, Notify_CancelTimeLine> 
+    {
+        private CancelTimeLine() : base() { }
+        public  static CancelTimeLine CreateQuery(){ return new CancelTimeLine();}
+    }
+    
+
     public interface INotifyService
     {
+        [API(40)]Notify_CancelTimeLine CancelTimeLine(Void req);
         [API(39)]Notify_CharacterTeamIndex CharacterTeamIndex(Void req);
         [API(38)]Notify_CharacterLevel CharacterLevel(Void req);
         [API(37)]Notify_CharacterExp CharacterExp(Void req);
@@ -375,6 +387,7 @@ namespace Proto.NotifyService
 
     public abstract class NotifyService
     {
+        [API(40)]public abstract Task<Notify_CancelTimeLine> CancelTimeLine(Void request);
         [API(39)]public abstract Task<Notify_CharacterTeamIndex> CharacterTeamIndex(Void request);
         [API(38)]public abstract Task<Notify_CharacterLevel> CharacterLevel(Void request);
         [API(37)]public abstract Task<Notify_CharacterExp> CharacterExp(Void request);

@@ -256,9 +256,15 @@ public static class PropertyDrawer
 		{
 			GUILayout.Label(name);
 			if (!(field.GetMemberValue(obj) is ValueSourceOf value))value = new ValueSourceOf();
-			GUILayout.Label(GetLable(typeof(ValueSourceOf).GetField("ValueForm")));
+			GUILayout.BeginHorizontal();
+			//GUILayout.Label(GetLable(typeof(ValueSourceOf).GetField("ValueForm")));
 			value.ValueForm = (GetValueFrom)EditorGUILayout.EnumPopup((Enum)value.ValueForm);
-			if (value.ValueForm == GetValueFrom.CurrentConfig)DrawProperty(typeof(ValueSourceOf).GetField("Value"), value);
+			if (value.ValueForm == GetValueFrom.CurrentConfig)
+			{
+                value.Value = EditorGUILayout.IntField(value.Value);
+			}
+			GUILayout.EndHorizontal();
+			
 			field.SetMemberValue(obj, value);
 		}
 		else if (fType.IsEnum)

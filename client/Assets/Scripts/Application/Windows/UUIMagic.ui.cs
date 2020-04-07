@@ -46,6 +46,7 @@ namespace Windows
         protected Image NextLevel;
         protected Text des_next;
         protected Image LevelUp;
+        protected Text lb_needLevel;
         protected Button bt_level_up;
         protected Image gold_icon;
         protected Text lb_gold;
@@ -71,6 +72,7 @@ namespace Windows
             NextLevel = FindChild<Image>("NextLevel");
             des_next = FindChild<Text>("des_next");
             LevelUp = FindChild<Image>("LevelUp");
+            lb_needLevel = FindChild<Text>("lb_needLevel");
             bt_level_up = FindChild<Button>("bt_level_up");
             gold_icon = FindChild<Image>("gold_icon");
             lb_gold = FindChild<Text>("lb_gold");
