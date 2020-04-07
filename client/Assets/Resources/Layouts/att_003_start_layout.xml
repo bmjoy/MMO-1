@@ -65,8 +65,8 @@
       <fromBoneName>Bottom</fromBoneName>
       <toBoneName>Bottom</toBoneName>
       <Bind>false</Bind>
-      <destoryType>Time</destoryType>
-      <destoryTime>5</destoryTime>
+      <destoryType>LayoutTimeOut</destoryType>
+      <destoryTime>0</destoryTime>
       <offet>
         <x>0</x>
         <y>0</y>

@@ -27,9 +27,9 @@ public class UBattleMissileView : UElementView ,IBattleMissile
         var viewTarget = viewRelease.CharacterTarget as UCharacterView;
         var characterView = viewRelease.CharacterReleaser as UCharacterView;
         var rotation = (characterView as IBattleCharacter).Rotation;
-        transform.position = characterView.GetBoneByName(fromBone).position +  rotation* offset;
+        transform.position = characterView.GetBoneByName(fromBone).position + rotation * offset;
         transform.rotation = Quaternion.identity;
-       
+
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(res, (obj) =>
         {
             if (obj == null) return;
@@ -37,7 +37,10 @@ public class UBattleMissileView : UElementView ,IBattleMissile
             ins.transform.SetParent(this.transform, false);
             ins.transform.RestRTS();
             var path = ins.GetComponent<MissileFollowPath>();
-            if (path) path.SetTarget(viewTarget.GetBoneByName(toBone), speed);
+            if (path && viewTarget)
+            {
+                path.SetTarget(viewTarget.GetBoneByName(toBone), speed);
+            }
         });
     }
 
