@@ -17,11 +17,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
         public const string SELECT_MAGIC_ID = "__Magic_ID__";
         public const string TRAGET_INDEX = "__Target_Index__";
-        //public const string ACTION_MESSAGE = "__Action_Message__{0}";
-
-
-
-
+       
         public bool IsDebug { set; get; }
         public object UserState { get { return Character; } }
         private Composite Current;
@@ -111,32 +107,25 @@ namespace GameLogic.Game.AIBehaviorTree
 
             if (next != null)
             {
-                Current.Stop(this);
+                if (Current?.LastStatus == RunStatus.Running)
+                    Current.Stop(this);
                 Current = next;
                 next = null;
-                Current.Start(this);
             }
 
             if (NeedBreak)
             {
                 NeedBreak = false;
-                Current.Stop(this);
-                Current.Start(this);
+                if (Current?.LastStatus == RunStatus.Running) Current.Stop(this);
             }
 
-            if (Current.LastStatus == null)
+            if (Current.LastStatus != RunStatus.Running)
             {
                 Current.Start(this);
             }
-
-            Current.Tick(this);
-            if (Current.LastStatus.HasValue
-                && Current.LastStatus.Value != BehaviorTree.RunStatus.Running)
+            if (Current.Tick(this)!= RunStatus.Running)
             {
-                Current.Stop(this);
-                //重新从根执行
                 Current = Root;
-                Current.Start(this);
             }
         }
 
@@ -246,7 +235,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
         internal void Stop()
         {
-            Current?.Stop(this);
+            if (Current?.LastStatus == RunStatus.Running) Current?.Stop(this);
         }
 
         public override string ToString()

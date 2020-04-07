@@ -132,7 +132,7 @@ namespace GameLogic.Game.LayoutLogics
 				offsetPos,
 				releaser.Releaser.TeamIndex);
 
-			releaser.ShowDamageRange(layout);
+			releaser.ShowDamageRange(layout,targetPos.Value,rototion);
 
 			if (string.IsNullOrEmpty(layout.effectKey))
 			{

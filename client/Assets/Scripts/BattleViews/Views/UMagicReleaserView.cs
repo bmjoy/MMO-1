@@ -34,7 +34,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
 
-    void IMagicReleaser.PlayTimeLine(string layoutPath,int targetIndex, int type)
+    void IMagicReleaser.PlayTimeLine(int pIndex ,string layoutPath,int targetIndex, int type)
     {
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PlayTimeLine
@@ -42,28 +42,51 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Path = layoutPath,
             Index = Index,
             TargetIndex = targetIndex,
-            Type =type
+            Type =type,
+            PlayIndex = pIndex
         });
 #endif
 #if !UNITY_SERVER
 
         var eType = (Layout.EventType)type;
         var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
-        PlayLine((PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
+        PlayLine(pIndex, (PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
 #endif
     }
 
-    private TimeLineViewPlayer PlayLine(TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
+    void IMagicReleaser.CancelTimeLine(int pIndex)
+    {
+#if UNITY_SERVER || UNITY_EDITOR
+        CreateNotify(new Notify_CancelTimeLine
+        {
+            Index = Index,
+            PlayIndex = pIndex
+        }); ;
+#endif
+#if !UNITY_SERVER
+        foreach (var i in _players)
+        {
+            if (i.Index == pIndex)
+            {
+                _players.Remove(i);
+                i.Destory();
+                break;
+            }
+        }     
+#endif
+    }
+
+    private TimeLineViewPlayer PlayLine(int pIndex,TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
     {
         if (timeLine == null) return null;
-        var player = new TimeLineViewPlayer(timeLine, this, eventTarget, type);
+        var player = new TimeLineViewPlayer(pIndex,timeLine, this, eventTarget, type);
         _players.AddLast(player);
         return player;
     }
 
-    void IMagicReleaser.PlayTest(TimeLine line)
+    void IMagicReleaser.PlayTest(int pIndex,TimeLine line)
     {
-        PlayLine(line, this.CharacterTarget, Layout.EventType.EVENT_START);
+        PlayLine(pIndex, line, this.CharacterTarget, Layout.EventType.EVENT_START);
     }
 
     private void TickTimeLine(GTime time)
@@ -115,18 +138,16 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
     }
 
 
-    void IMagicReleaser.ShowDamageRanger(DamageLayout layout)
+    void IMagicReleaser.ShowDamageRanger(DamageLayout layout, UVector3 tar, Quaternion rototion)
     {
 #if UNITY_EDITOR
         if (layout.RangeType.damageType == Layout.LayoutElements.DamageType.Rangle)
         {
-            var target = layout.target == Layout.TargetType.Releaser ? CharacterReleaser : CharacterTarget;
-            var pos = target.Transform.position + target.Rotation * layout.RangeType.offsetPosition.ToUV3();
-            DamageRangeDebuger.TryGet(this.gameObject)
-                .AddDebug(layout, pos, target.Transform.rotation);
+            var pos = tar + rototion * layout.RangeType.offsetPosition.ToUV3();
+            DamageRangeDebuger.TryGet(this.gameObject).AddDebug(layout, pos,rototion);
         }
 #endif
     }
 
-
+  
 }

@@ -46,13 +46,14 @@ namespace GameLogic.Game.AIBehaviorTree
 
 		public override void Stop(ITreeRoot context)
         {
-            base.Stop(context);
             if (LastStatus == RunStatus.Running)
             {
                 var root = context as AITreeRoot;
-                root.Character.StopMove();
+				if (root.Character.IsMoving)
+					root.Character.StopMove();
             }
-        }
+			base.Stop(context);
+		}
 	}
 }
 

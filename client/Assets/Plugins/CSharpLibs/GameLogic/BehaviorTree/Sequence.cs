@@ -19,19 +19,13 @@ namespace BehaviorTree
 
         public override IEnumerable<RunStatus> Execute(ITreeRoot context)
         {
-
             foreach (Composite node in Children)
             {
                 node.Start(context);
                 while (node.Tick(context) == RunStatus.Running)
                 {
-                    //Selection = node;
                     yield return RunStatus.Running;
                 }
-
-                //Selection = null;
-                node.Stop(context);
-
                 if (node.LastStatus == RunStatus.Failure)
                 {
                     yield return RunStatus.Failure;

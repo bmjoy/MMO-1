@@ -123,6 +123,7 @@ namespace Proto
     [Index(1009056,typeof(Notify_CharacterExp))]
     [Index(1009058,typeof(Notify_CharacterLevel))]
     [Index(1009060,typeof(Notify_CharacterTeamIndex))]
+    [Index(1009062,typeof(Notify_CancelTimeLine))]
 
     [ApiVersion(0,0,1)]
     public static class MessageTypeIndexs

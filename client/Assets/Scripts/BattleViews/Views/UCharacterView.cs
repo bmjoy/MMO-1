@@ -118,7 +118,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             Target = wrapTar;
             if (Vector3.Distance(wrapTar.Value, View.transform.position) < stopDis)
             {
-                return false;
+                return true;
             }
             View.Agent.stoppingDistance = stopDis;
             View.Agent.SetDestination(wrapTar.Value);

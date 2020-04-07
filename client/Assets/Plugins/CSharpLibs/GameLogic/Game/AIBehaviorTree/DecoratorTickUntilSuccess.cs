@@ -18,13 +18,10 @@ namespace GameLogic.Game.AIBehaviorTree
                 {
                     lastTime = context.Time;
                     DecoratedChild.Start(context);
-
                     while (DecoratedChild.Tick(context) == RunStatus.Running)
                     {
                         yield return RunStatus.Running;
                     }
-                    DecoratedChild.Stop(context);
-
                     if (DecoratedChild.LastStatus == RunStatus.Success)
                     {
                         yield return RunStatus.Success;

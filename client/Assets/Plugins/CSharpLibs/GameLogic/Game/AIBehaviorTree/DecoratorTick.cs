@@ -25,7 +25,6 @@ namespace GameLogic.Game.AIBehaviorTree
                     {
                         yield return RunStatus.Running;
                     }
-                    DecoratedChild.Stop(context);
                 }
                 yield return RunStatus.Running;
             }
