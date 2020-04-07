@@ -2,16 +2,10 @@
 using GameLogic.Game.Elements;
 using Proto;
 using UnityEngine;
+using P = Proto.HeroPropertyType;
 
 namespace GameLogic.Game
 {
-
-    public enum TeamTypeIndex
-    {
-        Player = 1, //玩家
-        Monster =2
-    }
-
     public struct DamageResult
     {
         public DamageResult(DamageType t, bool isMissed, int da,int crtm)
@@ -28,7 +22,6 @@ namespace GameLogic.Game
     }
 	/// <summary>
 	/// 战斗中的算法
-	/// 
 	/// </summary>
 	public sealed class BattleAlgorithm
 	{
@@ -47,7 +40,7 @@ namespace GameLogic.Game
         /// <summary>
         /// 敏捷减少普攻间隔时间 ms
         /// </summary>
-        public static float AGILITY_SUBWAITTIME = 3;//每点敏捷降低攻击间隔时间毫秒
+        public static float AGILITY_SUBWAITTIME = 8;//每点敏捷降低攻击间隔时间毫秒
         /// <summary>
         /// 敏捷增加移动速度
         /// </summary>
@@ -68,10 +61,6 @@ namespace GameLogic.Game
         /// 最快的移动速度
         /// </summary>
         public static float MAX_SPEED = 6.5f;//最大速度
-        /// <summary>
-        /// 伤害减免参数
-        /// </summary>
-        public static float DEFANCE_RATE = 0.006f;//伤害减免参数
 
         /// <summary>
         /// hurt r
@@ -85,20 +74,18 @@ namespace GameLogic.Game
         /// <returns></returns>
         public static int CalNormalDamage(BattleCharacter attack)
         {
-            float damage = Randomer.RandomMinAndMax(
-                attack[HeroPropertyType.DamageMin].FinalValue,
-                attack[HeroPropertyType.DamageMax].FinalValue);
+            float damage = Randomer.RandomMinAndMax(attack[P.DamageMin].FinalValue,attack[P.DamageMax].FinalValue);
             
             switch (attack.Category)
             {
                 case HeroCategory.HcAgility:
-                    damage += attack[HeroPropertyType.Agility].FinalValue;
+                    damage += attack[P.Agility].FinalValue;
                     break;
                 case HeroCategory.HcForce:
-                    damage += attack[HeroPropertyType.Force].FinalValue;
+                    damage += attack[P.Force].FinalValue;
                     break;
                 case HeroCategory.HcKnowledge:
-                    damage += attack[HeroPropertyType.Knowledge].FinalValue;
+                    damage += attack[P.Knowledge].FinalValue;
                     break;
             }
             return (int)damage;
@@ -119,19 +106,12 @@ namespace GameLogic.Game
             return (int)result;
         }
 
-        /// <summary>
-        /// damage
-        /// </summary>
-        /// <param name="sources"></param>
-        /// <param name="damage"></param>
-        /// <param name="dType"></param>
-        /// <param name="defencer"></param>
-        /// <returns></returns>
+
         public static DamageResult GetDamageResult(BattleCharacter sources, int damage,DamageType dType, BattleCharacter defencer)
         {
             bool isMissed = false;
             int crtmult = 1;
-            var crt = sources[HeroPropertyType.Crt].FinalValue;
+            var crt = sources[P.Crt].FinalValue;
 
             if (GRandomer.Probability10000(crt))
             {
@@ -141,32 +121,24 @@ namespace GameLogic.Game
             {
                 case DamageType.Physical:
                     {
-                        var d = defencer[HeroPropertyType.Defance].FinalValue +
-                            defencer[HeroPropertyType.Agility].FinalValue*AGILITY_DEFANCE;
+                        var d = defencer[P.Defance].FinalValue + defencer[P.Agility].FinalValue*AGILITY_DEFANCE;
                         damage = damage * crtmult;
-                        //处理防御((装甲)*0.006))/(1+0.006*(装甲) 
-                        damage = damage - (int)(damage *
-                            (d * DEFANCE_RATE) /(1 + DEFANCE_RATE * d));
-                        
-                        isMissed = GRandomer.Probability10000(defencer[HeroPropertyType.Jouk].FinalValue);
+                        //乘法
+                        var result = (damage *  damage) /(damage + d );
+                        isMissed = GRandomer.Probability10000(defencer[P.Jouk].FinalValue);
+                        damage = (int)result;
                     }
                     break;
                 case DamageType.Magic:
                     {
-                        damage =(int)( damage *(1 - defencer[HeroPropertyType.Resistibility].FinalValue / 10000f));
+                        damage =(int)( damage *(1 - defencer[P.Resistibility].FinalValue / 10000f));
                     }
                     break;
                 default:
                     break;
             }
 
-            return new DamageResult
-            {
-                CrtMult = crtmult,
-                Damage = damage,
-                DType = dType,
-                IsMissed = isMissed 
-            };
+            return new DamageResult(dType, isMissed, damage, crtmult);
         }
 	}
 }

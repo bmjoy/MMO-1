@@ -128,8 +128,8 @@ public class UCharacterView : UElementView, IBattleCharacter
         public Vector3? ChangeTarget(Vector3 target, float dis)
         {
             stopDis = dis;
-            MoveTo(target);
-            return Target;
+            if (MoveTo(target)) return Target;
+            else return null;
         }
 
         public override void Exit()
@@ -805,6 +805,7 @@ public class UCharacterView : UElementView, IBattleCharacter
             StopDis = stopDis
         });
 #endif
+     
         return MoveToPos(target.ToUV3(), stopDis);
     }
 

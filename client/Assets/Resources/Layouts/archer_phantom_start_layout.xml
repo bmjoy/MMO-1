@@ -26,7 +26,7 @@
         <ValueForm>MagicLevelParam1</ValueForm>
         <Value>0</Value>
       </level>
-      <AIPath>AI/archer_call_ai.xml</AIPath>
+      <AIPath />
       <time>
         <ValueForm>CurrentConfig</ValueForm>
         <Value>-1</Value>
