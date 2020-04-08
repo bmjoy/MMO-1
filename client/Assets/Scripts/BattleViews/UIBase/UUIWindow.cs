@@ -109,6 +109,8 @@ public abstract class UUIWindow:UUIElement
 		
 	}
 
+    protected virtual void OnLanguage() { }
+
 	public void ShowWindow()
 	{
 		this.state = WindowState.ONSHOWING;
