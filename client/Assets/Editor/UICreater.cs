@@ -19,6 +19,7 @@ public class UICreater : EditorWindow
     {
         var winds = (UICreater)GetWindow(typeof(UICreater), true, "Gen UI Code");
         winds.minSize = new Vector2(300, 400);
+        winds.windowsRoot = Path.Combine(Application.dataPath, "Scripts/Application/Windows");
     }
 
     public void OnGUI()

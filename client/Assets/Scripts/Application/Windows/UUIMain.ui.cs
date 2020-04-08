@@ -17,6 +17,7 @@ namespace Windows
         protected Button MenuWeapon;
         protected Button MenuSkill;
         protected Image mission_notification;
+        protected Button MenuRefresh;
         protected Button MenuMessages;
         protected Image message_notification;
         protected Text MessagCountText;
@@ -48,6 +49,7 @@ namespace Windows
             MenuWeapon = FindChild<Button>("MenuWeapon");
             MenuSkill = FindChild<Button>("MenuSkill");
             mission_notification = FindChild<Image>("mission_notification");
+            MenuRefresh = FindChild<Button>("MenuRefresh");
             MenuMessages = FindChild<Button>("MenuMessages");
             message_notification = FindChild<Image>("message_notification");
             MessagCountText = FindChild<Text>("MessagCountText");

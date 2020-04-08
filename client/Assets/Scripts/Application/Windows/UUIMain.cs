@@ -58,6 +58,10 @@ namespace Windows
                 UUIManager.S.CreateWindowAsync<UUIMessages>(ui => ui.ShowWindow());
             });
 
+            MenuRefresh.onClick.AddListener(() => { 
+            
+            });
+
             user_info.onClick.AddListener(() => { OpenEquip(); });
 
             var swipeEv = swip.GetComponent<UIEventSwipe>();
@@ -95,6 +99,7 @@ namespace Windows
             MenuShop.SetKey("UI_MAIN_SHOP");
             MenuMessages.SetKey("UI_MAIN_MESSAGE");
             Button_Play.SetKey("UI_MAIN_PLAY");
+            MenuRefresh.SetKey("UI_MAIN_Refresh");
             OnUpdateUIData();
         }
         protected override void OnHide()
