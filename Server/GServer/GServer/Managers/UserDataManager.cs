@@ -6,6 +6,7 @@ using EConfig;
 using ExcelConfig;
 using GateServer;
 using Google.Protobuf.Collections;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using Proto;
 using Proto.MongoDB;
@@ -25,11 +26,16 @@ namespace GServer.Managers
     public class UserDataManager :XSingleton<UserDataManager>
     {
 
-        private static readonly Random random = new Random();
-
-        private static bool Probability10000(int pro)
+        private async Task<bool> CostGold(GamePlayerEntity player, int gold)
         {
-            return random.Next(10000) < pro;
+            if (gold <= 0) return false;
+            var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+            var fgold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
+            var filter = Builders<GamePlayerEntity>.Filter.And(id, fgold);
+            var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold - gold);
+
+            var re = await DataBase.S.Playes.UpdateOneAsync(filter, update);
+            return re.ModifiedCount > 0;
         }
 
         public async Task<GameHeroEntity> FindHeroByPlayerId(string player_uuid)
@@ -39,6 +45,12 @@ namespace GServer.Managers
             var query = await  DataBase.S.Heros.FindAsync(filter);
 
             return query.Single();
+        }
+
+        public async Task<GameHeroEntity> FindHeroByAccountId(string accountID)
+        {
+            var player = await FindPlayerByAccountId(accountID);
+            return await FindHeroByPlayerId(player.Uuid);
         }
 
         internal async Task<string> ProcessBattleReward(string account_uuid, RepeatedField<PlayerItem> items, int exp, int level, int gold)
@@ -200,7 +212,7 @@ namespace GServer.Managers
 
             if (package == null) return new G2C_EquipmentLevelUp { Code = ErrorCode.Error };
 
-            if (!package.Items.TryGetValue(item_uuid, out ItemNum item))
+            if (!package.Items.TryGetValue(item_uuid, out PackageItem item))
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.NofoundItem };
 
             var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
@@ -251,7 +263,7 @@ namespace GServer.Managers
                 DataBase.S.Playes.UpdateOne(filter, update);
             }
 
-            if (Probability10000(levelconfig.Pro))
+            if (GRandomer.Probability10000(levelconfig.Pro))
             {
                 item.Level += 1;
                 var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
@@ -262,6 +274,7 @@ namespace GServer.Managers
 
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
+
 
         internal async Task<G2C_BuyGold> BuyGold(Client client, string accountUuid, int shopId)
         {
@@ -299,9 +312,9 @@ namespace GServer.Managers
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
 
-            if (!hero.Magics.TryGetValue(magicId, out Proto.MongoDB.HeroMagic magic))
+            if (!hero.Magics.TryGetValue(magicId, out DBHeroMagic magic))
             {
-                magic = new Proto.MongoDB.HeroMagic { Actived = true, Exp = 0, Level = 0 };
+                magic = new DBHeroMagic { Actived = true, Exp = 0, Level = 0 };
                 hero.Magics.Add(magicId, magic);
             }
 
@@ -419,7 +432,7 @@ namespace GServer.Managers
                     if (i.Guid == e.Value)  return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
                 }
 
-                if (!p.Items.TryGetValue(i.Guid, out ItemNum item))
+                if (!p.Items.TryGetValue(i.Guid, out PackageItem item))
                     return new G2C_SaleItem { Code = ErrorCode.NofoundItem };
                 if (item.Num < i.Num)
                     return new G2C_SaleItem { Code = ErrorCode.NoenoughItem };
@@ -430,7 +443,7 @@ namespace GServer.Managers
             var total = 0;
             foreach (var i in items)
             {
-                if (p.Items.TryGetValue(i.Guid, out ItemNum item))
+                if (p.Items.TryGetValue(i.Guid, out PackageItem item))
                 {
                     var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
                     if (config.SalePrice > 0) total += config.SalePrice * i.Num;
@@ -465,7 +478,7 @@ namespace GServer.Managers
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();
 
-            if (!package.Items.TryGetValue(equip_uuid, out ItemNum item)) return false;
+            if (!package.Items.TryGetValue(equip_uuid, out PackageItem item)) return false;
 
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
             if (config == null) return false;
@@ -493,7 +506,7 @@ namespace GServer.Managers
             package.Items.Clear();
             foreach (var i in diff)
             {
-                package.Items.Add(i.GUID, new ItemNum { Id= i.ItemID, IsLock = i.Locked, Level =i.Level, Num = i.Num, Uuid = i.GUID });
+                package.Items.Add(i.GUID, new PackageItem { Id= i.ItemID, IsLock = i.Locked, Level =i.Level, Num = i.Num, Uuid = i.GUID });
             }
             var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
             await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
@@ -501,7 +514,7 @@ namespace GServer.Managers
             return true;
         }
 
-        private ItemNum GetCanStackItem(int itemID, GamePackageEntity package)
+        private PackageItem GetCanStackItem(int itemID, GamePackageEntity package)
         {
             var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(itemID);
             foreach (var i in package.Items)
@@ -542,13 +555,13 @@ namespace GServer.Managers
                 {
                     var add = Math.Min(num, it.MaxStackNum);
                     num -= add;
-                    var itemNum = new ItemNum
+                    var itemNum = new PackageItem
                     {
+                        Uuid = Guid.NewGuid().ToString(),
                         Id = i.ItemID,
                         IsLock = i.Locked,
                         Level = i.Level,
-                        Num = add,
-                        Uuid = Guid.NewGuid().ToString()
+                        Num = add
                     };
                     package.Items.Add(itemNum.Uuid, itemNum);
                 }
@@ -580,6 +593,90 @@ namespace GServer.Managers
             var result = await DataBase.S.Playes.UpdateOneAsync(filter, update);
             return result.ModifiedCount > 0;
         }
+
+        internal async Task<G2C_RefreshEquip> RefreshEquip(Client client, string accountId, string equipUuid, IList<string> customItem)
+        {
+            var player = await FindPlayerByAccountId(accountId);
+            var package = await FindPackageByPlayerID(player.Uuid);
+
+            if (!package.Items.TryGetValue(equipUuid, out PackageItem equip)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(equip.Id);
+            if (config == null) return new G2C_RefreshEquip { Code = ErrorCode.Error };
+            var refreshData = ExcelToJSONConfigManager.Current.GetConfigByID<EquipRefreshData>(config.Quality);
+            int refreshCount = equip.EquipData?.RefreshCount ?? 0;
+            if (refreshData.MaxRefreshTimes < refreshCount) return new G2C_RefreshEquip { Code = ErrorCode.RefreshTimeLimit };
+            if (refreshData.NeedItemCount > customItem.Count) return new G2C_RefreshEquip { Code = ErrorCode.NoenoughItem };
+
+
+            Dictionary<HeroPropertyType, int> values = new Dictionary<HeroPropertyType, int>();
+
+            foreach (var i in customItem)
+            {
+                if (!package.Items.TryGetValue(equipUuid, out PackageItem custom)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+                var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(custom.Id);
+                if ((ItemType)itemConfig.ItemType != ItemType.ItEquip) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+                if (custom.Uuid == equipUuid) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+                if (itemConfig.Quality < refreshData.NeedQuality) return new G2C_RefreshEquip { Code = ErrorCode.NeedItemQuality };
+                var equipConfig = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(itemConfig.Params[0]));
+                if (equipConfig == null) return new G2C_RefreshEquip { Code = ErrorCode.Error };
+                var pre = equipConfig.Properties.SplitToInt();
+                var vals = equipConfig.PropertyValues.SplitToInt();
+
+                for (var index = 0; index < pre.Count; index++)
+                {
+                    var p = (HeroPropertyType)pre[index];
+                    var d = ExcelToJSONConfigManager.Current.GetConfigByID<RefreshPropertyValueData>(pre[index]);
+                    if (d == null) continue;
+                    if (values.ContainsKey(p))
+                    {
+                        values[p] += vals[index];
+                    }
+                    else
+                    {
+                        values.Add(p, vals[index]);
+                    }
+                }
+            }
+
+            if (values.Count == 0) return new G2C_RefreshEquip { Code = ErrorCode.NoPropertyToRefresh };
+
+            if (refreshData.CostGold > player.Gold) return new G2C_RefreshEquip { Code = ErrorCode.NoEnoughtGold };
+            var appendCount = GRandomer.RandomMinAndMax(refreshData.PropertyAppendCountMin, refreshData.PropertyAppendCountMax);
+
+            while (appendCount > 0)
+            {
+                appendCount--;
+                var property = GRandomer.RandomMinAndMax(refreshData.PropertyAppendMin, refreshData.PropertyAppendMax);
+                var selected = GRandomer.RandomList(values.Keys.ToList());
+                var val = ExcelToJSONConfigManager.Current.GetConfigByID<RefreshPropertyValueData>((int)selected);
+                var appendValue = val.Value * property;
+                if (equip.EquipData.Properties.ContainsKey(selected))
+                {
+                    equip.EquipData.Properties[selected] += appendValue;
+                }
+                else
+                {
+                    equip.EquipData.Properties.Add(selected, appendValue);
+                }
+            }
+
+            if (!(await CostGold(player, refreshData.CostGold))) return new G2C_RefreshEquip { Code = ErrorCode.NoEnoughtGold };
+
+            foreach (var i in customItem)
+            {
+                package.Items.Remove(i);
+            }
+
+            var filter = Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid);
+            var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
+            await DataBase.S.Packages.UpdateOneAsync(filter, update);
+
+            await SyncToClient(client, player.Uuid);
+            return new G2C_RefreshEquip { Code = ErrorCode.Ok };
+        }
+
+
     }
 }
 

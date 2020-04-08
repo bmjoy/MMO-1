@@ -150,8 +150,20 @@ namespace Proto.GateServerService
     }
     
 
+    /// <summary>
+    /// 14
+    /// </summary>    
+    [API(14)]
+    public class RefreshEquip:APIBase<C2G_RefreshEquip, G2C_RefreshEquip> 
+    {
+        private RefreshEquip() : base() { }
+        public  static RefreshEquip CreateQuery(){ return new RefreshEquip();}
+    }
+    
+
     public interface IGateServerService
     {
+        [API(14)]G2C_RefreshEquip RefreshEquip(C2G_RefreshEquip req);
         [API(13)]G2C_BuyGold BuyGold(C2G_BuyGold req);
         [API(12)]G2C_BuyItem BuyItem(C2G_BuyItem req);
         [API(11)]G2C_Shop QueryShop(C2G_Shop req);
@@ -171,6 +183,7 @@ namespace Proto.GateServerService
 
     public abstract class GateServerService
     {
+        [API(14)]public abstract Task<G2C_RefreshEquip> RefreshEquip(C2G_RefreshEquip request);
         [API(13)]public abstract Task<G2C_BuyGold> BuyGold(C2G_BuyGold request);
         [API(12)]public abstract Task<G2C_BuyItem> BuyItem(C2G_BuyItem request);
         [API(11)]public abstract Task<G2C_Shop> QueryShop(C2G_Shop request);

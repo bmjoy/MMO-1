@@ -27,7 +27,7 @@ namespace GateServer
 
             foreach (var i in entity.Equips)
             {
-                if (package.Items.TryGetValue(i.Value, out ItemNum item))
+                if (package.Items.TryGetValue(i.Value, out PackageItem item))
                 {
                     h.Equips.Add(new WearEquip
                     {
@@ -48,14 +48,23 @@ namespace GateServer
             {
                 foreach (var i in entity.Items)
                 {
-                    p.Items.Add(i.Key,new PlayerItem
+
+                    var item = new PlayerItem
                     {
                         GUID = i.Key,
                         ItemID = i.Value.Id,
                         Locked = i.Value.IsLock,
                         Num = i.Value.Num,
                         Level = i.Value.Level
-                    });
+                    };
+
+                    item.Data.RefreshTime = i.Value.EquipData.RefreshCount;
+                    foreach (var pro in i.Value.EquipData.Properties)
+                    {
+                        item.Data.Values.Add((int)pro.Key, pro.Value);
+                    }
+                   
+                    p.Items.Add(i.Key,item);
                 }
             }
 

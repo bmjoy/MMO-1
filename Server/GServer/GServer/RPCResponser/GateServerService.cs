@@ -31,6 +31,20 @@ namespace GateServer
         public G2C_BeginGame BeginGame(C2G_BeginGame request)
         {
             var userID = (string)Client.UserState;
+
+
+            var level = ExcelToJSONConfigManager.Current.GetConfigByID<BattleLevelData>(request.LevelID);
+            if (level == null)
+            {
+                return new G2C_BeginGame { Code = ErrorCode.NofoundServerId };
+            }
+
+            var hero = UserDataManager.S.FindHeroByAccountId(AccountUuid).GetAwaiter().GetResult();
+            if (hero.Level > level.LimitLevel)
+            {
+                return new G2C_BeginGame { Code = ErrorCode.PlayerLevelLimit };
+            }
+
             var req = new G2L_BeginBattle
             {
                 LevelId = request.LevelID,
@@ -43,8 +57,6 @@ namespace GateServer
                 ServerInfo = r.BattleServer
             };
         }
-
-      
 
         public G2C_BuyPackageSize BuyPackageSize(C2G_BuyPackageSize req)
         {
@@ -279,6 +291,11 @@ namespace GateServer
                 .BuyGold(Client, AccountUuid, req.ShopId)
                 .GetAwaiter()
                 .GetResult();
+        }
+
+        public G2C_RefreshEquip RefreshEquip(C2G_RefreshEquip req)
+        {
+            return UserDataManager.S.RefreshEquip(Client, AccountUuid, req.EquipUuid, req.CoustomItem).GetAwaiter().GetResult();
         }
     }
 }

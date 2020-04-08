@@ -70,6 +70,8 @@ namespace Proto
     [Index(1003024,typeof(G2C_BuyItem))]
     [Index(1003025,typeof(C2G_BuyGold))]
     [Index(1003026,typeof(G2C_BuyGold))]
+    [Index(1003027,typeof(C2G_RefreshEquip))]
+    [Index(1003028,typeof(G2C_RefreshEquip))]
     [Index(1004001,typeof(Task_G2C_SyncPackage))]
     [Index(1004003,typeof(Task_G2C_SyncHero))]
     [Index(1004005,typeof(Task_G2C_JoinBattle))]
