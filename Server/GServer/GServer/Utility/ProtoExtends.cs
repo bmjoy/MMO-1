@@ -57,8 +57,9 @@ namespace GateServer
                         Num = i.Value.Num,
                         Level = i.Value.Level
                     };
-
-                    item.Data.RefreshTime = i.Value.EquipData.RefreshCount;
+                    item.Data = new EquipData();
+                    item.Data.RefreshTime = i.Value.EquipData?.RefreshCount??0;
+                    
                     foreach (var pro in i.Value.EquipData.Properties)
                     {
                         item.Data.Values.Add((int)pro.Key, pro.Value);

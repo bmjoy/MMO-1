@@ -1,4 +1,4 @@
 [
-	{"ID":10001,"Name":"\u5C0F\u602A\u6389\u843D","DropPro":100,"DropMinNum":1,"DropMaxNum":1,"DropItem":"1|2","DropNum":"1|1","Pro":"100|100","GoldMin":0,"GoldMax":200},
-	{"ID":10002,"Name":"\u5730\u56FE1BOSS\u6389\u843D","DropPro":10000,"DropMinNum":1,"DropMaxNum":5,"DropItem":"1|2|1001|1002|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012","DropNum":"10|10|1|1|1|1|1|1|1|1|1|1|1|1","Pro":"1000|1000|100|100|100|100|100|100|100|100|100|100|100|100","GoldMin":1000,"GoldMax":2000}
+	{"ID":10001,"Name":"\u5C0F\u602A\u6389\u843D","DropPro":1000,"DropMinNum":1,"DropMaxNum":1,"DropItem":"1|2","DropNum":"1|1","Pro":"100|100","GoldMin":50,"GoldMax":200},
+	{"ID":10002,"Name":"\u5730\u56FE1BOSS\u6389\u843D","DropPro":10000,"DropMinNum":4,"DropMaxNum":10,"DropItem":"1|2|1001|1002|1003|1004|1005|1006|1007|1008|1009|1010|1011|1012","DropNum":"10|10|1|1|1|1|1|1|1|1|1|1|1|1","Pro":"1000|1000|100|100|100|100|100|100|100|100|100|100|100|100","GoldMin":2000,"GoldMax":5000}
 ]

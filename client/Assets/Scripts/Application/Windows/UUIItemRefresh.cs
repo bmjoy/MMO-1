@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine.UI;
 using UGameTools;
+using Proto;
 
 namespace Windows
 {
@@ -44,7 +45,16 @@ namespace Windows
 
         private void SelectedItem()
         {
-            //UUIManager.S.CreateWindowAsync<UUISelectEquip>(ui => ui.ShowWindow());
+            UUIManager.S.CreateWindowAsync<UUISelectItem>(ui =>
+            {
+                ui.ShowSelect(1, false);
+                ui.OnSelectedItems = OnSelectRefresh;
+            } );
+        }
+
+        private void OnSelectRefresh(List<PlayerItem> obj)
+        {
+             
         }
 
         protected override void OnShow()

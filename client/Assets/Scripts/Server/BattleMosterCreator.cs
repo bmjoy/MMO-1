@@ -45,6 +45,7 @@ namespace Server
         private void CreateMonster()
         {
             BattlePerception per = Per;
+            
             var groupPos = this.MonsterGroups.Select(t => t.transform.position).ToArray();
             var pos = GRandomer.RandomArray(groupPos);
             IList<int> groups = null;
