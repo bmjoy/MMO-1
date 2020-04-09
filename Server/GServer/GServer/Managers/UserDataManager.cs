@@ -613,7 +613,7 @@ namespace GServer.Managers
 
             foreach (var i in customItem)
             {
-                if (!package.Items.TryGetValue(equipUuid, out PackageItem custom)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+                if (!package.Items.TryGetValue(i, out PackageItem custom)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
                 var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(custom.Id);
                 if ((ItemType)itemConfig.ItemType != ItemType.ItEquip) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
                 if (custom.Uuid == equipUuid) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
