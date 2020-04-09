@@ -667,6 +667,7 @@ namespace GServer.Managers
             {
                 package.Items.Remove(i);
             }
+            equip.EquipData.RefreshCount++;
 
             var filter = Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid);
             var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
