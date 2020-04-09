@@ -53,7 +53,6 @@ namespace Windows
                 Template.AddIconSel.ActiveSelfObject(false);
                 var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(PlayerItem.ItemID);
                 Template.equip_lvl.text = $"+{item.Level}";
-                //var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                 ResourcesManager.S.LoadIcon(config, s =>
                 {
                     this.Template.icon_right.sprite = s;
@@ -288,16 +287,14 @@ namespace Windows
             base.OnShow();
             customItems = null;
             lb_Lvl.text =
-            lb_equipname.text = lb_equiprefresh.text=
+            lb_equipname.text = lb_equiprefresh.text =
             lb_description.text = string.Empty;
 
             LevelRoot.ActiveSelfObject(false);
             Right.ActiveSelfObject(false);
-
-
+            lb_custom_title.SetKey("UUIItemRefresh_custom_title");
+            lb_custom_property_title.SetKey("UUIItemRefresh_refresh_got_title");
             SelectedItem();
-
-
         }
 
         protected override void OnUpdateUIData()
