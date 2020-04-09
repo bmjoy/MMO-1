@@ -68,6 +68,11 @@ namespace GameLogic.Game
         public static float HURT_NOTIFY_R = 10f;
 
         /// <summary>
+        /// 伤害减免参数
+        /// </summary>
+        public static float DEFANCE_RATE = 0.006f;//伤害减免参数
+
+        /// <summary>
         /// 计算普通攻击
         /// </summary>
         /// <param name="attack"></param>
@@ -106,7 +111,6 @@ namespace GameLogic.Game
             return (int)result;
         }
 
-
         public static DamageResult GetDamageResult(BattleCharacter sources, int damage,DamageType dType, BattleCharacter defencer)
         {
             bool isMissed = false;
@@ -122,9 +126,9 @@ namespace GameLogic.Game
                 case DamageType.Physical:
                     {
                         var d = defencer[P.Defance].FinalValue + defencer[P.Agility].FinalValue*AGILITY_DEFANCE;
-                        damage = damage * crtmult;
-                        //乘法
-                        var result = (damage *  damage) /(damage + d );
+                        damage *= crtmult;
+                        var p = d * DEFANCE_RATE;
+                        var result = damage - damage * (p / (1 + p));
                         isMissed = GRandomer.Probability10000(defencer[P.Jouk].FinalValue);
                         damage = (int)result;
                     }
