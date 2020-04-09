@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Layout.LayoutEffects;
 using Proto;
 
@@ -190,6 +191,37 @@ namespace GameLogic.Game
 					break;
 			}
 		}
+
+        public override string ToString()
+        {
+			//var str = string.Empty;
+
+			if (Rate > 0)
+			{
+				var basev = (int)(BaseValue * (1 + Rate / 10000f));
+				if (AppendValue > 0)
+				{
+					var appv = (int)(AppendValue * (1 + Rate / 10000f));
+					return $"{basev}+{appv}";
+				}
+				else {
+					return $"{basev}";
+				}
+			}
+			else
+			{
+				if (AppendValue > 0)
+				{
+					return $"{BaseValue}+{AppendValue}";
+
+				}
+				else {
+					return $"{BaseValue}";
+                }
+
+			}
+			
+        }
     }
 }
 

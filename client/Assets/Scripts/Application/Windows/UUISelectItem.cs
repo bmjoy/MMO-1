@@ -58,6 +58,7 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
+            ButtonClose.onClick.AddListener(() => HideWindow());
             //Write Code here
         }
         protected override void OnShow()
@@ -111,7 +112,7 @@ namespace Windows
 
         private int needcount = 0;
 
-        public void ShowSelect(int count, bool nowear, string exceptId = null)
+        public void ShowSelect(int count, bool nowear, string exceptId = null, int quality=-1)
         {
             needcount = count;
             var gata = UApplication.G<GMainGate>();
@@ -120,7 +121,7 @@ namespace Windows
                 {
                     Item = t.Value,
                     Config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(t.Value.ItemID)
-                }).Where(t => t.Config.ItemType == (int)ItemType.ItEquip)
+                }).Where(t => t.Config.ItemType == (int)ItemType.ItEquip && t.Config.Quality>=quality)
                 .Select(t => t).ToList();
 
             if (nowear)
@@ -134,6 +135,8 @@ namespace Windows
                 ListItems= ListItems.Where(t => !wears.Contains(t.Item.GUID)).ToList();
 
             }
+
+
 
             ShowWindow();
         }
