@@ -41,17 +41,15 @@ namespace GServer.Managers
             return await FindHeroByPlayerId(player.Uuid);
         }
 
-        internal async Task<string> ProcessBattleReward(string account_uuid, RepeatedField<PlayerItem> items, int exp, int level, int gold)
+        public async Task<string> ProcessBattleReward(string account_uuid,IList<PlayerItem> modifyItems,  IList<PlayerItem> RemoveItems, int exp, int level, int gold)
         {
             var player = await FindPlayerByAccountId(account_uuid);
             if (player == null) return null;
-            var pupdate = Builders<GamePlayerEntity>.Update.Set(t =>t.Gold, gold);
-            var pfilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-            await DataBase.S.Playes.UpdateOneAsync(pfilter, pupdate);
-            await ProcessRewardItem(player.Uuid, items);
+            var pupdate = Builders<GamePlayerEntity>.Update.Inc(t =>t.Gold, gold);
+            await DataBase.S.Playes.UpdateOneAsync(t => t.Uuid== player.Uuid, pupdate);
+            var (ms,rs) = await ProcessRewardItem(player.Uuid, modifyItems,  RemoveItems);
             var hero = await FindHeroByPlayerId(player.Uuid);
-            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp)
-                .Set(t => t.Level, level);
+            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp).Set(t => t.Level, level);
             var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
             await DataBase.S.Heros.UpdateOneAsync(filter, update);
             return  player.Uuid;
@@ -537,19 +535,42 @@ namespace GServer.Managers
             return true;
         }
 
-        private async Task<bool> ProcessRewardItem(string player_uuid, IList<PlayerItem> diff)
+        private async Task<Tuple<IList<PlayerItem>, IList<PlayerItem>>> ProcessRewardItem(string player_uuid, IList<PlayerItem> modify, IList<PlayerItem> removes)
         {
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();
-            package.Items.Clear();
-            foreach (var i in diff)
-            {
-                package.Items.Add(i.ToPackageItem());
-            }
-            var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
-            await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
 
-            return true;
+            var models = new List<WriteModel<GamePackageEntity>>();
+            foreach (var i in modify)
+            {
+                if (package.TryGetItem(i.GUID, out PackageItem item))
+                {
+                    var m = i.ToPackageItem();
+                    models.Add(new UpdateOneModel<GamePackageEntity>(
+                        Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid)
+                        & Builders<GamePackageEntity>.Filter.ElemMatch(t => t.Items, x => x.Uuid == item.Uuid),
+                        Builders<GamePackageEntity>.Update.Set(t => t.Items[-1], m)
+                        ));
+                }
+                else 
+                {
+                    models.Add(new UpdateOneModel<GamePackageEntity>(
+                       Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid),
+                       Builders<GamePackageEntity>.Update.Push(t => t.Items, i.ToPackageItem())
+                       ));
+                }
+            }
+
+            foreach (var i in removes)
+            {
+                models.Add(new UpdateOneModel<GamePackageEntity>(
+                          Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid),
+                          Builders<GamePackageEntity>.Update.PullFilter(t => t.Items, t=>t.Uuid == i.GUID)));
+            }
+
+            await DataBase.S.Packages.BulkWriteAsync(models);
+
+            return Tuple.Create(modify,removes);
         }
 
         private PackageItem GetCanStackItem(int itemID, GamePackageEntity package)

@@ -21,7 +21,7 @@ namespace GateServer
             ErrorCode code = ErrorCode.Ok;
 
             var t = UserDataManager.S
-                .ProcessBattleReward(request.AccountUuid, request.Items, request.Exp, request.Level, request.Gold);
+                .ProcessBattleReward(request.AccountUuid, request.ModifyItems, request.RemoveItems, request.Exp, request.Level, request.DiffGold);
             t.Wait();
             var uuid = t.Result;
             if (!string.IsNullOrEmpty(uuid))

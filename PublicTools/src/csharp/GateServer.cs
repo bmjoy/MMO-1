@@ -71,55 +71,56 @@ namespace Proto {
             "ZBgBIAEoCRIXCg9TZXJ2aWNlU2VydmVySUQYAiABKAUihAEKEUcyQl9HZXRQ",
             "bGF5ZXJJbmZvEh4KBENvZGUYASABKA4yEC5Qcm90by5FcnJvckNvZGUSDAoE",
             "R29sZBgEIAEoBRIaCgRIZXJvGAIgASgLMgwuUHJvdG8uREhlcm8SJQoHUGFj",
-            "a2FnZRgDIAEoCzIULlByb3RvLlBsYXllclBhY2thZ2UiggEKEEIyR19CYXR0",
-            "bGVSZXdhcmQSEwoLQWNjb3VudFV1aWQYASABKAkSDAoER29sZBgCIAEoBRIN",
-            "CgVNYXBJRBgDIAEoBRIgCgVJdGVtcxgEIAMoCzIRLlByb3RvLlBsYXllckl0",
-            "ZW0SCwoDRXhwGAUgASgFEg0KBUxldmVsGAYgASgFIjIKEEcyQl9CYXR0bGVS",
-            "ZXdhcmQSHgoEQ29kZRgBIAEoDjIQLlByb3RvLkVycm9yQ29kZSI8ChNUYXNr",
-            "X0cyQ19Kb2luQmF0dGxlEiUKBlNlcnZlchgBIAEoCzIVLlByb3RvLkdhbWVT",
-            "ZXJ2ZXJJbmZvIh0KC0MyR19CdXlHb2xkEg4KBlNob3BJZBgBIAEoBSJfCgtH",
-            "MkNfQnV5R29sZBIeCgRDb2RlGAEgASgOMhAuUHJvdG8uRXJyb3JDb2RlEgwK",
-            "BEdvbGQYAiABKAUSDAoEQ29pbhgDIAEoBRIUCgxSZWNlaXZlZEdvbGQYBCAB",
-            "KAUiOgoQQzJHX1JlZnJlc2hFcXVpcBIRCglFcXVpcFV1aWQYASABKAkSEwoL",
-            "Q291c3RvbUl0ZW0YAiADKAkiMgoQRzJDX1JlZnJlc2hFcXVpcBIeCgRDb2Rl",
-            "GAEgASgOMhAuUHJvdG8uRXJyb3JDb2RlImEKD1Rhc2tfTW9kaWZ5SXRlbRIm",
-            "CgtNb2RpZnlJdGVtcxgBIAMoCzIRLlByb3RvLlBsYXllckl0ZW0SJgoLUmVt",
-            "b3ZlSXRlbXMYAiADKAsyES5Qcm90by5QbGF5ZXJJdGVtIi4KEFRhc2tfQ29p",
-            "bkFuZEdvbGQSDAoEQ29pbhgBIAEoBRIMCgRHb2xkGAIgASgFIiAKEFRhc2tf",
-            "UGFja2FnZVNpemUSDAoEU2l6ZRgBIAEoBTLwBgoRR2F0ZVNlcnZlclNlcnZp",
-            "Y2USLQoFTG9naW4SEC5Qcm90by5DMkdfTG9naW4aEC5Qcm90by5HMkNfTG9n",
-            "aW4iABI8CgpDcmVhdGVIZXJvEhUuUHJvdG8uQzJHX0NyZWF0ZUhlcm8aFS5Q",
-            "cm90by5HMkNfQ3JlYXRlSGVybyIAEjkKCUJlZ2luR2FtZRIULlByb3RvLkMy",
-            "R19CZWdpbkdhbWUaFC5Qcm90by5HMkNfQmVnaW5HYW1lIgASRQoNR2V0TGFz",
-            "dEJhdHRsZRIYLlByb3RvLkMyR19HZXRMYXN0QmF0dGxlGhguUHJvdG8uRzJD",
-            "X0dldExhc3RCYXR0bGUiABJFCg1PcGVyYXRvckVxdWlwEhguUHJvdG8uQzJH",
-            "X09wZXJhdG9yRXF1aXAaGC5Qcm90by5HMkNfT3BlcmF0b3JFcXVpcCIAEjYK",
-            "CFNhbGVJdGVtEhMuUHJvdG8uQzJHX1NhbGVJdGVtGhMuUHJvdG8uRzJDX1Nh",
-            "bGVJdGVtIgASTgoQRXF1aXBtZW50TGV2ZWxVcBIbLlByb3RvLkMyR19FcXVp",
-            "cG1lbnRMZXZlbFVwGhsuUHJvdG8uRzJDX0VxdWlwbWVudExldmVsVXAiABIw",
-            "CgZHTVRvb2wSES5Qcm90by5DMkdfR01Ub29sGhEuUHJvdG8uRzJDX0dNVG9v",
-            "bCIAEkgKDkJ1eVBhY2thZ2VTaXplEhkuUHJvdG8uQzJHX0J1eVBhY2thZ2VT",
-            "aXplGhkuUHJvdG8uRzJDX0J1eVBhY2thZ2VTaXplIgASQgoMTWFnaWNMZXZl",
-            "bFVwEhcuUHJvdG8uQzJHX01hZ2ljTGV2ZWxVcBoXLlByb3RvLkcyQ19NYWdp",
-            "Y0xldmVsVXAiABIvCglRdWVyeVNob3ASDy5Qcm90by5DMkdfU2hvcBoPLlBy",
-            "b3RvLkcyQ19TaG9wIgASMwoHQnV5SXRlbRISLlByb3RvLkMyR19CdXlJdGVt",
-            "GhIuUHJvdG8uRzJDX0J1eUl0ZW0iABIzCgdCdXlHb2xkEhIuUHJvdG8uQzJH",
-            "X0J1eUdvbGQaEi5Qcm90by5HMkNfQnV5R29sZCIAEkIKDFJlZnJlc2hFcXVp",
-            "cBIXLlByb3RvLkMyR19SZWZyZXNoRXF1aXAaFy5Qcm90by5HMkNfUmVmcmVz",
-            "aEVxdWlwIgAyqwMKDkdhdGVTZXJ2ZXJUYXNrEkkKC1N5bmNQYWNrYWdlEhsu",
-            "UHJvdG8uVGFza19HMkNfU3luY1BhY2thZ2UaGy5Qcm90by5UYXNrX0cyQ19T",
-            "eW5jUGFja2FnZSIAEkAKCFN5bmNIZXJvEhguUHJvdG8uVGFza19HMkNfU3lu",
-            "Y0hlcm8aGC5Qcm90by5UYXNrX0cyQ19TeW5jSGVybyIAEkYKCkpvaW5CYXR0",
-            "bGUSGi5Qcm90by5UYXNrX0cyQ19Kb2luQmF0dGxlGhouUHJvdG8uVGFza19H",
-            "MkNfSm9pbkJhdHRsZSIAEj4KCk1vZGlmeUl0ZW0SFi5Qcm90by5UYXNrX01v",
-            "ZGlmeUl0ZW0aFi5Qcm90by5UYXNrX01vZGlmeUl0ZW0iABJBCgtDb2luQW5k",
-            "R29sZBIXLlByb3RvLlRhc2tfQ29pbkFuZEdvbGQaFy5Qcm90by5UYXNrX0Nv",
-            "aW5BbmRHb2xkIgASQQoLUGFja2FnZVNpemUSFy5Qcm90by5UYXNrX1BhY2th",
-            "Z2VTaXplGhcuUHJvdG8uVGFza19QYWNrYWdlU2l6ZSIAMqQBChdHYXRlQmF0",
-            "dGxlU2VydmVyU2VydmljZRJFCg1HZXRQbGF5ZXJJbmZvEhguUHJvdG8uQjJH",
-            "X0dldFBsYXllckluZm8aGC5Qcm90by5HMkJfR2V0UGxheWVySW5mbyIAEkIK",
-            "DEJhdHRsZVJld2FyZBIXLlByb3RvLkIyR19CYXR0bGVSZXdhcmQaFy5Qcm90",
-            "by5HMkJfQmF0dGxlUmV3YXJkIgBiBnByb3RvMw=="));
+            "a2FnZRgDIAEoCzIULlByb3RvLlBsYXllclBhY2thZ2UitAEKEEIyR19CYXR0",
+            "bGVSZXdhcmQSEwoLQWNjb3VudFV1aWQYASABKAkSEAoIRGlmZkdvbGQYAiAB",
+            "KAUSDQoFTWFwSUQYAyABKAUSJgoLTW9kaWZ5SXRlbXMYBCADKAsyES5Qcm90",
+            "by5QbGF5ZXJJdGVtEiYKC1JlbW92ZUl0ZW1zGAUgAygLMhEuUHJvdG8uUGxh",
+            "eWVySXRlbRILCgNFeHAYBiABKAUSDQoFTGV2ZWwYByABKAUiMgoQRzJCX0Jh",
+            "dHRsZVJld2FyZBIeCgRDb2RlGAEgASgOMhAuUHJvdG8uRXJyb3JDb2RlIjwK",
+            "E1Rhc2tfRzJDX0pvaW5CYXR0bGUSJQoGU2VydmVyGAEgASgLMhUuUHJvdG8u",
+            "R2FtZVNlcnZlckluZm8iHQoLQzJHX0J1eUdvbGQSDgoGU2hvcElkGAEgASgF",
+            "Il8KC0cyQ19CdXlHb2xkEh4KBENvZGUYASABKA4yEC5Qcm90by5FcnJvckNv",
+            "ZGUSDAoER29sZBgCIAEoBRIMCgRDb2luGAMgASgFEhQKDFJlY2VpdmVkR29s",
+            "ZBgEIAEoBSI6ChBDMkdfUmVmcmVzaEVxdWlwEhEKCUVxdWlwVXVpZBgBIAEo",
+            "CRITCgtDb3VzdG9tSXRlbRgCIAMoCSIyChBHMkNfUmVmcmVzaEVxdWlwEh4K",
+            "BENvZGUYASABKA4yEC5Qcm90by5FcnJvckNvZGUiYQoPVGFza19Nb2RpZnlJ",
+            "dGVtEiYKC01vZGlmeUl0ZW1zGAEgAygLMhEuUHJvdG8uUGxheWVySXRlbRIm",
+            "CgtSZW1vdmVJdGVtcxgCIAMoCzIRLlByb3RvLlBsYXllckl0ZW0iLgoQVGFz",
+            "a19Db2luQW5kR29sZBIMCgRDb2luGAEgASgFEgwKBEdvbGQYAiABKAUiIAoQ",
+            "VGFza19QYWNrYWdlU2l6ZRIMCgRTaXplGAEgASgFMvAGChFHYXRlU2VydmVy",
+            "U2VydmljZRItCgVMb2dpbhIQLlByb3RvLkMyR19Mb2dpbhoQLlByb3RvLkcy",
+            "Q19Mb2dpbiIAEjwKCkNyZWF0ZUhlcm8SFS5Qcm90by5DMkdfQ3JlYXRlSGVy",
+            "bxoVLlByb3RvLkcyQ19DcmVhdGVIZXJvIgASOQoJQmVnaW5HYW1lEhQuUHJv",
+            "dG8uQzJHX0JlZ2luR2FtZRoULlByb3RvLkcyQ19CZWdpbkdhbWUiABJFCg1H",
+            "ZXRMYXN0QmF0dGxlEhguUHJvdG8uQzJHX0dldExhc3RCYXR0bGUaGC5Qcm90",
+            "by5HMkNfR2V0TGFzdEJhdHRsZSIAEkUKDU9wZXJhdG9yRXF1aXASGC5Qcm90",
+            "by5DMkdfT3BlcmF0b3JFcXVpcBoYLlByb3RvLkcyQ19PcGVyYXRvckVxdWlw",
+            "IgASNgoIU2FsZUl0ZW0SEy5Qcm90by5DMkdfU2FsZUl0ZW0aEy5Qcm90by5H",
+            "MkNfU2FsZUl0ZW0iABJOChBFcXVpcG1lbnRMZXZlbFVwEhsuUHJvdG8uQzJH",
+            "X0VxdWlwbWVudExldmVsVXAaGy5Qcm90by5HMkNfRXF1aXBtZW50TGV2ZWxV",
+            "cCIAEjAKBkdNVG9vbBIRLlByb3RvLkMyR19HTVRvb2waES5Qcm90by5HMkNf",
+            "R01Ub29sIgASSAoOQnV5UGFja2FnZVNpemUSGS5Qcm90by5DMkdfQnV5UGFj",
+            "a2FnZVNpemUaGS5Qcm90by5HMkNfQnV5UGFja2FnZVNpemUiABJCCgxNYWdp",
+            "Y0xldmVsVXASFy5Qcm90by5DMkdfTWFnaWNMZXZlbFVwGhcuUHJvdG8uRzJD",
+            "X01hZ2ljTGV2ZWxVcCIAEi8KCVF1ZXJ5U2hvcBIPLlByb3RvLkMyR19TaG9w",
+            "Gg8uUHJvdG8uRzJDX1Nob3AiABIzCgdCdXlJdGVtEhIuUHJvdG8uQzJHX0J1",
+            "eUl0ZW0aEi5Qcm90by5HMkNfQnV5SXRlbSIAEjMKB0J1eUdvbGQSEi5Qcm90",
+            "by5DMkdfQnV5R29sZBoSLlByb3RvLkcyQ19CdXlHb2xkIgASQgoMUmVmcmVz",
+            "aEVxdWlwEhcuUHJvdG8uQzJHX1JlZnJlc2hFcXVpcBoXLlByb3RvLkcyQ19S",
+            "ZWZyZXNoRXF1aXAiADKrAwoOR2F0ZVNlcnZlclRhc2sSSQoLU3luY1BhY2th",
+            "Z2USGy5Qcm90by5UYXNrX0cyQ19TeW5jUGFja2FnZRobLlByb3RvLlRhc2tf",
+            "RzJDX1N5bmNQYWNrYWdlIgASQAoIU3luY0hlcm8SGC5Qcm90by5UYXNrX0cy",
+            "Q19TeW5jSGVybxoYLlByb3RvLlRhc2tfRzJDX1N5bmNIZXJvIgASRgoKSm9p",
+            "bkJhdHRsZRIaLlByb3RvLlRhc2tfRzJDX0pvaW5CYXR0bGUaGi5Qcm90by5U",
+            "YXNrX0cyQ19Kb2luQmF0dGxlIgASPgoKTW9kaWZ5SXRlbRIWLlByb3RvLlRh",
+            "c2tfTW9kaWZ5SXRlbRoWLlByb3RvLlRhc2tfTW9kaWZ5SXRlbSIAEkEKC0Nv",
+            "aW5BbmRHb2xkEhcuUHJvdG8uVGFza19Db2luQW5kR29sZBoXLlByb3RvLlRh",
+            "c2tfQ29pbkFuZEdvbGQiABJBCgtQYWNrYWdlU2l6ZRIXLlByb3RvLlRhc2tf",
+            "UGFja2FnZVNpemUaFy5Qcm90by5UYXNrX1BhY2thZ2VTaXplIgAypAEKF0dh",
+            "dGVCYXR0bGVTZXJ2ZXJTZXJ2aWNlEkUKDUdldFBsYXllckluZm8SGC5Qcm90",
+            "by5CMkdfR2V0UGxheWVySW5mbxoYLlByb3RvLkcyQl9HZXRQbGF5ZXJJbmZv",
+            "IgASQgoMQmF0dGxlUmV3YXJkEhcuUHJvdG8uQjJHX0JhdHRsZVJld2FyZBoX",
+            "LlByb3RvLkcyQl9CYXR0bGVSZXdhcmQiAGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.DataReflection.Descriptor, global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -152,7 +153,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2C_Shop), global::Proto.G2C_Shop.Parser, new[]{ "Code", "Shops" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_GetPlayerInfo), global::Proto.B2G_GetPlayerInfo.Parser, new[]{ "AccountUuid", "ServiceServerID" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2B_GetPlayerInfo), global::Proto.G2B_GetPlayerInfo.Parser, new[]{ "Code", "Gold", "Hero", "Package" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_BattleReward), global::Proto.B2G_BattleReward.Parser, new[]{ "AccountUuid", "Gold", "MapID", "Items", "Exp", "Level" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.B2G_BattleReward), global::Proto.B2G_BattleReward.Parser, new[]{ "AccountUuid", "DiffGold", "MapID", "ModifyItems", "RemoveItems", "Exp", "Level" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.G2B_BattleReward), global::Proto.G2B_BattleReward.Parser, new[]{ "Code" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Task_G2C_JoinBattle), global::Proto.Task_G2C_JoinBattle.Parser, new[]{ "Server" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.C2G_BuyGold), global::Proto.C2G_BuyGold.Parser, new[]{ "ShopId" }, null, null, null),
@@ -4906,9 +4907,10 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public B2G_BattleReward(B2G_BattleReward other) : this() {
       accountUuid_ = other.accountUuid_;
-      gold_ = other.gold_;
+      diffGold_ = other.diffGold_;
       mapID_ = other.mapID_;
-      items_ = other.items_.Clone();
+      modifyItems_ = other.modifyItems_.Clone();
+      removeItems_ = other.removeItems_.Clone();
       exp_ = other.exp_;
       level_ = other.level_;
     }
@@ -4932,17 +4934,17 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "Gold" field.</summary>
-    public const int GoldFieldNumber = 2;
-    private int gold_;
+    /// <summary>Field number for the "DiffGold" field.</summary>
+    public const int DiffGoldFieldNumber = 2;
+    private int diffGold_;
     /// <summary>
     ///用户金币
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Gold {
-      get { return gold_; }
+    public int DiffGold {
+      get { return diffGold_; }
       set {
-        gold_ = value;
+        diffGold_ = value;
       }
     }
 
@@ -4960,21 +4962,34 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "Items" field.</summary>
-    public const int ItemsFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_items_codec
+    /// <summary>Field number for the "ModifyItems" field.</summary>
+    public const int ModifyItemsFieldNumber = 4;
+    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_modifyItems_codec
         = pb::FieldCodec.ForMessage(34, global::Proto.PlayerItem.Parser);
-    private readonly pbc::RepeatedField<global::Proto.PlayerItem> items_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
+    private readonly pbc::RepeatedField<global::Proto.PlayerItem> modifyItems_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
     /// <summary>
     ///掉落物品
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto.PlayerItem> Items {
-      get { return items_; }
+    public pbc::RepeatedField<global::Proto.PlayerItem> ModifyItems {
+      get { return modifyItems_; }
+    }
+
+    /// <summary>Field number for the "RemoveItems" field.</summary>
+    public const int RemoveItemsFieldNumber = 5;
+    private static readonly pb::FieldCodec<global::Proto.PlayerItem> _repeated_removeItems_codec
+        = pb::FieldCodec.ForMessage(42, global::Proto.PlayerItem.Parser);
+    private readonly pbc::RepeatedField<global::Proto.PlayerItem> removeItems_ = new pbc::RepeatedField<global::Proto.PlayerItem>();
+    /// <summary>
+    ///消耗完的物品
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto.PlayerItem> RemoveItems {
+      get { return removeItems_; }
     }
 
     /// <summary>Field number for the "Exp" field.</summary>
-    public const int ExpFieldNumber = 5;
+    public const int ExpFieldNumber = 6;
     private int exp_;
     /// <summary>
     ///经验
@@ -4988,7 +5003,7 @@ namespace Proto {
     }
 
     /// <summary>Field number for the "Level" field.</summary>
-    public const int LevelFieldNumber = 6;
+    public const int LevelFieldNumber = 7;
     private int level_;
     /// <summary>
     ///等级
@@ -5015,9 +5030,10 @@ namespace Proto {
         return true;
       }
       if (AccountUuid != other.AccountUuid) return false;
-      if (Gold != other.Gold) return false;
+      if (DiffGold != other.DiffGold) return false;
       if (MapID != other.MapID) return false;
-      if(!items_.Equals(other.items_)) return false;
+      if(!modifyItems_.Equals(other.modifyItems_)) return false;
+      if(!removeItems_.Equals(other.removeItems_)) return false;
       if (Exp != other.Exp) return false;
       if (Level != other.Level) return false;
       return true;
@@ -5027,9 +5043,10 @@ namespace Proto {
     public override int GetHashCode() {
       int hash = 1;
       if (AccountUuid.Length != 0) hash ^= AccountUuid.GetHashCode();
-      if (Gold != 0) hash ^= Gold.GetHashCode();
+      if (DiffGold != 0) hash ^= DiffGold.GetHashCode();
       if (MapID != 0) hash ^= MapID.GetHashCode();
-      hash ^= items_.GetHashCode();
+      hash ^= modifyItems_.GetHashCode();
+      hash ^= removeItems_.GetHashCode();
       if (Exp != 0) hash ^= Exp.GetHashCode();
       if (Level != 0) hash ^= Level.GetHashCode();
       return hash;
@@ -5046,21 +5063,22 @@ namespace Proto {
         output.WriteRawTag(10);
         output.WriteString(AccountUuid);
       }
-      if (Gold != 0) {
+      if (DiffGold != 0) {
         output.WriteRawTag(16);
-        output.WriteInt32(Gold);
+        output.WriteInt32(DiffGold);
       }
       if (MapID != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(MapID);
       }
-      items_.WriteTo(output, _repeated_items_codec);
+      modifyItems_.WriteTo(output, _repeated_modifyItems_codec);
+      removeItems_.WriteTo(output, _repeated_removeItems_codec);
       if (Exp != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(48);
         output.WriteInt32(Exp);
       }
       if (Level != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(56);
         output.WriteInt32(Level);
       }
     }
@@ -5071,13 +5089,14 @@ namespace Proto {
       if (AccountUuid.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(AccountUuid);
       }
-      if (Gold != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Gold);
+      if (DiffGold != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(DiffGold);
       }
       if (MapID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(MapID);
       }
-      size += items_.CalculateSize(_repeated_items_codec);
+      size += modifyItems_.CalculateSize(_repeated_modifyItems_codec);
+      size += removeItems_.CalculateSize(_repeated_removeItems_codec);
       if (Exp != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Exp);
       }
@@ -5095,13 +5114,14 @@ namespace Proto {
       if (other.AccountUuid.Length != 0) {
         AccountUuid = other.AccountUuid;
       }
-      if (other.Gold != 0) {
-        Gold = other.Gold;
+      if (other.DiffGold != 0) {
+        DiffGold = other.DiffGold;
       }
       if (other.MapID != 0) {
         MapID = other.MapID;
       }
-      items_.Add(other.items_);
+      modifyItems_.Add(other.modifyItems_);
+      removeItems_.Add(other.removeItems_);
       if (other.Exp != 0) {
         Exp = other.Exp;
       }
@@ -5123,7 +5143,7 @@ namespace Proto {
             break;
           }
           case 16: {
-            Gold = input.ReadInt32();
+            DiffGold = input.ReadInt32();
             break;
           }
           case 24: {
@@ -5131,14 +5151,18 @@ namespace Proto {
             break;
           }
           case 34: {
-            items_.AddEntriesFrom(input, _repeated_items_codec);
+            modifyItems_.AddEntriesFrom(input, _repeated_modifyItems_codec);
             break;
           }
-          case 40: {
-            Exp = input.ReadInt32();
+          case 42: {
+            removeItems_.AddEntriesFrom(input, _repeated_removeItems_codec);
             break;
           }
           case 48: {
+            Exp = input.ReadInt32();
+            break;
+          }
+          case 56: {
             Level = input.ReadInt32();
             break;
           }

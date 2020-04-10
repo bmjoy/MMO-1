@@ -14,8 +14,8 @@ public class UParticlePlayer:MonoBehaviour, IParticlePlayer
     {
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(Path, (obj) =>
         {
-             if (obj == null) return;
-             Instantiate(obj, this.transform);
+            if (obj == null) return;
+            if (this.transform) Instantiate(obj, this.transform);
         });
     }
 
