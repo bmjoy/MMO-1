@@ -281,6 +281,16 @@ message Task_PackageSize
 	int32 Size= 1;
 }
 
+message C2G_ActiveMagic
+{
+	int32 MagicId = 1;
+}
+
+message G2C_ActiveMagic
+{
+	 ErrorCode Code =1;
+}
+
 service GateServerService
 {
 	rpc Login (C2G_Login) returns(G2C_Login){};//1
@@ -297,6 +307,7 @@ service GateServerService
 	rpc BuyItem(C2G_BuyItem) returns (G2C_BuyItem){};//12
 	rpc BuyGold(C2G_BuyGold) returns (G2C_BuyGold){};//13
 	rpc RefreshEquip (C2G_RefreshEquip) returns (G2C_RefreshEquip){};//14
+	rpc ActiveMagic(C2G_ActiveMagic) returns(G2C_ActiveMagic){};//15
 }
 
 service GateServerTask

@@ -297,5 +297,10 @@ namespace GateServer
         {
             return UserDataManager.S.RefreshEquip(Client, AccountUuid, req.EquipUuid, req.CoustomItem).GetAwaiter().GetResult();
         }
+
+        public G2C_ActiveMagic ActiveMagic(C2G_ActiveMagic req)
+        {
+            return UserDataManager.S.ActiveMadic(Client, AccountUuid, req.MagicId).GetAwaiter().GetResult();
+        }
     }
 }

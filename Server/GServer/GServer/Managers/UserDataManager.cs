@@ -266,6 +266,7 @@ namespace GServer.Managers
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
 
+      
 
         private void SyncModifyItems(Client userClient, PlayerItem[] modifies, PlayerItem[] removes =null)
         {
@@ -315,6 +316,27 @@ namespace GServer.Managers
                 ReceivedGold = item.ReceiveGold
             };
         }
+        //todo
+        internal async Task<G2C_ActiveMagic> ActiveMadic(Client client, string accountUuid, int magicId)
+        {
+            var player = await FindPlayerByAccountId(accountUuid);
+            var hero = await FindHeroByPlayerId(player.Uuid);
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(magicId);
+            if (config.CharacterID != hero.HeroId) return new G2C_ActiveMagic { Code = ErrorCode.Error };
+            if (!hero.Magics.TryGetValue(magicId, out DBHeroMagic magic))
+            {
+                magic = new DBHeroMagic { Actived = true, Exp = 0, Level = 1 };
+                hero.Magics.Add(magicId, magic);
+                var update = Builders<GameHeroEntity>.Update.Set(t => t.Magics, hero.Magics);
+                await DataBase.S.Heros.UpdateOneAsync(t => t.Uuid == hero.Uuid, update);
+                await SyncToClient(client, player.Uuid, true);
+                return new G2C_ActiveMagic { Code = ErrorCode.Ok };
+            }
+            else {
+                return new G2C_ActiveMagic { Code = ErrorCode.Error };
+            }
+
+        }
 
         internal async Task<G2C_MagicLevelUp> MagicLevelUp(Client client, int magicId, int level, string accountUuid)
         {
@@ -329,19 +351,22 @@ namespace GServer.Managers
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
 
+           
+            var models = new List<WriteModel<GameHeroEntity>>();
+
+            if (!hero.Magics.TryGetValue(magicId, out DBHeroMagic magic))
+            {
+                // magic = new DBHeroMagic { Actived = true, Exp = 0, Level = 0 };
+                //hero.Magics.Add(magicId, magic);
+                return new G2C_MagicLevelUp { Code = ErrorCode.MagicNoActicted };
+            }
+
             if (levelConfig.NeedGold > 0)
             {
                 player.Gold -= levelConfig.NeedGold;
                 var update = Builders<GamePlayerEntity>.Update.Inc(t => t.Gold, -levelConfig.NeedGold);
                 await DataBase.S.Playes.UpdateOneAsync(t => t.Uuid == player.Uuid, update);
                 SyncCoinAndGold(client, player.Coin, player.Gold);
-            }
-
-            var models = new List<WriteModel<GameHeroEntity>>();
-
-            if (!hero.Magics.TryGetValue(magicId, out DBHeroMagic magic))
-            {
-                magic = new DBHeroMagic { Actived = true, Exp = 0, Level = 0 };
             }
 
             magic.Level += 1;
