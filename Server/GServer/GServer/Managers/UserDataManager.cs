@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using EConfig;
 using ExcelConfig;
 using GateServer;
-using Google.Protobuf.Collections;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using Proto;
 using Proto.MongoDB;
@@ -498,7 +496,7 @@ namespace GServer.Managers
             await DataBase.S.Playes.FindOneAndUpdateAsync(t=>t.Uuid == pl.Uuid, u_player);
             await DataBase.S.Packages.BulkWriteAsync(models);
 
-            SyncModifyItems(client, null, removes.Select(t => t.ToPlayerItem()).ToArray());
+            SyncModifyItems(client, modify.Select(t=>t.ToPlayerItem()).ToArray(), removes.Select(t => t.ToPlayerItem()).ToArray());
             SyncCoinAndGold(client, pl.Coin, pl.Gold);
             return new G2C_SaleItem { Code = ErrorCode.Ok, Coin = pl.Coin, Gold = pl.Gold };
 
