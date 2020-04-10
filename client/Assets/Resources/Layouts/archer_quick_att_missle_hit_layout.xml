@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>0.5</Time>
+  <Time>0.1</Time>
   <Points>
     <TimePoint>
       <GUID>dac7692e-3434-4719-b097-4d7578409726</GUID>
@@ -38,7 +38,6 @@
           <z>0</z>
         </offsetPosition>
       </RangeType>
-      <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
     <LayoutBase xsi:type="ParticleLayout">

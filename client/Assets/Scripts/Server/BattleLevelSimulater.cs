@@ -179,6 +179,21 @@ namespace Server
                         appendProperties.Add(p, v);
                     }
                 }
+
+                foreach (var kv in equip.Data.Values)
+                {
+                    var p = (P)kv.Key;
+                    var v = (int)(kv.Value*(1 + addRate));
+                    if (appendProperties.TryGetValue(p, out int value))
+                    {
+                        appendProperties[p] = v + value;
+                    }
+                    else
+                    {
+                        appendProperties.Add(p, v);
+                    }
+                }
+
             }
             var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;        
             character = per.CreateCharacter(user.GetHero().Level, data,

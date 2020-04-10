@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using Proto;
 using Proto.MongoDB;
 using ServerUtility;
 
@@ -15,14 +16,42 @@ namespace GateServer
     public class DataBase : XSingleton<DataBase>
     {
 
+        public class PackageEquip
+        {
+
+            public PackageEquip() { Properties = new Dictionary<HeroPropertyType, int>(); }
+            public int RefreshCount { set; get; }
+            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
+            public Dictionary<HeroPropertyType,int> Properties { set; get; }
+        }
+
+        public class PackageItem
+        {
+
+            public PackageItem() { this.EquipData = new PackageEquip(); }
+
+            [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+            [BsonElement("id")]
+            public string Uuid { set; get; }
+
+            public int Id { set; get; }
+
+            public int Level { set; get; }
+
+            public int Num { set; get; }
+
+            public bool IsLock { set; get; }
+
+            public PackageEquip EquipData { set; get; }
+        }
+
         public class GamePackageEntity
         {
             [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
             [BsonElement("id")]
             public string Uuid { set; get; }
-            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
             [BsonElement("item")]
-            public Dictionary<string, ItemNum> Items { set; get; }
+            public List<PackageItem> Items { set; get; }
             [BsonElement("size")]
             public int PackageSize { set; get; }
             [BsonElement("puuid")]
@@ -30,7 +59,22 @@ namespace GateServer
 
             public GamePackageEntity()
             {
-                Items = new Dictionary<string, ItemNum>();
+                Items = new List<PackageItem>();
+            }
+
+            public bool TryGetItem(string uuid, out PackageItem item)
+            {
+                foreach (var i in Items)
+                {
+                    if (i.Uuid == uuid)
+                    {
+                        item = i;
+                        return true;
+                    }
+                }
+
+                item = null;
+                return false;
             }
 
         }
@@ -44,14 +88,14 @@ namespace GateServer
             public int Exp { set; get; }
             public int Level { set; get; }
             [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
-            public Dictionary<int, HeroMagic> Magics { set; get; }
+            public Dictionary<int, DBHeroMagic> Magics { set; get; }
             [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
             public Dictionary<int, string> Equips { set; get; }
             public string HeroName { set; get; }
             public int HeroId { set; get; }
             public GameHeroEntity()
             {
-                Magics = new Dictionary<int, HeroMagic>();
+                Magics = new Dictionary<int, DBHeroMagic>();
                 Equips = new Dictionary<int, string>();
             }
         }
@@ -64,10 +108,12 @@ namespace GateServer
             public string Uuid { set; get; }
             [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
             [BsonElement("item")]
-            public Dictionary<string, ItemNum> Items { set; get; }
+            public Dictionary<string, PackageItem> Items { set; get; }
             [BsonElement("puuid")]
             public string PlayerUuid { set; get; }
         }
+
+     
 
         public DataBase()
         {

@@ -30,6 +30,10 @@ enum ErrorCode
     NoFoundItemInShop = 21;//商店中没有该道具
     NoEnoughtCoin = 22 ;//钻石不足
     PackageSizeLimit = 23;//背包上限
+    PlayerLevelLimit = 24;//等级过高
+    RefreshTimeLimit = 25;//超过了最大可刷新次数
+    NeedItemQuality = 26;//道具品质不够
+    NoPropertyToRefresh = 27;//属性不够无法刷新
 }
 
 //empty text

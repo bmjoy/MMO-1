@@ -123,7 +123,7 @@ namespace Windows
             if ((ItemType)config.ItemType == ItemType.ItEquip)
             {
                 var eq = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(config.Params[0]));
-                ShowEquip(config, eq, item.Level);
+                ShowEquip(item, config, eq, item.Level);
             }
             else {
                 EquipmentPropertyTableManager.Count = 0;
@@ -131,7 +131,7 @@ namespace Windows
         }
 
 
-        private void ShowEquip(ItemData config, EquipmentData equip,int lvl)
+        private void ShowEquip(PlayerItem pItem, ItemData config, EquipmentData equip,int lvl)
         {
             var level = ExcelToJSONConfigManager.Current
                         .FirstConfig<EquipmentLevelUpData>(t => t.Level == lvl && t.Quality == config.Quality);
@@ -142,14 +142,23 @@ namespace Windows
             for (var ip = 0; ip < pro.Count; ip++)
             {
                 var pr = (P)pro[ip];
-                if (!properties.ContainsKey(pr))
-                    properties.Add(pr, 0);
-
+                if (!properties.ContainsKey(pr)) properties.Add(pr, 0);
                 if (properties.TryGetValue(pr, out ComplexValue value))
                 {
-                    //计算装备加成
-                    var eVal = value.AppendValue + (1 + ((level?.AppendRate ?? 0) / 10000f)) * val[ip];
-                    value.SetAppendValue((int)eVal);
+                    value.SetBaseValue(value.BaseValue + val[ip]);
+                    value.SetRate(level?.AppendRate ?? 0);
+                }
+            }
+            if (pItem.Data != null)
+            {
+                foreach (var v in pItem.Data.Values)
+                {
+                    var k = (P)v.Key;
+                    if (!properties.ContainsKey(k)) properties.Add(k, 0);
+                    if (properties.TryGetValue(k, out ComplexValue value))
+                    {
+                        value.SetAppendValue(value.AppendValue + v.Value);
+                    }
                 }
             }
 
@@ -159,7 +168,7 @@ namespace Windows
             {
                 EquipmentPropertyTableManager[index]
                     .Model
-                    .SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}", i.Value.FinalValue));
+                    .SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}", i.Value.ToString()));
                 index++;
             }
         }

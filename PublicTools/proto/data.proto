@@ -43,7 +43,6 @@ message HeroMagic
 	 int32 Level =2;//level
 }
 
-
 //玩家角色
 message DHero
 {
@@ -55,21 +54,21 @@ message DHero
 	string Name = 6;
 }
 
-//装备属性
-message EquipProperty
+message EquipData
 {
-	 HeroPropertyType Property=1;//属性类型
-	 int32 Value=2;//属性值
+	int32 RefreshTime =1;
+	map<int32,int32> Values = 2;
 }
 
 //玩家道具
 message PlayerItem
 {
-	  int32 ItemID=1;//配置ID
-	  int32 Num=2;//拥有数量
-	  string GUID=3;//唯一识别码
-	  bool Locked=4; //是否锁定中
-	  int32 Level =5;//等级 装备特有
+	int32 ItemID=1;//配置ID
+	int32 Num=2;//拥有数量
+	string GUID=3;//唯一识别码
+	bool Locked=4; //是否锁定中
+	int32 Level =5;//等级 装备特有
+	EquipData Data= 6;
 }
 
 //玩家背包

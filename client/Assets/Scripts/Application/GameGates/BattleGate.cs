@@ -140,6 +140,8 @@ public class BattleGate : UGate, IServerMessageHandler
                 c.cullingMask = LayerMask.GetMask("Player");
                 go.transform.localPosition = new Vector3(0,1.1f,1.5f);
                 c.farClipPlane = 5;
+                c.clearFlags = CameraClearFlags.SolidColor;
+                c.backgroundColor = new Color(52 / 255f, 44 / 255f, 33 / 255f, 1);
                 go.TryAdd<LookAtTarget>().target = character.GetBoneByName(UCharacterView.BodyBone);
             }
         };

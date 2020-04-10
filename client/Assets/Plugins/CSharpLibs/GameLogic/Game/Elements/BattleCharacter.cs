@@ -374,9 +374,8 @@ namespace GameLogic.Game.Elements
 
         public bool AddMP(int mp)
         {
-            if (mp <= 0) return false;
-            MP += mp;
             var temp = MP;
+            MP += mp;
             if (MP >= MaxMP) MP = MaxMP;
             if (temp == MP) return false;
             View.ShowMPChange(mp, MP, MaxMP);

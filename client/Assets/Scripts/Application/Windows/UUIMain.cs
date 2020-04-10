@@ -16,11 +16,7 @@ namespace Windows
         protected override void InitModel()
         {
             base.InitModel();
-            MenuSkill.onClick.AddListener(() =>
-            {
-                
-            });
-
+     
             Button_Play.onClick.AddListener(() =>
             {
                 UUIManager.Singleton
@@ -56,6 +52,10 @@ namespace Windows
             });
             MenuMessages.onClick.AddListener(() => {
                 UUIManager.S.CreateWindowAsync<UUIMessages>(ui => ui.ShowWindow());
+            });
+
+            MenuRefresh.onClick.AddListener(() => {
+                UUIManager.S.CreateWindowAsync<UUIItemRefresh>(ui => ui.ShowWindow());
             });
 
             user_info.onClick.AddListener(() => { OpenEquip(); });
@@ -95,6 +95,7 @@ namespace Windows
             MenuShop.SetKey("UI_MAIN_SHOP");
             MenuMessages.SetKey("UI_MAIN_MESSAGE");
             Button_Play.SetKey("UI_MAIN_PLAY");
+            MenuRefresh.SetKey("UI_MAIN_Refresh");
             OnUpdateUIData();
         }
         protected override void OnHide()

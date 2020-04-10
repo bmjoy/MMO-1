@@ -27,7 +27,7 @@ namespace GateServer
 
             foreach (var i in entity.Equips)
             {
-                if (package.Items.TryGetValue(i.Value, out ItemNum item))
+                if (package.TryGetItem(i.Value, out PackageItem item))
                 {
                     h.Equips.Add(new WearEquip
                     {
@@ -41,6 +41,49 @@ namespace GateServer
             return h;
         }
 
+        public static PackageItem ToPackageItem(this PlayerItem item)
+        {
+            var pItem = new PackageItem
+            {
+                Id = item.ItemID,
+                IsLock = item.Locked,
+                Level = item.Level,
+                Num = item.Num,
+                Uuid = item.GUID
+            };
+
+            if (item.Data != null)
+            {
+                pItem.EquipData.RefreshCount = item.Data.RefreshTime;
+                foreach (var i in item.Data.Values)
+                {
+                    pItem.EquipData.Properties.Add((HeroPropertyType)i.Key, i.Value);
+                }
+            }
+            return pItem;
+        }
+
+        public static PlayerItem ToPlayerItem(this PackageItem i)
+        {
+            var item = new PlayerItem
+            {
+                GUID = i.Uuid,
+                ItemID = i.Id,
+                Locked = i.IsLock,
+                Num = i.Num,
+                Level = i.Level
+            };
+            item.Data = new EquipData();
+            item.Data.RefreshTime = i.EquipData?.RefreshCount ?? 0;
+
+            foreach (var pro in i.EquipData.Properties)
+            {
+                item.Data.Values.Add((int)pro.Key, pro.Value);
+            }
+
+            return item;
+        }
+
         public static PlayerPackage ToPackage(this GamePackageEntity entity)
         {
             var p = new PlayerPackage { MaxSize = entity.PackageSize };
@@ -48,14 +91,7 @@ namespace GateServer
             {
                 foreach (var i in entity.Items)
                 {
-                    p.Items.Add(i.Key,new PlayerItem
-                    {
-                        GUID = i.Key,
-                        ItemID = i.Value.Id,
-                        Locked = i.Value.IsLock,
-                        Num = i.Value.Num,
-                        Level = i.Value.Level
-                    });
+                    p.Items.Add(i.Uuid,i.ToPlayerItem());
                 }
             }
 
@@ -69,7 +105,6 @@ namespace GateServer
             foreach (var i in arrs) list.Add(int.Parse(i));
             return list;
         }
-
 
         public static ItemsShop ToItemShop(this ItemShopData config)
         {

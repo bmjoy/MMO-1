@@ -26,6 +26,7 @@ using System;
 using System.IO;
 using GameLogic.Game.LayoutLogics;
 using Server;
+using System.Linq;
 
 public class BattleSimulater : XSingleton<BattleSimulater>
 {
@@ -227,14 +228,23 @@ public class BattleSimulater : XSingleton<BattleSimulater>
             {
                 AccountUuid = p.AccountId,
                 MapID = Simulater.LevelData.ID,
-                Gold = p.Gold,
+                DiffGold = p.DiffGold,
                 Exp = p.GetHero().Exprices,
                 Level = p.GetHero().Level
             };
-            foreach (var c in p.Items)
+
+            var removeItesm = p.Package.Removes.Select(t => t.Item).ToList();
+            var modify = p.Package.Items.Where(t => t.Value.Dirty).Select(t => t.Value.Item).ToList();
+            foreach (var i in removeItesm)
             {
-                req.Items.Add(c.Value);
+                req.RemoveItems.Add(i);
             }
+
+            foreach (var i in modify)
+            {
+                req.ModifyItems.Add(i);
+            }
+
             var pack = BattleReward.CreateQuery()
             .GetResult(gateClient, req);
             gateClient.Disconnect();

@@ -84,9 +84,7 @@ public class UApplication : XSingleton<UApplication>
         base.Awake();
         _ = new ExcelToJSONConfigManager(ResourcesManager.S);
         GetServer();
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         StartCoroutine(RunReader());
-
         Constant = ExcelToJSONConfigManager.Current.GetConfigByID<ConstantValue>(1);
     }
 

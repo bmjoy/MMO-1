@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
 <TimeLine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Time>1</Time>
+  <Time>0.35</Time>
   <Points>
     <TimePoint>
       <GUID>78164013-d316-4f24-90c1-e2218581082a</GUID>

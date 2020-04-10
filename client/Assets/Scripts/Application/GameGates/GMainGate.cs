@@ -33,22 +33,6 @@ public class GMainGate:UGate
     private GameServerInfo ServerInfo;
     public RequestClient<GateServerTaskHandler> Client{ private set; get; }
 
-    public void UpdateItem(IList<PlayerItem> diff)
-    {
-        foreach (var i in diff)
-        {
-            if (package.Items.TryGetValue(i.GUID, out PlayerItem p))
-            {
-                p.Num += i.Num;
-                if (p.Num <= 0)
-                {
-                    package.Items.Remove(i.GUID);
-                }
-
-            }
-        }
-        UUIManager.S.UpdateUIData();
-    }
 
     public UCharacterView ReCreateHero(int heroID,string heroname)
     {
@@ -82,11 +66,13 @@ public class GMainGate:UGate
         c.cullingMask = LayerMask.GetMask("Player");
         go.transform.localPosition = new Vector3(0, 1.1f, 1.5f);
         c.farClipPlane = 5;
+        c.clearFlags = CameraClearFlags.SolidColor;
+        c.backgroundColor = new Color(52 / 255f, 44 / 255f, 33 / 255f, 1);
         go.TryAdd<LookAtTarget>().target = characterView.GetBoneByName(UCharacterView.BodyBone);
         return characterView;
     }
-    public RenderTexture LookAtView { private set; get; }
 
+    public RenderTexture LookAtView { private set; get; }
 
     internal void RotationHero(float x)
     {
@@ -113,7 +99,6 @@ public class GMainGate:UGate
     {
 
         yield return SceneManager.LoadSceneAsync("Main");
-
         Data = FindObjectOfType<MainData>();
         view = UPerceptionView.Create();
         Client = new RequestClient<GateServerTaskHandler>(ServerInfo.Host, ServerInfo.Port, false)

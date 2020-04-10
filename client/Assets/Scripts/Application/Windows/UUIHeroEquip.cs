@@ -183,9 +183,22 @@ namespace Windows
 
                 if (properties.TryGetValue(pr, out ComplexValue value))
                 {
-                    //计算装备加成
-                    var eVal = value.AppendValue + (1 + ((level?.AppendRate ?? 0) / 10000f)) * val[ip];
-                    value.SetAppendValue((int)eVal);
+                    value.SetBaseValue(value.BaseValue + val[ip]);
+                    value.SetRate(level?.AppendRate ?? 0);
+                }
+            }
+            if (it.Data != null)
+            {
+                foreach (var i in it.Data.Values)
+                {
+                    var k = (P)i.Key;
+                    if (!properties.ContainsKey(k))
+                        properties.Add(k, 0);
+
+                    if (properties.TryGetValue(k, out ComplexValue value))
+                    {
+                        value.SetAppendValue(value.AppendValue + i.Value);
+                    }
                 }
             }
 
@@ -194,7 +207,8 @@ namespace Windows
             foreach (var i in properties)
             {
                 EquipmentPropertyTableManager[index]
-                    .Model.SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}", i.Value.FinalValue));
+                    .Model.SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}",
+                    i.Value.ToString()));
 
                 index++;
             }
@@ -274,15 +288,28 @@ namespace Windows
 
                     for (var ip = 0; ip < pro.Count; ip++)
                     {
-                        if (properties.TryGetValue((P)pro[ip], out ComplexValue value))
+                        var pr = (P)pro[ip];
+                        if (!properties.ContainsKey(pr)) properties.Add(pr, 0);
+                        if (properties.TryGetValue(pr, out ComplexValue value))
                         {
-                            //计算装备加成
-                            var eVal = value.AppendValue + (1 + ((level?.AppendRate ?? 0) / 10000f)) * val[ip];
-                            value.SetAppendValue((int)eVal);
+                            value.SetBaseValue(value.BaseValue + val[ip]);
+                            value.SetRate(level?.AppendRate ?? 0);
+                        }
+                    }
+                    if (pItem.Data != null)
+                    {
+                        foreach (var v in pItem.Data.Values)
+                        {
+                            var k = (P)v.Key;
+                            if (!properties.ContainsKey(k)) properties.Add(k, 0);
+                            if (properties.TryGetValue(k, out ComplexValue value))
+                            {
+                                value.SetAppendValue(value.AppendValue + v.Value);
+                            }
                         }
                     }
 
-                    if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
+                if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
                     {
                         partIcon.icon.ActiveSelfObject(true);
                         ResourcesManager.S.LoadIcon(item,s => partIcon.icon.sprite = s);
