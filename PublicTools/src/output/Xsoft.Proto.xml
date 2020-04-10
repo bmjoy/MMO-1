@@ -2554,14 +2554,17 @@
         <member name="F:Proto.B2G_BattleReward.AccountUuidFieldNumber">
             <summary>Field number for the "AccountUuid" field.</summary>
         </member>
-        <member name="F:Proto.B2G_BattleReward.GoldFieldNumber">
-            <summary>Field number for the "Gold" field.</summary>
+        <member name="F:Proto.B2G_BattleReward.DiffGoldFieldNumber">
+            <summary>Field number for the "DiffGold" field.</summary>
         </member>
         <member name="F:Proto.B2G_BattleReward.MapIDFieldNumber">
             <summary>Field number for the "MapID" field.</summary>
         </member>
-        <member name="F:Proto.B2G_BattleReward.ItemsFieldNumber">
-            <summary>Field number for the "Items" field.</summary>
+        <member name="F:Proto.B2G_BattleReward.ModifyItemsFieldNumber">
+            <summary>Field number for the "ModifyItems" field.</summary>
+        </member>
+        <member name="F:Proto.B2G_BattleReward.RemoveItemsFieldNumber">
+            <summary>Field number for the "RemoveItems" field.</summary>
         </member>
         <member name="F:Proto.B2G_BattleReward.ExpFieldNumber">
             <summary>Field number for the "Exp" field.</summary>
@@ -2574,7 +2577,7 @@
             用户ID
              </summary>
         </member>
-        <member name="P:Proto.B2G_BattleReward.Gold">
+        <member name="P:Proto.B2G_BattleReward.DiffGold">
              <summary>
             用户金币
              </summary>
@@ -2584,9 +2587,14 @@
             当前战斗地图
              </summary>
         </member>
-        <member name="P:Proto.B2G_BattleReward.Items">
+        <member name="P:Proto.B2G_BattleReward.ModifyItems">
              <summary>
             掉落物品
+             </summary>
+        </member>
+        <member name="P:Proto.B2G_BattleReward.RemoveItems">
+             <summary>
+            消耗完的物品
              </summary>
         </member>
         <member name="P:Proto.B2G_BattleReward.Exp">
@@ -2633,6 +2641,21 @@
         </member>
         <member name="F:Proto.G2C_RefreshEquip.CodeFieldNumber">
             <summary>Field number for the "Code" field.</summary>
+        </member>
+        <member name="F:Proto.Task_ModifyItem.ModifyItemsFieldNumber">
+            <summary>Field number for the "ModifyItems" field.</summary>
+        </member>
+        <member name="F:Proto.Task_ModifyItem.RemoveItemsFieldNumber">
+            <summary>Field number for the "RemoveItems" field.</summary>
+        </member>
+        <member name="F:Proto.Task_CoinAndGold.CoinFieldNumber">
+            <summary>Field number for the "Coin" field.</summary>
+        </member>
+        <member name="F:Proto.Task_CoinAndGold.GoldFieldNumber">
+            <summary>Field number for the "Gold" field.</summary>
+        </member>
+        <member name="F:Proto.Task_PackageSize.SizeFieldNumber">
+            <summary>Field number for the "Size" field.</summary>
         </member>
         <member name="T:Proto.GateServerService.Login">
             <summary>
@@ -2717,6 +2740,21 @@
         <member name="T:Proto.GateServerTask.JoinBattle">
             <summary>
             3
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.ModifyItem">
+            <summary>
+            4
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.CoinAndGold">
+            <summary>
+            5
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.PackageSize">
+            <summary>
+            6
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">

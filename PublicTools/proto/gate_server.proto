@@ -219,12 +219,13 @@ message G2B_GetPlayerInfo
 //返回战斗数据
 message B2G_BattleReward
 {
-	string AccountUuid=1;			 //用户ID
-	int32 Gold=2;  			 //用户金币
-	int32 MapID=3; 			 //当前战斗地图
-	repeated PlayerItem Items=4;   //掉落物品
-	int32 Exp = 5;//经验
-	int32 Level = 6;//等级
+	string AccountUuid=1;			     //用户ID
+	int32 DiffGold=2;  			         //用户金币
+	int32 MapID=3; 			             //当前战斗地图
+	repeated PlayerItem ModifyItems=4;   //掉落物品
+	repeated PlayerItem RemoveItems =5;  //消耗完的物品
+	int32 Exp = 6;//经验
+	int32 Level = 7;//等级
 }
 
 //返回战斗数据
@@ -264,6 +265,22 @@ message G2C_RefreshEquip
 	ErrorCode Code = 1;
 }
 
+message Task_ModifyItem
+{
+	repeated PlayerItem ModifyItems = 1;
+	repeated PlayerItem RemoveItems = 2;
+}
+
+message Task_CoinAndGold
+{
+	int32 Coin = 1;
+	int32 Gold = 2;
+}
+message Task_PackageSize
+{
+	int32 Size= 1;
+}
+
 service GateServerService
 {
 	rpc Login (C2G_Login) returns(G2C_Login){};//1
@@ -287,6 +304,9 @@ service GateServerTask
 	rpc SyncPackage(Task_G2C_SyncPackage) returns (Task_G2C_SyncPackage){};//1
 	rpc SyncHero(Task_G2C_SyncHero) returns (Task_G2C_SyncHero){};//2
 	rpc JoinBattle(Task_G2C_JoinBattle) returns (Task_G2C_JoinBattle){};//3
+	rpc ModifyItem (Task_ModifyItem) returns (Task_ModifyItem){};//4
+	rpc CoinAndGold (Task_CoinAndGold) returns (Task_CoinAndGold){};//5
+	rpc PackageSize (Task_PackageSize) returns (Task_PackageSize){};//6
 }
 
 service GateBattleServerService

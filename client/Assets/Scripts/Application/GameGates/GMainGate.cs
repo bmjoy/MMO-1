@@ -33,22 +33,6 @@ public class GMainGate:UGate
     private GameServerInfo ServerInfo;
     public RequestClient<GateServerTaskHandler> Client{ private set; get; }
 
-    public void UpdateItem(IList<PlayerItem> diff)
-    {
-        foreach (var i in diff)
-        {
-            if (package.Items.TryGetValue(i.GUID, out PlayerItem p))
-            {
-                p.Num += i.Num;
-                if (p.Num <= 0)
-                {
-                    package.Items.Remove(i.GUID);
-                }
-
-            }
-        }
-        UUIManager.S.UpdateUIData();
-    }
 
     public UCharacterView ReCreateHero(int heroID,string heroname)
     {

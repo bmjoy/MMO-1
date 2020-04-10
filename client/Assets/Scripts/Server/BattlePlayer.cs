@@ -5,6 +5,7 @@ using EConfig;
 using ExcelConfig;
 using GameLogic.Game.Elements;
 using Proto;
+using Server;
 using UnityEngine;
 using XNet.Libs.Net;
 
@@ -14,9 +15,17 @@ public class BattlePlayer
     #region Property
 
     private readonly DHero Hero;
-    private readonly PlayerPackage Package;
+    public  BattlePackage Package { private set; get; }
     public BattleCharacter HeroCharacter { set; get; }
-    public int Gold { get; private set; }
+
+    public int Gold
+    {
+        get { return baseGold + DiffGold; }
+        private set
+        {
+            DiffGold = value - baseGold;        
+        }
+    }
 
     #endregion
 
@@ -28,16 +37,20 @@ public class BattlePlayer
     public string AccountId {  private set; get; }
 
     public GameServerInfo GateServer { set; get; }
-   
+
+
+    private int baseGold = 0;
+
     public BattlePlayer(string account, PlayerPackage package, DHero hero, int gold, Client client, GameServerInfo info)
     {
-        Package = package;
+        Package = new BattlePackage( package);
         Hero = hero;
-        Gold = gold;
+        baseGold = gold;
         this.AccountId = account;
         this.Client = client;
         GateServer = info;
     }
+
 
     public bool SubGold(int gold)
     {
@@ -74,10 +87,9 @@ public class BattlePlayer
         var result = new PlayerPackage();
         foreach (var i in Package.Items)
         {
-            result.Items.Add(i.Key ,i.Value);
+            result.Items.Add(i.Key ,i.Value.Item);
             result.MaxSize = Package.MaxSize;
         }
-
         return result;
     }
 
@@ -90,27 +102,29 @@ public class BattlePlayer
         {
             item.GUID =CreateUUID();
             if (CurrentSize >= Package.MaxSize) return false;
-            Package.Items.Add(item.GUID, item);
+            Package.Items.Add(item.GUID, new BattlePlayerItem(item,true));
         }
         else 
         {
             foreach (var i in Package.Items)
             {
-                if (i.Value.Locked) continue;
-                if (i.Value.ItemID == item.ItemID)
+                if (i.Value.Item.Locked) continue;
+                if (i.Value.Item.ItemID == item.ItemID)
                 {
-                    if (i.Value.Num == config.MaxStackNum) continue;
-                    int maxNum = config.MaxStackNum - i.Value.Num;
+                    if (i.Value.Item.Num == config.MaxStackNum) continue;
+                    int maxNum = config.MaxStackNum - i.Value.Item.Num;
                     if (maxNum >= item.Num)
                     {
-                        i.Value.Num += item.Num;
+                        i.Value.Item.Num += item.Num;
                         item.Num = 0;
+                        i.Value.SetDrity();
                         break;
                     }
                     else
                     {
-                        i.Value.Num += maxNum;
+                        i.Value.Item.Num += maxNum;
                         item.Num -= maxNum;
+                        i.Value.SetDrity();
                     }
                 }
             }
@@ -122,7 +136,7 @@ public class BattlePlayer
                 var num = Mathf.Min(config.MaxStackNum, item.Num);
                 item.Num -= num;
                 var playitem = new PlayerItem { GUID = CreateUUID(), ItemID = item.ItemID, Level = item.Level, Num = num };
-                Package.Items.Add(playitem.GUID, playitem);
+                Package.Items.Add(playitem.GUID, new BattlePlayerItem(item, true));
             }
         }
         Dirty = true;
@@ -134,43 +148,48 @@ public class BattlePlayer
         int have = 0;
         foreach (var i in Package.Items)
         {
-            if (i.Value.Locked && ignoreLocked) continue;
-            if (i.Value.ItemID == itemId) have += i.Value.Num;
+            if (i.Value.Item.Locked && ignoreLocked) continue;
+            if (i.Value.Item.ItemID == itemId) have += i.Value.Item.Num;
         }
         return have;
     }
 
-    public bool ConsumeItem(int item, int num=1)
+    public bool ConsumeItem(int item, int num = 1)
     {
         int have = GetItemCount(item);
         if (have < num) return false;
         HashSet<string> needRemoves = new HashSet<string>();
         foreach (var i in Package.Items)
         {
-            if (i.Value.ItemID != item) continue;
-            if (i.Value.Locked) continue;
-
-            var left = num-i.Value.Num;
+            if (i.Value.Item.ItemID != item) continue;
+            if (i.Value.Item.Locked) continue;
+            var left = num - i.Value.Item.Num;
             if (left < 0)
             {
-                i.Value.Num -= num;
+                i.Value.Item.Num -= num;
+                i.Value.SetDrity();
                 num = 0;
                 break;
             }
+            i.Value.SetDrity();
             needRemoves.Add(i.Key);
             num = left;
         }
-        foreach (var i in needRemoves)  Package.Items.Remove(i);
+        foreach (var i in needRemoves)
+        {
+            Package.RemoveItem(i);
+        }
         Dirty = true;
         return true;
     }
 
     public bool Dirty { get; private set; } = false;
-    public IDictionary<string,PlayerItem> Items { get { return Package.Items; } }
+    
+    public int DiffGold { get; private set; }
 
     internal PlayerItem GetEquipByGuid(string gUID)
     {
-        if (Package.Items.TryGetValue(gUID, out PlayerItem item)) return item;   
+        if (Package.Items.TryGetValue(gUID, out BattlePlayerItem item)) return item.Item;   
         return null;
     }
 

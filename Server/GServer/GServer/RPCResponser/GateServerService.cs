@@ -74,7 +74,7 @@ namespace GateServer
 
             if (!string.IsNullOrEmpty( task.Result))
             {
-                manager.SyncToClient(Client, task.Result).Wait();
+                manager.SyncToClient(Client, task.Result,true,true).Wait();
             }
             return new G2C_CreateHero { Code = !string.IsNullOrEmpty(task.Result) ? ErrorCode.Ok : ErrorCode.Error };
         }
@@ -155,7 +155,7 @@ namespace GateServer
                     break;
             }
 
-            UserDataManager.S.SyncToClient(Client, player.Uuid).Wait();
+            UserDataManager.S.SyncToClient(Client, player.Uuid,true,true).Wait();
             return new G2C_GMTool
             {
                 Code = ErrorCode.Ok
@@ -200,7 +200,7 @@ namespace GateServer
                 var task = UserDataManager.S.FindPlayerByAccountId(AccountUuid);
                 task.Wait();
                 var player = task.Result;
-                if (player != null) UserDataManager.S.SyncToClient(Client, player.Uuid).Wait();
+                if (player != null) UserDataManager.S.SyncToClient(Client, player.Uuid,true,true).Wait();
                 return new G2C_Login { Code = ErrorCode.Ok, HavePlayer = player != null };
             }
             else
@@ -226,7 +226,7 @@ namespace GateServer
             var op = UserDataManager.S.OperatorEquip(player.Uuid, request.Guid, request.Part, request.IsWear);
             op.Wait();
             var result = op.Result;
-            if (result) UserDataManager.S.SyncToClient(Client, player.Uuid).Wait();
+            if (result) UserDataManager.S.SyncToClient(Client, player.Uuid,true).Wait();
 
             return new G2C_OperatorEquip
             {
