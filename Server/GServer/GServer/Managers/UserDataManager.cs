@@ -26,18 +26,6 @@ namespace GServer.Managers
     public class UserDataManager :XSingleton<UserDataManager>
     {
 
-        private async Task<bool> CostGold(GamePlayerEntity player, int gold)
-        {
-            if (gold <= 0) return false;
-            var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-            var fgold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
-            var filter = Builders<GamePlayerEntity>.Filter.And(id, fgold);
-            var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold - gold);
-
-            var re = await DataBase.S.Playes.UpdateOneAsync(filter, update);
-            return re.ModifiedCount > 0;
-        }
-
         public async Task<GameHeroEntity> FindHeroByPlayerId(string player_uuid)
         {
            
@@ -69,28 +57,31 @@ namespace GServer.Managers
             return  player.Uuid;
         }
 
-        internal async Task SyncToClient(Client userClient, string playerUuid, bool packageOnly = false)
+        internal async Task SyncToClient(Client userClient, string playerUuid, bool syncPlayer = false, bool syncPackage = false)
         {
-            
             var player = await FindPlayerById(playerUuid);
             var p = await FindPackageByPlayerID(playerUuid);
-
-            var pack = new Task_G2C_SyncPackage
+            if (syncPackage)
             {
-                Coin = player.Coin,
-                Gold = player.Gold,
-                Package = p.ToPackage()
-            };
+                //var p = await FindPackageByPlayerID(playerUuid);
+                var pack = new Task_G2C_SyncPackage
+                {
+                    Coin = player.Coin,
+                    Gold = player.Gold,
+                    Package = p.ToPackage()
+                };
+                userClient.CreateTask(pack).Send();
+            }
 
-            userClient.CreateTask(pack).Send();
-            if (packageOnly) return;
-            var h = (await FindHeroByPlayerId(playerUuid)).ToDhero(p);
-            var hTask = new Task_G2C_SyncHero
+            if (syncPlayer)
             {
-                Hero = h
-            };
-            userClient.CreateTask(hTask).Send();
-
+                var h = (await FindHeroByPlayerId(playerUuid)).ToDhero(p);
+                var hTask = new Task_G2C_SyncHero
+                {
+                    Hero = h
+                };
+                userClient.CreateTask(hTask).Send();
+            }
         }
 
         internal async Task<G2C_BuyPackageSize> BuyPackageSize(Client client,string accountUuid, int size)
@@ -102,19 +93,21 @@ namespace GServer.Managers
             if (package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE >
                 Application.Constant.PACKAGE_SIZE_LIMIT) return  new G2C_BuyPackageSize { Code = ErrorCode.PackageSizeLimit };
             {
-                var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-                var update = Builders<GamePlayerEntity>.Update
-                    .Set(t => t.Coin, player.Coin - Application.Constant.PACKAGE_BUY_COST);
-                 await DataBase.S.Playes.UpdateOneAsync(filter, update);
-            }
-            {
-                var filter = Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid);
-                var update = Builders<GamePackageEntity>.Update.Set(t => t.PackageSize,
-                    package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE);
-                await DataBase.S.Packages.UpdateOneAsync(filter, update);
+
+                 await DataBase.S.Playes.FindOneAndUpdateAsync(t => t.Uuid== player.Uuid,
+                     Builders<GamePlayerEntity>.Update.Inc(t => t.Coin, - Application.Constant.PACKAGE_BUY_COST));
+                SyncCoinAndGold(client, player.Coin - Application.Constant.PACKAGE_BUY_COST, player.Gold);
             }
 
-            await SyncToClient(client, player.Uuid, true);
+            {
+                await DataBase.S.Packages.FindOneAndUpdateAsync(t => t.Uuid== package.Uuid,
+                    Builders<GamePackageEntity>.Update.Inc(t=>t.PackageSize, Application.Constant.PACKAGE_BUY_SIZE)
+                    );
+            }
+
+            client
+                .CreateTask(new Task_PackageSize { Size = package.PackageSize + Application.Constant.PACKAGE_BUY_SIZE })
+                .Send();
 
             return new G2C_BuyPackageSize
             {
@@ -212,7 +205,7 @@ namespace GServer.Managers
 
             if (package == null) return new G2C_EquipmentLevelUp { Code = ErrorCode.Error };
 
-            if (!package.Items.TryGetValue(item_uuid, out PackageItem item))
+            if (!package.TryGetItem(item_uuid, out PackageItem item))
                 return new G2C_EquipmentLevelUp { Code = ErrorCode.NofoundItem };
 
             var itemconfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
@@ -252,29 +245,57 @@ namespace GServer.Managers
             if (levelconfig.CostGold > 0)
             {
                 player.Gold -= levelconfig.CostGold;
-                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold);
-                DataBase.S.Playes.UpdateOne(filter, update);
+                var update = Builders<GamePlayerEntity>.Update.Inc(t => t.Gold, -levelconfig.CostGold);
+                await DataBase.S.Playes.FindOneAndUpdateAsync(filter, update);
             }
 
             if (levelconfig.CostCoin > 0)
             {
                 player.Coin -= levelconfig.CostCoin;
-                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Coin, player.Coin);
-                DataBase.S.Playes.UpdateOne(filter, update);
+                var update = Builders<GamePlayerEntity>.Update.Inc(t => t.Coin, -levelconfig.CostCoin);
+                await DataBase.S.Playes.FindOneAndUpdateAsync(filter, update);
             }
 
             if (GRandomer.Probability10000(levelconfig.Pro))
             {
                 item.Level += 1;
-                var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
-                DataBase.S.Packages.UpdateOne(p_filter, update);
+                var update = Builders<GamePackageEntity>.Update.Set(t=>t.Items[-1].Level, item.Level);
+                var f = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player.Uuid)
+                    & Builders<GamePackageEntity>.Filter.ElemMatch(t => t.Items, x => x.Uuid == item.Uuid);
+                await DataBase.S.Packages.FindOneAndUpdateAsync(f, update);
+                SyncModifyItems(client, new [] { item.ToPlayerItem() });
             }
 
-            await SyncToClient(client, player_uuid);
-
+            SyncCoinAndGold(client, player.Coin, player.Gold);
             return new G2C_EquipmentLevelUp { Code = ErrorCode.Ok, Level = item.Level };
         }
 
+
+        private void SyncModifyItems(Client userClient, PlayerItem[] modifies, PlayerItem[] removes =null)
+        {
+            var task = new Task_ModifyItem();
+            if (modifies != null)
+            {
+                foreach (var i in modifies)
+                {
+                    task.ModifyItems.Add(i);
+                }
+            }
+            if (removes != null)
+            {
+                foreach (var i in removes)
+                {
+                    task.RemoveItems.Add(i);
+                }
+            }
+            userClient.CreateTask(task).Send();
+        }
+
+        private void SyncCoinAndGold(Client userClient, int coin, int gold)
+        {
+            var task = new Task_CoinAndGold { Coin = coin, Gold = gold };
+            userClient.CreateTask(task).Send();
+        }
 
         internal async Task<G2C_BuyGold> BuyGold(Client client, string accountUuid, int shopId)
         {
@@ -282,13 +303,13 @@ namespace GServer.Managers
             if (item == null) return new G2C_BuyGold { Code = ErrorCode.NofoundItem };
             var player = await FindPlayerByAccountId(accountUuid);
             if (player.Coin < item.Prices) return new G2C_BuyGold { Code = ErrorCode.NoEnoughtCoin };
-            var update = Builders<GamePlayerEntity>.Update
-                .Set(t => t.Coin, player.Coin - item.Prices)
-                .Set(t => t.Gold, player.Gold + item.ReceiveGold);
-            var idFilter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-            await DataBase.S.Playes.UpdateOneAsync(idFilter, update);
 
-            await SyncToClient(client, player.Uuid, true);
+            var update = Builders<GamePlayerEntity>.Update
+                .Inc(t => t.Coin, - item.Prices)
+                .Inc(t => t.Gold,  item.ReceiveGold);
+            await DataBase.S.Playes.FindOneAndUpdateAsync(t=>t.Uuid == player.Uuid, update);
+
+            SyncCoinAndGold(client, player.Coin - item.Prices, player.Gold + item.ReceiveGold);
 
             return new G2C_BuyGold
             {
@@ -312,29 +333,30 @@ namespace GServer.Managers
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
 
+            if (levelConfig.NeedGold > 0)
+            {
+                player.Gold -= levelConfig.NeedGold;
+                var update = Builders<GamePlayerEntity>.Update.Inc(t => t.Gold, -levelConfig.NeedGold);
+                await DataBase.S.Playes.UpdateOneAsync(t => t.Uuid == player.Uuid, update);
+                SyncCoinAndGold(client, player.Coin, player.Gold);
+            }
+
+            var models = new List<WriteModel<GameHeroEntity>>();
+
             if (!hero.Magics.TryGetValue(magicId, out DBHeroMagic magic))
             {
                 magic = new DBHeroMagic { Actived = true, Exp = 0, Level = 0 };
-                hero.Magics.Add(magicId, magic);
-            }
-
-            if(levelConfig.NeedGold > 0)
-            {
-                var filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
-                player.Gold -= levelConfig.NeedGold;
-                var update = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold);
-                await DataBase.S.Playes.UpdateOneAsync(filter, update);
             }
 
             magic.Level += 1;
+
             {
-                var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
-                var update = Builders<GameHeroEntity>.Update.Set(t => t.Magics, hero.Magics);
-                await DataBase.S.Heros.UpdateOneAsync(filter, update);
+               
+                var update = Builders<GameHeroEntity>.Update.Set(t=>t.Magics, hero.Magics);
+                await DataBase.S.Heros.UpdateOneAsync(t=>t.Uuid == hero.Uuid, update);
             }
 
-
-            await SyncToClient(client, player.Uuid);
+            await SyncToClient(client, player.Uuid,true);
 
             return new G2C_MagicLevelUp
             {
@@ -342,39 +364,37 @@ namespace GServer.Managers
             };
         }
 
-        internal async Task<ErrorCode> BuyItem(Client c,string acount_id, ShopItem item)
+        internal async Task<ErrorCode> BuyItem(Client c, string acount_id, ShopItem item)
         {
-            var player =  await FindPlayerByAccountId(acount_id);
-
-            var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid , player.Uuid);
-            bool update = false;
+            var player = await FindPlayerByAccountId(acount_id);
+            var id = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, player.Uuid);
+   
             if (item.CType == CoinType.Coin)
             {
                 if (item.Prices > player.Coin) return ErrorCode.NoEnoughtCoin;
-                var coin = Builders<GamePlayerEntity>.Filter.Eq(t => t.Coin, player.Coin);
-                var query_player = Builders<GamePlayerEntity>.Filter.And(id, coin);
-                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Coin ,player.Coin -  item.Prices);
-                var res = await  DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
-                update = res.ModifiedCount > 0;
+
+                await DataBase.S.Playes.FindOneAndUpdateAsync(t => t.Uuid == player.Uuid,
+                    Builders<GamePlayerEntity>.Update.Inc(t => t.Coin, -item.Prices));
+                player.Coin -= item.Prices;
             }
             else if (item.CType == CoinType.Gold)
             {
                 if (item.Prices > player.Gold) return ErrorCode.NoEnoughtGold;
-                var gold = Builders<GamePlayerEntity>.Filter.Eq(t => t.Gold, player.Gold);
-                var query_player = Builders<GamePlayerEntity>.Filter.And(id, gold);
-                var update_player = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, player.Gold - item.Prices);
-                var res = await DataBase.S.Playes.UpdateOneAsync(query_player, update_player);
-                update = res.ModifiedCount > 0;
+                await DataBase.S.Playes.FindOneAndUpdateAsync(t => t.Uuid == player.Uuid,
+                  Builders<GamePlayerEntity>.Update.Inc(t => t.Gold, -item.Prices));
+                player.Gold -= item.Prices;
             }
+            
+            var (modifies, add) = await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum });
 
-            if (!update) return ErrorCode.Error;
+            var items = new List<PlayerItem>();
+            foreach (var i in modifies) items.Add(i.ToPlayerItem());
+            foreach(var i in  add) items.Add(i.ToPlayerItem());
 
-            if (await AddItems(player.Uuid, new PlayerItem { ItemID = item.ItemId, Num = item.PackageNum }))
-            {
-                await SyncToClient(c, player.Uuid, true);
-                return ErrorCode.Ok;
-            }
-            return ErrorCode.Error;
+            SyncModifyItems(c, items.ToArray());
+            SyncCoinAndGold(c, player.Coin, player.Gold);
+            return ErrorCode.Ok;
+
         }
 
         internal async Task<int> HeroGetExprise(string uuid, int exp)
@@ -432,7 +452,7 @@ namespace GServer.Managers
                     if (i.Guid == e.Value)  return new G2C_SaleItem { Code = ErrorCode.IsWearOnHero };
                 }
 
-                if (!p.Items.TryGetValue(i.Guid, out PackageItem item))
+                if (!p.TryGetItem(i.Guid, out PackageItem item))
                     return new G2C_SaleItem { Code = ErrorCode.NofoundItem };
                 if (item.Num < i.Num)
                     return new G2C_SaleItem { Code = ErrorCode.NoenoughItem };
@@ -441,29 +461,47 @@ namespace GServer.Managers
             }
 
             var total = 0;
+            var removes = new List<PackageItem>();
+            var modify = new List<PackageItem>();
+
+            var models = new List<WriteModel<GamePackageEntity>>();
+
             foreach (var i in items)
             {
-                if (p.Items.TryGetValue(i.Guid, out PackageItem item))
+                if (p.TryGetItem(i.Guid, out PackageItem item))
                 {
                     var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
                     if (config.SalePrice > 0) total += config.SalePrice * i.Num;
                     item.Num -= i.Num;
                     if (item.Num == 0)
                     {
-                        p.Items.Remove(i.Guid);
+                        removes.Add(item);
+                        models.Add(new UpdateOneModel<GamePackageEntity>(
+                            Builders<GamePackageEntity>.Filter.Eq(t=>t.Uuid, p.Uuid),
+                            Builders<GamePackageEntity>.Update.PullFilter(t=>t.Items,x=>x.Uuid ==item.Uuid))
+                            );
+                    }
+                    else
+                    {
+                        modify.Add(item);
+                        models.Add(new UpdateOneModel<GamePackageEntity>(
+                        Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, p.Uuid) &
+                        Builders<GamePackageEntity>.Filter.ElemMatch(t => t.Items, x => x.Uuid == item.Uuid),
+                        Builders<GamePackageEntity>.Update.Set(t => t.Items[-1].Num, item.Num))
+                        );
                     }
                 }
             }
 
             pl.Gold += total;
 
-            var u_player = Builders<GamePlayerEntity>.Update.Set(t => t.Gold, pl.Gold);
-            var u_package = Builders<GamePackageEntity>.Update.Set(t => t.Items, p.Items);
-            var u_filter = Builders<GamePlayerEntity>.Filter.Eq(t => t.Uuid, pl.Uuid);
-            await DataBase.S.Playes.UpdateOneAsync(u_filter, u_player);
-            await DataBase.S.Packages.UpdateOneAsync(fiterPackage, u_package);
-            await SyncToClient(client, pl.Uuid);
 
+            var u_player = Builders<GamePlayerEntity>.Update.Inc(t => t.Gold,total);
+            await DataBase.S.Playes.FindOneAndUpdateAsync(t=>t.Uuid == pl.Uuid, u_player);
+            await DataBase.S.Packages.BulkWriteAsync(models);
+
+            SyncModifyItems(client, null, removes.Select(t => t.ToPlayerItem()).ToArray());
+            SyncCoinAndGold(client, pl.Coin, pl.Gold);
             return new G2C_SaleItem { Code = ErrorCode.Ok, Coin = pl.Coin, Gold = pl.Gold };
 
         }
@@ -478,7 +516,7 @@ namespace GServer.Managers
             var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, player_uuid);
             var package = (await DataBase.S.Packages.FindAsync(pa_filter)).Single();
 
-            if (!package.Items.TryGetValue(equip_uuid, out PackageItem item)) return false;
+            if (!package.TryGetItem(equip_uuid, out PackageItem item)) return false;
 
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(item.Id);
             if (config == null) return false;
@@ -506,7 +544,7 @@ namespace GServer.Managers
             package.Items.Clear();
             foreach (var i in diff)
             {
-                package.Items.Add(i.GUID, new PackageItem { Id= i.ItemID, IsLock = i.Locked, Level =i.Level, Num = i.Num, Uuid = i.GUID });
+                package.Items.Add(i.ToPackageItem());
             }
             var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
             await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
@@ -519,28 +557,24 @@ namespace GServer.Managers
             var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(itemID);
             foreach (var i in package.Items)
             {
-                if (i.Value.Id == itemID)
+                if (i.Id == itemID)
                 {
-                    if (i.Value.Num < it.MaxStackNum) return i.Value;
+                    if (i.Num < it.MaxStackNum) return i;
                 }
             }
-
             return null;
         }
 
-        /// <summary>
-        /// add item new
-        /// </summary>
-        /// <param name="uuid"></param>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public async Task<bool> AddItems(string uuid, PlayerItem i)
+        public async Task<Tuple<List<PackageItem>,List< PackageItem>>> AddItems(string uuid, PlayerItem i)
         {
-            if (i.Num <= 0) return false;
+            if (i.Num <= 0) return null;
             GamePackageEntity package = await FindPackageByPlayerID(uuid);
             var it = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
-            if (it == null) return false;
+            if (it == null) return null;
             var num = i.Num;
+            var modifies = new List<PackageItem>();
+            var adds = new List<PackageItem>();
+           
             while (num > 0)
             {
                 var cItem = GetCanStackItem(i.ItemID, package);
@@ -550,6 +584,7 @@ namespace GServer.Managers
                     var add = Math.Min(remainNum, num);
                     cItem.Num += add;
                     num -= add;
+                    modifies.Add(cItem);
                 }
                 else
                 {
@@ -563,14 +598,32 @@ namespace GServer.Managers
                         Level = i.Level,
                         Num = add
                     };
-                    package.Items.Add(itemNum.Uuid, itemNum);
+                    adds.Add(itemNum);
                 }
             }
 
-            var pa_filter = Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, uuid);
-            var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
-            await DataBase.S.Packages.UpdateOneAsync(pa_filter, update);
-            return true;
+
+            var models = new List<WriteModel<GamePackageEntity>>();
+            foreach (var a in adds) 
+            {
+                var push = new UpdateOneModel<GamePackageEntity>(
+                    Builders<GamePackageEntity>.Filter.Eq(t => t.PlayerUuid, uuid),
+                    Builders<GamePackageEntity>.Update.Push(t => t.Items, a));
+                models.Add(push);
+            }
+
+            foreach (var m in modifies)
+            {
+                var b = Builders<GamePackageEntity>.Filter;
+                models.Add(new UpdateOneModel<GamePackageEntity>(
+                    b.Eq(t => t.PlayerUuid, uuid) & b.ElemMatch(t => t.Items, x => x.Uuid == m.Uuid),
+                    Builders<GamePackageEntity>.Update.Set(t => t.Items[-1], m))
+                    );
+            }
+
+            await DataBase.S.Packages.BulkWriteAsync(models);
+
+            return  Tuple.Create(modifies, adds);
         }
 
         public async Task<bool> AddGoldAndCoin(string player_uuid, int coin, int gold)
@@ -599,7 +652,7 @@ namespace GServer.Managers
             var player = await FindPlayerByAccountId(accountId);
             var package = await FindPackageByPlayerID(player.Uuid);
 
-            if (!package.Items.TryGetValue(equipUuid, out PackageItem equip)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+            if (!package.TryGetItem(equipUuid, out PackageItem equip)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
 
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(equip.Id);
             if (config == null) return new G2C_RefreshEquip { Code = ErrorCode.Error };
@@ -607,13 +660,11 @@ namespace GServer.Managers
             int refreshCount = equip.EquipData?.RefreshCount ?? 0;
             if (refreshData.MaxRefreshTimes < refreshCount) return new G2C_RefreshEquip { Code = ErrorCode.RefreshTimeLimit };
             if (refreshData.NeedItemCount > customItem.Count) return new G2C_RefreshEquip { Code = ErrorCode.NoenoughItem };
-
-
             Dictionary<HeroPropertyType, int> values = new Dictionary<HeroPropertyType, int>();
-
+            var removes = new List<PackageItem>();
             foreach (var i in customItem)
             {
-                if (!package.Items.TryGetValue(i, out PackageItem custom)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
+                if (!package.TryGetItem(i, out PackageItem custom)) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
                 var itemConfig = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(custom.Id);
                 if ((ItemType)itemConfig.ItemType != ItemType.ItEquip) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
                 if (custom.Uuid == equipUuid) return new G2C_RefreshEquip { Code = ErrorCode.NofoundItem };
@@ -622,7 +673,6 @@ namespace GServer.Managers
                 if (equipConfig == null) return new G2C_RefreshEquip { Code = ErrorCode.Error };
                 var pre = equipConfig.Properties.SplitToInt();
                 var vals = equipConfig.PropertyValues.SplitToInt();
-
                 for (var index = 0; index < pre.Count; index++)
                 {
                     var p = (HeroPropertyType)pre[index];
@@ -637,6 +687,7 @@ namespace GServer.Managers
                         values.Add(p, vals[index]);
                     }
                 }
+                removes.Add(custom);
             }
 
             if (values.Count == 0) return new G2C_RefreshEquip { Code = ErrorCode.NoPropertyToRefresh };
@@ -661,23 +712,35 @@ namespace GServer.Managers
                 }
             }
 
-            if (!(await CostGold(player, refreshData.CostGold))) return new G2C_RefreshEquip { Code = ErrorCode.NoEnoughtGold };
-
-            foreach (var i in customItem)
-            {
-                package.Items.Remove(i);
-            }
             equip.EquipData.RefreshCount++;
 
-            var filter = Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid);
-            var update = Builders<GamePackageEntity>.Update.Set(t => t.Items, package.Items);
-            await DataBase.S.Packages.UpdateOneAsync(filter, update);
+            var models = new List<WriteModel<GamePackageEntity>>();
 
-            await SyncToClient(client, player.Uuid);
+            var modify = new UpdateOneModel<GamePackageEntity>(
+                     Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid)
+                     & Builders<GamePackageEntity>.Filter.ElemMatch(t => t.Items, c=>c.Uuid == equip.Uuid),
+                      Builders<GamePackageEntity>.Update.Set(t => t.Items[-1], equip)
+                );
+            models.Add(modify);
+
+            foreach (var i in removes)
+            {
+                var delete = new UpdateOneModel<GamePackageEntity>(
+                    Builders<GamePackageEntity>.Filter.Eq(t => t.Uuid, package.Uuid),
+                    Builders<GamePackageEntity>.Update.PullFilter(t => t.Items, t=>t.Uuid == i.Uuid)
+                    );
+                models.Add(delete);
+            }
+
+
+            await DataBase.S.Packages.BulkWriteAsync(models);
+            await DataBase.S.Playes.FindOneAndUpdateAsync(p => p.Uuid == player.Uuid,
+                 Builders<GamePlayerEntity>.Update.Inc(t => t.Gold, -refreshData.CostGold));
+
+            SyncCoinAndGold(client, player.Coin, player.Gold - refreshData.CostGold);
+            SyncModifyItems(client, new[] { equip.ToPlayerItem() }, removes.Select(t => t.ToPlayerItem()).ToArray());
             return new G2C_RefreshEquip { Code = ErrorCode.Ok };
         }
-
-
     }
 }
 

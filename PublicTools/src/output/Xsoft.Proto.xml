@@ -2634,6 +2634,21 @@
         <member name="F:Proto.G2C_RefreshEquip.CodeFieldNumber">
             <summary>Field number for the "Code" field.</summary>
         </member>
+        <member name="F:Proto.Task_ModifyItem.ModifyItemsFieldNumber">
+            <summary>Field number for the "ModifyItems" field.</summary>
+        </member>
+        <member name="F:Proto.Task_ModifyItem.RemoveItemsFieldNumber">
+            <summary>Field number for the "RemoveItems" field.</summary>
+        </member>
+        <member name="F:Proto.Task_CoinAndGold.CoinFieldNumber">
+            <summary>Field number for the "Coin" field.</summary>
+        </member>
+        <member name="F:Proto.Task_CoinAndGold.GoldFieldNumber">
+            <summary>Field number for the "Gold" field.</summary>
+        </member>
+        <member name="F:Proto.Task_PackageSize.SizeFieldNumber">
+            <summary>Field number for the "Size" field.</summary>
+        </member>
         <member name="T:Proto.GateServerService.Login">
             <summary>
             1
@@ -2717,6 +2732,21 @@
         <member name="T:Proto.GateServerTask.JoinBattle">
             <summary>
             3
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.ModifyItem">
+            <summary>
+            4
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.CoinAndGold">
+            <summary>
+            5
+            </summary>    
+        </member>
+        <member name="T:Proto.GateServerTask.PackageSize">
+            <summary>
+            6
             </summary>    
         </member>
         <member name="T:Proto.LoginBattleGameServerService.RegBattleServer">

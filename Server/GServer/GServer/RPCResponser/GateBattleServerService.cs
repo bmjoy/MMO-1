@@ -29,7 +29,7 @@ namespace GateServer
                 var userClient = Application.Current.GetClientByUserID(uuid);
                 if (userClient != null)
                 {
-                    UserDataManager.S.SyncToClient(userClient, uuid).Wait();
+                    UserDataManager.S.SyncToClient(userClient, uuid,true,true).Wait();
                 }
             }
             else

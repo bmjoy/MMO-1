@@ -50,9 +50,8 @@ namespace GateServer
             [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
             [BsonElement("id")]
             public string Uuid { set; get; }
-            [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
             [BsonElement("item")]
-            public Dictionary<string, PackageItem> Items { set; get; }
+            public List<PackageItem> Items { set; get; }
             [BsonElement("size")]
             public int PackageSize { set; get; }
             [BsonElement("puuid")]
@@ -60,7 +59,22 @@ namespace GateServer
 
             public GamePackageEntity()
             {
-                Items = new Dictionary<string, PackageItem>();
+                Items = new List<PackageItem>();
+            }
+
+            public bool TryGetItem(string uuid, out PackageItem item)
+            {
+                foreach (var i in Items)
+                {
+                    if (i.Uuid == uuid)
+                    {
+                        item = i;
+                        return true;
+                    }
+                }
+
+                item = null;
+                return false;
             }
 
         }
