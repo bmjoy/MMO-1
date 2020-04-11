@@ -109,7 +109,7 @@ namespace Server
                 var id = m[GRandomer.RandPro(p)];
                 var monsterData = CM.Current.GetConfigByID<MonsterData>(id);
                 var data = CM.Current.GetConfigByID<CharacterData>(monsterData.CharacterID);
-                var magic = per.CreateHeroMagic(data.ID);
+                var magic = data.CreateHeroMagic(); ;
                 var mName = $"{data.Name}";
 
                 if (!string.IsNullOrEmpty(monsterData.NamePrefix))

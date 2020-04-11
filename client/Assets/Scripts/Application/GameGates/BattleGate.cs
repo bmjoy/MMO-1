@@ -251,6 +251,7 @@ public class BattleGate : UGate, IServerMessageHandler
             {
                 if (view.IsMoving) return;
             }
+            if (Owner.InStartLayout) return;
         }
 
         var act = new Action_LookRotation { LookRotationY = ThridPersionCameraContollor.Current.RotationY };

@@ -204,6 +204,31 @@ public class UCharacterView : UElementView, IBattleCharacter
         
     }
 
+    private readonly List<TimeLineViewPlayer> timeLinePlayers = new List<TimeLineViewPlayer>();
+
+    internal void AttachLayoutView(TimeLineViewPlayer timeLineViewPlayer)
+    {
+        timeLinePlayers.Add(timeLineViewPlayer);
+    }
+
+    internal void DeAttachLayoutView(TimeLineViewPlayer timeLineViewPlayer)
+    {
+        timeLinePlayers.Remove(timeLineViewPlayer);
+    }
+
+    public bool InStartLayout
+    {
+        get
+        {
+            foreach (var i in timeLinePlayers)
+            {
+                //i.RView.IsMagic
+                if (i.EventType == Layout.EventType.EVENT_START) return true;
+            }
+            return false;
+        }
+    }
+
     public Vector3 MoveJoystick(Vector3 forward)
     {
         MoveByDir(forward);

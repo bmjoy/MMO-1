@@ -168,7 +168,7 @@ namespace GameLogic.Game.LayoutLogics
 			var data = ExcelToJSONConfigManager
 				.Current.GetConfigByID<CharacterData>(id);
 
-			var magics = per.CreateHeroMagic(data.ID);
+			var magics = data.CreateHeroMagic();
 			var unit = per.CreateCharacter(
 				level,
 				data,
