@@ -39,6 +39,11 @@
              8
              </summary>    
             </member>
+        <member name="T:Proto.ActionService.LookRotation">
+             <summary>
+             9
+             </summary>    
+            </member>
         <member name="T:Proto.BattleServerReflection">
              <summary>Holder for reflection information generated from battle_server.proto</summary>
             </member>
@@ -122,6 +127,13 @@
             </member>
         <member name="F:Proto.Action_UseItem.ItemIdFieldNumber">
              <summary>Field number for the "ItemId" field.</summary>
+            </member>
+        <member name="F:Proto.Action_LookRotation.LookRotationYFieldNumber">
+             <summary>Field number for the "LookRotationY" field.</summary>
+            </member>
+        <member name="P:Proto.Action_LookRotation.LookRotationY">
+             <summary>
+             </summary>
             </member>
         <member name="T:Proto.Notify_ElementExitState">
              <summary>
@@ -1575,12 +1587,12 @@
             </member>
         <member name="P:EConfig.CharacterData.AttackSpeed">
              <summary>
-             攻击速度(间隔秒)
+             攻击速度(秒)
              </summary>
             </member>
         <member name="P:EConfig.CharacterData.MoveSpeed">
              <summary>
-             移动速度（m/s）
+             移动速度m/s
              </summary>
             </member>
         <member name="P:EConfig.CharacterData.PriorityMove">

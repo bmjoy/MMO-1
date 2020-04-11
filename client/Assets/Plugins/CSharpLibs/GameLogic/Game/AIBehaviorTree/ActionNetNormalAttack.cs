@@ -45,7 +45,7 @@ namespace GameLogic.Game.AIBehaviorTree
                 }
                 TargetTeamType type = mc.Config.GetTeamType();
                 root.GetDistanceByValueType(DistanceValueOf.ViewDistance, 0, out float v);
-                var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.Nearest);
+                var target = root.Perception.FindTarget(root.Character, type, v, 360, true, TargetSelectType.ForwardNearest);
                 if (!target)
                 {
                     if (root.IsDebug) { Attach("failure", "no found target in view"); }

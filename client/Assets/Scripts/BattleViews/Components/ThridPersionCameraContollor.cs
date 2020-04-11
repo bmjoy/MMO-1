@@ -16,12 +16,9 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
     void Update()
     {
 
-        rx = Mathf.Lerp(rx, rotationX, Time.deltaTime * 5);
-        ry = Mathf.Lerp(ry, rotationY, Time.deltaTime * 5);
-
-       // var targetPos = Vector3.zero;
-        if (lookTarget)
-            targetPos = lookTarget.position;
+        rx = Mathf.Lerp(rx, RotationX, Time.deltaTime * 5);
+        ry = Mathf.Lerp(ry, RotationY, Time.deltaTime * 5);
+        if (lookTarget)  targetPos = lookTarget.position;
         this.transform.position = targetPos - (Quaternion.Euler(rx, ry, 0) * Vector3.forward) * distance;
         this.transform.LookAt(targetPos);
     }
@@ -32,8 +29,8 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
     private float ry = 0;
     private Vector3 targetPos;
 
-    public float rotationX = 45;
-    public float rotationY = 0;
+    public float RotationX { private set; get; } = 45;
+    public float RotationY { private set; get; } = 0;
 
     public Transform lookTarget;
 
@@ -46,17 +43,16 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
         targetPos = tr;
     }
 
-    public ThridPersionCameraContollor RotationX(float x)
+    public ThridPersionCameraContollor RotationByX(float x)
     {
-        rotationX += x;
-        rotationX = Mathf.Clamp(rotationX ,5, 85);
+        RotationX += x;
+        RotationX = Mathf.Clamp(RotationX ,5, 85);
         return this;
     }
 
-    public ThridPersionCameraContollor RotationY(float y)
+    public ThridPersionCameraContollor RotationByY(float y)
     {
-        rotationY -= y;
-        //rotationY %= 360;
+        RotationY -= y;
         return this;
     }
 
@@ -70,4 +66,9 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
         return vp.z > 0;
     }
 
+    public void SetXY(float x, float y)
+    {
+        this.RotationX = x;
+        this.RotationY = y;
+    }
 }

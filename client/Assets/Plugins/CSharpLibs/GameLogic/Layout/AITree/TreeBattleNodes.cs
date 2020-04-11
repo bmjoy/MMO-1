@@ -8,6 +8,7 @@ namespace Layout.AITree
 	public enum TargetSelectType
 	{
 		Nearest,
+        ForwardNearest,
 		Random,
 		HPMax,
 		HPMin,

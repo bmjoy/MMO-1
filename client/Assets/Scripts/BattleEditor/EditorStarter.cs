@@ -147,9 +147,9 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 	{
 		if (!isStarted) return;
 		Tick();
-		tcamera.rotationX =  slider_y;
+
+		tcamera.SetXY(slider_y,ry);
 		tcamera.distance = distance;
-		tcamera.rotationY = ry;
 		if (isChanged)
 		{
 			var position = PerView.UScene.startPoint.position;

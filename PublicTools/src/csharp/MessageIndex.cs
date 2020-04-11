@@ -36,6 +36,7 @@ namespace Proto
     [Index(1000009,typeof(Action_UseItem))]
     [Index(1000011,typeof(Action_MoveJoystick))]
     [Index(1000013,typeof(Action_StopMove))]
+    [Index(1000015,typeof(Action_LookRotation))]
     [Index(1001001,typeof(C2B_ExitBattle))]
     [Index(1001002,typeof(B2C_ExitBattle))]
     [Index(1001003,typeof(C2B_JoinBattle))]

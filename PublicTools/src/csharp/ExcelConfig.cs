@@ -713,13 +713,13 @@ namespace EConfig
         public float ViewDistance { set; get; }
         
         /// <summary>
-        /// 攻击速度(间隔秒)
+        /// 攻击速度(秒)
         /// </summary>
         [ExcelConfigColIndex(6)]
         public float AttackSpeed { set; get; }
         
         /// <summary>
-        /// 移动速度（m/s）
+        /// 移动速度m/s
         /// </summary>
         [ExcelConfigColIndex(7)]
         public float MoveSpeed { set; get; }

@@ -154,24 +154,15 @@ namespace GameLogic.Game.Elements
             get
             {
                 var t = View?.Transform;
-                if (!t) return UVector3.zero;
+                if (!t) return UVector3.forward;
                 return t.forward;
             }
         }
         public bool IsMoving { get { return View.IsMoving; } }
-        public Quaternion Rototion
-        {
-            get
-            {
-                return View.Rotation;
-            }
-        }
+        public Quaternion Rototion { get { return View.Rotation; } }
         public Transform Transform { get { return this.View.RootTransform; } }
         //property
-        public ComplexValue this[P type]
-        {
-            get { return Properties[type]; }
-        }
+        public ComplexValue this[P type] { get { return Properties[type]; } }
         //call unit owner
         public int OwnerIndex { private set; get; } 
         public CharacterData Config { private set; get; }
@@ -362,6 +353,11 @@ namespace GameLogic.Game.Elements
             View.Relive();
             View.ShowHPChange(hp, HP, MaxHP);
             return true;
+        }
+
+        public void LookRotation(UVector3 vector3)
+        {
+            View.SetLookRotation(vector3.ToPV3());
         }
 
         public bool SubMP(int mp)

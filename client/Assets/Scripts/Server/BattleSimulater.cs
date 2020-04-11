@@ -18,6 +18,7 @@ using System.IO;
 using GameLogic.Game.LayoutLogics;
 using Server;
 using System.Linq;
+using UVector3 = UnityEngine.Vector3;
 
 public class BattleSimulater : XSingleton<BattleSimulater>
 {
@@ -318,6 +319,11 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                                 break;
                             }
                     }
+                }
+                else if (action is Action_LookRotation look)
+                {
+                    //var q = Quaternion.Euler(0, look.LookRotationY, 0);
+                    i.Value.HeroCharacter.LookRotation(new UVector3(0, look.LookRotationY, 0));
                 }
                 else
                 {

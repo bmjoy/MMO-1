@@ -66,6 +66,11 @@ message Action_UseItem
 {
 	int32 ItemId =1;
 }
+
+message Action_LookRotation
+{
+	float LookRotationY =1; //
+}
 //notify action
 
 //元素退出场景
@@ -350,6 +355,7 @@ service ActionService
 	rpc UseItem (Action_UseItem) returns (Void){};//6
 	rpc MoveJoystick (Action_MoveJoystick) returns (Void){};//7
 	rpc StopMove (Action_StopMove) returns (Void){};//8
+	rpc LookRotation (Action_LookRotation) returns (Void){};//9
 }
 
 service BattleServerService
