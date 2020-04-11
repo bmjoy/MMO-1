@@ -84,8 +84,20 @@ namespace Proto.ActionService
     }
     
 
+    /// <summary>
+    /// 9
+    /// </summary>    
+    [API(9)]
+    public class LookRotation:APIBase<Action_LookRotation, Void> 
+    {
+        private LookRotation() : base() { }
+        public  static LookRotation CreateQuery(){ return new LookRotation();}
+    }
+    
+
     public interface IActionService
     {
+        [API(9)]Void LookRotation(Action_LookRotation req);
         [API(8)]Void StopMove(Action_StopMove req);
         [API(7)]Void MoveJoystick(Action_MoveJoystick req);
         [API(6)]Void UseItem(Action_UseItem req);
@@ -99,6 +111,7 @@ namespace Proto.ActionService
 
     public abstract class ActionService
     {
+        [API(9)]public abstract Task<Void> LookRotation(Action_LookRotation request);
         [API(8)]public abstract Task<Void> StopMove(Action_StopMove request);
         [API(7)]public abstract Task<Void> MoveJoystick(Action_MoveJoystick request);
         [API(6)]public abstract Task<Void> UseItem(Action_UseItem request);

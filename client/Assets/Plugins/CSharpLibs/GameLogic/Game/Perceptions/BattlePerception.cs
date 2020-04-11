@@ -357,6 +357,38 @@ namespace GameLogic.Game.Perceptions
                             }
                         }
                         break;
+                    case TargetSelectType.ForwardNearest:
+                        {
+                            var forward = character.Forward;
+                            var dis = float.MaxValue;
+                            //var angle = float.MaxValue;//  UVector3.Angle(target.Position - character.Position, forward);
+                            foreach (var i in list)
+                            {
+                                var temp = UVector3.Angle(i.Position - character.Position, forward);
+                                if (temp < 15)
+                                {
+                                    if (dis < Distance(i, character)) continue;
+                                    dis = Distance(i, character);
+                                    target = i;
+                                }
+                            }
+                            //no nearest
+                            if (target == null)
+                            {
+                                target = list[0];
+                                var d = Distance(target, character);
+                                foreach (var i in list)
+                                {
+                                    var temp = Distance(i, character);
+                                    if (temp < d)
+                                    {
+                                        d = temp;
+                                        target = i;
+                                    }
+                                }
+                            }
+                        }
+                        break;
                     case TargetSelectType.Random:
                         target = GRandomer.RandomList(list);
                         break;

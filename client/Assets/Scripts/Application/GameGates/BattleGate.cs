@@ -235,11 +235,26 @@ public class BattleGate : UGate, IServerMessageHandler
         else
         {
             var stopMove = new Action_StopMove { StopPos = pos.ToPV3() };
-            if(Owner.DoStopMove())
-            SendAction(stopMove);
+            if (Owner.DoStopMove())
+            {
+                SendAction(stopMove);
+                TrySendLookForward(true);
+            }
+        }
+    }
+
+    public void TrySendLookForward(bool force = false)
+    {
+        if (!force)
+        {
+            if (Owner is IBattleCharacter view)
+            {
+                if (view.IsMoving) return;
+            }
         }
 
-        
+        var act = new Action_LookRotation { LookRotationY = ThridPersionCameraContollor.Current.RotationY };
+        SendAction(act);
     }
 
     public bool IsMpFull()
@@ -274,8 +289,7 @@ public class BattleGate : UGate, IServerMessageHandler
     private void ReleaseLock()
     {
         releaseLockTime = Time.time + .3f;
-        if (Owner)
-            Owner.DoStopMove();
+        if (Owner) Owner.DoStopMove();
     }
 
     internal void DoNormalAttack()

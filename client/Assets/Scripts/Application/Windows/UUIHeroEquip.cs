@@ -10,6 +10,8 @@ using ExcelConfig;
 using EConfig;
 using GameLogic.Game;
 using Proto.GateServerService;
+using GameLogic;
+using Layout.LayoutEffects;
 
 namespace Windows
 {
@@ -170,37 +172,8 @@ namespace Windows
                 lb_gold.text = $"{next.CostGold}";
                 lb_coin.text = $"{next.CostCoin}";
             }
-            var pro = equip.Properties.SplitToInt();
-            var val = equip.PropertyValues.SplitToInt();
-
   
-            var properties = new Dictionary<P, ComplexValue>();
-            for (var ip = 0; ip < pro.Count; ip++)
-            {
-                var pr = (P)pro[ip];
-                if (!properties.ContainsKey(pr))
-                    properties.Add(pr, 0);
-
-                if (properties.TryGetValue(pr, out ComplexValue value))
-                {
-                    value.SetBaseValue(value.BaseValue + val[ip]);
-                    value.SetRate(level?.AppendRate ?? 0);
-                }
-            }
-            if (it.Data != null)
-            {
-                foreach (var i in it.Data.Values)
-                {
-                    var k = (P)i.Key;
-                    if (!properties.ContainsKey(k))
-                        properties.Add(k, 0);
-
-                    if (properties.TryGetValue(k, out ComplexValue value))
-                    {
-                        value.SetAppendValue(value.AppendValue + i.Value);
-                    }
-                }
-            }
+            var properties =  it.GetProperties();
 
             EquipmentPropertyTableManager.Count = properties.Count;
             int index = 0;
@@ -279,40 +252,18 @@ namespace Windows
                 {
                     var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.ItemID);
                     var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
-                    var level = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == pItem.Level && t.Quality == item.Quality);
-
-                    var pro = equip.Properties.SplitToInt();
-                    var val = equip.PropertyValues.SplitToInt();
-                    //var level = 
-
-                    for (var ip = 0; ip < pro.Count; ip++)
+                    var ps = pItem.GetProperties();
+                    foreach (var kv in ps)
                     {
-                        var pr = (P)pro[ip];
-                        if (!properties.ContainsKey(pr)) properties.Add(pr, 0);
-                        if (properties.TryGetValue(pr, out ComplexValue value))
+                        if (properties.TryGetValue(kv.Key, out ComplexValue v))
                         {
-                            value.SetBaseValue(value.BaseValue + val[ip]);
-                            value.SetRate(level?.AppendRate ?? 0);
+                            v.ModifyValueAdd(AddType.Append, kv.Value.FinalValue);
                         }
                     }
-                    if (pItem.Data != null)
-                    {
-                        foreach (var v in pItem.Data.Values)
-                        {
-                            var k = (P)v.Key;
-                            if (!properties.ContainsKey(k)) properties.Add(k, 0);
-                            if (properties.TryGetValue(k, out ComplexValue value))
-                            {
-                                value.SetAppendValue(value.AppendValue + v.Value);
-                            }
-                        }
-                    }
-
-                if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
+                    if (Equips.TryGetValue((EquipmentType)equip.PartType, out HeroPartData partIcon))
                     {
                         partIcon.icon.ActiveSelfObject(true);
-                        ResourcesManager.S.LoadIcon(item,s => partIcon.icon.sprite = s);
+                        ResourcesManager.S.LoadIcon(item, s => partIcon.icon.sprite = s);
                         if (pItem.Level > 0) partIcon.level.text = $"+{pItem.Level}";
                         partIcon.rootLvl.ActiveSelfObject(pItem.Level > 0);
                     }
@@ -324,9 +275,9 @@ namespace Windows
             var appDefance = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_DEFANCE;
             var speedAdd = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_ADDSPEED;
             var attackSpeed = properties[P.Agility].FinalValue * BattleAlgorithm.AGILITY_SUBWAITTIME;
-            properties[P.MaxHp].SetAppendValue((int)(properties[P.MaxHp].AppendValue + appMaxHp));
-            properties[P.MaxMp].SetAppendValue((int)(properties[P.MaxMp].AppendValue + appMaxMp));
-            properties[P.Defance].SetAppendValue((int)(properties[P.Defance].AppendValue + appDefance));
+            properties[P.MaxHp].ModifyValueAdd( AddType.Append, appMaxHp);
+            properties[P.MaxMp].ModifyValueAdd(AddType.Append, appMaxMp);
+            properties[P.Defance].ModifyValueAdd( AddType.Append, appDefance);
             var damage = 0;
             var category = (HeroCategory)data.Category;
             switch (category)

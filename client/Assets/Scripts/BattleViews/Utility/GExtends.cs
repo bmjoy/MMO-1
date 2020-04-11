@@ -134,12 +134,6 @@ namespace UGameTools
         }
 
 
-        public static IList<int> SplitToInt(this string str, char sKey = '|')
-        {
-            var arrs = str.Split(sKey);
-            var list = new List<int>();
-            foreach (var i in arrs) list.Add(int.Parse(i));
-            return list;
-        }
+      
     }
 }

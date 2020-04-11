@@ -145,8 +145,9 @@ namespace Windows
             var swipeEv = swipe.GetComponent<UIEventSwipe>();
             swipeEv.OnSwiping.AddListener((v) =>
             {
-                v = v * .5f;
-                ThridPersionCameraContollor.Current.RotationX(v.y).RotationY(v.x);
+                v *= .5f;
+                ThridPersionCameraContollor.Current.RotationByX(v.y).RotationByY(v.x);
+                UApplication.G<BattleGate>().TrySendLookForward();
             });
 
             bt_normal_att.onClick.AddListener(() =>

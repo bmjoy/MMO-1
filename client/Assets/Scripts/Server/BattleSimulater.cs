@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using EngineCore.Simulater;
-using GameLogic;
-using GameLogic.Game.Perceptions;
-using GameLogic.Game.States;
 using Proto;
 using Proto.LoginBattleGameServerService;
 using UnityEngine;
@@ -12,14 +9,8 @@ using System.Collections.Concurrent;
 using GameLogic.Game.Elements;
 using XNet.Libs.Utility;
 using Google.Protobuf;
-using GameLogic.Game.AIBehaviorTree;
 using EConfig;
-using UGameTools;
-using UnityEngine.SceneManagement;
-using P = Proto.HeroPropertyType;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
-using Layout.AITree;
-using Layout;
 using System.Threading.Tasks;
 using Proto.GateBattleServerService;
 using System;
@@ -27,6 +18,7 @@ using System.IO;
 using GameLogic.Game.LayoutLogics;
 using Server;
 using System.Linq;
+using UVector3 = UnityEngine.Vector3;
 
 public class BattleSimulater : XSingleton<BattleSimulater>
 {
@@ -327,6 +319,11 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                                 break;
                             }
                     }
+                }
+                else if (action is Action_LookRotation look)
+                {
+                    //var q = Quaternion.Euler(0, look.LookRotationY, 0);
+                    i.Value.HeroCharacter.LookRotation(new UVector3(0, look.LookRotationY, 0));
                 }
                 else
                 {

@@ -161,8 +161,20 @@ namespace Proto.GateServerService
     }
     
 
+    /// <summary>
+    /// 15
+    /// </summary>    
+    [API(15)]
+    public class ActiveMagic:APIBase<C2G_ActiveMagic, G2C_ActiveMagic> 
+    {
+        private ActiveMagic() : base() { }
+        public  static ActiveMagic CreateQuery(){ return new ActiveMagic();}
+    }
+    
+
     public interface IGateServerService
     {
+        [API(15)]G2C_ActiveMagic ActiveMagic(C2G_ActiveMagic req);
         [API(14)]G2C_RefreshEquip RefreshEquip(C2G_RefreshEquip req);
         [API(13)]G2C_BuyGold BuyGold(C2G_BuyGold req);
         [API(12)]G2C_BuyItem BuyItem(C2G_BuyItem req);
@@ -183,6 +195,7 @@ namespace Proto.GateServerService
 
     public abstract class GateServerService
     {
+        [API(15)]public abstract Task<G2C_ActiveMagic> ActiveMagic(C2G_ActiveMagic request);
         [API(14)]public abstract Task<G2C_RefreshEquip> RefreshEquip(C2G_RefreshEquip request);
         [API(13)]public abstract Task<G2C_BuyGold> BuyGold(C2G_BuyGold request);
         [API(12)]public abstract Task<G2C_BuyItem> BuyItem(C2G_BuyItem request);

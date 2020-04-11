@@ -34,6 +34,7 @@ enum ErrorCode
     RefreshTimeLimit = 25;//超过了最大可刷新次数
     NeedItemQuality = 26;//道具品质不够
     NoPropertyToRefresh = 27;//属性不够无法刷新
+    MagicNoActicted = 28;//魔法没有激活
 }
 
 //empty text

@@ -16,6 +16,123 @@ namespace EConfig
 {
 
     /// <summary>
+    /// 装备数据表
+    /// </summary>
+    [ConfigFile("EquipmentData.json","EquipmentData")]
+    [global::System.Serializable]
+    public class EquipmentData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 品质
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int Quality { set; get; }
+        
+        /// <summary>
+        /// 装备类型
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int PartType { set; get; }
+        
+        /// <summary>
+        /// 属性
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String Properties { set; get; }
+        
+        /// <summary>
+        /// 属性值
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String PropertyValues { set; get; }
+
+    }
+
+    /// <summary>
+    /// 等级表
+    /// </summary>
+    [ConfigFile("MapData.json","MapData")]
+    [global::System.Serializable]
+    public class MapData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 资源名称
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String LevelName { set; get; }
+        
+        /// <summary>
+        /// 刷怪点
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String MonsterPos { set; get; }
+        
+        /// <summary>
+        /// Boss刷怪点
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String BossPos { set; get; }
+
+    }
+
+    /// <summary>
+    /// 装备升级表
+    /// </summary>
+    [ConfigFile("EquipmentLevelUpData.json","EquipmentLevelUpData")]
+    [global::System.Serializable]
+    public class EquipmentLevelUpData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 品质
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int Quality { set; get; }
+        
+        /// <summary>
+        /// 装备级别
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int Level { set; get; }
+        
+        /// <summary>
+        /// 附加比例万分比
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int AppendRate { set; get; }
+        
+        /// <summary>
+        /// 成功概率
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int Pro { set; get; }
+        
+        /// <summary>
+        /// 消耗金币
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int CostGold { set; get; }
+        
+        /// <summary>
+        /// 消耗钻石
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int CostCoin { set; get; }
+
+    }
+
+    /// <summary>
     /// 战斗关卡地图表
     /// </summary>
     [ConfigFile("BattleLevelData.json","BattleLevelData")]
@@ -274,6 +391,135 @@ namespace EConfig
     }
 
     /// <summary>
+    /// 装备刷新
+    /// </summary>
+    [ConfigFile("EquipRefreshData.json","EquipRefreshData")]
+    [global::System.Serializable]
+    public class EquipRefreshData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 品质
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int Quality { set; get; }
+        
+        /// <summary>
+        /// 金币消耗
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int CostGold { set; get; }
+        
+        /// <summary>
+        /// 成功概率万分比
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Pro { set; get; }
+        
+        /// <summary>
+        /// 需求装备品质
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int NeedQuality { set; get; }
+        
+        /// <summary>
+        /// 最大可刷新次数
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int MaxRefreshTimes { set; get; }
+        
+        /// <summary>
+        /// 需要消耗道具
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int NeedItemCount { set; get; }
+        
+        /// <summary>
+        /// 属性添加值
+        /// </summary>
+        [ExcelConfigColIndex(7)]
+        public int PropertyAppendMin { set; get; }
+        
+        /// <summary>
+        /// 属性添加上限
+        /// </summary>
+        [ExcelConfigColIndex(8)]
+        public int PropertyAppendMax { set; get; }
+        
+        /// <summary>
+        /// 属性添加数量
+        /// </summary>
+        [ExcelConfigColIndex(9)]
+        public int PropertyAppendCountMin { set; get; }
+        
+        /// <summary>
+        /// 属性添加数量
+        /// </summary>
+        [ExcelConfigColIndex(10)]
+        public int PropertyAppendCountMax { set; get; }
+
+    }
+
+    /// <summary>
+    /// 属性参数对照
+    /// </summary>
+    [ConfigFile("RefreshPropertyValueData.json","RefreshPropertyValueData")]
+    [global::System.Serializable]
+    public class RefreshPropertyValueData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 属性单位值
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int Value { set; get; }
+
+    }
+
+    /// <summary>
+    /// 游戏常量表
+    /// </summary>
+    [ConfigFile("ConstantValue.json","ConstantValue")]
+    [global::System.Serializable]
+    public class ConstantValue:JSONConfigBase    {
+        
+        /// <summary>
+        /// 用户初始化钻石
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int PLAYER_COIN { set; get; }
+        
+        /// <summary>
+        /// 初始化金币
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public int PLAYER_GOLD { set; get; }
+        
+        /// <summary>
+        /// 初始化数据 
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int PACKAGE_SIZE { set; get; }
+        
+        /// <summary>
+        /// 购买消耗
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int PACKAGE_BUY_COST { set; get; }
+        
+        /// <summary>
+        /// 购买消耗增容量
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int PACKAGE_BUY_SIZE { set; get; }
+        
+        /// <summary>
+        /// 购买消耗增容量上限
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public int PACKAGE_SIZE_LIMIT { set; get; }
+
+    }
+
+    /// <summary>
     /// 英雄升级经验表
     /// </summary>
     [ConfigFile("CharacterLevelUpData.json","CharacterLevelUpData")]
@@ -297,6 +543,135 @@ namespace EConfig
         /// </summary>
         [ExcelConfigColIndex(3)]
         public int NeedTotalExprices { set; get; }
+
+    }
+
+    /// <summary>
+    /// 商店表
+    /// </summary>
+    [ConfigFile("ItemShopData.json","ItemShopData")]
+    [global::System.Serializable]
+    public class ItemShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 商店ID
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public int ShopId { set; get; }
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 商店道具
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String ItemIds { set; get; }
+        
+        /// <summary>
+        /// 道具数量
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public String ItemNums { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public String ItemPrices { set; get; }
+        
+        /// <summary>
+        /// 货币类型
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public String CoinTypes { set; get; }
+
+    }
+
+    /// <summary>
+    /// 金币商店
+    /// </summary>
+    [ConfigFile("GoldShopData.json","GoldShopData")]
+    [global::System.Serializable]
+    public class GoldShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 图片
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Icon { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public int Prices { set; get; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int ReceiveGold { set; get; }
+        
+        /// <summary>
+        /// 每个钻石多少金币
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public float CoinOfGold { set; get; }
+
+    }
+
+    /// <summary>
+    /// 钻石商店
+    /// </summary>
+    [ConfigFile("GemShopData.json","GemShopData")]
+    [global::System.Serializable]
+    public class GemShopData:JSONConfigBase    {
+        
+        /// <summary>
+        /// 名称
+        /// </summary>
+        [ExcelConfigColIndex(1)]
+        public String Name { set; get; }
+        
+        /// <summary>
+        /// 图片
+        /// </summary>
+        [ExcelConfigColIndex(2)]
+        public String Icon { set; get; }
+        
+        /// <summary>
+        /// 商店Key
+        /// </summary>
+        [ExcelConfigColIndex(3)]
+        public String BundleId { set; get; }
+        
+        /// <summary>
+        /// 价格
+        /// </summary>
+        [ExcelConfigColIndex(4)]
+        public int Prices { set; get; }
+        
+        /// <summary>
+        /// 获得钻石
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int ReceiveCoin { set; get; }
+        
+        /// <summary>
+        /// 价值兑换
+        /// </summary>
+        [ExcelConfigColIndex(6)]
+        public float OneOfValue { set; get; }
 
     }
 
@@ -338,13 +713,13 @@ namespace EConfig
         public float ViewDistance { set; get; }
         
         /// <summary>
-        /// 攻击速度(间隔秒)
+        /// 攻击速度(秒)
         /// </summary>
         [ExcelConfigColIndex(6)]
         public float AttackSpeed { set; get; }
         
         /// <summary>
-        /// 移动速度（m/s）
+        /// 移动速度m/s
         /// </summary>
         [ExcelConfigColIndex(7)]
         public float MoveSpeed { set; get; }
@@ -550,215 +925,47 @@ namespace EConfig
     }
 
     /// <summary>
-    /// 游戏常量表
+    /// 英雄数据表
     /// </summary>
-    [ConfigFile("ConstantValue.json","ConstantValue")]
+    [ConfigFile("MagicLevelUpData.json","MagicLevelUpData")]
     [global::System.Serializable]
-    public class ConstantValue:JSONConfigBase    {
+    public class MagicLevelUpData:JSONConfigBase    {
         
         /// <summary>
-        /// 用户初始化钻石
+        /// ID
         /// </summary>
         [ExcelConfigColIndex(1)]
-        public int PLAYER_COIN { set; get; }
+        public int MagicID { set; get; }
         
         /// <summary>
-        /// 初始化金币
+        /// 需要等级
         /// </summary>
         [ExcelConfigColIndex(2)]
-        public int PLAYER_GOLD { set; get; }
+        public int NeedLevel { set; get; }
         
         /// <summary>
-        /// 初始化数据 
+        /// 需求金币
         /// </summary>
         [ExcelConfigColIndex(3)]
-        public int PACKAGE_SIZE { set; get; }
+        public int NeedGold { set; get; }
         
         /// <summary>
-        /// 购买消耗
+        /// 等级
         /// </summary>
         [ExcelConfigColIndex(4)]
-        public int PACKAGE_BUY_COST { set; get; }
-        
-        /// <summary>
-        /// 购买消耗增容量
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public int PACKAGE_BUY_SIZE { set; get; }
-        
-        /// <summary>
-        /// 购买消耗增容量上限
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public int PACKAGE_SIZE_LIMIT { set; get; }
-
-    }
-
-    /// <summary>
-    /// 装备升级表
-    /// </summary>
-    [ConfigFile("EquipmentLevelUpData.json","EquipmentLevelUpData")]
-    [global::System.Serializable]
-    public class EquipmentLevelUpData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 品质
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int Quality { set; get; }
-        
-        /// <summary>
-        /// 装备级别
-        /// </summary>
-        [ExcelConfigColIndex(2)]
         public int Level { set; get; }
         
         /// <summary>
-        /// 附加比例万分比
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int AppendRate { set; get; }
-        
-        /// <summary>
-        /// 成功概率
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int Pro { set; get; }
-        
-        /// <summary>
-        /// 消耗金币
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public int CostGold { set; get; }
-        
-        /// <summary>
-        /// 消耗钻石
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public int CostCoin { set; get; }
-
-    }
-
-    /// <summary>
-    /// 装备数据表
-    /// </summary>
-    [ConfigFile("EquipmentData.json","EquipmentData")]
-    [global::System.Serializable]
-    public class EquipmentData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 品质
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public int Quality { set; get; }
-        
-        /// <summary>
-        /// 装备类型
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int PartType { set; get; }
-        
-        /// <summary>
-        /// 属性
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public String Properties { set; get; }
-        
-        /// <summary>
-        /// 属性值
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public String PropertyValues { set; get; }
-
-    }
-
-    /// <summary>
-    /// 装备刷新
-    /// </summary>
-    [ConfigFile("EquipRefreshData.json","EquipRefreshData")]
-    [global::System.Serializable]
-    public class EquipRefreshData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 品质
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int Quality { set; get; }
-        
-        /// <summary>
-        /// 金币消耗
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public int CostGold { set; get; }
-        
-        /// <summary>
-        /// 成功概率万分比
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int Pro { set; get; }
-        
-        /// <summary>
-        /// 需求装备品质
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int NeedQuality { set; get; }
-        
-        /// <summary>
-        /// 最大可刷新次数
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public int MaxRefreshTimes { set; get; }
-        
-        /// <summary>
-        /// 需要消耗道具
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public int NeedItemCount { set; get; }
-        
-        /// <summary>
-        /// 属性添加值
-        /// </summary>
-        [ExcelConfigColIndex(7)]
-        public int PropertyAppendMin { set; get; }
-        
-        /// <summary>
-        /// 属性添加上限
-        /// </summary>
-        [ExcelConfigColIndex(8)]
-        public int PropertyAppendMax { set; get; }
-        
-        /// <summary>
-        /// 属性添加数量
-        /// </summary>
-        [ExcelConfigColIndex(9)]
-        public int PropertyAppendCountMin { set; get; }
-        
-        /// <summary>
-        /// 属性添加数量
+        /// 描述
         /// </summary>
         [ExcelConfigColIndex(10)]
-        public int PropertyAppendCountMax { set; get; }
-
-    }
-
-    /// <summary>
-    /// 属性参数对照
-    /// </summary>
-    [ConfigFile("RefreshPropertyValueData.json","RefreshPropertyValueData")]
-    [global::System.Serializable]
-    public class RefreshPropertyValueData:JSONConfigBase    {
+        public String Description { set; get; }
         
         /// <summary>
-        /// 属性单位值
+        /// 参数1
         /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int Value { set; get; }
+        [ExcelConfigColIndex(0)]
+        public List<String> Param { set; get; }
 
     }
 
@@ -828,213 +1035,6 @@ namespace EConfig
         /// </summary>
         [ExcelConfigColIndex(0)]
         public List<String> Params { set; get; }
-
-    }
-
-    /// <summary>
-    /// 商店表
-    /// </summary>
-    [ConfigFile("ItemShopData.json","ItemShopData")]
-    [global::System.Serializable]
-    public class ItemShopData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 商店ID
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int ShopId { set; get; }
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 商店道具
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String ItemIds { set; get; }
-        
-        /// <summary>
-        /// 道具数量
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public String ItemNums { set; get; }
-        
-        /// <summary>
-        /// 价格
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public String ItemPrices { set; get; }
-        
-        /// <summary>
-        /// 货币类型
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public String CoinTypes { set; get; }
-
-    }
-
-    /// <summary>
-    /// 金币商店
-    /// </summary>
-    [ConfigFile("GoldShopData.json","GoldShopData")]
-    [global::System.Serializable]
-    public class GoldShopData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 图片
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String Icon { set; get; }
-        
-        /// <summary>
-        /// 价格
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int Prices { set; get; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int ReceiveGold { set; get; }
-        
-        /// <summary>
-        /// 每个钻石多少金币
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public float CoinOfGold { set; get; }
-
-    }
-
-    /// <summary>
-    /// 钻石商店
-    /// </summary>
-    [ConfigFile("GemShopData.json","GemShopData")]
-    [global::System.Serializable]
-    public class GemShopData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 图片
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String Icon { set; get; }
-        
-        /// <summary>
-        /// 商店Key
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String BundleId { set; get; }
-        
-        /// <summary>
-        /// 价格
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int Prices { set; get; }
-        
-        /// <summary>
-        /// 获得钻石
-        /// </summary>
-        [ExcelConfigColIndex(5)]
-        public int ReceiveCoin { set; get; }
-        
-        /// <summary>
-        /// 价值兑换
-        /// </summary>
-        [ExcelConfigColIndex(6)]
-        public float OneOfValue { set; get; }
-
-    }
-
-    /// <summary>
-    /// 英雄数据表
-    /// </summary>
-    [ConfigFile("MagicLevelUpData.json","MagicLevelUpData")]
-    [global::System.Serializable]
-    public class MagicLevelUpData:JSONConfigBase    {
-        
-        /// <summary>
-        /// ID
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public int MagicID { set; get; }
-        
-        /// <summary>
-        /// 需要等级
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public int NeedLevel { set; get; }
-        
-        /// <summary>
-        /// 需求金币
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public int NeedGold { set; get; }
-        
-        /// <summary>
-        /// 等级
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public int Level { set; get; }
-        
-        /// <summary>
-        /// 描述
-        /// </summary>
-        [ExcelConfigColIndex(10)]
-        public String Description { set; get; }
-        
-        /// <summary>
-        /// 参数1
-        /// </summary>
-        [ExcelConfigColIndex(0)]
-        public List<String> Param { set; get; }
-
-    }
-
-    /// <summary>
-    /// 等级表
-    /// </summary>
-    [ConfigFile("MapData.json","MapData")]
-    [global::System.Serializable]
-    public class MapData:JSONConfigBase    {
-        
-        /// <summary>
-        /// 名称
-        /// </summary>
-        [ExcelConfigColIndex(1)]
-        public String Name { set; get; }
-        
-        /// <summary>
-        /// 资源名称
-        /// </summary>
-        [ExcelConfigColIndex(2)]
-        public String LevelName { set; get; }
-        
-        /// <summary>
-        /// 刷怪点
-        /// </summary>
-        [ExcelConfigColIndex(3)]
-        public String MonsterPos { set; get; }
-        
-        /// <summary>
-        /// Boss刷怪点
-        /// </summary>
-        [ExcelConfigColIndex(4)]
-        public String BossPos { set; get; }
 
     }
 

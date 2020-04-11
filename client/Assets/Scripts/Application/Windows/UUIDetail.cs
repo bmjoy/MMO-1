@@ -1,17 +1,13 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine.UI;
 using UGameTools;
 using Proto;
 using ExcelConfig;
-using UnityEngine;
 using EConfig;
 using Proto.GateServerService;
 using GameLogic.Game;
 
 using P = Proto.HeroPropertyType;
+using GameLogic;
 
 namespace Windows
 {
@@ -131,37 +127,9 @@ namespace Windows
         }
 
 
-        private void ShowEquip(PlayerItem pItem, ItemData config, EquipmentData equip,int lvl)
+        private void ShowEquip(PlayerItem pItem, ItemData config, EquipmentData equip, int lvl)
         {
-            var level = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == lvl && t.Quality == config.Quality);
-            var pro = equip.Properties.SplitToInt();
-            var val = equip.PropertyValues.SplitToInt();
-           
-            var properties = new Dictionary<P, ComplexValue>();
-            for (var ip = 0; ip < pro.Count; ip++)
-            {
-                var pr = (P)pro[ip];
-                if (!properties.ContainsKey(pr)) properties.Add(pr, 0);
-                if (properties.TryGetValue(pr, out ComplexValue value))
-                {
-                    value.SetBaseValue(value.BaseValue + val[ip]);
-                    value.SetRate(level?.AppendRate ?? 0);
-                }
-            }
-            if (pItem.Data != null)
-            {
-                foreach (var v in pItem.Data.Values)
-                {
-                    var k = (P)v.Key;
-                    if (!properties.ContainsKey(k)) properties.Add(k, 0);
-                    if (properties.TryGetValue(k, out ComplexValue value))
-                    {
-                        value.SetAppendValue(value.AppendValue + v.Value);
-                    }
-                }
-            }
-
+            var properties = pItem.GetProperties();
             EquipmentPropertyTableManager.Count = properties.Count;
             int index = 0;
             foreach (var i in properties)
