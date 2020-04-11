@@ -130,6 +130,28 @@ namespace Windows
 
         private void OnItemClick(ContentTableModel obj)
         {
+
+            if (obj.magic == null)
+            {
+                UUIPopup.ShowConfirm(
+                    LanguageManager.S["UUIMaigc_Active_Title"],
+                    LanguageManager.S["UUIMaigc_Active_Content"],
+                    () => {
+                        var gata = UApplication.G<GMainGate>();
+                        ActiveMagic.CreateQuery()
+                        .SendRequest(gata.Client, new C2G_ActiveMagic { MagicId = obj.config.ID },
+                        (res) => {
+                            if (res.Code.IsOk())
+                            {
+                                //UApplication.S.ShowNotify("")
+                                return;
+                            }
+                            UApplication.S.ShowError(res.Code);
+                        },UUIManager.S);
+                    });
+                return;
+            }
+
             selected = obj.config.ID;
             foreach (var i in ContentTableManager) i.Model.UnSelected();
             obj.Selected();
