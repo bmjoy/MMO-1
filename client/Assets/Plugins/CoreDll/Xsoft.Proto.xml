@@ -71,6 +71,27 @@
         <member name="F:Proto.B2C_ExitBattle.CodeFieldNumber">
              <summary>Field number for the "Code" field.</summary>
             </member>
+        <member name="F:Proto.C2B_ViewPlayerHero.AccountUuidFieldNumber">
+             <summary>Field number for the "AccountUuid" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.CodeFieldNumber">
+             <summary>Field number for the "Code" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.NameFieldNumber">
+             <summary>Field number for the "Name" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.LevelFieldNumber">
+             <summary>Field number for the "Level" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.HeroIDFieldNumber">
+             <summary>Field number for the "HeroID" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.WaerEquipsFieldNumber">
+             <summary>Field number for the "WaerEquips" field.</summary>
+            </member>
+        <member name="F:Proto.B2C_ViewPlayerHero.MagicsFieldNumber">
+             <summary>Field number for the "Magics" field.</summary>
+            </member>
         <member name="F:Proto.Action_CollectItem.IndexFieldNumber">
              <summary>Field number for the "Index" field.</summary>
             </member>
@@ -584,6 +605,11 @@
              3
              </summary>    
             </member>
+        <member name="T:Proto.BattleServerService.ViewPlayerHero">
+             <summary>
+             4
+             </summary>    
+            </member>
         <member name="T:Proto.ConstReflection">
              <summary>Holder for reflection information generated from const.proto</summary>
             </member>
@@ -888,6 +914,12 @@
             </member>
         <member name="F:Proto.DHero.NameFieldNumber">
              <summary>Field number for the "Name" field.</summary>
+            </member>
+        <member name="F:Proto.DHero.HPFieldNumber">
+             <summary>Field number for the "HP" field.</summary>
+            </member>
+        <member name="F:Proto.DHero.MPFieldNumber">
+             <summary>Field number for the "MP" field.</summary>
             </member>
         <member name="F:Proto.EquipData.RefreshTimeFieldNumber">
              <summary>Field number for the "RefreshTime" field.</summary>
@@ -2623,6 +2655,12 @@
              <summary>
             等级
              </summary>
+            </member>
+        <member name="F:Proto.B2G_BattleReward.HPFieldNumber">
+             <summary>Field number for the "HP" field.</summary>
+            </member>
+        <member name="F:Proto.B2G_BattleReward.MPFieldNumber">
+             <summary>Field number for the "MP" field.</summary>
             </member>
         <member name="T:Proto.G2B_BattleReward">
              <summary>

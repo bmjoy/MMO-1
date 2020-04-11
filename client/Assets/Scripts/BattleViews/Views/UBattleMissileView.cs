@@ -20,7 +20,6 @@ public class UBattleMissileView : UElementView ,IBattleMissile
 		}
 	}
 
-
     private IEnumerator Start()
     {
         var viewRelease = PerView.GetViewByIndex<UMagicReleaserView>(releaserIndex);
@@ -29,12 +28,12 @@ public class UBattleMissileView : UElementView ,IBattleMissile
         var rotation = (characterView as IBattleCharacter).Rotation;
         transform.position = characterView.GetBoneByName(fromBone).position + rotation * offset;
         transform.rotation = Quaternion.identity;
-
+#if !UNITY_SERVER
         yield return ResourcesManager.Singleton.LoadResourcesWithExName<GameObject>(res, (obj) =>
         {
             if (obj == null) return;
-            var ins = Instantiate(obj);
-            ins.transform.SetParent(this.transform, false);
+            if (!this) return;
+            var ins = Instantiate(obj,this.transform);
             ins.transform.RestRTS();
             var path = ins.GetComponent<MissileFollowPath>();
             if (path && viewTarget)
@@ -42,6 +41,7 @@ public class UBattleMissileView : UElementView ,IBattleMissile
                 path.SetTarget(viewTarget.GetBoneByName(toBone), speed);
             }
         });
+#endif
     }
 
     public string res;

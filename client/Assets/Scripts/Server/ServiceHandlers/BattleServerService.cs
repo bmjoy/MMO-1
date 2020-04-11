@@ -49,12 +49,49 @@ public class BattleServerService : Responser, IBattleServerService
 
             gateClient.Disconnect();
 
-            if (!gate.BindUser(request.AccountUuid, Client, pack.Package, pack.Hero,pack.Gold, seResult.GateServer))
+            if (!gate.BindUser(request.AccountUuid,
+                Client,
+                pack.Package,
+                pack.Hero,pack.Gold,
+                seResult.GateServer))
             {
                 result = ErrorCode.NofoundUserOnBattleServer;
             }
         }
         return new B2C_JoinBattle { Code = result };
+    }
+
+    public B2C_ViewPlayerHero ViewPlayerHero(C2B_ViewPlayerHero req)
+    {
+        var gate = BattleSimulater.S;
+        if (!gate.TryGetPlayer(req.AccountUuid, out BattlePlayer player))
+        {
+            return new B2C_ViewPlayerHero { Code = ErrorCode.NoGamePlayerData };
+        }
+
+        var hero = player.GetHero();
+
+        var response = new B2C_ViewPlayerHero
+        {
+            Code = ErrorCode.Ok,
+            HeroID = hero.HeroID,
+            Level = hero.Level,
+            Name = hero.Name
+        };
+
+        foreach (var i in hero.Equips)
+        {
+            var e = player.GetEquipByGuid(i.GUID);
+            if (e == null) continue;
+            response.WaerEquips.Add(e);
+        }
+
+        foreach (var i in hero.Magics)
+        {
+            response.Magics.Add(i);
+        }
+        return response;
+
     }
 }
 

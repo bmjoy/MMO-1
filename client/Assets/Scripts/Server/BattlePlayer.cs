@@ -39,7 +39,7 @@ public class BattlePlayer
     public GameServerInfo GateServer { set; get; }
 
 
-    private int baseGold = 0;
+    private readonly int baseGold = 0;
 
     public BattlePlayer(string account, PlayerPackage package, DHero hero, int gold, Client client, GameServerInfo info)
     {
@@ -136,7 +136,7 @@ public class BattlePlayer
                 var num = Mathf.Min(config.MaxStackNum, item.Num);
                 item.Num -= num;
                 var playitem = new PlayerItem { GUID = CreateUUID(), ItemID = item.ItemID, Level = item.Level, Num = num };
-                Package.Items.Add(playitem.GUID, new BattlePlayerItem(item, true));
+                Package.Items.Add(playitem.GUID, new BattlePlayerItem(playitem, true));
             }
         }
         Dirty = true;

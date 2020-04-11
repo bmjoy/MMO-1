@@ -39,7 +39,7 @@ namespace GServer.Managers
             return await FindHeroByPlayerId(player.Uuid);
         }
 
-        public async Task<string> ProcessBattleReward(string account_uuid,IList<PlayerItem> modifyItems,  IList<PlayerItem> RemoveItems, int exp, int level, int gold)
+        public async Task<string> ProcessBattleReward(string account_uuid,IList<PlayerItem> modifyItems,  IList<PlayerItem> RemoveItems, int exp, int level, int gold,int hp, int mp)
         {
             var player = await FindPlayerByAccountId(account_uuid);
             if (player == null) return null;
@@ -47,7 +47,11 @@ namespace GServer.Managers
             await DataBase.S.Playes.UpdateOneAsync(t => t.Uuid== player.Uuid, pupdate);
             var (ms,rs) = await ProcessRewardItem(player.Uuid, modifyItems,  RemoveItems);
             var hero = await FindHeroByPlayerId(player.Uuid);
-            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp).Set(t => t.Level, level);
+            var update = Builders<GameHeroEntity>.Update
+                .Set(t => t.Exp, exp)
+                .Set(t => t.Level, level)
+                .Set(t=>t.HP, hp)
+                .Set(t=>t.MP, mp);
             var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
             await DataBase.S.Heros.UpdateOneAsync(filter, update);
             return  player.Uuid;
@@ -134,27 +138,24 @@ namespace GServer.Managers
             return query.Single();
         }
 
-        public async Task<string> TryToCreateUser(string userID, int heroID, string heroName)
+        public async Task<G2C_CreateHero> TryToCreateUser(Client client, string userID, int heroID, string heroName)
         {
 
-            if (heroName.Length > 12) return  string.Empty;
+            if (heroName.Length > 12) return  new G2C_CreateHero { Code = ErrorCode.NameOrPwdLeghtIncorrect };
 
             var character = ExcelToJSONConfigManager
                 .Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == heroID);
-            if (character == null) return string.Empty;
+            if (character == null) return new G2C_CreateHero { Code = ErrorCode.NoHeroInfo };
 
             var fiter = Builders<GamePlayerEntity>.Filter.Eq(t => t.AccountUuid, userID);
             var fiterHero = Builders<GameHeroEntity>.Filter.Eq(t => t.HeroName, heroName);
-            //var heros = db.GetCollection<GameHeroEntity>(Hero);
-            
-
             if(
                /*user create*/ (await DataBase.S.Playes.FindAsync(Builders<GamePlayerEntity>.Filter.Eq(t => t.AccountUuid, userID))).Any() ||
                /*hero name  */ (await DataBase.S.Heros.FindAsync(Builders<GameHeroEntity>.Filter.Eq(t => t.HeroName, heroName))).Any()
             )
             {
-                
-                return string.Empty;
+
+                return new G2C_CreateHero { Code = ErrorCode.RegExistUserName };
             }
 
             var player = new GamePlayerEntity
@@ -165,7 +166,6 @@ namespace GServer.Managers
                 LastIp = string.Empty
             };
             await DataBase.S.Playes.InsertOneAsync(player);
-            
             var hero = new GameHeroEntity
             {
                 Exp = 0,
@@ -174,23 +174,17 @@ namespace GServer.Managers
                 PlayerUuid = player.Uuid,
                 HeroId = heroID
             };
-
             await DataBase.S.Heros.InsertOneAsync(hero);
-
             var package = new GamePackageEntity
             {
                 PackageSize = Application.Constant.PACKAGE_SIZE,
                 PlayerUuid = player.Uuid
             };
-
-            
             await DataBase.S.Packages.InsertOneAsync(package);
-
-            return player.Uuid;
+            await SyncToClient(client, player.Uuid, true, true);
+            return new G2C_CreateHero { Code = ErrorCode.Ok };
 
         }
-
-
 
         public async Task<G2C_EquipmentLevelUp> EquipLevel(Client client, string account_uuid, string item_uuid, int level)
         {

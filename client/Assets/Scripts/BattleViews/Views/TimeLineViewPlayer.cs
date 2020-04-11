@@ -158,12 +158,15 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
         this.RView = view;
         this.EventTarget = eventTarget;
         this.EventType = ty;
+        if (this.RView.CharacterReleaser is UCharacterView character)
+        {
+            character.AttachLayoutView(this);
+        }
     }
 
     public UMagicReleaserView RView { get; }
     public IBattleCharacter EventTarget { get; private set; }
     public Layout.EventType EventType { get; }
-
     protected override void EnableLayout(LayoutBase layout)
     {
         if (LayoutBase.IsViewLayout(layout)) ActiveLayout(layout, this);
@@ -174,6 +177,10 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     protected override void OnDestory()
     {
         base.OnDestory();
+        if (this.RView.CharacterReleaser is UCharacterView character)
+        {
+            character.DeAttachLayoutView(this);
+        }
         foreach (var i in _players)
         {
             i.DestoryParticle();

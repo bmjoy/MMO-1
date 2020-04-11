@@ -168,7 +168,7 @@ namespace GameLogic.Game.LayoutLogics
 			var data = ExcelToJSONConfigManager
 				.Current.GetConfigByID<CharacterData>(id);
 
-			var magics = per.CreateHeroMagic(data.ID);
+			var magics = data.CreateHeroMagic();
 			var unit = per.CreateCharacter(
 				level,
 				data,
@@ -179,7 +179,7 @@ namespace GameLogic.Game.LayoutLogics
 				charachter.Rototion.eulerAngles,
 				charachter.AcccountUuid, data.Name, releaser.Releaser.Index
 			);
-
+			//unit.ResetHPMP();
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
 			releaser.AttachElement(unit, false, unitLayout.time.ProcessValue(releaser)/1000f);

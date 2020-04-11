@@ -14,7 +14,6 @@ using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using UnityEngine;
 using System.Linq;
-using ExcelConfig;
 
 
 namespace GameLogic.Game.Perceptions
@@ -127,47 +126,6 @@ namespace GameLogic.Game.Perceptions
         #endregion
 
         #region Character
-
-        public IList<BattleCharacterMagic> CreateHeroMagic(int characterID, DHero hero =null)
-        {
-            var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(characterID);
-            var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
-            var magics = ExcelToJSONConfigManager.Current.GetConfigs<CharacterMagicData>(t =>
-            {
-                return t.CharacterID == data.ID && (MagicReleaseType)t.ReleaseType == MagicReleaseType.MrtMagic;
-            });
-            var list = new List<BattleCharacterMagic>();
-            foreach (var i in magics)
-            {
-                list.Add(new BattleCharacterMagic( MagicType.MtMagic, i, GetMagicLevel(hero,i.ID))); 
-            }
-            if (cData != null)
-            {
-                if (cData.NormalAttack > 0)
-                {
-                    var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(cData.NormalAttack);
-                    list.Add(new BattleCharacterMagic(MagicType.MtNormal, config, GetMagicLevel(hero, cData.NormalAttack)));
-                }
-
-            }
-            return list;
-        }
-
-        private MagicLevelUpData GetMagicLevel(DHero hero, int magicID)
-        {
-            if (hero == null) return null;
-            foreach (var i in hero.Magics)
-            {
-                if (i.MagicKey == magicID)
-                {
-                    return ExcelToJSONConfigManager.Current.FirstConfig<MagicLevelUpData>(t => t.MagicID == magicID && t.Level == i.Level);
-                }
-            }
-            return null;
-        }
-
-        
-
         public BattleCharacter CreateCharacter(
             int level,
             CharacterData data,
@@ -177,7 +135,7 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name,int ownerIndex = -1 )
+            string name,int ownerIndex = -1, int hp = -1,int mp =-1)
         {
             
             var now = this.View.GetTimeSimulater().Now.Time;
@@ -215,11 +173,8 @@ namespace GameLogic.Game.Perceptions
                     p.SetBaseValue(p.BaseValue + i.Value);
                 }
             }
-
-            battleCharacter.Init();
-           
+            battleCharacter.ResetHPMP(hp, mp);
             this.JoinElement(battleCharacter);
-
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;
         }

@@ -93,6 +93,8 @@ namespace GateServer
             public Dictionary<int, string> Equips { set; get; }
             public string HeroName { set; get; }
             public int HeroId { set; get; }
+            public int HP { set; get; }
+            public int MP { set; get; }
             public GameHeroEntity()
             {
                 Magics = new Dictionary<int, DBHeroMagic>();
@@ -113,8 +115,6 @@ namespace GateServer
             public string PlayerUuid { set; get; }
         }
 
-     
-
         public DataBase()
         {
             BsonClassMap.RegisterClassMap<GamePlayerEntity>(
@@ -123,7 +123,6 @@ namespace GateServer
                 cm.AutoMap();
                 cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
             });
-         
         }
 
         public const string PLAYER = "Player";

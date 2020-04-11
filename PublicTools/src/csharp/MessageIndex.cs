@@ -41,6 +41,8 @@ namespace Proto
     [Index(1001002,typeof(B2C_ExitBattle))]
     [Index(1001003,typeof(C2B_JoinBattle))]
     [Index(1001004,typeof(B2C_JoinBattle))]
+    [Index(1001005,typeof(C2B_ViewPlayerHero))]
+    [Index(1001006,typeof(B2C_ViewPlayerHero))]
     [Index(1002001,typeof(B2G_GetPlayerInfo))]
     [Index(1002002,typeof(G2B_GetPlayerInfo))]
     [Index(1002003,typeof(B2G_BattleReward))]
@@ -133,7 +135,7 @@ namespace Proto
     [Index(1009060,typeof(Notify_CharacterTeamIndex))]
     [Index(1009062,typeof(Notify_CancelTimeLine))]
 
-    [ApiVersion(0,0,1)]
+    [ApiVersion(1,0,2)]
     public static class MessageTypeIndexs
     {
         private static readonly Dictionary<int, Type> types = new Dictionary<int, Type>();

@@ -47,7 +47,6 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         });
 #endif
 #if !UNITY_SERVER
-
         var eType = (Layout.EventType)type;
         var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
         PlayLine(pIndex, (PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);

@@ -16,7 +16,9 @@ namespace GateServer
                 Exprices = entity.Exp,
                 HeroID = entity.HeroId,
                 Level = entity.Level,
-                Name = entity.HeroName
+                Name = entity.HeroName,
+                HP = entity.HP,
+                MP = entity.MP
             };
 
 

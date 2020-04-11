@@ -29,8 +29,20 @@ namespace Proto.BattleServerService
     }
     
 
+    /// <summary>
+    /// 4
+    /// </summary>    
+    [API(4)]
+    public class ViewPlayerHero:APIBase<C2B_ViewPlayerHero, B2C_ViewPlayerHero> 
+    {
+        private ViewPlayerHero() : base() { }
+        public  static ViewPlayerHero CreateQuery(){ return new ViewPlayerHero();}
+    }
+    
+
     public interface IBattleServerService
     {
+        [API(4)]B2C_ViewPlayerHero ViewPlayerHero(C2B_ViewPlayerHero req);
         [API(3)]B2C_JoinBattle JoinBattle(C2B_JoinBattle req);
         [API(1)]B2C_ExitBattle ExitBattle(C2B_ExitBattle req);
 
@@ -39,6 +51,7 @@ namespace Proto.BattleServerService
 
     public abstract class BattleServerService
     {
+        [API(4)]public abstract Task<B2C_ViewPlayerHero> ViewPlayerHero(C2B_ViewPlayerHero request);
         [API(3)]public abstract Task<B2C_JoinBattle> JoinBattle(C2B_JoinBattle request);
         [API(1)]public abstract Task<B2C_ExitBattle> ExitBattle(C2B_ExitBattle request);
 

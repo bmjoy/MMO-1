@@ -12,7 +12,7 @@ if [ "$?" -ne "0" ]; then
   exit 1
 fi
 
-mono PServicePugin.exe dir:../proto file:*.proto saveto:$CSHARP_OUT_PATH version:0.0.1
+mono PServicePugin.exe dir:../proto file:*.proto saveto:$CSHARP_OUT_PATH version:$__VERSION
 if [ "$?" -ne "0" ]; then
   echo "Sorry, check service define"
   exit 1

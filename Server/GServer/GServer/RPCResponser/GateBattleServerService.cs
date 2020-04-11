@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GServer;
 using GServer.Managers;
 using Proto;
@@ -20,21 +21,24 @@ namespace GateServer
         {
             ErrorCode code = ErrorCode.Ok;
 
-            var t = UserDataManager.S
-                .ProcessBattleReward(request.AccountUuid, request.ModifyItems, request.RemoveItems, request.Exp, request.Level, request.DiffGold);
-            t.Wait();
-            var uuid = t.Result;
-            if (!string.IsNullOrEmpty(uuid))
+            var uuid = UserDataManager.S.ProcessBattleReward(
+                request.AccountUuid,
+                request.ModifyItems,
+                request.RemoveItems,
+                request.Exp,
+                request.Level,
+                request.DiffGold,
+                request.HP,
+                request.MP)
+                .GetAwaiter().GetResult();
+
+            if (string.IsNullOrEmpty(uuid)) return new G2B_BattleReward { Code = ErrorCode.Error };
+
+            var userClient = Application.Current.GetClientByUserID(uuid);
+            if (userClient != null)
             {
-                var userClient = Application.Current.GetClientByUserID(uuid);
-                if (userClient != null)
-                {
-                    UserDataManager.S.SyncToClient(userClient, uuid,true,true).Wait();
-                }
-            }
-            else
-            {
-                code = ErrorCode.Error;
+                //send to client
+                UserDataManager.S.SyncToClient(userClient, uuid, true, true).Wait();
             }
 
             return new G2B_BattleReward { Code = code };
@@ -43,9 +47,12 @@ namespace GateServer
         [IgnoreAdmission]
         public G2B_GetPlayerInfo GetPlayerInfo(B2G_GetPlayerInfo request)
         {
+            return GetPlayer(request.AccountUuid).GetAwaiter().GetResult();
+        }
 
-            // var manager = MonitorPool.G<UserDataManager>();
-            var player = UserDataManager.S.FindPlayerByAccountId(request.AccountUuid).GetAwaiter().GetResult();
+        private async Task<G2B_GetPlayerInfo> GetPlayer(string accountID)
+        {
+            var player = await UserDataManager.S.FindPlayerByAccountId(accountID);
 
             if (player == null)
             {
@@ -55,10 +62,8 @@ namespace GateServer
                 };
             }
 
-            var package = UserDataManager.S.FindPackageByPlayerID(player.Uuid).GetAwaiter().GetResult();
-
-            var hero = UserDataManager.S.FindHeroByPlayerId(player.Uuid).GetAwaiter().GetResult();
-
+            var package = await UserDataManager.S.FindPackageByPlayerID(player.Uuid);//.GetAwaiter().GetResult();
+            var hero = await UserDataManager.S.FindHeroByPlayerId(player.Uuid);//.GetAwaiter().GetResult();
             return new G2B_GetPlayerInfo
             {
                 Code = ErrorCode.Ok,

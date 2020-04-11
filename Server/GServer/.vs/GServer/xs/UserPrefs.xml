@@ -2,9 +2,10 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Managers/UserDataManager.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="188" Column="1" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="298" Column="42" />
-      <File FileName="../../GameCore/XNet/Net/Client.cs" Line="171" Column="38" />
-      <File FileName="GServer/Managers/UserDataManager.cs" Line="712" Column="56" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="20" Column="36" />
+      <File FileName="../../GameCore/XNet/Net/Client.cs" />
+      <File FileName="GServer/MongoTool/DataBase.cs" Line="152" Column="1" />
+      <File FileName="GServer/Managers/UserDataManager.cs" Line="26" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +15,7 @@
               <Node name="Managers" expanded="True">
                 <Node name="UserDataManager.cs" selected="True" />
               </Node>
-              <Node name="RPCResponser" expanded="True" />
+              <Node name="Utility" expanded="True" />
             </Node>
             <Node name="LoginServer" expanded="True">
               <Node name="RPCResponsers" expanded="True" />
