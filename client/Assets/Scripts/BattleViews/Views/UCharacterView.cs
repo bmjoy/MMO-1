@@ -483,35 +483,24 @@ public class UCharacterView : UElementView, IBattleCharacter
     void IBattleCharacter.SetLookRotation(Proto.Vector3 eu)
     {
         if (!this) return;
-        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(eu.ToUV3());
 #if UNITY_SERVER || UNITY_EDITOR
+        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(eu.ToUV3());
         CreateNotify(new Notify_CharacterRotation
         {
             Rotation = eu,
             Index = Index
         });
+#else
+        targetLookQuaternion = Quaternion.Euler(eu.ToUV3());//use smooth
 #endif
     }
 
-
-    Transform IBattleCharacter.Transform
-    {
-        get
-        {
-            if (ViewRoot)
-                return ViewRoot.transform;
-            return null;
-        }
-    }
-
-    Transform IBattleCharacter.RootTransform
-    {
-        get {
-            if (this) return transform;
-            return null;
-        }
-    }
-
+    Quaternion IBattleCharacter.Rotation { get { return ViewRoot ? ViewRoot.transform.rotation : Quaternion.identity; } }
+    float IBattleCharacter.Radius { get { return Agent ? Agent.radius : 0; } }
+    public bool IsDeath { get; private set; } = false;
+    Transform IBattleCharacter.Transform { get { return ViewRoot ? ViewRoot.transform : null; } }
+    Transform IBattleCharacter.RootTransform { get { return this ? transform : null; } }
+  
     private bool TryToSetPosition(Vector3 pos)
     {
         if (Vector3.Distance(pos, transform.position) > .05f)
@@ -578,26 +567,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         an.SetTrigger(motion);
     }
 
-   
-    Quaternion IBattleCharacter.Rotation {
-        get
-        {
-            if (ViewRoot)
-                return ViewRoot.transform.rotation;
-            return Quaternion.identity;
-        }
-    }
-
-    float IBattleCharacter.Radius
-    {
-        get
-        {
-            if (ViewRoot) return Agent.radius;
-            return 0;
-        }
-    }
-
-    public bool IsDeath { get; private set; } = false;
+  
 
     public Action<UBattleItem> OnItemTrigger;
 
