@@ -148,6 +148,7 @@ namespace Windows
             if (refreshData.MaxRefreshTimes <= item.Data?.RefreshTime)
             {
                 UApplication.S.ShowNotify(LanguageManager.S["UUIItemRefresh_max_times"]);
+                Right.ActiveSelfObject(false);
                 return;
             }
 
@@ -199,7 +200,7 @@ namespace Windows
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(it.ItemID);
                 var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                 var pro = equip.Properties.SplitToInt();
-                var val = equip.PropertyValues.SplitToInt();
+               // var val = equip.PropertyValues.SplitToInt();
 
                 for (var ip = 0; ip < pro.Count; ip++)
                 {
@@ -209,7 +210,7 @@ namespace Windows
                     if (!properties.ContainsKey(pr))  properties.Add(pr, 0);
                     if (properties.TryGetValue(pr, out ComplexValue value))
                     {
-                        value.SetBaseValue(value.BaseValue + val[ip]* fpv.Value);
+                        value.SetBaseValue(fpv.Value);
                     }
                 }
             }
@@ -219,7 +220,7 @@ namespace Windows
             foreach (var i in properties)
             {
                 EquipmentPropertyTableManager[index].Model.SetLabel(LanguageManager.S.Format($"UUIDetail_{i.Key}",
-                    $"{currentRefreshData.PropertyAppendMin}~{currentRefreshData.PropertyAppendMax}"));
+                    $"{currentRefreshData.PropertyAppendMin * i.Value.FinalValue}~{currentRefreshData.PropertyAppendMax * i.Value.FinalValue}"));
                 index++;
             }
         }

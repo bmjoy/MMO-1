@@ -190,6 +190,7 @@ namespace Server
             if (!GRandomer.Probability10000(drop.DropPro)) return;
             var items = drop.DropItem.SplitToInt();
             var pors = drop.Pro.SplitToInt();
+            var nums = drop.DropNum.SplitToInt();
             if (owner)
             {
                 var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
@@ -210,7 +211,7 @@ namespace Server
                 count--;
                 var offset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f));
                 var index = GRandomer.RandPro(pors.ToArray());
-                var item = new PlayerItem { ItemID = items[index], Num = 1 };
+                var item = new PlayerItem { ItemID = items[index], Num = nums[index]};
                 Per.CreateItem(pos + offset, item, groupIndex, teamIndex);
             }
         }

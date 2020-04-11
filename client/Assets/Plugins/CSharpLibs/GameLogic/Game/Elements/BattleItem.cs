@@ -14,7 +14,6 @@ namespace GameLogic.Game.Elements
 
         public Proto.PlayerItem DropItem { private set; get; }
 
-
         public float AliveTime { set; get; }
 
         public float LockTime { set; get; }

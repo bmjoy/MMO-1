@@ -702,7 +702,7 @@ namespace GServer.Managers
             if (config == null) return new G2C_RefreshEquip { Code = ErrorCode.Error };
             var refreshData = ExcelToJSONConfigManager.Current.GetConfigByID<EquipRefreshData>(config.Quality);
             int refreshCount = equip.EquipData?.RefreshCount ?? 0;
-            if (refreshData.MaxRefreshTimes < refreshCount) return new G2C_RefreshEquip { Code = ErrorCode.RefreshTimeLimit };
+            if (refreshData.MaxRefreshTimes <= refreshCount) return new G2C_RefreshEquip { Code = ErrorCode.RefreshTimeLimit };
             if (refreshData.NeedItemCount > customItem.Count) return new G2C_RefreshEquip { Code = ErrorCode.NoenoughItem };
             Dictionary<HeroPropertyType, int> values = new Dictionary<HeroPropertyType, int>();
             var removes = new List<PackageItem>();
