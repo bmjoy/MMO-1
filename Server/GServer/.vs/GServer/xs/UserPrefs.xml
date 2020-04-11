@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="188" Column="1" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="298" Column="42" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="70" Column="20" />
       <File FileName="../../GameCore/XNet/Net/Client.cs" />
-      <File FileName="GServer/MongoTool/DataBase.cs" Line="82" Column="36" />
+      <File FileName="GServer/MongoTool/DataBase.cs" Line="152" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
