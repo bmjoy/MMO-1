@@ -14,7 +14,6 @@ using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using UnityEngine;
 using System.Linq;
-using ExcelConfig;
 
 
 namespace GameLogic.Game.Perceptions
