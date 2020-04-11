@@ -9,6 +9,7 @@ using MongoDB.Driver;
 using Proto;
 using Proto.GateServerService;
 using Proto.LoginBattleGameServerService;
+using Proto.MongoDB;
 using XNet.Libs.Net;
 using static GateServer.DataBase;
 using static Proto.ItemsShop.Types;
@@ -187,11 +188,11 @@ namespace GateServer
                 AccountUuid = request.UserID;
             }
             else { return new G2C_Login { Code = ErrorCode.Error }; };
-
             if (Client.HaveAdmission)
             {
-                var player = await UserDataManager.S.FindPlayerByAccountId(AccountUuid);
-                if (player != null) UserDataManager.S.SyncToClient(Client, player.Uuid, true, true).Wait();
+                var player = await DataBase.S.Playes.FindOneAndUpdateAsync(t => t.AccountUuid == AccountUuid,
+                     Builders<GamePlayerEntity>.Update.Set(t => t.LastIp, Client.Socket.RemoteEndPoint.ToString()));
+                if (player != null) await UserDataManager.S.SyncToClient(Client, player.Uuid, true, true);
                 return new G2C_Login { Code = ErrorCode.Ok, HavePlayer = player != null };
             }
             else
