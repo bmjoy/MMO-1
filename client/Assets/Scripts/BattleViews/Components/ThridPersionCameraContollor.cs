@@ -29,8 +29,8 @@ public class ThridPersionCameraContollor : UnityEngine.MonoBehaviour
     private float ry = 0;
     private Vector3 targetPos;
 
-    public float RotationX;//{ private set; get; } = 45;
-    public float RotationY;// { private set; get; } = 0;
+    public float RotationX =30;//{ private set; get; } = 45;
+    public float RotationY =0;// { private set; get; } = 0;
 
     public Transform lookTarget;
 
