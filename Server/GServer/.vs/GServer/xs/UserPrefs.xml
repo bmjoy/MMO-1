@@ -1,20 +1,19 @@
 ﻿<Properties StartupConfiguration="{3508095A-DE0F-4FEA-8717-962D0388B5E4}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/RPCResponser/GateServerService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GServer/Managers/UserDataManager.cs">
     <Files>
       <File FileName="LoginServer/RPCResponsers/LoginGateServerService.cs" Line="188" Column="1" />
-      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="70" Column="20" />
+      <File FileName="GServer/RPCResponser/GateServerService.cs" Line="20" Column="36" />
       <File FileName="../../GameCore/XNet/Net/Client.cs" />
       <File FileName="GServer/MongoTool/DataBase.cs" Line="152" Column="1" />
+      <File FileName="GServer/Managers/UserDataManager.cs" Line="26" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="GServer" expanded="True">
             <Node name="GateServer" expanded="True">
-              <Node name="Managers" expanded="True" />
-              <Node name="MongoTool" expanded="True" />
-              <Node name="RPCResponser" expanded="True">
-                <Node name="GateServerService.cs" selected="True" />
+              <Node name="Managers" expanded="True">
+                <Node name="UserDataManager.cs" selected="True" />
               </Node>
               <Node name="Utility" expanded="True" />
             </Node>

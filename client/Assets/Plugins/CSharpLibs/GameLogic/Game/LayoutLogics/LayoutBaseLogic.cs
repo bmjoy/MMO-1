@@ -179,8 +179,7 @@ namespace GameLogic.Game.LayoutLogics
 				charachter.Rototion.eulerAngles,
 				charachter.AcccountUuid, data.Name, releaser.Releaser.Index
 			);
-
-			unit.ResetHPMP();
+			//unit.ResetHPMP();
 			unit.LookAt(releaser.ReleaserTarget.ReleaserTarget);
 
 			releaser.AttachElement(unit, false, unitLayout.time.ProcessValue(releaser)/1000f);

@@ -8,10 +8,8 @@ using GameLogic.Game.Perceptions;
 using EConfig;
 using UVector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
-using ExcelConfig;
 using Layout.AITree;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 namespace GameLogic.Game.Elements
 {

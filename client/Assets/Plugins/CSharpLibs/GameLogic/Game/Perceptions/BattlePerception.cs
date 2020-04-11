@@ -136,7 +136,7 @@ namespace GameLogic.Game.Perceptions
             UVector3 position,
             UVector3 forward,
             string accountUuid,
-            string name,int ownerIndex = -1 )
+            string name,int ownerIndex = -1, int hp = -1,int mp =-1)
         {
             
             var now = this.View.GetTimeSimulater().Now.Time;
@@ -174,7 +174,7 @@ namespace GameLogic.Game.Perceptions
                     p.SetBaseValue(p.BaseValue + i.Value);
                 }
             }
-
+            battleCharacter.ResetHPMP(hp, mp);
             this.JoinElement(battleCharacter);
             view.SetPriorityMove(data.PriorityMove);
             return battleCharacter;

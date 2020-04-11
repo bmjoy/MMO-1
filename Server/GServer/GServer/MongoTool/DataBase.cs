@@ -115,8 +115,6 @@ namespace GateServer
             public string PlayerUuid { set; get; }
         }
 
-     
-
         public DataBase()
         {
             BsonClassMap.RegisterClassMap<GamePlayerEntity>(
@@ -125,7 +123,6 @@ namespace GateServer
                 cm.AutoMap();
                 cm.MapIdMember(c => c.Uuid).SetIdGenerator(StringObjectIdGenerator.Instance);
             });
-         
         }
 
         public const string PLAYER = "Player";

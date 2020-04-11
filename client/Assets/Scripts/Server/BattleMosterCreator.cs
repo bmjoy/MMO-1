@@ -132,7 +132,7 @@ namespace Server
                 var Monster = per.CreateCharacter(monsterData.Level, data, magic, append, 2,
                     standPos[i].Pos, standPos[i].Forward, string.Empty, mName);
                 per.ChangeCharacterAI(data.AIResourcePath, Monster);
-                Monster.ResetHPMP();
+                //Monster.ResetHPMP();
                 AliveCount++;
 
                 Monster["__Drop"] = drop;

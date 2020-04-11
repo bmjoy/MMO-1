@@ -174,9 +174,9 @@ namespace Server
                 pos.position,
                 pos.rotation.eulerAngles,
                 user.AccountId,
-                user.GetHero().Name);
+                user.GetHero().Name,-1, hero.HP,hero.MP);
             per.ChangeCharacterAI(data.AIResourcePath, character);
-            character.ResetHPMP(hero.HP,hero.MP);
+            //character.ResetHPMP(hero.HP,hero.MP);
             return character;
         }
 
