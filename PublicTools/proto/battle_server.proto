@@ -29,6 +29,20 @@ message B2C_ExitBattle
 	 ErrorCode Code=1;
 }
 
+message C2B_ViewPlayerHero
+{
+	string AccountUuid = 1;
+}
+
+message B2C_ViewPlayerHero
+{
+	ErrorCode Code = 1;
+	string Name = 2;
+	int32 Level =3;
+	int32 HeroID = 4;
+	repeated PlayerItem WaerEquips = 5;
+}
+
 message Action_CollectItem
 {
 	int32 Index =1;
@@ -362,4 +376,5 @@ service BattleServerService
 {
 	rpc ExitBattle(C2B_ExitBattle)returns(B2C_ExitBattle){};//1
 	rpc JoinBattle(C2B_JoinBattle)returns (B2C_JoinBattle){};//3
+	rpc ViewPlayerHero(C2B_ViewPlayerHero) returns (B2C_ViewPlayerHero){};//4
 }
