@@ -9,6 +9,7 @@ using ExcelConfig;
 using EConfig;
 using GameLogic.Game;
 using P = Proto.HeroPropertyType;
+using GameLogic;
 
 namespace Windows
 {
@@ -191,28 +192,26 @@ namespace Windows
         }
         private void ShowProperty(List<PlayerItem> obj)
         {
-
-            //var refreshProperty = ExcelToJSONConfigManager.Current.GetConfigs<RefreshPropertyValueData>();
-
             var properties = new Dictionary<P, ComplexValue>();
             foreach (var it in obj)
             {
                 var item = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(it.ItemID);
                 var equip = ExcelToJSONConfigManager.Current.GetConfigByID<EquipmentData>(int.Parse(item.Params[0]));
                 var pro = equip.Properties.SplitToInt();
-               // var val = equip.PropertyValues.SplitToInt();
-
+               
                 for (var ip = 0; ip < pro.Count; ip++)
                 {
                     var pr = (P)pro[ip];
                     var fpv = ExcelToJSONConfigManager.Current.GetConfigByID<RefreshPropertyValueData>((int)pr);
                     if (fpv == null) continue;
                     if (!properties.ContainsKey(pr))  properties.Add(pr, 0);
-                    if (properties.TryGetValue(pr, out ComplexValue value))
-                    {
-                        value.SetBaseValue(fpv.Value);
-                    }
                 }
+            }
+
+            foreach (var i in properties)
+            {
+                var fpv = ExcelToJSONConfigManager.Current.GetConfigByID<RefreshPropertyValueData>((int)i.Key);
+                i.Value.SetBaseValue(fpv.Value);
             }
 
             EquipmentPropertyTableManager.Count = properties.Count;
@@ -237,40 +236,7 @@ namespace Windows
             lb_description.text = item.Description;
             lb_equiprefresh.SetKey("UUIItemRefresh_RefreshTimes", $"{ currentRefreshData.MaxRefreshTimes - it.Data?.RefreshTime}");
             LevelRoot.ActiveSelfObject(it.Level > 0);
-            var level = ExcelToJSONConfigManager.Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == it.Level && t.Quality == item.Quality);        
-            var pro = equip.Properties.SplitToInt();
-            var val = equip.PropertyValues.SplitToInt();
-
-
-            var properties = new Dictionary<P, ComplexValue>();
-            for (var ip = 0; ip < pro.Count; ip++)
-            {
-                var pr = (P)pro[ip];
-                if (!properties.ContainsKey(pr))
-                    properties.Add(pr, 0);
-
-                if (properties.TryGetValue(pr, out ComplexValue value))
-                {
-                    value.SetBaseValue(value.BaseValue + val[ip]);
-                    value.SetRate(level?.AppendRate ?? 0);
-                }
-            }
-            if (it.Data != null)
-            {
-                foreach (var i in it.Data.Values)
-                {
-                    var k = (P)i.Key;
-                    if (!properties.ContainsKey(k))
-                        properties.Add(k, 0);
-
-                    if (properties.TryGetValue(k, out ComplexValue value))
-                    {
-                        value.SetAppendValue(value.AppendValue + i.Value);
-                    }
-                }
-            }
-
+            var properties = it.GetProperties();
             PropertyListTableManager .Count = properties.Count;
             int index = 0;
             foreach (var i in properties)

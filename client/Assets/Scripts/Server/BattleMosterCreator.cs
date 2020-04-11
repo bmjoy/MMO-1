@@ -12,6 +12,7 @@ using P = Proto.HeroPropertyType;
 using EngineCore.Simulater;
 using GameLogic.Game.Elements;
 using XNet.Libs.Utility;
+using GameLogic;
 
 namespace Server
 {

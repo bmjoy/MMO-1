@@ -147,53 +147,24 @@ namespace Server
             var appendProperties = new Dictionary<P, int>();
             foreach (var i in user.GetHero().Equips)
             {
-                var itemsConfig = CM.Current.GetConfigByID<ItemData>(i.ItemID);
-                var equipId = int.Parse(itemsConfig.Params[0]);
-                var equipconfig = CM.Current.GetConfigByID<EquipmentData>(equipId);
-                if (equipconfig == null) continue;
                 var equip = user.GetEquipByGuid(i.GUID);
-                float addRate = 0f;
-                if (equip != null)
+                if (equip == null)
                 {
-                    var equipLevelUp = CM
-                        .Current
-                        .FirstConfig<EquipmentLevelUpData>(t => t.Level == equip.Level && t.Quality == equipconfig.Quality);
-                    if (equipLevelUp != null)
-                    {
-                        addRate = equipLevelUp.AppendRate / 10000f;
-                    }
+                    Debug.LogError($"No found equip {i.GUID}");
+                    continue;
                 }
-                //基础加成
-                var properties = equipconfig.Properties.SplitToInt();
-                var values = equipconfig.PropertyValues.SplitToInt();
-                for (var index = 0; index < properties.Count; index++)
+                var ps = equip.GetProperties();
+                foreach (var p in ps)
                 {
-                    var p = (P)properties[index];
-                    int v = (int)(values[index] * (1 + addRate));
-                    if (appendProperties.TryGetValue(p, out int value))
+                    if (appendProperties.ContainsKey(p.Key))
                     {
-                        appendProperties[p] = v + value;
+                        appendProperties[p.Key] += p.Value.FinalValue;
                     }
                     else
                     {
-                        appendProperties.Add(p, v);
+                        appendProperties.Add(p.Key, p.Value.FinalValue);
                     }
                 }
-
-                foreach (var kv in equip.Data.Values)
-                {
-                    var p = (P)kv.Key;
-                    var v = (int)(kv.Value*(1 + addRate));
-                    if (appendProperties.TryGetValue(p, out int value))
-                    {
-                        appendProperties[p] = v + value;
-                    }
-                    else
-                    {
-                        appendProperties.Add(p, v);
-                    }
-                }
-
             }
             var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;        
             character = per.CreateCharacter(user.GetHero().Level, data,
