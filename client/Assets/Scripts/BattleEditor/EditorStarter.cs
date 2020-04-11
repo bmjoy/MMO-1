@@ -109,6 +109,7 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 		var releaser = per.CreateCharacter(level, data, magics,null, 1,
 			scene.startPoint.position + (UVector3.right * distanceCharacter / 2)
             , new UVector3(0, 90, 0), string.Empty, data.Name);
+		releaser.ResetHPMP();
 		if (ai) per.ChangeCharacterAI(data.AIResourcePath, releaser);
 		this.releaser = releaser;
 		tcamera.SetLookAt(releaser.Transform);
@@ -123,7 +124,8 @@ public class EditorStarter : XSingleton<EditorStarter> , IAIRunner, IStateLoader
 		var scene = PerView.UScene;
 		var magics = data.CreateHeroMagic();// per.CreateHeroMagic(data.ID);
 		var target = per.CreateCharacter(level, data, magics,null, 2, scene.enemyStartPoint.position + (UVector3.left * distanceCharacter / 2),
-			new UVector3(0, -90, 0), string.Empty, data.Name); ;
+			new UVector3(0, -90, 0), string.Empty, data.Name);
+		target.ResetHPMP();
 		if (ai) per.ChangeCharacterAI(data.AIResourcePath, target);
 		this.target = target;
 	}

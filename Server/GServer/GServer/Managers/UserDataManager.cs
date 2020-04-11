@@ -39,7 +39,7 @@ namespace GServer.Managers
             return await FindHeroByPlayerId(player.Uuid);
         }
 
-        public async Task<string> ProcessBattleReward(string account_uuid,IList<PlayerItem> modifyItems,  IList<PlayerItem> RemoveItems, int exp, int level, int gold)
+        public async Task<string> ProcessBattleReward(string account_uuid,IList<PlayerItem> modifyItems,  IList<PlayerItem> RemoveItems, int exp, int level, int gold,int hp, int mp)
         {
             var player = await FindPlayerByAccountId(account_uuid);
             if (player == null) return null;
@@ -47,7 +47,11 @@ namespace GServer.Managers
             await DataBase.S.Playes.UpdateOneAsync(t => t.Uuid== player.Uuid, pupdate);
             var (ms,rs) = await ProcessRewardItem(player.Uuid, modifyItems,  RemoveItems);
             var hero = await FindHeroByPlayerId(player.Uuid);
-            var update = Builders<GameHeroEntity>.Update.Set(t => t.Exp, exp).Set(t => t.Level, level);
+            var update = Builders<GameHeroEntity>.Update
+                .Set(t => t.Exp, exp)
+                .Set(t => t.Level, level)
+                .Set(t=>t.HP, hp)
+                .Set(t=>t.MP, mp);
             var filter = Builders<GameHeroEntity>.Filter.Eq(t => t.Uuid, hero.Uuid);
             await DataBase.S.Heros.UpdateOneAsync(filter, update);
             return  player.Uuid;

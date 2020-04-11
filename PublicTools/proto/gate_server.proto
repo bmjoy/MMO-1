@@ -211,9 +211,10 @@ message B2G_GetPlayerInfo
 message G2B_GetPlayerInfo
 {
 	 ErrorCode Code=1;//返回信息
-	 int32 Gold = 4;//金币
-	 DHero Hero=2;    //英雄数据
-	 PlayerPackage Package=3;//道具列表
+	 int32 Gold = 2;//金币
+	 DHero Hero=3;    //英雄数据
+	 PlayerPackage Package=4;//道具列表
+
 }
 
 //返回战斗数据
@@ -226,6 +227,8 @@ message B2G_BattleReward
 	repeated PlayerItem RemoveItems =5;  //消耗完的物品
 	int32 Exp = 6;//经验
 	int32 Level = 7;//等级
+	int32 HP = 8;
+	int32 MP =9;
 }
 
 //返回战斗数据

@@ -132,6 +132,7 @@ namespace Server
                 var Monster = per.CreateCharacter(monsterData.Level, data, magic, append, 2,
                     standPos[i].Pos, standPos[i].Forward, string.Empty, mName);
                 per.ChangeCharacterAI(data.AIResourcePath, Monster);
+                Monster.ResetHPMP();
                 AliveCount++;
 
                 Monster["__Drop"] = drop;
@@ -178,11 +179,15 @@ namespace Server
         private void DoDrop(Vector3 pos, MonsterData monster, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
         {
             BattlePlayer player = null;
-            if (owner && BattleSimulater.S.TryGetPlayer(owner.AcccountUuid, out  player))
+            if (owner && BattleSimulater.S.TryGetPlayer(owner.AcccountUuid, out player))
             {
                 var exp = player.GetHero().Exprices;
                 int expNew = player.AddExp(monster.Exp, out int old, out int newLevel);
-                if (newLevel != old) player.HeroCharacter.SetLevel(newLevel);
+                if (newLevel != old)
+                {
+                    player.HeroCharacter.SetLevel(newLevel);
+                    player.HeroCharacter.ResetHPMP();//full mp and hp
+                }
                 var expNotify = new Notify_CharacterExp { Exp = expNew, Level = newLevel, OldExp = exp, OldLeve = old };
                 player.Client.SendMessage(expNotify.ToNotityMessage());
             }

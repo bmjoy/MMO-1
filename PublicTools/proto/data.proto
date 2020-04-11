@@ -52,6 +52,8 @@ message DHero
 	repeated WearEquip Equips=4;//当前穿戴装备
 	repeated HeroMagic Magics=5;//英雄当前激活魔法
 	string Name = 6;
+	int32 HP = 7;
+	int32 MP = 8;
 }
 
 message EquipData

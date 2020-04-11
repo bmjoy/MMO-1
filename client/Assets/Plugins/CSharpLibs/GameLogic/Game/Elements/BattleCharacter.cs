@@ -403,12 +403,13 @@ namespace GameLogic.Game.Elements
             View.LookAtTarget(releaserTarget.Index);
         }
 
-        internal void Init()
-		{
-            HP = MaxHP;
-            MP = MaxMP;
+        public void ResetHPMP(int hp = -1, int mp = -1)
+        {
+            this.HP = hp == -1 ? MaxHP : (int)Mathf.Max(MaxHP * 0.1f, hp);
+            this.MP = mp == -1 ? MaxMP : mp;
             View.SetHpMp(HP, MaxHP, MP, MaxMP);
-		}
+        }
+
 
 		protected void OnDeath()
 		{

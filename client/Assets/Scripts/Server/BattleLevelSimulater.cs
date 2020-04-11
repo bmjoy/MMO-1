@@ -162,11 +162,21 @@ namespace Server
                     }
                 }
             }
+            //hp
+            //mp
+            var hero = user.GetHero();
             var pos = GRandomer.RandomArray(playerBornPositions).transform;//.position;        
-            character = per.CreateCharacter(user.GetHero().Level, data,
+            character = per.CreateCharacter(
+                hero.Level,
+                data,
                 magic, appendProperties,
-                PlayerTeamIndex, pos.position, pos.rotation.eulerAngles, user.AccountId, user.GetHero().Name);
+                PlayerTeamIndex,
+                pos.position,
+                pos.rotation.eulerAngles,
+                user.AccountId,
+                user.GetHero().Name);
             per.ChangeCharacterAI(data.AIResourcePath, character);
+            character.ResetHPMP(hero.HP,hero.MP);
             return character;
         }
 

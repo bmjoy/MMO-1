@@ -222,7 +222,9 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 MapID = Simulater.LevelData.ID,
                 DiffGold = p.DiffGold,
                 Exp = p.GetHero().Exprices,
-                Level = p.GetHero().Level
+                Level = p.GetHero().Level,
+                HP = p.HeroCharacter?.HP??0,
+                MP = p.HeroCharacter?.MP??0
             };
 
             var removeItesm = p.Package.Removes.Select(t => t.Item).ToList();

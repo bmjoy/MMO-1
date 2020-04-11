@@ -41,6 +41,7 @@ message B2C_ViewPlayerHero
 	int32 Level =3;
 	int32 HeroID = 4;
 	repeated PlayerItem WaerEquips = 5;
+	repeated HeroMagic Magics = 6; 
 }
 
 message Action_CollectItem

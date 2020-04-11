@@ -93,6 +93,8 @@ namespace GateServer
             public Dictionary<int, string> Equips { set; get; }
             public string HeroName { set; get; }
             public int HeroId { set; get; }
+            public int HP { set; get; }
+            public int MP { set; get; }
             public GameHeroEntity()
             {
                 Magics = new Dictionary<int, DBHeroMagic>();
