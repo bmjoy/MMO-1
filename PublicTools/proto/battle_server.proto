@@ -97,11 +97,12 @@ message Notify_ElementExitState
 //创建一个释放者
 message Notify_CreateReleaser
 {
-     int32 Index=1;
-	 int32 ReleaserIndex=2;
-	 int32 TargetIndex=3;
-	 string MagicKey=4;
-	 Vector3 Position = 5;
+    int32 Index=1;
+	int32 ReleaserIndex=2;
+	int32 TargetIndex=3;
+	string MagicKey=4;
+	Vector3 Position = 5;
+	ReleaserModeType RMType = 6;
 }
 
 //战斗中的角色

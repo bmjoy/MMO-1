@@ -18,7 +18,6 @@ namespace GateServer
 
         public class PackageEquip
         {
-
             public PackageEquip() { Properties = new Dictionary<HeroPropertyType, int>(); }
             public int RefreshCount { set; get; }
             [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfDocuments)]
@@ -72,7 +71,6 @@ namespace GateServer
                         return true;
                     }
                 }
-
                 item = null;
                 return false;
             }

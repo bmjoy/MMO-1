@@ -184,6 +184,9 @@
         <member name="F:Proto.Notify_CreateReleaser.PositionFieldNumber">
              <summary>Field number for the "Position" field.</summary>
             </member>
+        <member name="F:Proto.Notify_CreateReleaser.RMTypeFieldNumber">
+             <summary>Field number for the "RMType" field.</summary>
+            </member>
         <member name="T:Proto.Notify_CreateBattleCharacter">
              <summary>
             战斗中的角色

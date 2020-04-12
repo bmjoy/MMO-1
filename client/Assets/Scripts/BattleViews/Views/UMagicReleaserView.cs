@@ -7,20 +7,19 @@ using GameLogic;
 using UVector3 = UnityEngine.Vector3;
 using System.Collections.Generic;
 using GameLogic.Game.LayoutLogics;
-using System.Reflection;
-using System;
 using GameLogic.Game.Perceptions;
 using EngineCore.Simulater;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(int releaser, int target, UVector3 targetpos)
+    public void SetCharacter(int releaser, int target, UVector3 targetpos, Proto.ReleaserModeType rmType)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
         RIndex = releaser;
         TIndex = target;
         TargetPos = targetpos;
+        RMType = rmType;
     }
 
     public UVector3 TargetPos;
@@ -29,6 +28,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     public IBattleCharacter CharacterTarget { private set; get; }
     public IBattleCharacter CharacterReleaser { private set; get; }
+
+    public ReleaserModeType RMType { private set; get; }
 
     public string Key { get; internal set; }
 
@@ -118,7 +119,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             ReleaserIndex = RIndex,
             TargetIndex = TIndex,
             MagicKey = Key,
-            Position = TargetPos.ToPV3()
+            Position = TargetPos.ToPV3(),
+            RMType = RMType
         };
         return createNotify;
     }

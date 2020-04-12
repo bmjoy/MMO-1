@@ -57,7 +57,7 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
             releaser = root.Perception
-                .CreateReleaser(key, root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic, -1);
+                .CreateReleaser(key, root.Character, new ReleaseAtTarget(root.Character, target), ReleaserType.Magic, Proto.ReleaserModeType.RmtMagic, -1);
 
             while (!releaser.IsLayoutStartFinish)
             {

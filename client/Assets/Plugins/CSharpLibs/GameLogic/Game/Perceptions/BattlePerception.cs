@@ -75,7 +75,7 @@ namespace GameLogic.Game.Perceptions
 
 
         #region create Elements 
-        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, float durtime)
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, ReleaserModeType RMType, float durtime)
         {
             var magic = View.GetMagicByKey(key);
             if (magic == null)
@@ -83,11 +83,11 @@ namespace GameLogic.Game.Perceptions
                 Debug.LogError($"{key} no found!");
                 return null;
             }
-            var releaser = CreateReleaser(key, owner, magic, target, ty, durtime);
+            var releaser = CreateReleaser(key, owner, magic, target, ty, RMType, durtime);
             return releaser;
         }
 
-        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, MagicData magic, IReleaserTarget target, ReleaserType ty, float durtime)
+        public MagicReleaser CreateReleaser(string key, BattleCharacter owner, MagicData magic, IReleaserTarget target, ReleaserType ty, ReleaserModeType RMType, float durtime)
         {
             if (magic.unique)
             {
@@ -107,7 +107,7 @@ namespace GameLogic.Game.Perceptions
                 if (have) return null;
             }
 
-            var view = View.CreateReleaserView(target.Releaser.Index,target.ReleaserTarget.Index, key,target.TargetPosition.ToPV3());
+            var view = View.CreateReleaserView(target.Releaser.Index,target.ReleaserTarget.Index, key,target.TargetPosition.ToPV3(),RMType);
             var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
             if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Skill, mReleaser);
             this.JoinElement(mReleaser);

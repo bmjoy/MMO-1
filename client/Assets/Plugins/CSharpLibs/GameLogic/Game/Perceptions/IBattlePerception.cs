@@ -63,8 +63,8 @@ namespace GameLogic.Game.Perceptions
             IList<HeroMagicData> cds,int ownerIndex);
 
        
-        [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position")]
-        IMagicReleaser CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos);
+        [NeedNotify(typeof(Notify_CreateReleaser), "ReleaserIndex", "TargetIndex", "MagicKey", "Position", "RMType")]
+        IMagicReleaser CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos, Proto.ReleaserModeType rmType);
 
         /// <summary>
         /// Creates the missile.

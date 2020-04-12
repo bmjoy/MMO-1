@@ -118,3 +118,11 @@ message BattleServerConfig
 	int32 LoginServerPort=5;
 	string LoginServiceHost =6;
 }
+
+enum ReleaserModeType
+{
+	RMT_NONE =0;
+	RMT_Magic =1;
+	RMT_NormalAttack =2;
+	RMT_Buff =4;
+}

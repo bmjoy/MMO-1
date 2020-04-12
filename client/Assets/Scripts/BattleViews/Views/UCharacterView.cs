@@ -222,7 +222,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         {
             foreach (var i in timeLinePlayers)
             {
-                //i.RView.IsMagic
+                if (i.RView.RMType != ReleaserModeType.RmtMagic) continue;
                 if (i.EventType == Layout.EventType.EVENT_START) return true;
             }
             return false;

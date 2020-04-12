@@ -56,11 +56,13 @@ namespace Proto {
             "IAEoBRIRCglNYXhQbGF5ZXIYAiABKAUSEgoKTGlzdGVuUG9ydBgDIAEoBRIS",
             "CgpMaXN0ZW5Ib3N0GAQgASgJEhcKD0xvZ2luU2VydmVyUG9ydBgFIAEoBRIY",
             "ChBMb2dpblNlcnZpY2VIb3N0GAYgASgJKj4KCU1hZ2ljVHlwZRINCglNVF9O",
-            "b3JtYWwQABIUChBNVF9Ob3JtYWxfQXBwZW5kEAESDAoITVRfTWFnaWMQAmIG",
-            "cHJvdG8z"));
+            "b3JtYWwQABIUChBNVF9Ob3JtYWxfQXBwZW5kEAESDAoITVRfTWFnaWMQAipT",
+            "ChBSZWxlYXNlck1vZGVUeXBlEgwKCFJNVF9OT05FEAASDQoJUk1UX01hZ2lj",
+            "EAESFAoQUk1UX05vcm1hbEF0dGFjaxACEgwKCFJNVF9CdWZmEARiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.MagicType), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.MagicType), typeof(global::Proto.ReleaserModeType), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Vector3), global::Proto.Vector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameServerInfo), global::Proto.GameServerInfo.Parser, new[]{ "Host", "Port", "ServerId", "MaxPlayerCount", "CurrentPlayerCount", "ServicesHost", "ServicesPort" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.WearEquip), global::Proto.WearEquip.Parser, new[]{ "ItemID", "GUID", "Part" }, null, null, null),
@@ -84,6 +86,13 @@ namespace Proto {
     [pbr::OriginalName("MT_Normal")] MtNormal = 0,
     [pbr::OriginalName("MT_Normal_Append")] MtNormalAppend = 1,
     [pbr::OriginalName("MT_Magic")] MtMagic = 2,
+  }
+
+  public enum ReleaserModeType {
+    [pbr::OriginalName("RMT_NONE")] RmtNone = 0,
+    [pbr::OriginalName("RMT_Magic")] RmtMagic = 1,
+    [pbr::OriginalName("RMT_NormalAttack")] RmtNormalAttack = 2,
+    [pbr::OriginalName("RMT_Buff")] RmtBuff = 4,
   }
 
   #endregion

@@ -74,7 +74,8 @@ namespace GameLogic.Game.AIBehaviorTree
                 }
 
                 var rTarget = new ReleaseAtTarget(root.Character, target);
-                releaser = root.Perception.CreateReleaser(mc.Config.MagicKey, root.Character, rTarget, ReleaserType.Magic, -1);
+                releaser = root.Perception.CreateReleaser(mc.Config.MagicKey,
+                    root.Character, rTarget, ReleaserType.Magic, ReleaserModeType.RmtNormalAttack, -1);
                 if (!releaser)
                 {
                     if (root.IsDebug) {
