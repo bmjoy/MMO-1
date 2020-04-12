@@ -42,6 +42,7 @@ public class UBattleMissileView : UElementView ,IBattleMissile
             }
         });
 #endif
+        yield return null;
     }
 
     public string res;
