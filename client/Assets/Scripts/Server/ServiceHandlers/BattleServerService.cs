@@ -20,13 +20,19 @@ public class BattleServerService : Responser, IBattleServerService
     [IgnoreAdmission]
     public B2C_JoinBattle JoinBattle(C2B_JoinBattle request)
     {
+        //版本
+        if (request.Version != MessageTypeIndexs.Version)
+        {
+            return new B2C_JoinBattle { Code = ErrorCode.Error };
+        }
+
         var gate = BattleSimulater.S;
         var re = new B2L_CheckSession
         {
             UserID = request.AccountUuid,
             SessionKey = request.Session,
-
         };
+       
         var seResult = CheckSession.CreateQuery().GetResult(gate.CenterServerClient, re);
         ErrorCode result = seResult.Code;
         if (seResult.Code == ErrorCode.Ok)

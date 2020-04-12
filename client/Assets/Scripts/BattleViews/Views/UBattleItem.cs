@@ -53,8 +53,7 @@ public class UBattleItem : UElementView, IBattleItem
         {
             var owner = false;
             owner = IsOwner(PerView.OwnerIndex);
-            id = UUITipDrawer.S.DrawItemName(id, config.Name, owner,
-                this.transform.position +Vector3.up *.8f, ThridPersionCameraContollor.Current.CurrenCamera);
+            id = UUITipDrawer.S.DrawItemName(id, config.Name, owner, this.transform.position +Vector3.up *.8f, ThridPersionCameraContollor.Current.CurrenCamera);
         }
 #endif
     }

@@ -92,7 +92,7 @@ public class BattleGate : UGate, IServerMessageHandler
                     Session = UApplication.S.SesssionKey,
                     AccountUuid = UApplication.S.AccountUuid,
                     MapID = Level.ID,
-                    Version = 1
+                    Version = MessageTypeIndexs.Version
                 },
                 (r) =>
                 {

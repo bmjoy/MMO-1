@@ -43,7 +43,12 @@ public class LoginGate:UGate
         }
 
         var req = Reg.CreateQuery();
-        yield return req.Send(Client, new C2L_Reg { Password = password, UserName = username, Version = MessageTypeIndexs.Version });
+        yield return req.Send(Client, new C2L_Reg
+        {
+            Password = password,
+            UserName = username,
+            Version = MessageTypeIndexs.Version
+        });
         callback?.Invoke(req.QueryRespons);
         Client?.Disconnect();
         Client = null;
@@ -58,7 +63,12 @@ public class LoginGate:UGate
             yield break;
         }
         var req = Login.CreateQuery();
-        yield return req.Send(Client, new C2L_Login { Password = pwd , UserName = name, Version = MessageTypeIndexs.Version });
+        yield return req.Send(Client, new C2L_Login
+        {
+            Password = pwd,
+            UserName = name,
+            Version = MessageTypeIndexs.Version
+        });
         callback?.Invoke(req.QueryRespons);
         Client?.Disconnect();
         Client = null;
