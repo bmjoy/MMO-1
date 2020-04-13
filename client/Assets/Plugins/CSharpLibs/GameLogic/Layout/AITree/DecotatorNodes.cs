@@ -25,5 +25,11 @@ namespace Layout.AITree
 
 	[EditorAITreeNode("终止树并启动子树", "Dec", "修饰节点", AllowChildType.One)]
 	public class TreeNodeBreakTreeAndRunChild:TreeNode{ }
+
+	[EditorAITreeNode("CD执行", "Dec", "修饰节点", AllowChildType.One)]
+	public class TreeNodeCd:TreeNode
+	{
+		public FieldValue CdTime = 100;
+	}
 }
 

@@ -403,6 +403,12 @@ namespace GameLogic.Game.Elements
                             this.ToCompleted();
                         }
                         break;
+                    case BattleEventType.NomarlAttack:
+                        if ((DisposeValue & (int)DisposeType.NormarlAttack) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
                 }
             }
         }

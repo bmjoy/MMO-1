@@ -79,7 +79,7 @@ namespace GameLogic.Game.AIBehaviorTree
             }
             else
             {
-                root.Character.TryToSetPosition(message.Position.ToUV3(), message.Rotation.ToUV3());
+                root.Character.TryToSetPosition(message.Position.ToUV3(), message.Rotation.Y);
             }
 
             if (!root.Character.SubMP(magic.Config.MPCost))

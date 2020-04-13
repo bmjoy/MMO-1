@@ -109,7 +109,8 @@ namespace GameLogic.Game.Perceptions
 
             var view = View.CreateReleaserView(target.Releaser.Index,target.ReleaserTarget.Index, key,target.TargetPosition.ToPV3(),RMType);
             var mReleaser = new MagicReleaser(key, magic,owner, target, this.ReleaserControllor, view, ty, durtime);
-            if (ty == ReleaserType.Magic) owner.FireEvent(BattleEventType.Skill, mReleaser);
+            if(RMType == ReleaserModeType.RmtMagic) owner.FireEvent(BattleEventType.Skill, mReleaser);
+            if(RMType == ReleaserModeType.RmtNormalAttack) owner.FireEvent(BattleEventType.NomarlAttack, mReleaser);
             this.JoinElement(mReleaser);
             return mReleaser;
         }

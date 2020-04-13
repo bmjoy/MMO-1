@@ -24,7 +24,7 @@ namespace GateServer
 
             foreach (var i in entity.Magics)
             {
-                h.Magics.Add(new Proto.HeroMagic { MagicKey = i.Key, Level = i.Value.Level });
+                h.Magics.Add(new HeroMagic { MagicKey = i.Key, Level = i.Value.Level });
             }
 
             foreach (var i in entity.Equips)
@@ -75,8 +75,10 @@ namespace GateServer
                 Num = i.Num,
                 Level = i.Level
             };
-            item.Data = new EquipData();
-            item.Data.RefreshTime = i.EquipData?.RefreshCount ?? 0;
+            item.Data = new EquipData
+            {
+                RefreshTime = i.EquipData?.RefreshCount ?? 0
+            };
 
             foreach (var pro in i.EquipData.Properties)
             {

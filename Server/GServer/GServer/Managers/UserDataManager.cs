@@ -341,7 +341,10 @@ namespace GServer.Managers
 
             var levelConfig = ExcelToJSONConfigManager
                 .Current.FirstConfig<MagicLevelUpData>(t => t.Level == level && t.MagicID == magicId);
-
+            if (levelConfig == null)
+            {
+                return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+            }
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
 

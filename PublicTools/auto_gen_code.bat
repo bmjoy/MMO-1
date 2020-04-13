@@ -1,4 +1,4 @@
-
+﻿
 ::Copy "C:\Users\xxp\Google 云端硬盘\MultplayerGame\Excel" .\econfigs\ /Y
 
 SET IMPORT_PATH=../proto/
@@ -9,7 +9,7 @@ pushd ToolBin
 protoc.exe ../proto/*.proto --csharp_out=%CSHARP_PATH% -I=%IMPORT_PATH%
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 
-PServicePugin.exe dir:../proto file:*.proto saveto:%CSHARP_PATH% version:0.0.1
+PServicePugin.exe dir:../proto file:*.proto saveto:%CSHARP_PATH% version:%VERSION%
 IF not %ERRORLEVEL% == 0 exit  %ERRORLEVEL%
 
 ExcelOut.exe dir:../econfigs namespace:EConfig exportJson:../src/json/ exportCs:%CSHARP_PATH%/ExcelConfig.cs ex:*.xlsx debug:false

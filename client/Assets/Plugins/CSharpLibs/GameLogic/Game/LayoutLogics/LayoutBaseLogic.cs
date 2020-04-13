@@ -64,7 +64,7 @@ namespace GameLogic.Game.LayoutLogics
 		[HandleLayout(typeof(LookAtTarget))]
 		public static void LookAtTargetActive(TimeLinePlayer linePlayer, LayoutBase layoutBase)
 		{
-			var layout = layoutBase as LookAtTarget;
+			//var layout = layoutBase as LookAtTarget;
             linePlayer.Releaser?.Releaser?.LookAt(linePlayer.Releaser.Target);
 		}
         #endregion
