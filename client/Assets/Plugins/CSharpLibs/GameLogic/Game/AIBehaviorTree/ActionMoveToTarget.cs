@@ -42,7 +42,7 @@ namespace GameLogic.Game.AIBehaviorTree
 					yield break;
 				}
 				var time = root.Time;
-				while (time + .3f > root.Time && root.Character.IsMoving)
+				while (time + .5f > root.Time && root.Character.IsMoving)
 				{
 					yield return RunStatus.Running;
 				}

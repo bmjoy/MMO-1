@@ -311,6 +311,7 @@ public class BattleGate : UGate, IServerMessageHandler
         if (gm) Destroy(gm);
         Client?.Disconnect();
         UUIManager.S.ShowMask(false);
+        PrintReceived();
     }
 
     private void OnDisconnect()
@@ -329,7 +330,15 @@ public class BattleGate : UGate, IServerMessageHandler
             UApplication.S.SendTotal = Client.SendSize;
             UApplication.S.PingDelay = (float)Client.Delay / (float)TimeSpan.TicksPerMillisecond;
         }
+
+        if (Print)
+        {
+            Print = false;
+            PrintReceived();
+        }
     }
+
+
 
     private void SendAction(IMessage action)
     {
@@ -337,11 +346,33 @@ public class BattleGate : UGate, IServerMessageHandler
         Client.SendMessage(action.ToAction());
     }
 
+    private readonly Dictionary<Type, int> _messageTotal = new Dictionary<Type, int>();
+
     public void Handle(Message message, SocketClient client)
     {
         var notify = message.AsNotify();
+       
         player.Process(notify);
+
+        if (_messageTotal.TryGetValue(notify.GetType(), out _))
+        {
+            _messageTotal[notify.GetType()] += message.Size;
+        }
+        else
+        {
+            _messageTotal.Add(notify.GetType(), message.Size);
+        }
     }
+    public bool Print = false;
+    private void PrintReceived()
+    {
+        foreach (var i in _messageTotal)
+        {
+            Debug.Log($"Total:{i.Key}->{i.Value}");
+        }
+    }
+
+
 
     private bool CanNetAction()
     {

@@ -10,6 +10,7 @@ namespace Layout.LayoutEffects
 		SKILL =1,
 		MOVE = 2,
 		HURT = 4,
+		NormarlAttack = 8
 	}
 	
 
