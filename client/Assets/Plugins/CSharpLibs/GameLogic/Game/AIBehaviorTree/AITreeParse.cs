@@ -81,7 +81,7 @@ namespace GameLogic.Game.AIBehaviorTree
 				//var n = node as TreeNodeTick;
 				return new DecoratorTick(list[0])
 				{
-					TickTime = n.tickTime,
+					Node = n,
 					Guid = node.guid
 				};
 			}
@@ -116,6 +116,10 @@ namespace GameLogic.Game.AIBehaviorTree
 			{
 				return new DecoratonBreakTreeAndRunChild(list[0]) { Guid = node.guid };
 			}
+			else if (node is TreeNodeCd cd)
+  			{
+				return new DecoratonCd(list[0]) { Guid = node.guid, Node = cd };
+			}
 			else if (node is TreeNodeLinkNode linkNode)
 			{
 				var childNode = loader.Load(linkNode.Path);
@@ -126,9 +130,9 @@ namespace GameLogic.Game.AIBehaviorTree
 
 			else if (node is TreeNodeBattleEvent ev)
 			{
-				var t= CreateFrom(node.childs[0],loader);
-				return new EventBattle(t) { eventType = ev.eventType , Guid = node.guid};
-            }
+				var t = CreateFrom(node.childs[0], loader);
+				return new EventBattle(t) { eventType = ev.eventType, Guid = node.guid };
+			}
 			else
 			{
 				return Parse(node);

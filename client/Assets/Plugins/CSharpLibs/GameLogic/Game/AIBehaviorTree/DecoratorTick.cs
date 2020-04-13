@@ -1,5 +1,6 @@
 ﻿using BehaviorTree;
 using Layout;
+using Layout.AITree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace GameLogic.Game.AIBehaviorTree
 
             while (true)
             {
-				if (lastTime + (TickTime / 1000f) <= context.Time)
+				if (lastTime + (Node.tickTime / 1000f) <= context.Time)
                 {
 					lastTime = context.Time;
                     DecoratedChild.Start(context);
@@ -29,10 +30,9 @@ namespace GameLogic.Game.AIBehaviorTree
                 yield return RunStatus.Running;
             }
         }
+        public TreeNodeTick Node { get; internal set; }
 
-        public FieldValue TickTime { set; get; }
-
-		public override void Stop(ITreeRoot context)
+        public override void Stop(ITreeRoot context)
 		{
 			base.Stop(context);
 			DecoratedChild.Stop(context);
