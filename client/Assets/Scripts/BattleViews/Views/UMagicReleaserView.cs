@@ -25,6 +25,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         {
             Magic = per.GetMagicByKey(magicKey);
         }
+        Key = magicKey;
     }
 
 
