@@ -26,8 +26,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
     private int RIndex;
     private int TIndex;
 
-    public IBattleCharacter CharacterTarget { private set; get; }
-    public IBattleCharacter CharacterReleaser { private set; get; }
+    public UCharacterView CharacterTarget { private set; get; }
+    public UCharacterView CharacterReleaser { private set; get; }
 
     public ReleaserModeType RMType { private set; get; }
 

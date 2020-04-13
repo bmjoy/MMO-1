@@ -13,7 +13,6 @@ namespace GameLogic.Game.Elements
         Quaternion Rotation { get; }
         Transform RootTransform { get; }
         float Radius { get; }
-        void PlayMotion(string motion);//play motion
         void SetHpMp(int hp, int hpMax, int mp, int mpMax);
 
         [NeedNotify(typeof(Notify_CharacterRelive))]
