@@ -480,14 +480,14 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
-    void IBattleCharacter.SetLookRotation(Proto.Vector3 eu)
+    void IBattleCharacter.SetLookRotation(float rotationY)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(eu.ToUV3());
+        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(0, rotationY,0);
         CreateNotify(new Notify_CharacterRotation
         {
-            Rotation = eu,
+            RotationY = rotationY,
             Index = Index
         });
 #else

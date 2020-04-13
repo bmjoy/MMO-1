@@ -325,7 +325,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 else if (action is Action_LookRotation look)
                 {
                     //var q = Quaternion.Euler(0, look.LookRotationY, 0);
-                    i.Value.HeroCharacter.LookRotation(new UVector3(0, look.LookRotationY, 0));
+                    i.Value.HeroCharacter.LookRotation(look.LookRotationY);
                 }
                 else
                 {

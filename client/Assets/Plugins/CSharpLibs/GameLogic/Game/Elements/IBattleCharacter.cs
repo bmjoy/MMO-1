@@ -48,8 +48,8 @@ namespace GameLogic.Game.Elements
         void SetLock(int lockValue);
         [NeedNotify(typeof(Notify_CharacterPush), "StartPos", "Length", "Speed")]
         void Push(Proto.Vector3 startPos, Proto.Vector3 length, Proto.Vector3 speed);
-        [NeedNotify(typeof(Notify_CharacterRotation),"Rotation")]
-        void SetLookRotation(Proto.Vector3 eu);//use angle
+        [NeedNotify(typeof(Notify_CharacterRotation), "RotationY")]
+        void SetLookRotation(float rotationY);//use angle
         [NeedNotify(typeof(Notify_CharacterLevel),"Level")]
         void SetLevel(int level);
         [NeedNotify(typeof(Notify_CharacterTeamIndex),"TeamIndex","OwnerIndex")]

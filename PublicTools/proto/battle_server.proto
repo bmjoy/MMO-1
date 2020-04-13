@@ -308,7 +308,7 @@ message Notify_SyncServerTime
 message Notify_CharacterRotation
 {
 	int32 Index=1;
-	Vector3 Rotation = 2;
+	float RotationY =2;
 }
 
 message Notify_CharacterExp

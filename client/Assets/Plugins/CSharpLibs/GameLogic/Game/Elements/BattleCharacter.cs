@@ -280,10 +280,10 @@ namespace GameLogic.Game.Elements
             View.StopMove(p.ToPV3());
         }
 
-        internal void TryToSetPosition(UVector3 pos, UVector3 rotation)
+        internal void TryToSetPosition(UVector3 pos, float rotation)
         {
             View.SetPosition(pos.ToPV3());
-            View.SetLookRotation(rotation.ToPV3());
+            View.SetLookRotation(rotation);
         }
 
 
@@ -353,9 +353,9 @@ namespace GameLogic.Game.Elements
             return true;
         }
 
-        public void LookRotation(UVector3 vector3)
+        public void LookRotation(float rY)
         {
-            View.SetLookRotation(vector3.ToPV3());
+            View.SetLookRotation(rY);
         }
 
         public bool SubMP(int mp)
