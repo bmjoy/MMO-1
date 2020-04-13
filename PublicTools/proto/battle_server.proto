@@ -288,7 +288,7 @@ message Notify_DropGold
 message Notify_PlayTimeLine
 {
 	int32 Index = 1;
-	string Path = 2;
+	int32 PathIndex = 2; 
 	int32 TargetIndex =3;
 	int32 Type =4; //事件类型
 	int32 PlayIndex =5;

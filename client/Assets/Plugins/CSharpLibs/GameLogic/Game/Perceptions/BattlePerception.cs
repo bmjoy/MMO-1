@@ -204,7 +204,7 @@ namespace GameLogic.Game.Perceptions
 
         public AITreeRoot ChangeCharacterAI(string pathTree, BattleCharacter character)
         {
-            TreeNode ai = View.GetAITree(pathTree);
+            var ai = View.GetAITree(pathTree);
             return ChangeCharacterAI(ai, character,pathTree);
         }
 

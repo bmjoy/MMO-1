@@ -317,10 +317,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         var obj = new GameObject($"Rleaser:{magicKey}");
         obj.transform.SetParent(this.transform, false);
         var view = obj.AddComponent<UMagicReleaserView>();
-
-        view.Key = magicKey;
         view.SetPrecpetion(this);
-        view.SetCharacter(releaser, target, targetPos.ToUV3(),rmType);
+        view.SetData(releaser, target, targetPos.ToUV3(),rmType,magicKey);
         return view;
     }
         

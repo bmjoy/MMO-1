@@ -24,7 +24,6 @@ namespace Windows
                 {
                     OnClick?.Invoke(this);
                 });
-                //todo
             }
 
             internal void SetData(CharacterPlayerData characterPlayer)
@@ -107,7 +106,7 @@ namespace Windows
         {
             yield return new WaitForSeconds(.5f);
             if (!view) yield break;
-            (view as IBattleCharacter).PlayMotion(motion);
+            view.PlayMotion(motion);
         }
 
         protected override void OnHide()

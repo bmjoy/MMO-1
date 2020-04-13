@@ -154,7 +154,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
  
 
 
-    public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, IBattleCharacter eventTarget, Layout.EventType ty)
+    public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, UCharacterView eventTarget, Layout.EventType ty)
         : base(line, pIndex)
     {
         this.RView = view;

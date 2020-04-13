@@ -106,11 +106,7 @@ namespace Layout.AITree
         ViewDistance
 	}
 
-	public enum CompareType
-	{ 
-	    Less,
-		Greater
-	}
+	
 	[EditorAITreeNode("判断目标距离", "Cond", "战斗节点/目标", AllowChildType.None)]
 	public class TreeNodeDistancTarget : TreeNode
 	{

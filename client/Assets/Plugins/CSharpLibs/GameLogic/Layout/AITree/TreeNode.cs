@@ -13,6 +13,8 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeProbabilitySelector)),
 		XmlInclude(typeof(TreeNodeProbabilityNode)),
         XmlInclude(typeof(TreeNodeLinkNode)),
+        XmlInclude(typeof(TreeNodeChangeAITree)),
+        XmlInclude(typeof(TreeNodeCompareIntKey)),
 
        
 		/*基础结束*/
