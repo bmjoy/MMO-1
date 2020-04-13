@@ -12,13 +12,7 @@ using System.Collections;
 public class UBattleMissileView : UElementView ,IBattleMissile
 {
 	
-    Transform IBattleMissile.Transform 
-	{
-		get
-		{
-            return transform;
-		}
-	}
+    Transform IBattleMissile.Transform { get { return transform; } }
 
     private IEnumerator Start()
     {
