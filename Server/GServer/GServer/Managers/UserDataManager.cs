@@ -673,12 +673,12 @@ namespace GServer.Managers
 
             if (coin > 0)
             {
-                update = up.Set(t => t.Coin, player.Coin + coin);
+                update = up.Inc(t => t.Coin,coin);
             }
 
             if (gold > 0)
             {
-                update = up.Set(t => t.Gold, player.Gold + gold);
+                update = up.Inc(t => t.Gold,gold);
             }
 
             var result = await DataBase.S.Playes.UpdateOneAsync(filter, update);

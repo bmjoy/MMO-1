@@ -68,7 +68,6 @@ public class BattleGate : UGate, IServerMessageHandler
        
         StartCoroutine(Init());
         gm= this.gameObject.AddComponent<GameGMTools>();
-        //gm.ShowGM = true;
     }
 
     private IEnumerator Init()
@@ -192,7 +191,6 @@ public class BattleGate : UGate, IServerMessageHandler
 
 
     public RenderTexture LookAtView {private set; get; }
-
 
     private void TriggerItem(UBattleItem item)
     {
