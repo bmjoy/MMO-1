@@ -132,12 +132,10 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     {
         foreach (var i in OwnerReleasers)
         {
-            if (i.Value.Key == key) return true;
+            if (i.Value.MagicKey == key) return true;
         }
         return false;
     }
-
-    
 
     public IMessage[] GetAndClearNotify()
     {
