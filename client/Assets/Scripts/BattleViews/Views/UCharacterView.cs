@@ -222,7 +222,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         {
             foreach (var i in timeLinePlayers)
             {
-                //i.RView.IsMagic
+                if (i.RView.RMType != ReleaserModeType.RmtMagic) continue;
                 if (i.EventType == Layout.EventType.EVENT_START) return true;
             }
             return false;
@@ -363,7 +363,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         body.transform.SetParent(this.transform, false);
         bones.Add(BodyBone, body.transform);
 
-        if (curHp == 0) { (this as IBattleCharacter).PlayMotion(Die_Motion); IsDeath = true; };
+        if (curHp == 0) { PlayMotion(Die_Motion); IsDeath = true; };
         StartCoroutine(Init(path));
     }
 
@@ -480,14 +480,14 @@ public class UCharacterView : UElementView, IBattleCharacter
 
     public IList<HeroMagicData> Magics { get { return MagicCds.Values.ToList() ; } }
 
-    void IBattleCharacter.SetLookRotation(Proto.Vector3 eu)
+    void IBattleCharacter.SetLookRotation(float rotationY)
     {
         if (!this) return;
 #if UNITY_SERVER || UNITY_EDITOR
-        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(eu.ToUV3());
+        this.LookQuaternion = targetLookQuaternion = Quaternion.Euler(0, rotationY,0);
         CreateNotify(new Notify_CharacterRotation
         {
-            Rotation = eu,
+            RotationY = rotationY,
             Index = Index
         });
 #else
@@ -526,6 +526,11 @@ public class UCharacterView : UElementView, IBattleCharacter
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_LookAtCharacter { Index = Index, Target = target });
 #endif
+        LookAtIndex(target);
+    }
+
+    public void LookAtIndex(int target)
+    {
         var v = PerView.GetViewByIndex<UElementView>(target);
         if (!v) return;
         LookAt(v.transform);
@@ -550,8 +555,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         properties.Add(new CharacterProperty { PType = type, FinalValue = finalValue });
     }
 
-
-    void IBattleCharacter.PlayMotion(string motion)
+    public void PlayMotion(string motion)
     {
         if (!this) return;
         var an = CharacterAnimator;
@@ -576,7 +580,7 @@ public class UCharacterView : UElementView, IBattleCharacter
 	{
         if (!this) return;
         var view = this as IBattleCharacter;
-		view.PlayMotion (Die_Motion);
+		PlayMotion (Die_Motion);
         GoToEmpty();
         showHpBarTime = -1;
 		IsDeath = true;
@@ -791,13 +795,7 @@ public class UCharacterView : UElementView, IBattleCharacter
         MP = mp; this.MpMax = mpMax;
     }
 
-    bool IBattleCharacter.IsMoving
-    {
-        get
-        {
-            return !(State is Empty);
-        }
-    }
+    bool IBattleCharacter.IsMoving { get { return !(State is Empty); } }
 
     Vector3? IBattleCharacter.MoveTo(Proto.Vector3 position, Proto.Vector3 target, float stopDis)
     {

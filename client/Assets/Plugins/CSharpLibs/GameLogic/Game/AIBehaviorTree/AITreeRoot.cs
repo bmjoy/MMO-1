@@ -141,19 +141,6 @@ namespace GameLogic.Game.AIBehaviorTree
             NeedBreak = true;
         }
 
-        public void SetInt(string key, int value)
-        {
-
-            this[key] = value;
-        }
-
-        public int GetInt(string key)
-        {
-            var v = this[key];
-            if (v == null) return 0;
-            return (int)v;
-        }
-
         public float Time
         {
             get

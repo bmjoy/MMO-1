@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Proto;
 using ExcelConfig;
-using System.Collections.Generic;
 using GameLogic.Game.Perceptions;
 using UGameTools;
 using EConfig;
@@ -13,7 +12,6 @@ using Windows;
 using System.Collections;
 using XNet.Libs.Net;
 using Vector3 = UnityEngine.Vector3;
-using GameLogic.Game.Elements;
 
 public class GMainGate:UGate
 {
@@ -191,9 +189,9 @@ public class GMainGate:UGate
             timeTO = -1;
             if (!characterView) return;
             var character = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == hero.HeroID);
-            if (characterView is IBattleCharacter c && !string.IsNullOrEmpty( character?.Motion))
+            if (!string.IsNullOrEmpty(character?.Motion))
             {
-                c.PlayMotion(character.Motion);
+                characterView.PlayMotion(character?.Motion);
             }
             characterView.targetLookQuaternion = Quaternion.identity;
         }
@@ -204,7 +202,6 @@ public class GMainGate:UGate
         UApplication.S.GotoLoginGate();
     }
 
-   
     public async Task TryToJoinLastBattle()
     {
         var r = await GetLastBattle.CreateQuery()

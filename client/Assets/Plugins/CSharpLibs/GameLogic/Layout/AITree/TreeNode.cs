@@ -13,6 +13,8 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeProbabilitySelector)),
 		XmlInclude(typeof(TreeNodeProbabilityNode)),
         XmlInclude(typeof(TreeNodeLinkNode)),
+        XmlInclude(typeof(TreeNodeChangeAITree)),
+        XmlInclude(typeof(TreeNodeCompareIntKey)),
 
        
 		/*基础结束*/
@@ -21,7 +23,8 @@ namespace Layout.AITree
 		XmlInclude(typeof(TreeNodeRunUnitlSuccess)),
 		XmlInclude(typeof(TreeNodeTick)),
 		XmlInclude(typeof(TreeNodeTickUntilSuccess)),
-        XmlInclude(typeof(TreeNodeReturnSuccss)),
+        XmlInclude(typeof(TreeNodeReturnSuccss)),   
+		XmlInclude(typeof(TreeNodeCd)),
 		/*装饰节点结束*/
 		XmlInclude(typeof(TreeNodeFindTarget)),
 		XmlInclude(typeof(TreeNodeWaitForSeconds)),

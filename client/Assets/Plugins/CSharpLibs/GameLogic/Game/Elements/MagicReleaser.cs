@@ -118,17 +118,13 @@ namespace GameLogic.Game.Elements
                 var i = Magic.Containers[index];
                 if (i.type == eventType)
                 {
-                    
-                    var timeLine = i.line??per.View.GetTimeLineByPath(i.layoutPath);
+                    var timeLine = i.line ?? per.View.GetTimeLineByPath(i.layoutPath);
                     if (timeLine == null) continue;
                     playerIndex++;
-
                     var player = new TimeLinePlayer(playerIndex, timeLine, this, i, target);
                     _players.AddLast(player);
-
-                    if (i.line == null) View.PlayTimeLine(playerIndex,i.layoutPath,target.Index,(int)eventType);//for runtime
-                    else View.PlayTest(playerIndex, i.line);//for editor
-
+                    if (i.line == null) View.PlayTimeLine(playerIndex, index, target.Index, (int)eventType);//for runtime
+                    else View.PlayTest(playerIndex, i.line);
                     if (i.type == EventType.EVENT_START)
                     {
                         if (startLayout != null)
@@ -399,6 +395,12 @@ namespace GameLogic.Game.Elements
                         break;
                     case BattleEventType.Hurt:
                         if ((DisposeValue & (int)DisposeType.HURT) > 0)
+                        {
+                            this.ToCompleted();
+                        }
+                        break;
+                    case BattleEventType.NomarlAttack:
+                        if ((DisposeValue & (int)DisposeType.NormarlAttack) > 0)
                         {
                             this.ToCompleted();
                         }

@@ -313,7 +313,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                         case ItemType.ItMpitem:
                             {
                                 var rTarget = new ReleaseAtTarget(i.Value.HeroCharacter, i.Value.HeroCharacter);
-                                if (Simulater.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic, -1))
+                                if (Simulater.CreateReleaser(config.Params[0], i.Value.HeroCharacter, rTarget, ReleaserType.Magic, ReleaserModeType.RmtNone, -1))
                                 {
                                     i.Value.ConsumeItem(useItem.ItemId);
                                     needNotifyPackage = true;
@@ -325,7 +325,7 @@ public class BattleSimulater : XSingleton<BattleSimulater>
                 else if (action is Action_LookRotation look)
                 {
                     //var q = Quaternion.Euler(0, look.LookRotationY, 0);
-                    i.Value.HeroCharacter.LookRotation(new UVector3(0, look.LookRotationY, 0));
+                    i.Value.HeroCharacter.LookRotation(look.LookRotationY);
                 }
                 else
                 {

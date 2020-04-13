@@ -77,7 +77,9 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     public static void LookAtTargetActive(TimeLineViewPlayer linePlayer, LayoutBase layoutBase)
     {
         if (layoutBase is LookAtTarget)
-            linePlayer.RView.CharacterReleaser.LookAtTarget(linePlayer.RView.CharacterTarget.Index);
+        {
+            linePlayer.RView.CharacterReleaser.LookAtIndex(linePlayer.RView.CharacterTarget.Index);
+        }
     }
     #endregion
 
@@ -152,7 +154,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
  
 
 
-    public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, IBattleCharacter eventTarget, Layout.EventType ty)
+    public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, UCharacterView eventTarget, Layout.EventType ty)
         : base(line, pIndex)
     {
         this.RView = view;
@@ -165,7 +167,7 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     }
 
     public UMagicReleaserView RView { get; }
-    public IBattleCharacter EventTarget { get; private set; }
+    public UCharacterView EventTarget { get; private set; }
     public Layout.EventType EventType { get; }
     protected override void EnableLayout(LayoutBase layout)
     {

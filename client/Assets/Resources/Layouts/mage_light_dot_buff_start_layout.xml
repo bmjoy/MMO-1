@@ -38,9 +38,9 @@
       <GUID>aecff6ed-8b49-477b-aa3a-2e812d9977fb</GUID>
       <target>Target</target>
       <RangeType>
-        <damageType>Single</damageType>
+        <damageType>Rangle</damageType>
         <fiterType>EmenyTeam</fiterType>
-        <radius>1</radius>
+        <radius>1.5</radius>
         <angle>360</angle>
         <offsetAngle>0</offsetAngle>
         <offsetPosition>
@@ -49,7 +49,6 @@
           <z>0</z>
         </offsetPosition>
       </RangeType>
-      <effectType>EffectGroup</effectType>
       <effectKey>001</effectKey>
     </LayoutBase>
   </Layouts>

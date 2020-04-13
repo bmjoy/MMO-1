@@ -200,11 +200,11 @@ namespace Server
 
         protected virtual void OnTick() { }
 
-        internal MagicReleaser CreateReleaser(string key, BattleCharacter heroCharacter, ReleaseAtTarget rTarget, ReleaserType Rt, int dur)
+        internal MagicReleaser CreateReleaser(string key, BattleCharacter heroCharacter, ReleaseAtTarget rTarget, ReleaserType Rt, ReleaserModeType rmType, int dur)
         {
             if (State.Perception is BattlePerception per)
             {
-               return  per.CreateReleaser(key, heroCharacter, rTarget, Rt, dur);
+               return  per.CreateReleaser(key, heroCharacter, rTarget, Rt, rmType, dur);
             }
             return null;
         }

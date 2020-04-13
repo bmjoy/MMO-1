@@ -66,7 +66,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 
     private DisplayNumerInputParam param;
 
-    public void ShowHPCure(UnityEngine.Vector3 pos, int hp)
+    public void ShowHPCure(UVector3 pos, int hp)
     {
 #if !UNITY_SERVER
         GPUBillboardBuffer.S.DisplayNumberRandom($"{hp}", new Vector2(.2f, .2f), pos, Color.green, true, param);
@@ -312,15 +312,13 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return view;
     }
 
-    IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos)
+    IMagicReleaser IBattlePerception.CreateReleaserView(int releaser, int target, string magicKey, Proto.Vector3 targetPos, Proto.ReleaserModeType rmType)
     {
         var obj = new GameObject($"Rleaser:{magicKey}");
         obj.transform.SetParent(this.transform, false);
         var view = obj.AddComponent<UMagicReleaserView>();
-
-        view.Key = magicKey;
         view.SetPrecpetion(this);
-        view.SetCharacter(releaser, target, targetPos.ToUV3());
+        view.SetData(releaser, target, targetPos.ToUV3(),rmType,magicKey);
         return view;
     }
         

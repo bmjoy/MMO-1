@@ -97,11 +97,12 @@ message Notify_ElementExitState
 //创建一个释放者
 message Notify_CreateReleaser
 {
-     int32 Index=1;
-	 int32 ReleaserIndex=2;
-	 int32 TargetIndex=3;
-	 string MagicKey=4;
-	 Vector3 Position = 5;
+    int32 Index=1;
+	int32 ReleaserIndex=2;
+	int32 TargetIndex=3;
+	string MagicKey=4;
+	Vector3 Position = 5;
+	ReleaserModeType RMType = 6;
 }
 
 //战斗中的角色
@@ -287,7 +288,7 @@ message Notify_DropGold
 message Notify_PlayTimeLine
 {
 	int32 Index = 1;
-	string Path = 2;
+	int32 PathIndex = 2; 
 	int32 TargetIndex =3;
 	int32 Type =4; //事件类型
 	int32 PlayIndex =5;
@@ -307,7 +308,7 @@ message Notify_SyncServerTime
 message Notify_CharacterRotation
 {
 	int32 Index=1;
-	Vector3 Rotation = 2;
+	float RotationY =2;
 }
 
 message Notify_CharacterExp

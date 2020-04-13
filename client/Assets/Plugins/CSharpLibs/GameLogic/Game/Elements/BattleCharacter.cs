@@ -67,6 +67,12 @@ namespace GameLogic.Game.Elements
       
 
         public HeroCategory Category { set; get; }
+
+        internal void LookAt(BattleCharacter target)
+        {
+            View.LookAtTarget(target.Index);
+        }
+
         public DefanceType TDefance { set; get; }
         public DamageType TDamage { set; get; }
         public UVector3 BronPosition { private set; get; }
@@ -234,11 +240,6 @@ namespace GameLogic.Game.Elements
            return  Magics.Remove(id);
         }
 
-        internal void PlayMotion(string motionName)
-        {
-            View.PlayMotion(motionName);
-        }
-
         public bool MoveTo(UVector3 target, out UVector3 warpTarget, float stopDis = 0f)
         {
             warpTarget = target;
@@ -280,10 +281,10 @@ namespace GameLogic.Game.Elements
             View.StopMove(p.ToPV3());
         }
 
-        internal void TryToSetPosition(UVector3 pos, UVector3 rotation)
+        internal void TryToSetPosition(UVector3 pos, float rotation)
         {
             View.SetPosition(pos.ToPV3());
-            View.SetLookRotation(rotation.ToPV3());
+            View.SetLookRotation(rotation);
         }
 
 
@@ -353,9 +354,9 @@ namespace GameLogic.Game.Elements
             return true;
         }
 
-        public void LookRotation(UVector3 vector3)
+        public void LookRotation(float rY)
         {
-            View.SetLookRotation(vector3.ToPV3());
+            View.SetLookRotation(rY);
         }
 
         public bool SubMP(int mp)
@@ -394,11 +395,6 @@ namespace GameLogic.Game.Elements
             }
             if (Lock.IsLock(ActionLockType.NoAi)) return;
             AiRoot?.Tick();
-        }
-
-        internal void LookAt(BattleCharacter releaserTarget)
-        {
-            View.LookAtTarget(releaserTarget.Index);
         }
 
         public void ResetHPMP(int hp = -1, int mp = -1)

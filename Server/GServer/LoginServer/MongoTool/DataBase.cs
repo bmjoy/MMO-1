@@ -56,7 +56,7 @@ namespace MongoTool
             GateServer = Data.GetCollection<GateServerInfoEntity>(GATE_SERVER);
             Session = Data.GetCollection<UserSessionInfoEntity>(SESSION);
             BattleServer = Data.GetCollection<PlayerBattleServerEntity>(BATTLE_SERVER);
-            //clear temp data
+
             Session.DeleteMany(Builders<UserSessionInfoEntity>.Filter.Exists(t => t.AccountUuid, true));
             GateServer.DeleteMany(Builders<GateServerInfoEntity>.Filter.Exists(t => t.Host, true));
             BattleServer.DeleteMany(Builders<PlayerBattleServerEntity>.Filter.Exists(t => t.Host, true));

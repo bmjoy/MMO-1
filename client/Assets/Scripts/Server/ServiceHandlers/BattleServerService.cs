@@ -20,13 +20,19 @@ public class BattleServerService : Responser, IBattleServerService
     [IgnoreAdmission]
     public B2C_JoinBattle JoinBattle(C2B_JoinBattle request)
     {
+        //版本
+        if (request.Version != MessageTypeIndexs.Version)
+        {
+            return new B2C_JoinBattle { Code = ErrorCode.Error };
+        }
+
         var gate = BattleSimulater.S;
         var re = new B2L_CheckSession
         {
             UserID = request.AccountUuid,
             SessionKey = request.Session,
-
         };
+       
         var seResult = CheckSession.CreateQuery().GetResult(gate.CenterServerClient, re);
         ErrorCode result = seResult.Code;
         if (seResult.Code == ErrorCode.Ok)
@@ -68,9 +74,7 @@ public class BattleServerService : Responser, IBattleServerService
         {
             return new B2C_ViewPlayerHero { Code = ErrorCode.NoGamePlayerData };
         }
-
         var hero = player.GetHero();
-
         var response = new B2C_ViewPlayerHero
         {
             Code = ErrorCode.Ok,
@@ -78,14 +82,12 @@ public class BattleServerService : Responser, IBattleServerService
             Level = hero.Level,
             Name = hero.Name
         };
-
         foreach (var i in hero.Equips)
         {
             var e = player.GetEquipByGuid(i.GUID);
             if (e == null) continue;
             response.WaerEquips.Add(e);
         }
-
         foreach (var i in hero.Magics)
         {
             response.Magics.Add(i);

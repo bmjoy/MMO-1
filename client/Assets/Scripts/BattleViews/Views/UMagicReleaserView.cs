@@ -7,49 +7,66 @@ using GameLogic;
 using UVector3 = UnityEngine.Vector3;
 using System.Collections.Generic;
 using GameLogic.Game.LayoutLogics;
-using System.Reflection;
-using System;
 using GameLogic.Game.Perceptions;
 using EngineCore.Simulater;
+using Layout;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetCharacter(int releaser, int target, UVector3 targetpos)
+    public void SetData(int releaser, int target, UVector3 targetpos, Proto.ReleaserModeType rmType,string magicKey)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
         RIndex = releaser;
         TIndex = target;
         TargetPos = targetpos;
+        RMType = rmType;
+        if (PerView is IBattlePerception per)
+        {
+            Magic = per.GetMagicByKey(magicKey);
+        }
     }
 
+
+    private MagicData Magic;
     public UVector3 TargetPos;
     private int RIndex;
     private int TIndex;
 
-    public IBattleCharacter CharacterTarget { private set; get; }
-    public IBattleCharacter CharacterReleaser { private set; get; }
+    public UCharacterView CharacterTarget { private set; get; }
+    public UCharacterView CharacterReleaser { private set; get; }
+
+    public ReleaserModeType RMType { private set; get; }
 
     public string Key { get; internal set; }
 
     private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
 
-    void IMagicReleaser.PlayTimeLine(int pIndex ,string layoutPath,int targetIndex, int type)
+    void IMagicReleaser.PlayTimeLine(int pIndex, int PathIndex, int targetIndex, int type)
     {
 #if UNITY_SERVER || UNITY_EDITOR
         CreateNotify(new Notify_PlayTimeLine
         {
-            Path = layoutPath,
+            PathIndex = PathIndex,
             Index = Index,
             TargetIndex = targetIndex,
-            Type =type,
+            Type = type,
             PlayIndex = pIndex
         });
 #endif
 #if !UNITY_SERVER
         var eType = (Layout.EventType)type;
         var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
-        PlayLine(pIndex, (PerView as IBattlePerception)?.GetTimeLineByPath(layoutPath),tar, eType);
+        if (PerView is IBattlePerception per)
+        {
+            if (PathIndex < 0 || Magic.Containers.Count <= PathIndex)
+            {
+                Debug.LogError($"Index out of bounds {PathIndex} magic containers {Magic?.Containers?.Count}");
+                return;
+            }
+            var e = Magic.Containers[PathIndex];
+            PlayLine(pIndex, per?.GetTimeLineByPath(e.layoutPath), tar, eType);
+        }
 #endif
     }
 
@@ -75,7 +92,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 #endif
     }
 
-    private TimeLineViewPlayer PlayLine(int pIndex,TimeLine timeLine, IBattleCharacter eventTarget, Layout.EventType type)
+    private TimeLineViewPlayer PlayLine(int pIndex,TimeLine timeLine, UCharacterView eventTarget, Layout.EventType type)
     {
         if (timeLine == null) return null;
         var player = new TimeLineViewPlayer(pIndex,timeLine, this, eventTarget, type);
@@ -118,7 +135,8 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             ReleaserIndex = RIndex,
             TargetIndex = TIndex,
             MagicKey = Key,
-            Position = TargetPos.ToPV3()
+            Position = TargetPos.ToPV3(),
+            RMType = RMType
         };
         return createNotify;
     }

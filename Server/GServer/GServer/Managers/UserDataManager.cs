@@ -341,7 +341,10 @@ namespace GServer.Managers
 
             var levelConfig = ExcelToJSONConfigManager
                 .Current.FirstConfig<MagicLevelUpData>(t => t.Level == level && t.MagicID == magicId);
-
+            if (levelConfig == null)
+            {
+                return new G2C_MagicLevelUp { Code = ErrorCode.Error };
+            }
             if (levelConfig.NeedLevel > hero.Level) return new G2C_MagicLevelUp { Code = ErrorCode.NeedHeroLevel };
             if (levelConfig.NeedGold > player.Gold) return new G2C_MagicLevelUp { Code = ErrorCode.NoEnoughtGold };
 
@@ -673,12 +676,12 @@ namespace GServer.Managers
 
             if (coin > 0)
             {
-                update = up.Set(t => t.Coin, player.Coin + coin);
+                update = up.Inc(t => t.Coin,coin);
             }
 
             if (gold > 0)
             {
-                update = up.Set(t => t.Gold, player.Gold + gold);
+                update = up.Inc(t => t.Gold,gold);
             }
 
             var result = await DataBase.S.Playes.UpdateOneAsync(filter, update);

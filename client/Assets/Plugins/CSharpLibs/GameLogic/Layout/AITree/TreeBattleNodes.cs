@@ -34,8 +34,9 @@ namespace Layout.AITree
 		Hurt,  //被伤害
         Killed, //杀死对手
         Death, // 死亡
-		Skill, //释放技能 普工和技能
-		Move //移动
+		Skill, //释放技能
+		Move, //移动
+		NomarlAttack
     }
 
 	[EditorAITreeNode("战斗事件", "Event", "战斗节点", AllowChildType.One)]
@@ -105,11 +106,7 @@ namespace Layout.AITree
         ViewDistance
 	}
 
-	public enum CompareType
-	{ 
-	    Less,
-		Greater
-	}
+	
 	[EditorAITreeNode("判断目标距离", "Cond", "战斗节点/目标", AllowChildType.None)]
 	public class TreeNodeDistancTarget : TreeNode
 	{
