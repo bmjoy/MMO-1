@@ -27,29 +27,24 @@ namespace Windows
                     {
                         if ((lastTime + 0.3f > UnityEngine.Time.time)) return;
                         lastTime = UnityEngine.Time.time;
-                        if (OnClick == null)
-                            return;
-                        OnClick(this);
+                        OnClick?.Invoke(this);
                     });
             }
 
             public Action<GridTableModel> OnClick;
-
-            public void SetMagic(int id )
+            public HeroMagicData Data;
+            public void SetMagic(HeroMagicData  data )
             {
-                if (magicID != id)
+                Data = data;
+                if (magicID != data.MagicID)
                 {
-                    magicID = id;
-                    MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
+                    magicID = data.MagicID;
+                    MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
                     var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
                     LMagicData = per.GetMagicByKey(MagicData.MagicKey);
-                    ResourcesManager.S.LoadIcon(MagicData, (s) =>
-                     {
-                         Template.Icon.sprite = s;
-                     });
+                    ResourcesManager.S.LoadIcon(MagicData, s => Template.Icon.sprite = s);
                 }
             }
-
             private int magicID = -1;
             public CharacterMagicData MagicData;
             private float cdTime = 0.01f;
@@ -243,9 +238,7 @@ namespace Windows
             {
                 i.Model.Update(view, gate.TimeServerNow, gate.PreView.HaveOwnerKey(i.Model.MagicData.MagicKey));
             }
-            
             UpdateMap();
-           
             if (view.TryGetMagicData(normalAtt, out HeroMagicData att))
             {
                 var time = Mathf.Max(0, att.CDTime - gate.TimeServerNow);
@@ -313,7 +306,7 @@ namespace Windows
                 foreach (var i in GridTableManager)
                 {
                     
-                    i.Model.SetMagic(list[index].MagicID);
+                    i.Model.SetMagic(list[index]);
                     i.Model.OnClick = OnRelease;
                     index++;
                 }
@@ -356,7 +349,7 @@ namespace Windows
         
         private void OnRelease(GridTableModel item)
         {
-            UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);
+            UApplication.G<BattleGate>().ReleaseSkill(item.Data);
         }
 
         private UCharacterView view;

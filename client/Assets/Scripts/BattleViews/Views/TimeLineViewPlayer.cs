@@ -152,8 +152,6 @@ public class TimeLineViewPlayer : TimeLinePlayerBase
     }
     #endregion
  
-
-
     public TimeLineViewPlayer(int pIndex, TimeLine line, UMagicReleaserView view, UCharacterView eventTarget, Layout.EventType ty)
         : base(line, pIndex)
     {

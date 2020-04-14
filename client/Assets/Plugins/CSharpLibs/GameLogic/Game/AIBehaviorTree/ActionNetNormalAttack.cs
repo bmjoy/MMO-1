@@ -73,6 +73,15 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                 }
 
+                if (mc.MpCost > 0)
+                {
+                    if (!root.Character.SubMP(mc.MpCost))
+                    {
+                        yield return RunStatus.Failure;
+                        yield break;
+                    }
+                }
+
                 var rTarget = new ReleaseAtTarget(root.Character, target);
                 releaser = root.Perception.CreateReleaser(mc.Config.MagicKey,
                     root.Character, rTarget, ReleaserType.Magic, ReleaserModeType.RmtNormalAttack, -1);
@@ -84,7 +93,6 @@ namespace GameLogic.Game.AIBehaviorTree
                     yield return RunStatus.Failure;
                     yield break;
                 }
-
                 releaser.SetParam(mc.Params);
                 root.Character.AttachMagicHistory(mc.Config.ID, root.Time, root.Character.AttackSpeed);
                 while (!releaser.IsLayoutStartFinish)
