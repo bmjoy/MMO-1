@@ -491,8 +491,9 @@ public class UCharacterView : UElementView, IBattleCharacter
             Index = Index
         });
 #else
-        targetLookQuaternion = Quaternion.Euler(eu.ToUV3());//use smooth
+         targetLookQuaternion = Quaternion.Euler(0,rotationY,0);//use smooth
 #endif
+
     }
 
     Quaternion IBattleCharacter.Rotation { get { return ViewRoot ? ViewRoot.transform.rotation : Quaternion.identity; } }
