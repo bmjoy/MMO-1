@@ -245,6 +245,8 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         if (!force)
         {
+            if (!Owner) return;
+
             if (Owner is IBattleCharacter view)
             {
                 if (view.IsMoving) return;
@@ -380,20 +382,20 @@ public class BattleGate : UGate, IServerMessageHandler
         return true;
     }
 
-    internal void ReleaseSkill(CharacterMagicData magicData)
+    internal void ReleaseSkill(HeroMagicData magicData)
     {
         if (!CanNetAction()) return;
-        if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
+        if (Owner.TryGetMagicData(magicData.MagicID, out HeroMagicData data))
         {
             var character = Owner as IBattleCharacter;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
             if (config != null) Owner.ShowRange(config.RangeMax);
-            if (config.MPCost <= Owner.MP)
+            if (data.MPCost <= Owner.MP)
             {
                 ReleaseLock();
                 SendAction(new Action_ClickSkillIndex
                 {
-                    MagicId = magicData.ID,
+                    MagicId = data.MagicID,
                     Position = character.Transform.position.ToPV3(),
                     Rotation = character.Rotation.eulerAngles.ToPV3()
                 });
