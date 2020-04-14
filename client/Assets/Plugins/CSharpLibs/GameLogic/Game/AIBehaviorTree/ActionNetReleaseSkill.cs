@@ -82,10 +82,14 @@ namespace GameLogic.Game.AIBehaviorTree
                 root.Character.TryToSetPosition(message.Position.ToUV3(), message.Rotation.Y);
             }
 
-            if (!root.Character.SubMP(magic.Config.MPCost))
+
+            if (magic.Config.MPCost > 0)
             {
-                yield return RunStatus.Failure;
-                yield break;
+                if (!root.Character.SubMP(magic.Config.MPCost))
+                {
+                    yield return RunStatus.Failure;
+                    yield break;
+                }
             }
 
             var rt = new ReleaseAtTarget(root.Character, target);

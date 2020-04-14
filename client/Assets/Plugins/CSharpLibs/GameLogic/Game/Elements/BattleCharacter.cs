@@ -79,29 +79,10 @@ namespace GameLogic.Game.Elements
         public Dictionary<int, DamageWatch> Watch { get; } = new Dictionary<int, DamageWatch>();
 
         public int GroupIndex {set;get;}
-        public int MaxHP
-        {
-            get
-            {
-                return this[P.MaxHp].FinalValue + (int)(this[P.Force].FinalValue * BattleAlgorithm.FORCE_HP);
-            }
-        }
-        public int MaxMP
-        {
-            get
-            {
-                var maxMP = this[P.MaxMp].FinalValue + (int)(this[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP);
-                return maxMP;
-            }
-        }
-        public float AttackSpeed
-        {
-            get
-            {
-                var time = this[P.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[P.Agility].FinalValue;
-                return Mathf.Clamp(time / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100);
-            }
-        }
+        public int MaxHP { get { return this[P.MaxHp].FinalValue + (int)(this[P.Force].FinalValue * BattleAlgorithm.FORCE_HP); } }
+        public int MaxMP { get { return this[P.MaxMp].FinalValue + (int)(this[P.Knowledge].FinalValue * BattleAlgorithm.KNOWLEGDE_MP); } }
+        public float AttackSpeed { get {  return Mathf.Clamp((this[P.MagicWaitTime].FinalValue - BattleAlgorithm.AGILITY_SUBWAITTIME * this[P.Agility].FinalValue) / 1000, BattleAlgorithm.ATTACK_MIN_WAIT / 1000f, 100); } }
+
         public string Name { set; get; }
         public int TeamIndex { private set; get; }
         public int Level { set; get; }
@@ -119,7 +100,6 @@ namespace GameLogic.Game.Elements
             set
             {
                 BaseSpeed = value;
-
                 View.SetSpeed(Speed);
             }
             get
@@ -287,7 +267,6 @@ namespace GameLogic.Game.Elements
             View.SetLookRotation(rotation);
         }
 
-
         public bool SubHP(int hp, out bool dead)
         {
             dead = HP == 0;
@@ -307,7 +286,6 @@ namespace GameLogic.Game.Elements
             this.OwnerIndex = ownerIndex;
             this.View.SetTeamIndex(tIndex, ownerIndex);
         }
-
 
         public Action PushEnd;
 
