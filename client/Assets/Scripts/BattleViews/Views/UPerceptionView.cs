@@ -137,6 +137,8 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
         return false;
     }
 
+    private readonly IMessage[] Empty = new IMessage[0];
+
     public IMessage[] GetAndClearNotify()
     {
         if (_notify.Count > 0)
@@ -145,8 +147,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             _notify.Clear();
             return list;
         }
-        else
-            return new IMessage[0];
+        else  return Empty;
     }
 
     public IMessage[] GetInitNotify()
