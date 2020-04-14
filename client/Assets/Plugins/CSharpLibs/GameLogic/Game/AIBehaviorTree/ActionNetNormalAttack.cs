@@ -73,9 +73,9 @@ namespace GameLogic.Game.AIBehaviorTree
                     }
                 }
 
-                if (mc.Config.MPCost > 0)
+                if (mc.MpCost > 0)
                 {
-                    if (!root.Character.SubMP(mc.Config.MPCost))
+                    if (!root.Character.SubMP(mc.MpCost))
                     {
                         yield return RunStatus.Failure;
                         yield break;
@@ -93,7 +93,6 @@ namespace GameLogic.Game.AIBehaviorTree
                     yield return RunStatus.Failure;
                     yield break;
                 }
-
                 releaser.SetParam(mc.Params);
                 root.Character.AttachMagicHistory(mc.Config.ID, root.Time, root.Character.AttackSpeed);
                 while (!releaser.IsLayoutStartFinish)

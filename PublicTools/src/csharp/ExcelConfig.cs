@@ -992,9 +992,15 @@ namespace EConfig
         public int Level { set; get; }
         
         /// <summary>
+        /// Mp cost
+        /// </summary>
+        [ExcelConfigColIndex(5)]
+        public int MPCost { set; get; }
+        
+        /// <summary>
         /// 描述
         /// </summary>
-        [ExcelConfigColIndex(10)]
+        [ExcelConfigColIndex(11)]
         public String Description { set; get; }
         
         /// <summary>

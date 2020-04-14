@@ -17,6 +17,8 @@ namespace GameLogic.Game.Elements
     {
         public MagicType Type { private set; get; }
 
+        public int MpCost { set; get; }
+
         public CharacterMagicData Config { private set; get; }
 
         public int ConfigId { get { return Config.ID; } }
@@ -26,6 +28,8 @@ namespace GameLogic.Game.Elements
             Type = type;
             Config = config;
             this.LevelData = lv;
+            MpCost = config.MPCost;
+            if (lv != null) MpCost = lv.MPCost;
         }
 
         private MagicLevelUpData LevelData { set; get; }

@@ -1051,6 +1051,9 @@
         <member name="F:Proto.HeroMagicData.MTypeFieldNumber">
             <summary>Field number for the "MType" field.</summary>
         </member>
+        <member name="F:Proto.HeroMagicData.MPCostFieldNumber">
+            <summary>Field number for the "MPCost" field.</summary>
+        </member>
         <member name="F:Proto.ClientConfig.LoginServerHostFieldNumber">
             <summary>Field number for the "LoginServerHost" field.</summary>
         </member>
@@ -1843,6 +1846,11 @@
         <member name="P:EConfig.MagicLevelUpData.Level">
             <summary>
             等级
+            </summary>
+        </member>
+        <member name="P:EConfig.MagicLevelUpData.MPCost">
+            <summary>
+            Mp cost
             </summary>
         </member>
         <member name="P:EConfig.MagicLevelUpData.Description">

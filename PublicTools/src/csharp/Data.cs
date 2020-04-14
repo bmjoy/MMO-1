@@ -46,18 +46,18 @@ namespace Proto {
             "OAEiYwoQUGxheWVyU2VydmVySW5mbxITCgtBY2NvdW50VXVpZBgBIAEoCRIQ",
             "CghTZXJ2ZXJJRBgCIAEoBRITCgtTZXJ2aWNlUG9ydBgDIAEoBRITCgtTZXJ2",
             "aWNlSG9zdBgEIAEoCSJICgxIZXJvUHJvcGVydHkSKQoIUHJvcGVydHkYASAB",
-            "KA4yFy5Qcm90by5IZXJvUHJvcGVydHlUeXBlEg0KBVZhbHVlGAIgASgFIlEK",
+            "KA4yFy5Qcm90by5IZXJvUHJvcGVydHlUeXBlEg0KBVZhbHVlGAIgASgFImEK",
             "DUhlcm9NYWdpY0RhdGESDgoGQ0RUaW1lGAEgASgCEg8KB01hZ2ljSUQYAiAB",
-            "KAUSHwoFTVR5cGUYAyABKA4yEC5Qcm90by5NYWdpY1R5cGUiQAoMQ2xpZW50",
-            "Q29uZmlnEhcKD0xvZ2luU2VydmVySG9zdBgBIAEoCRIXCg9Mb2dpblNlcnZl",
-            "clBvcnQYAiABKAUikQEKEkJhdHRsZVNlcnZlckNvbmZpZxINCgVMZXZlbBgB",
-            "IAEoBRIRCglNYXhQbGF5ZXIYAiABKAUSEgoKTGlzdGVuUG9ydBgDIAEoBRIS",
-            "CgpMaXN0ZW5Ib3N0GAQgASgJEhcKD0xvZ2luU2VydmVyUG9ydBgFIAEoBRIY",
-            "ChBMb2dpblNlcnZpY2VIb3N0GAYgASgJKj4KCU1hZ2ljVHlwZRINCglNVF9O",
-            "b3JtYWwQABIUChBNVF9Ob3JtYWxfQXBwZW5kEAESDAoITVRfTWFnaWMQAipT",
-            "ChBSZWxlYXNlck1vZGVUeXBlEgwKCFJNVF9OT05FEAASDQoJUk1UX01hZ2lj",
-            "EAESFAoQUk1UX05vcm1hbEF0dGFjaxACEgwKCFJNVF9CdWZmEARiBnByb3Rv",
-            "Mw=="));
+            "KAUSHwoFTVR5cGUYAyABKA4yEC5Qcm90by5NYWdpY1R5cGUSDgoGTVBDb3N0",
+            "GAQgASgFIkAKDENsaWVudENvbmZpZxIXCg9Mb2dpblNlcnZlckhvc3QYASAB",
+            "KAkSFwoPTG9naW5TZXJ2ZXJQb3J0GAIgASgFIpEBChJCYXR0bGVTZXJ2ZXJD",
+            "b25maWcSDQoFTGV2ZWwYASABKAUSEQoJTWF4UGxheWVyGAIgASgFEhIKCkxp",
+            "c3RlblBvcnQYAyABKAUSEgoKTGlzdGVuSG9zdBgEIAEoCRIXCg9Mb2dpblNl",
+            "cnZlclBvcnQYBSABKAUSGAoQTG9naW5TZXJ2aWNlSG9zdBgGIAEoCSo+CglN",
+            "YWdpY1R5cGUSDQoJTVRfTm9ybWFsEAASFAoQTVRfTm9ybWFsX0FwcGVuZBAB",
+            "EgwKCE1UX01hZ2ljEAIqUwoQUmVsZWFzZXJNb2RlVHlwZRIMCghSTVRfTk9O",
+            "RRAAEg0KCVJNVF9NYWdpYxABEhQKEFJNVF9Ob3JtYWxBdHRhY2sQAhIMCghS",
+            "TVRfQnVmZhAEYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Proto.ConstReflection.Descriptor, global::Proto.ExcelconstReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto.MagicType), typeof(global::Proto.ReleaserModeType), }, new pbr::GeneratedClrTypeInfo[] {
@@ -71,7 +71,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerPackage), global::Proto.PlayerPackage.Parser, new[]{ "Items", "MaxSize" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerServerInfo), global::Proto.PlayerServerInfo.Parser, new[]{ "AccountUuid", "ServerID", "ServicePort", "ServiceHost" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroProperty), global::Proto.HeroProperty.Parser, new[]{ "Property", "Value" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagicData), global::Proto.HeroMagicData.Parser, new[]{ "CDTime", "MagicID", "MType" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.HeroMagicData), global::Proto.HeroMagicData.Parser, new[]{ "CDTime", "MagicID", "MType", "MPCost" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.ClientConfig), global::Proto.ClientConfig.Parser, new[]{ "LoginServerHost", "LoginServerPort" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.BattleServerConfig), global::Proto.BattleServerConfig.Parser, new[]{ "Level", "MaxPlayer", "ListenPort", "ListenHost", "LoginServerPort", "LoginServiceHost" }, null, null, null)
           }));
@@ -2166,6 +2166,7 @@ namespace Proto {
       cDTime_ = other.cDTime_;
       magicID_ = other.magicID_;
       mType_ = other.mType_;
+      mPCost_ = other.mPCost_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2206,6 +2207,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "MPCost" field.</summary>
+    public const int MPCostFieldNumber = 4;
+    private int mPCost_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int MPCost {
+      get { return mPCost_; }
+      set {
+        mPCost_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as HeroMagicData);
@@ -2222,6 +2234,7 @@ namespace Proto {
       if (CDTime != other.CDTime) return false;
       if (MagicID != other.MagicID) return false;
       if (MType != other.MType) return false;
+      if (MPCost != other.MPCost) return false;
       return true;
     }
 
@@ -2231,6 +2244,7 @@ namespace Proto {
       if (CDTime != 0F) hash ^= CDTime.GetHashCode();
       if (MagicID != 0) hash ^= MagicID.GetHashCode();
       if (MType != 0) hash ^= MType.GetHashCode();
+      if (MPCost != 0) hash ^= MPCost.GetHashCode();
       return hash;
     }
 
@@ -2253,6 +2267,10 @@ namespace Proto {
         output.WriteRawTag(24);
         output.WriteEnum((int) MType);
       }
+      if (MPCost != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MPCost);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2266,6 +2284,9 @@ namespace Proto {
       }
       if (MType != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) MType);
+      }
+      if (MPCost != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MPCost);
       }
       return size;
     }
@@ -2283,6 +2304,9 @@ namespace Proto {
       }
       if (other.MType != 0) {
         MType = other.MType;
+      }
+      if (other.MPCost != 0) {
+        MPCost = other.MPCost;
       }
     }
 
@@ -2304,6 +2328,10 @@ namespace Proto {
           }
           case 24: {
             mType_ = (global::Proto.MagicType) input.ReadEnum();
+            break;
+          }
+          case 32: {
+            MPCost = input.ReadInt32();
             break;
           }
         }

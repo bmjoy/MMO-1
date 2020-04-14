@@ -85,6 +85,20 @@ namespace GameLogic
             return type;
         }
 
+        public static HeroMagicData ToHeroMagic(this BattleCharacterMagic magic, float now)
+        {
+            var hero = new HeroMagicData
+            {
+                CDTime = now,
+                MagicID = magic.ConfigId,
+                MType = magic.Type,
+                MPCost = magic.MpCost
+            };
+
+            return hero;
+        }
+
+
         public static IList<BattleCharacterMagic> CreateHeroMagic(this CharacterData data, DHero hero = null)
         {
             var cData = ExcelToJSONConfigManager.Current.FirstConfig<CharacterPlayerData>(t => t.CharacterID == data.ID);
@@ -111,7 +125,7 @@ namespace GameLogic
             return list;
         }
 
-        public static IList<BattleCharacterMagic> CreateHeroMagic(this DHero hero )
+        public static IList<BattleCharacterMagic> CreateHeroMagic(this DHero hero)
         {
             var data = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterData>(hero.HeroID);
             return CreateHeroMagic(data, hero);

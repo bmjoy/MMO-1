@@ -46,7 +46,6 @@ namespace GameLogic.Game.Perceptions
         public static bool InviewSide(BattleCharacter ower , BattleCharacter target, float viewDistance, float angle)
         {
             if (Distance(ower, target) > viewDistance) return false;
-
             var forward = target.Position - ower.Position;
             if (angle / 2 < UVector3.Angle(forward, ower.Forward)) return false;
             return true;
@@ -72,7 +71,6 @@ namespace GameLogic.Game.Perceptions
         public BattleItemControllor BattleItemControllor { private set; get; }
         public EmptyControllor Empty { private set; get; }
         #endregion
-
 
         #region create Elements 
         public MagicReleaser CreateReleaser(string key, BattleCharacter owner, IReleaserTarget target, ReleaserType ty, ReleaserModeType RMType, float durtime)
@@ -140,9 +138,7 @@ namespace GameLogic.Game.Perceptions
         {
             
             var now = this.View.GetTimeSimulater().Now.Time;
-            var cds = magics.Select(t => new HeroMagicData { CDTime = now, MagicID = t.ConfigId, MType = t.Type })
-                .ToList();
-
+            var cds = magics.Select(t => t.ToHeroMagic(now)) .ToList();
             var view = View.CreateBattleCharacterView(accountUuid, data.ID,
                 teamIndex, position.ToPV3(), forward.ToPV3(), level, name,
                 data.MoveSpeed, data.HPMax, data.HPMax,data.MPMax, data.MPMax,cds, ownerIndex );
@@ -219,23 +215,6 @@ namespace GameLogic.Game.Perceptions
 
         #endregion
 
-        public BattleCharacter GetSingleTargetUseRandom(BattleCharacter owner)
-        {
-            BattleCharacter target = null;
-
-            this.State.Each<BattleCharacter>((t) =>
-            {
-                if (t.TeamIndex != owner.TeamIndex)
-                {
-                    target = t;
-                    return true;
-                }
-                return false;
-            });
-
-            return target;
-        }
-      
         public BattleCharacter FindTarget(int target)
         {
             return this.State[target] as BattleCharacter;

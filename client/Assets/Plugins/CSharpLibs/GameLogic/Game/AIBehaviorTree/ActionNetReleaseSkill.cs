@@ -83,9 +83,9 @@ namespace GameLogic.Game.AIBehaviorTree
             }
 
 
-            if (magic.Config.MPCost > 0)
+            if (magic.MpCost > 0)
             {
-                if (!root.Character.SubMP(magic.Config.MPCost))
+                if (!root.Character.SubMP(magic.MpCost))
                 {
                     yield return RunStatus.Failure;
                     yield break;
