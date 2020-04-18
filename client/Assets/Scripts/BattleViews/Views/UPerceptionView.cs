@@ -73,7 +73,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
 #endif
     }
 
-    internal void ShowMPCure(UnityEngine.Vector3 pos, int mp)
+    internal void ShowMPCure(UVector3 pos, int mp)
     {
 #if !UNITY_SERVER
         GPUBillboardBuffer.S.DisplayNumberRandom($"{mp}", new Vector2(.2f, .2f), pos, Color.blue, true, param);
@@ -132,12 +132,12 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
     {
         foreach (var i in OwnerReleasers)
         {
-            if (i.Value.Key == key) return true;
+            if (i.Value.MagicKey == key) return true;
         }
         return false;
     }
 
-    
+    private readonly IMessage[] Empty = new IMessage[0];
 
     public IMessage[] GetAndClearNotify()
     {
@@ -147,8 +147,7 @@ public class UPerceptionView : MonoBehaviour, IBattlePerception, ITimeSimulater,
             _notify.Clear();
             return list;
         }
-        else
-            return new IMessage[0];
+        else  return Empty;
     }
 
     public IMessage[] GetInitNotify()

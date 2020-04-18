@@ -28,15 +28,15 @@ namespace GameLogic.Game
         /// <summary>
         /// 力量增加血量
         /// </summary>
-        public static float FORCE_HP = 5;
+        public static float FORCE_HP = 10;
         /// <summary>
         /// 智力增加Mp
         /// </summary>
-        public static float KNOWLEGDE_MP = 1.5f;
+        public static float KNOWLEGDE_MP = 5f;
         /// <summary>
         /// 敏捷增加防御
         /// </summary>
-        public static float AGILITY_DEFANCE = 1;
+        public static float AGILITY_DEFANCE = .5f;
         /// <summary>
         /// 敏捷减少普攻间隔时间 ms
         /// </summary>

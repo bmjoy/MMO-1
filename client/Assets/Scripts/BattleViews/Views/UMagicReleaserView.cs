@@ -13,7 +13,7 @@ using Layout;
 
 public class UMagicReleaserView : UElementView, IMagicReleaser
 {
-    public void SetData(int releaser, int target, UVector3 targetpos, Proto.ReleaserModeType rmType,string magicKey)
+    public void SetData(int releaser, int target, UVector3 targetpos, ReleaserModeType rmType,string magicKey)
     {
         CharacterTarget = PerView.GetViewByIndex<UCharacterView>(target);
         CharacterReleaser = PerView.GetViewByIndex<UCharacterView>(releaser);
@@ -23,8 +23,9 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         RMType = rmType;
         if (PerView is IBattlePerception per)
         {
-            Magic = per.GetMagicByKey(magicKey);
+            Magic = per?.GetMagicByKey(magicKey);
         }
+        MagicKey = magicKey;
     }
 
 
@@ -38,7 +39,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
 
     public ReleaserModeType RMType { private set; get; }
 
-    public string Key { get; internal set; }
+    public string MagicKey { get; private set; }
 
     private readonly LinkedList<TimeLineViewPlayer> _players = new LinkedList<TimeLineViewPlayer>();
 
@@ -55,6 +56,9 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
         });
 #endif
 #if !UNITY_SERVER
+
+        if (Magic == null) { Debug.LogError($"Nofoun magic key {MagicKey}"); return; }
+
         var eType = (Layout.EventType)type;
         var tar = PerView.GetViewByIndex<UCharacterView>(targetIndex);
         if (PerView is IBattlePerception per)
@@ -134,7 +138,7 @@ public class UMagicReleaserView : UElementView, IMagicReleaser
             Index = Index,
             ReleaserIndex = RIndex,
             TargetIndex = TIndex,
-            MagicKey = Key,
+            MagicKey = MagicKey,
             Position = TargetPos.ToPV3(),
             RMType = RMType
         };

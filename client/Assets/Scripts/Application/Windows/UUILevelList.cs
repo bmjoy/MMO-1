@@ -65,19 +65,29 @@ namespace Windows
         private void OnItemClick(ContentTableModel item)
         {
             var gate = UApplication.G<GMainGate>();
-            if (gate == null) return;
+            UUIPopup.ShowConfirm("GoToServer", "Cancel to local",
+                () => GoToServer(item.Data.ID),
+                () =>
+                {
+                    UApplication.S.StartLocalLevel(gate.hero, gate.package, item.Data.ID);
+                });
+        }
 
+        private void GoToServer(int leveID)
+        {
+            var gate = UApplication.G<GMainGate>();
+            if (gate == null) return;
             BeginGame.CreateQuery().SendRequest(gate.Client,
-                new C2G_BeginGame { LevelID = item.Data.ID },
+                new C2G_BeginGame { LevelID = leveID },
                 r =>
                 {
                     if (r.Code.IsOk())
                     {
-                        UApplication.Singleton.GotoBattleGate(r.ServerInfo, item.Data.ID);
+                        UApplication.S.GotoBattleGate(r.ServerInfo, leveID);
                     }
                     else
                     {
-                        UApplication.Singleton.ShowError(r.Code);
+                        UApplication.S.ShowError(r.Code);
                     }
                 }, UUIManager.S);
         }

@@ -17,8 +17,37 @@ using Windows;
 using UnityEngine.AddressableAssets;
 using UGameTools;
 
-public class BattleGate : UGate, IServerMessageHandler
+public class BattleGate : UGate, IServerMessageHandler,IBattleGate
 {
+
+    float IBattleGate.TimeServerNow { get { return TimeServerNow; } }
+
+    UPerceptionView IBattleGate.PreView { get { return PreView; } }
+
+    Texture IBattleGate.LookAtView { get { return LookAtView; } }
+
+    UCharacterView IBattleGate.Owner { get { return Owner; } }
+
+    void IBattleGate.Exit()
+    {
+        ExitBattle.CreateQuery()
+                       .SendRequest(Client,
+                       new C2B_ExitBattle
+                       {
+                           AccountUuid = UApplication.S.AccountUuid
+                       },
+                       (r) =>
+                       {
+                           UApplication.S.GoBackToMainGate();
+                           if (!r.Code.IsOk())
+                               UApplication.S.ShowError(r.Code);
+                       }, UUIManager.S);
+    }
+
+    PlayerPackage IBattleGate.Package { get { return Package; } }
+
+    DHero IBattleGate.Hero { get { return Hero; } }
+
 
     public void SetServer(GameServerInfo serverInfo, int levelID)
     {
@@ -31,6 +60,7 @@ public class BattleGate : UGate, IServerMessageHandler
 
 
     public BattleLevelData Level { private set; get; }
+
     public float TimeServerNow
     {
         get
@@ -62,9 +92,6 @@ public class BattleGate : UGate, IServerMessageHandler
     {
         UUIManager.Singleton.HideAll();
         UUIManager.Singleton.ShowMask(true);
-        UUIManager.Singleton.CreateWindowAsync<UUIBattle>((ui)=> {
-            ui.ShowWindow();
-        });
        
         StartCoroutine(Init());
         gm= this.gameObject.AddComponent<GameGMTools>();
@@ -118,30 +145,20 @@ public class BattleGate : UGate, IServerMessageHandler
             if (UApplication.S.AccountUuid == character.AccoundUuid)
             {
                 Owner = character;
-                Owner.transform.SetLayer( LayerMask.NameToLayer("Player"));
+                //Owner.transform.SetLayer( LayerMask.NameToLayer("Player"));
                 Owner.ShowName = true;
                 PreView.OwerTeamIndex = character.TeamId;
                 PreView.OwnerIndex = character.Index;
                 FindObjectOfType<ThridPersionCameraContollor>()
                 .SetLookAt(character.GetBoneByName(UCharacterView.BottomBone));
-                UUIManager.Singleton.ShowMask(false);
-                var ui = UUIManager.Singleton.GetUIWindow<UUIBattle>();
-                ui.InitCharacter(character);
-                UUIManager.S.ShowMask(false);
                 character.OnItemTrigger = TriggerItem;
+                character.LookView(LookAtView);
+                UUIManager.Singleton.CreateWindowAsync<UUIBattle>((ui) =>
+                {
+                    ui.ShowWindow(this);
+                    UUIManager.S.ShowMask(false);
+                });
 
-               
-                var go = new GameObject("Look", typeof(Camera));
-                go.transform.SetParent(character.GetBoneByName(UCharacterView.RootBone),false);
-                go.transform.RestRTS();
-                var c = go.GetComponent<Camera>();
-                c.targetTexture = LookAtView;
-                c.cullingMask = LayerMask.GetMask("Player");
-                go.transform.localPosition = new Vector3(0,1.1f,1.5f);
-                c.farClipPlane = 5;
-                c.clearFlags = CameraClearFlags.SolidColor;
-                c.backgroundColor = new Color(52 / 255f, 44 / 255f, 33 / 255f, 1);
-                go.TryAdd<LookAtTarget>().target = character.GetBoneByName(UCharacterView.BodyBone);
             }
         };
         
@@ -153,8 +170,7 @@ public class BattleGate : UGate, IServerMessageHandler
                 ServerStartTime = initPack.TimeNow;
                 Package = initPack.Package;
                 Hero = initPack.Hero;
-                UUIManager.S.GetUIWindow<UUIBattle>()?.InitData(Package,Hero);
-                
+                UUIManager.S.UpdateUIData();
             }
         };
 
@@ -170,15 +186,13 @@ public class BattleGate : UGate, IServerMessageHandler
                     ui.ShowWindow(exp.Level);
                 });
             }
-
-            UUIManager.S.GetUIWindow<UUIBattle>()?.InitHero( Hero);
-
+            UUIManager.S.UpdateUIData();
+            //UUIManager.S.GetUIWindow<UUIBattle>()?.InitHero(Hero);
         };
 
         player.OnDropGold = (gold) =>
         {
-
-            UApplication.S.ShowNotify($"获得金币{gold.Gold}");
+            //UApplication.S.ShowNotify($"获得金币{gold.Gold}");
         };
 
         player.OnSyncServerTime = (sTime) =>
@@ -206,9 +220,11 @@ public class BattleGate : UGate, IServerMessageHandler
 
     public UCharacterView Owner { private set; get; }
 
+  
     private float lastSyncTime = 0;
     private float releaseLockTime = -1;
-    internal void MoveDir(Vector3 dir)
+
+    void IBattleGate.MoveDir(Vector3 dir)
     {
         if (!CanNetAction()) return;
         if (releaseLockTime > Time.time) return;
@@ -236,15 +252,18 @@ public class BattleGate : UGate, IServerMessageHandler
             if (Owner.DoStopMove())
             {
                 SendAction(stopMove);
-                TrySendLookForward(true);
+                if (this is IBattleGate b)
+                    b.TrySendLookForward(true);
             }
         }
     }
 
-    public void TrySendLookForward(bool force = false)
+    void IBattleGate.TrySendLookForward(bool force)
     {
         if (!force)
         {
+            if (!Owner) return;
+
             if (Owner is IBattleCharacter view)
             {
                 if (view.IsMoving) return;
@@ -256,52 +275,22 @@ public class BattleGate : UGate, IServerMessageHandler
         SendAction(act);
     }
 
-    public bool IsMpFull()
+    bool IBattleGate.IsMpFull()
     {
         if (!this.Owner) return true;
         return Owner.IsFullMp;
     }
 
-    public bool IsHpFull()
+    bool IBattleGate.IsHpFull()
     {
         if (!this.Owner) return true;
         return Owner.IsFullHp;
-    }
-
-    internal bool SendUserItem(ItemType type)
-    {
-        if (!Owner) return false;
-        if (Owner.IsDeath) return false;
-        //if (!CanNetAction()) return false;
-        foreach (var i in Package.Items)
-        {
-            var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
-            if ((ItemType)config.ItemType == type)
-            {
-                SendAction(new Action_UseItem { ItemId = i.Value.ItemID });
-                return true;
-            }
-        }
-        return false;
     }
 
     private void ReleaseLock()
     {
         releaseLockTime = Time.time + .3f;
         if (Owner) Owner.DoStopMove();
-    }
-
-    internal void DoNormalAttack()
-    {
-        if (!CanNetAction()) return;
-        ReleaseLock();
-        if (Owner.TryGetMagicByType(MagicType.MtNormal, out HeroMagicData data))
-        {
-            var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
-            if (config != null) Owner.ShowRange(config.RangeMax);
-        }
-
-        SendAction(new Action_NormalAttack());
     }
 
     protected override void ExitGate()
@@ -335,9 +324,6 @@ public class BattleGate : UGate, IServerMessageHandler
             PrintReceived();
         }
     }
-
-
-
     private void SendAction(IMessage action)
     {
         Debug.Log($"{action.GetType()}{action}");
@@ -370,8 +356,6 @@ public class BattleGate : UGate, IServerMessageHandler
         }
     }
 
-
-
     private bool CanNetAction()
     {
         if (!Owner) return false;
@@ -380,20 +364,20 @@ public class BattleGate : UGate, IServerMessageHandler
         return true;
     }
 
-    internal void ReleaseSkill(CharacterMagicData magicData)
+    void IBattleGate.ReleaseSkill(HeroMagicData magicData)
     {
         if (!CanNetAction()) return;
-        if (Owner.TryGetMagicData(magicData.ID, out HeroMagicData data))
+        if (Owner.TryGetMagicData(magicData.MagicID, out HeroMagicData data))
         {
             var character = Owner as IBattleCharacter;
             var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
             if (config != null) Owner.ShowRange(config.RangeMax);
-            if (config.MPCost <= Owner.MP)
+            if (data.MPCost <= Owner.MP)
             {
                 ReleaseLock();
                 SendAction(new Action_ClickSkillIndex
                 {
-                    MagicId = magicData.ID,
+                    MagicId = data.MagicID,
                     Position = character.Transform.position.ToPV3(),
                     Rotation = character.Rotation.eulerAngles.ToPV3()
                 });
@@ -405,6 +389,29 @@ public class BattleGate : UGate, IServerMessageHandler
         }
        
     }
+
+    void IBattleGate.DoNormalAttack()
+    {
+        SendAction(new Action_NormalAttack());
+    }
+
+    bool IBattleGate.SendUseItem(ItemType type)
+    {
+        if (!Owner) return false;
+        if (Owner.IsDeath) return false;
+        //if (!CanNetAction()) return false;
+        foreach (var i in Package.Items)
+        {
+            var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
+            if ((ItemType)config.ItemType == type)
+            {
+                SendAction(new Action_UseItem { ItemId = i.Value.ItemID });
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     #endregion
 }

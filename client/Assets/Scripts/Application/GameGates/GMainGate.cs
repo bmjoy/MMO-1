@@ -53,20 +53,7 @@ public class GMainGate:UGate
         var thridCamear = FindObjectOfType<ThridPersionCameraContollor>();
         thridCamear.SetLookAt(characterView.GetBoneByName(UCharacterView.BottomBone));
         characterView.ShowName = false;
-
-        characterView.transform.SetLayer(LayerMask.NameToLayer("Player"));
-
-        var go = new GameObject("Look", typeof(Camera));
-        go.transform.SetParent(characterView.GetBoneByName(UCharacterView.RootBone), false);
-        go.transform.RestRTS();
-        var c = go.GetComponent<Camera>();
-        c.targetTexture = LookAtView;
-        c.cullingMask = LayerMask.GetMask("Player");
-        go.transform.localPosition = new Vector3(0, 1.1f, 1.5f);
-        c.farClipPlane = 5;
-        c.clearFlags = CameraClearFlags.SolidColor;
-        c.backgroundColor = new Color(52 / 255f, 44 / 255f, 33 / 255f, 1);
-        go.TryAdd<LookAtTarget>().target = characterView.GetBoneByName(UCharacterView.BodyBone);
+        characterView.LookView(LookAtView);
         return characterView;
     }
 

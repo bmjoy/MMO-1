@@ -27,29 +27,24 @@ namespace Windows
                     {
                         if ((lastTime + 0.3f > UnityEngine.Time.time)) return;
                         lastTime = UnityEngine.Time.time;
-                        if (OnClick == null)
-                            return;
-                        OnClick(this);
+                        OnClick?.Invoke(this);
                     });
             }
 
             public Action<GridTableModel> OnClick;
-
-            public void SetMagic(int id )
+            public HeroMagicData Data;
+            public void SetMagic(HeroMagicData  data,IBattleGate battle )
             {
-                if (magicID != id)
+                Data = data;
+                if (magicID != data.MagicID)
                 {
-                    magicID = id;
-                    MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(id);
-                    var per = UApplication.G<BattleGate>().PreView as IBattlePerception;
+                    magicID = data.MagicID;
+                    MagicData = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
+                    var per = battle.PreView as IBattlePerception;
                     LMagicData = per.GetMagicByKey(MagicData.MagicKey);
-                    ResourcesManager.S.LoadIcon(MagicData, (s) =>
-                     {
-                         Template.Icon.sprite = s;
-                     });
+                    ResourcesManager.S.LoadIcon(MagicData, s => Template.Icon.sprite = s);
                 }
             }
-
             private int magicID = -1;
             public CharacterMagicData MagicData;
             private float cdTime = 0.01f;
@@ -111,19 +106,7 @@ namespace Windows
                         LanguageManager.S["UUIBattle_Quit_Content"],
                         () =>
                     {
-                        var gate = UApplication.G<BattleGate>();
-                        ExitBattle.CreateQuery()
-                        .SendRequest(gate.Client,
-                        new C2B_ExitBattle
-                        {
-                            AccountUuid = UApplication.S.AccountUuid
-                        },
-                        (r)=>
-                        {
-                            UApplication.S.GoBackToMainGate();
-                            if (!r.Code.IsOk())
-                                UApplication.S.ShowError(r.Code);
-                        }, UUIManager.S);
+                        BattleGate.Exit();
                     });
                 });
 
@@ -134,12 +117,8 @@ namespace Windows
             {
                 if (lastTime > UnityEngine.Time.time) return;
                 lastTime = UnityEngine.Time.time + .3f;
-                //if ((v - last).magnitude <= 0.03f) return;
-                //last = v;
                 var dir = ThridPersionCameraContollor.Current.LookRotaion * new Vector3(v.x, 0, v.y);
-                var g = UApplication.G<BattleGate>();
-                if (g == null) return;
-                g.MoveDir(dir);
+                BattleGate?.MoveDir(dir);
             });
 
             var swipeEv = swipe.GetComponent<UIEventSwipe>();
@@ -147,36 +126,30 @@ namespace Windows
             {
                 v *= .5f;
                 ThridPersionCameraContollor.Current.RotationByX(v.y).RotationByY(v.x);
-                UApplication.G<BattleGate>().TrySendLookForward();
+                BattleGate?.TrySendLookForward(false);
             });
 
             bt_normal_att.onClick.AddListener(() =>
             {
-                var g = UApplication.G<BattleGate>();
-                if (g == null) return;
-                g.DoNormalAttack();
+                BattleGate?.DoNormalAttack();
             });
 
             bt_hp.onClick.AddListener(() => 
             {
-                var g = UApplication.G<BattleGate>();
-                if (g == null) return;
-                if (g.IsHpFull())
+                if (BattleGate?.IsHpFull()==true)
                 {
                     UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_HP_Full"]);
                     return;
                 }
-                g.SendUserItem(ItemType.ItHpitem);
+                BattleGate?.SendUseItem(ItemType.ItHpitem);
             });
             bt_mp.onClick.AddListener(() => {
-                var g = UApplication.G<BattleGate>();
-                if (g == null) return;
-                if (g.IsMpFull())
+                if (BattleGate?.IsMpFull() == true)
                 {
                     UApplication.S.ShowNotify(LanguageManager.S["UUIBattle_MP_Full"]);
                     return;
                 }
-                g.SendUserItem(ItemType.ItMpitem);
+                BattleGate?.SendUseItem(ItemType.ItMpitem);
             });
         }
 
@@ -184,7 +157,7 @@ namespace Windows
 
         private string keyMp = string.Empty;
 
-        internal void InitHero(DHero hero)
+        private void InitHero(DHero hero)
         {
             this.Level_Number.text = $"{hero.Level}";
             this.Username.text = $"{hero.Name}";
@@ -203,11 +176,19 @@ namespace Windows
 
         private int normalAtt = -1;
 
-        internal void InitData(PlayerPackage package, DHero hero)
+        //private PlayerPackage Package;
+
+        internal void ShowWindow(IBattleGate gata)
         {
-            SetPackage(package);
-            InitHero(hero);
-            foreach (var i in package.Items)
+            this.BattleGate = gata;
+            ShowWindow();
+        }
+
+        private void ShowView()
+        {
+            SetPackage(BattleGate.Package);
+            InitHero(BattleGate.Hero);
+            foreach (var i in BattleGate.Package.Items)
             {
                 var config = ExcelToJSONConfigManager.Current.GetConfigByID<ItemData>(i.Value.ItemID);
                 if ((ItemType)config.ItemType == ItemType.ItHpitem)
@@ -219,21 +200,30 @@ namespace Windows
                     keyMp = config.Params[0];
                 }
             }
+            InitCharacter(BattleGate.Owner);
+
+        }
+
+        protected override void OnUpdateUIData()
+        {
+            base.OnUpdateUIData();
+            ShowView();
         }
 
         protected override void OnShow()
         {
             base.OnShow();
             this.GridTableManager.Count = 0;
+            ShowView();
         }
+
+        public IBattleGate BattleGate { private set; get; }
 
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            var gate = UApplication.G<BattleGate>();
-            if (gate == null) return;
+            var view = BattleGate?.Owner;
             if (!view) return;
-
             HPSilder.value = view.HP / (float)view.HpMax;
             lb_hp.text = $"{view.HP}/{view.HpMax}";
             MpSilder.value = view.MP / (float)view.MpMax;
@@ -241,14 +231,12 @@ namespace Windows
 
             foreach (var i in GridTableManager)
             {
-                i.Model.Update(view, gate.TimeServerNow, gate.PreView.HaveOwnerKey(i.Model.MagicData.MagicKey));
+                i.Model.Update(view, BattleGate.TimeServerNow, BattleGate.PreView.HaveOwnerKey(i.Model.MagicData.MagicKey));
             }
-            
             UpdateMap();
-           
             if (view.TryGetMagicData(normalAtt, out HeroMagicData att))
             {
-                var time = Mathf.Max(0, att.CDTime - gate.TimeServerNow);
+                var time = Mathf.Max(0, att.CDTime - BattleGate.TimeServerNow);
                 float cdTime = 1;// view.AttackSpeed 
                 if (cdTime < time) cdTime = time;
                 if (cdTime > 0)
@@ -260,18 +248,16 @@ namespace Windows
                     this.AttCdMask.fillAmount = 0;
                 }
             }
-            bt_hp.interactable = !gate.PreView.HaveOwnerKey(keyHp);
-            bt_mp.interactable = !gate.PreView.HaveOwnerKey(keyMp);
+            bt_hp.interactable = !BattleGate.PreView.HaveOwnerKey(keyHp);
+            bt_mp.interactable = !BattleGate.PreView.HaveOwnerKey(keyMp);
         }
-
 
         private void UpdateMap()
         {
 
             int wi = Map.width;
-            var gate = UApplication.G<BattleGate>();
-            if (gate == null) return;
-            if (!gate.Owner) return;
+           
+            if (!BattleGate.Owner) return;
             var a = new Color(1, 1, 1, 0);
             for (int x = 0; x < size; x++)
             {
@@ -286,11 +272,11 @@ namespace Windows
             this.ViewForward.localRotation = lookRotation;
 
             float r = size / 2;// 16;
-            gate.PreView.Each<UCharacterView>(t =>
+            BattleGate.PreView.Each<UCharacterView>(t =>
             {
-                var offset = t.transform.position - gate.Owner.transform.position;
+                var offset = t.transform.position - BattleGate.Owner.transform.position;
                 if (offset.magnitude > r) return false;
-                Colors[(int)(offset.x + r)+ (int)(offset.z + r)* size] = t.TeamId == gate.Owner.TeamId ? Color.green : Color.red;
+                Colors[(int)(offset.x + r)+ (int)(offset.z + r)* size] = t.TeamId == BattleGate.Owner.TeamId ? Color.green : Color.red;
                 return false;
             });
 
@@ -302,18 +288,19 @@ namespace Windows
         {
             base.OnHide();
         }
-        public void InitCharacter(UCharacterView view)
+
+        private void InitCharacter(UCharacterView view)
         {
-            var gata = UApplication.G<BattleGate>();
+            //var gata = UApplication.G<BattleGate>();
             if (view.TryGetMagicsType(MagicType.MtMagic, out IList<HeroMagicData> list))
             {
-                var pre = gata.PreView as IBattlePerception;
+                var pre = BattleGate.PreView as IBattlePerception;
                 this.GridTableManager.Count = list.Count;
                 int index = 0;
                 foreach (var i in GridTableManager)
                 {
                     
-                    i.Model.SetMagic(list[index].MagicID);
+                    i.Model.SetMagic(list[index],BattleGate);
                     i.Model.OnClick = OnRelease;
                     index++;
                 }
@@ -324,11 +311,10 @@ namespace Windows
                 var config = ExcelToJSONConfigManager.Current.GetConfigByID<CharacterMagicData>(data.MagicID);
                 ResourcesManager.S.LoadIcon(config, (s) => att_Icon.sprite = s);
             }
-            this.view = view;
-
-            this.Player.texture = gata.LookAtView;
+            this.Player.texture = BattleGate.LookAtView;
         }
-        public void SetPackage(PlayerPackage package)
+
+        private void SetPackage(PlayerPackage package)
         {
             int hp = 0;
             int mp = 0;
@@ -356,10 +342,8 @@ namespace Windows
         
         private void OnRelease(GridTableModel item)
         {
-            UApplication.G<BattleGate>().ReleaseSkill(item.MagicData);
+            BattleGate.ReleaseSkill(item.Data);
         }
-
-        private UCharacterView view;
 
         public bool IsMaigic(int id)
         {
@@ -368,7 +352,7 @@ namespace Windows
             return data.ReleaseType == (int)MagicReleaseType.MrtMagic;
         }
 
-
+       
        
     }
 }

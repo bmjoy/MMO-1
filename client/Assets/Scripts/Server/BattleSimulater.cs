@@ -18,7 +18,6 @@ using System.IO;
 using GameLogic.Game.LayoutLogics;
 using Server;
 using System.Linq;
-using UVector3 = UnityEngine.Vector3;
 
 public class BattleSimulater : XSingleton<BattleSimulater>
 {
