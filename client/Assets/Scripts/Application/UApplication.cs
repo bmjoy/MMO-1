@@ -61,6 +61,11 @@ public class UApplication : XSingleton<UApplication>
         GoToMainGate(server);
     }
 
+    public void StartLocalLevel(DHero hero, PlayerPackage package, int levelID)
+    {
+        ChangeGate<LevelSimulatorGate>().Init(hero, package, levelID) ;
+    }
+
     public void GotoLoginGate() => ChangeGate<LoginGate>();
    
     public void GotoBattleGate(GameServerInfo serverInfo, int mapID) => ChangeGate<BattleGate>().SetServer(serverInfo, mapID);

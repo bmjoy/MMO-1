@@ -134,6 +134,20 @@ namespace UGameTools
         }
 
 
-      
+        public static void LookView(this UCharacterView character, RenderTexture LookAtView)
+        {
+            var go = new GameObject("Look", typeof(Camera));
+            character.transform.SetLayer(LayerMask.NameToLayer("Player"));
+            go.transform.SetParent(character.GetBoneByName(UCharacterView.RootBone), false);
+            go.transform.RestRTS();
+            var c = go.GetComponent<Camera>();
+            c.targetTexture = LookAtView;
+            c.cullingMask = LayerMask.GetMask("Player");
+            go.transform.localPosition = new Vector3(0, 1.1f, 1.5f);
+            c.farClipPlane = 5;
+            c.clearFlags = CameraClearFlags.SolidColor;
+            c.backgroundColor = new Color(52 / 255f, 44 / 255f, 33 / 255f, 1);
+            go.TryAdd<LookAtTargetTransfrom>().target = character.GetBoneByName(UCharacterView.BodyBone);
+        }
     }
 }

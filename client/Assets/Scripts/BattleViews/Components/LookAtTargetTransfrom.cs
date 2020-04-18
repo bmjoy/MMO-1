@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookAtTarget : MonoBehaviour
+public class LookAtTargetTransfrom : MonoBehaviour
 {
 
     // Update is called once per frame

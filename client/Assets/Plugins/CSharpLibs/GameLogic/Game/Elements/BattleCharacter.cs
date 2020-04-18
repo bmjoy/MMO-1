@@ -155,6 +155,8 @@ namespace GameLogic.Game.Elements
         public int OwnerIndex { private set; get; } 
         public CharacterData Config { private set; get; }
 
+        public IBattleCharacter CharacterView => this.View; 
+
         public BattleCharacter (
             CharacterData data,
             IList<BattleCharacterMagic> magics,

@@ -5,7 +5,8 @@
         "BattleViews",
         "Joystick",
         "Unity.ResourceManager",
-        "Unity.Addressables"
+        "Unity.Addressables",
+        "Server"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

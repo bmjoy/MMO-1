@@ -4,14 +4,12 @@ using System.Linq;
 using EConfig;
 using GameLogic.Game.Perceptions;
 using Proto;
-using UGameTools;
 using UnityEngine;
 using CM = ExcelConfig.ExcelToJSONConfigManager;
 using Vector3 = UnityEngine.Vector3;
 using P = Proto.HeroPropertyType;
 using EngineCore.Simulater;
 using GameLogic.Game.Elements;
-using XNet.Libs.Utility;
 using GameLogic;
 
 namespace Server
@@ -22,15 +20,23 @@ namespace Server
         public Vector3 Forward;
     }
 
+    public class DropItem
+    {
+        public Vector3 Pos { get; internal set; }
+        public MonsterData MDate { get; internal set; }
+        public DropGroupData DataConfig { get; internal set; }
+        public int OwnerIndex { get; internal set; }
+        public int TeamIndex { get; internal set; }
+        public BattleCharacter Owner { get; internal set; }
+    }
+
     public class BattleMosterCreator
     {
-        public BattleLevelSimulater Simulater { get; private set; }
+        public BattlePerception Per { private set; get; }
 
-        public BattlePerception Per { get { return Simulater.State.Perception as BattlePerception; } }
+        public BattleLevelData LevelData { private set; get; }
 
-        public BattleLevelData LevelData { get { return Simulater.LevelData; } }
-
-        private MonsterGroupPosition[] MonsterGroups { get { return Simulater.MonsterGroup; } }
+        public MonsterGroupPosition[] MonsterGroups { private set; get; }
 
         public int CountKillCount;
 
@@ -38,9 +44,11 @@ namespace Server
 
         private float LastTime = 0;
 
-        public BattleMosterCreator(BattleLevelSimulater sim)
+        public BattleMosterCreator(BattleLevelData  levelData, MonsterGroupPosition[] groupPos, BattlePerception per )
         {
-            Simulater = sim;
+            Per = per;
+            LevelData = levelData;
+            MonsterGroups = groupPos;
         }
 
         private void CreateMonster()
@@ -154,7 +162,16 @@ namespace Server
                             if (!owner) continue;
                             //召唤物掉落归属问题
                             if (owner.OwnerIndex > 0) owner = per.FindTarget(owner.OwnerIndex);
-                            DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
+                            OnDrop?.Invoke(new DropItem
+                            {
+                                Pos = el.Position,
+                                MDate = mdata,
+                                DataConfig = d,
+                                OwnerIndex = owner?.Index ?? -1,
+                                TeamIndex = owner?.TeamIndex ?? -1,
+                                Owner = owner
+                            });
+                            //DoDrop(el.Position, mdata, d, owner?.Index ?? -1, owner?.TeamIndex ?? -1, owner);
                             break;
                         }
                     }
@@ -162,63 +179,18 @@ namespace Server
             }
         }
 
-        internal void TryCreateMonster(float time)
+        public Action<DropItem> OnDrop;
+
+        public void TryCreateMonster(float time)
         {
+
             if (AliveCount == 0)
-            {
                 CreateMonster();
-                LastTime = time;
-            }
-            else if (LastTime + LevelData.MaxRefrshTime < time)
+
+            if (LastTime + LevelData.MaxRefrshTime < time)
             {
                 if (AliveCount <= LevelData.MaxMonster) CreateMonster();
                 LastTime = time;
-            }
-        }
-
-        private void DoDrop(Vector3 pos, MonsterData monster, DropGroupData drop, int groupIndex, int teamIndex, BattleCharacter owner)
-        {
-            BattlePlayer player = null;
-            if (owner && BattleSimulater.S.TryGetPlayer(owner.AcccountUuid, out player))
-            {
-                var exp = player.GetHero().Exprices;
-                int expNew = player.AddExp(monster.Exp, out int old, out int newLevel);
-                if (newLevel != old)
-                {
-                    player.HeroCharacter.SetLevel(newLevel);
-                    player.HeroCharacter.ResetHPMP();//full mp and hp
-                }
-                var expNotify = new Notify_CharacterExp { Exp = expNew, Level = newLevel, OldExp = exp, OldLeve = old };
-                player.Client.SendMessage(expNotify.ToNotityMessage());
-            }
-
-            if (drop == null) return;
-            if (!GRandomer.Probability10000(drop.DropPro)) return;
-            var items = drop.DropItem.SplitToInt();
-            var pors = drop.Pro.SplitToInt();
-            var nums = drop.DropNum.SplitToInt();
-            if (owner)
-            {
-                var gold = GRandomer.RandomMinAndMax(drop.GoldMin, drop.GoldMax);
-                if (gold > 0)
-                {
-                    if (player != null)
-                    {
-                        player.AddGold(gold);
-                        var notify = new Notify_DropGold { Gold = gold, TotalGold = player.Gold };
-                        player.Client.SendMessage(notify.ToNotityMessage());
-                    }
-                }
-            }
-
-            var count = GRandomer.RandomMinAndMax(drop.DropMinNum, drop.DropMaxNum);
-            while (count > 0)
-            {
-                count--;
-                var offset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f));
-                var index = GRandomer.RandPro(pors.ToArray());
-                var item = new PlayerItem { ItemID = items[index], Num = nums[index]};
-                Per.CreateItem(pos + offset, item, groupIndex, teamIndex);
             }
         }
     }

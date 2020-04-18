@@ -106,9 +106,13 @@ namespace Server
             yield return new WaitForEndOfFrame();
             State = new BattleState(PerView, this, PerView);
             State.Start(this.GetTime());
-          
 
+            OnLoadCompleted();
         }
+
+        protected virtual void OnLoadCompleted() { }
+
+        public BattlePerception Per { get { return State.Perception as BattlePerception; } }
 
         public bool TryGetElementByIndex<T>(int index, out T el) where T : GObject
         {
@@ -218,8 +222,7 @@ namespace Server
             foreach (var i in types)
             {
                 if (!i.IsSubclassOf(t)) continue;
-                var atts = i.GetCustomAttributes(typeof(LevelSimulaterAttribute), false) as LevelSimulaterAttribute[];
-                if (atts == null || atts.Length == 0) continue;
+                if (!(i.GetCustomAttributes(typeof(LevelSimulaterAttribute), false) is LevelSimulaterAttribute[] atts) || atts.Length == 0) continue;
                 Types.Add(atts[0].MType, i);
             }
         }
