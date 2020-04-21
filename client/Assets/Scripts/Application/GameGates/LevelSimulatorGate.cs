@@ -152,6 +152,7 @@ public class LevelSimulatorGate : UGate, IStateLoader,IBattleGate
         if (State == null) return;
         GState.Tick(State, timeSimulater.Now);
         MCreator?.TryCreateMonster(this.GetTime().Time);
+        PerView.GetAndClearNotify();
     }
 
     float IBattleGate.TimeServerNow => timeSimulater.Now.Time;
