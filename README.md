@@ -19,7 +19,7 @@
   
   ## 项目目录结构
   *  client 战斗服务器和游戏客户端
-  *  Doc 是相关策划文档已经迁移到了 [项目相关文档](https://drive.google.com/drive/folders/1yl8qRea4k8GfgQMEJbQq0JGRSVvwrRnv?usp=sharing)
+  *  Doc 是相关策划文档已经迁移到了
   *  Server 服务器目录
   *  Server/GServer/LoginServer 是中心账号服务器
   *  Server/GServer/GServer 是网关服务器用来承载用户数据
